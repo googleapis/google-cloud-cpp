@@ -4,7 +4,11 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.39.0 - TBD
+## v2.39.0 - 2025-07
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-07-03T11:36:10-07:00](https://github.com/googleapis/googleapis/tree/f9d6fe4a6ad9ed89dfc315f284124d2104377940)
 
 ## v2.38.0 - 2025-06
 
