@@ -47,7 +47,9 @@ namespace oauth2 {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-struct ServiceAccountMetadata {
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This struct will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.") ServiceAccountMetadata {
   std::set<std::string> scopes;
   std::string email;
 };
@@ -57,6 +59,9 @@ struct ServiceAccountMetadata {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This function will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     storage::internal::HttpResponse const& response);
 
@@ -67,6 +72,9 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This function will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseComputeEngineRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -104,8 +112,11 @@ class ComputeEngineCredentials;
 
 /// @copydoc ComputeEngineCredentials
 template <>
-class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
-                               std::chrono::system_clock> : public Credentials {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
+    ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
+                             std::chrono::system_clock> : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
   explicit ComputeEngineCredentials(std::string service_account_email);
@@ -152,7 +163,10 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
 
 /// @copydoc ComputeEngineCredentials
 template <typename HttpRequestBuilderType, typename ClockType>
-class ComputeEngineCredentials : public Credentials {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.") ComputeEngineCredentials
+    : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
