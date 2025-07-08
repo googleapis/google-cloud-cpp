@@ -290,6 +290,56 @@ class DepServiceConnection {
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(google::longrunning::Operation const& operation);
 
+  virtual StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+  ListAuthzExtensions(
+      google::cloud::networkservices::v1::ListAuthzExtensionsRequest request);
+
+  virtual StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(
+      google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

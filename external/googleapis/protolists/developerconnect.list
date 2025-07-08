@@ -1,1 +1,2 @@
 @com_google_googleapis//google/cloud/developerconnect/v1:developer_connect.proto
+@com_google_googleapis//google/cloud/developerconnect/v1:insights_config.proto

@@ -398,6 +398,176 @@ DepServiceClient::DeleteLbRouteExtension(
   return connection_->DeleteLbRouteExtension(operation);
 }
 
+StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceClient::ListAuthzExtensions(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListAuthzExtensionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAuthzExtensions(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceClient::ListAuthzExtensions(
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAuthzExtensions(std::move(request));
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceClient::GetAuthzExtension(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetAuthzExtensionRequest request;
+  request.set_name(name);
+  return connection_->GetAuthzExtension(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceClient::GetAuthzExtension(
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAuthzExtension(request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceClient::CreateAuthzExtension(
+    std::string const& parent,
+    google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+    std::string const& authz_extension_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateAuthzExtensionRequest request;
+  request.set_parent(parent);
+  *request.mutable_authz_extension() = authz_extension;
+  request.set_authz_extension_id(authz_extension_id);
+  return connection_->CreateAuthzExtension(request);
+}
+
+StatusOr<google::longrunning::Operation> DepServiceClient::CreateAuthzExtension(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+    std::string const& authz_extension_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateAuthzExtensionRequest request;
+  request.set_parent(parent);
+  *request.mutable_authz_extension() = authz_extension;
+  request.set_authz_extension_id(authz_extension_id);
+  return connection_->CreateAuthzExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceClient::CreateAuthzExtension(
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuthzExtension(request);
+}
+
+StatusOr<google::longrunning::Operation> DepServiceClient::CreateAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuthzExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceClient::CreateAuthzExtension(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuthzExtension(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceClient::UpdateAuthzExtension(
+    google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateAuthzExtensionRequest request;
+  *request.mutable_authz_extension() = authz_extension;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAuthzExtension(request);
+}
+
+StatusOr<google::longrunning::Operation> DepServiceClient::UpdateAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateAuthzExtensionRequest request;
+  *request.mutable_authz_extension() = authz_extension;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAuthzExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceClient::UpdateAuthzExtension(
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuthzExtension(request);
+}
+
+StatusOr<google::longrunning::Operation> DepServiceClient::UpdateAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuthzExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceClient::UpdateAuthzExtension(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuthzExtension(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceClient::DeleteAuthzExtension(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteAuthzExtensionRequest request;
+  request.set_name(name);
+  return connection_->DeleteAuthzExtension(request);
+}
+
+StatusOr<google::longrunning::Operation> DepServiceClient::DeleteAuthzExtension(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteAuthzExtensionRequest request;
+  request.set_name(name);
+  return connection_->DeleteAuthzExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceClient::DeleteAuthzExtension(
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthzExtension(request);
+}
+
+StatusOr<google::longrunning::Operation> DepServiceClient::DeleteAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthzExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceClient::DeleteAuthzExtension(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthzExtension(operation);
+}
+
 StreamRange<google::cloud::location::Location> DepServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

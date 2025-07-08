@@ -222,6 +222,154 @@ StreamRange<std::string> DeveloperConnectConnection::FetchGitRefs(
       StreamRange<std::string>>();
 }
 
+StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectConnection::ListAccountConnectors(
+    google::cloud::developerconnect::v1::
+        ListAccountConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::developerconnect::v1::AccountConnector>>();
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectConnection::GetAccountConnector(
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnection::CreateAccountConnector(
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::CreateAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnection::CreateAccountConnector(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnection::UpdateAccountConnector(
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::UpdateAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnection::UpdateAccountConnector(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteAccountConnector(
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::DeleteAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteAccountConnector(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectConnection::FetchAccessToken(
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::developerconnect::v1::User>
+DeveloperConnectConnection::ListUsers(
+    google::cloud::developerconnect::v1::
+        ListUsersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::developerconnect::v1::User>>();
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteUser(
+    google::cloud::developerconnect::v1::DeleteUserRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectConnection::DeleteUser(
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteUserRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteUser(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectConnection::FetchSelf(
+    google::cloud::developerconnect::v1::FetchSelfRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteSelf(
+    google::cloud::developerconnect::v1::DeleteSelfRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectConnection::DeleteSelf(
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteSelfRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteSelf(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 DeveloperConnectConnection::ListLocations(
     google::cloud::location::
