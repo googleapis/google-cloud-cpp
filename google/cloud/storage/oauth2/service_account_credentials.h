@@ -55,7 +55,7 @@ namespace oauth2 {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 struct GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This struct will be removed in v3.0.0 and later. Prefer using the "
+    "This struct will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
     ServiceAccountCredentialsInfo {
   std::string client_email;
@@ -74,7 +74,7 @@ struct GOOGLE_CLOUD_CPP_DEPRECATED(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
@@ -92,7 +92,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source,
@@ -105,7 +105,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
@@ -124,7 +124,7 @@ ParseServiceAccountRefreshResponse(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
@@ -138,7 +138,7 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 std::string MakeJWTAssertion(std::string const& header,
                              std::string const& payload,
@@ -154,7 +154,7 @@ std::string MakeJWTAssertion(std::string const& header,
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 std::string CreateServiceAccountRefreshPayload(
     ServiceAccountCredentialsInfo const& info, std::string const& grant_type,
@@ -187,7 +187,7 @@ std::string CreateServiceAccountRefreshPayload(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<std::string> MakeSelfSignedJWT(
     ServiceAccountCredentialsInfo const& info,
@@ -199,7 +199,7 @@ StatusOr<std::string> MakeSelfSignedJWT(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
 
@@ -238,7 +238,7 @@ class ServiceAccountCredentials;
 /// @copydoc ServiceAccountCredentials
 template <>
 class GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This class will be removed in v3.0.0 and later. Prefer using the "
+    "This class will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
     ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                               std::chrono::system_clock> : public Credentials {
@@ -289,7 +289,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
 /// @copydoc ServiceAccountCredentials
 template <typename HttpRequestBuilderType, typename ClockType>
 class GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This class will be removed in v3.0.0 and later. Prefer using the "
+    "This class will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.") ServiceAccountCredentials
     : public Credentials {
  public:
@@ -385,7 +385,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
 namespace internal {
 
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 oauth2_internal::ServiceAccountCredentialsInfo MapServiceAccountCredentialsInfo(
     oauth2::ServiceAccountCredentialsInfo info);

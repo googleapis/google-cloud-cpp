@@ -33,7 +33,7 @@ namespace oauth2 {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 enum class GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This enum will be removed in v3.0.0 and later. Prefer using the unified "
+    "This enum will be removed in v4.0.0 and later. Prefer using the unified "
     "credentials documented in @ref guac.") JwtSigningAlgorithms {
   // NOLINTNEXTLINE(readability-identifier-naming)
   RS256
@@ -45,7 +45,7 @@ enum class GOOGLE_CLOUD_CPP_DEPRECATED(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This constant will be removed in v3.0.0 and later. Prefer using the "
+    "This constant will be removed in v4.0.0 and later. Prefer using the "
     "unified "
     "credentials documented in @ref guac.")
 constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
@@ -64,7 +64,7 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This constant will be removed in v3.0.0 and later. Prefer using the "
+    "This constant will be removed in v4.0.0 and later. Prefer using the "
     "unified "
     "credentials documented in @ref guac.")
 constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
@@ -77,7 +77,7 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This constant will be removed in v3.0.0 and later. Prefer using the "
+    "This constant will be removed in v4.0.0 and later. Prefer using the "
     "unified "
     "credentials documented in @ref guac.")
 inline char const* GoogleOAuthRefreshEndpoint() {
@@ -91,7 +91,7 @@ inline char const* GoogleOAuthRefreshEndpoint() {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This constant will be removed in v3.0.0 and later. Prefer using the "
+    "This constant will be removed in v4.0.0 and later. Prefer using the "
     "unified "
     "credentials documented in @ref guac.")
 inline char const* GoogleOAuthScopeCloudPlatform() {

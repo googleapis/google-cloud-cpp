@@ -45,7 +45,7 @@ namespace oauth2 {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
@@ -64,7 +64,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 std::shared_ptr<Credentials> CreateAnonymousCredentials();
@@ -78,7 +78,7 @@ std::shared_ptr<Credentials> CreateAnonymousCredentials();
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -93,7 +93,7 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path);
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -122,7 +122,7 @@ CreateAuthorizedUserCredentialsFromJsonContents(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -153,7 +153,7 @@ CreateServiceAccountCredentialsFromFilePath(std::string const& path);
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -171,7 +171,7 @@ CreateServiceAccountCredentialsFromFilePath(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -199,7 +199,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -217,7 +217,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -245,7 +245,7 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path);
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -272,7 +272,7 @@ CreateServiceAccountCredentialsFromP12FilePath(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -306,7 +306,7 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -324,7 +324,7 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -354,7 +354,7 @@ CreateServiceAccountCredentialsFromJsonContents(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
@@ -368,7 +368,7 @@ CreateServiceAccountCredentialsFromJsonContents(
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();
@@ -379,7 +379,7 @@ std::shared_ptr<Credentials> CreateComputeEngineCredentials();
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials "
     "documented in @ref guac.")
 std::shared_ptr<Credentials> CreateComputeEngineCredentials(
