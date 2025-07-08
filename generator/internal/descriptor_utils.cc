@@ -223,12 +223,6 @@ auto constexpr kLoggingConfigClientCpp2 =
    "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]")""";
 
 ParameterCommentSubstitution substitutions[] = {
-    // Unescaped elements in bigtable/admin/v2.
-    {" projects/<project>/instances/<instance>/"
-     "tables/<table>/authorizedViews/<authorized_view>",
-     " `projects/<project>/instances/<instance>/"
-     "tables/<table>/authorizedViews/<authorized_view>`"},
-
     // There a number of comments (almost all from DialogFlow) that
     // - use single code quotes
     // - are broken up over multiple lines
