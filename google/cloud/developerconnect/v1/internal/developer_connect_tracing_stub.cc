@@ -306,6 +306,219 @@ DeveloperConnectTracingStub::FetchGitRefs(
                            child_->FetchGitRefs(context, options, request));
 }
 
+StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
+DeveloperConnectTracingStub::ListAccountConnectors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "ListAccountConnectors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListAccountConnectors(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectTracingStub::GetAccountConnector(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "GetAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetAccountConnector(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncCreateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "CreateAccountConnector");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAccountConnector(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::CreateAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "CreateAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateAccountConnector(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncUpdateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "UpdateAccountConnector");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAccountConnector(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::UpdateAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "UpdateAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateAccountConnector(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncDeleteAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "DeleteAccountConnector");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteAccountConnector(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "DeleteAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteAccountConnector(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectTracingStub::FetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "FetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchAccessToken(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListUsersResponse>
+DeveloperConnectTracingStub::ListUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListUsersRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "ListUsers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListUsers(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncDeleteUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteUser");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteUser(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteUser(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectTracingStub::FetchSelf(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "FetchSelf");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchSelf(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncDeleteSelf(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteSelf");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteSelf(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteSelf(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteSelf");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSelf(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DeveloperConnectTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

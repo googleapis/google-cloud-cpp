@@ -3029,6 +3029,7 @@ service {
 # Network Services (aka Traffic Director)
 service {
   service_proto_path: "google/cloud/networkservices/v1/network_services.proto"
+  additional_proto_files: ["google/cloud/networkservices/v1/extensibility.proto"]
   product_path: "google/cloud/networkservices/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]

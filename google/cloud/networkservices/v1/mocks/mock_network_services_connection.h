@@ -186,6 +186,241 @@ class MockNetworkServicesConnection
       DeleteEndpointPolicy, (google::longrunning::Operation const& operation),
       (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>),
+      ListWasmPluginVersions,
+      (google::cloud::networkservices::v1::ListWasmPluginVersionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>,
+      GetWasmPluginVersion,
+      (google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWasmPluginVersion(Matcher<google::cloud::networkservices::v1::CreateWasmPluginVersionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>,
+      CreateWasmPluginVersion,
+      (google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateWasmPluginVersion(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateWasmPluginVersion,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWasmPluginVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>,
+      CreateWasmPluginVersion,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWasmPluginVersion(Matcher<google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteWasmPluginVersion,
+      (google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteWasmPluginVersion(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteWasmPluginVersion,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWasmPluginVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteWasmPluginVersion,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::WasmPlugin>),
+      ListWasmPlugins,
+      (google::cloud::networkservices::v1::ListWasmPluginsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::WasmPlugin>, GetWasmPlugin,
+      (google::cloud::networkservices::v1::GetWasmPluginRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWasmPlugin(Matcher<google::cloud::networkservices::v1::CreateWasmPluginRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>,
+      CreateWasmPlugin,
+      (google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateWasmPlugin(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateWasmPlugin,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateWasmPlugin(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>,
+              CreateWasmPlugin,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWasmPlugin(Matcher<google::cloud::networkservices::v1::UpdateWasmPluginRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>,
+      UpdateWasmPlugin,
+      (google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateWasmPlugin(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateWasmPlugin,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateWasmPlugin(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>,
+              UpdateWasmPlugin,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWasmPlugin(Matcher<google::cloud::networkservices::v1::DeleteWasmPluginRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteWasmPlugin,
+      (google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteWasmPlugin(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteWasmPlugin,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteWasmPlugin(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteWasmPlugin, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::networkservices::v1::Gateway>),
               ListGateways,
               (google::cloud::networkservices::v1::ListGatewaysRequest request),
