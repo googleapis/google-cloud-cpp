@@ -36,7 +36,10 @@ namespace oauth2 {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-class AnonymousCredentials : public Credentials {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed in v4.0.0 and later. "
+    "Prefer using the unified credentials "
+    "documented in @ref guac.") AnonymousCredentials : public Credentials {
  public:
   AnonymousCredentials() = default;
 

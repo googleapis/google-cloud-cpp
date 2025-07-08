@@ -45,7 +45,10 @@ namespace oauth2 {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-struct AuthorizedUserCredentialsInfo {
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This struct will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
+    AuthorizedUserCredentialsInfo {
   std::string client_id;
   std::string client_secret;
   std::string refresh_token;
@@ -60,6 +63,9 @@ struct AuthorizedUserCredentialsInfo {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This function will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -70,6 +76,9 @@ ParseAuthorizedUserRefreshResponse(
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This function will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri =
@@ -106,9 +115,11 @@ class AuthorizedUserCredentials;
 
 /// @copydoc AuthorizedUserCredentials
 template <>
-class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
-                                std::chrono::system_clock>
-    : public Credentials {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
+    AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                              std::chrono::system_clock> : public Credentials {
  public:
   explicit AuthorizedUserCredentials(
       AuthorizedUserCredentialsInfo const& info,
@@ -138,7 +149,10 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
 
 /// @copydoc AuthorizedUserCredentials
 template <typename HttpRequestBuilderType, typename ClockType>
-class AuthorizedUserCredentials : public Credentials {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed in v4.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.") AuthorizedUserCredentials
+    : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
                                      ChannelOptions const& channel_options = {})
