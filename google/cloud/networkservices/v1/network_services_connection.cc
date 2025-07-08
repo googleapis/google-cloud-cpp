@@ -124,6 +124,154 @@ NetworkServicesConnection::DeleteEndpointPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesConnection::ListWasmPluginVersions(
+    google::cloud::networkservices::v1::
+        ListWasmPluginVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>>();
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesConnection::GetWasmPluginVersion(
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+NetworkServicesConnection::CreateWasmPluginVersion(
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateWasmPluginVersion(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+NetworkServicesConnection::CreateWasmPluginVersion(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteWasmPluginVersion(
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteWasmPluginVersion(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteWasmPluginVersion(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesConnection::ListWasmPlugins(
+    google::cloud::networkservices::v1::
+        ListWasmPluginsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networkservices::v1::WasmPlugin>>();
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesConnection::GetWasmPlugin(
+    google::cloud::networkservices::v1::GetWasmPluginRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesConnection::CreateWasmPlugin(
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::WasmPlugin>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesConnection::CreateWasmPlugin(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::WasmPlugin>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesConnection::UpdateWasmPlugin(
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::WasmPlugin>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesConnection::UpdateWasmPlugin(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::WasmPlugin>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteWasmPlugin(
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteWasmPlugin(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::networkservices::v1::Gateway>
 NetworkServicesConnection::ListGateways(
     google::cloud::networkservices::v1::

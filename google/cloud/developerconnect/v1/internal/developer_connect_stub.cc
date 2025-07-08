@@ -318,6 +318,233 @@ DefaultDeveloperConnectStub::FetchGitRefs(
   return response;
 }
 
+StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
+DefaultDeveloperConnectStub::ListAccountConnectors(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+        request) {
+  google::cloud::developerconnect::v1::ListAccountConnectorsResponse response;
+  auto status = grpc_stub_->ListAccountConnectors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DefaultDeveloperConnectStub::GetAccountConnector(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request) {
+  google::cloud::developerconnect::v1::AccountConnector response;
+  auto status = grpc_stub_->GetAccountConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDeveloperConnectStub::AsyncCreateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::developerconnect::v1::
+                 CreateAccountConnectorRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAccountConnector(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::CreateAccountConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateAccountConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDeveloperConnectStub::AsyncUpdateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::developerconnect::v1::
+                 UpdateAccountConnectorRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAccountConnector(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::UpdateAccountConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateAccountConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDeveloperConnectStub::AsyncDeleteAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::developerconnect::v1::
+                 DeleteAccountConnectorRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAccountConnector(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::DeleteAccountConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteAccountConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DefaultDeveloperConnectStub::FetchAccessToken(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+        request) {
+  google::cloud::developerconnect::v1::FetchAccessTokenResponse response;
+  auto status = grpc_stub_->FetchAccessToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListUsersResponse>
+DefaultDeveloperConnectStub::ListUsers(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::ListUsersRequest const& request) {
+  google::cloud::developerconnect::v1::ListUsersResponse response;
+  auto status = grpc_stub_->ListUsers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDeveloperConnectStub::AsyncDeleteUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::developerconnect::v1::DeleteUserRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteUser(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::DeleteUser(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteUser(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DefaultDeveloperConnectStub::FetchSelf(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  google::cloud::developerconnect::v1::User response;
+  auto status = grpc_stub_->FetchSelf(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDeveloperConnectStub::AsyncDeleteSelf(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::developerconnect::v1::DeleteSelfRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteSelf(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::DeleteSelf(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSelf(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDeveloperConnectStub::ListLocations(
     grpc::ClientContext& context, Options const&,

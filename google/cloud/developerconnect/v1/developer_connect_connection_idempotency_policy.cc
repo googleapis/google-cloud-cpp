@@ -113,6 +113,57 @@ Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchGitRefs(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListAccountConnectors(
+    google::cloud::developerconnect::v1::
+        ListAccountConnectorsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetAccountConnector(
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::CreateAccountConnector(
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::UpdateAccountConnector(
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteAccountConnector(
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchAccessToken(
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListUsers(
+    google::cloud::developerconnect::v1::ListUsersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteUser(
+    google::cloud::developerconnect::v1::DeleteUserRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchSelf(
+    google::cloud::developerconnect::v1::FetchSelfRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteSelf(
+    google::cloud::developerconnect::v1::DeleteSelfRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

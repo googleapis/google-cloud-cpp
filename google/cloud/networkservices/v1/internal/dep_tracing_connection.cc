@@ -276,6 +276,127 @@ DepServiceTracingConnection::DeleteLbRouteExtension(
                            child_->DeleteLbRouteExtension(operation));
 }
 
+StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceTracingConnection::ListAuthzExtensions(
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::ListAuthzExtensions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAuthzExtensions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkservices::v1::AuthzExtension>(std::move(span),
+                                                          std::move(sr));
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceTracingConnection::GetAuthzExtension(
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::GetAuthzExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAuthzExtension(request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceTracingConnection::CreateAuthzExtension(
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::CreateAuthzExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAuthzExtension(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingConnection::CreateAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::CreateAuthzExtension");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateAuthzExtension(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceTracingConnection::CreateAuthzExtension(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::CreateAuthzExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAuthzExtension(operation));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceTracingConnection::UpdateAuthzExtension(
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::UpdateAuthzExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAuthzExtension(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingConnection::UpdateAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::UpdateAuthzExtension");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateAuthzExtension(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+DepServiceTracingConnection::UpdateAuthzExtension(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::UpdateAuthzExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAuthzExtension(operation));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceTracingConnection::DeleteAuthzExtension(
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::DeleteAuthzExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAuthzExtension(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingConnection::DeleteAuthzExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::DeleteAuthzExtension");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteAuthzExtension(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceTracingConnection::DeleteAuthzExtension(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::DeleteAuthzExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAuthzExtension(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 DepServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
