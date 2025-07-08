@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_SNAPSHOT_SETTINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_SNAPSHOT_SETTINGS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_retry_traits.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -54,8 +54,7 @@ class SnapshotSettingsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SnapshotSettingsLimitedErrorCountRetryPolicy
-    : public SnapshotSettingsRetryPolicy {
+class SnapshotSettingsLimitedErrorCountRetryPolicy : public SnapshotSettingsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +64,14 @@ class SnapshotSettingsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SnapshotSettingsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SnapshotSettingsLimitedErrorCountRetryPolicy(
       SnapshotSettingsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SnapshotSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SnapshotSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SnapshotSettingsLimitedErrorCountRetryPolicy(
       SnapshotSettingsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SnapshotSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SnapshotSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +91,7 @@ class SnapshotSettingsLimitedErrorCountRetryPolicy
   using BaseType = SnapshotSettingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_snapshot_settings_v1_internal::SnapshotSettingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_snapshot_settings_v1_internal::SnapshotSettingsRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +104,7 @@ class SnapshotSettingsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SnapshotSettingsLimitedTimeRetryPolicy
-    : public SnapshotSettingsRetryPolicy {
+class SnapshotSettingsLimitedTimeRetryPolicy : public SnapshotSettingsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +129,12 @@ class SnapshotSettingsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SnapshotSettingsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SnapshotSettingsLimitedTimeRetryPolicy(
-      SnapshotSettingsLimitedTimeRetryPolicy&& rhs) noexcept
-      : SnapshotSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SnapshotSettingsLimitedTimeRetryPolicy(
-      SnapshotSettingsLimitedTimeRetryPolicy const& rhs) noexcept
-      : SnapshotSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SnapshotSettingsLimitedTimeRetryPolicy(SnapshotSettingsLimitedTimeRetryPolicy&& rhs) noexcept
+    : SnapshotSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SnapshotSettingsLimitedTimeRetryPolicy(SnapshotSettingsLimitedTimeRetryPolicy const& rhs) noexcept
+    : SnapshotSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +156,7 @@ class SnapshotSettingsLimitedTimeRetryPolicy
   using BaseType = SnapshotSettingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_snapshot_settings_v1_internal::SnapshotSettingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_snapshot_settings_v1_internal::SnapshotSettingsRetryTraits> impl_;
 };
 
 /**
@@ -177,8 +169,7 @@ class SnapshotSettingsLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeSnapshotSettingsConnection()`.
  *
- * For mocking, see
- * `compute_snapshot_settings_v1_mocks::MockSnapshotSettingsConnection`.
+ * For mocking, see `compute_snapshot_settings_v1_mocks::MockSnapshotSettingsConnection`.
  */
 class SnapshotSettingsConnection {
  public:
@@ -187,21 +178,16 @@ class SnapshotSettingsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
-                          GetSnapshotSettingsRequest const& request);
+  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
-                            PatchSnapshotSettingsRequest const& request);
+  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSnapshotSettings(NoAwaitTag,
-                        google::cloud::cpp::compute::snapshot_settings::v1::
-                            PatchSnapshotSettingsRequest const& request);
+  PatchSnapshotSettings(NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchSnapshotSettings( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

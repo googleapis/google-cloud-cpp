@@ -30,8 +30,7 @@ namespace cloud {
 namespace apigeeconnect_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigeeconnect_v1_mocks::MockConnectionServiceConnection
-/// directly.
+/// @deprecated Use apigeeconnect_v1_mocks::MockConnectionServiceConnection directly.
 using ::google::cloud::apigeeconnect_v1_mocks::MockConnectionServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CLIENT_H
 
-#include "google/cloud/vision/v1/image_annotator_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vision/v1/image_annotator_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ImageAnnotatorClient {
  public:
-  explicit ImageAnnotatorClient(
-      std::shared_ptr<ImageAnnotatorConnection> connection, Options opts = {});
+  explicit ImageAnnotatorClient(std::shared_ptr<ImageAnnotatorConnection> connection, Options opts = {});
   ~ImageAnnotatorClient();
 
   ///@{
@@ -80,12 +79,10 @@ class ImageAnnotatorClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ImageAnnotatorClient const& a,
-                         ImageAnnotatorClient const& b) {
+  friend bool operator==(ImageAnnotatorClient const& a, ImageAnnotatorClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ImageAnnotatorClient const& a,
-                         ImageAnnotatorClient const& b) {
+  friend bool operator!=(ImageAnnotatorClient const& a, ImageAnnotatorClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,10 +110,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
-  BatchAnnotateImages(
-      std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
-          requests,
-      Options opts = {});
+  BatchAnnotateImages(std::vector<google::cloud::vision::v1::AnnotateImageRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -146,9 +140,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
-  BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request,
-      Options opts = {});
+  BatchAnnotateImages(google::cloud::vision::v1::BatchAnnotateImagesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -180,10 +172,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(
-      std::vector<google::cloud::vision::v1::AnnotateFileRequest> const&
-          requests,
-      Options opts = {});
+  BatchAnnotateFiles(std::vector<google::cloud::vision::v1::AnnotateFileRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -219,9 +208,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request,
-      Options opts = {});
+  BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -262,11 +249,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(
-      std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
-          requests,
-      google::cloud::vision::v1::OutputConfig const& output_config,
-      Options opts = {});
+  AsyncBatchAnnotateImages(std::vector<google::cloud::vision::v1::AnnotateImageRequest> const& requests, google::cloud::vision::v1::OutputConfig const& output_config, Options opts = {});
 
   // clang-format off
   ///
@@ -279,12 +262,8 @@ class ImageAnnotatorClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      NoAwaitTag,
-      std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
-          requests,
-      google::cloud::vision::v1::OutputConfig const& output_config,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateImages(NoAwaitTag, std::vector<google::cloud::vision::v1::AnnotateImageRequest> const& requests, google::cloud::vision::v1::OutputConfig const& output_config, Options opts = {});
 
   // clang-format off
   ///
@@ -329,9 +308,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
-      Options opts = {});
+  AsyncBatchAnnotateImages(google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -344,10 +321,8 @@ class ImageAnnotatorClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      NoAwaitTag,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateImages(NoAwaitTag, google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +334,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  AsyncBatchAnnotateImages(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -397,10 +371,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(
-      std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
-          requests,
-      Options opts = {});
+  AsyncBatchAnnotateFiles(std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -413,11 +384,8 @@ class ImageAnnotatorClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      NoAwaitTag,
-      std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
-          requests,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateFiles(NoAwaitTag, std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -459,9 +427,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
-      Options opts = {});
+  AsyncBatchAnnotateFiles(google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -474,10 +440,8 @@ class ImageAnnotatorClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      NoAwaitTag,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateFiles(NoAwaitTag, google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -489,8 +453,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  AsyncBatchAnnotateFiles(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -516,8 +479,8 @@ class ImageAnnotatorClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -548,9 +511,8 @@ class ImageAnnotatorClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ImageAnnotatorConnection> connection_;

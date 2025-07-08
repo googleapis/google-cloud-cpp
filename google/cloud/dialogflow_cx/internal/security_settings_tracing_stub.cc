@@ -32,121 +32,99 @@ SecuritySettingsServiceTracingStub::SecuritySettingsServiceTracingStub(
     std::shared_ptr<SecuritySettingsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingStub::CreateSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "CreateSecuritySettings");
+StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceTracingStub::CreateSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "CreateSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateSecuritySettings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateSecuritySettings(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingStub::GetSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "GetSecuritySettings");
+StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceTracingStub::GetSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "GetSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetSecuritySettings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetSecuritySettings(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingStub::UpdateSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "UpdateSecuritySettings");
+StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceTracingStub::UpdateSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "UpdateSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateSecuritySettings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSecuritySettings(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
-SecuritySettingsServiceTracingStub::ListSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "ListSecuritySettings");
+StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse> SecuritySettingsServiceTracingStub::ListSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "ListSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListSecuritySettings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListSecuritySettings(context, options, request));
 }
 
 Status SecuritySettingsServiceTracingStub::DeleteSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "DeleteSecuritySettings");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "DeleteSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteSecuritySettings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSecuritySettings(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-SecuritySettingsServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> SecuritySettingsServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-SecuritySettingsServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> SecuritySettingsServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SecuritySettingsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SecuritySettingsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-SecuritySettingsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> SecuritySettingsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -154,11 +132,10 @@ SecuritySettingsServiceTracingStub::GetOperation(
 }
 
 Status SecuritySettingsServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
-      "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SecuritySettingsService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -167,8 +144,7 @@ Status SecuritySettingsServiceTracingStub::CancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<SecuritySettingsServiceStub>
-MakeSecuritySettingsServiceTracingStub(
+std::shared_ptr<SecuritySettingsServiceStub> MakeSecuritySettingsServiceTracingStub(
     std::shared_ptr<SecuritySettingsServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SecuritySettingsServiceTracingStub>(std::move(stub));

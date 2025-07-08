@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DataAccessControlServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DataAccessControlServiceClient`. To
- * do so, construct an object of type `DataAccessControlServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `DataAccessControlServiceClient`. To do so,
+ * construct an object of type `DataAccessControlServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,83 +42,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDataAccessControlServiceConnection
-    : public chronicle_v1::DataAccessControlServiceConnection {
+class MockDataAccessControlServiceConnection : public chronicle_v1::DataAccessControlServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessLabel>,
-              CreateDataAccessLabel,
-              (google::cloud::chronicle::v1::CreateDataAccessLabelRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::DataAccessLabel>,
-      GetDataAccessLabel,
-      (google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::chronicle::v1::DataAccessLabel>),
-      ListDataAccessLabels,
-      (google::cloud::chronicle::v1::ListDataAccessLabelsRequest request),
-      (override));
+  CreateDataAccessLabel,
+  (google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessLabel>,
-              UpdateDataAccessLabel,
-              (google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const&
-                   request),
-              (override));
+  GetDataAccessLabel,
+  (google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteDataAccessLabel,
-              (google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const&
-                   request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::DataAccessLabel>),
+  ListDataAccessLabels,
+  (google::cloud::chronicle::v1::ListDataAccessLabelsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessScope>,
-              CreateDataAccessScope,
-              (google::cloud::chronicle::v1::CreateDataAccessScopeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessLabel>,
+  UpdateDataAccessLabel,
+  (google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::DataAccessScope>,
-      GetDataAccessScope,
-      (google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::chronicle::v1::DataAccessScope>),
-      ListDataAccessScopes,
-      (google::cloud::chronicle::v1::ListDataAccessScopesRequest request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteDataAccessLabel,
+  (google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessScope>,
-              UpdateDataAccessScope,
-              (google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const&
-                   request),
-              (override));
+  CreateDataAccessScope,
+  (google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteDataAccessScope,
-              (google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessScope>,
+  GetDataAccessScope,
+  (google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::DataAccessScope>),
+  ListDataAccessScopes,
+  (google::cloud::chronicle::v1::ListDataAccessScopesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::DataAccessScope>,
+  UpdateDataAccessScope,
+  (google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteDataAccessScope,
+  (google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

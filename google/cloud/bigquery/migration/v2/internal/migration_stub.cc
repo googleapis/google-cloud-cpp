@@ -32,97 +32,93 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 DefaultMigrationServiceStub::CreateMigrationWorkflow(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::
-        CreateMigrationWorkflowRequest const& request) {
-  google::cloud::bigquery::migration::v2::MigrationWorkflow response;
-  auto status =
-      grpc_stub_->CreateMigrationWorkflow(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request) {
+    google::cloud::bigquery::migration::v2::MigrationWorkflow response;
+    auto status =
+        grpc_stub_->CreateMigrationWorkflow(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 DefaultMigrationServiceStub::GetMigrationWorkflow(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
-        request) {
-  google::cloud::bigquery::migration::v2::MigrationWorkflow response;
-  auto status = grpc_stub_->GetMigrationWorkflow(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request) {
+    google::cloud::bigquery::migration::v2::MigrationWorkflow response;
+    auto status =
+        grpc_stub_->GetMigrationWorkflow(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
 DefaultMigrationServiceStub::ListMigrationWorkflows(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
-        request) {
-  google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse
-      response;
-  auto status =
-      grpc_stub_->ListMigrationWorkflows(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const& request) {
+    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse response;
+    auto status =
+        grpc_stub_->ListMigrationWorkflows(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultMigrationServiceStub::DeleteMigrationWorkflow(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::
-        DeleteMigrationWorkflowRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteMigrationWorkflow(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultMigrationServiceStub::DeleteMigrationWorkflow(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteMigrationWorkflow(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultMigrationServiceStub::StartMigrationWorkflow(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->StartMigrationWorkflow(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultMigrationServiceStub::StartMigrationWorkflow(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->StartMigrationWorkflow(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 DefaultMigrationServiceStub::GetMigrationSubtask(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-        request) {
-  google::cloud::bigquery::migration::v2::MigrationSubtask response;
-  auto status = grpc_stub_->GetMigrationSubtask(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request) {
+    google::cloud::bigquery::migration::v2::MigrationSubtask response;
+    auto status =
+        grpc_stub_->GetMigrationSubtask(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
 DefaultMigrationServiceStub::ListMigrationSubtasks(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
-        request) {
-  google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse
-      response;
-  auto status = grpc_stub_->ListMigrationSubtasks(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const& request) {
+    google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse response;
+    auto status =
+        grpc_stub_->ListMigrationSubtasks(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -53,8 +53,7 @@ class LlmUtilityServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LlmUtilityServiceLimitedErrorCountRetryPolicy
-    : public LlmUtilityServiceRetryPolicy {
+class LlmUtilityServiceLimitedErrorCountRetryPolicy : public LlmUtilityServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class LlmUtilityServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit LlmUtilityServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   LlmUtilityServiceLimitedErrorCountRetryPolicy(
       LlmUtilityServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LlmUtilityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LlmUtilityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LlmUtilityServiceLimitedErrorCountRetryPolicy(
       LlmUtilityServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LlmUtilityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LlmUtilityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class LlmUtilityServiceLimitedErrorCountRetryPolicy
   using BaseType = LlmUtilityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::LlmUtilityServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::LlmUtilityServiceRetryTraits> impl_;
 };
 
 /**
@@ -106,8 +103,7 @@ class LlmUtilityServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LlmUtilityServiceLimitedTimeRetryPolicy
-    : public LlmUtilityServiceRetryPolicy {
+class LlmUtilityServiceLimitedTimeRetryPolicy : public LlmUtilityServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,14 +128,12 @@ class LlmUtilityServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit LlmUtilityServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  LlmUtilityServiceLimitedTimeRetryPolicy(
-      LlmUtilityServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : LlmUtilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LlmUtilityServiceLimitedTimeRetryPolicy(
-      LlmUtilityServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : LlmUtilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LlmUtilityServiceLimitedTimeRetryPolicy(LlmUtilityServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : LlmUtilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LlmUtilityServiceLimitedTimeRetryPolicy(LlmUtilityServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : LlmUtilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,18 +155,16 @@ class LlmUtilityServiceLimitedTimeRetryPolicy
   using BaseType = LlmUtilityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::LlmUtilityServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::LlmUtilityServiceRetryTraits> impl_;
 };
 
 /**
  * The `LlmUtilityServiceConnection` object for `LlmUtilityServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `LlmUtilityServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `LlmUtilityServiceClient`.
+ * sets in `LlmUtilityServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `LlmUtilityServiceClient`.
  *
  * To create a concrete instance, see `MakeLlmUtilityServiceConnection()`.
  *
@@ -188,51 +180,48 @@ class LlmUtilityServiceConnection {
   CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-  ComputeTokens(
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request);
+  ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `LlmUtilityServiceConnection`.
+ * A factory function to construct an object of type `LlmUtilityServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * LlmUtilityServiceClient.
+ * should be passed as an argument to the constructor of LlmUtilityServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `LlmUtilityServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `LlmUtilityServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -243,8 +232,8 @@ class LlmUtilityServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `LlmUtilityServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `LlmUtilityServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<LlmUtilityServiceConnection> MakeLlmUtilityServiceConnection(
     std::string const& location, Options options = {});

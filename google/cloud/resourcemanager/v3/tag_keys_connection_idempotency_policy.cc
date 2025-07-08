@@ -26,46 +26,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TagKeysConnectionIdempotencyPolicy::~TagKeysConnectionIdempotencyPolicy() =
-    default;
+TagKeysConnectionIdempotencyPolicy::~TagKeysConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TagKeysConnectionIdempotencyPolicy>
 TagKeysConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TagKeysConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::ListTagKeys(
-    google::cloud::resourcemanager::v3::ListTagKeysRequest) {  // NOLINT
+Idempotency TagKeysConnectionIdempotencyPolicy::ListTagKeys(google::cloud::resourcemanager::v3::ListTagKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::GetTagKey(
-    google::cloud::resourcemanager::v3::GetTagKeyRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::GetTagKey(google::cloud::resourcemanager::v3::GetTagKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::GetNamespacedTagKey(
-    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::GetNamespacedTagKey(google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::CreateTagKey(
-    google::cloud::resourcemanager::v3::CreateTagKeyRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::CreateTagKey(google::cloud::resourcemanager::v3::CreateTagKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::UpdateTagKey(
-    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::UpdateTagKey(google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::DeleteTagKey(
-    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::DeleteTagKey(google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -75,18 +67,16 @@ Idempotency TagKeysConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagKeysConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency TagKeysConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TagKeysConnectionIdempotencyPolicy>
-MakeDefaultTagKeysConnectionIdempotencyPolicy() {
+    MakeDefaultTagKeysConnectionIdempotencyPolicy() {
   return std::make_unique<TagKeysConnectionIdempotencyPolicy>();
 }
 

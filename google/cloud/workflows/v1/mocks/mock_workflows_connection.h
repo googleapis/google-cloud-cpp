@@ -47,27 +47,24 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::workflows::v1::Workflow>),
-              ListWorkflows,
-              (google::cloud::workflows::v1::ListWorkflowsRequest request),
-              (override));
+  ListWorkflows,
+  (google::cloud::workflows::v1::ListWorkflowsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::workflows::v1::Workflow>, GetWorkflow,
-              (google::cloud::workflows::v1::GetWorkflowRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::workflows::v1::Workflow>,
+  GetWorkflow,
+  (google::cloud::workflows::v1::GetWorkflowRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateWorkflow(Matcher<google::cloud::workflows::v1::CreateWorkflowRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateWorkflow(Matcher<google::cloud::workflows::v1::CreateWorkflowRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::Workflow>>, CreateWorkflow,
-      (google::cloud::workflows::v1::CreateWorkflowRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
+  CreateWorkflow,
+  (google::cloud::workflows::v1::CreateWorkflowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -75,38 +72,33 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateWorkflow(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateWorkflow,
-      (NoAwaitTag,
-       google::cloud::workflows::v1::CreateWorkflowRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateWorkflow, (NoAwaitTag,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateWorkflow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateWorkflow(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              CreateWorkflow, (google::longrunning::Operation const& operation),
-              (override));
+  CreateWorkflow, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteWorkflow(Matcher<google::cloud::workflows::v1::DeleteWorkflowRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteWorkflow(Matcher<google::cloud::workflows::v1::DeleteWorkflowRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
-      DeleteWorkflow,
-      (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
+  DeleteWorkflow,
+  (google::cloud::workflows::v1::DeleteWorkflowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -114,37 +106,33 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteWorkflow(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteWorkflow,
-      (NoAwaitTag,
-       google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteWorkflow, (NoAwaitTag,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteWorkflow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteWorkflow(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
-              DeleteWorkflow, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteWorkflow, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateWorkflow(Matcher<google::cloud::workflows::v1::UpdateWorkflowRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateWorkflow(Matcher<google::cloud::workflows::v1::UpdateWorkflowRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::Workflow>>, UpdateWorkflow,
-      (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
+  UpdateWorkflow,
+  (google::cloud::workflows::v1::UpdateWorkflowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -152,48 +140,45 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateWorkflow(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateWorkflow,
-      (NoAwaitTag,
-       google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateWorkflow, (NoAwaitTag,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateWorkflow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateWorkflow(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              UpdateWorkflow, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateWorkflow, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::workflows::v1::Workflow>),
-      ListWorkflowRevisions,
-      (google::cloud::workflows::v1::ListWorkflowRevisionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::workflows::v1::Workflow>),
+  ListWorkflowRevisions,
+  (google::cloud::workflows::v1::ListWorkflowRevisionsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

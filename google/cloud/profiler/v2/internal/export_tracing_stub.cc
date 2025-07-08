@@ -32,12 +32,11 @@ ExportServiceTracingStub::ExportServiceTracingStub(
     std::shared_ptr<ExportServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-ExportServiceTracingStub::ListProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ExportServiceTracingStub::ListProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudprofiler.v2.ExportService", "ListProfiles");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudprofiler.v2.ExportService", "ListProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

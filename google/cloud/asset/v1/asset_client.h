@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AssetServiceClient {
  public:
-  explicit AssetServiceClient(
-      std::shared_ptr<AssetServiceConnection> connection, Options opts = {});
+  explicit AssetServiceClient(std::shared_ptr<AssetServiceConnection> connection, Options opts = {});
   ~AssetServiceClient();
 
   ///@{
@@ -78,12 +77,10 @@ class AssetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AssetServiceClient const& a,
-                         AssetServiceClient const& b) {
+  friend bool operator==(AssetServiceClient const& a, AssetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AssetServiceClient const& a,
-                         AssetServiceClient const& b) {
+  friend bool operator!=(AssetServiceClient const& a, AssetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -134,9 +131,8 @@ class AssetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
-      google::cloud::asset::v1::ExportAssetsRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
+  ExportAssets(google::cloud::asset::v1::ExportAssetsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -149,9 +145,8 @@ class AssetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportAssets(
-      NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportAssets(NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -162,8 +157,8 @@ class AssetServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
+  ExportAssets(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -201,8 +196,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L445}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::Asset> ListAssets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::asset::v1::Asset>
+  ListAssets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +236,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L445}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::Asset> ListAssets(
-      google::cloud::asset::v1::ListAssetsRequest request, Options opts = {});
+  StreamRange<google::cloud::asset::v1::Asset>
+  ListAssets(google::cloud::asset::v1::ListAssetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -278,9 +273,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
-  BatchGetAssetsHistory(
-      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request,
-      Options opts = {});
+  BatchGetAssetsHistory(google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -309,8 +302,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L840}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::Feed> CreateFeed(std::string const& parent,
-                                                      Options opts = {});
+  StatusOr<google::cloud::asset::v1::Feed>
+  CreateFeed(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +333,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L840}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
-      google::cloud::asset::v1::CreateFeedRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::Feed>
+  CreateFeed(google::cloud::asset::v1::CreateFeedRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -369,8 +361,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::Feed> GetFeed(std::string const& name,
-                                                   Options opts = {});
+  StatusOr<google::cloud::asset::v1::Feed>
+  GetFeed(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -399,9 +391,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::Feed> GetFeed(
-      google::cloud::asset::v1::GetFeedRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::Feed>
+  GetFeed(google::cloud::asset::v1::GetFeedRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +418,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L629}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
-      std::string const& parent, Options opts = {});
+  StatusOr<google::cloud::asset::v1::ListFeedsResponse>
+  ListFeeds(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -457,9 +448,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L629}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
-      google::cloud::asset::v1::ListFeedsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::ListFeedsResponse>
+  ListFeeds(google::cloud::asset::v1::ListFeedsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -487,8 +477,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L635}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
-      google::cloud::asset::v1::Feed const& feed, Options opts = {});
+  StatusOr<google::cloud::asset::v1::Feed>
+  UpdateFeed(google::cloud::asset::v1::Feed const& feed, Options opts = {});
 
   // clang-format off
   ///
@@ -517,9 +507,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L635}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
-      google::cloud::asset::v1::UpdateFeedRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::Feed>
+  UpdateFeed(google::cloud::asset::v1::UpdateFeedRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -543,7 +532,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L650}
   ///
   // clang-format on
-  Status DeleteFeed(std::string const& name, Options opts = {});
+  Status
+  DeleteFeed(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -569,8 +559,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L650}
   ///
   // clang-format on
-  Status DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const& request,
-                    Options opts = {});
+  Status
+  DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -638,9 +628,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-  SearchAllResources(std::string const& scope, std::string const& query,
-                     std::vector<std::string> const& asset_types,
-                     Options opts = {});
+  SearchAllResources(std::string const& scope, std::string const& query, std::vector<std::string> const& asset_types, Options opts = {});
 
   // clang-format off
   ///
@@ -682,9 +670,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-  SearchAllResources(
-      google::cloud::asset::v1::SearchAllResourcesRequest request,
-      Options opts = {});
+  SearchAllResources(google::cloud::asset::v1::SearchAllResourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -743,8 +729,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-  SearchAllIamPolicies(std::string const& scope, std::string const& query,
-                       Options opts = {});
+  SearchAllIamPolicies(std::string const& scope, std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -786,9 +771,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-  SearchAllIamPolicies(
-      google::cloud::asset::v1::SearchAllIamPoliciesRequest request,
-      Options opts = {});
+  SearchAllIamPolicies(google::cloud::asset::v1::SearchAllIamPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -818,9 +801,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1463}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
-      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
+  AnalyzeIamPolicy(google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -867,12 +849,8 @@ class AssetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-  AnalyzeIamPolicyLongrunning(
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+  AnalyzeIamPolicyLongrunning(google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -885,11 +863,8 @@ class AssetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      NoAwaitTag,
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AnalyzeIamPolicyLongrunning(NoAwaitTag, google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -900,10 +875,8 @@ class AssetServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-  AnalyzeIamPolicyLongrunning(google::longrunning::Operation const& operation,
-                              Options opts = {});
+  future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+  AnalyzeIamPolicyLongrunning(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -936,9 +909,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeMoveResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1836}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
-      google::cloud::asset::v1::AnalyzeMoveRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
+  AnalyzeMove(google::cloud::asset::v1::AnalyzeMoveRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -978,9 +950,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.QueryAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1993}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
-      google::cloud::asset::v1::QueryAssetsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+  QueryAssets(google::cloud::asset::v1::QueryAssetsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1019,10 +990,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1613}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
-      std::string const& parent,
-      google::cloud::asset::v1::SavedQuery const& saved_query,
-      std::string const& saved_query_id, Options opts = {});
+  StatusOr<google::cloud::asset::v1::SavedQuery>
+  CreateSavedQuery(std::string const& parent, google::cloud::asset::v1::SavedQuery const& saved_query, std::string const& saved_query_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1051,9 +1020,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1613}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
-      google::cloud::asset::v1::CreateSavedQueryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::SavedQuery>
+  CreateSavedQuery(google::cloud::asset::v1::CreateSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1081,8 +1049,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1613}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::asset::v1::SavedQuery>
+  GetSavedQuery(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1111,9 +1079,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1613}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
-      google::cloud::asset::v1::GetSavedQueryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::SavedQuery>
+  GetSavedQuery(google::cloud::asset::v1::GetSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1148,8 +1115,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1613}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::asset::v1::SavedQuery>
+  ListSavedQueries(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1187,9 +1154,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1613}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
-      google::cloud::asset::v1::ListSavedQueriesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::asset::v1::SavedQuery>
+  ListSavedQueries(google::cloud::asset::v1::ListSavedQueriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1221,9 +1187,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1760}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
-      google::cloud::asset::v1::SavedQuery const& saved_query,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::asset::v1::SavedQuery>
+  UpdateSavedQuery(google::cloud::asset::v1::SavedQuery const& saved_query, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1252,9 +1217,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1760}
   ///
   // clang-format on
-  StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
-      google::cloud::asset::v1::UpdateSavedQueryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::asset::v1::SavedQuery>
+  UpdateSavedQuery(google::cloud::asset::v1::UpdateSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1280,7 +1244,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1777}
   ///
   // clang-format on
-  Status DeleteSavedQuery(std::string const& name, Options opts = {});
+  Status
+  DeleteSavedQuery(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1306,9 +1271,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1777}
   ///
   // clang-format on
-  Status DeleteSavedQuery(
-      google::cloud::asset::v1::DeleteSavedQueryRequest const& request,
-      Options opts = {});
+  Status
+  DeleteSavedQuery(google::cloud::asset::v1::DeleteSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1338,10 +1302,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
-  BatchGetEffectiveIamPolicies(
-      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
-          request,
-      Options opts = {});
+  BatchGetEffectiveIamPolicies(google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1392,10 +1353,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2485}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
-  AnalyzeOrgPolicies(std::string const& scope, std::string const& constraint,
-                     std::string const& filter, Options opts = {});
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+  AnalyzeOrgPolicies(std::string const& scope, std::string const& constraint, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1433,11 +1392,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2449}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
-  AnalyzeOrgPolicies(
-      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+  AnalyzeOrgPolicies(google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1491,12 +1447,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2586}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::
-                  AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
-  AnalyzeOrgPolicyGovernedContainers(std::string const& scope,
-                                     std::string const& constraint,
-                                     std::string const& filter,
-                                     Options opts = {});
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+  AnalyzeOrgPolicyGovernedContainers(std::string const& scope, std::string const& constraint, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1535,12 +1487,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2539}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::
-                  AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
-  AnalyzeOrgPolicyGovernedContainers(
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
-          request,
-      Options opts = {});
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+  AnalyzeOrgPolicyGovernedContainers(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1634,11 +1582,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2767}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
-                  GovernedAsset>
-  AnalyzeOrgPolicyGovernedAssets(std::string const& scope,
-                                 std::string const& constraint,
-                                 std::string const& filter, Options opts = {});
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
+  AnalyzeOrgPolicyGovernedAssets(std::string const& scope, std::string const& constraint, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1724,11 +1669,8 @@ class AssetServiceClient {
   /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2737}
   ///
   // clang-format on
-  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
-                  GovernedAsset>
-  AnalyzeOrgPolicyGovernedAssets(
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
+  AnalyzeOrgPolicyGovernedAssets(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1754,8 +1696,8 @@ class AssetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1786,9 +1728,8 @@ class AssetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AssetServiceConnection> connection_;

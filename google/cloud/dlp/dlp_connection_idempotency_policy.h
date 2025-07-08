@@ -26,8 +26,7 @@ namespace cloud {
 namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use dlp_v2::MakeDefaultDlpServiceConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use dlp_v2::MakeDefaultDlpServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::dlp_v2::MakeDefaultDlpServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use dlp_v2::DlpServiceConnectionIdempotencyPolicy directly.

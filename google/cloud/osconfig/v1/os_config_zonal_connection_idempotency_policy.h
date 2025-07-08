@@ -34,55 +34,47 @@ class OsConfigZonalServiceConnectionIdempotencyPolicy {
   virtual ~OsConfigZonalServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<OsConfigZonalServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<OsConfigZonalServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateOSPolicyAssignment(
-      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateOSPolicyAssignment(google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateOSPolicyAssignment(
-      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateOSPolicyAssignment(google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetOSPolicyAssignment(
-      google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOSPolicyAssignment(google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request);
 
-  virtual google::cloud::Idempotency ListOSPolicyAssignments(
-      google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request);
+  virtual google::cloud::Idempotency
+  ListOSPolicyAssignments(google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request);
 
-  virtual google::cloud::Idempotency ListOSPolicyAssignmentRevisions(
-      google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListOSPolicyAssignmentRevisions(google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request);
 
-  virtual google::cloud::Idempotency DeleteOSPolicyAssignment(
-      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteOSPolicyAssignment(google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetOSPolicyAssignmentReport(
-      google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetOSPolicyAssignmentReport(google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request);
 
-  virtual google::cloud::Idempotency ListOSPolicyAssignmentReports(
-      google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListOSPolicyAssignmentReports(google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request);
 
-  virtual google::cloud::Idempotency GetInventory(
-      google::cloud::osconfig::v1::GetInventoryRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInventory(google::cloud::osconfig::v1::GetInventoryRequest const& request);
 
-  virtual google::cloud::Idempotency ListInventories(
-      google::cloud::osconfig::v1::ListInventoriesRequest request);
+  virtual google::cloud::Idempotency
+  ListInventories(google::cloud::osconfig::v1::ListInventoriesRequest request);
 
-  virtual google::cloud::Idempotency GetVulnerabilityReport(
-      google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetVulnerabilityReport(google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request);
 
-  virtual google::cloud::Idempotency ListVulnerabilityReports(
-      google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request);
+  virtual google::cloud::Idempotency
+  ListVulnerabilityReports(google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request);
 };
 
 std::unique_ptr<OsConfigZonalServiceConnectionIdempotencyPolicy>
-MakeDefaultOsConfigZonalServiceConnectionIdempotencyPolicy();
+    MakeDefaultOsConfigZonalServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_v1

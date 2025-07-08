@@ -47,47 +47,44 @@ class MockVersionsConnection : public dialogflow_es::VersionsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Version>),
-              ListVersions,
-              (google::cloud::dialogflow::v2::ListVersionsRequest request),
-              (override));
+  ListVersions,
+  (google::cloud::dialogflow::v2::ListVersionsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Version>, GetVersion,
-              (google::cloud::dialogflow::v2::GetVersionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Version>,
+  GetVersion,
+  (google::cloud::dialogflow::v2::GetVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Version>, CreateVersion,
-      (google::cloud::dialogflow::v2::CreateVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Version>,
+  CreateVersion,
+  (google::cloud::dialogflow::v2::CreateVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Version>, UpdateVersion,
-      (google::cloud::dialogflow::v2::UpdateVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Version>,
+  UpdateVersion,
+  (google::cloud::dialogflow::v2::UpdateVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteVersion,
-      (google::cloud::dialogflow::v2::DeleteVersionRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteVersion,
+  (google::cloud::dialogflow::v2::DeleteVersionRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

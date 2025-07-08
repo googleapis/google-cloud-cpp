@@ -37,48 +37,48 @@ class JobsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<JobsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateJob(
-      google::cloud::run::v2::CreateJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateJob(google::cloud::run::v2::CreateJobRequest const& request);
 
-  virtual google::cloud::Idempotency GetJob(
-      google::cloud::run::v2::GetJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetJob(google::cloud::run::v2::GetJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListJobs(
-      google::cloud::run::v2::ListJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListJobs(google::cloud::run::v2::ListJobsRequest request);
 
-  virtual google::cloud::Idempotency UpdateJob(
-      google::cloud::run::v2::UpdateJobRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::run::v2::DeleteJobRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request);
 
-  virtual google::cloud::Idempotency RunJob(
-      google::cloud::run::v2::RunJobRequest const& request);
+  virtual google::cloud::Idempotency
+  RunJob(google::cloud::run::v2::RunJobRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<JobsConnectionIdempotencyPolicy>
-MakeDefaultJobsConnectionIdempotencyPolicy();
+    MakeDefaultJobsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

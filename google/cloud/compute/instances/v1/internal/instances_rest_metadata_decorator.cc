@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instances/v1/instances.proto
 
 #include "google/cloud/compute/instances/v1/internal/instances_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,7 +31,8 @@ namespace compute_instances_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstancesRestMetadata::InstancesRestMetadata(
-    std::shared_ptr<InstancesRestStub> child, std::string api_client_header)
+    std::shared_ptr<InstancesRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -40,617 +41,562 @@ InstancesRestMetadata::InstancesRestMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncAddAccessConfig(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncAddAccessConfig(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncAddAccessConfig(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::AddAccessConfig(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AddAccessConfig(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncAddResourcePolicies(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        AddResourcePoliciesRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncAddResourcePolicies(cq, std::move(rest_context),
-                                          std::move(options), request);
+  return child_->AsyncAddResourcePolicies(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::AddResourcePolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        AddResourcePoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AddResourcePolicies(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
 InstancesRestMetadata::AggregatedListInstances(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        AggregatedListInstancesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListInstances(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncAttachDisk(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncAttachDisk(cq, std::move(rest_context),
-                                 std::move(options), request);
+  return child_->AsyncAttachDisk(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::AttachDisk(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AttachDisk(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncBulkInsert(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncBulkInsert(cq, std::move(rest_context),
-                                 std::move(options), request);
+  return child_->AsyncBulkInsert(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::BulkInsert(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->BulkInsert(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncDeleteInstance(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteInstance(cq, std::move(rest_context),
-                                     std::move(options), request);
+  return child_->AsyncDeleteInstance(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::DeleteInstance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteInstance(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncDeleteAccessConfig(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteAccessConfig(cq, std::move(rest_context),
-                                         std::move(options), request);
+  return child_->AsyncDeleteAccessConfig(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::DeleteAccessConfig(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteAccessConfig(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncDetachDisk(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDetachDisk(cq, std::move(rest_context),
-                                 std::move(options), request);
+  return child_->AsyncDetachDisk(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::DetachDisk(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DetachDisk(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
 InstancesRestMetadata::GetInstance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetInstanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetInstance(rest_context, options, request);
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
 InstancesRestMetadata::GetEffectiveFirewalls(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        GetEffectiveFirewallsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetEffectiveFirewalls(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
 InstancesRestMetadata::GetGuestAttributes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetGuestAttributes(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstancesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Screenshot>
 InstancesRestMetadata::GetScreenshot(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetScreenshot(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
 InstancesRestMetadata::GetSerialPortOutput(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        GetSerialPortOutputRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetSerialPortOutput(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
 InstancesRestMetadata::GetShieldedInstanceIdentity(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        GetShieldedInstanceIdentityRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetShieldedInstanceIdentity(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncInsertInstance(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertInstance(cq, std::move(rest_context),
-                                     std::move(options), request);
+  return child_->AsyncInsertInstance(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::InsertInstance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertInstance(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceList>
 InstancesRestMetadata::ListInstances(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::ListInstancesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListInstances(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
 InstancesRestMetadata::ListReferrers(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::ListReferrersRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListReferrers(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncPerformMaintenance(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
-                                         std::move(options), request);
+  return child_->AsyncPerformMaintenance(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::PerformMaintenance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PerformMaintenance(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncRemoveResourcePolicies(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        RemoveResourcePoliciesRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncRemoveResourcePolicies(cq, std::move(rest_context),
-                                             std::move(options), request);
+  return child_->AsyncRemoveResourcePolicies(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::RemoveResourcePolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        RemoveResourcePoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->RemoveResourcePolicies(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncReportHostAsFaulty(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncReportHostAsFaulty(cq, std::move(rest_context),
-                                         std::move(options), request);
+  return child_->AsyncReportHostAsFaulty(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::ReportHostAsFaulty(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ReportHostAsFaulty(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncReset(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncReset(cq, std::move(rest_context), std::move(options),
-                            request);
+  return child_->AsyncReset(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::Reset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Reset(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncResume(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncResume(cq, std::move(rest_context), std::move(options),
-                             request);
+  return child_->AsyncResume(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::Resume(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Resume(rest_context, options, request);
 }
 
-Status InstancesRestMetadata::SendDiagnosticInterrupt(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        SendDiagnosticInterruptRequest const& request) {
+Status
+InstancesRestMetadata::SendDiagnosticInterrupt(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SendDiagnosticInterrupt(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetDeletionProtection(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        SetDeletionProtectionRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetDeletionProtection(cq, std::move(rest_context),
-                                            std::move(options), request);
+  return child_->AsyncSetDeletionProtection(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetDeletionProtection(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        SetDeletionProtectionRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetDeletionProtection(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetDiskAutoDelete(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetDiskAutoDelete(cq, std::move(rest_context),
-                                        std::move(options), request);
+  return child_->AsyncSetDiskAutoDelete(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetDiskAutoDelete(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetDiskAutoDelete(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstancesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
-                                request);
+  return child_->AsyncSetLabels(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetLabels(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetMachineResources(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        SetMachineResourcesRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetMachineResources(cq, std::move(rest_context),
-                                          std::move(options), request);
+  return child_->AsyncSetMachineResources(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetMachineResources(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        SetMachineResourcesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetMachineResources(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetMachineType(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetMachineType(cq, std::move(rest_context),
-                                     std::move(options), request);
+  return child_->AsyncSetMachineType(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetMachineType(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetMachineType(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetMetadata(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetMetadata(cq, std::move(rest_context),
-                                  std::move(options), request);
+  return child_->AsyncSetMetadata(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetMetadata(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetMinCpuPlatform(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetMinCpuPlatform(cq, std::move(rest_context),
-                                        std::move(options), request);
+  return child_->AsyncSetMinCpuPlatform(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetMinCpuPlatform(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetMinCpuPlatform(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetName(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetName(cq, std::move(rest_context), std::move(options),
-                              request);
+  return child_->AsyncSetName(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetName(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetName(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetScheduling(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetScheduling(cq, std::move(rest_context),
-                                    std::move(options), request);
+  return child_->AsyncSetScheduling(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetScheduling(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetScheduling(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetSecurityPolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
-                                        std::move(options), request);
+  return child_->AsyncSetSecurityPolicy(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetSecurityPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetSecurityPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetServiceAccount(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetServiceAccount(cq, std::move(rest_context),
-                                        std::move(options), request);
+  return child_->AsyncSetServiceAccount(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetServiceAccount(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetServiceAccount(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetShieldedInstanceIntegrityPolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        SetShieldedInstanceIntegrityPolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) {
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetShieldedInstanceIntegrityPolicy(
       cq, std::move(rest_context), std::move(options), request);
@@ -658,242 +604,225 @@ InstancesRestMetadata::AsyncSetShieldedInstanceIntegrityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetShieldedInstanceIntegrityPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        SetShieldedInstanceIntegrityPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) {
   SetMetadata(rest_context, options);
-  return child_->SetShieldedInstanceIntegrityPolicy(rest_context, options,
-                                                    request);
+  return child_->SetShieldedInstanceIntegrityPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetTags(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetTags(cq, std::move(rest_context), std::move(options),
-                              request);
+  return child_->AsyncSetTags(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SetTags(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetTags(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSimulateMaintenanceEvent(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        SimulateMaintenanceEventRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSimulateMaintenanceEvent(cq, std::move(rest_context),
-                                               std::move(options), request);
+  return child_->AsyncSimulateMaintenanceEvent(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::SimulateMaintenanceEvent(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        SimulateMaintenanceEventRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SimulateMaintenanceEvent(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncStart(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncStart(cq, std::move(rest_context), std::move(options),
-                            request);
+  return child_->AsyncStart(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::Start(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Start(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncStartWithEncryptionKey(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        StartWithEncryptionKeyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncStartWithEncryptionKey(cq, std::move(rest_context),
-                                             std::move(options), request);
+  return child_->AsyncStartWithEncryptionKey(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::StartWithEncryptionKey(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        StartWithEncryptionKeyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->StartWithEncryptionKey(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncStop(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncStop(cq, std::move(rest_context), std::move(options),
-                           request);
+  return child_->AsyncStop(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::Stop(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Stop(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSuspend(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSuspend(cq, std::move(rest_context), std::move(options),
-                              request);
+  return child_->AsyncSuspend(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::Suspend(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Suspend(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstancesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateInstance(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateInstance(cq, std::move(rest_context),
-                                     std::move(options), request);
+  return child_->AsyncUpdateInstance(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::UpdateInstance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateInstance(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateAccessConfig(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateAccessConfig(cq, std::move(rest_context),
-                                         std::move(options), request);
+  return child_->AsyncUpdateAccessConfig(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::UpdateAccessConfig(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateAccessConfig(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateDisplayDevice(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        UpdateDisplayDeviceRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateDisplayDevice(cq, std::move(rest_context),
-                                          std::move(options), request);
+  return child_->AsyncUpdateDisplayDevice(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::UpdateDisplayDevice(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        UpdateDisplayDeviceRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateDisplayDevice(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateNetworkInterface(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        UpdateNetworkInterfaceRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateNetworkInterface(cq, std::move(rest_context),
-                                             std::move(options), request);
+  return child_->AsyncUpdateNetworkInterface(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::UpdateNetworkInterface(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        UpdateNetworkInterfaceRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateNetworkInterface(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateShieldedInstanceConfig(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instances::v1::
-        UpdateShieldedInstanceConfigRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateShieldedInstanceConfig(cq, std::move(rest_context),
-                                                   std::move(options), request);
+  return child_->AsyncUpdateShieldedInstanceConfig(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesRestMetadata::UpdateShieldedInstanceConfig(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instances::v1::
-        UpdateShieldedInstanceConfigRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateShieldedInstanceConfig(rest_context, options, request);
 }
@@ -903,29 +832,28 @@ InstancesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
-        request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> InstancesRestMetadata::AsyncCancelOperation(
+future<Status>
+InstancesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void InstancesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

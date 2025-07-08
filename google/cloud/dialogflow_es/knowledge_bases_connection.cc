@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/knowledge_bases_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_tracing_connection.h"
 #include "google/cloud/dialogflow_es/knowledge_bases_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KnowledgeBasesConnection::~KnowledgeBasesConnection() = default;
 
-StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesConnection::ListKnowledgeBases(
-    google::cloud::dialogflow::v2::
-        ListKnowledgeBasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> KnowledgeBasesConnection::ListKnowledgeBases(
+    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>>();
 }
@@ -58,7 +56,8 @@ KnowledgeBasesConnection::CreateKnowledgeBase(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status KnowledgeBasesConnection::DeleteKnowledgeBase(
+Status
+KnowledgeBasesConnection::DeleteKnowledgeBase(
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -69,10 +68,8 @@ KnowledgeBasesConnection::UpdateKnowledgeBase(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-KnowledgeBasesConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> KnowledgeBasesConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -83,20 +80,20 @@ KnowledgeBasesConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-KnowledgeBasesConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> KnowledgeBasesConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> KnowledgeBasesConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+KnowledgeBasesConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status KnowledgeBasesConnection::CancelOperation(
+Status
+KnowledgeBasesConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -104,18 +101,17 @@ Status KnowledgeBasesConnection::CancelOperation(
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 KnowledgeBasesPolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      KnowledgeBasesPolicyOptionList>(options, __func__);
   options = dialogflow_es_internal::KnowledgeBasesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultKnowledgeBasesStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_es_internal::MakeKnowledgeBasesTracingConnection(
       std::make_shared<dialogflow_es_internal::KnowledgeBasesConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(

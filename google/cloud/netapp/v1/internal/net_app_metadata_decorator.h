@@ -35,86 +35,84 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NetAppMetadata : public NetAppStub {
  public:
   ~NetAppMetadata() override = default;
-  NetAppMetadata(std::shared_ptr<NetAppStub> child,
-                 std::multimap<std::string, std::string> fixed_metadata,
-                 std::string api_client_header = "");
+  NetAppMetadata(
+      std::shared_ptr<NetAppStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
-  ListStoragePools(grpc::ClientContext& context, Options const& options,
-                   google::cloud::netapp::v1::ListStoragePoolsRequest const&
-                       request) override;
+  StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse> ListStoragePools(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::ListStoragePoolsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateStoragePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateStoragePoolRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateStoragePoolRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateStoragePool(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateStoragePoolRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetStoragePoolRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateStoragePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateStoragePool(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteStoragePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncValidateDirectoryService(
+  future<StatusOr<google::longrunning::Operation>> AsyncValidateDirectoryService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
-      override;
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ValidateDirectoryService(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSwitchActiveReplicaZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
-      override;
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListVolumesResponse> ListVolumes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::ListVolumesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetVolumeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVolume(
@@ -124,7 +122,8 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::CreateVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateVolume(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::CreateVolumeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVolume(
@@ -134,7 +133,8 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::UpdateVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVolume(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::UpdateVolumeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteVolume(
@@ -144,7 +144,8 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::DeleteVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVolume(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::DeleteVolumeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRevertVolume(
@@ -154,15 +155,18 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RevertVolume(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -172,7 +176,8 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::CreateSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSnapshot(
@@ -182,7 +187,8 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSnapshot(
@@ -192,87 +198,84 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
-  ListActiveDirectories(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request)
-      override;
+  StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse> ListActiveDirectories(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ActiveDirectory> GetActiveDirectory(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::netapp::v1::GetActiveDirectoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateActiveDirectory(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateActiveDirectory(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateActiveDirectory(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteActiveDirectory(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse> ListKmsConfigs(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::ListKmsConfigsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKmsConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateKmsConfigRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateKmsConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKmsConfig(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateKmsConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateKmsConfigRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::KmsConfig> GetKmsConfig(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetKmsConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKmsConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateKmsConfig(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncEncryptVolumes(
       google::cloud::CompletionQueue& cq,
@@ -281,176 +284,166 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> EncryptVolumes(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse> VerifyKmsConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::netapp::v1::VerifyKmsConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteKmsConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteKmsConfig(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) override;
 
-  StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
-  ListReplications(grpc::ClientContext& context, Options const& options,
-                   google::cloud::netapp::v1::ListReplicationsRequest const&
-                       request) override;
+  StatusOr<google::cloud::netapp::v1::ListReplicationsResponse> ListReplications(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::ListReplicationsRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateReplicationRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateReplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateReplication(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateReplicationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteReplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteReplicationRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteReplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteReplication(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteReplicationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateReplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateReplicationRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateReplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateReplication(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateReplicationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopReplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::StopReplicationRequest const& request)
-      override;
+      google::cloud::netapp::v1::StopReplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopReplication(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::StopReplicationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::StopReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResumeReplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::ResumeReplicationRequest const& request)
-      override;
+      google::cloud::netapp::v1::ResumeReplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ResumeReplication(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::ResumeReplicationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::ResumeReplicationRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncReverseReplicationDirection(
+  future<StatusOr<google::longrunning::Operation>> AsyncReverseReplicationDirection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
-          request) override;
+      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReverseReplicationDirection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncEstablishPeering(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
-      override;
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> EstablishPeering(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSyncReplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::SyncReplicationRequest const& request)
-      override;
+      google::cloud::netapp::v1::SyncReplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SyncReplication(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::SyncReplicationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupVault(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackupVault(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetBackupVaultRequest const& request) override;
 
-  StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
-  ListBackupVaults(grpc::ClientContext& context, Options const& options,
-                   google::cloud::netapp::v1::ListBackupVaultsRequest const&
-                       request) override;
+  StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse> ListBackupVaults(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::ListBackupVaultsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupVault(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupVault(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
@@ -459,15 +452,18 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetBackupRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::ListBackupsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
@@ -477,7 +473,8 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
@@ -487,121 +484,124 @@ class NetAppMetadata : public NetAppStub {
       google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackupPolicy(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::netapp::v1::GetBackupPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::GetBackupPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
-  ListBackupPolicies(grpc::ClientContext& context, Options const& options,
-                     google::cloud::netapp::v1::ListBackupPoliciesRequest const&
-                         request) override;
+  StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse> ListBackupPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse> ListQuotaRules(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::ListQuotaRulesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::netapp::v1::GetQuotaRuleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateQuotaRule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
-      override;
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateQuotaRule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateQuotaRule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
-      override;
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateQuotaRule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteQuotaRule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
-      override;
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteQuotaRule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -617,7 +617,8 @@ class NetAppMetadata : public NetAppStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

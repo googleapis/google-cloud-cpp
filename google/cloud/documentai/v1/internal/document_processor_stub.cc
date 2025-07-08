@@ -33,25 +33,25 @@ DocumentProcessorServiceStub::~DocumentProcessorServiceStub() = default;
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DefaultDocumentProcessorServiceStub::ProcessDocument(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::ProcessRequest const& request) {
-  google::cloud::documentai::v1::ProcessResponse response;
-  auto status = grpc_stub_->ProcessDocument(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::ProcessRequest const& request) {
+    google::cloud::documentai::v1::ProcessResponse response;
+    auto status =
+        grpc_stub_->ProcessDocument(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncBatchProcessDocuments(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::BatchProcessRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::BatchProcessRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::BatchProcessRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::BatchProcessRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::documentai::v1::BatchProcessRequest const& request,
@@ -63,90 +63,94 @@ DefaultDocumentProcessorServiceStub::AsyncBatchProcessDocuments(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::BatchProcessDocuments(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::BatchProcessRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->BatchProcessDocuments(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::BatchProcessRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchProcessDocuments(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::FetchProcessorTypes(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
-  google::cloud::documentai::v1::FetchProcessorTypesResponse response;
-  auto status = grpc_stub_->FetchProcessorTypes(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
+    google::cloud::documentai::v1::FetchProcessorTypesResponse response;
+    auto status =
+        grpc_stub_->FetchProcessorTypes(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::ListProcessorTypes(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
-  google::cloud::documentai::v1::ListProcessorTypesResponse response;
-  auto status = grpc_stub_->ListProcessorTypes(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
+    google::cloud::documentai::v1::ListProcessorTypesResponse response;
+    auto status =
+        grpc_stub_->ListProcessorTypes(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
 DefaultDocumentProcessorServiceStub::GetProcessorType(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
-  google::cloud::documentai::v1::ProcessorType response;
-  auto status = grpc_stub_->GetProcessorType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+    google::cloud::documentai::v1::ProcessorType response;
+    auto status =
+        grpc_stub_->GetProcessorType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessors(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::ListProcessorsRequest const& request) {
-  google::cloud::documentai::v1::ListProcessorsResponse response;
-  auto status = grpc_stub_->ListProcessors(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::ListProcessorsRequest const& request) {
+    google::cloud::documentai::v1::ListProcessorsResponse response;
+    auto status =
+        grpc_stub_->ListProcessors(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DefaultDocumentProcessorServiceStub::GetProcessor(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::GetProcessorRequest const& request) {
-  google::cloud::documentai::v1::Processor response;
-  auto status = grpc_stub_->GetProcessor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::GetProcessorRequest const& request) {
+    google::cloud::documentai::v1::Processor response;
+    auto status =
+        grpc_stub_->GetProcessor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::TrainProcessorVersionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::TrainProcessorVersionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-                 request,
+             google::cloud::documentai::v1::TrainProcessorVersionRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncTrainProcessorVersion(context, request, cq);
       },
@@ -155,56 +159,55 @@ DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::TrainProcessorVersion(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->TrainProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->TrainProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DefaultDocumentProcessorServiceStub::GetProcessorVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
-  google::cloud::documentai::v1::ProcessorVersion response;
-  auto status = grpc_stub_->GetProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
+    google::cloud::documentai::v1::ProcessorVersion response;
+    auto status =
+        grpc_stub_->GetProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessorVersions(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::ListProcessorVersionsRequest const&
-        request) {
-  google::cloud::documentai::v1::ListProcessorVersionsResponse response;
-  auto status = grpc_stub_->ListProcessorVersions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::ListProcessorVersionsRequest const& request) {
+    google::cloud::documentai::v1::ListProcessorVersionsResponse response;
+    auto status =
+        grpc_stub_->ListProcessorVersions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeleteProcessorVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::DeleteProcessorVersionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-                 request,
+             google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteProcessorVersion(context, request, cq);
       },
@@ -213,32 +216,29 @@ DefaultDocumentProcessorServiceStub::AsyncDeleteProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::DeleteProcessorVersion(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeployProcessorVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::DeployProcessorVersionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::DeployProcessorVersionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-                 request,
+             google::cloud::documentai::v1::DeployProcessorVersionRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeployProcessorVersion(context, request, cq);
       },
@@ -247,34 +247,30 @@ DefaultDocumentProcessorServiceStub::AsyncDeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::DeployProcessorVersion(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeployProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeployProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncUndeployProcessorVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::UndeployProcessorVersionRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUndeployProcessorVersion(context, request, cq);
       },
       request, std::move(context));
@@ -282,44 +278,43 @@ DefaultDocumentProcessorServiceStub::AsyncUndeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::UndeployProcessorVersion(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UndeployProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UndeployProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DefaultDocumentProcessorServiceStub::CreateProcessor(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::CreateProcessorRequest const& request) {
-  google::cloud::documentai::v1::Processor response;
-  auto status = grpc_stub_->CreateProcessor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::CreateProcessorRequest const& request) {
+    google::cloud::documentai::v1::Processor response;
+    auto status =
+        grpc_stub_->CreateProcessor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeleteProcessor(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::DeleteProcessorRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::DeleteProcessorRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::documentai::v1::DeleteProcessorRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::DeleteProcessorRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteProcessor(context, request, cq);
       },
       request, std::move(context));
@@ -327,30 +322,30 @@ DefaultDocumentProcessorServiceStub::AsyncDeleteProcessor(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::DeleteProcessor(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteProcessor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteProcessor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncEnableProcessor(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::EnableProcessorRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::EnableProcessorRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::documentai::v1::EnableProcessorRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::EnableProcessorRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncEnableProcessor(context, request, cq);
       },
       request, std::move(context));
@@ -358,30 +353,30 @@ DefaultDocumentProcessorServiceStub::AsyncEnableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::EnableProcessor(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->EnableProcessor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->EnableProcessor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDisableProcessor(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::DisableProcessorRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::DisableProcessorRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::documentai::v1::DisableProcessorRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::DisableProcessorRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDisableProcessor(context, request, cq);
       },
       request, std::move(context));
@@ -389,65 +384,61 @@ DefaultDocumentProcessorServiceStub::AsyncDisableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::DisableProcessor(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DisableProcessor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DisableProcessor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncSetDefaultProcessorVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::SetDefaultProcessorVersionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::documentai::v1::
-                 SetDefaultProcessorVersionRequest const& request,
+             google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncSetDefaultProcessorVersion(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncSetDefaultProcessorVersion(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::SetDefaultProcessorVersion(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->SetDefaultProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->SetDefaultProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::ReviewDocumentRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::ReviewDocumentRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::documentai::v1::ReviewDocumentRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::ReviewDocumentRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncReviewDocument(context, request, cq);
       },
       request, std::move(context));
@@ -455,32 +446,30 @@ DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::ReviewDocument(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ReviewDocument(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ReviewDocument(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::documentai::v1::EvaluateProcessorVersionRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncEvaluateProcessorVersion(context, request, cq);
       },
       request, std::move(context));
@@ -488,99 +477,107 @@ DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::EvaluateProcessorVersion(
-    grpc::ClientContext& context, Options,
-    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->EvaluateProcessorVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->EvaluateProcessorVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
 DefaultDocumentProcessorServiceStub::GetEvaluation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
-  google::cloud::documentai::v1::Evaluation response;
-  auto status = grpc_stub_->GetEvaluation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+    google::cloud::documentai::v1::Evaluation response;
+    auto status =
+        grpc_stub_->GetEvaluation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DefaultDocumentProcessorServiceStub::ListEvaluations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
-  google::cloud::documentai::v1::ListEvaluationsResponse response;
-  auto status = grpc_stub_->ListEvaluations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
+    google::cloud::documentai::v1::ListEvaluationsResponse response;
+    auto status =
+        grpc_stub_->ListEvaluations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDocumentProcessorServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultDocumentProcessorServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDocumentProcessorServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentProcessorServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDocumentProcessorServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDocumentProcessorServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -609,14 +606,13 @@ future<Status> DefaultDocumentProcessorServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

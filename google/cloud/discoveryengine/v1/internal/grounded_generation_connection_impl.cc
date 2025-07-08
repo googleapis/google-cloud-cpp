@@ -17,9 +17,9 @@
 // source: google/cloud/discoveryengine/v1/grounded_generation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_connection_impl.h"
-#include "google/cloud/discoveryengine/v1/internal/grounded_generation_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/discoveryengine/v1/internal/grounded_generation_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,98 +34,77 @@ namespace {
 
 std::unique_ptr<discoveryengine_v1::GroundedGenerationServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<discoveryengine_v1::GroundedGenerationServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<discoveryengine_v1::GroundedGenerationServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    discoveryengine_v1::GroundedGenerationServiceConnectionIdempotencyPolicy>
+std::unique_ptr<discoveryengine_v1::GroundedGenerationServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<discoveryengine_v1::
-               GroundedGenerationServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<discoveryengine_v1::GroundedGenerationServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
-GroundedGenerationServiceConnectionImpl::
-    GroundedGenerationServiceConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            discoveryengine_v1_internal::GroundedGenerationServiceStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), GroundedGenerationServiceConnection::options())) {
-}
+GroundedGenerationServiceConnectionImpl::GroundedGenerationServiceConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<discoveryengine_v1_internal::GroundedGenerationServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        GroundedGenerationServiceConnection::options())) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
     google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
 GroundedGenerationServiceConnectionImpl::AsyncStreamGenerateGroundedContent() {
-  return stub_->AsyncStreamGenerateGroundedContent(
-      background_->cq(), std::make_shared<grpc::ClientContext>(),
-      internal::SaveCurrentOptions());
+  return stub_->AsyncStreamGenerateGroundedContent(background_->cq(),
+                                std::make_shared<grpc::ClientContext>(),
+                                internal::SaveCurrentOptions());
 }
 
 StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-GroundedGenerationServiceConnectionImpl::GenerateGroundedContent(
-    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-        request) {
+GroundedGenerationServiceConnectionImpl::GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateGroundedContent(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 GenerateGroundedContentRequest const& request) {
+             google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
         return stub_->GenerateGroundedContent(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-GroundedGenerationServiceConnectionImpl::CheckGrounding(
-    google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
+GroundedGenerationServiceConnectionImpl::CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CheckGrounding(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CheckGroundingRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
         return stub_->CheckGrounding(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-GroundedGenerationServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+GroundedGenerationServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           discoveryengine_v1::GroundedGenerationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -135,8 +114,7 @@ GroundedGenerationServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -144,8 +122,7 @@ GroundedGenerationServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-GroundedGenerationServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+GroundedGenerationServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -157,8 +134,8 @@ GroundedGenerationServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status GroundedGenerationServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+GroundedGenerationServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

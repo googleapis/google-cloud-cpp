@@ -32,54 +32,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class BinauthzManagementServiceV1TracingStub
-    : public BinauthzManagementServiceV1Stub {
+class BinauthzManagementServiceV1TracingStub : public BinauthzManagementServiceV1Stub {
  public:
   ~BinauthzManagementServiceV1TracingStub() override = default;
 
-  explicit BinauthzManagementServiceV1TracingStub(
-      std::shared_ptr<BinauthzManagementServiceV1Stub> child);
+  explicit BinauthzManagementServiceV1TracingStub(std::shared_ptr<BinauthzManagementServiceV1Stub> child);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
-  ListAttestors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
-          request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse> ListAttestors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::ListAttestorsRequest const& request) override;
 
   Status DeleteAttestor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) override;
 
  private:
   std::shared_ptr<BinauthzManagementServiceV1Stub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -90,8 +86,7 @@ class BinauthzManagementServiceV1TracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<BinauthzManagementServiceV1Stub>
-MakeBinauthzManagementServiceV1TracingStub(
+std::shared_ptr<BinauthzManagementServiceV1Stub> MakeBinauthzManagementServiceV1TracingStub(
     std::shared_ptr<BinauthzManagementServiceV1Stub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

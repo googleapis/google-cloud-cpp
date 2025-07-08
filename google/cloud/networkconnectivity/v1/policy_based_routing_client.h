@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_CLIENT_H
 
-#include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,30 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PolicyBasedRoutingServiceClient {
  public:
-  explicit PolicyBasedRoutingServiceClient(
-      std::shared_ptr<PolicyBasedRoutingServiceConnection> connection,
-      Options opts = {});
+  explicit PolicyBasedRoutingServiceClient(std::shared_ptr<PolicyBasedRoutingServiceConnection> connection, Options opts = {});
   ~PolicyBasedRoutingServiceClient();
 
   ///@{
   /// @name Copy and move support
-  PolicyBasedRoutingServiceClient(PolicyBasedRoutingServiceClient const&) =
-      default;
-  PolicyBasedRoutingServiceClient& operator=(
-      PolicyBasedRoutingServiceClient const&) = default;
+  PolicyBasedRoutingServiceClient(PolicyBasedRoutingServiceClient const&) = default;
+  PolicyBasedRoutingServiceClient& operator=(PolicyBasedRoutingServiceClient const&) = default;
   PolicyBasedRoutingServiceClient(PolicyBasedRoutingServiceClient&&) = default;
-  PolicyBasedRoutingServiceClient& operator=(
-      PolicyBasedRoutingServiceClient&&) = default;
+  PolicyBasedRoutingServiceClient& operator=(PolicyBasedRoutingServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PolicyBasedRoutingServiceClient const& a,
-                         PolicyBasedRoutingServiceClient const& b) {
+  friend bool operator==(PolicyBasedRoutingServiceClient const& a, PolicyBasedRoutingServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PolicyBasedRoutingServiceClient const& a,
-                         PolicyBasedRoutingServiceClient const& b) {
+  friend bool operator!=(PolicyBasedRoutingServiceClient const& a, PolicyBasedRoutingServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -164,10 +157,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  ListPolicyBasedRoutes(
-      google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest
-          request,
-      Options opts = {});
+  ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -222,10 +212,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  GetPolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-          request,
-      Options opts = {});
+  GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -266,11 +253,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(
-      std::string const& parent,
-      google::cloud::networkconnectivity::v1::PolicyBasedRoute const&
-          policy_based_route,
-      std::string const& policy_based_route_id, Options opts = {});
+  CreatePolicyBasedRoute(std::string const& parent, google::cloud::networkconnectivity::v1::PolicyBasedRoute const& policy_based_route, std::string const& policy_based_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -283,11 +266,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::networkconnectivity::v1::PolicyBasedRoute const&
-          policy_based_route,
-      std::string const& policy_based_route_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePolicyBasedRoute(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::PolicyBasedRoute const& policy_based_route, std::string const& policy_based_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -324,9 +304,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::
-                             CreatePolicyBasedRouteRequest const& request,
-                         Options opts = {});
+  CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -339,11 +317,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::
-          CreatePolicyBasedRouteRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePolicyBasedRoute(NoAwaitTag, google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +330,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreatePolicyBasedRoute(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -401,8 +375,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePolicyBasedRoute(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -439,9 +413,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::
-                             DeletePolicyBasedRouteRequest const& request,
-                         Options opts = {});
+  DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -454,11 +426,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::
-          DeletePolicyBasedRouteRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePolicyBasedRoute(NoAwaitTag, google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -470,8 +439,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeletePolicyBasedRoute(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -509,8 +477,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -539,9 +507,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -573,8 +540,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -605,8 +572,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -641,9 +608,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -678,8 +644,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -718,8 +684,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -745,8 +711,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -777,9 +743,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -803,7 +768,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -832,9 +798,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -868,7 +833,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -907,9 +873,8 @@ class PolicyBasedRoutingServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PolicyBasedRoutingServiceConnection> connection_;

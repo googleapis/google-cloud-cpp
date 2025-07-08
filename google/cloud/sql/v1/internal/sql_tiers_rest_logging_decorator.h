@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_TIERS_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_TIERS_REST_LOGGING_DECORATOR_H
 
-#include "google/cloud/sql/v1/internal/sql_tiers_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
+#include "google/cloud/sql/v1/internal/sql_tiers_rest_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_tiers.pb.h>
@@ -38,13 +38,12 @@ class SqlTiersServiceRestLogging : public SqlTiersServiceRestStub {
  public:
   ~SqlTiersServiceRestLogging() override = default;
   SqlTiersServiceRestLogging(std::shared_ptr<SqlTiersServiceRestStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlTiersListRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlTiersListRequest const& request) override;
 
  private:
   std::shared_ptr<SqlTiersServiceRestStub> child_;

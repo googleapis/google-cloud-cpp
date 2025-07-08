@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionZonesClient::RegionZonesClient(
     std::shared_ptr<RegionZonesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 RegionZonesClient::~RegionZonesClient() = default;
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-RegionZonesClient::ListRegionZones(std::string const& project,
-                                   std::string const& region, Options opts) {
+RegionZonesClient::ListRegionZones(std::string const& project, std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request;
   request.set_project(project);
@@ -43,10 +42,7 @@ RegionZonesClient::ListRegionZones(std::string const& project,
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-RegionZonesClient::ListRegionZones(
-    google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
-        request,
-    Options opts) {
+RegionZonesClient::ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRegionZones(std::move(request));
 }

@@ -27,27 +27,19 @@ namespace cloud {
 namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use certificatemanager_v1::MakeCertificateManagerConnection
-/// directly.
+/// @deprecated Use certificatemanager_v1::MakeCertificateManagerConnection directly.
 using ::google::cloud::certificatemanager_v1::MakeCertificateManagerConnection;
 
-/// @deprecated Use certificatemanager_v1::CertificateManagerConnection
-/// directly.
+/// @deprecated Use certificatemanager_v1::CertificateManagerConnection directly.
 using ::google::cloud::certificatemanager_v1::CertificateManagerConnection;
 
-/// @deprecated Use
-/// certificatemanager_v1::CertificateManagerLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerLimitedErrorCountRetryPolicy;
+/// @deprecated Use certificatemanager_v1::CertificateManagerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// certificatemanager_v1::CertificateManagerLimitedTimeRetryPolicy directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerLimitedTimeRetryPolicy;
+/// @deprecated Use certificatemanager_v1::CertificateManagerLimitedTimeRetryPolicy directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerLimitedTimeRetryPolicy;
 
-/// @deprecated Use certificatemanager_v1::CertificateManagerRetryPolicy
-/// directly.
+/// @deprecated Use certificatemanager_v1::CertificateManagerRetryPolicy directly.
 using ::google::cloud::certificatemanager_v1::CertificateManagerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

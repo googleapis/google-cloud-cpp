@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INTERNAL_INSTANCE_TEMPLATES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INTERNAL_INSTANCE_TEMPLATES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_options.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_stub.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_retry_traits.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,104 +44,73 @@ class InstanceTemplatesRestConnectionImpl
   ~InstanceTemplatesRestConnectionImpl() override = default;
 
   InstanceTemplatesRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_instance_templates_v1_internal::InstanceTemplatesRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_instance_templates_v1_internal::InstanceTemplatesRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
-  AggregatedListInstanceTemplates(
-      google::cloud::cpp::compute::instance_templates::v1::
-          AggregatedListInstanceTemplatesRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
+  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate(
-      google::cloud::cpp::compute::instance_templates::v1::
-          DeleteInstanceTemplateRequest const& request) override;
+  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
-      NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
-                      DeleteInstanceTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceTemplate(NoAwaitTag,
+      google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
-                          GetInstanceTemplateRequest const& request) override;
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::instance_templates::v1::
-          GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate(
-      google::cloud::cpp::compute::instance_templates::v1::
-          InsertInstanceTemplateRequest const& request) override;
+  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
-      NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
-                      InsertInstanceTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceTemplate(NoAwaitTag,
+      google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceTemplate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                            ListInstanceTemplatesRequest request) override;
+  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::instance_templates::v1::
-          SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      compute_instance_templates_v1::InstanceTemplatesRetryPolicy>
+  static std::unique_ptr<compute_instance_templates_v1::InstanceTemplatesRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<
-            compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_instance_templates_v1::
-                 InstanceTemplatesBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_instance_templates_v1::InstanceTemplatesBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<compute_instance_templates_v1::
-                             InstanceTemplatesConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_instance_templates_v1::InstanceTemplatesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_instance_templates_v1::
-                 InstanceTemplatesConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_instance_templates_v1::InstanceTemplatesConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_instance_templates_v1::
-                 InstanceTemplatesPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_instance_templates_v1::InstanceTemplatesPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_instance_templates_v1_internal::InstanceTemplatesRestStub>
-      stub_;
+  std::shared_ptr<compute_instance_templates_v1_internal::InstanceTemplatesRestStub> stub_;
   Options options_;
 };
 

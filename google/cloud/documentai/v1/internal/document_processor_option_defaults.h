@@ -28,8 +28,7 @@ namespace cloud {
 namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options DocumentProcessorServiceDefaultOptions(std::string const& location,
-                                               Options options);
+Options DocumentProcessorServiceDefaultOptions(std::string const& location, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_v1_internal

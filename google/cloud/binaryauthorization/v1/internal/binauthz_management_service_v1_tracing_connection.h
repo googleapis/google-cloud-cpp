@@ -36,43 +36,33 @@ class BinauthzManagementServiceV1TracingConnection
   ~BinauthzManagementServiceV1TracingConnection() override = default;
 
   explicit BinauthzManagementServiceV1TracingConnection(
-      std::shared_ptr<
-          binaryauthorization_v1::BinauthzManagementServiceV1Connection>
-          child);
+    std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-          request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
-      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request)
-      override;
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-          request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) override;
 
-  StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest request)
-      override;
+  StreamRange<google::cloud::binaryauthorization::v1::Attestor>
+  ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request) override;
 
-  Status DeleteAttestor(
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-          request) override;
+  Status
+  DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) override;
 
  private:
-  std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection>
-      child_;
+  std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -85,9 +75,7 @@ class BinauthzManagementServiceV1TracingConnection
  */
 std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1TracingConnection(
-    std::shared_ptr<
-        binaryauthorization_v1::BinauthzManagementServiceV1Connection>
-        conn);
+    std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1_internal

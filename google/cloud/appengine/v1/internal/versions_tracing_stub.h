@@ -39,11 +39,13 @@ class VersionsTracingStub : public VersionsStub {
   explicit VersionsTracingStub(std::shared_ptr<VersionsStub> child);
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::ListVersionsRequest const& request) override;
 
   StatusOr<google::appengine::v1::Version> GetVersion(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::GetVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVersion(
@@ -53,7 +55,8 @@ class VersionsTracingStub : public VersionsStub {
       google::appengine::v1::CreateVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateVersion(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::CreateVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVersion(
@@ -63,7 +66,8 @@ class VersionsTracingStub : public VersionsStub {
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVersion(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteVersion(
@@ -73,7 +77,8 @@ class VersionsTracingStub : public VersionsStub {
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVersion(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -90,8 +95,7 @@ class VersionsTracingStub : public VersionsStub {
 
  private:
   std::shared_ptr<VersionsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

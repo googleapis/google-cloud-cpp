@@ -28,41 +28,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceSettingsClient::InstanceSettingsClient(
     std::shared_ptr<InstanceSettingsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 InstanceSettingsClient::~InstanceSettingsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-InstanceSettingsClient::GetInstanceSettings(std::string const& project,
-                                            std::string const& zone,
-                                            Options opts) {
+InstanceSettingsClient::GetInstanceSettings(std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest
-      request;
+  google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->GetInstanceSettings(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-InstanceSettingsClient::GetInstanceSettings(
-    google::cloud::cpp::compute::instance_settings::v1::
-        GetInstanceSettingsRequest const& request,
-    Options opts) {
+InstanceSettingsClient::GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstanceSettings(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceSettingsClient::PatchInstanceSettings(
-    std::string const& project, std::string const& zone,
-    std::string const& update_mask,
-    google::cloud::cpp::compute::v1::InstanceSettings const&
-        instance_settings_resource,
-    Options opts) {
+InstanceSettingsClient::PatchInstanceSettings(std::string const& project, std::string const& zone, std::string const& update_mask, google::cloud::cpp::compute::v1::InstanceSettings const& instance_settings_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_settings::v1::
-      PatchInstanceSettingsRequest request;
+  google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_update_mask(update_mask);
@@ -71,15 +59,9 @@ InstanceSettingsClient::PatchInstanceSettings(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceSettingsClient::PatchInstanceSettings(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& update_mask,
-    google::cloud::cpp::compute::v1::InstanceSettings const&
-        instance_settings_resource,
-    Options opts) {
+InstanceSettingsClient::PatchInstanceSettings(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& update_mask, google::cloud::cpp::compute::v1::InstanceSettings const& instance_settings_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_settings::v1::
-      PatchInstanceSettingsRequest request;
+  google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_update_mask(update_mask);
@@ -88,27 +70,19 @@ InstanceSettingsClient::PatchInstanceSettings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceSettingsClient::PatchInstanceSettings(
-    google::cloud::cpp::compute::instance_settings::v1::
-        PatchInstanceSettingsRequest const& request,
-    Options opts) {
+InstanceSettingsClient::PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInstanceSettings(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceSettingsClient::PatchInstanceSettings(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_settings::v1::
-        PatchInstanceSettingsRequest const& request,
-    Options opts) {
+InstanceSettingsClient::PatchInstanceSettings(NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInstanceSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceSettingsClient::PatchInstanceSettings(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InstanceSettingsClient::PatchInstanceSettings(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInstanceSettings(operation);
 }

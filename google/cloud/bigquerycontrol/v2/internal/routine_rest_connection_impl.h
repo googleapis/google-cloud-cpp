@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_ROUTINE_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_ROUTINE_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_rest_stub.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/routine_connection.h"
 #include "google/cloud/bigquerycontrol/v2/routine_connection_idempotency_policy.h"
 #include "google/cloud/bigquerycontrol/v2/routine_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,48 +42,40 @@ class RoutineServiceRestConnectionImpl
   ~RoutineServiceRestConnectionImpl() override = default;
 
   RoutineServiceRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquerycontrol_v2_internal::RoutineServiceRestStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<bigquerycontrol_v2_internal::RoutineServiceRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::bigquery::v2::Routine> GetRoutine(
-      google::cloud::bigquery::v2::GetRoutineRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> InsertRoutine(
-      google::cloud::bigquery::v2::InsertRoutineRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
-      google::cloud::bigquery::v2::UpdateRoutineRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const& request) override;
 
-  Status DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const&
-                           request) override;
+  Status
+  DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse> ListRoutines(
-      google::cloud::bigquery::v2::ListRoutinesRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
+  ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const& request) override;
 
  private:
   static std::unique_ptr<bigquerycontrol_v2::RoutineServiceRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::RoutineServiceRetryPolicyOption>()
-        ->clone();
+    return options.get<bigquerycontrol_v2::RoutineServiceRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::RoutineServiceBackoffPolicyOption>()
-        ->clone();
+    return options.get<bigquerycontrol_v2::RoutineServiceBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      bigquerycontrol_v2::RoutineServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<bigquerycontrol_v2::RoutineServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<bigquerycontrol_v2::
-                 RoutineServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<bigquerycontrol_v2::RoutineServiceConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -44,18 +44,20 @@ PredictionServiceConnection::Predict(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::api::HttpBody> PredictionServiceConnection::RawPredict(
+StatusOr<google::api::HttpBody>
+PredictionServiceConnection::RawPredict(
     google::cloud::aiplatform::v1::RawPredictRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::api::HttpBody>
-PredictionServiceConnection::StreamRawPredict(
+StreamRange<google::api::HttpBody> PredictionServiceConnection::StreamRawPredict(
     google::cloud::aiplatform::v1::StreamRawPredictRequest const&) {
-  return google::cloud::internal::MakeStreamRange<google::api::HttpBody>(
-      []() -> absl::variant<Status, google::api::HttpBody> {
-        return Status(StatusCode::kUnimplemented, "not implemented");
-      });
+  return google::cloud::internal::MakeStreamRange<
+      google::api::HttpBody>(
+      []() -> absl::variant<Status,
+      google::api::HttpBody>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
@@ -103,16 +105,14 @@ PredictionServiceConnection::AsyncStreamingPredict() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
-PredictionServiceConnection::ServerStreamingPredict(
+StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse> PredictionServiceConnection::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::StreamingPredictResponse>(
-      []()
-          -> absl::variant<
-              Status, google::cloud::aiplatform::v1::StreamingPredictResponse> {
-        return Status(StatusCode::kUnimplemented, "not implemented");
-      });
+      []() -> absl::variant<Status,
+      google::cloud::aiplatform::v1::StreamingPredictResponse>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -138,21 +138,18 @@ PredictionServiceConnection::GenerateContent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceConnection::StreamGenerateContent(
+StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse> PredictionServiceConnection::StreamGenerateContent(
     google::cloud::aiplatform::v1::GenerateContentRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::GenerateContentResponse>(
-      []() -> absl::variant<
-               Status, google::cloud::aiplatform::v1::GenerateContentResponse> {
-        return Status(StatusCode::kUnimplemented, "not implemented");
-      });
+      []() -> absl::variant<Status,
+      google::cloud::aiplatform::v1::GenerateContentResponse>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
-StreamRange<google::cloud::location::Location>
-PredictionServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> PredictionServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -163,12 +160,14 @@ PredictionServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> PredictionServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+PredictionServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> PredictionServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+PredictionServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -179,10 +178,8 @@ PredictionServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-PredictionServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> PredictionServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -193,12 +190,14 @@ PredictionServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PredictionServiceConnection::DeleteOperation(
+Status
+PredictionServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PredictionServiceConnection::CancelOperation(
+Status
+PredictionServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -212,18 +211,17 @@ PredictionServiceConnection::WaitOperation(
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PredictionServicePolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      PredictionServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::PredictionServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultPredictionServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakePredictionServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::PredictionServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

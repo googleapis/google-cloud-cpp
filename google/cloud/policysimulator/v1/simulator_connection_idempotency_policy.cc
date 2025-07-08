@@ -26,41 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SimulatorConnectionIdempotencyPolicy::~SimulatorConnectionIdempotencyPolicy() =
-    default;
+SimulatorConnectionIdempotencyPolicy::~SimulatorConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SimulatorConnectionIdempotencyPolicy>
 SimulatorConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SimulatorConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SimulatorConnectionIdempotencyPolicy::GetReplay(
-    google::cloud::policysimulator::v1::GetReplayRequest const&) {
+Idempotency SimulatorConnectionIdempotencyPolicy::GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SimulatorConnectionIdempotencyPolicy::CreateReplay(
-    google::cloud::policysimulator::v1::CreateReplayRequest const&) {
+Idempotency SimulatorConnectionIdempotencyPolicy::CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SimulatorConnectionIdempotencyPolicy::ListReplayResults(
-    google::cloud::policysimulator::v1::ListReplayResultsRequest) {  // NOLINT
+Idempotency SimulatorConnectionIdempotencyPolicy::ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SimulatorConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SimulatorConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SimulatorConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SimulatorConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SimulatorConnectionIdempotencyPolicy>
-MakeDefaultSimulatorConnectionIdempotencyPolicy() {
+    MakeDefaultSimulatorConnectionIdempotencyPolicy() {
   return std::make_unique<SimulatorConnectionIdempotencyPolicy>();
 }
 

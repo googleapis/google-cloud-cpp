@@ -17,10 +17,10 @@
 // source: google/cloud/migrationcenter/v1/migrationcenter.proto
 
 #include "google/cloud/migrationcenter/v1/internal/migration_center_option_defaults.h"
-#include "google/cloud/migrationcenter/v1/migration_center_connection.h"
-#include "google/cloud/migrationcenter/v1/migration_center_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/migrationcenter/v1/migration_center_connection.h"
+#include "google/cloud/migrationcenter/v1/migration_center_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,41 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MigrationCenterDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_MIGRATION_CENTER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_MIGRATION_CENTER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_MIGRATION_CENTER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_MIGRATION_CENTER_AUTHORITY",
       "migrationcenter.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<migrationcenter_v1::MigrationCenterRetryPolicyOption>()) {
     options.set<migrationcenter_v1::MigrationCenterRetryPolicyOption>(
         migrationcenter_v1::MigrationCenterLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<migrationcenter_v1::MigrationCenterBackoffPolicyOption>()) {
     options.set<migrationcenter_v1::MigrationCenterBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<migrationcenter_v1::MigrationCenterPollingPolicyOption>()) {
     options.set<migrationcenter_v1::MigrationCenterPollingPolicyOption>(
         GenericPollingPolicy<
             migrationcenter_v1::MigrationCenterRetryPolicyOption::Type,
             migrationcenter_v1::MigrationCenterBackoffPolicyOption::Type>(
-            options.get<migrationcenter_v1::MigrationCenterRetryPolicyOption>()
-                ->clone(),
+            options.get<migrationcenter_v1::MigrationCenterRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<migrationcenter_v1::
-                       MigrationCenterConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        migrationcenter_v1::MigrationCenterConnectionIdempotencyPolicyOption>(
-        migrationcenter_v1::
-            MakeDefaultMigrationCenterConnectionIdempotencyPolicy());
+  if (!options.has<migrationcenter_v1::MigrationCenterConnectionIdempotencyPolicyOption>()) {
+    options.set<migrationcenter_v1::MigrationCenterConnectionIdempotencyPolicyOption>(
+        migrationcenter_v1::MakeDefaultMigrationCenterConnectionIdempotencyPolicy());
   }
 
   return options;

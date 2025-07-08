@@ -17,12 +17,12 @@
 // source: google/cloud/edgecontainer/v1/service.proto
 
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_auth_decorator.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_logging_decorator.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_metadata_decorator.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -39,30 +39,31 @@ namespace cloud {
 namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<EdgeContainerStub> CreateDefaultEdgeContainerStub(
+std::shared_ptr<EdgeContainerStub>
+CreateDefaultEdgeContainerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::edgecontainer::v1::EdgeContainer::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::edgecontainer::v1::EdgeContainer::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<EdgeContainerStub> stub =
-      std::make_shared<DefaultEdgeContainerStub>(
-          std::move(service_grpc_stub), std::move(service_locations_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultEdgeContainerStub>(
+      std::move(service_grpc_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<EdgeContainerAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<EdgeContainerAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<EdgeContainerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<EdgeContainerLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

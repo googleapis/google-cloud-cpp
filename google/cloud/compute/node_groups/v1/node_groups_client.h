@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeGroupsClient {
  public:
-  explicit NodeGroupsClient(std::shared_ptr<NodeGroupsConnection> connection,
-                            Options opts = {});
+  explicit NodeGroupsClient(std::shared_ptr<NodeGroupsConnection> connection, Options opts = {});
   ~NodeGroupsClient();
 
   ///@{
@@ -118,12 +117,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.AddNodesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L230}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const&
-          node_groups_add_nodes_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNodes(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const& node_groups_add_nodes_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -136,12 +131,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const&
-          node_groups_add_nodes_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddNodes(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const& node_groups_add_nodes_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -177,10 +168,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.AddNodesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L230}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNodes(google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -193,11 +182,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddNodes(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -208,9 +194,8 @@ class NodeGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNodes(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -246,8 +231,7 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L586}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
   AggregatedListNodeGroups(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -289,11 +273,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L586}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
-  AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::
-                               AggregatedListNodeGroupsRequest request,
-                           Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
+  AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -326,9 +307,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L350}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodeGroup(std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
 
   // clang-format off
   ///
@@ -341,9 +321,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNodeGroup(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
 
   // clang-format off
   ///
@@ -379,10 +358,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L350}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodeGroup(google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -395,11 +372,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNodeGroup(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -410,9 +384,8 @@ class NodeGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodeGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -446,12 +419,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L383}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const&
-          node_groups_delete_nodes_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodes(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const& node_groups_delete_nodes_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -464,12 +433,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const&
-          node_groups_delete_nodes_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNodes(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const& node_groups_delete_nodes_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -505,10 +470,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L383}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodes(google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -521,11 +484,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNodes(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -536,9 +496,8 @@ class NodeGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodes(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -567,9 +526,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L59}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
+  GetNodeGroup(std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
 
   // clang-format off
   ///
@@ -601,10 +559,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L59}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
+  GetNodeGroup(google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -632,9 +588,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      std::string const& project, std::string const& zone,
-      std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -665,10 +620,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -703,11 +656,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L453}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
-      std::string const& project, std::string const& zone,
-      std::int32_t initial_node_count,
-      google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNodeGroup(std::string const& project, std::string const& zone, std::int32_t initial_node_count, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -720,11 +670,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::int32_t initial_node_count,
-      google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNodeGroup(NoAwaitTag, std::string const& project, std::string const& zone, std::int32_t initial_node_count, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -761,10 +708,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L453}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNodeGroup(google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -777,11 +722,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNodeGroup(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -792,9 +734,8 @@ class NodeGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNodeGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +771,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L59}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
-      std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
+  ListNodeGroups(std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -871,10 +812,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L59}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
-          request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
+  ListNodeGroups(google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -910,9 +849,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L404}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
+  ListNodes(std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
 
   // clang-format off
   ///
@@ -951,9 +889,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L404}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
-      google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
+  ListNodes(google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -987,11 +924,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L636}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNodeGroup(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1004,11 +938,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNodeGroup(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1044,10 +975,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L636}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNodeGroup(google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1060,11 +989,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNodeGroup(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1075,9 +1001,8 @@ class NodeGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNodeGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1112,12 +1037,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(std::string const& project, std::string const& zone,
-                     std::string const& node_group,
-                     google::cloud::cpp::compute::v1::
-                         NodeGroupsPerformMaintenanceRequest const&
-                             node_groups_perform_maintenance_request_resource,
-                     Options opts = {});
+  PerformMaintenance(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsPerformMaintenanceRequest const& node_groups_perform_maintenance_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1130,13 +1050,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::
-          NodeGroupsPerformMaintenanceRequest const&
-              node_groups_perform_maintenance_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsPerformMaintenanceRequest const& node_groups_perform_maintenance_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1173,9 +1088,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::node_groups::v1::
-                         PerformMaintenanceRequest const& request,
-                     Options opts = {});
+  PerformMaintenance(google::cloud::cpp::compute::node_groups::v1::PerformMaintenanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1188,11 +1101,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          PerformMaintenanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::PerformMaintenanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1204,9 +1114,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PerformMaintenance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1235,12 +1143,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      std::string const& project, std::string const& zone,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
-          zone_set_policy_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1271,10 +1175,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1308,12 +1210,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.SetNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L729}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const&
-          node_groups_set_node_template_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNodeTemplate(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const& node_groups_set_node_template_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1326,12 +1224,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const&
-          node_groups_set_node_template_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetNodeTemplate(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const& node_groups_set_node_template_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1367,10 +1261,8 @@ class NodeGroupsClient {
   /// [google.cloud.cpp.compute.node_groups.v1.SetNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L729}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
-      google::cloud::cpp::compute::node_groups::v1::
-          SetNodeTemplateRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNodeTemplate(google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1383,11 +1275,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          SetNodeTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetNodeTemplate(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1398,9 +1287,8 @@ class NodeGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNodeTemplate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1436,13 +1324,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(
-      std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::
-          NodeGroupsSimulateMaintenanceEventRequest const&
-              node_groups_simulate_maintenance_event_request_resource,
-      Options opts = {});
+  SimulateMaintenanceEvent(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsSimulateMaintenanceEventRequest const& node_groups_simulate_maintenance_event_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1455,13 +1337,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& node_group,
-      google::cloud::cpp::compute::v1::
-          NodeGroupsSimulateMaintenanceEventRequest const&
-              node_groups_simulate_maintenance_event_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SimulateMaintenanceEvent(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsSimulateMaintenanceEventRequest const& node_groups_simulate_maintenance_event_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1498,9 +1375,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(google::cloud::cpp::compute::node_groups::v1::
-                               SimulateMaintenanceEventRequest const& request,
-                           Options opts = {});
+  SimulateMaintenanceEvent(google::cloud::cpp::compute::node_groups::v1::SimulateMaintenanceEventRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1513,11 +1388,8 @@ class NodeGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
-      NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          SimulateMaintenanceEventRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SimulateMaintenanceEvent(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::SimulateMaintenanceEventRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1529,9 +1401,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  SimulateMaintenanceEvent(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1560,12 +1430,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& zone,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1596,9 +1461,7 @@ class NodeGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<NodeGroupsConnection> connection_;

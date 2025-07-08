@@ -38,48 +38,45 @@ class ExperimentsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ExperimentsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
+  virtual google::cloud::Idempotency
+  ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
 
-  virtual google::cloud::Idempotency GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
 
-  virtual google::cloud::Idempotency CreateExperiment(
-      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteExperiment(
-      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request);
 
-  virtual google::cloud::Idempotency StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
+  virtual google::cloud::Idempotency
+  StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
 
-  virtual google::cloud::Idempotency StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
+  virtual google::cloud::Idempotency
+  StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>
-MakeDefaultExperimentsConnectionIdempotencyPolicy();
+    MakeDefaultExperimentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

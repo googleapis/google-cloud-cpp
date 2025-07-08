@@ -36,19 +36,15 @@ class PublicCertificateAuthorityServiceTracingConnection
   ~PublicCertificateAuthorityServiceTracingConnection() override = default;
 
   explicit PublicCertificateAuthorityServiceTracingConnection(
-      std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection>
-          child);
+    std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) override;
+  CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
 
  private:
-  std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection>
-      child_;
+  std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -61,8 +57,7 @@ class PublicCertificateAuthorityServiceTracingConnection
  */
 std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection>
 MakePublicCertificateAuthorityServiceTracingConnection(
-    std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection>
-        conn);
+    std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace publicca_v1_internal

@@ -26,13 +26,10 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// resourcemanager_v3::MakeDefaultFoldersConnectionIdempotencyPolicy directly.
-using ::google::cloud::resourcemanager_v3::
-    MakeDefaultFoldersConnectionIdempotencyPolicy;
+/// @deprecated Use resourcemanager_v3::MakeDefaultFoldersConnectionIdempotencyPolicy directly.
+using ::google::cloud::resourcemanager_v3::MakeDefaultFoldersConnectionIdempotencyPolicy;
 
-/// @deprecated Use resourcemanager_v3::FoldersConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use resourcemanager_v3::FoldersConnectionIdempotencyPolicy directly.
 using ::google::cloud::resourcemanager_v3::FoldersConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

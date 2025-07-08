@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NetworkProfilesClient {
  public:
-  explicit NetworkProfilesClient(
-      std::shared_ptr<NetworkProfilesConnection> connection, Options opts = {});
+  explicit NetworkProfilesClient(std::shared_ptr<NetworkProfilesConnection> connection, Options opts = {});
   ~NetworkProfilesClient();
 
   ///@{
@@ -76,12 +75,10 @@ class NetworkProfilesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NetworkProfilesClient const& a,
-                         NetworkProfilesClient const& b) {
+  friend bool operator==(NetworkProfilesClient const& a, NetworkProfilesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NetworkProfilesClient const& a,
-                         NetworkProfilesClient const& b) {
+  friend bool operator!=(NetworkProfilesClient const& a, NetworkProfilesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,9 +107,8 @@ class NetworkProfilesClient {
   /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L25}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
-      std::string const& project, std::string const& network_profile,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
+  GetNetworkProfile(std::string const& project, std::string const& network_profile, Options opts = {});
 
   // clang-format off
   ///
@@ -142,10 +138,8 @@ class NetworkProfilesClient {
   /// [google.cloud.cpp.compute.v1.NetworkProfile]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L25}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
-      google::cloud::cpp::compute::network_profiles::v1::
-          GetNetworkProfileRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
+  GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -220,9 +214,7 @@ class NetworkProfilesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::
-                          ListNetworkProfilesRequest request,
-                      Options opts = {});
+  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<NetworkProfilesConnection> connection_;

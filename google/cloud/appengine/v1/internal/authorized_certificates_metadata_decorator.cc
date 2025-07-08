@@ -46,59 +46,60 @@ AuthorizedCertificatesMetadata::AuthorizedCertificatesMetadata(
 
 StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 AuthorizedCertificatesMetadata::ListAuthorizedCertificates(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAuthorizedCertificates(context, options, request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesMetadata::GetAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAuthorizedCertificate(context, options, request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesMetadata::CreateAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAuthorizedCertificate(context, options, request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesMetadata::UpdateAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateAuthorizedCertificate(context, options, request);
 }
 
-Status AuthorizedCertificatesMetadata::DeleteAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+Status
+AuthorizedCertificatesMetadata::DeleteAuthorizedCertificate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAuthorizedCertificate(context, options, request);
 }
 
-void AuthorizedCertificatesMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void AuthorizedCertificatesMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AuthorizedCertificatesMetadata::SetMetadata(grpc::ClientContext& context,
-                                                 Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,80 +33,85 @@ SimulatorStub::~SimulatorStub() = default;
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
 DefaultSimulatorStub::GetReplay(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::policysimulator::v1::GetReplayRequest const& request) {
-  google::cloud::policysimulator::v1::Replay response;
-  auto status = grpc_stub_->GetReplay(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::policysimulator::v1::GetReplayRequest const& request) {
+    google::cloud::policysimulator::v1::Replay response;
+    auto status =
+        grpc_stub_->GetReplay(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSimulatorStub::AsyncCreateReplay(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::policysimulator::v1::CreateReplayRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::policysimulator::v1::CreateReplayRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::policysimulator::v1::CreateReplayRequest const&
-                 request,
+             google::cloud::policysimulator::v1::CreateReplayRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateReplay(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultSimulatorStub::CreateReplay(
-    grpc::ClientContext& context, Options,
-    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateReplay(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultSimulatorStub::CreateReplay(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateReplay(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 DefaultSimulatorStub::ListReplayResults(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::policysimulator::v1::ListReplayResultsRequest const&
-        request) {
-  google::cloud::policysimulator::v1::ListReplayResultsResponse response;
-  auto status = grpc_stub_->ListReplayResults(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::policysimulator::v1::ListReplayResultsRequest const& request) {
+    google::cloud::policysimulator::v1::ListReplayResultsResponse response;
+    auto status =
+        grpc_stub_->ListReplayResults(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultSimulatorStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultSimulatorStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultSimulatorStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,14 +140,13 @@ future<Status> DefaultSimulatorStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

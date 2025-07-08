@@ -31,9 +31,9 @@ CloudSchedulerAuth::CloudSchedulerAuth(
     std::shared_ptr<CloudSchedulerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
-CloudSchedulerAuth::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::ListJobsResponse> CloudSchedulerAuth::ListJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ CloudSchedulerAuth::ListJobs(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::GetJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::GetJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,7 +50,8 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::GetJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::CreateJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::CreateJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::UpdateJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -65,7 +68,8 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::UpdateJob(
 }
 
 Status CloudSchedulerAuth::DeleteJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -73,7 +77,8 @@ Status CloudSchedulerAuth::DeleteJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::PauseJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -81,7 +86,8 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::PauseJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::ResumeJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -89,16 +95,17 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::ResumeJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::RunJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::RunJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunJob(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-CloudSchedulerAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> CloudSchedulerAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -106,7 +113,8 @@ CloudSchedulerAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> CloudSchedulerAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

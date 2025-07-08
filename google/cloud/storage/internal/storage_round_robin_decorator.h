@@ -37,68 +37,80 @@ class StorageRoundRobin : public StorageStub {
   ~StorageRoundRobin() override = default;
 
   Status DeleteBucket(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::DeleteBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::Bucket> GetBucket(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::GetBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::Bucket> CreateBucket(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::CreateBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::ListBucketsResponse> ListBuckets(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::ListBucketsRequest const& request) override;
 
   StatusOr<google::storage::v2::Bucket> LockBucketRetentionPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::v2::LockBucketRetentionPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::v2::LockBucketRetentionPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::storage::v2::Bucket> UpdateBucket(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> ComposeObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::ComposeObjectRequest const& request) override;
 
   Status DeleteObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::DeleteObjectRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> RestoreObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::RestoreObjectRequest const& request) override;
 
-  StatusOr<google::storage::v2::CancelResumableWriteResponse>
-  CancelResumableWrite(
-      grpc::ClientContext& context, Options const& options,
+  StatusOr<google::storage::v2::CancelResumableWriteResponse> CancelResumableWrite(
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::CancelResumableWriteRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> GetObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::GetObjectRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::storage::v2::ReadObjectResponse>>
-  ReadObject(std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
-             google::storage::v2::ReadObjectRequest const& request) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::storage::v2::ReadObjectResponse>>
+  ReadObject(
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      google::storage::v2::ReadObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::storage::v2::BidiReadObjectRequest,
@@ -109,14 +121,16 @@ class StorageRoundRobin : public StorageStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::storage::v2::Object> UpdateObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::UpdateObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
-  WriteObject(std::shared_ptr<grpc::ClientContext> context,
-              Options const& options) override;
+  WriteObject(
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::storage::v2::BidiWriteObjectRequest,
@@ -127,24 +141,28 @@ class StorageRoundRobin : public StorageStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::ListObjectsRequest const& request) override;
 
   StatusOr<google::storage::v2::RewriteResponse> RewriteObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::RewriteObjectRequest const& request) override;
 
-  StatusOr<google::storage::v2::StartResumableWriteResponse>
-  StartResumableWrite(
-      grpc::ClientContext& context, Options const& options,
+  StatusOr<google::storage::v2::StartResumableWriteResponse> StartResumableWrite(
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::StartResumableWriteRequest const& request) override;
 
   StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> MoveObject(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::v2::MoveObjectRequest const& request) override;
 
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
@@ -168,11 +186,11 @@ class StorageRoundRobin : public StorageStub {
       google::storage::v2::ReadObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-      google::storage::v2::WriteObjectRequest,
-      google::storage::v2::WriteObjectResponse>>
-  AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options) override;
+      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>>
+  AsyncWriteObject(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::storage::v2::RewriteResponse>> AsyncRewriteObject(
       google::cloud::CompletionQueue& cq,
@@ -180,15 +198,13 @@ class StorageRoundRobin : public StorageStub {
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::RewriteObjectRequest const& request) override;
 
-  future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
-  AsyncStartResumableWrite(
+  future<StatusOr<google::storage::v2::StartResumableWriteResponse>> AsyncStartResumableWrite(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::StartResumableWriteRequest const& request) override;
 
-  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
-  AsyncQueryWriteStatus(
+  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>> AsyncQueryWriteStatus(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,

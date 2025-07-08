@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CertificateManagerClient::CertificateManagerClient(
     std::shared_ptr<CertificateManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 CertificateManagerClient::~CertificateManagerClient() = default;
 
 StreamRange<google::cloud::certificatemanager::v1::Certificate>
-CertificateManagerClient::ListCertificates(std::string const& parent,
-                                           Options opts) {
+CertificateManagerClient::ListCertificates(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::ListCertificatesRequest request;
   request.set_parent(parent);
@@ -42,16 +41,13 @@ CertificateManagerClient::ListCertificates(std::string const& parent,
 }
 
 StreamRange<google::cloud::certificatemanager::v1::Certificate>
-CertificateManagerClient::ListCertificates(
-    google::cloud::certificatemanager::v1::ListCertificatesRequest request,
-    Options opts) {
+CertificateManagerClient::ListCertificates(google::cloud::certificatemanager::v1::ListCertificatesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificates(std::move(request));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
-CertificateManagerClient::GetCertificate(std::string const& name,
-                                         Options opts) {
+CertificateManagerClient::GetCertificate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::GetCertificateRequest request;
   request.set_name(name);
@@ -59,18 +55,13 @@ CertificateManagerClient::GetCertificate(std::string const& name,
 }
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
-CertificateManagerClient::GetCertificate(
-    google::cloud::certificatemanager::v1::GetCertificateRequest const& request,
-    Options opts) {
+CertificateManagerClient::GetCertificate(google::cloud::certificatemanager::v1::GetCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificate(request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-CertificateManagerClient::CreateCertificate(
-    std::string const& parent,
-    google::cloud::certificatemanager::v1::Certificate const& certificate,
-    std::string const& certificate_id, Options opts) {
+CertificateManagerClient::CreateCertificate(std::string const& parent, google::cloud::certificatemanager::v1::Certificate const& certificate, std::string const& certificate_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateCertificateRequest request;
   request.set_parent(parent);
@@ -80,10 +71,7 @@ CertificateManagerClient::CreateCertificate(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificate(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::certificatemanager::v1::Certificate const& certificate,
-    std::string const& certificate_id, Options opts) {
+CertificateManagerClient::CreateCertificate(NoAwaitTag, std::string const& parent, google::cloud::certificatemanager::v1::Certificate const& certificate, std::string const& certificate_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateCertificateRequest request;
   request.set_parent(parent);
@@ -93,35 +81,25 @@ CertificateManagerClient::CreateCertificate(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-CertificateManagerClient::CreateCertificate(
-    google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateCertificate(google::cloud::certificatemanager::v1::CreateCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificate(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateCertificate(NoAwaitTag, google::cloud::certificatemanager::v1::CreateCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-CertificateManagerClient::CreateCertificate(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::CreateCertificate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificate(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-CertificateManagerClient::UpdateCertificate(
-    google::cloud::certificatemanager::v1::Certificate const& certificate,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateCertificate(google::cloud::certificatemanager::v1::Certificate const& certificate, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateCertificateRequest request;
   *request.mutable_certificate() = certificate;
@@ -130,10 +108,7 @@ CertificateManagerClient::UpdateCertificate(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateCertificate(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::Certificate const& certificate,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateCertificate(NoAwaitTag, google::cloud::certificatemanager::v1::Certificate const& certificate, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateCertificateRequest request;
   *request.mutable_certificate() = certificate;
@@ -142,34 +117,25 @@ CertificateManagerClient::UpdateCertificate(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-CertificateManagerClient::UpdateCertificate(
-    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateCertificate(google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateCertificate(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateCertificate(NoAwaitTag, google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-CertificateManagerClient::UpdateCertificate(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::UpdateCertificate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificate(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificate(std::string const& name,
-                                            Options opts) {
+CertificateManagerClient::DeleteCertificate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteCertificateRequest request;
   request.set_name(name);
@@ -177,8 +143,7 @@ CertificateManagerClient::DeleteCertificate(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificate(NoAwaitTag, std::string const& name,
-                                            Options opts) {
+CertificateManagerClient::DeleteCertificate(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteCertificateRequest request;
   request.set_name(name);
@@ -186,34 +151,25 @@ CertificateManagerClient::DeleteCertificate(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificate(
-    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificate(google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificate(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificate(NoAwaitTag, google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificate(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::DeleteCertificate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificate(operation);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
-CertificateManagerClient::ListCertificateMaps(std::string const& parent,
-                                              Options opts) {
+CertificateManagerClient::ListCertificateMaps(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::ListCertificateMapsRequest request;
   request.set_parent(parent);
@@ -221,16 +177,13 @@ CertificateManagerClient::ListCertificateMaps(std::string const& parent,
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
-CertificateManagerClient::ListCertificateMaps(
-    google::cloud::certificatemanager::v1::ListCertificateMapsRequest request,
-    Options opts) {
+CertificateManagerClient::ListCertificateMaps(google::cloud::certificatemanager::v1::ListCertificateMapsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificateMaps(std::move(request));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
-CertificateManagerClient::GetCertificateMap(std::string const& name,
-                                            Options opts) {
+CertificateManagerClient::GetCertificateMap(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::GetCertificateMapRequest request;
   request.set_name(name);
@@ -238,20 +191,13 @@ CertificateManagerClient::GetCertificateMap(std::string const& name,
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
-CertificateManagerClient::GetCertificateMap(
-    google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::GetCertificateMap(google::cloud::certificatemanager::v1::GetCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificateMap(request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-CertificateManagerClient::CreateCertificateMap(
-    std::string const& parent,
-    google::cloud::certificatemanager::v1::CertificateMap const&
-        certificate_map,
-    std::string const& certificate_map_id, Options opts) {
+CertificateManagerClient::CreateCertificateMap(std::string const& parent, google::cloud::certificatemanager::v1::CertificateMap const& certificate_map, std::string const& certificate_map_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateCertificateMapRequest request;
   request.set_parent(parent);
@@ -261,11 +207,7 @@ CertificateManagerClient::CreateCertificateMap(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificateMap(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::certificatemanager::v1::CertificateMap const&
-        certificate_map,
-    std::string const& certificate_map_id, Options opts) {
+CertificateManagerClient::CreateCertificateMap(NoAwaitTag, std::string const& parent, google::cloud::certificatemanager::v1::CertificateMap const& certificate_map, std::string const& certificate_map_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateCertificateMapRequest request;
   request.set_parent(parent);
@@ -275,36 +217,25 @@ CertificateManagerClient::CreateCertificateMap(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-CertificateManagerClient::CreateCertificateMap(
-    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateCertificateMap(google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateMap(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificateMap(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateCertificateMap(NoAwaitTag, google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-CertificateManagerClient::CreateCertificateMap(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::CreateCertificateMap(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateMap(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-CertificateManagerClient::UpdateCertificateMap(
-    google::cloud::certificatemanager::v1::CertificateMap const&
-        certificate_map,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateCertificateMap(google::cloud::certificatemanager::v1::CertificateMap const& certificate_map, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateCertificateMapRequest request;
   *request.mutable_certificate_map() = certificate_map;
@@ -313,11 +244,7 @@ CertificateManagerClient::UpdateCertificateMap(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateCertificateMap(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::CertificateMap const&
-        certificate_map,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateCertificateMap(NoAwaitTag, google::cloud::certificatemanager::v1::CertificateMap const& certificate_map, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateCertificateMapRequest request;
   *request.mutable_certificate_map() = certificate_map;
@@ -326,34 +253,25 @@ CertificateManagerClient::UpdateCertificateMap(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-CertificateManagerClient::UpdateCertificateMap(
-    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateCertificateMap(google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateMap(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateCertificateMap(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateCertificateMap(NoAwaitTag, google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-CertificateManagerClient::UpdateCertificateMap(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::UpdateCertificateMap(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateMap(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateMap(std::string const& name,
-                                               Options opts) {
+CertificateManagerClient::DeleteCertificateMap(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteCertificateMapRequest request;
   request.set_name(name);
@@ -361,9 +279,7 @@ CertificateManagerClient::DeleteCertificateMap(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificateMap(NoAwaitTag,
-                                               std::string const& name,
-                                               Options opts) {
+CertificateManagerClient::DeleteCertificateMap(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteCertificateMapRequest request;
   request.set_name(name);
@@ -371,53 +287,39 @@ CertificateManagerClient::DeleteCertificateMap(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateMap(
-    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificateMap(google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateMap(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificateMap(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificateMap(NoAwaitTag, google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateMap(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::DeleteCertificateMap(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateMap(operation);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
-CertificateManagerClient::ListCertificateMapEntries(std::string const& parent,
-                                                    Options opts) {
+CertificateManagerClient::ListCertificateMapEntries(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
-      request;
+  google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest request;
   request.set_parent(parent);
   return connection_->ListCertificateMapEntries(request);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
-CertificateManagerClient::ListCertificateMapEntries(
-    google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
-        request,
-    Options opts) {
+CertificateManagerClient::ListCertificateMapEntries(google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificateMapEntries(std::move(request));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
-CertificateManagerClient::GetCertificateMapEntry(std::string const& name,
-                                                 Options opts) {
+CertificateManagerClient::GetCertificateMapEntry(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest request;
   request.set_name(name);
@@ -425,23 +327,15 @@ CertificateManagerClient::GetCertificateMapEntry(std::string const& name,
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
-CertificateManagerClient::GetCertificateMapEntry(
-    google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::GetCertificateMapEntry(google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificateMapEntry(request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-CertificateManagerClient::CreateCertificateMapEntry(
-    std::string const& parent,
-    google::cloud::certificatemanager::v1::CertificateMapEntry const&
-        certificate_map_entry,
-    std::string const& certificate_map_entry_id, Options opts) {
+CertificateManagerClient::CreateCertificateMapEntry(std::string const& parent, google::cloud::certificatemanager::v1::CertificateMapEntry const& certificate_map_entry, std::string const& certificate_map_entry_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest
-      request;
+  google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_map_entry() = certificate_map_entry;
   request.set_certificate_map_entry_id(certificate_map_entry_id);
@@ -449,14 +343,9 @@ CertificateManagerClient::CreateCertificateMapEntry(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificateMapEntry(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::certificatemanager::v1::CertificateMapEntry const&
-        certificate_map_entry,
-    std::string const& certificate_map_entry_id, Options opts) {
+CertificateManagerClient::CreateCertificateMapEntry(NoAwaitTag, std::string const& parent, google::cloud::certificatemanager::v1::CertificateMapEntry const& certificate_map_entry, std::string const& certificate_map_entry_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest
-      request;
+  google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_map_entry() = certificate_map_entry;
   request.set_certificate_map_entry_id(certificate_map_entry_id);
@@ -464,134 +353,95 @@ CertificateManagerClient::CreateCertificateMapEntry(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-CertificateManagerClient::CreateCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        CreateCertificateMapEntryRequest const& request,
-    Options opts) {
+CertificateManagerClient::CreateCertificateMapEntry(google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateMapEntry(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificateMapEntry(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateMapEntryRequest const& request,
-    Options opts) {
+CertificateManagerClient::CreateCertificateMapEntry(NoAwaitTag, google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateMapEntry(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-CertificateManagerClient::CreateCertificateMapEntry(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::CreateCertificateMapEntry(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateMapEntry(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-CertificateManagerClient::UpdateCertificateMapEntry(
-    google::cloud::certificatemanager::v1::CertificateMapEntry const&
-        certificate_map_entry,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::CertificateMapEntry const& certificate_map_entry, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest
-      request;
+  google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest request;
   *request.mutable_certificate_map_entry() = certificate_map_entry;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateMapEntry(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateCertificateMapEntry(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::CertificateMapEntry const&
-        certificate_map_entry,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateCertificateMapEntry(NoAwaitTag, google::cloud::certificatemanager::v1::CertificateMapEntry const& certificate_map_entry, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest
-      request;
+  google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest request;
   *request.mutable_certificate_map_entry() = certificate_map_entry;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateMapEntry(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-CertificateManagerClient::UpdateCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        UpdateCertificateMapEntryRequest const& request,
-    Options opts) {
+CertificateManagerClient::UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateMapEntry(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateCertificateMapEntry(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        UpdateCertificateMapEntryRequest const& request,
-    Options opts) {
+CertificateManagerClient::UpdateCertificateMapEntry(NoAwaitTag, google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateMapEntry(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-CertificateManagerClient::UpdateCertificateMapEntry(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::UpdateCertificateMapEntry(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateMapEntry(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateMapEntry(std::string const& name,
-                                                    Options opts) {
+CertificateManagerClient::DeleteCertificateMapEntry(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest
-      request;
+  google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateMapEntry(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificateMapEntry(NoAwaitTag,
-                                                    std::string const& name,
-                                                    Options opts) {
+CertificateManagerClient::DeleteCertificateMapEntry(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest
-      request;
+  google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateMapEntry(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateMapEntryRequest const& request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificateMapEntry(google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateMapEntry(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificateMapEntry(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateMapEntryRequest const& request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificateMapEntry(NoAwaitTag, google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateMapEntry(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateMapEntry(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::DeleteCertificateMapEntry(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateMapEntry(operation);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
-CertificateManagerClient::ListDnsAuthorizations(std::string const& parent,
-                                                Options opts) {
+CertificateManagerClient::ListDnsAuthorizations(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest request;
   request.set_parent(parent);
@@ -599,16 +449,13 @@ CertificateManagerClient::ListDnsAuthorizations(std::string const& parent,
 }
 
 StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
-CertificateManagerClient::ListDnsAuthorizations(
-    google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest request,
-    Options opts) {
+CertificateManagerClient::ListDnsAuthorizations(google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDnsAuthorizations(std::move(request));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
-CertificateManagerClient::GetDnsAuthorization(std::string const& name,
-                                              Options opts) {
+CertificateManagerClient::GetDnsAuthorization(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest request;
   request.set_name(name);
@@ -616,20 +463,13 @@ CertificateManagerClient::GetDnsAuthorization(std::string const& name,
 }
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
-CertificateManagerClient::GetDnsAuthorization(
-    google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::GetDnsAuthorization(google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDnsAuthorization(request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-CertificateManagerClient::CreateDnsAuthorization(
-    std::string const& parent,
-    google::cloud::certificatemanager::v1::DnsAuthorization const&
-        dns_authorization,
-    std::string const& dns_authorization_id, Options opts) {
+CertificateManagerClient::CreateDnsAuthorization(std::string const& parent, google::cloud::certificatemanager::v1::DnsAuthorization const& dns_authorization, std::string const& dns_authorization_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest request;
   request.set_parent(parent);
@@ -639,11 +479,7 @@ CertificateManagerClient::CreateDnsAuthorization(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateDnsAuthorization(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::certificatemanager::v1::DnsAuthorization const&
-        dns_authorization,
-    std::string const& dns_authorization_id, Options opts) {
+CertificateManagerClient::CreateDnsAuthorization(NoAwaitTag, std::string const& parent, google::cloud::certificatemanager::v1::DnsAuthorization const& dns_authorization, std::string const& dns_authorization_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest request;
   request.set_parent(parent);
@@ -653,36 +489,25 @@ CertificateManagerClient::CreateDnsAuthorization(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-CertificateManagerClient::CreateDnsAuthorization(
-    google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateDnsAuthorization(google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDnsAuthorization(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateDnsAuthorization(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateDnsAuthorization(NoAwaitTag, google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDnsAuthorization(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-CertificateManagerClient::CreateDnsAuthorization(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::CreateDnsAuthorization(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDnsAuthorization(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-CertificateManagerClient::UpdateDnsAuthorization(
-    google::cloud::certificatemanager::v1::DnsAuthorization const&
-        dns_authorization,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateDnsAuthorization(google::cloud::certificatemanager::v1::DnsAuthorization const& dns_authorization, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest request;
   *request.mutable_dns_authorization() = dns_authorization;
@@ -691,11 +516,7 @@ CertificateManagerClient::UpdateDnsAuthorization(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateDnsAuthorization(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::DnsAuthorization const&
-        dns_authorization,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateDnsAuthorization(NoAwaitTag, google::cloud::certificatemanager::v1::DnsAuthorization const& dns_authorization, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest request;
   *request.mutable_dns_authorization() = dns_authorization;
@@ -704,34 +525,25 @@ CertificateManagerClient::UpdateDnsAuthorization(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-CertificateManagerClient::UpdateDnsAuthorization(
-    google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateDnsAuthorization(google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDnsAuthorization(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateDnsAuthorization(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateDnsAuthorization(NoAwaitTag, google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDnsAuthorization(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-CertificateManagerClient::UpdateDnsAuthorization(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::UpdateDnsAuthorization(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDnsAuthorization(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteDnsAuthorization(std::string const& name,
-                                                 Options opts) {
+CertificateManagerClient::DeleteDnsAuthorization(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest request;
   request.set_name(name);
@@ -739,9 +551,7 @@ CertificateManagerClient::DeleteDnsAuthorization(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteDnsAuthorization(NoAwaitTag,
-                                                 std::string const& name,
-                                                 Options opts) {
+CertificateManagerClient::DeleteDnsAuthorization(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest request;
   request.set_name(name);
@@ -749,79 +559,55 @@ CertificateManagerClient::DeleteDnsAuthorization(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteDnsAuthorization(
-    google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteDnsAuthorization(google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDnsAuthorization(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteDnsAuthorization(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteDnsAuthorization(NoAwaitTag, google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDnsAuthorization(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteDnsAuthorization(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::DeleteDnsAuthorization(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDnsAuthorization(operation);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
-CertificateManagerClient::ListCertificateIssuanceConfigs(
-    std::string const& parent, Options opts) {
+CertificateManagerClient::ListCertificateIssuanceConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest
-      request;
+  google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest request;
   request.set_parent(parent);
   return connection_->ListCertificateIssuanceConfigs(request);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
-CertificateManagerClient::ListCertificateIssuanceConfigs(
-    google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest
-        request,
-    Options opts) {
+CertificateManagerClient::ListCertificateIssuanceConfigs(google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificateIssuanceConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
-CertificateManagerClient::GetCertificateIssuanceConfig(std::string const& name,
-                                                       Options opts) {
+CertificateManagerClient::GetCertificateIssuanceConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest
-      request;
+  google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest request;
   request.set_name(name);
   return connection_->GetCertificateIssuanceConfig(request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
-CertificateManagerClient::GetCertificateIssuanceConfig(
-    google::cloud::certificatemanager::v1::
-        GetCertificateIssuanceConfigRequest const& request,
-    Options opts) {
+CertificateManagerClient::GetCertificateIssuanceConfig(google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificateIssuanceConfig(request);
 }
 
-future<
-    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
-CertificateManagerClient::CreateCertificateIssuanceConfig(
-    std::string const& parent,
-    google::cloud::certificatemanager::v1::CertificateIssuanceConfig const&
-        certificate_issuance_config,
-    std::string const& certificate_issuance_config_id, Options opts) {
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerClient::CreateCertificateIssuanceConfig(std::string const& parent, google::cloud::certificatemanager::v1::CertificateIssuanceConfig const& certificate_issuance_config, std::string const& certificate_issuance_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest
-      request;
+  google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_issuance_config() = certificate_issuance_config;
   request.set_certificate_issuance_config_id(certificate_issuance_config_id);
@@ -829,97 +615,69 @@ CertificateManagerClient::CreateCertificateIssuanceConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificateIssuanceConfig(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::certificatemanager::v1::CertificateIssuanceConfig const&
-        certificate_issuance_config,
-    std::string const& certificate_issuance_config_id, Options opts) {
+CertificateManagerClient::CreateCertificateIssuanceConfig(NoAwaitTag, std::string const& parent, google::cloud::certificatemanager::v1::CertificateIssuanceConfig const& certificate_issuance_config, std::string const& certificate_issuance_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest
-      request;
+  google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_issuance_config() = certificate_issuance_config;
   request.set_certificate_issuance_config_id(certificate_issuance_config_id);
   return connection_->CreateCertificateIssuanceConfig(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
-CertificateManagerClient::CreateCertificateIssuanceConfig(
-    google::cloud::certificatemanager::v1::
-        CreateCertificateIssuanceConfigRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerClient::CreateCertificateIssuanceConfig(google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateIssuanceConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateCertificateIssuanceConfig(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateIssuanceConfigRequest const& request,
-    Options opts) {
+CertificateManagerClient::CreateCertificateIssuanceConfig(NoAwaitTag, google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateIssuanceConfig(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
-CertificateManagerClient::CreateCertificateIssuanceConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerClient::CreateCertificateIssuanceConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateIssuanceConfig(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateIssuanceConfig(
-    std::string const& name, Options opts) {
+CertificateManagerClient::DeleteCertificateIssuanceConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest
-      request;
+  google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateIssuanceConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificateIssuanceConfig(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateManagerClient::DeleteCertificateIssuanceConfig(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest
-      request;
+  google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateIssuanceConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateIssuanceConfig(
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateIssuanceConfigRequest const& request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificateIssuanceConfig(google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateIssuanceConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteCertificateIssuanceConfig(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateIssuanceConfigRequest const& request,
-    Options opts) {
+CertificateManagerClient::DeleteCertificateIssuanceConfig(NoAwaitTag, google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateIssuanceConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteCertificateIssuanceConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::DeleteCertificateIssuanceConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateIssuanceConfig(operation);
 }
 
 StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
-CertificateManagerClient::ListTrustConfigs(std::string const& parent,
-                                           Options opts) {
+CertificateManagerClient::ListTrustConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::ListTrustConfigsRequest request;
   request.set_parent(parent);
@@ -927,16 +685,13 @@ CertificateManagerClient::ListTrustConfigs(std::string const& parent,
 }
 
 StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
-CertificateManagerClient::ListTrustConfigs(
-    google::cloud::certificatemanager::v1::ListTrustConfigsRequest request,
-    Options opts) {
+CertificateManagerClient::ListTrustConfigs(google::cloud::certificatemanager::v1::ListTrustConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTrustConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
-CertificateManagerClient::GetTrustConfig(std::string const& name,
-                                         Options opts) {
+CertificateManagerClient::GetTrustConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::GetTrustConfigRequest request;
   request.set_name(name);
@@ -944,18 +699,13 @@ CertificateManagerClient::GetTrustConfig(std::string const& name,
 }
 
 StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
-CertificateManagerClient::GetTrustConfig(
-    google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request,
-    Options opts) {
+CertificateManagerClient::GetTrustConfig(google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTrustConfig(request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-CertificateManagerClient::CreateTrustConfig(
-    std::string const& parent,
-    google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
-    std::string const& trust_config_id, Options opts) {
+CertificateManagerClient::CreateTrustConfig(std::string const& parent, google::cloud::certificatemanager::v1::TrustConfig const& trust_config, std::string const& trust_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateTrustConfigRequest request;
   request.set_parent(parent);
@@ -965,10 +715,7 @@ CertificateManagerClient::CreateTrustConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateTrustConfig(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
-    std::string const& trust_config_id, Options opts) {
+CertificateManagerClient::CreateTrustConfig(NoAwaitTag, std::string const& parent, google::cloud::certificatemanager::v1::TrustConfig const& trust_config, std::string const& trust_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::CreateTrustConfigRequest request;
   request.set_parent(parent);
@@ -978,35 +725,25 @@ CertificateManagerClient::CreateTrustConfig(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-CertificateManagerClient::CreateTrustConfig(
-    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateTrustConfig(google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrustConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::CreateTrustConfig(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::CreateTrustConfig(NoAwaitTag, google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrustConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-CertificateManagerClient::CreateTrustConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::CreateTrustConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrustConfig(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-CertificateManagerClient::UpdateTrustConfig(
-    google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateTrustConfig(google::cloud::certificatemanager::v1::TrustConfig const& trust_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateTrustConfigRequest request;
   *request.mutable_trust_config() = trust_config;
@@ -1015,10 +752,7 @@ CertificateManagerClient::UpdateTrustConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateTrustConfig(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateManagerClient::UpdateTrustConfig(NoAwaitTag, google::cloud::certificatemanager::v1::TrustConfig const& trust_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::UpdateTrustConfigRequest request;
   *request.mutable_trust_config() = trust_config;
@@ -1027,34 +761,25 @@ CertificateManagerClient::UpdateTrustConfig(
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-CertificateManagerClient::UpdateTrustConfig(
-    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateTrustConfig(google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrustConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::UpdateTrustConfig(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::UpdateTrustConfig(NoAwaitTag, google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrustConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-CertificateManagerClient::UpdateTrustConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::UpdateTrustConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrustConfig(operation);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteTrustConfig(std::string const& name,
-                                            Options opts) {
+CertificateManagerClient::DeleteTrustConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteTrustConfigRequest request;
   request.set_name(name);
@@ -1062,8 +787,7 @@ CertificateManagerClient::DeleteTrustConfig(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteTrustConfig(NoAwaitTag, std::string const& name,
-                                            Options opts) {
+CertificateManagerClient::DeleteTrustConfig(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::certificatemanager::v1::DeleteTrustConfigRequest request;
   request.set_name(name);
@@ -1071,49 +795,37 @@ CertificateManagerClient::DeleteTrustConfig(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteTrustConfig(
-    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteTrustConfig(google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrustConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateManagerClient::DeleteTrustConfig(
-    NoAwaitTag,
-    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-        request,
-    Options opts) {
+CertificateManagerClient::DeleteTrustConfig(NoAwaitTag, google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrustConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-CertificateManagerClient::DeleteTrustConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateManagerClient::DeleteTrustConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrustConfig(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-CertificateManagerClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+CertificateManagerClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-CertificateManagerClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+CertificateManagerClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-CertificateManagerClient::ListOperations(std::string const& name,
-                                         std::string const& filter,
-                                         Options opts) {
+CertificateManagerClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1122,50 +834,49 @@ CertificateManagerClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-CertificateManagerClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+CertificateManagerClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> CertificateManagerClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+CertificateManagerClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> CertificateManagerClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+CertificateManagerClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status CertificateManagerClient::DeleteOperation(std::string const& name,
-                                                 Options opts) {
+Status
+CertificateManagerClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status CertificateManagerClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+CertificateManagerClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status CertificateManagerClient::CancelOperation(std::string const& name,
-                                                 Options opts) {
+Status
+CertificateManagerClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status CertificateManagerClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+CertificateManagerClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

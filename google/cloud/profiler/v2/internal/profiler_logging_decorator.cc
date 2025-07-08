@@ -31,18 +31,21 @@ namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceLogging::ProfilerServiceLogging(
-    std::shared_ptr<ProfilerServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<ProfilerServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceLogging::CreateProfile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudprofiler::v2::CreateProfileRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
         return child_->CreateProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,13 +53,13 @@ ProfilerServiceLogging::CreateProfile(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceLogging::CreateOfflineProfile(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudprofiler::v2::
-                 CreateOfflineProfileRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
         return child_->CreateOfflineProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -64,12 +67,13 @@ ProfilerServiceLogging::CreateOfflineProfile(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceLogging::UpdateProfile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
         return child_->UpdateProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

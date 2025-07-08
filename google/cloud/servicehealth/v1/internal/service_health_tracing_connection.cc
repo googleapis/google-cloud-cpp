@@ -34,85 +34,65 @@ ServiceHealthTracingConnection::ServiceHealthTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::servicehealth::v1::Event>
-ServiceHealthTracingConnection::ListEvents(
-    google::cloud::servicehealth::v1::ListEventsRequest request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::ListEvents");
+ServiceHealthTracingConnection::ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::ListEvents");
   internal::OTelScope scope(span);
   auto sr = child_->ListEvents(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::servicehealth::v1::Event>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::servicehealth::v1::Event>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event>
-ServiceHealthTracingConnection::GetEvent(
-    google::cloud::servicehealth::v1::GetEventRequest const& request) {
-  auto span =
-      internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::GetEvent");
+ServiceHealthTracingConnection::GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::GetEvent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEvent(request));
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthTracingConnection::ListOrganizationEvents(
-    google::cloud::servicehealth::v1::ListOrganizationEventsRequest request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::ListOrganizationEvents");
+ServiceHealthTracingConnection::ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::ListOrganizationEvents");
   internal::OTelScope scope(span);
   auto sr = child_->ListOrganizationEvents(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::servicehealth::v1::OrganizationEvent>(std::move(span),
-                                                           std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::servicehealth::v1::OrganizationEvent>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthTracingConnection::GetOrganizationEvent(
-    google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::GetOrganizationEvent");
+ServiceHealthTracingConnection::GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::GetOrganizationEvent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOrganizationEvent(request));
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthTracingConnection::ListOrganizationImpacts(
-    google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::ListOrganizationImpacts");
+ServiceHealthTracingConnection::ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::ListOrganizationImpacts");
   internal::OTelScope scope(span);
   auto sr = child_->ListOrganizationImpacts(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::servicehealth::v1::OrganizationImpact>(std::move(span),
-                                                            std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::servicehealth::v1::OrganizationImpact>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthTracingConnection::GetOrganizationImpact(
-    google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::GetOrganizationImpact");
+ServiceHealthTracingConnection::GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::GetOrganizationImpact");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOrganizationImpact(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ServiceHealthTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::ListLocations");
+ServiceHealthTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ServiceHealthTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "servicehealth_v1::ServiceHealthConnection::GetLocation");
+ServiceHealthTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("servicehealth_v1::ServiceHealthConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }

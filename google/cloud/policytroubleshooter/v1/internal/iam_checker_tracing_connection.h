@@ -36,15 +36,12 @@ class IamCheckerTracingConnection
   ~IamCheckerTracingConnection() override = default;
 
   explicit IamCheckerTracingConnection(
-      std::shared_ptr<policytroubleshooter_v1::IamCheckerConnection> child);
+    std::shared_ptr<policytroubleshooter_v1::IamCheckerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<policytroubleshooter_v1::IamCheckerConnection> child_;

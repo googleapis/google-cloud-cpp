@@ -26,72 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SecuritySettingsServiceConnectionIdempotencyPolicy::
-    ~SecuritySettingsServiceConnectionIdempotencyPolicy() = default;
+SecuritySettingsServiceConnectionIdempotencyPolicy::~SecuritySettingsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
 SecuritySettingsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-SecuritySettingsServiceConnectionIdempotencyPolicy::CreateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SecuritySettingsServiceConnectionIdempotencyPolicy::GetSecuritySettings(
-    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SecuritySettingsServiceConnectionIdempotencyPolicy::UpdateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SecuritySettingsServiceConnectionIdempotencyPolicy::ListSecuritySettings(
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) {  // NOLINT
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SecuritySettingsServiceConnectionIdempotencyPolicy::DeleteSecuritySettings(
-    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
-MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>();
 }
 

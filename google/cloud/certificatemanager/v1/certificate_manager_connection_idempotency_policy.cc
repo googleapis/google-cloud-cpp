@@ -26,218 +26,155 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CertificateManagerConnectionIdempotencyPolicy::
-    ~CertificateManagerConnectionIdempotencyPolicy() = default;
+CertificateManagerConnectionIdempotencyPolicy::~CertificateManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
 CertificateManagerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CertificateManagerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificates(
-    google::cloud::certificatemanager::v1::ListCertificatesRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificates(google::cloud::certificatemanager::v1::ListCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::GetCertificate(
-    google::cloud::certificatemanager::v1::GetCertificateRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetCertificate(google::cloud::certificatemanager::v1::GetCertificateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateCertificate(
-    google::cloud::certificatemanager::v1::CreateCertificateRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateCertificate(google::cloud::certificatemanager::v1::CreateCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateCertificate(
-    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateCertificate(google::cloud::certificatemanager::v1::UpdateCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteCertificate(
-    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteCertificate(google::cloud::certificatemanager::v1::DeleteCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificateMaps(
-    google::cloud::certificatemanager::v1::
-        ListCertificateMapsRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificateMaps(google::cloud::certificatemanager::v1::ListCertificateMapsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::GetCertificateMap(
-    google::cloud::certificatemanager::v1::GetCertificateMapRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetCertificateMap(google::cloud::certificatemanager::v1::GetCertificateMapRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateCertificateMap(
-    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateCertificateMap(google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateCertificateMap(
-    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateCertificateMap(google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateMap(
-    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateMap(google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::ListCertificateMapEntries(
-    google::cloud::certificatemanager::v1::
-        ListCertificateMapEntriesRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificateMapEntries(google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::GetCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        GetCertificateMapEntryRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetCertificateMapEntry(google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::CreateCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        CreateCertificateMapEntryRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateCertificateMapEntry(google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::UpdateCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        UpdateCertificateMapEntryRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateMapEntry(
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateMapEntryRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateMapEntry(google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::ListDnsAuthorizations(
-    google::cloud::certificatemanager::v1::
-        ListDnsAuthorizationsRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListDnsAuthorizations(google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::GetDnsAuthorization(
-    google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetDnsAuthorization(google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::CreateDnsAuthorization(
-    google::cloud::certificatemanager::v1::
-        CreateDnsAuthorizationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateDnsAuthorization(google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::UpdateDnsAuthorization(
-    google::cloud::certificatemanager::v1::
-        UpdateDnsAuthorizationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateDnsAuthorization(google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::DeleteDnsAuthorization(
-    google::cloud::certificatemanager::v1::
-        DeleteDnsAuthorizationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteDnsAuthorization(google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::ListCertificateIssuanceConfigs(
-    google::cloud::certificatemanager::v1::
-        ListCertificateIssuanceConfigsRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificateIssuanceConfigs(google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::GetCertificateIssuanceConfig(
-    google::cloud::certificatemanager::v1::
-        GetCertificateIssuanceConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetCertificateIssuanceConfig(google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::CreateCertificateIssuanceConfig(
-    google::cloud::certificatemanager::v1::
-        CreateCertificateIssuanceConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateCertificateIssuanceConfig(google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateIssuanceConfig(
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateIssuanceConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateIssuanceConfig(google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::ListTrustConfigs(
-    google::cloud::certificatemanager::v1::ListTrustConfigsRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListTrustConfigs(google::cloud::certificatemanager::v1::ListTrustConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::GetTrustConfig(
-    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetTrustConfig(google::cloud::certificatemanager::v1::GetTrustConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateTrustConfig(
-    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateTrustConfig(google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateTrustConfig(
-    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateTrustConfig(google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteTrustConfig(
-    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteTrustConfig(google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateManagerConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
-MakeDefaultCertificateManagerConnectionIdempotencyPolicy() {
+    MakeDefaultCertificateManagerConnectionIdempotencyPolicy() {
   return std::make_unique<CertificateManagerConnectionIdempotencyPolicy>();
 }
 

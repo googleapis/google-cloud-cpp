@@ -19,8 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CONNECTION_H
 
-#include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
-#include "google/cloud/vision/v1/internal/image_annotator_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -29,6 +27,8 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
+#include "google/cloud/vision/v1/internal/image_annotator_retry_traits.h"
 #include <google/cloud/vision/v1/image_annotator.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -55,8 +55,7 @@ class ImageAnnotatorRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ImageAnnotatorLimitedErrorCountRetryPolicy
-    : public ImageAnnotatorRetryPolicy {
+class ImageAnnotatorLimitedErrorCountRetryPolicy : public ImageAnnotatorRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class ImageAnnotatorLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ImageAnnotatorLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ImageAnnotatorLimitedErrorCountRetryPolicy(
       ImageAnnotatorLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ImageAnnotatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ImageAnnotatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ImageAnnotatorLimitedErrorCountRetryPolicy(
       ImageAnnotatorLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ImageAnnotatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ImageAnnotatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class ImageAnnotatorLimitedErrorCountRetryPolicy
   using BaseType = ImageAnnotatorRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      vision_v1_internal::ImageAnnotatorRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<vision_v1_internal::ImageAnnotatorRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +130,12 @@ class ImageAnnotatorLimitedTimeRetryPolicy : public ImageAnnotatorRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ImageAnnotatorLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ImageAnnotatorLimitedTimeRetryPolicy(
-      ImageAnnotatorLimitedTimeRetryPolicy&& rhs) noexcept
-      : ImageAnnotatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ImageAnnotatorLimitedTimeRetryPolicy(
-      ImageAnnotatorLimitedTimeRetryPolicy const& rhs) noexcept
-      : ImageAnnotatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ImageAnnotatorLimitedTimeRetryPolicy(ImageAnnotatorLimitedTimeRetryPolicy&& rhs) noexcept
+    : ImageAnnotatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ImageAnnotatorLimitedTimeRetryPolicy(ImageAnnotatorLimitedTimeRetryPolicy const& rhs) noexcept
+    : ImageAnnotatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +157,7 @@ class ImageAnnotatorLimitedTimeRetryPolicy : public ImageAnnotatorRetryPolicy {
   using BaseType = ImageAnnotatorRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      vision_v1_internal::ImageAnnotatorRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<vision_v1_internal::ImageAnnotatorRetryTraits> impl_;
 };
 
 /**
@@ -186,43 +179,31 @@ class ImageAnnotatorConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
-  BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
+  BatchAnnotateImages(google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
 
   virtual StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
+  BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
+  AsyncBatchAnnotateImages(google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      NoAwaitTag,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateImages(NoAwaitTag, google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
+  AsyncBatchAnnotateImages( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
+  virtual future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
+  AsyncBatchAnnotateFiles(google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      NoAwaitTag,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateFiles(NoAwaitTag, google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
+  AsyncBatchAnnotateFiles( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

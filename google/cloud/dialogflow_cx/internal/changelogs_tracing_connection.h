@@ -30,37 +30,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ChangelogsTracingConnection : public dialogflow_cx::ChangelogsConnection {
+class ChangelogsTracingConnection
+    : public dialogflow_cx::ChangelogsConnection {
  public:
   ~ChangelogsTracingConnection() override = default;
 
   explicit ChangelogsTracingConnection(
-      std::shared_ptr<dialogflow_cx::ChangelogsConnection> child);
+    std::shared_ptr<dialogflow_cx::ChangelogsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Changelog> ListChangelogs(
-      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request)
-      override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Changelog>
+  ListChangelogs(google::cloud::dialogflow::cx::v3::ListChangelogsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
+  GetChangelog(google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::ChangelogsConnection> child_;

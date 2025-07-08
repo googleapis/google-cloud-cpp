@@ -26,17 +26,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlIamPoliciesServiceConnectionIdempotencyPolicy::
-    ~SqlIamPoliciesServiceConnectionIdempotencyPolicy() = default;
+SqlIamPoliciesServiceConnectionIdempotencyPolicy::~SqlIamPoliciesServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlIamPoliciesServiceConnectionIdempotencyPolicy>
 SqlIamPoliciesServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SqlIamPoliciesServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SqlIamPoliciesServiceConnectionIdempotencyPolicy>(*this);
 }
 
 std::unique_ptr<SqlIamPoliciesServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlIamPoliciesServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSqlIamPoliciesServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlIamPoliciesServiceConnectionIdempotencyPolicy>();
 }
 

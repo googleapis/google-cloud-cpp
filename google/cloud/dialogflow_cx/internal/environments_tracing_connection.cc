@@ -34,30 +34,23 @@ EnvironmentsTracingConnection::EnvironmentsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-EnvironmentsTracingConnection::ListEnvironments(
-    google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::ListEnvironments");
+EnvironmentsTracingConnection::ListEnvironments(google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::ListEnvironments");
   internal::OTelScope scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Environment>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::Environment>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
-EnvironmentsTracingConnection::GetEnvironment(
-    google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::GetEnvironment");
+EnvironmentsTracingConnection::GetEnvironment(google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-EnvironmentsTracingConnection::CreateEnvironment(
-    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-        request) {
+EnvironmentsTracingConnection::CreateEnvironment(google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
   internal::OTelScope scope(span);
@@ -66,14 +59,12 @@ EnvironmentsTracingConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::CreateEnvironment(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateEnvironment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateEnvironment(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -83,13 +74,11 @@ EnvironmentsTracingConnection::CreateEnvironment(
       "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateEnvironment(operation));
+      child_->CreateEnvironment(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-EnvironmentsTracingConnection::UpdateEnvironment(
-    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-        request) {
+EnvironmentsTracingConnection::UpdateEnvironment(google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
   internal::OTelScope scope(span);
@@ -98,14 +87,12 @@ EnvironmentsTracingConnection::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::UpdateEnvironment(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateEnvironment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateEnvironment(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -115,35 +102,27 @@ EnvironmentsTracingConnection::UpdateEnvironment(
       "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateEnvironment(operation));
+      child_->UpdateEnvironment(operation));
 }
 
-Status EnvironmentsTracingConnection::DeleteEnvironment(
-    google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::DeleteEnvironment");
+Status
+EnvironmentsTracingConnection::DeleteEnvironment(google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeleteEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteEnvironment(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-EnvironmentsTracingConnection::LookupEnvironmentHistory(
-    google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::LookupEnvironmentHistory");
+EnvironmentsTracingConnection::LookupEnvironmentHistory(google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::LookupEnvironmentHistory");
   internal::OTelScope scope(span);
   auto sr = child_->LookupEnvironmentHistory(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Environment>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::Environment>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-EnvironmentsTracingConnection::RunContinuousTest(
-    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-        request) {
+EnvironmentsTracingConnection::RunContinuousTest(google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
   internal::OTelScope scope(span);
@@ -152,14 +131,12 @@ EnvironmentsTracingConnection::RunContinuousTest(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::RunContinuousTest(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-        request) {
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->RunContinuousTest(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RunContinuousTest(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
@@ -169,94 +146,81 @@ EnvironmentsTracingConnection::RunContinuousTest(
       "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->RunContinuousTest(operation));
+      child_->RunContinuousTest(operation));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
-EnvironmentsTracingConnection::ListContinuousTestResults(
-    google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::ListContinuousTestResults");
+EnvironmentsTracingConnection::ListContinuousTestResults(google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::ListContinuousTestResults");
   internal::OTelScope scope(span);
   auto sr = child_->ListContinuousTestResults(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::ContinuousTestResult>(std::move(span),
-                                                               std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-EnvironmentsTracingConnection::DeployFlow(
-    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
+EnvironmentsTracingConnection::DeployFlow(google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::DeployFlow");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeployFlow(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::DeployFlow(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::DeployFlow");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeployFlow(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeployFlow(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
 EnvironmentsTracingConnection::DeployFlow(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::DeployFlow");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeployFlow(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeployFlow(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-EnvironmentsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::ListLocations");
+EnvironmentsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-EnvironmentsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::GetLocation");
+EnvironmentsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EnvironmentsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::ListOperations");
+EnvironmentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EnvironmentsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::GetOperation");
+EnvironmentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status EnvironmentsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::EnvironmentsConnection::CancelOperation");
+Status
+EnvironmentsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

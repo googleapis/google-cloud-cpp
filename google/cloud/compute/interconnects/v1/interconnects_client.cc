@@ -28,85 +28,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InterconnectsClient::InterconnectsClient(
     std::shared_ptr<InterconnectsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 InterconnectsClient::~InterconnectsClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::DeleteInterconnect(std::string const& project,
-                                        std::string const& interconnect,
-                                        Options opts) {
+InterconnectsClient::DeleteInterconnect(std::string const& project, std::string const& interconnect, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   return connection_->DeleteInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::DeleteInterconnect(NoAwaitTag, std::string const& project,
-                                        std::string const& interconnect,
-                                        Options opts) {
+InterconnectsClient::DeleteInterconnect(NoAwaitTag, std::string const& project, std::string const& interconnect, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   return connection_->DeleteInterconnect(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::DeleteInterconnect(
-    google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::DeleteInterconnect(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::DeleteInterconnect(NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnect(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::DeleteInterconnect(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectsClient::DeleteInterconnect(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnect(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsClient::GetInterconnect(std::string const& project,
-                                     std::string const& interconnect,
-                                     Options opts) {
+InterconnectsClient::GetInterconnect(std::string const& project, std::string const& interconnect, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   return connection_->GetInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsClient::GetInterconnect(
-    google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::GetInterconnect(google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-InterconnectsClient::GetDiagnostics(std::string const& project,
-                                    std::string const& interconnect,
-                                    Options opts) {
+InterconnectsClient::GetDiagnostics(std::string const& project, std::string const& interconnect, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest request;
   request.set_project(project);
@@ -115,114 +93,80 @@ InterconnectsClient::GetDiagnostics(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-InterconnectsClient::GetDiagnostics(
-    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
-        request,
-    Options opts) {
+InterconnectsClient::GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDiagnostics(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
-InterconnectsClient::GetMacsecConfig(std::string const& project,
-                                     std::string const& interconnect,
-                                     Options opts) {
+InterconnectsClient::GetMacsecConfig(std::string const& project, std::string const& interconnect, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   return connection_->GetMacsecConfig(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
-InterconnectsClient::GetMacsecConfig(
-    google::cloud::cpp::compute::interconnects::v1::
-        GetMacsecConfigRequest const& request,
-    Options opts) {
+InterconnectsClient::GetMacsecConfig(google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMacsecConfig(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::InsertInterconnect(
-    std::string const& project,
-    google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource,
-    Options opts) {
+InterconnectsClient::InsertInterconnect(std::string const& project, google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest request;
   request.set_project(project);
   *request.mutable_interconnect_resource() = interconnect_resource;
   return connection_->InsertInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::InsertInterconnect(
-    NoAwaitTag, std::string const& project,
-    google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource,
-    Options opts) {
+InterconnectsClient::InsertInterconnect(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest request;
   request.set_project(project);
   *request.mutable_interconnect_resource() = interconnect_resource;
   return connection_->InsertInterconnect(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::InsertInterconnect(
-    google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::InsertInterconnect(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::InsertInterconnect(NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInterconnect(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::InsertInterconnect(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectsClient::InsertInterconnect(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInterconnect(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsClient::ListInterconnects(std::string const& project,
-                                       Options opts) {
+InterconnectsClient::ListInterconnects(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request;
   request.set_project(project);
   return connection_->ListInterconnects(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsClient::ListInterconnects(
-    google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
-        request,
-    Options opts) {
+InterconnectsClient::ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInterconnects(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::PatchInterconnect(
-    std::string const& project, std::string const& interconnect,
-    google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource,
-    Options opts) {
+InterconnectsClient::PatchInterconnect(std::string const& project, std::string const& interconnect, google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   *request.mutable_interconnect_resource() = interconnect_resource;
@@ -230,13 +174,9 @@ InterconnectsClient::PatchInterconnect(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::PatchInterconnect(
-    NoAwaitTag, std::string const& project, std::string const& interconnect,
-    google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource,
-    Options opts) {
+InterconnectsClient::PatchInterconnect(NoAwaitTag, std::string const& project, std::string const& interconnect, google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest
-      request;
+  google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   *request.mutable_interconnect_resource() = interconnect_resource;
@@ -244,83 +184,57 @@ InterconnectsClient::PatchInterconnect(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::PatchInterconnect(
-    google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::PatchInterconnect(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectRequest const& request,
-    Options opts) {
+InterconnectsClient::PatchInterconnect(NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInterconnect(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::PatchInterconnect(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectsClient::PatchInterconnect(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInterconnect(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::SetLabels(
-    std::string const& project, std::string const& resource,
-    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
-        global_set_labels_request_resource,
-    Options opts) {
+InterconnectsClient::SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_labels_request_resource() =
-      global_set_labels_request_resource;
+  *request.mutable_global_set_labels_request_resource() = global_set_labels_request_resource;
   return connection_->SetLabels(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::SetLabels(
-    NoAwaitTag, std::string const& project, std::string const& resource,
-    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
-        global_set_labels_request_resource,
-    Options opts) {
+InterconnectsClient::SetLabels(NoAwaitTag, std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_labels_request_resource() =
-      global_set_labels_request_resource;
+  *request.mutable_global_set_labels_request_resource() = global_set_labels_request_resource;
   return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::SetLabels(
-    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
-        request,
-    Options opts) {
+InterconnectsClient::SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsClient::SetLabels(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
-        request,
-    Options opts) {
+InterconnectsClient::SetLabels(NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::SetLabels(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectsClient::SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(operation);
 }

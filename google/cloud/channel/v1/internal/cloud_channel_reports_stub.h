@@ -25,8 +25,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/channel/v1/operations.pb.h>
-#include <google/cloud/channel/v1/reports_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/channel/v1/reports_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,38 +46,44 @@ class CloudChannelReportsServiceStub {
       google::cloud::channel::v1::RunReportJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RunReportJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::channel::v1::RunReportJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
-  FetchReportResults(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::channel::v1::FetchReportResultsResponse> FetchReportResults(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::channel::v1::FetchReportResultsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -87,15 +93,11 @@ class CloudChannelReportsServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultCloudChannelReportsServiceStub
-    : public CloudChannelReportsServiceStub {
+class DefaultCloudChannelReportsServiceStub : public CloudChannelReportsServiceStub {
  public:
   DefaultCloudChannelReportsServiceStub(
-      std::unique_ptr<
-          google::cloud::channel::v1::CloudChannelReportsService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::channel::v1::CloudChannelReportsService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -106,33 +108,38 @@ class DefaultCloudChannelReportsServiceStub
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunReportJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
-  FetchReportResults(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::channel::v1::FetchReportResultsRequest const& request)
-      override;
+  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse> FetchReportResults(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::channel::v1::FetchReportResultsRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -148,11 +155,8 @@ class DefaultCloudChannelReportsServiceStub
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::channel::v1::CloudChannelReportsService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::channel::v1::CloudChannelReportsService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

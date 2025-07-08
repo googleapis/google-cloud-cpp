@@ -36,37 +36,33 @@ class ControlServiceTracingConnection
   ~ControlServiceTracingConnection() override = default;
 
   explicit ControlServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::ControlServiceConnection> child);
+    std::shared_ptr<discoveryengine_v1::ControlServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
-      google::cloud::discoveryengine::v1::CreateControlRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Control>
+  CreateControl(google::cloud::discoveryengine::v1::CreateControlRequest const& request) override;
 
-  Status DeleteControl(
-      google::cloud::discoveryengine::v1::DeleteControlRequest const& request)
-      override;
+  Status
+  DeleteControl(google::cloud::discoveryengine::v1::DeleteControlRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
-      google::cloud::discoveryengine::v1::UpdateControlRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Control>
+  UpdateControl(google::cloud::discoveryengine::v1::UpdateControlRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
-      google::cloud::discoveryengine::v1::GetControlRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Control>
+  GetControl(google::cloud::discoveryengine::v1::GetControlRequest const& request) override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Control> ListControls(
-      google::cloud::discoveryengine::v1::ListControlsRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Control>
+  ListControls(google::cloud::discoveryengine::v1::ListControlsRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::ControlServiceConnection> child_;

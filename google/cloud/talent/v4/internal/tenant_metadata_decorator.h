@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_METADATA_DECORATOR_H
 
-#include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,36 +34,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TenantServiceMetadata : public TenantServiceStub {
  public:
   ~TenantServiceMetadata() override = default;
-  TenantServiceMetadata(std::shared_ptr<TenantServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata,
-                        std::string api_client_header = "");
+  TenantServiceMetadata(
+      std::shared_ptr<TenantServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::GetTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
   Status DeleteTenant(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

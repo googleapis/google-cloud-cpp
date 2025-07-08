@@ -17,13 +17,13 @@
 // source: google/cloud/networkconnectivity/v1/policy_based_routing.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_connection_impl.h"
-#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -35,81 +35,56 @@ namespace {
 
 std::unique_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<networkconnectivity_v1::
-               PolicyBasedRoutingServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<networkconnectivity_v1::PolicyBasedRoutingServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<networkconnectivity_v1::
-                    PolicyBasedRoutingServiceConnectionIdempotencyPolicy>
+std::unique_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<networkconnectivity_v1::
-               PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<networkconnectivity_v1::PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options
-      .get<networkconnectivity_v1::
-               PolicyBasedRoutingServicePollingPolicyOption>()
-      ->clone();
+  return options.get<networkconnectivity_v1::PolicyBasedRoutingServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
-PolicyBasedRoutingServiceConnectionImpl::
-    PolicyBasedRoutingServiceConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            networkconnectivity_v1_internal::PolicyBasedRoutingServiceStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), PolicyBasedRoutingServiceConnection::options())) {
-}
+PolicyBasedRoutingServiceConnectionImpl::PolicyBasedRoutingServiceConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<networkconnectivity_v1_internal::PolicyBasedRoutingServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        PolicyBasedRoutingServiceConnection::options())) {}
 
 StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceConnectionImpl::ListPolicyBasedRoutes(
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest
-        request) {
+PolicyBasedRoutingServiceConnectionImpl::ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListPolicyBasedRoutes(request);
+  auto idempotency = idempotency_policy(*current)->ListPolicyBasedRoutes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::networkconnectivity::v1::
-                                      ListPolicyBasedRoutesRequest const& r) {
+          Options const& options, google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::networkconnectivity::v1::
-                       ListPolicyBasedRoutesRequest const& request) {
+                   google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) {
               return stub->ListPolicyBasedRoutes(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse
-             r) {
-        std::vector<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-            result(r.policy_based_routes().size());
+      [](google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse r) {
+        std::vector<google::cloud::networkconnectivity::v1::PolicyBasedRoute> result(r.policy_based_routes().size());
         auto& messages = *r.mutable_policy_based_routes();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -117,73 +92,62 @@ PolicyBasedRoutingServiceConnectionImpl::ListPolicyBasedRoutes(
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceConnectionImpl::GetPolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-        request) {
+PolicyBasedRoutingServiceConnectionImpl::GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPolicyBasedRoute(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 GetPolicyBasedRouteRequest const& request) {
+             google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
         return stub_->GetPolicyBasedRoute(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request) {
+PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreatePolicyBasedRoute(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::networkconnectivity::v1::PolicyBasedRoute>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::networkconnectivity::v1::
-                         CreatePolicyBasedRouteRequest const& request) {
-        return stub->AsyncCreatePolicyBasedRoute(cq, std::move(context),
-                                                 std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::networkconnectivity::v1::PolicyBasedRoute>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::networkconnectivity::v1::PolicyBasedRoute>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
+     return stub->AsyncCreatePolicyBasedRoute(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::networkconnectivity::v1::PolicyBasedRoute>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request) {
+      NoAwaitTag, google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePolicyBasedRoute(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 CreatePolicyBasedRouteRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
         return stub_->CreatePolicyBasedRoute(context, options, request);
       },
       *current, request, __func__);
@@ -191,94 +155,78 @@ PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
 PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::networkconnectivity::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreatePolicyBasedRoute",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::networkconnectivity::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
+        internal::InvalidArgumentError("operation does not correspond to CreatePolicyBasedRoute",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::networkconnectivity::v1::PolicyBasedRoute>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::networkconnectivity::v1::PolicyBasedRoute>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::networkconnectivity::v1::PolicyBasedRoute>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::networkconnectivity::v1::PolicyBasedRoute>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request) {
+PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeletePolicyBasedRoute(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::networkconnectivity::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::networkconnectivity::v1::
-                         DeletePolicyBasedRouteRequest const& request) {
-        return stub->AsyncDeletePolicyBasedRoute(cq, std::move(context),
-                                                 std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::networkconnectivity::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::networkconnectivity::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
+     return stub->AsyncDeletePolicyBasedRoute(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::networkconnectivity::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request) {
+      NoAwaitTag, google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePolicyBasedRoute(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 DeletePolicyBasedRouteRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
         return stub_->DeletePolicyBasedRoute(context, options, request);
       },
       *current, request, __func__);
@@ -286,71 +234,56 @@ PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::networkconnectivity::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeletePolicyBasedRoute",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::networkconnectivity::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeletePolicyBasedRoute",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::networkconnectivity::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::networkconnectivity::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::networkconnectivity::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::networkconnectivity::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-PolicyBasedRoutingServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+PolicyBasedRoutingServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -358,8 +291,7 @@ PolicyBasedRoutingServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-PolicyBasedRoutingServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+PolicyBasedRoutingServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -372,8 +304,7 @@ PolicyBasedRoutingServiceConnectionImpl::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy>
-PolicyBasedRoutingServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+PolicyBasedRoutingServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -386,8 +317,7 @@ PolicyBasedRoutingServiceConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy>
-PolicyBasedRoutingServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+PolicyBasedRoutingServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -400,8 +330,7 @@ PolicyBasedRoutingServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PolicyBasedRoutingServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+PolicyBasedRoutingServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -414,22 +343,17 @@ PolicyBasedRoutingServiceConnectionImpl::TestIamPermissions(
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyBasedRoutingServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+PolicyBasedRoutingServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -439,8 +363,7 @@ PolicyBasedRoutingServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -448,8 +371,7 @@ PolicyBasedRoutingServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+PolicyBasedRoutingServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -461,8 +383,8 @@ PolicyBasedRoutingServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status PolicyBasedRoutingServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+PolicyBasedRoutingServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -474,8 +396,8 @@ Status PolicyBasedRoutingServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status PolicyBasedRoutingServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+PolicyBasedRoutingServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

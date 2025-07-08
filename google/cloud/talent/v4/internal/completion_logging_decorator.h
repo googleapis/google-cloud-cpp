@@ -35,15 +35,17 @@ class CompletionLogging : public CompletionStub {
  public:
   ~CompletionLogging() override = default;
   CompletionLogging(std::shared_ptr<CompletionStub> child,
-                    TracingOptions tracing_options,
-                    std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

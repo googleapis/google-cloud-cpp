@@ -34,159 +34,133 @@ AssuredWorkloadsServiceTracingStub::AssuredWorkloadsServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceTracingStub::AsyncCreateWorkload(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "CreateWorkload");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "CreateWorkload");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateWorkload(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateWorkload(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AssuredWorkloadsServiceTracingStub::CreateWorkload(
-    grpc::ClientContext& context, Options options,
-    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "CreateWorkload");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "CreateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceTracingStub::UpdateWorkload(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::assuredworkloads::v1::Workload> AssuredWorkloadsServiceTracingStub::UpdateWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "UpdateWorkload");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "UpdateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
-AssuredWorkloadsServiceTracingStub::RestrictAllowedResources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "RestrictAllowedResources");
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse> AssuredWorkloadsServiceTracingStub::RestrictAllowedResources(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "RestrictAllowedResources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->RestrictAllowedResources(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->RestrictAllowedResources(context, options, request));
 }
 
 Status AssuredWorkloadsServiceTracingStub::DeleteWorkload(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "DeleteWorkload");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "DeleteWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceTracingStub::GetWorkload(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::assuredworkloads::v1::Workload> AssuredWorkloadsServiceTracingStub::GetWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "GetWorkload");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
-AssuredWorkloadsServiceTracingStub::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse> AssuredWorkloadsServiceTracingStub::ListWorkloads(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "ListWorkloads");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "ListWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWorkloads(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
-AssuredWorkloadsServiceTracingStub::ListViolations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse> AssuredWorkloadsServiceTracingStub::ListViolations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "ListViolations");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "ListViolations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListViolations(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::Violation>
-AssuredWorkloadsServiceTracingStub::GetViolation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::assuredworkloads::v1::Violation> AssuredWorkloadsServiceTracingStub::GetViolation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "GetViolation");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "GetViolation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetViolation(context, options, request));
 }
 
-StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
-AssuredWorkloadsServiceTracingStub::AcknowledgeViolation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "AcknowledgeViolation");
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse> AssuredWorkloadsServiceTracingStub::AcknowledgeViolation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "AcknowledgeViolation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->AcknowledgeViolation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->AcknowledgeViolation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-AssuredWorkloadsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> AssuredWorkloadsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-AssuredWorkloadsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> AssuredWorkloadsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
-      "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.assuredworkloads.v1.AssuredWorkloadsService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -203,7 +177,8 @@ AssuredWorkloadsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -216,15 +191,14 @@ future<Status> AssuredWorkloadsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<AssuredWorkloadsServiceStub>
-MakeAssuredWorkloadsServiceTracingStub(
+std::shared_ptr<AssuredWorkloadsServiceStub> MakeAssuredWorkloadsServiceTracingStub(
     std::shared_ptr<AssuredWorkloadsServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AssuredWorkloadsServiceTracingStub>(std::move(stub));

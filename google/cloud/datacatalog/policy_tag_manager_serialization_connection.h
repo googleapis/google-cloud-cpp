@@ -27,29 +27,19 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datacatalog_v1::MakePolicyTagManagerSerializationConnection
-/// directly.
-using ::google::cloud::datacatalog_v1::
-    MakePolicyTagManagerSerializationConnection;
+/// @deprecated Use datacatalog_v1::MakePolicyTagManagerSerializationConnection directly.
+using ::google::cloud::datacatalog_v1::MakePolicyTagManagerSerializationConnection;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationConnection
-/// directly.
+/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationConnection directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationConnection;
 
-/// @deprecated Use
-/// datacatalog_v1::PolicyTagManagerSerializationLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::datacatalog_v1::
-    PolicyTagManagerSerializationLimitedErrorCountRetryPolicy;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// datacatalog_v1::PolicyTagManagerSerializationLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::datacatalog_v1::
-    PolicyTagManagerSerializationLimitedTimeRetryPolicy;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationLimitedTimeRetryPolicy directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationLimitedTimeRetryPolicy;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationRetryPolicy
-/// directly.
+/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationRetryPolicy directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

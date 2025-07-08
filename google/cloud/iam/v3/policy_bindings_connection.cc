@@ -17,15 +17,15 @@
 // source: google/iam/v3/policy_bindings_service.proto
 
 #include "google/cloud/iam/v3/policy_bindings_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/iam/v3/internal/policy_bindings_connection_impl.h"
 #include "google/cloud/iam/v3/internal/policy_bindings_option_defaults.h"
 #include "google/cloud/iam/v3/internal/policy_bindings_stub_factory.h"
 #include "google/cloud/iam/v3/internal/policy_bindings_tracing_connection.h"
 #include "google/cloud/iam/v3/policy_bindings_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
@@ -42,23 +42,24 @@ future<StatusOr<google::iam::v3::PolicyBinding>>
 PolicyBindingsConnection::CreatePolicyBinding(
     google::iam::v3::CreatePolicyBindingRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PolicyBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PolicyBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsConnection::CreatePolicyBinding(
-    NoAwaitTag, google::iam::v3::CreatePolicyBindingRequest const&) {
+    NoAwaitTag,
+    google::iam::v3::CreatePolicyBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
 PolicyBindingsConnection::CreatePolicyBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PolicyBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PolicyBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::iam::v3::PolicyBinding>
@@ -71,65 +72,64 @@ future<StatusOr<google::iam::v3::PolicyBinding>>
 PolicyBindingsConnection::UpdatePolicyBinding(
     google::iam::v3::UpdatePolicyBindingRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PolicyBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PolicyBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsConnection::UpdatePolicyBinding(
-    NoAwaitTag, google::iam::v3::UpdatePolicyBindingRequest const&) {
+    NoAwaitTag,
+    google::iam::v3::UpdatePolicyBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
 PolicyBindingsConnection::UpdatePolicyBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PolicyBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PolicyBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
 PolicyBindingsConnection::DeletePolicyBinding(
     google::iam::v3::DeletePolicyBindingRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsConnection::DeletePolicyBinding(
-    NoAwaitTag, google::iam::v3::DeletePolicyBindingRequest const&) {
+    NoAwaitTag,
+    google::iam::v3::DeletePolicyBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
 PolicyBindingsConnection::DeletePolicyBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::iam::v3::PolicyBinding>
-PolicyBindingsConnection::ListPolicyBindings(
-    google::iam::v3::
-        ListPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::iam::v3::PolicyBinding> PolicyBindingsConnection::ListPolicyBindings(
+    google::iam::v3::ListPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::v3::PolicyBinding>>();
 }
 
-StreamRange<google::iam::v3::PolicyBinding>
-PolicyBindingsConnection::SearchTargetPolicyBindings(
-    google::iam::v3::
-        SearchTargetPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::iam::v3::PolicyBinding> PolicyBindingsConnection::SearchTargetPolicyBindings(
+    google::iam::v3::SearchTargetPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::v3::PolicyBinding>>();
 }
 
-StatusOr<google::longrunning::Operation> PolicyBindingsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+PolicyBindingsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -137,17 +137,17 @@ StatusOr<google::longrunning::Operation> PolicyBindingsConnection::GetOperation(
 std::shared_ptr<PolicyBindingsConnection> MakePolicyBindingsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PolicyBindingsPolicyOptionList>(options,
-                                                                 __func__);
-  options = iam_v3_internal::PolicyBindingsDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      PolicyBindingsPolicyOptionList>(options, __func__);
+  options = iam_v3_internal::PolicyBindingsDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = iam_v3_internal::CreateDefaultPolicyBindingsStub(std::move(auth),
-                                                               options);
+  auto stub = iam_v3_internal::CreateDefaultPolicyBindingsStub(
+    std::move(auth), options);
   return iam_v3_internal::MakePolicyBindingsTracingConnection(
       std::make_shared<iam_v3_internal::PolicyBindingsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

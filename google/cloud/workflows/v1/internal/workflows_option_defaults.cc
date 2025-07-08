@@ -17,10 +17,10 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/v1/internal/workflows_option_defaults.h"
-#include "google/cloud/workflows/v1/workflows_connection.h"
-#include "google/cloud/workflows/v1/workflows_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/workflows/v1/workflows_connection.h"
+#include "google/cloud/workflows/v1/workflows_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,33 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options WorkflowsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_WORKFLOWS_AUTHORITY", "workflows.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_WORKFLOWS_AUTHORITY",
+      "workflows.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<workflows_v1::WorkflowsRetryPolicyOption>()) {
     options.set<workflows_v1::WorkflowsRetryPolicyOption>(
-        workflows_v1::WorkflowsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        workflows_v1::WorkflowsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<workflows_v1::WorkflowsBackoffPolicyOption>()) {
     options.set<workflows_v1::WorkflowsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<workflows_v1::WorkflowsPollingPolicyOption>()) {
     options.set<workflows_v1::WorkflowsPollingPolicyOption>(
-        GenericPollingPolicy<workflows_v1::WorkflowsRetryPolicyOption::Type,
-                             workflows_v1::WorkflowsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            workflows_v1::WorkflowsRetryPolicyOption::Type,
+            workflows_v1::WorkflowsBackoffPolicyOption::Type>(
             options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()) {
     options.set<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>(
         workflows_v1::MakeDefaultWorkflowsConnectionIdempotencyPolicy());
   }

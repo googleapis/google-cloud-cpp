@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INTERNAL_DATA_ACCESS_CONTROL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INTERNAL_DATA_ACCESS_CONTROL_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/data_access_control_connection.h"
 #include "google/cloud/chronicle/v1/data_access_control_connection_idempotency_policy.h"
 #include "google/cloud/chronicle/v1/data_access_control_options.h"
 #include "google/cloud/chronicle/v1/internal/data_access_control_retry_traits.h"
 #include "google/cloud/chronicle/v1/internal/data_access_control_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,63 +43,53 @@ class DataAccessControlServiceConnectionImpl
   ~DataAccessControlServiceConnectionImpl() override = default;
 
   DataAccessControlServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<chronicle_v1_internal::DataAccessControlServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<chronicle_v1_internal::DataAccessControlServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> CreateDataAccessLabel(
-      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> GetDataAccessLabel(
-      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) override;
 
   StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest
-                           request) override;
+  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> UpdateDataAccessLabel(
-      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) override;
 
-  Status DeleteDataAccessLabel(
-      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request)
-      override;
+  Status
+  DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
-      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> GetDataAccessScope(
-      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) override;
 
   StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest
-                           request) override;
+  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> UpdateDataAccessScope(
-      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) override;
 
-  Status DeleteDataAccessScope(
-      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request)
-      override;
+  Status
+  DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

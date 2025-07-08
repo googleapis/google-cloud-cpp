@@ -36,52 +36,43 @@ class SslCertificatesTracingConnection
   ~SslCertificatesTracingConnection() override = default;
 
   explicit SslCertificatesTracingConnection(
-      std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
-          child);
+    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
-  AggregatedListSslCertificates(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          AggregatedListSslCertificatesRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
+  AggregatedListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                           DeleteSslCertificateRequest const& request) override;
+  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
-      NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::
-                      DeleteSslCertificateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslCertificate(NoAwaitTag,
+      google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSslCertificate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          GetSslCertificateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
+  GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                           InsertSslCertificateRequest const& request) override;
+  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
-      NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::
-                      InsertSslCertificateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslCertificate(NoAwaitTag,
+      google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSslCertificate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::
-                          ListSslCertificatesRequest request) override;
+  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request) override;
 
  private:
-  std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
-      child_;
+  std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -94,8 +85,7 @@ class SslCertificatesTracingConnection
  */
 std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
 MakeSslCertificatesTracingConnection(
-    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
-        conn);
+    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_ssl_certificates_v1_internal

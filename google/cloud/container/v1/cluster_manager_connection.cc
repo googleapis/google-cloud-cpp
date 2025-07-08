@@ -17,13 +17,13 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/v1/cluster_manager_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/container/v1/cluster_manager_options.h"
 #include "google/cloud/container/v1/internal/cluster_manager_connection_impl.h"
 #include "google/cloud/container/v1/internal/cluster_manager_option_defaults.h"
 #include "google/cloud/container/v1/internal/cluster_manager_stub_factory.h"
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -44,7 +44,8 @@ ClusterManagerConnection::ListClusters(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::container::v1::Cluster> ClusterManagerConnection::GetCluster(
+StatusOr<google::container::v1::Cluster>
+ClusterManagerConnection::GetCluster(
     google::container::v1::GetClusterRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -127,7 +128,8 @@ ClusterManagerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ClusterManagerConnection::CancelOperation(
+Status
+ClusterManagerConnection::CancelOperation(
     google::container::v1::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -150,7 +152,8 @@ ClusterManagerConnection::ListNodePools(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::container::v1::NodePool> ClusterManagerConnection::GetNodePool(
+StatusOr<google::container::v1::NodePool>
+ClusterManagerConnection::GetNodePool(
     google::container::v1::GetNodePoolRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -167,7 +170,8 @@ ClusterManagerConnection::DeleteNodePool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ClusterManagerConnection::CompleteNodePoolUpgrade(
+Status
+ClusterManagerConnection::CompleteNodePoolUpgrade(
     google::container::v1::CompleteNodePoolUpgradeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -184,7 +188,8 @@ ClusterManagerConnection::SetNodePoolManagement(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerConnection::SetLabels(
+StatusOr<google::container::v1::Operation>
+ClusterManagerConnection::SetLabels(
     google::container::v1::SetLabelsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -225,10 +230,8 @@ ClusterManagerConnection::SetMaintenancePolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::container::v1::UsableSubnetwork>
-ClusterManagerConnection::ListUsableSubnetworks(
-    google::container::v1::
-        ListUsableSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::container::v1::UsableSubnetwork> ClusterManagerConnection::ListUsableSubnetworks(
+    google::container::v1::ListUsableSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::container::v1::UsableSubnetwork>>();
 }
@@ -254,18 +257,17 @@ ClusterManagerConnection::FetchNodePoolUpgradeInfo(
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ClusterManagerPolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      container_v1_internal::ClusterManagerDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ClusterManagerPolicyOptionList>(options, __func__);
+  options = container_v1_internal::ClusterManagerDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = container_v1_internal::CreateDefaultClusterManagerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return container_v1_internal::MakeClusterManagerTracingConnection(
       std::make_shared<container_v1_internal::ClusterManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

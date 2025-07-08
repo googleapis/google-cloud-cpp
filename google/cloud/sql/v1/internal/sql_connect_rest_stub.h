@@ -38,14 +38,11 @@ class SqlConnectServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::GetConnectSettingsRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::GetConnectSettingsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-  GenerateEphemeralCert(
+  virtual StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse> GenerateEphemeralCert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) = 0;
 };
 
 class DefaultSqlConnectServiceRestStub : public SqlConnectServiceRestStub {
@@ -54,20 +51,16 @@ class DefaultSqlConnectServiceRestStub : public SqlConnectServiceRestStub {
 
   explicit DefaultSqlConnectServiceRestStub(Options options);
   DefaultSqlConnectServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::GetConnectSettingsRequest const& request)
-      override;
+      Options const& options, google::cloud::sql::v1::GetConnectSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-  GenerateEphemeralCert(
+  StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse> GenerateEphemeralCert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request)
-      override;
+      Options const& options, google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

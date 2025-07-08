@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_OPTIONS_H
 
-#include "google/cloud/vision/v1/product_search_connection.h"
-#include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vision/v1/product_search_connection.h"
+#include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {
@@ -74,7 +74,8 @@ struct ProductSearchPollingPolicyOption {
  * @ingroup google-cloud-vision-options
  */
 using ProductSearchPolicyOptionList =
-    OptionList<ProductSearchRetryPolicyOption, ProductSearchBackoffPolicyOption,
+    OptionList<ProductSearchRetryPolicyOption,
+               ProductSearchBackoffPolicyOption,
                ProductSearchPollingPolicyOption,
                ProductSearchConnectionIdempotencyPolicyOption>;
 

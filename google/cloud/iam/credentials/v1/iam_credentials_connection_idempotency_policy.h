@@ -34,27 +34,26 @@ class IAMCredentialsConnectionIdempotencyPolicy {
   virtual ~IAMCredentialsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
+  virtual google::cloud::Idempotency
+  GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
+  virtual google::cloud::Idempotency
+  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request);
 
-  virtual google::cloud::Idempotency SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request);
+  virtual google::cloud::Idempotency
+  SignBlob(google::iam::credentials::v1::SignBlobRequest const& request);
 
-  virtual google::cloud::Idempotency SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const& request);
+  virtual google::cloud::Idempotency
+  SignJwt(google::iam::credentials::v1::SignJwtRequest const& request);
 };
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-MakeDefaultIAMCredentialsConnectionIdempotencyPolicy();
+    MakeDefaultIAMCredentialsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1
 }  // namespace cloud
 }  // namespace google

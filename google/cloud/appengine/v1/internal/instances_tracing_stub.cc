@@ -28,15 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-InstancesTracingStub::InstancesTracingStub(std::shared_ptr<InstancesStub> child)
+InstancesTracingStub::InstancesTracingStub(
+    std::shared_ptr<InstancesStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::appengine::v1::ListInstancesResponse>
-InstancesTracingStub::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::ListInstancesResponse> InstancesTracingStub::ListInstances(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListInstancesRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Instances", "ListInstances");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Instances", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,10 +44,10 @@ InstancesTracingStub::ListInstances(
 }
 
 StatusOr<google::appengine::v1::Instance> InstancesTracingStub::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Instances", "GetInstance");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Instances", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,24 +56,23 @@ StatusOr<google::appengine::v1::Instance> InstancesTracingStub::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstancesTracingStub::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DeleteInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Instances", "DeleteInstance");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Instances", "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> InstancesTracingStub::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DeleteInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Instances", "DeleteInstance");
+StatusOr<google::longrunning::Operation>
+InstancesTracingStub::DeleteInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Instances", "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -82,23 +81,23 @@ StatusOr<google::longrunning::Operation> InstancesTracingStub::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstancesTracingStub::AsyncDebugInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DebugInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Instances", "DebugInstance");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DebugInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Instances", "DebugInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDebugInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> InstancesTracingStub::DebugInstance(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DebugInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Instances", "DebugInstance");
+StatusOr<google::longrunning::Operation>
+InstancesTracingStub::DebugInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DebugInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Instances", "DebugInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -115,7 +114,8 @@ InstancesTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -128,8 +128,8 @@ future<Status> InstancesTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

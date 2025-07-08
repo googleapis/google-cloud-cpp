@@ -33,17 +33,15 @@ AzureClustersStub::~AzureClustersStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureClient(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::CreateAzureClientRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateAzureClient(context, request, cq);
       },
@@ -52,53 +50,55 @@ DefaultAzureClustersStub::AsyncCreateAzureClient(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::CreateAzureClient(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateAzureClient(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateAzureClient(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 DefaultAzureClustersStub::GetAzureClient(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
-  google::cloud::gkemulticloud::v1::AzureClient response;
-  auto status = grpc_stub_->GetAzureClient(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
+    google::cloud::gkemulticloud::v1::AzureClient response;
+    auto status =
+        grpc_stub_->GetAzureClient(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 DefaultAzureClustersStub::ListAzureClients(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
-  google::cloud::gkemulticloud::v1::ListAzureClientsResponse response;
-  auto status = grpc_stub_->ListAzureClients(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
+    google::cloud::gkemulticloud::v1::ListAzureClientsResponse response;
+    auto status =
+        grpc_stub_->ListAzureClients(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncDeleteAzureClient(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteAzureClient(context, request, cq);
       },
@@ -107,30 +107,29 @@ DefaultAzureClustersStub::AsyncDeleteAzureClient(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::DeleteAzureClient(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteAzureClient(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteAzureClient(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::CreateAzureClusterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateAzureCluster(context, request, cq);
       },
@@ -139,31 +138,29 @@ DefaultAzureClustersStub::AsyncCreateAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::CreateAzureCluster(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateAzureCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateAzureCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncUpdateAzureCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateAzureCluster(context, request, cq);
       },
@@ -172,55 +169,55 @@ DefaultAzureClustersStub::AsyncUpdateAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::UpdateAzureCluster(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateAzureCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateAzureCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 DefaultAzureClustersStub::GetAzureCluster(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
-  google::cloud::gkemulticloud::v1::AzureCluster response;
-  auto status = grpc_stub_->GetAzureCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
+    google::cloud::gkemulticloud::v1::AzureCluster response;
+    auto status =
+        grpc_stub_->GetAzureCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 DefaultAzureClustersStub::ListAzureClusters(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
-  google::cloud::gkemulticloud::v1::ListAzureClustersResponse response;
-  auto status = grpc_stub_->ListAzureClusters(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
+    google::cloud::gkemulticloud::v1::ListAzureClustersResponse response;
+    auto status =
+        grpc_stub_->ListAzureClusters(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncDeleteAzureCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteAzureCluster(context, request, cq);
       },
@@ -229,61 +226,55 @@ DefaultAzureClustersStub::AsyncDeleteAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::DeleteAzureCluster(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteAzureCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteAzureCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
 DefaultAzureClustersStub::GenerateAzureClusterAgentToken(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::
-        GenerateAzureClusterAgentTokenRequest const& request) {
-  google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse
-      response;
-  auto status =
-      grpc_stub_->GenerateAzureClusterAgentToken(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const& request) {
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse response;
+    auto status =
+        grpc_stub_->GenerateAzureClusterAgentToken(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 DefaultAzureClustersStub::GenerateAzureAccessToken(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
-        request) {
-  google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse response;
-  auto status =
-      grpc_stub_->GenerateAzureAccessToken(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const& request) {
+    google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse response;
+    auto status =
+        grpc_stub_->GenerateAzureAccessToken(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureNodePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateAzureNodePool(context, request, cq);
       },
@@ -292,31 +283,29 @@ DefaultAzureClustersStub::AsyncCreateAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::CreateAzureNodePool(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateAzureNodePool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateAzureNodePool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateAzureNodePool(context, request, cq);
       },
@@ -325,56 +314,55 @@ DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::UpdateAzureNodePool(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateAzureNodePool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateAzureNodePool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 DefaultAzureClustersStub::GetAzureNodePool(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
-  google::cloud::gkemulticloud::v1::AzureNodePool response;
-  auto status = grpc_stub_->GetAzureNodePool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
+    google::cloud::gkemulticloud::v1::AzureNodePool response;
+    auto status =
+        grpc_stub_->GetAzureNodePool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
 DefaultAzureClustersStub::ListAzureNodePools(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
-        request) {
-  google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse response;
-  auto status = grpc_stub_->ListAzureNodePools(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const& request) {
+    google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse response;
+    auto status =
+        grpc_stub_->ListAzureNodePools(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-                 request,
+             google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteAzureNodePool(context, request, cq);
       },
@@ -383,99 +371,107 @@ DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 DefaultAzureClustersStub::DeleteAzureNodePool(
-    grpc::ClientContext& context, Options,
-    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteAzureNodePool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteAzureNodePool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
 DefaultAzureClustersStub::GetAzureOpenIdConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
-        request) {
-  google::cloud::gkemulticloud::v1::AzureOpenIdConfig response;
-  auto status = grpc_stub_->GetAzureOpenIdConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const& request) {
+    google::cloud::gkemulticloud::v1::AzureOpenIdConfig response;
+    auto status =
+        grpc_stub_->GetAzureOpenIdConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
 DefaultAzureClustersStub::GetAzureJsonWebKeys(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
-        request) {
-  google::cloud::gkemulticloud::v1::AzureJsonWebKeys response;
-  auto status = grpc_stub_->GetAzureJsonWebKeys(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request) {
+    google::cloud::gkemulticloud::v1::AzureJsonWebKeys response;
+    auto status =
+        grpc_stub_->GetAzureJsonWebKeys(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 DefaultAzureClustersStub::GetAzureServerConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
-        request) {
-  google::cloud::gkemulticloud::v1::AzureServerConfig response;
-  auto status = grpc_stub_->GetAzureServerConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const& request) {
+    google::cloud::gkemulticloud::v1::AzureServerConfig response;
+    auto status =
+        grpc_stub_->GetAzureServerConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultAzureClustersStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultAzureClustersStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultAzureClustersStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAzureClustersStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultAzureClustersStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAzureClustersStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -504,14 +500,13 @@ future<Status> DefaultAzureClustersStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AuthorizedCertificatesConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AuthorizedCertificatesClient`. To
- * do so, construct an object of type `AuthorizedCertificatesClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `AuthorizedCertificatesClient`. To do so,
+ * construct an object of type `AuthorizedCertificatesClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,39 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAuthorizedCertificatesConnection
-    : public appengine_v1::AuthorizedCertificatesConnection {
+class MockAuthorizedCertificatesConnection : public appengine_v1::AuthorizedCertificatesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::appengine::v1::AuthorizedCertificate>),
-      ListAuthorizedCertificates,
-      (google::appengine::v1::ListAuthorizedCertificatesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::appengine::v1::AuthorizedCertificate>,
-      GetAuthorizedCertificate,
-      (google::appengine::v1::GetAuthorizedCertificateRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::appengine::v1::AuthorizedCertificate>),
+  ListAuthorizedCertificates,
+  (google::appengine::v1::ListAuthorizedCertificatesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::appengine::v1::AuthorizedCertificate>,
-              CreateAuthorizedCertificate,
-              (google::appengine::v1::CreateAuthorizedCertificateRequest const&
-                   request),
-              (override));
+  GetAuthorizedCertificate,
+  (google::appengine::v1::GetAuthorizedCertificateRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::appengine::v1::AuthorizedCertificate>,
-              UpdateAuthorizedCertificate,
-              (google::appengine::v1::UpdateAuthorizedCertificateRequest const&
-                   request),
-              (override));
+  CreateAuthorizedCertificate,
+  (google::appengine::v1::CreateAuthorizedCertificateRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteAuthorizedCertificate,
-              (google::appengine::v1::DeleteAuthorizedCertificateRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::AuthorizedCertificate>,
+  UpdateAuthorizedCertificate,
+  (google::appengine::v1::UpdateAuthorizedCertificateRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteAuthorizedCertificate,
+  (google::appengine::v1::DeleteAuthorizedCertificateRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

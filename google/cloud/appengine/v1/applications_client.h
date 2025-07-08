@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ApplicationsClient {
  public:
-  explicit ApplicationsClient(
-      std::shared_ptr<ApplicationsConnection> connection, Options opts = {});
+  explicit ApplicationsClient(std::shared_ptr<ApplicationsConnection> connection, Options opts = {});
   ~ApplicationsClient();
 
   ///@{
@@ -77,12 +76,10 @@ class ApplicationsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ApplicationsClient const& a,
-                         ApplicationsClient const& b) {
+  friend bool operator==(ApplicationsClient const& a, ApplicationsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ApplicationsClient const& a,
-                         ApplicationsClient const& b) {
+  friend bool operator!=(ApplicationsClient const& a, ApplicationsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +106,8 @@ class ApplicationsClient {
   /// [google.appengine.v1.GetApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::Application> GetApplication(
-      std::string const& name, Options opts = {});
+  StatusOr<google::appengine::v1::Application>
+  GetApplication(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -139,9 +136,8 @@ class ApplicationsClient {
   /// [google.appengine.v1.GetApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::Application> GetApplication(
-      google::appengine::v1::GetApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::appengine::v1::Application>
+  GetApplication(google::appengine::v1::GetApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -183,9 +179,8 @@ class ApplicationsClient {
   /// [google.appengine.v1.CreateApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L121}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
-      google::appengine::v1::CreateApplicationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::Application>>
+  CreateApplication(google::appengine::v1::CreateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -198,10 +193,8 @@ class ApplicationsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApplication(
-      NoAwaitTag,
-      google::appengine::v1::CreateApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApplication(NoAwaitTag, google::appengine::v1::CreateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -212,8 +205,8 @@ class ApplicationsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Application>>
+  CreateApplication(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -254,9 +247,8 @@ class ApplicationsClient {
   /// [google.appengine.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L127}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
-      google::appengine::v1::UpdateApplicationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::Application>>
+  UpdateApplication(google::appengine::v1::UpdateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -269,10 +261,8 @@ class ApplicationsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApplication(
-      NoAwaitTag,
-      google::appengine::v1::UpdateApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApplication(NoAwaitTag, google::appengine::v1::UpdateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,8 +273,8 @@ class ApplicationsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Application>>
+  UpdateApplication(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -329,9 +319,8 @@ class ApplicationsClient {
   /// [google.appengine.v1.RepairApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L139}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
-      google::appengine::v1::RepairApplicationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::Application>>
+  RepairApplication(google::appengine::v1::RepairApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -344,10 +333,8 @@ class ApplicationsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RepairApplication(
-      NoAwaitTag,
-      google::appengine::v1::RepairApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RepairApplication(NoAwaitTag, google::appengine::v1::RepairApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -358,8 +345,8 @@ class ApplicationsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Application>>
+  RepairApplication(google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ApplicationsConnection> connection_;

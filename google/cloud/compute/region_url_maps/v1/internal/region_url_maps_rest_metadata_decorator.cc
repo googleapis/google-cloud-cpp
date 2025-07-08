@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_url_maps/v1/region_url_maps.proto
 
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,7 +31,8 @@ namespace compute_region_url_maps_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionUrlMapsRestMetadata::RegionUrlMapsRestMetadata(
-    std::shared_ptr<RegionUrlMapsRestStub> child, std::string api_client_header)
+    std::shared_ptr<RegionUrlMapsRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -40,111 +41,100 @@ RegionUrlMapsRestMetadata::RegionUrlMapsRestMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestMetadata::AsyncDeleteUrlMap(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteUrlMap(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncDeleteUrlMap(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestMetadata::DeleteUrlMap(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteUrlMap(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 RegionUrlMapsRestMetadata::GetUrlMap(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetUrlMap(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestMetadata::AsyncInsertUrlMap(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertUrlMap(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncInsertUrlMap(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestMetadata::InsertUrlMap(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertUrlMap(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 RegionUrlMapsRestMetadata::ListRegionUrlMaps(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        ListRegionUrlMapsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListRegionUrlMaps(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestMetadata::AsyncPatchUrlMap(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchUrlMap(cq, std::move(rest_context),
-                                  std::move(options), request);
+  return child_->AsyncPatchUrlMap(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestMetadata::PatchUrlMap(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchUrlMap(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestMetadata::AsyncUpdateUrlMap(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateUrlMap(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncUpdateUrlMap(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestMetadata::UpdateUrlMap(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateUrlMap(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 RegionUrlMapsRestMetadata::Validate(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Validate(rest_context, options, request);
 }
@@ -154,29 +144,28 @@ RegionUrlMapsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> RegionUrlMapsRestMetadata::AsyncCancelOperation(
+future<Status>
+RegionUrlMapsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void RegionUrlMapsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

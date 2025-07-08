@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_CATALOG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_CATALOG_CONNECTION_H
 
-#include "google/cloud/retail/v2/catalog_connection_idempotency_policy.h"
-#include "google/cloud/retail/v2/internal/catalog_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/retail/v2/catalog_connection_idempotency_policy.h"
+#include "google/cloud/retail/v2/internal/catalog_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,8 +52,7 @@ class CatalogServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CatalogServiceLimitedErrorCountRetryPolicy
-    : public CatalogServiceRetryPolicy {
+class CatalogServiceLimitedErrorCountRetryPolicy : public CatalogServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class CatalogServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit CatalogServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CatalogServiceLimitedErrorCountRetryPolicy(
       CatalogServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CatalogServiceLimitedErrorCountRetryPolicy(
       CatalogServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class CatalogServiceLimitedErrorCountRetryPolicy
   using BaseType = CatalogServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      retail_v2_internal::CatalogServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<retail_v2_internal::CatalogServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class CatalogServiceLimitedTimeRetryPolicy : public CatalogServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CatalogServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CatalogServiceLimitedTimeRetryPolicy(
-      CatalogServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CatalogServiceLimitedTimeRetryPolicy(
-      CatalogServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CatalogServiceLimitedTimeRetryPolicy(CatalogServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CatalogServiceLimitedTimeRetryPolicy(CatalogServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class CatalogServiceLimitedTimeRetryPolicy : public CatalogServiceRetryPolicy {
   using BaseType = CatalogServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      retail_v2_internal::CatalogServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<retail_v2_internal::CatalogServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,52 +175,44 @@ class CatalogServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
-      google::cloud::retail::v2::ListCatalogsRequest request);
+  virtual StreamRange<google::cloud::retail::v2::Catalog>
+  ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request);
 
-  virtual StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
-      google::cloud::retail::v2::UpdateCatalogRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Catalog>
+  UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request);
 
-  virtual Status SetDefaultBranch(
-      google::cloud::retail::v2::SetDefaultBranchRequest const& request);
+  virtual Status
+  SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(
-      google::cloud::retail::v2::GetDefaultBranchRequest const& request);
+  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::CompletionConfig>
-  GetCompletionConfig(
-      google::cloud::retail::v2::GetCompletionConfigRequest const& request);
+  GetCompletionConfig(google::cloud::retail::v2::GetCompletionConfigRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::CompletionConfig>
-  UpdateCompletionConfig(
-      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request);
+  UpdateCompletionConfig(google::cloud::retail::v2::UpdateCompletionConfigRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  GetAttributesConfig(
-      google::cloud::retail::v2::GetAttributesConfigRequest const& request);
+  GetAttributesConfig(google::cloud::retail::v2::GetAttributesConfigRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  UpdateAttributesConfig(
-      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request);
+  UpdateAttributesConfig(google::cloud::retail::v2::UpdateAttributesConfigRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  AddCatalogAttribute(
-      google::cloud::retail::v2::AddCatalogAttributeRequest const& request);
+  AddCatalogAttribute(google::cloud::retail::v2::AddCatalogAttributeRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  RemoveCatalogAttribute(
-      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request);
+  RemoveCatalogAttribute(google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  ReplaceCatalogAttribute(
-      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
+  ReplaceCatalogAttribute(google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

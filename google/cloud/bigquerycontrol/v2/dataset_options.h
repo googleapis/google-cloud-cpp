@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_DATASET_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_DATASET_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/dataset_connection.h"
 #include "google/cloud/bigquerycontrol/v2/dataset_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

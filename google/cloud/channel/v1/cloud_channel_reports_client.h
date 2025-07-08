@@ -68,35 +68,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class GOOGLE_CLOUD_CPP_DEPRECATED(
-    "CloudChannelReportsService has been deprecated and will be turned down in "
-    "the future.") CloudChannelReportsServiceClient {
+class
+ GOOGLE_CLOUD_CPP_DEPRECATED(
+      "CloudChannelReportsService has been deprecated and will be turned down in the future."
+)
+CloudChannelReportsServiceClient {
  public:
-  explicit CloudChannelReportsServiceClient(
-      std::shared_ptr<CloudChannelReportsServiceConnection> connection,
-      Options opts = {});
+  explicit CloudChannelReportsServiceClient(std::shared_ptr<CloudChannelReportsServiceConnection> connection, Options opts = {});
   ~CloudChannelReportsServiceClient();
 
   ///@{
   /// @name Copy and move support
-  CloudChannelReportsServiceClient(CloudChannelReportsServiceClient const&) =
-      default;
-  CloudChannelReportsServiceClient& operator=(
-      CloudChannelReportsServiceClient const&) = default;
-  CloudChannelReportsServiceClient(CloudChannelReportsServiceClient&&) =
-      default;
-  CloudChannelReportsServiceClient& operator=(
-      CloudChannelReportsServiceClient&&) = default;
+  CloudChannelReportsServiceClient(CloudChannelReportsServiceClient const&) = default;
+  CloudChannelReportsServiceClient& operator=(CloudChannelReportsServiceClient const&) = default;
+  CloudChannelReportsServiceClient(CloudChannelReportsServiceClient&&) = default;
+  CloudChannelReportsServiceClient& operator=(CloudChannelReportsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudChannelReportsServiceClient const& a,
-                         CloudChannelReportsServiceClient const& b) {
+  friend bool operator==(CloudChannelReportsServiceClient const& a, CloudChannelReportsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudChannelReportsServiceClient const& a,
-                         CloudChannelReportsServiceClient const& b) {
+  friend bool operator!=(CloudChannelReportsServiceClient const& a, CloudChannelReportsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -170,8 +164,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request,
-               Options opts = {});
+  RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,10 +180,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StatusOr<google::longrunning::Operation> RunReportJob(
-      NoAwaitTag,
-      google::cloud::channel::v1::RunReportJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunReportJob(NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +196,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(google::longrunning::Operation const& operation,
-               Options opts = {});
+  RunReportJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -251,8 +241,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::cloud::channel::v1::Row> FetchReportResults(
-      std::string const& report_job, Options opts = {});
+  StreamRange<google::cloud::channel::v1::Row>
+  FetchReportResults(std::string const& report_job, Options opts = {});
 
   // clang-format off
   ///
@@ -299,9 +289,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::cloud::channel::v1::Row> FetchReportResults(
-      google::cloud::channel::v1::FetchReportResultsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::Row>
+  FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +332,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::cloud::channel::v1::Report> ListReports(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::channel::v1::Report>
+  ListReports(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -390,9 +379,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::cloud::channel::v1::Report> ListReports(
-      google::cloud::channel::v1::ListReportsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::Report>
+  ListReports(google::cloud::channel::v1::ListReportsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +415,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -467,8 +455,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -494,8 +482,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -526,9 +514,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -552,7 +539,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -581,9 +569,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -617,7 +604,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -656,9 +644,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CloudChannelReportsServiceConnection> connection_;

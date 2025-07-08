@@ -77,28 +77,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AppConnectorsServiceClient {
  public:
-  explicit AppConnectorsServiceClient(
-      std::shared_ptr<AppConnectorsServiceConnection> connection,
-      Options opts = {});
+  explicit AppConnectorsServiceClient(std::shared_ptr<AppConnectorsServiceConnection> connection, Options opts = {});
   ~AppConnectorsServiceClient();
 
   ///@{
   /// @name Copy and move support
   AppConnectorsServiceClient(AppConnectorsServiceClient const&) = default;
-  AppConnectorsServiceClient& operator=(AppConnectorsServiceClient const&) =
-      default;
+  AppConnectorsServiceClient& operator=(AppConnectorsServiceClient const&) = default;
   AppConnectorsServiceClient(AppConnectorsServiceClient&&) = default;
   AppConnectorsServiceClient& operator=(AppConnectorsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AppConnectorsServiceClient const& a,
-                         AppConnectorsServiceClient const& b) {
+  friend bool operator==(AppConnectorsServiceClient const& a, AppConnectorsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AppConnectorsServiceClient const& a,
-                         AppConnectorsServiceClient const& b) {
+  friend bool operator!=(AppConnectorsServiceClient const& a, AppConnectorsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -175,10 +170,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  ListAppConnectors(
-      google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
-          request,
-      Options opts = {});
+  ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -234,9 +226,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::
-                      GetAppConnectorRequest const& request,
-                  Options opts = {});
+  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,11 +265,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(
-      std::string const& parent,
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
-          app_connector,
-      std::string const& app_connector_id, Options opts = {});
+  CreateAppConnector(std::string const& parent, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, std::string const& app_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -292,11 +278,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAppConnector(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
-          app_connector,
-      std::string const& app_connector_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAppConnector(NoAwaitTag, std::string const& parent, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, std::string const& app_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -333,9 +316,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
-                         CreateAppConnectorRequest const& request,
-                     Options opts = {});
+  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -348,11 +329,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAppConnector(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appconnectors::v1::
-          CreateAppConnectorRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -364,8 +342,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  CreateAppConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -403,10 +380,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
-          app_connector,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -419,11 +393,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAppConnector(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
-          app_connector,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -460,9 +431,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
-                         UpdateAppConnectorRequest const& request,
-                     Options opts = {});
+  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -475,11 +444,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAppConnector(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appconnectors::v1::
-          UpdateAppConnectorRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -491,8 +457,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  UpdateAppConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -524,8 +489,7 @@ class AppConnectorsServiceClient {
   /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L263}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                      AppConnectorOperationMetadata>>
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
   DeleteAppConnector(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -539,8 +503,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAppConnector(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAppConnector(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -576,11 +540,8 @@ class AppConnectorsServiceClient {
   /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L263}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                      AppConnectorOperationMetadata>>
-  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
-                         DeleteAppConnectorRequest const& request,
-                     Options opts = {});
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -593,11 +554,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAppConnector(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appconnectors::v1::
-          DeleteAppConnectorRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -608,10 +566,8 @@ class AppConnectorsServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                      AppConnectorOperationMetadata>>
-  DeleteAppConnector(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -645,10 +601,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(std::string const& app_connector,
-               google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
-                   resource_info,
-               Options opts = {});
+  ReportStatus(std::string const& app_connector, google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const& resource_info, Options opts = {});
 
   // clang-format off
   ///
@@ -661,11 +614,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ReportStatus(
-      NoAwaitTag, std::string const& app_connector,
-      google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
-          resource_info,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ReportStatus(NoAwaitTag, std::string const& app_connector, google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const& resource_info, Options opts = {});
 
   // clang-format off
   ///
@@ -702,10 +652,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-          request,
-      Options opts = {});
+  ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -718,11 +665,8 @@ class AppConnectorsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ReportStatus(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ReportStatus(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -734,8 +678,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(google::longrunning::Operation const& operation,
-               Options opts = {});
+  ReportStatus(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -773,8 +716,8 @@ class AppConnectorsServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -803,9 +746,8 @@ class AppConnectorsServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -837,8 +779,8 @@ class AppConnectorsServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -869,8 +811,8 @@ class AppConnectorsServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -905,9 +847,8 @@ class AppConnectorsServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -942,8 +883,8 @@ class AppConnectorsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -982,8 +923,8 @@ class AppConnectorsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1009,8 +950,8 @@ class AppConnectorsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1041,9 +982,8 @@ class AppConnectorsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1067,7 +1007,8 @@ class AppConnectorsServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1096,9 +1037,8 @@ class AppConnectorsServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1132,7 +1072,8 @@ class AppConnectorsServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1171,9 +1112,8 @@ class AppConnectorsServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AppConnectorsServiceConnection> connection_;

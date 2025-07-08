@@ -42,76 +42,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockOsConfigServiceConnection
-    : public osconfig_v1::OsConfigServiceConnection {
+class MockOsConfigServiceConnection : public osconfig_v1::OsConfigServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchJob>, ExecutePatchJob,
-      (google::cloud::osconfig::v1::ExecutePatchJobRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchJob>,
+  ExecutePatchJob,
+  (google::cloud::osconfig::v1::ExecutePatchJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchJob>, GetPatchJob,
-              (google::cloud::osconfig::v1::GetPatchJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchJob>,
+  GetPatchJob,
+  (google::cloud::osconfig::v1::GetPatchJobRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchJob>, CancelPatchJob,
-      (google::cloud::osconfig::v1::CancelPatchJobRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchJob>,
+  CancelPatchJob,
+  (google::cloud::osconfig::v1::CancelPatchJobRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::PatchJob>),
-              ListPatchJobs,
-              (google::cloud::osconfig::v1::ListPatchJobsRequest request),
-              (override));
+  ListPatchJobs,
+  (google::cloud::osconfig::v1::ListPatchJobsRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>),
-      ListPatchJobInstanceDetails,
-      (google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>),
+  ListPatchJobInstanceDetails,
+  (google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-              CreatePatchDeployment,
-              (google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-      GetPatchDeployment,
-      (google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::osconfig::v1::PatchDeployment>),
-      ListPatchDeployments,
-      (google::cloud::osconfig::v1::ListPatchDeploymentsRequest request),
-      (override));
-
-  MOCK_METHOD(Status, DeletePatchDeployment,
-              (google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&
-                   request),
-              (override));
+  CreatePatchDeployment,
+  (google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-              UpdatePatchDeployment,
-              (google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
-                   request),
-              (override));
+  GetPatchDeployment,
+  (google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-      PausePatchDeployment,
-      (google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::PatchDeployment>),
+  ListPatchDeployments,
+  (google::cloud::osconfig::v1::ListPatchDeploymentsRequest request), (override));
+
+  MOCK_METHOD(Status,
+  DeletePatchDeployment,
+  (google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-              ResumePatchDeployment,
-              (google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
-                   request),
-              (override));
+  UpdatePatchDeployment,
+  (google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+  PausePatchDeployment,
+  (google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+  ResumePatchDeployment,
+  (google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

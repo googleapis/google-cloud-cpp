@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/v2/product_connection.h"
-#include "google/cloud/retail/v2/internal/product_connection_impl.h"
-#include "google/cloud/retail/v2/internal/product_option_defaults.h"
-#include "google/cloud/retail/v2/internal/product_stub_factory.h"
-#include "google/cloud/retail/v2/internal/product_tracing_connection.h"
-#include "google/cloud/retail/v2/product_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/internal/product_connection_impl.h"
+#include "google/cloud/retail/v2/internal/product_option_defaults.h"
+#include "google/cloud/retail/v2/internal/product_stub_factory.h"
+#include "google/cloud/retail/v2/internal/product_tracing_connection.h"
+#include "google/cloud/retail/v2/product_options.h"
 #include <memory>
 #include <utility>
 
@@ -50,10 +50,8 @@ ProductServiceConnection::GetProduct(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::retail::v2::Product>
-ProductServiceConnection::ListProducts(
-    google::cloud::retail::v2::
-        ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::retail::v2::Product> ProductServiceConnection::ListProducts(
+    google::cloud::retail::v2::ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Product>>();
 }
@@ -64,7 +62,8 @@ ProductServiceConnection::UpdateProduct(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ProductServiceConnection::DeleteProduct(
+Status
+ProductServiceConnection::DeleteProduct(
     google::cloud::retail::v2::DeleteProductRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -73,97 +72,104 @@ future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
 ProductServiceConnection::PurgeProducts(
     google::cloud::retail::v2::PurgeProductsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::PurgeProducts(
-    NoAwaitTag, google::cloud::retail::v2::PurgeProductsRequest const&) {
+    NoAwaitTag,
+    google::cloud::retail::v2::PurgeProductsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-ProductServiceConnection::PurgeProducts(google::longrunning::Operation const&) {
+ProductServiceConnection::PurgeProducts(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnection::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::ImportProductsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::ImportProductsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::ImportProducts(
-    NoAwaitTag, google::cloud::retail::v2::ImportProductsRequest const&) {
+    NoAwaitTag,
+    google::cloud::retail::v2::ImportProductsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnection::ImportProducts(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::ImportProductsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::ImportProductsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceConnection::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::SetInventoryResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::SetInventoryResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ProductServiceConnection::SetInventory(
-    NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const&) {
+StatusOr<google::longrunning::Operation>
+ProductServiceConnection::SetInventory(
+    NoAwaitTag,
+    google::cloud::retail::v2::SetInventoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-ProductServiceConnection::SetInventory(google::longrunning::Operation const&) {
+ProductServiceConnection::SetInventory(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::SetInventoryResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::SetInventoryResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceConnection::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::AddFulfillmentPlaces(
-    NoAwaitTag, google::cloud::retail::v2::AddFulfillmentPlacesRequest const&) {
+    NoAwaitTag,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceConnection::AddFulfillmentPlaces(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnection::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -171,46 +177,47 @@ ProductServiceConnection::RemoveFulfillmentPlaces(
     NoAwaitTag,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnection::RemoveFulfillmentPlaces(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceConnection::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::AddLocalInventories(
-    NoAwaitTag, google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
+    NoAwaitTag,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceConnection::AddLocalInventories(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnection::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -218,26 +225,25 @@ ProductServiceConnection::RemoveLocalInventories(
     NoAwaitTag,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnection::RemoveLocalInventories(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-ProductServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ProductServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ProductServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ProductServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -245,18 +251,17 @@ StatusOr<google::longrunning::Operation> ProductServiceConnection::GetOperation(
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ProductServicePolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      retail_v2_internal::ProductServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ProductServicePolicyOptionList>(options, __func__);
+  options = retail_v2_internal::ProductServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultProductServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return retail_v2_internal::MakeProductServiceTracingConnection(
       std::make_shared<retail_v2_internal::ProductServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

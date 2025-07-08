@@ -35,14 +35,13 @@ class ConnectionServiceLogging : public ConnectionServiceStub {
  public:
   ~ConnectionServiceLogging() override = default;
   ConnectionServiceLogging(std::shared_ptr<ConnectionServiceStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
-      override;
+  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) override;
 
  private:
   std::shared_ptr<ConnectionServiceStub> child_;

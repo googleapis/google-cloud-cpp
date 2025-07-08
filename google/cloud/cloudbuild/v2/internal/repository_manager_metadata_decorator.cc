@@ -50,36 +50,35 @@ RepositoryManagerMetadata::AsyncCreateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnection(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateConnection(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::CreateConnection(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConnection(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerMetadata::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnection(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerMetadata::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, options, request);
 }
 
@@ -89,20 +88,17 @@ RepositoryManagerMetadata::AsyncUpdateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("connection.name=",
-                           internal::UrlEncode(request.connection().name())));
-  return child_->AsyncUpdateConnection(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("connection.name=", internal::UrlEncode(request.connection().name())));
+  return child_->AsyncUpdateConnection(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::UpdateConnection(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("connection.name=",
-                           internal::UrlEncode(request.connection().name())));
+  SetMetadata(context, options, absl::StrCat("connection.name=", internal::UrlEncode(request.connection().name())));
   return child_->UpdateConnection(context, options, request);
 }
 
@@ -112,18 +108,17 @@ RepositoryManagerMetadata::AsyncDeleteConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnection(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteConnection(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::DeleteConnection(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConnection(context, options, request);
 }
 
@@ -133,18 +128,17 @@ RepositoryManagerMetadata::AsyncCreateRepository(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRepository(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRepository(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::CreateRepository(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRepository(context, options, request);
 }
 
@@ -153,39 +147,36 @@ RepositoryManagerMetadata::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchCreateRepositories(cq, std::move(context),
-                                              std::move(options), request);
+    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchCreateRepositories(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::BatchCreateRepositories(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerMetadata::GetRepository(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerMetadata::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRepositories(context, options, request);
 }
 
@@ -195,105 +186,98 @@ RepositoryManagerMetadata::AsyncDeleteRepository(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRepository(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRepository(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::DeleteRepository(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 RepositoryManagerMetadata::FetchReadWriteToken(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("repository=", internal::UrlEncode(request.repository())));
   return child_->FetchReadWriteToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerMetadata::FetchReadToken(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  SetMetadata(context, options, absl::StrCat("repository=", internal::UrlEncode(request.repository())));
   return child_->FetchReadToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 RepositoryManagerMetadata::FetchLinkableRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("connection=", internal::UrlEncode(request.connection())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("connection=", internal::UrlEncode(request.connection())));
   return child_->FetchLinkableRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerMetadata::FetchGitRefs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  SetMetadata(context, options, absl::StrCat("repository=", internal::UrlEncode(request.repository())));
   return child_->FetchGitRefs(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> RepositoryManagerMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+RepositoryManagerMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> RepositoryManagerMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+RepositoryManagerMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 RepositoryManagerMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status RepositoryManagerMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+RepositoryManagerMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -305,8 +289,8 @@ RepositoryManagerMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> RepositoryManagerMetadata::AsyncCancelOperation(
@@ -316,21 +300,21 @@ future<Status> RepositoryManagerMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void RepositoryManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void RepositoryManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

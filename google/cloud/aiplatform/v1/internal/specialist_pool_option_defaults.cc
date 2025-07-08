@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/specialist_pool_option_defaults.h"
 #include "google/cloud/aiplatform/v1/specialist_pool_connection.h"
 #include "google/cloud/aiplatform/v1/specialist_pool_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,8 +34,7 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options SpecialistPoolServiceDefaultOptions(std::string const& location,
-                                            Options options) {
+Options SpecialistPoolServiceDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SPECIALIST_POOL_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_SPECIALIST_POOL_SERVICE_AUTHORITY",
@@ -44,36 +43,25 @@ Options SpecialistPoolServiceDefaultOptions(std::string const& location,
   if (!options.has<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>(
         aiplatform_v1::SpecialistPoolServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>()) {
     options.set<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>(
         GenericPollingPolicy<
             aiplatform_v1::SpecialistPoolServiceRetryPolicyOption::Type,
             aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption::Type>(
-            options
-                .get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<aiplatform_v1::
-                    SpecialistPoolServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        aiplatform_v1::SpecialistPoolServiceConnectionIdempotencyPolicyOption>(
-        aiplatform_v1::
-            MakeDefaultSpecialistPoolServiceConnectionIdempotencyPolicy());
+  if (!options.has<aiplatform_v1::SpecialistPoolServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<aiplatform_v1::SpecialistPoolServiceConnectionIdempotencyPolicyOption>(
+        aiplatform_v1::MakeDefaultSpecialistPoolServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -30,47 +30,53 @@ namespace cloud {
 namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudBuildLogging::CloudBuildLogging(std::shared_ptr<CloudBuildStub> child,
-                                     TracingOptions tracing_options,
-                                     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+CloudBuildLogging::CloudBuildLogging(
+    std::shared_ptr<CloudBuildStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncCreateBuild(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-        return child_->AsyncCreateBuild(cq, std::move(context),
-                                        std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+        return child_->AsyncCreateBuild(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::CreateBuild(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::CreateBuild(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
         return child_->CreateBuild(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildLogging::GetBuild(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v1::Build>
+CloudBuildLogging::GetBuild(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
         return child_->GetBuild(context, options, request);
       },
@@ -79,12 +85,13 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildLogging::GetBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 CloudBuildLogging::ListBuilds(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
         return child_->ListBuilds(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -92,12 +99,13 @@ CloudBuildLogging::ListBuilds(
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildLogging::CancelBuild(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
         return child_->CancelBuild(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -105,30 +113,31 @@ CloudBuildLogging::CancelBuild(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncRetryBuild(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-        return child_->AsyncRetryBuild(cq, std::move(context),
-                                       std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+        return child_->AsyncRetryBuild(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::RetryBuild(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::RetryBuild(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
         return child_->RetryBuild(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -136,30 +145,31 @@ StatusOr<google::longrunning::Operation> CloudBuildLogging::RetryBuild(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncApproveBuild(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v1::ApproveBuildRequest const&
-                 request) {
-        return child_->AsyncApproveBuild(cq, std::move(context),
-                                         std::move(options), request);
+             google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+        return child_->AsyncApproveBuild(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::ApproveBuild(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::ApproveBuild(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::ApproveBuildRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
         return child_->ApproveBuild(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -167,13 +177,13 @@ StatusOr<google::longrunning::Operation> CloudBuildLogging::ApproveBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildLogging::CreateBuildTrigger(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) {
         return child_->CreateBuildTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -181,12 +191,13 @@ CloudBuildLogging::CreateBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildLogging::GetBuildTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
         return child_->GetBuildTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -194,25 +205,27 @@ CloudBuildLogging::GetBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 CloudBuildLogging::ListBuildTriggers(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::ListBuildTriggersRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
         return child_->ListBuildTriggers(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudBuildLogging::DeleteBuildTrigger(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
-        request) {
+Status
+CloudBuildLogging::DeleteBuildTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) {
         return child_->DeleteBuildTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -220,13 +233,13 @@ Status CloudBuildLogging::DeleteBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildLogging::UpdateBuildTrigger(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) {
         return child_->UpdateBuildTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -234,30 +247,31 @@ CloudBuildLogging::UpdateBuildTrigger(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncRunBuildTrigger(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
-                 request) {
-        return child_->AsyncRunBuildTrigger(cq, std::move(context),
-                                            std::move(options), request);
+             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+        return child_->AsyncRunBuildTrigger(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::RunBuildTrigger(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::RunBuildTrigger(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
         return child_->RunBuildTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -265,14 +279,13 @@ StatusOr<google::longrunning::Operation> CloudBuildLogging::RunBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildLogging::ReceiveTriggerWebhook(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) {
         return child_->ReceiveTriggerWebhook(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -280,30 +293,31 @@ CloudBuildLogging::ReceiveTriggerWebhook(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncCreateWorkerPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
-                 request) {
-        return child_->AsyncCreateWorkerPool(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+        return child_->AsyncCreateWorkerPool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::CreateWorkerPool(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::CreateWorkerPool(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
         return child_->CreateWorkerPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -311,12 +325,13 @@ StatusOr<google::longrunning::Operation> CloudBuildLogging::CreateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildLogging::GetWorkerPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
         return child_->GetWorkerPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -324,30 +339,31 @@ CloudBuildLogging::GetWorkerPool(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncDeleteWorkerPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
-                 request) {
-        return child_->AsyncDeleteWorkerPool(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+        return child_->AsyncDeleteWorkerPool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::DeleteWorkerPool(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::DeleteWorkerPool(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
         return child_->DeleteWorkerPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -355,30 +371,31 @@ StatusOr<google::longrunning::Operation> CloudBuildLogging::DeleteWorkerPool(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildLogging::AsyncUpdateWorkerPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
-                 request) {
-        return child_->AsyncUpdateWorkerPool(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+        return child_->AsyncUpdateWorkerPool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildLogging::UpdateWorkerPool(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudBuildLogging::UpdateWorkerPool(
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
         return child_->UpdateWorkerPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -386,12 +403,13 @@ StatusOr<google::longrunning::Operation> CloudBuildLogging::UpdateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 CloudBuildLogging::ListWorkerPools(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
         return child_->ListWorkerPools(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -408,8 +426,8 @@ CloudBuildLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -425,8 +443,8 @@ future<Status> CloudBuildLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

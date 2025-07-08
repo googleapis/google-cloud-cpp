@@ -31,30 +31,27 @@ PublisherAuth::PublisherAuth(
     std::shared_ptr<PublisherStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::eventarc::publishing::v1::
-             PublishChannelConnectionEventsResponse>
-PublisherAuth::PublishChannelConnectionEvents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::eventarc::publishing::v1::
-        PublishChannelConnectionEventsRequest const& request) {
+StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse> PublisherAuth::PublishChannelConnectionEvents(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PublishChannelConnectionEvents(context, options, request);
 }
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-PublisherAuth::PublishEvents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-        request) {
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse> PublisherAuth::PublishEvents(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PublishEvents(context, options, request);
 }
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
-PublisherAuth::Publish(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> PublisherAuth::Publish(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

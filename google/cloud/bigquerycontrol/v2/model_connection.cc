@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/model.proto
 
 #include "google/cloud/bigquerycontrol/v2/model_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/internal/model_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/model_tracing_connection.h"
 #include "google/cloud/bigquerycontrol/v2/model_options.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -36,25 +36,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelServiceConnection::~ModelServiceConnection() = default;
 
-StatusOr<google::cloud::bigquery::v2::Model> ModelServiceConnection::GetModel(
+StatusOr<google::cloud::bigquery::v2::Model>
+ModelServiceConnection::GetModel(
     google::cloud::bigquery::v2::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::v2::Model>
-ModelServiceConnection::ListModels(
-    google::cloud::bigquery::v2::
-        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::v2::Model> ModelServiceConnection::ListModels(
+    google::cloud::bigquery::v2::ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::v2::Model>>();
 }
 
-StatusOr<google::cloud::bigquery::v2::Model> ModelServiceConnection::PatchModel(
+StatusOr<google::cloud::bigquery::v2::Model>
+ModelServiceConnection::PatchModel(
     google::cloud::bigquery::v2::PatchModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ModelServiceConnection::DeleteModel(
+Status
+ModelServiceConnection::DeleteModel(
     google::cloud::bigquery::v2::DeleteModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

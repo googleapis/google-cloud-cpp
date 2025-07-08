@@ -27,22 +27,17 @@ namespace cloud {
 namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use artifactregistry_v1::MakeArtifactRegistryConnection
-/// directly.
+/// @deprecated Use artifactregistry_v1::MakeArtifactRegistryConnection directly.
 using ::google::cloud::artifactregistry_v1::MakeArtifactRegistryConnection;
 
 /// @deprecated Use artifactregistry_v1::ArtifactRegistryConnection directly.
 using ::google::cloud::artifactregistry_v1::ArtifactRegistryConnection;
 
-/// @deprecated Use
-/// artifactregistry_v1::ArtifactRegistryLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::artifactregistry_v1::
-    ArtifactRegistryLimitedErrorCountRetryPolicy;
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::artifactregistry_v1::
-    ArtifactRegistryLimitedTimeRetryPolicy;
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy;
 
 /// @deprecated Use artifactregistry_v1::ArtifactRegistryRetryPolicy directly.
 using ::google::cloud::artifactregistry_v1::ArtifactRegistryRetryPolicy;

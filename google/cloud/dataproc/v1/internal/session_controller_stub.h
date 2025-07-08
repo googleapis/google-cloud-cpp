@@ -25,9 +25,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dataproc/v1/operations.pb.h>
-#include <google/cloud/dataproc/v1/sessions.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/dataproc/v1/sessions.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -47,27 +47,29 @@ class SessionControllerStub {
       google::cloud::dataproc::v1::CreateSessionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateSession(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataproc::v1::CreateSessionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Session> GetSession(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::GetSessionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataproc::v1::ListSessionsResponse>
-  ListSessions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataproc::v1::ListSessionsResponse> ListSessions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::ListSessionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncTerminateSession(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncTerminateSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::TerminateSessionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> TerminateSession(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataproc::v1::TerminateSessionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSession(
@@ -77,42 +79,49 @@ class SessionControllerStub {
       google::cloud::dataproc::v1::DeleteSessionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteSession(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataproc::v1::DeleteSessionRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -125,12 +134,9 @@ class SessionControllerStub {
 class DefaultSessionControllerStub : public SessionControllerStub {
  public:
   DefaultSessionControllerStub(
-      std::unique_ptr<
-          google::cloud::dataproc::v1::SessionController::StubInterface>
-          grpc_stub,
+      std::unique_ptr<google::cloud::dataproc::v1::SessionController::StubInterface> grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         operations_stub_(std::move(operations_stub)) {}
@@ -139,72 +145,78 @@ class DefaultSessionControllerStub : public SessionControllerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::CreateSessionRequest const& request)
-      override;
+      google::cloud::dataproc::v1::CreateSessionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateSession(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::CreateSessionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Session> GetSession(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::GetSessionRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::ListSessionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTerminateSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::TerminateSessionRequest const& request)
-      override;
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TerminateSession(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::TerminateSessionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::DeleteSessionRequest const& request)
-      override;
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSession(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::DeleteSessionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -220,11 +232,9 @@ class DefaultSessionControllerStub : public SessionControllerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::dataproc::v1::SessionController::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::dataproc::v1::SessionController::StubInterface> grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

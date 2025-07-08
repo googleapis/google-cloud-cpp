@@ -17,17 +17,17 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_stub_factory.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_auth_decorator.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_logging_decorator.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_metadata_decorator.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_auth_decorator.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_logging_decorator.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_metadata_decorator.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_tracing_stub.h"
 #include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -41,26 +41,26 @@ std::shared_ptr<VideoIntelligenceServiceStub>
 CreateDefaultVideoIntelligenceServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::videointelligence::v1::VideoIntelligenceService::NewStub(
-          channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::videointelligence::v1::VideoIntelligenceService::NewStub(channel);
   std::shared_ptr<VideoIntelligenceServiceStub> stub =
-      std::make_shared<DefaultVideoIntelligenceServiceStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultVideoIntelligenceServiceStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<VideoIntelligenceServiceAuth>(std::move(auth),
-                                                          std::move(stub));
+    stub = std::make_shared<VideoIntelligenceServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<VideoIntelligenceServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<VideoIntelligenceServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

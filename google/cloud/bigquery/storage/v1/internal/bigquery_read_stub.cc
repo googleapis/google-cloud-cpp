@@ -32,21 +32,21 @@ BigQueryReadStub::~BigQueryReadStub() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 DefaultBigQueryReadStub::CreateReadSession(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-        request) {
-  google::cloud::bigquery::storage::v1::ReadSession response;
-  auto status = grpc_stub_->CreateReadSession(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
+    google::cloud::bigquery::storage::v1::ReadSession response;
+    auto status =
+        grpc_stub_->CreateReadSession(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 DefaultBigQueryReadStub::ReadRows(
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const&,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto stream = grpc_stub_->ReadRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
@@ -56,15 +56,15 @@ DefaultBigQueryReadStub::ReadRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 DefaultBigQueryReadStub::SplitReadStream(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-        request) {
-  google::cloud::bigquery::storage::v1::SplitReadStreamResponse response;
-  auto status = grpc_stub_->SplitReadStream(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
+    google::cloud::bigquery::storage::v1::SplitReadStreamResponse response;
+    auto status =
+        grpc_stub_->SplitReadStream(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

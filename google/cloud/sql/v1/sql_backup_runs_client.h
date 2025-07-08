@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_BACKUP_RUNS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_BACKUP_RUNS_CLIENT_H
 
-#include "google/cloud/sql/v1/sql_backup_runs_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/sql/v1/sql_backup_runs_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlBackupRunsServiceClient {
  public:
-  explicit SqlBackupRunsServiceClient(
-      std::shared_ptr<SqlBackupRunsServiceConnection> connection,
-      Options opts = {});
+  explicit SqlBackupRunsServiceClient(std::shared_ptr<SqlBackupRunsServiceConnection> connection, Options opts = {});
   ~SqlBackupRunsServiceClient();
 
   ///@{
   /// @name Copy and move support
   SqlBackupRunsServiceClient(SqlBackupRunsServiceClient const&) = default;
-  SqlBackupRunsServiceClient& operator=(SqlBackupRunsServiceClient const&) =
-      default;
+  SqlBackupRunsServiceClient& operator=(SqlBackupRunsServiceClient const&) = default;
   SqlBackupRunsServiceClient(SqlBackupRunsServiceClient&&) = default;
   SqlBackupRunsServiceClient& operator=(SqlBackupRunsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlBackupRunsServiceClient const& a,
-                         SqlBackupRunsServiceClient const& b) {
+  friend bool operator==(SqlBackupRunsServiceClient const& a, SqlBackupRunsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlBackupRunsServiceClient const& a,
-                         SqlBackupRunsServiceClient const& b) {
+  friend bool operator!=(SqlBackupRunsServiceClient const& a, SqlBackupRunsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,9 +109,8 @@ class SqlBackupRunsServiceClient {
   /// [google.cloud.sql.v1.SqlBackupRunsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L72}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -145,9 +139,8 @@ class SqlBackupRunsServiceClient {
   /// [google.cloud.sql.v1.SqlBackupRunsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L86}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::BackupRun> Get(
-      google::cloud::sql::v1::SqlBackupRunsGetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::BackupRun>
+  Get(google::cloud::sql::v1::SqlBackupRunsGetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -176,9 +169,8 @@ class SqlBackupRunsServiceClient {
   /// [google.cloud.sql.v1.SqlBackupRunsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Insert(
-      google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Insert(google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +201,8 @@ class SqlBackupRunsServiceClient {
   /// [google.cloud.sql.v1.SqlBackupRunsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L109}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
-      google::cloud::sql::v1::SqlBackupRunsListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
+  List(google::cloud::sql::v1::SqlBackupRunsListRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SqlBackupRunsServiceConnection> connection_;

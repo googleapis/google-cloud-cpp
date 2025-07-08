@@ -29,85 +29,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-TimeseriesInsightsControllerTracingConnection::
-    TimeseriesInsightsControllerTracingConnection(
-        std::shared_ptr<
-            timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
-            child)
+TimeseriesInsightsControllerTracingConnection::TimeseriesInsightsControllerTracingConnection(
+    std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
-TimeseriesInsightsControllerTracingConnection::ListDataSets(
-    google::cloud::timeseriesinsights::v1::ListDataSetsRequest request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "ListDataSets");
+TimeseriesInsightsControllerTracingConnection::ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::ListDataSets");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataSets(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::timeseriesinsights::v1::DataSet>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::timeseriesinsights::v1::DataSet>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
-TimeseriesInsightsControllerTracingConnection::CreateDataSet(
-    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "CreateDataSet");
+TimeseriesInsightsControllerTracingConnection::CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::CreateDataSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDataSet(request));
 }
 
-Status TimeseriesInsightsControllerTracingConnection::DeleteDataSet(
-    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "DeleteDataSet");
+Status
+TimeseriesInsightsControllerTracingConnection::DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::DeleteDataSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDataSet(request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-TimeseriesInsightsControllerTracingConnection::AppendEvents(
-    google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "AppendEvents");
+TimeseriesInsightsControllerTracingConnection::AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::AppendEvents");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AppendEvents(request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-TimeseriesInsightsControllerTracingConnection::QueryDataSet(
-    google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "QueryDataSet");
+TimeseriesInsightsControllerTracingConnection::QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::QueryDataSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->QueryDataSet(request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-TimeseriesInsightsControllerTracingConnection::EvaluateSlice(
-    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "EvaluateSlice");
+TimeseriesInsightsControllerTracingConnection::EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::EvaluateSlice");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EvaluateSlice(request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-TimeseriesInsightsControllerTracingConnection::EvaluateTimeseries(
-    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "timeseriesinsights_v1::TimeseriesInsightsControllerConnection::"
-      "EvaluateTimeseries");
+TimeseriesInsightsControllerTracingConnection::EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) {
+  auto span = internal::MakeSpan("timeseriesinsights_v1::TimeseriesInsightsControllerConnection::EvaluateTimeseries");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EvaluateTimeseries(request));
 }
@@ -116,13 +88,10 @@ TimeseriesInsightsControllerTracingConnection::EvaluateTimeseries(
 
 std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
 MakeTimeseriesInsightsControllerTracingConnection(
-    std::shared_ptr<
-        timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
-        conn) {
+    std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<TimeseriesInsightsControllerTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<TimeseriesInsightsControllerTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

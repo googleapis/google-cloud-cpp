@@ -38,20 +38,16 @@ class RegionsRestLogging : public RegionsRestStub {
  public:
   ~RegionsRestLogging() override = default;
   RegionsRestLogging(std::shared_ptr<RegionsRestStub> child,
-                     TracingOptions tracing_options,
-                     std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionList> ListRegions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) override;
 
  private:
   std::shared_ptr<RegionsRestStub> child_;

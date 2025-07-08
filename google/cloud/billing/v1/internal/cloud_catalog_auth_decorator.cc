@@ -31,18 +31,18 @@ CloudCatalogAuth::CloudCatalogAuth(
     std::shared_ptr<CloudCatalogStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::billing::v1::ListServicesResponse>
-CloudCatalogAuth::ListServices(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ListServicesResponse> CloudCatalogAuth::ListServices(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListServices(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::ListSkusResponse>
-CloudCatalogAuth::ListSkus(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ListSkusResponse> CloudCatalogAuth::ListSkus(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

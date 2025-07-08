@@ -31,27 +31,27 @@ DocumentServiceAuth::DocumentServiceAuth(
     std::shared_ptr<DocumentServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-DocumentServiceAuth::CreateDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse> DocumentServiceAuth::CreateDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDocument(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::Document>
-DocumentServiceAuth::GetDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::Document> DocumentServiceAuth::GetDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDocument(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-DocumentServiceAuth::UpdateDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse> DocumentServiceAuth::UpdateDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,44 +59,44 @@ DocumentServiceAuth::UpdateDocument(
 }
 
 Status DocumentServiceAuth::DeleteDocument(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDocument(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
-DocumentServiceAuth::SearchDocuments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
-        request) {
+StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse> DocumentServiceAuth::SearchDocuments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::SearchDocumentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchDocuments(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::Document>
-DocumentServiceAuth::LockDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::Document> DocumentServiceAuth::LockDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->LockDocument(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
-DocumentServiceAuth::FetchAcl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> DocumentServiceAuth::FetchAcl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchAcl(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
-DocumentServiceAuth::SetAcl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> DocumentServiceAuth::SetAcl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,7 +104,8 @@ DocumentServiceAuth::SetAcl(
 }
 
 StatusOr<google::longrunning::Operation> DocumentServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

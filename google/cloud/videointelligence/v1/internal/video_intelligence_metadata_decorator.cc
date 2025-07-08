@@ -51,13 +51,14 @@ VideoIntelligenceServiceMetadata::AsyncAnnotateVideo(
     google::cloud::internal::ImmutableOptions options,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   SetMetadata(*context, *options);
-  return child_->AsyncAnnotateVideo(cq, std::move(context), std::move(options),
-                                    request);
+  return child_->AsyncAnnotateVideo(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceMetadata::AnnotateVideo(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   SetMetadata(context, options);
   return child_->AnnotateVideo(context, options, request);
@@ -71,8 +72,8 @@ VideoIntelligenceServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> VideoIntelligenceServiceMetadata::AsyncCancelOperation(
@@ -82,21 +83,21 @@ future<Status> VideoIntelligenceServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void VideoIntelligenceServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void VideoIntelligenceServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void VideoIntelligenceServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                                   Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

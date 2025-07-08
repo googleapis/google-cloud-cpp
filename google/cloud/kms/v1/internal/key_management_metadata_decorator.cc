@@ -46,327 +46,321 @@ KeyManagementServiceMetadata::KeyManagementServiceMetadata(
 
 StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>
 KeyManagementServiceMetadata::ListKeyRings(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ListKeyRingsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListKeyRings(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>
 KeyManagementServiceMetadata::ListCryptoKeys(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCryptoKeys(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>
 KeyManagementServiceMetadata::ListCryptoKeyVersions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCryptoKeyVersions(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ListImportJobsResponse>
 KeyManagementServiceMetadata::ListImportJobs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ListImportJobsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListImportJobs(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceMetadata::GetKeyRing(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetKeyRing(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceMetadata::GetCryptoKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCryptoKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceMetadata::GetCryptoKeyVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
 KeyManagementServiceMetadata::GetPublicKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetPublicKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPublicKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceMetadata::GetImportJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetImportJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetImportJob(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceMetadata::CreateKeyRing(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateKeyRing(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceMetadata::CreateCryptoKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCryptoKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceMetadata::CreateCryptoKeyVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceMetadata::ImportCryptoKeyVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceMetadata::CreateImportJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::CreateImportJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateImportJob(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceMetadata::UpdateCryptoKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("crypto_key.name=",
-                           internal::UrlEncode(request.crypto_key().name())));
+  SetMetadata(context, options, absl::StrCat("crypto_key.name=", internal::UrlEncode(request.crypto_key().name())));
   return child_->UpdateCryptoKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceMetadata::UpdateCryptoKeyVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("crypto_key_version.name=",
-                   internal::UrlEncode(request.crypto_key_version().name())));
+  SetMetadata(context, options, absl::StrCat("crypto_key_version.name=", internal::UrlEncode(request.crypto_key_version().name())));
   return child_->UpdateCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceMetadata::UpdateCryptoKeyPrimaryVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateCryptoKeyPrimaryVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceMetadata::DestroyCryptoKeyVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DestroyCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceMetadata::RestoreCryptoKeyVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RestoreCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
 KeyManagementServiceMetadata::Encrypt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::EncryptRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->Encrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
 KeyManagementServiceMetadata::Decrypt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::DecryptRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->Decrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::RawEncryptResponse>
 KeyManagementServiceMetadata::RawEncrypt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::RawEncryptRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RawEncrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::RawDecryptResponse>
 KeyManagementServiceMetadata::RawDecrypt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::RawDecryptRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RawDecrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceMetadata::AsymmetricSign(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsymmetricSign(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
 KeyManagementServiceMetadata::AsymmetricDecrypt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsymmetricDecrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
 KeyManagementServiceMetadata::MacSign(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::MacSignRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MacSign(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
 KeyManagementServiceMetadata::MacVerify(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::MacVerifyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MacVerify(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceMetadata::GenerateRandomBytes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("location=", internal::UrlEncode(request.location())));
+  SetMetadata(context, options, absl::StrCat("location=", internal::UrlEncode(request.location())));
   return child_->GenerateRandomBytes(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 KeyManagementServiceMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 KeyManagementServiceMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> KeyManagementServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+KeyManagementServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> KeyManagementServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+KeyManagementServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 KeyManagementServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 KeyManagementServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-void KeyManagementServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void KeyManagementServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void KeyManagementServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                               Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

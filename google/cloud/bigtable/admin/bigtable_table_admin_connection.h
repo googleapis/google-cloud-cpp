@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_TABLE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_TABLE_ADMIN_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection_idempotency_policy.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,8 +57,7 @@ class BigtableTableAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kAborted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BigtableTableAdminLimitedErrorCountRetryPolicy
-    : public BigtableTableAdminRetryPolicy {
+class BigtableTableAdminLimitedErrorCountRetryPolicy : public BigtableTableAdminRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,16 +67,14 @@ class BigtableTableAdminLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit BigtableTableAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   BigtableTableAdminLimitedErrorCountRetryPolicy(
       BigtableTableAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : BigtableTableAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : BigtableTableAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BigtableTableAdminLimitedErrorCountRetryPolicy(
       BigtableTableAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : BigtableTableAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : BigtableTableAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -97,9 +94,7 @@ class BigtableTableAdminLimitedErrorCountRetryPolicy
   using BaseType = BigtableTableAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigtable_admin_internal::BigtableTableAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigtable_admin_internal::BigtableTableAdminRetryTraits> impl_;
 };
 
 /**
@@ -113,8 +108,7 @@ class BigtableTableAdminLimitedErrorCountRetryPolicy
  * - [`kAborted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BigtableTableAdminLimitedTimeRetryPolicy
-    : public BigtableTableAdminRetryPolicy {
+class BigtableTableAdminLimitedTimeRetryPolicy : public BigtableTableAdminRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,14 +133,12 @@ class BigtableTableAdminLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit BigtableTableAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  BigtableTableAdminLimitedTimeRetryPolicy(
-      BigtableTableAdminLimitedTimeRetryPolicy&& rhs) noexcept
-      : BigtableTableAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BigtableTableAdminLimitedTimeRetryPolicy(
-      BigtableTableAdminLimitedTimeRetryPolicy const& rhs) noexcept
-      : BigtableTableAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BigtableTableAdminLimitedTimeRetryPolicy(BigtableTableAdminLimitedTimeRetryPolicy&& rhs) noexcept
+    : BigtableTableAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BigtableTableAdminLimitedTimeRetryPolicy(BigtableTableAdminLimitedTimeRetryPolicy const& rhs) noexcept
+    : BigtableTableAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -168,18 +160,16 @@ class BigtableTableAdminLimitedTimeRetryPolicy
   using BaseType = BigtableTableAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigtable_admin_internal::BigtableTableAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigtable_admin_internal::BigtableTableAdminRetryTraits> impl_;
 };
 
 /**
  * The `BigtableTableAdminConnection` object for `BigtableTableAdminClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `BigtableTableAdminClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `BigtableTableAdminClient`.
+ * sets in `BigtableTableAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BigtableTableAdminClient`.
  *
  * To create a concrete instance, see `MakeBigtableTableAdminConnection()`.
  *
@@ -191,155 +181,163 @@ class BigtableTableAdminConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::bigtable::admin::v2::Table> CreateTable(
-      google::bigtable::admin::v2::CreateTableRequest const& request);
+  virtual StatusOr<google::bigtable::admin::v2::Table>
+  CreateTable(google::bigtable::admin::v2::CreateTableRequest const& request);
 
-  virtual StreamRange<google::bigtable::admin::v2::Table> ListTables(
-      google::bigtable::admin::v2::ListTablesRequest request);
+  virtual StreamRange<google::bigtable::admin::v2::Table>
+  ListTables(google::bigtable::admin::v2::ListTablesRequest request);
 
-  virtual StatusOr<google::bigtable::admin::v2::Table> GetTable(
-      google::bigtable::admin::v2::GetTableRequest const& request);
+  virtual StatusOr<google::bigtable::admin::v2::Table>
+  GetTable(google::bigtable::admin::v2::GetTableRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::bigtable::admin::v2::UpdateTableRequest const& request);
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
+  UpdateTable(google::bigtable::admin::v2::UpdateTableRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateTable(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateTableRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateTable(NoAwaitTag, google::bigtable::admin::v2::UpdateTableRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
+  UpdateTable( google::longrunning::Operation const& operation);
 
-  virtual Status DeleteTable(
-      google::bigtable::admin::v2::DeleteTableRequest const& request);
+  virtual Status
+  DeleteTable(google::bigtable::admin::v2::DeleteTableRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      google::bigtable::admin::v2::UndeleteTableRequest const& request);
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
+  UndeleteTable(google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UndeleteTable(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UndeleteTableRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UndeleteTable(NoAwaitTag, google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
+  UndeleteTable( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
+  CreateAuthorizedView(google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAuthorizedView(NoAwaitTag, google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(google::longrunning::Operation const& operation);
+  CreateAuthorizedView( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::bigtable::admin::v2::AuthorizedView>
-  ListAuthorizedViews(
-      google::bigtable::admin::v2::ListAuthorizedViewsRequest request);
+  ListAuthorizedViews(google::bigtable::admin::v2::ListAuthorizedViewsRequest request);
 
   virtual StatusOr<google::bigtable::admin::v2::AuthorizedView>
-  GetAuthorizedView(
-      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request);
+  GetAuthorizedView(google::bigtable::admin::v2::GetAuthorizedViewRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
+  UpdateAuthorizedView(google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateAuthorizedView(NoAwaitTag, google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(google::longrunning::Operation const& operation);
+  UpdateAuthorizedView( google::longrunning::Operation const& operation);
 
-  virtual Status DeleteAuthorizedView(
-      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request);
+  virtual Status
+  DeleteAuthorizedView(google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request);
 
-  virtual StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
+  virtual StatusOr<google::bigtable::admin::v2::Table>
+  ModifyColumnFamilies(google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
 
-  virtual Status DropRowRange(
-      google::bigtable::admin::v2::DropRowRangeRequest const& request);
+  virtual Status
+  DropRowRange(google::bigtable::admin::v2::DropRowRangeRequest const& request);
 
-  virtual StatusOr<
-      google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
-  GenerateConsistencyToken(
-      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
-          request);
+  virtual StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
+  GenerateConsistencyToken(google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request);
 
   virtual StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
-  CheckConsistency(
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request);
+  CheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      google::bigtable::admin::v2::CreateBackupRequest const& request);
+  virtual future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CreateBackup(google::bigtable::admin::v2::CreateBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBackup(NoAwaitTag, google::bigtable::admin::v2::CreateBackupRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CreateBackup( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
-      google::bigtable::admin::v2::GetBackupRequest const& request);
+  virtual StatusOr<google::bigtable::admin::v2::Backup>
+  GetBackup(google::bigtable::admin::v2::GetBackupRequest const& request);
 
-  virtual StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
-      google::bigtable::admin::v2::UpdateBackupRequest const& request);
+  virtual StatusOr<google::bigtable::admin::v2::Backup>
+  UpdateBackup(google::bigtable::admin::v2::UpdateBackupRequest const& request);
 
-  virtual Status DeleteBackup(
-      google::bigtable::admin::v2::DeleteBackupRequest const& request);
+  virtual Status
+  DeleteBackup(google::bigtable::admin::v2::DeleteBackupRequest const& request);
 
-  virtual StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
-      google::bigtable::admin::v2::ListBackupsRequest request);
+  virtual StreamRange<google::bigtable::admin::v2::Backup>
+  ListBackups(google::bigtable::admin::v2::ListBackupsRequest request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      google::bigtable::admin::v2::RestoreTableRequest const& request);
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
+  RestoreTable(google::bigtable::admin::v2::RestoreTableRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RestoreTable(
-      NoAwaitTag,
-      google::bigtable::admin::v2::RestoreTableRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RestoreTable(NoAwaitTag, google::bigtable::admin::v2::RestoreTableRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
+  RestoreTable( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      google::bigtable::admin::v2::CopyBackupRequest const& request);
+  virtual future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CopyBackup(google::bigtable::admin::v2::CopyBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CopyBackup(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CopyBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CopyBackup(NoAwaitTag, google::bigtable::admin::v2::CopyBackupRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CopyBackup( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual future<
-      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-  AsyncCheckConsistency(
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request);
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  CreateSchemaBundle(google::bigtable::admin::v2::CreateSchemaBundleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateSchemaBundle(NoAwaitTag, google::bigtable::admin::v2::CreateSchemaBundleRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  CreateSchemaBundle( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle(google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateSchemaBundle(NoAwaitTag, google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::bigtable::admin::v2::SchemaBundle>
+  GetSchemaBundle(google::bigtable::admin::v2::GetSchemaBundleRequest const& request);
+
+  virtual StreamRange<google::bigtable::admin::v2::SchemaBundle>
+  ListSchemaBundles(google::bigtable::admin::v2::ListSchemaBundlesRequest request);
+
+  virtual Status
+  DeleteSchemaBundle(google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+  AsyncCheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `BigtableTableAdminConnection`.
+ * A factory function to construct an object of type `BigtableTableAdminConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * BigtableTableAdminClient.
+ * should be passed as an argument to the constructor of BigtableTableAdminClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `BigtableTableAdminConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `BigtableTableAdminConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -349,8 +347,8 @@ class BigtableTableAdminConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `BigtableTableAdminConnection`
- * created by this function.
+ * @param options (optional) Configure the `BigtableTableAdminConnection` created by
+ * this function.
  */
 std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
     Options options = {});

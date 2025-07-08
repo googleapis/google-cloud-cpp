@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AcceleratorTypesClient {
  public:
-  explicit AcceleratorTypesClient(
-      std::shared_ptr<AcceleratorTypesConnection> connection,
-      Options opts = {});
+  explicit AcceleratorTypesClient(std::shared_ptr<AcceleratorTypesConnection> connection, Options opts = {});
   ~AcceleratorTypesClient();
 
   ///@{
@@ -78,12 +76,10 @@ class AcceleratorTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AcceleratorTypesClient const& a,
-                         AcceleratorTypesClient const& b) {
+  friend bool operator==(AcceleratorTypesClient const& a, AcceleratorTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AcceleratorTypesClient const& a,
-                         AcceleratorTypesClient const& b) {
+  friend bool operator!=(AcceleratorTypesClient const& a, AcceleratorTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +118,7 @@ class AcceleratorTypesClient {
   /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L285}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
   AggregatedListAcceleratorTypes(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -165,12 +160,8 @@ class AcceleratorTypesClient {
   /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L285}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
-  AggregatedListAcceleratorTypes(
-      google::cloud::cpp::compute::accelerator_types::v1::
-          AggregatedListAcceleratorTypesRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+  AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -197,9 +188,8 @@ class AcceleratorTypesClient {
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
-      std::string const& project, std::string const& zone,
-      std::string const& accelerator_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
+  GetAcceleratorType(std::string const& project, std::string const& zone, std::string const& accelerator_type, Options opts = {});
 
   // clang-format off
   ///
@@ -229,10 +219,8 @@ class AcceleratorTypesClient {
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
-      google::cloud::cpp::compute::accelerator_types::v1::
-          GetAcceleratorTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
+  GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -269,8 +257,7 @@ class AcceleratorTypesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-  ListAcceleratorTypes(std::string const& project, std::string const& zone,
-                       Options opts = {});
+  ListAcceleratorTypes(std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -311,9 +298,7 @@ class AcceleratorTypesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::
-                           ListAcceleratorTypesRequest request,
-                       Options opts = {});
+  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<AcceleratorTypesConnection> connection_;

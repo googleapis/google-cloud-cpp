@@ -17,17 +17,17 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_stub_factory.h"
-#include "google/cloud/support/v2/internal/comment_auth_decorator.h"
-#include "google/cloud/support/v2/internal/comment_logging_decorator.h"
-#include "google/cloud/support/v2/internal/comment_metadata_decorator.h"
-#include "google/cloud/support/v2/internal/comment_stub.h"
-#include "google/cloud/support/v2/internal/comment_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/support/v2/internal/comment_auth_decorator.h"
+#include "google/cloud/support/v2/internal/comment_logging_decorator.h"
+#include "google/cloud/support/v2/internal/comment_metadata_decorator.h"
+#include "google/cloud/support/v2/internal/comment_stub.h"
+#include "google/cloud/support/v2/internal/comment_tracing_stub.h"
 #include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -37,26 +37,28 @@ namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CommentServiceStub> CreateDefaultCommentServiceStub(
+std::shared_ptr<CommentServiceStub>
+CreateDefaultCommentServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::support::v2::CommentService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::support::v2::CommentService::NewStub(channel);
   std::shared_ptr<CommentServiceStub> stub =
-      std::make_shared<DefaultCommentServiceStub>(std::move(service_grpc_stub));
+    std::make_shared<DefaultCommentServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<CommentServiceAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<CommentServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<CommentServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CommentServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

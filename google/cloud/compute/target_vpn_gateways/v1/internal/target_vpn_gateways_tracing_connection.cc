@@ -30,125 +30,92 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TargetVpnGatewaysTracingConnection::TargetVpnGatewaysTracingConnection(
-    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
-        child)
+    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection> child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
-TargetVpnGatewaysTracingConnection::AggregatedListTargetVpnGateways(
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        AggregatedListTargetVpnGatewaysRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "AggregatedListTargetVpnGateways");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
+TargetVpnGatewaysTracingConnection::AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest request) {
+  auto span = internal::MakeSpan("compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::AggregatedListTargetVpnGateways");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetVpnGateways(std::move(request));
-  return internal::MakeTracedStreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysTracingConnection::DeleteTargetVpnGateway(
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        DeleteTargetVpnGatewayRequest const& request) {
+TargetVpnGatewaysTracingConnection::DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "DeleteTargetVpnGateway");
+      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::DeleteTargetVpnGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteTargetVpnGateway(request));
+  return internal::EndSpan(std::move(span), child_->DeleteTargetVpnGateway(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysTracingConnection::DeleteTargetVpnGateway(
-    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                    DeleteTargetVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "DeleteTargetVpnGateway");
+      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::DeleteTargetVpnGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteTargetVpnGateway(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteTargetVpnGateway(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetVpnGatewaysTracingConnection::DeleteTargetVpnGateway(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "DeleteTargetVpnGateway");
+      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::DeleteTargetVpnGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteTargetVpnGateway(operation));
+      child_->DeleteTargetVpnGateway(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysTracingConnection::GetTargetVpnGateway(
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        GetTargetVpnGatewayRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "GetTargetVpnGateway");
+TargetVpnGatewaysTracingConnection::GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const& request) {
+  auto span = internal::MakeSpan("compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::GetTargetVpnGateway");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTargetVpnGateway(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysTracingConnection::InsertTargetVpnGateway(
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        InsertTargetVpnGatewayRequest const& request) {
+TargetVpnGatewaysTracingConnection::InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "InsertTargetVpnGateway");
+      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::InsertTargetVpnGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertTargetVpnGateway(request));
+  return internal::EndSpan(std::move(span), child_->InsertTargetVpnGateway(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysTracingConnection::InsertTargetVpnGateway(
-    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                    InsertTargetVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "InsertTargetVpnGateway");
+      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::InsertTargetVpnGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertTargetVpnGateway(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertTargetVpnGateway(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetVpnGatewaysTracingConnection::InsertTargetVpnGateway(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "InsertTargetVpnGateway");
+      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::InsertTargetVpnGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertTargetVpnGateway(operation));
+      child_->InsertTargetVpnGateway(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysTracingConnection::ListTargetVpnGateways(
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        ListTargetVpnGatewaysRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::"
-      "ListTargetVpnGateways");
+TargetVpnGatewaysTracingConnection::ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request) {
+  auto span = internal::MakeSpan("compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::ListTargetVpnGateways");
   internal::OTelScope scope(span);
   auto sr = child_->ListTargetVpnGateways(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::TargetVpnGateway>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysTracingConnection::SetLabels(
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        SetLabelsRequest const& request) {
+TargetVpnGatewaysTracingConnection::SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::SetLabels");
   internal::OTelScope scope(span);
@@ -157,12 +124,12 @@ TargetVpnGatewaysTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysTracingConnection::SetLabels(
-    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                    SetLabelsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -171,19 +138,18 @@ TargetVpnGatewaysTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
+  return internal::EndSpan(std::move(span),
+      child_->SetLabels(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
 MakeTargetVpnGatewaysTracingConnection(
-    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
-        conn) {
+    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<TargetVpnGatewaysTracingConnection>(std::move(conn));
+    conn = std::make_shared<TargetVpnGatewaysTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -42,31 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSnapshotSettingsConnection
-    : public compute_snapshot_settings_v1::SnapshotSettingsConnection {
+class MockSnapshotSettingsConnection : public compute_snapshot_settings_v1::SnapshotSettingsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>,
-              GetSnapshotSettings,
-              (google::cloud::cpp::compute::snapshot_settings::v1::
-                   GetSnapshotSettingsRequest const& request),
-              (override));
+  GetSnapshotSettings,
+  (google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchSnapshotSettings(Matcher<google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchSnapshotSettings(Matcher<google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSnapshotSettings,
-              (google::cloud::cpp::compute::snapshot_settings::v1::
-                   PatchSnapshotSettingsRequest const& request),
-              (override));
+  PatchSnapshotSettings,
+  (google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -75,24 +69,20 @@ class MockSnapshotSettingsConnection
   /// EXPECT_CALL(*mock, PatchSnapshotSettings(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchSnapshotSettings,
-              (NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
-                               PatchSnapshotSettingsRequest const& request),
-              (override));
+  PatchSnapshotSettings, (NoAwaitTag,
+    google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchSnapshotSettings(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchSnapshotSettings(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSnapshotSettings,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchSnapshotSettings, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

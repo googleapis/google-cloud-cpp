@@ -43,97 +43,89 @@ class AttachedClustersAuth : public AttachedClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-          request) override;
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAttachedCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-          request) override;
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportAttachedCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-          request) override;
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
-  GetAttachedCluster(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
-          request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster> GetAttachedCluster(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
-  ListAttachedClusters(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
-          request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse> ListAttachedClusters(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAttachedCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-          request) override;
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
-  GetAttachedServerConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig> GetAttachedServerConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterInstallManifestResponse>
-  GenerateAttachedClusterInstallManifest(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkemulticloud::v1::
-          GenerateAttachedClusterInstallManifestRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse> GenerateAttachedClusterInstallManifest(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterAgentTokenResponse>
-  GenerateAttachedClusterAgentToken(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkemulticloud::v1::
-          GenerateAttachedClusterAgentTokenRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse> GenerateAttachedClusterAgentToken(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

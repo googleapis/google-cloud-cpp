@@ -36,18 +36,18 @@ class SearchServiceTracingConnection
   ~SearchServiceTracingConnection() override = default;
 
   explicit SearchServiceTracingConnection(
-      std::shared_ptr<retail_v2::SearchServiceConnection> child);
+    std::shared_ptr<retail_v2::SearchServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
-      google::cloud::retail::v2::SearchRequest request) override;
+  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
+  Search(google::cloud::retail::v2::SearchRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::SearchServiceConnection> child_;

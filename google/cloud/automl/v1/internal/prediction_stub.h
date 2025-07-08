@@ -40,7 +40,8 @@ class PredictionServiceStub {
   virtual ~PredictionServiceStub() = 0;
 
   virtual StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::automl::v1::PredictRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(
@@ -50,13 +51,14 @@ class PredictionServiceStub {
       google::cloud::automl::v1::BatchPredictRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchPredict(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::automl::v1::BatchPredictRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -69,16 +71,14 @@ class PredictionServiceStub {
 class DefaultPredictionServiceStub : public PredictionServiceStub {
  public:
   DefaultPredictionServiceStub(
-      std::unique_ptr<
-          google::cloud::automl::v1::PredictionService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::automl::v1::PredictionService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::automl::v1::PredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(
@@ -88,7 +88,8 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -104,10 +105,8 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::automl::v1::PredictionService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::automl::v1::PredictionService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

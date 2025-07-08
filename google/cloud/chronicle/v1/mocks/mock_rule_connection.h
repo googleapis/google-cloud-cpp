@@ -46,45 +46,41 @@ class MockRuleServiceConnection : public chronicle_v1::RuleServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Rule>, CreateRule,
-              (google::cloud::chronicle::v1::CreateRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Rule>,
+  CreateRule,
+  (google::cloud::chronicle::v1::CreateRuleRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Rule>, GetRule,
-              (google::cloud::chronicle::v1::GetRuleRequest const& request),
-              (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::Rule>), ListRules,
-              (google::cloud::chronicle::v1::ListRulesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Rule>, UpdateRule,
-              (google::cloud::chronicle::v1::UpdateRuleRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteRule,
-              (google::cloud::chronicle::v1::DeleteRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Rule>,
+  GetRule,
+  (google::cloud::chronicle::v1::GetRuleRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::Rule>),
-              ListRuleRevisions,
-              (google::cloud::chronicle::v1::ListRuleRevisionsRequest request),
-              (override));
+  ListRules,
+  (google::cloud::chronicle::v1::ListRulesRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Rule>,
+  UpdateRule,
+  (google::cloud::chronicle::v1::UpdateRuleRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteRule,
+  (google::cloud::chronicle::v1::DeleteRuleRequest const& request), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::Rule>),
+  ListRuleRevisions,
+  (google::cloud::chronicle::v1::ListRuleRevisionsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateRetrohunt(Matcher<google::cloud::chronicle::v1::CreateRetrohuntRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateRetrohunt(Matcher<google::cloud::chronicle::v1::CreateRetrohuntRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>,
-      CreateRetrohunt,
-      (google::cloud::chronicle::v1::CreateRetrohuntRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>,
+  CreateRetrohunt,
+  (google::cloud::chronicle::v1::CreateRetrohuntRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -92,65 +88,57 @@ class MockRuleServiceConnection : public chronicle_v1::RuleServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateRetrohunt(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateRetrohunt,
-      (NoAwaitTag,
-       google::cloud::chronicle::v1::CreateRetrohuntRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateRetrohunt, (NoAwaitTag,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRetrohunt(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateRetrohunt(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>,
-              CreateRetrohunt,
-              (google::longrunning::Operation const& operation), (override));
+  CreateRetrohunt, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::Retrohunt>, GetRetrohunt,
-      (google::cloud::chronicle::v1::GetRetrohuntRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Retrohunt>,
+  GetRetrohunt,
+  (google::cloud::chronicle::v1::GetRetrohuntRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::Retrohunt>),
-              ListRetrohunts,
-              (google::cloud::chronicle::v1::ListRetrohuntsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::RuleDeployment>, GetRuleDeployment,
-      (google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::chronicle::v1::RuleDeployment>),
-      ListRuleDeployments,
-      (google::cloud::chronicle::v1::ListRuleDeploymentsRequest request),
-      (override));
+  ListRetrohunts,
+  (google::cloud::chronicle::v1::ListRetrohuntsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::RuleDeployment>,
-              UpdateRuleDeployment,
-              (google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const&
-                   request),
-              (override));
+  GetRuleDeployment,
+  (google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::RuleDeployment>),
+  ListRuleDeployments,
+  (google::cloud::chronicle::v1::ListRuleDeploymentsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::RuleDeployment>,
+  UpdateRuleDeployment,
+  (google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

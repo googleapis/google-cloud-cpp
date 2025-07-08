@@ -28,31 +28,20 @@ namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServicePollingPolicyOption;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption;
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServiceBackoffPolicyOption;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServicePolicyOptionList directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServicePolicyOptionList;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServicePolicyOptionList directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServicePolicyOptionList;
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServiceRetryPolicyOption;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_INTERNAL_REPOSITORY_MANAGER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_INTERNAL_REPOSITORY_MANAGER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_retry_traits.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_stub.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,141 +46,116 @@ class RepositoryManagerConnectionImpl
   ~RepositoryManagerConnectionImpl() override = default;
 
   RepositoryManagerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<cloudbuild_v2_internal::RepositoryManagerStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<cloudbuild_v2_internal::RepositoryManagerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
-      override;
+  CreateConnection(google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateConnection(NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(google::longrunning::Operation const& operation) override;
+  CreateConnection(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudbuild::v2::Connection>
+  GetConnection(google::devtools::cloudbuild::v2::GetConnectionRequest const& request) override;
 
-  StreamRange<google::devtools::cloudbuild::v2::Connection> ListConnections(
-      google::devtools::cloudbuild::v2::ListConnectionsRequest request)
-      override;
+  StreamRange<google::devtools::cloudbuild::v2::Connection>
+  ListConnections(google::devtools::cloudbuild::v2::ListConnectionsRequest request) override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+  UpdateConnection(google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateConnection(NoAwaitTag,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
   UpdateConnection(
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
-      override;
+  future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+  DeleteConnection(google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) override;
 
-  future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteConnection(NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteConnection(
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
-      override;
+  future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
+  CreateRepository(google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) override;
 
-  future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
   CreateRepository(
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
-      override;
+  future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) override;
 
-  future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  BatchCreateRepositories(NoAwaitTag,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) override;
 
-  future<StatusOr<
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request) override;
-
-  future<StatusOr<
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
   BatchCreateRepositories(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      google::devtools::cloudbuild::v2::GetRepositoryRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudbuild::v2::Repository>
+  GetRepository(google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) override;
 
-  StreamRange<google::devtools::cloudbuild::v2::Repository> ListRepositories(
-      google::devtools::cloudbuild::v2::ListRepositoriesRequest request)
-      override;
+  StreamRange<google::devtools::cloudbuild::v2::Repository>
+  ListRepositories(google::devtools::cloudbuild::v2::ListRepositoriesRequest request) override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+  DeleteRepository(google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteRepository(
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
-      override;
-
-  future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(
-      google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-          request) override;
+  FetchReadWriteToken(google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
-                     request) override;
+  FetchReadToken(google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) override;
 
   StreamRange<google::devtools::cloudbuild::v2::Repository>
-  FetchLinkableRepositories(
-      google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
-          request) override;
+  FetchLinkableRepositories(google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest request) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
-      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+  FetchGitRefs(google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -17,17 +17,17 @@
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
 #include "google/cloud/tpu/v1/internal/tpu_stub_factory.h"
-#include "google/cloud/tpu/v1/internal/tpu_auth_decorator.h"
-#include "google/cloud/tpu/v1/internal/tpu_logging_decorator.h"
-#include "google/cloud/tpu/v1/internal/tpu_metadata_decorator.h"
-#include "google/cloud/tpu/v1/internal/tpu_stub.h"
-#include "google/cloud/tpu/v1/internal/tpu_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/tpu/v1/internal/tpu_auth_decorator.h"
+#include "google/cloud/tpu/v1/internal/tpu_logging_decorator.h"
+#include "google/cloud/tpu/v1/internal/tpu_metadata_decorator.h"
+#include "google/cloud/tpu/v1/internal/tpu_stub.h"
+#include "google/cloud/tpu/v1/internal/tpu_tracing_stub.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/tpu/v1/cloud_tpu.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -39,28 +39,32 @@ namespace cloud {
 namespace tpu_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TpuStub> CreateDefaultTpuStub(
+std::shared_ptr<TpuStub>
+CreateDefaultTpuStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::tpu::v1::Tpu::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
-  std::shared_ptr<TpuStub> stub = std::make_shared<DefaultTpuStub>(
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  std::shared_ptr<TpuStub> stub =
+    std::make_shared<DefaultTpuStub>(
       std::move(service_grpc_stub), std::move(service_locations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<TpuAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<TpuAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<TpuMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<TpuLogging>(std::move(stub),
-                                        options.get<GrpcTracingOptionsOption>(),
-                                        options.get<LoggingComponentsOption>());
+    stub = std::make_shared<TpuLogging>(
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeTpuTracingStub(std::move(stub));

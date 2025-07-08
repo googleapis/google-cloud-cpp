@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_tiers.proto
 
 #include "google/cloud/sql/v1/internal/sql_tiers_rest_connection_impl.h"
-#include "google/cloud/sql/v1/internal/sql_tiers_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
+#include "google/cloud/sql/v1/internal/sql_tiers_rest_stub_factory.h"
 #include <memory>
 #include <utility>
 
@@ -34,20 +34,19 @@ SqlTiersServiceRestConnectionImpl::SqlTiersServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<sql_v1_internal::SqlTiersServiceRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      SqlTiersServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        SqlTiersServiceConnection::options())) {}
 
 StatusOr<google::cloud::sql::v1::TiersListResponse>
-SqlTiersServiceRestConnectionImpl::List(
-    google::cloud::sql::v1::SqlTiersListRequest const& request) {
+SqlTiersServiceRestConnectionImpl::List(google::cloud::sql::v1::SqlTiersListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->List(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::sql::v1::SqlTiersListRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::sql::v1::SqlTiersListRequest const& request) {
         return stub_->List(rest_context, options, request);
       },
       *current, request, __func__);

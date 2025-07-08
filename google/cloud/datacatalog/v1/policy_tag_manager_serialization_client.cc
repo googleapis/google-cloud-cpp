@@ -26,42 +26,32 @@ namespace datacatalog_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTagManagerSerializationClient::PolicyTagManagerSerializationClient(
-    std::shared_ptr<PolicyTagManagerSerializationConnection> connection,
-    Options opts)
+    std::shared_ptr<PolicyTagManagerSerializationConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-PolicyTagManagerSerializationClient::~PolicyTagManagerSerializationClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+PolicyTagManagerSerializationClient::~PolicyTagManagerSerializationClient() = default;
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerSerializationClient::ReplaceTaxonomy(
-    google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request,
-    Options opts) {
+PolicyTagManagerSerializationClient::ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReplaceTaxonomy(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-PolicyTagManagerSerializationClient::ImportTaxonomies(
-    google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request,
-    Options opts) {
+PolicyTagManagerSerializationClient::ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportTaxonomies(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-PolicyTagManagerSerializationClient::ExportTaxonomies(
-    google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request,
-    Options opts) {
+PolicyTagManagerSerializationClient::ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTaxonomies(request);
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyTagManagerSerializationClient::ListOperations(std::string const& name,
-                                                    std::string const& filter,
-                                                    Options opts) {
+PolicyTagManagerSerializationClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -70,15 +60,13 @@ PolicyTagManagerSerializationClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyTagManagerSerializationClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+PolicyTagManagerSerializationClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyTagManagerSerializationClient::GetOperation(std::string const& name,
-                                                  Options opts) {
+PolicyTagManagerSerializationClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -86,36 +74,35 @@ PolicyTagManagerSerializationClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyTagManagerSerializationClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+PolicyTagManagerSerializationClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status PolicyTagManagerSerializationClient::DeleteOperation(
-    std::string const& name, Options opts) {
+Status
+PolicyTagManagerSerializationClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status PolicyTagManagerSerializationClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+PolicyTagManagerSerializationClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status PolicyTagManagerSerializationClient::CancelOperation(
-    std::string const& name, Options opts) {
+Status
+PolicyTagManagerSerializationClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status PolicyTagManagerSerializationClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+PolicyTagManagerSerializationClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

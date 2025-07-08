@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_connection_impl.h"
-#include "google/cloud/dialogflow_es/internal/knowledge_bases_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_es/internal/knowledge_bases_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,63 +32,54 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_es::KnowledgeBasesRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dialogflow_es::KnowledgeBasesRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<dialogflow_es::KnowledgeBasesBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::KnowledgeBasesBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 KnowledgeBasesConnectionImpl::KnowledgeBasesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_es_internal::KnowledgeBasesStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      KnowledgeBasesConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        KnowledgeBasesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesConnectionImpl::ListKnowledgeBases(
-    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) {
+KnowledgeBasesConnectionImpl::ListKnowledgeBases(google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListKnowledgeBases(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& r) {
+          Options const& options, google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
               return stub->ListKnowledgeBases(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListKnowledgeBasesResponse r) {
-        std::vector<google::cloud::dialogflow::v2::KnowledgeBase> result(
-            r.knowledge_bases().size());
+        std::vector<google::cloud::dialogflow::v2::KnowledgeBase> result(r.knowledge_bases().size());
         auto& messages = *r.mutable_knowledge_bases();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -96,92 +87,79 @@ KnowledgeBasesConnectionImpl::ListKnowledgeBases(
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesConnectionImpl::GetKnowledgeBase(
-    google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
+KnowledgeBasesConnectionImpl::GetKnowledgeBase(google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetKnowledgeBase(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&
-                 request) {
+             google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
         return stub_->GetKnowledgeBase(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesConnectionImpl::CreateKnowledgeBase(
-    google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
+KnowledgeBasesConnectionImpl::CreateKnowledgeBase(google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateKnowledgeBase(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&
-                 request) {
+             google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
         return stub_->CreateKnowledgeBase(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status KnowledgeBasesConnectionImpl::DeleteKnowledgeBase(
-    google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
+Status
+KnowledgeBasesConnectionImpl::DeleteKnowledgeBase(google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteKnowledgeBase(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&
-                 request) {
+             google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
         return stub_->DeleteKnowledgeBase(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesConnectionImpl::UpdateKnowledgeBase(
-    google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
+KnowledgeBasesConnectionImpl::UpdateKnowledgeBase(google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateKnowledgeBase(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&
-                 request) {
+             google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
         return stub_->UpdateKnowledgeBase(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-KnowledgeBasesConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+KnowledgeBasesConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -189,8 +167,7 @@ KnowledgeBasesConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-KnowledgeBasesConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+KnowledgeBasesConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -203,21 +180,17 @@ KnowledgeBasesConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-KnowledgeBasesConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+KnowledgeBasesConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -227,8 +200,7 @@ KnowledgeBasesConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -236,8 +208,7 @@ KnowledgeBasesConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-KnowledgeBasesConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+KnowledgeBasesConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -249,8 +220,8 @@ KnowledgeBasesConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status KnowledgeBasesConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+KnowledgeBasesConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

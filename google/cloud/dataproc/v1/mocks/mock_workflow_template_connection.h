@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `WorkflowTemplateServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `WorkflowTemplateServiceClient`. To
- * do so, construct an object of type `WorkflowTemplateServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `WorkflowTemplateServiceClient`. To do so,
+ * construct an object of type `WorkflowTemplateServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,38 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockWorkflowTemplateServiceConnection
-    : public dataproc_v1::WorkflowTemplateServiceConnection {
+class MockWorkflowTemplateServiceConnection : public dataproc_v1::WorkflowTemplateServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
-              CreateWorkflowTemplate,
-              (google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
-                   request),
-              (override));
+  CreateWorkflowTemplate,
+  (google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
-      GetWorkflowTemplate,
-      (google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
+  GetWorkflowTemplate,
+  (google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InstantiateWorkflowTemplate(Matcher<google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InstantiateWorkflowTemplate(Matcher<google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
-      InstantiateWorkflowTemplate,
-      (google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
+  InstantiateWorkflowTemplate,
+  (google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -81,40 +72,33 @@ class MockWorkflowTemplateServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InstantiateWorkflowTemplate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, InstantiateWorkflowTemplate,
-      (NoAwaitTag,
-       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  InstantiateWorkflowTemplate, (NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InstantiateWorkflowTemplate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InstantiateWorkflowTemplate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
-              InstantiateWorkflowTemplate,
-              (google::longrunning::Operation const& operation), (override));
+  InstantiateWorkflowTemplate, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InstantiateInlineWorkflowTemplate(Matcher<google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate(Matcher<google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
-              InstantiateInlineWorkflowTemplate,
-              (google::cloud::dataproc::v1::
-                   InstantiateInlineWorkflowTemplateRequest const& request),
-              (override));
+  InstantiateInlineWorkflowTemplate,
+  (google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -123,69 +107,60 @@ class MockWorkflowTemplateServiceConnection
   /// EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-              InstantiateInlineWorkflowTemplate,
-              (NoAwaitTag,
-               google::cloud::dataproc::v1::
-                   InstantiateInlineWorkflowTemplateRequest const& request),
-              (override));
+  InstantiateInlineWorkflowTemplate, (NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InstantiateInlineWorkflowTemplate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
-              InstantiateInlineWorkflowTemplate,
-              (google::longrunning::Operation const& operation), (override));
+  InstantiateInlineWorkflowTemplate, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
-              UpdateWorkflowTemplate,
-              (google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
-                   request),
-              (override));
+  UpdateWorkflowTemplate,
+  (google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>),
-      ListWorkflowTemplates,
-      (google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>),
+  ListWorkflowTemplates,
+  (google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request), (override));
 
-  MOCK_METHOD(Status, DeleteWorkflowTemplate,
-              (google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteWorkflowTemplate,
+  (google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

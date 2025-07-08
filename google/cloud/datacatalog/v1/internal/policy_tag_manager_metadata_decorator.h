@@ -40,85 +40,93 @@ class PolicyTagManagerMetadata : public PolicyTagManagerStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) override;
 
   Status DeleteTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
-  ListTaxonomies(grpc::ClientContext& context, Options const& options,
-                 google::cloud::datacatalog::v1::ListTaxonomiesRequest const&
-                     request) override;
+  StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse> ListTaxonomies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) override;
 
   Status DeletePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
-  ListPolicyTags(grpc::ClientContext& context, Options const& options,
-                 google::cloud::datacatalog::v1::ListPolicyTagsRequest const&
-                     request) override;
+  StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse> ListPolicyTags(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

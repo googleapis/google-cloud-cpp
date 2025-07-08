@@ -36,37 +36,29 @@ class BigQueryWriteTracingConnection
   ~BigQueryWriteTracingConnection() override = default;
 
   explicit BigQueryWriteTracingConnection(
-      std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection> child);
+    std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
-      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
+  CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
   AsyncAppendRows() override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
-      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
+  GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-  FinalizeWriteStream(
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-          request) override;
+  FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request) override;
 
-  StatusOr<
-      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-  BatchCommitWriteStreams(
-      google::cloud::bigquery::storage::v1::
-          BatchCommitWriteStreamsRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
+  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
+  FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) override;
 
  private:
   std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection> child_;

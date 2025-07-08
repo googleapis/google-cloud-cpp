@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_AUTH_DECORATOR_H
 
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,12 +38,10 @@ class PolicyTroubleshooterAuth : public PolicyTroubleshooterStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<PolicyTroubleshooterStub> child);
 
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::
-               TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::iam::v3::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

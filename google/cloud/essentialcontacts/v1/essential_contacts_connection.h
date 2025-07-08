@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_ESSENTIAL_CONTACTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_ESSENTIAL_CONTACTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection_idempotency_policy.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,17 +36,14 @@ namespace essentialcontacts_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `EssentialContactsServiceConnection`.
-class EssentialContactsServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class EssentialContactsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<EssentialContactsServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<EssentialContactsServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `EssentialContactsServiceConnection` based on counting
- * errors.
+ * A retry policy for `EssentialContactsServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -55,8 +52,7 @@ class EssentialContactsServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EssentialContactsServiceLimitedErrorCountRetryPolicy
-    : public EssentialContactsServiceRetryPolicy {
+class EssentialContactsServiceLimitedErrorCountRetryPolicy : public EssentialContactsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,18 +61,15 @@ class EssentialContactsServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit EssentialContactsServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit EssentialContactsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   EssentialContactsServiceLimitedErrorCountRetryPolicy(
       EssentialContactsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : EssentialContactsServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : EssentialContactsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EssentialContactsServiceLimitedErrorCountRetryPolicy(
       EssentialContactsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : EssentialContactsServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : EssentialContactsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,8 +81,7 @@ class EssentialContactsServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<EssentialContactsServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        EssentialContactsServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<EssentialContactsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -97,14 +89,11 @@ class EssentialContactsServiceLimitedErrorCountRetryPolicy
   using BaseType = EssentialContactsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      essentialcontacts_v1_internal::EssentialContactsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<essentialcontacts_v1_internal::EssentialContactsServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `EssentialContactsServiceConnection` based on elapsed
- * time.
+ * A retry policy for `EssentialContactsServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -113,8 +102,7 @@ class EssentialContactsServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EssentialContactsServiceLimitedTimeRetryPolicy
-    : public EssentialContactsServiceRetryPolicy {
+class EssentialContactsServiceLimitedTimeRetryPolicy : public EssentialContactsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,16 +127,12 @@ class EssentialContactsServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit EssentialContactsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  EssentialContactsServiceLimitedTimeRetryPolicy(
-      EssentialContactsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : EssentialContactsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
-  EssentialContactsServiceLimitedTimeRetryPolicy(
-      EssentialContactsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : EssentialContactsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
+  EssentialContactsServiceLimitedTimeRetryPolicy(EssentialContactsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : EssentialContactsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EssentialContactsServiceLimitedTimeRetryPolicy(EssentialContactsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : EssentialContactsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -170,25 +154,20 @@ class EssentialContactsServiceLimitedTimeRetryPolicy
   using BaseType = EssentialContactsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      essentialcontacts_v1_internal::EssentialContactsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<essentialcontacts_v1_internal::EssentialContactsServiceRetryTraits> impl_;
 };
 
 /**
- * The `EssentialContactsServiceConnection` object for
- * `EssentialContactsServiceClient`.
+ * The `EssentialContactsServiceConnection` object for `EssentialContactsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `EssentialContactsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `EssentialContactsServiceClient`.
+ * sets in `EssentialContactsServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EssentialContactsServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeEssentialContactsServiceConnection()`.
+ * To create a concrete instance, see `MakeEssentialContactsServiceConnection()`.
  *
- * For mocking, see
- * `essentialcontacts_v1_mocks::MockEssentialContactsServiceConnection`.
+ * For mocking, see `essentialcontacts_v1_mocks::MockEssentialContactsServiceConnection`.
  */
 class EssentialContactsServiceConnection {
  public:
@@ -196,60 +175,51 @@ class EssentialContactsServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
-      google::cloud::essentialcontacts::v1::CreateContactRequest const&
-          request);
+  virtual StatusOr<google::cloud::essentialcontacts::v1::Contact>
+  CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request);
 
-  virtual StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
-      google::cloud::essentialcontacts::v1::UpdateContactRequest const&
-          request);
+  virtual StatusOr<google::cloud::essentialcontacts::v1::Contact>
+  UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request);
 
   virtual StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ListContacts(
-      google::cloud::essentialcontacts::v1::ListContactsRequest request);
+  ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request);
 
-  virtual StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
-      google::cloud::essentialcontacts::v1::GetContactRequest const& request);
+  virtual StatusOr<google::cloud::essentialcontacts::v1::Contact>
+  GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request);
 
-  virtual Status DeleteContact(
-      google::cloud::essentialcontacts::v1::DeleteContactRequest const&
-          request);
+  virtual Status
+  DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request);
 
   virtual StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ComputeContacts(
-      google::cloud::essentialcontacts::v1::ComputeContactsRequest request);
+  ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request);
 
-  virtual Status SendTestMessage(
-      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
-          request);
+  virtual Status
+  SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `EssentialContactsServiceConnection`.
+ * A factory function to construct an object of type `EssentialContactsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * EssentialContactsServiceClient.
+ * should be passed as an argument to the constructor of EssentialContactsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `EssentialContactsServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `EssentialContactsServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::essentialcontacts_v1::EssentialContactsServicePolicyOptionList`
+ * - `google::cloud::essentialcontacts_v1::EssentialContactsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `EssentialContactsServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `EssentialContactsServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<EssentialContactsServiceConnection>
-MakeEssentialContactsServiceConnection(Options options = {});
+std::shared_ptr<EssentialContactsServiceConnection> MakeEssentialContactsServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace essentialcontacts_v1

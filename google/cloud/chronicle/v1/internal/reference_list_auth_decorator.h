@@ -39,40 +39,43 @@ class ReferenceListServiceAuth : public ReferenceListServiceStub {
       std::shared_ptr<ReferenceListServiceStub> child);
 
   StatusOr<google::cloud::chronicle::v1::ReferenceList> GetReferenceList(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::GetReferenceListRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::GetReferenceListRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse>
-  ListReferenceLists(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::ListReferenceListsRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse> ListReferenceLists(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::ListReferenceListsRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::ReferenceList> CreateReferenceList(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::CreateReferenceListRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::CreateReferenceListRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::UpdateReferenceListRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

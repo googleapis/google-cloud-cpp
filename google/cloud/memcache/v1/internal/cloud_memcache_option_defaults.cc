@@ -17,10 +17,10 @@
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
 #include "google/cloud/memcache/v1/internal/cloud_memcache_option_defaults.h"
-#include "google/cloud/memcache/v1/cloud_memcache_connection.h"
-#include "google/cloud/memcache/v1/cloud_memcache_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/memcache/v1/cloud_memcache_connection.h"
+#include "google/cloud/memcache/v1/cloud_memcache_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,21 +35,19 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudMemcacheDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_AUTHORITY", "memcache.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_AUTHORITY",
+      "memcache.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<memcache_v1::CloudMemcacheRetryPolicyOption>()) {
     options.set<memcache_v1::CloudMemcacheRetryPolicyOption>(
         memcache_v1::CloudMemcacheLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<memcache_v1::CloudMemcacheBackoffPolicyOption>()) {
     options.set<memcache_v1::CloudMemcacheBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<memcache_v1::CloudMemcachePollingPolicyOption>()) {
     options.set<memcache_v1::CloudMemcachePollingPolicyOption>(
@@ -58,12 +56,9 @@ Options CloudMemcacheDefaultOptions(Options options) {
             memcache_v1::CloudMemcacheBackoffPolicyOption::Type>(
             options.get<memcache_v1::CloudMemcacheRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()) {
     options.set<memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>(
         memcache_v1::MakeDefaultCloudMemcacheConnectionIdempotencyPolicy());
   }

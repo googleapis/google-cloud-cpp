@@ -35,64 +35,69 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class StorageBatchOperationsLogging : public StorageBatchOperationsStub {
  public:
   ~StorageBatchOperationsLogging() override = default;
-  StorageBatchOperationsLogging(
-      std::shared_ptr<StorageBatchOperationsStub> child,
-      TracingOptions tracing_options, std::set<std::string> const& components);
+  StorageBatchOperationsLogging(std::shared_ptr<StorageBatchOperationsStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::storagebatchoperations::v1::ListJobsResponse>
-  ListJobs(grpc::ClientContext& context, Options const& options,
-           google::cloud::storagebatchoperations::v1::ListJobsRequest const&
-               request) override;
+  StatusOr<google::cloud::storagebatchoperations::v1::ListJobsResponse> ListJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::storagebatchoperations::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::storagebatchoperations::v1::Job> GetJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::storagebatchoperations::v1::GetJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::storagebatchoperations::v1::GetJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request) override;
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) override;
 
   Status DeleteJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request) override;
 
-  StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-  CancelJob(grpc::ClientContext& context, Options const& options,
-            google::cloud::storagebatchoperations::v1::CancelJobRequest const&
-                request) override;
+  StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse> CancelJob(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::storagebatchoperations::v1::CancelJobRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

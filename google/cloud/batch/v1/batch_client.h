@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BatchServiceClient {
  public:
-  explicit BatchServiceClient(
-      std::shared_ptr<BatchServiceConnection> connection, Options opts = {});
+  explicit BatchServiceClient(std::shared_ptr<BatchServiceConnection> connection, Options opts = {});
   ~BatchServiceClient();
 
   ///@{
@@ -80,12 +79,10 @@ class BatchServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BatchServiceClient const& a,
-                         BatchServiceClient const& b) {
+  friend bool operator==(BatchServiceClient const& a, BatchServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BatchServiceClient const& a,
-                         BatchServiceClient const& b) {
+  friend bool operator!=(BatchServiceClient const& a, BatchServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,9 +120,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      std::string const& parent, google::cloud::batch::v1::Job const& job,
-      std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  CreateJob(std::string const& parent, google::cloud::batch::v1::Job const& job, std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -154,9 +150,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      google::cloud::batch::v1::CreateJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  CreateJob(google::cloud::batch::v1::CreateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -180,8 +175,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> GetJob(std::string const& name,
-                                                 Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  GetJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -210,9 +205,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> GetJob(
-      google::cloud::batch::v1::GetJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  GetJob(google::cloud::batch::v1::GetJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -243,8 +237,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L291}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+  DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -257,9 +251,8 @@ class BatchServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteJob(NoAwaitTag,
-                                                     std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -295,9 +288,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L291}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      google::cloud::batch::v1::DeleteJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -310,9 +302,8 @@ class BatchServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteJob(
-      NoAwaitTag, google::cloud::batch::v1::DeleteJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteJob(NoAwaitTag, google::cloud::batch::v1::DeleteJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -323,8 +314,8 @@ class BatchServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+  DeleteJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +346,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L214}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+  CancelJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -369,9 +360,8 @@ class BatchServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelJob(NoAwaitTag,
-                                                     std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -407,9 +397,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L214}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
-      google::cloud::batch::v1::CancelJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+  CancelJob(google::cloud::batch::v1::CancelJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -422,9 +411,8 @@ class BatchServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelJob(
-      NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelJob(NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -435,8 +423,8 @@ class BatchServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+  CancelJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -469,8 +457,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L217}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Job> ListJobs(std::string const& parent,
-                                                      Options opts = {});
+  StreamRange<google::cloud::batch::v1::Job>
+  ListJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +496,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L217}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Job> ListJobs(
-      google::cloud::batch::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::batch::v1::Job>
+  ListJobs(google::cloud::batch::v1::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -533,8 +521,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
-                                                   Options opts = {});
+  StatusOr<google::cloud::batch::v1::Task>
+  GetTask(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -563,9 +551,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Task> GetTask(
-      google::cloud::batch::v1::GetTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::batch::v1::Task>
+  GetTask(google::cloud::batch::v1::GetTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -600,8 +587,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Task> ListTasks(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::batch::v1::Task>
+  ListTasks(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -639,8 +626,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Task> ListTasks(
-      google::cloud::batch::v1::ListTasksRequest request, Options opts = {});
+  StreamRange<google::cloud::batch::v1::Task>
+  ListTasks(google::cloud::batch::v1::ListTasksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -678,8 +665,8 @@ class BatchServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -708,9 +695,8 @@ class BatchServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -745,8 +731,8 @@ class BatchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -785,8 +771,8 @@ class BatchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -812,8 +798,8 @@ class BatchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -844,9 +830,8 @@ class BatchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -870,7 +855,8 @@ class BatchServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -899,9 +885,8 @@ class BatchServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -935,7 +920,8 @@ class BatchServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -974,9 +960,8 @@ class BatchServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<BatchServiceConnection> connection_;

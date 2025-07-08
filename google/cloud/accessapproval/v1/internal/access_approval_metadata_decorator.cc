@@ -46,105 +46,96 @@ AccessApprovalMetadata::AccessApprovalMetadata(
 
 StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
 AccessApprovalMetadata::ListApprovalRequests(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListApprovalRequests(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalMetadata::GetApprovalRequest(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetApprovalRequest(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalMetadata::ApproveApprovalRequest(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ApproveApprovalRequest(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalMetadata::DismissApprovalRequest(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DismissApprovalRequest(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalMetadata::InvalidateApprovalRequest(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->InvalidateApprovalRequest(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalMetadata::GetAccessApprovalSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccessApprovalSettings(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalMetadata::UpdateAccessApprovalSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::
-        UpdateAccessApprovalSettingsMessage const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("settings.name=",
-                           internal::UrlEncode(request.settings().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("settings.name=", internal::UrlEncode(request.settings().name())));
   return child_->UpdateAccessApprovalSettings(context, options, request);
 }
 
-Status AccessApprovalMetadata::DeleteAccessApprovalSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::
-        DeleteAccessApprovalSettingsMessage const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+AccessApprovalMetadata::DeleteAccessApprovalSettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAccessApprovalSettings(context, options, request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
 AccessApprovalMetadata::GetAccessApprovalServiceAccount(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::accessapproval::v1::
-        GetAccessApprovalServiceAccountMessage const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccessApprovalServiceAccount(context, options, request);
 }
 
 void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options,
-                                         std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

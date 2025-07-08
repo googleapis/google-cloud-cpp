@@ -34,24 +34,23 @@ class SqlSslCertsServiceConnectionIdempotencyPolicy {
   virtual ~SqlSslCertsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlSslCertsServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<SqlSslCertsServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency Delete(
-      google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request);
+  virtual google::cloud::Idempotency
+  Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request);
 
-  virtual google::cloud::Idempotency Get(
-      google::cloud::sql::v1::SqlSslCertsGetRequest const& request);
+  virtual google::cloud::Idempotency
+  Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request);
 
-  virtual google::cloud::Idempotency Insert(
-      google::cloud::sql::v1::SqlSslCertsInsertRequest const& request);
+  virtual google::cloud::Idempotency
+  Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request);
 
-  virtual google::cloud::Idempotency List(
-      google::cloud::sql::v1::SqlSslCertsListRequest const& request);
+  virtual google::cloud::Idempotency
+  List(google::cloud::sql::v1::SqlSslCertsListRequest const& request);
 };
 
 std::unique_ptr<SqlSslCertsServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlSslCertsServiceConnectionIdempotencyPolicy();
+    MakeDefaultSqlSslCertsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

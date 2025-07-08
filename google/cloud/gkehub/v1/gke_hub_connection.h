@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CONNECTION_H
 
-#include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
-#include "google/cloud/gkehub/v1/internal/gke_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_retry_traits.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -66,14 +66,14 @@ class GkeHubLimitedErrorCountRetryPolicy : public GkeHubRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit GkeHubLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   GkeHubLimitedErrorCountRetryPolicy(
       GkeHubLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : GkeHubLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : GkeHubLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GkeHubLimitedErrorCountRetryPolicy(
       GkeHubLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : GkeHubLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : GkeHubLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class GkeHubLimitedErrorCountRetryPolicy : public GkeHubRetryPolicy {
   using BaseType = GkeHubRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      gkehub_v1_internal::GkeHubRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<gkehub_v1_internal::GkeHubRetryTraits> impl_;
 };
 
 /**
@@ -133,12 +131,12 @@ class GkeHubLimitedTimeRetryPolicy : public GkeHubRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit GkeHubLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   GkeHubLimitedTimeRetryPolicy(GkeHubLimitedTimeRetryPolicy&& rhs) noexcept
-      : GkeHubLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : GkeHubLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   GkeHubLimitedTimeRetryPolicy(GkeHubLimitedTimeRetryPolicy const& rhs) noexcept
-      : GkeHubLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : GkeHubLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,16 +150,15 @@ class GkeHubLimitedTimeRetryPolicy : public GkeHubRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<GkeHubRetryPolicy> clone() const override {
-    return std::make_unique<GkeHubLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<GkeHubLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = GkeHubRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      gkehub_v1_internal::GkeHubRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<gkehub_v1_internal::GkeHubRetryTraits> impl_;
 };
 
 /**
@@ -182,84 +179,74 @@ class GkeHubConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
-      google::cloud::gkehub::v1::ListMembershipsRequest request);
+  virtual StreamRange<google::cloud::gkehub::v1::Membership>
+  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request);
 
-  virtual StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
-      google::cloud::gkehub::v1::ListFeaturesRequest request);
+  virtual StreamRange<google::cloud::gkehub::v1::Feature>
+  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request);
 
-  virtual StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      google::cloud::gkehub::v1::GetMembershipRequest const& request);
+  virtual StatusOr<google::cloud::gkehub::v1::Membership>
+  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request);
 
-  virtual StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      google::cloud::gkehub::v1::GetFeatureRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  CreateMembership(
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request);
+  virtual StatusOr<google::cloud::gkehub::v1::Feature>
+  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  CreateMembership(google::longrunning::Operation const& operation);
+  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request);
 
-  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateMembership(NoAwaitTag, google::cloud::gkehub::v1::CreateMembershipRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request);
+  virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  CreateMembership( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request);
 
-  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag, google::cloud::gkehub::v1::CreateFeatureRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
+  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::longrunning::Operation const& operation);
+  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMembership(NoAwaitTag, google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembership( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag, google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteFeature(google::longrunning::Operation const& operation);
+  DeleteFeature( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  UpdateMembership(
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
+  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateMembership(NoAwaitTag, google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  UpdateMembership(google::longrunning::Operation const& operation);
+  UpdateMembership( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
+  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag, google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
 
-  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-  GenerateConnectManifest(
-      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
+  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
 };
 
 /**
@@ -283,7 +270,8 @@ class GkeHubConnection {
  * @param options (optional) Configure the `GkeHubConnection` created by
  * this function.
  */
-std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options = {});
+std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_v1

@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DocumentServiceClient {
  public:
-  explicit DocumentServiceClient(
-      std::shared_ptr<DocumentServiceConnection> connection, Options opts = {});
+  explicit DocumentServiceClient(std::shared_ptr<DocumentServiceConnection> connection, Options opts = {});
   ~DocumentServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class DocumentServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DocumentServiceClient const& a,
-                         DocumentServiceClient const& b) {
+  friend bool operator==(DocumentServiceClient const& a, DocumentServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DocumentServiceClient const& a,
-                         DocumentServiceClient const& b) {
+  friend bool operator!=(DocumentServiceClient const& a, DocumentServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,9 +107,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-  CreateDocument(std::string const& parent,
-                 google::cloud::contentwarehouse::v1::Document const& document,
-                 Options opts = {});
+  CreateDocument(std::string const& parent, google::cloud::contentwarehouse::v1::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -142,9 +137,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-  CreateDocument(
-      google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request,
-      Options opts = {});
+  CreateDocument(google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -171,8 +164,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L84}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::Document> GetDocument(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::Document>
+  GetDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +194,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L84}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::Document> GetDocument(
-      google::cloud::contentwarehouse::v1::GetDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::Document>
+  GetDocument(google::cloud::contentwarehouse::v1::GetDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -234,9 +226,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-  UpdateDocument(std::string const& name,
-                 google::cloud::contentwarehouse::v1::Document const& document,
-                 Options opts = {});
+  UpdateDocument(std::string const& name, google::cloud::contentwarehouse::v1::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -267,9 +257,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-  UpdateDocument(
-      google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request,
-      Options opts = {});
+  UpdateDocument(google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -294,7 +282,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L133}
   ///
   // clang-format on
-  Status DeleteDocument(std::string const& name, Options opts = {});
+  Status
+  DeleteDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -320,9 +309,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L133}
   ///
   // clang-format on
-  Status DeleteDocument(
-      google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDocument(google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +347,7 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.SearchDocumentsResponse.MatchingDocument]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L203}
   ///
   // clang-format on
-  StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
-                  MatchingDocument>
+  StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>
   SearchDocuments(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -402,11 +389,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.SearchDocumentsResponse.MatchingDocument]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L203}
   ///
   // clang-format on
-  StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
-                  MatchingDocument>
-  SearchDocuments(
-      google::cloud::contentwarehouse::v1::SearchDocumentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>
+  SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +416,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.LockDocumentRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L280}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::Document> LockDocument(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::Document>
+  LockDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -462,9 +446,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.LockDocumentRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L280}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::Document> LockDocument(
-      google::cloud::contentwarehouse::v1::LockDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::Document>
+  LockDocument(google::cloud::contentwarehouse::v1::LockDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -495,8 +478,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.FetchAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
-      std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
+  FetchAcl(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -527,9 +510,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.FetchAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
-      google::cloud::contentwarehouse::v1::FetchAclRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
+  FetchAcl(google::cloud::contentwarehouse::v1::FetchAclRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -578,9 +560,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.SetAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L272}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
+  SetAcl(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
 
   // clang-format off
   ///
@@ -610,9 +591,8 @@ class DocumentServiceClient {
   /// [google.cloud.contentwarehouse.v1.SetAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L272}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
-      google::cloud::contentwarehouse::v1::SetAclRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
+  SetAcl(google::cloud::contentwarehouse::v1::SetAclRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -638,8 +618,8 @@ class DocumentServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -670,9 +650,8 @@ class DocumentServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DocumentServiceConnection> connection_;

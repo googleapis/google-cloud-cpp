@@ -30,8 +30,7 @@ namespace cloud {
 namespace billing_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use billing_budgets_v1_mocks::MockBudgetServiceConnection
-/// directly.
+/// @deprecated Use billing_budgets_v1_mocks::MockBudgetServiceConnection directly.
 using ::google::cloud::billing_budgets_v1_mocks::MockBudgetServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

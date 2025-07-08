@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RuleServiceClient::RuleServiceClient(
     std::shared_ptr<RuleServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 RuleServiceClient::~RuleServiceClient() = default;
 
-StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::CreateRule(
-    std::string const& parent, google::cloud::chronicle::v1::Rule const& rule,
-    Options opts) {
+StatusOr<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::CreateRule(std::string const& parent, google::cloud::chronicle::v1::Rule const& rule, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateRuleRequest request;
   request.set_parent(parent);
@@ -42,44 +41,42 @@ StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::CreateRule(
   return connection_->CreateRule(request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::CreateRule(
-    google::cloud::chronicle::v1::CreateRuleRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRule(request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::GetRule(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::GetRule(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::GetRuleRequest request;
   request.set_name(name);
   return connection_->GetRule(request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::GetRule(
-    google::cloud::chronicle::v1::GetRuleRequest const& request, Options opts) {
+StatusOr<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRule(request);
 }
 
-StreamRange<google::cloud::chronicle::v1::Rule> RuleServiceClient::ListRules(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::ListRules(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::ListRulesRequest request;
   request.set_parent(parent);
   return connection_->ListRules(request);
 }
 
-StreamRange<google::cloud::chronicle::v1::Rule> RuleServiceClient::ListRules(
-    google::cloud::chronicle::v1::ListRulesRequest request, Options opts) {
+StreamRange<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::ListRules(google::cloud::chronicle::v1::ListRulesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRules(std::move(request));
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::UpdateRule(
-    google::cloud::chronicle::v1::Rule const& rule,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::UpdateRule(google::cloud::chronicle::v1::Rule const& rule, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::UpdateRuleRequest request;
   *request.mutable_rule() = rule;
@@ -87,23 +84,22 @@ StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::UpdateRule(
   return connection_->UpdateRule(request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceClient::UpdateRule(
-    google::cloud::chronicle::v1::UpdateRuleRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::chronicle::v1::Rule>
+RuleServiceClient::UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRule(request);
 }
 
-Status RuleServiceClient::DeleteRule(std::string const& name, Options opts) {
+Status
+RuleServiceClient::DeleteRule(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::DeleteRuleRequest request;
   request.set_name(name);
   return connection_->DeleteRule(request);
 }
 
-Status RuleServiceClient::DeleteRule(
-    google::cloud::chronicle::v1::DeleteRuleRequest const& request,
-    Options opts) {
+Status
+RuleServiceClient::DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRule(request);
 }
@@ -117,17 +113,13 @@ RuleServiceClient::ListRuleRevisions(std::string const& name, Options opts) {
 }
 
 StreamRange<google::cloud::chronicle::v1::Rule>
-RuleServiceClient::ListRuleRevisions(
-    google::cloud::chronicle::v1::ListRuleRevisionsRequest request,
-    Options opts) {
+RuleServiceClient::ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuleRevisions(std::move(request));
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-RuleServiceClient::CreateRetrohunt(
-    std::string const& parent,
-    google::cloud::chronicle::v1::Retrohunt const& retrohunt, Options opts) {
+RuleServiceClient::CreateRetrohunt(std::string const& parent, google::cloud::chronicle::v1::Retrohunt const& retrohunt, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateRetrohuntRequest request;
   request.set_parent(parent);
@@ -135,9 +127,8 @@ RuleServiceClient::CreateRetrohunt(
   return connection_->CreateRetrohunt(request);
 }
 
-StatusOr<google::longrunning::Operation> RuleServiceClient::CreateRetrohunt(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::chronicle::v1::Retrohunt const& retrohunt, Options opts) {
+StatusOr<google::longrunning::Operation>
+RuleServiceClient::CreateRetrohunt(NoAwaitTag, std::string const& parent, google::cloud::chronicle::v1::Retrohunt const& retrohunt, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateRetrohuntRequest request;
   request.set_parent(parent);
@@ -146,24 +137,19 @@ StatusOr<google::longrunning::Operation> RuleServiceClient::CreateRetrohunt(
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-RuleServiceClient::CreateRetrohunt(
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request,
-    Options opts) {
+RuleServiceClient::CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRetrohunt(request);
 }
 
-StatusOr<google::longrunning::Operation> RuleServiceClient::CreateRetrohunt(
-    NoAwaitTag,
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+RuleServiceClient::CreateRetrohunt(NoAwaitTag, google::cloud::chronicle::v1::CreateRetrohuntRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRetrohunt(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-RuleServiceClient::CreateRetrohunt(
-    google::longrunning::Operation const& operation, Options opts) {
+RuleServiceClient::CreateRetrohunt(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRetrohunt(operation);
 }
@@ -177,9 +163,7 @@ RuleServiceClient::GetRetrohunt(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
-RuleServiceClient::GetRetrohunt(
-    google::cloud::chronicle::v1::GetRetrohuntRequest const& request,
-    Options opts) {
+RuleServiceClient::GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRetrohunt(request);
 }
@@ -193,8 +177,7 @@ RuleServiceClient::ListRetrohunts(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::chronicle::v1::Retrohunt>
-RuleServiceClient::ListRetrohunts(
-    google::cloud::chronicle::v1::ListRetrohuntsRequest request, Options opts) {
+RuleServiceClient::ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRetrohunts(std::move(request));
 }
@@ -208,16 +191,13 @@ RuleServiceClient::GetRuleDeployment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceClient::GetRuleDeployment(
-    google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request,
-    Options opts) {
+RuleServiceClient::GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRuleDeployment(request);
 }
 
 StreamRange<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceClient::ListRuleDeployments(std::string const& parent,
-                                       Options opts) {
+RuleServiceClient::ListRuleDeployments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::ListRuleDeploymentsRequest request;
   request.set_parent(parent);
@@ -225,17 +205,13 @@ RuleServiceClient::ListRuleDeployments(std::string const& parent,
 }
 
 StreamRange<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceClient::ListRuleDeployments(
-    google::cloud::chronicle::v1::ListRuleDeploymentsRequest request,
-    Options opts) {
+RuleServiceClient::ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuleDeployments(std::move(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceClient::UpdateRuleDeployment(
-    google::cloud::chronicle::v1::RuleDeployment const& rule_deployment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+RuleServiceClient::UpdateRuleDeployment(google::cloud::chronicle::v1::RuleDeployment const& rule_deployment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::UpdateRuleDeploymentRequest request;
   *request.mutable_rule_deployment() = rule_deployment;
@@ -244,15 +220,13 @@ RuleServiceClient::UpdateRuleDeployment(
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceClient::UpdateRuleDeployment(
-    google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request,
-    Options opts) {
+RuleServiceClient::UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRuleDeployment(request);
 }
 
-StreamRange<google::longrunning::Operation> RuleServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+RuleServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -260,50 +234,50 @@ StreamRange<google::longrunning::Operation> RuleServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> RuleServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+RuleServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> RuleServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+RuleServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> RuleServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+RuleServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status RuleServiceClient::DeleteOperation(std::string const& name,
-                                          Options opts) {
+Status
+RuleServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status RuleServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+RuleServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status RuleServiceClient::CancelOperation(std::string const& name,
-                                          Options opts) {
+Status
+RuleServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status RuleServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+RuleServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

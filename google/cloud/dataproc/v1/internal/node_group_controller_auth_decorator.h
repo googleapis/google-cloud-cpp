@@ -43,56 +43,62 @@ class NodeGroupControllerAuth : public NodeGroupControllerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
-      override;
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNodeGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResizeNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
-      override;
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ResizeNodeGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

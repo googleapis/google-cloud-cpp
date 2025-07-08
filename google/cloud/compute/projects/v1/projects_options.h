@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_PROJECTS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_PROJECTS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/projects/v1/projects_connection.h"
 #include "google/cloud/compute/projects/v1/projects_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct ProjectsPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using ProjectsPolicyOptionList =
-    OptionList<ProjectsRetryPolicyOption, ProjectsBackoffPolicyOption,
+    OptionList<ProjectsRetryPolicyOption,
+               ProjectsBackoffPolicyOption,
                ProjectsPollingPolicyOption,
                ProjectsConnectionIdempotencyPolicyOption>;
 

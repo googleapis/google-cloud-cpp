@@ -17,11 +17,11 @@
 // source: google/cloud/compute/accelerator_types/v1/accelerator_types.proto
 
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,36 +41,33 @@ AcceleratorTypesRestMetadata::AcceleratorTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 AcceleratorTypesRestMetadata::AggregatedListAcceleratorTypes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::accelerator_types::v1::
-        AggregatedListAcceleratorTypesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListAcceleratorTypes(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 AcceleratorTypesRestMetadata::GetAcceleratorType(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypeRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetAcceleratorType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
 AcceleratorTypesRestMetadata::ListAcceleratorTypes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::accelerator_types::v1::
-        ListAcceleratorTypesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListAcceleratorTypes(rest_context, options, request);
 }
 
 void AcceleratorTypesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,12 +17,12 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/v2/internal/cloud_tasks_connection_impl.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,47 +32,44 @@ namespace tasks_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<tasks_v2::CloudTasksRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<tasks_v2::CloudTasksRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<tasks_v2::CloudTasksBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<tasks_v2::CloudTasksConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 CloudTasksConnectionImpl::CloudTasksConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tasks_v2_internal::CloudTasksStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      CloudTasksConnection::options())) {}
+    std::shared_ptr<tasks_v2_internal::CloudTasksStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        CloudTasksConnection::options())) {}
 
 StreamRange<google::cloud::tasks::v2::Queue>
-CloudTasksConnectionImpl::ListQueues(
-    google::cloud::tasks::v2::ListQueuesRequest request) {
+CloudTasksConnectionImpl::ListQueues(google::cloud::tasks::v2::ListQueuesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListQueues(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::tasks::v2::Queue>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::tasks::v2::Queue>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::tasks::v2::ListQueuesRequest const& r) {
+          Options const& options, google::cloud::tasks::v2::ListQueuesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -89,8 +86,8 @@ CloudTasksConnectionImpl::ListQueues(
       });
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::GetQueue(
-    google::cloud::tasks::v2::GetQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnectionImpl::GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -102,8 +99,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::GetQueue(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::CreateQueue(
-    google::cloud::tasks::v2::CreateQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnectionImpl::CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -115,8 +112,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::CreateQueue(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::UpdateQueue(
-    google::cloud::tasks::v2::UpdateQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnectionImpl::UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -128,8 +125,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::UpdateQueue(
       *current, request, __func__);
 }
 
-Status CloudTasksConnectionImpl::DeleteQueue(
-    google::cloud::tasks::v2::DeleteQueueRequest const& request) {
+Status
+CloudTasksConnectionImpl::DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -141,8 +138,8 @@ Status CloudTasksConnectionImpl::DeleteQueue(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::PurgeQueue(
-    google::cloud::tasks::v2::PurgeQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnectionImpl::PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -154,8 +151,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::PurgeQueue(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::PauseQueue(
-    google::cloud::tasks::v2::PauseQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnectionImpl::PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -167,8 +164,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::PauseQueue(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::ResumeQueue(
-    google::cloud::tasks::v2::ResumeQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnectionImpl::ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -180,8 +177,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnectionImpl::ResumeQueue(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> CloudTasksConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+CloudTasksConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -193,8 +190,8 @@ StatusOr<google::iam::v1::Policy> CloudTasksConnectionImpl::GetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> CloudTasksConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+CloudTasksConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -207,8 +204,7 @@ StatusOr<google::iam::v1::Policy> CloudTasksConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudTasksConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+CloudTasksConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -220,21 +216,18 @@ CloudTasksConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
-StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::ListTasks(
-    google::cloud::tasks::v2::ListTasksRequest request) {
+StreamRange<google::cloud::tasks::v2::Task>
+CloudTasksConnectionImpl::ListTasks(google::cloud::tasks::v2::ListTasksRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTasks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::tasks::v2::Task>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::tasks::v2::Task>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::tasks::v2::ListTasksRequest const& r) {
+          Options const& options, google::cloud::tasks::v2::ListTasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -251,8 +244,8 @@ StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::ListTasks(
       });
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::GetTask(
-    google::cloud::tasks::v2::GetTaskRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksConnectionImpl::GetTask(google::cloud::tasks::v2::GetTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -264,8 +257,8 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::GetTask(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::CreateTask(
-    google::cloud::tasks::v2::CreateTaskRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksConnectionImpl::CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -277,8 +270,8 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::CreateTask(
       *current, request, __func__);
 }
 
-Status CloudTasksConnectionImpl::DeleteTask(
-    google::cloud::tasks::v2::DeleteTaskRequest const& request) {
+Status
+CloudTasksConnectionImpl::DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -290,8 +283,8 @@ Status CloudTasksConnectionImpl::DeleteTask(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::RunTask(
-    google::cloud::tasks::v2::RunTaskRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksConnectionImpl::RunTask(google::cloud::tasks::v2::RunTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -304,33 +297,27 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::RunTask(
 }
 
 StreamRange<google::cloud::location::Location>
-CloudTasksConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+CloudTasksConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -338,8 +325,7 @@ CloudTasksConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-CloudTasksConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+CloudTasksConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

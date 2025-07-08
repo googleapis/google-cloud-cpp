@@ -34,16 +34,14 @@ class PolicyTroubleshooterConnectionIdempotencyPolicy {
   virtual ~PolicyTroubleshooterConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PolicyTroubleshooterConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<PolicyTroubleshooterConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency TroubleshootIamPolicy(
-      google::cloud::policytroubleshooter::iam::v3::
-          TroubleshootIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request);
 };
 
 std::unique_ptr<PolicyTroubleshooterConnectionIdempotencyPolicy>
-MakeDefaultPolicyTroubleshooterConnectionIdempotencyPolicy();
+    MakeDefaultPolicyTroubleshooterConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_iam_v3

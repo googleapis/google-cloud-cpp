@@ -46,7 +46,8 @@ LanguageServiceMetadata::LanguageServiceMetadata(
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceMetadata::AnalyzeSentiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
   SetMetadata(context, options);
   return child_->AnalyzeSentiment(context, options, request);
@@ -54,7 +55,8 @@ LanguageServiceMetadata::AnalyzeSentiment(
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceMetadata::AnalyzeEntities(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
   SetMetadata(context, options);
   return child_->AnalyzeEntities(context, options, request);
@@ -62,7 +64,8 @@ LanguageServiceMetadata::AnalyzeEntities(
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceMetadata::AnalyzeEntitySentiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
   SetMetadata(context, options);
   return child_->AnalyzeEntitySentiment(context, options, request);
@@ -70,7 +73,8 @@ LanguageServiceMetadata::AnalyzeEntitySentiment(
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceMetadata::AnalyzeSyntax(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
   SetMetadata(context, options);
   return child_->AnalyzeSyntax(context, options, request);
@@ -78,7 +82,8 @@ LanguageServiceMetadata::AnalyzeSyntax(
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 LanguageServiceMetadata::ClassifyText(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::ClassifyTextRequest const& request) {
   SetMetadata(context, options);
   return child_->ClassifyText(context, options, request);
@@ -86,7 +91,8 @@ LanguageServiceMetadata::ClassifyText(
 
 StatusOr<google::cloud::language::v1::ModerateTextResponse>
 LanguageServiceMetadata::ModerateText(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::ModerateTextRequest const& request) {
   SetMetadata(context, options);
   return child_->ModerateText(context, options, request);
@@ -94,23 +100,24 @@ LanguageServiceMetadata::ModerateText(
 
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceMetadata::AnnotateText(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v1::AnnotateTextRequest const& request) {
   SetMetadata(context, options);
   return child_->AnnotateText(context, options, request);
 }
 
 void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                          Options const& options,
-                                          std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                          Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTargetSslProxiesConnection
-    : public compute_target_ssl_proxies_v1::TargetSslProxiesConnection {
+class MockTargetSslProxiesConnection : public compute_target_ssl_proxies_v1::TargetSslProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockTargetSslProxiesConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTargetSslProxy(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteTargetSslProxy(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteTargetSslProxy,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   DeleteTargetSslProxyRequest const& request),
-              (override));
+  DeleteTargetSslProxy,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,45 +65,36 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, DeleteTargetSslProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteTargetSslProxy,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               DeleteTargetSslProxyRequest const& request),
-              (override));
+  DeleteTargetSslProxy, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTargetSslProxy(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteTargetSslProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteTargetSslProxy,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteTargetSslProxy, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>,
-              GetTargetSslProxy,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   GetTargetSslProxyRequest const& request),
-              (override));
+  GetTargetSslProxy,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertTargetSslProxy(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertTargetSslProxy(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertTargetSslProxy,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   InsertTargetSslProxyRequest const& request),
-              (override));
+  InsertTargetSslProxy,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -116,45 +103,36 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, InsertTargetSslProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertTargetSslProxy,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               InsertTargetSslProxyRequest const& request),
-              (override));
+  InsertTargetSslProxy, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertTargetSslProxy(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertTargetSslProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertTargetSslProxy,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertTargetSslProxy, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>),
-              ListTargetSslProxies,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   ListTargetSslProxiesRequest request),
-              (override));
+  ListTargetSslProxies,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetBackendService(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetBackendService(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetBackendService,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetBackendServiceRequest const& request),
-              (override));
+  SetBackendService,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -163,39 +141,32 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, SetBackendService(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetBackendService,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               SetBackendServiceRequest const& request),
-              (override));
+  SetBackendService, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetBackendService(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetBackendService(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetBackendService,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetBackendService, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetCertificateMap(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetCertificateMap(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetCertificateMap,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetCertificateMapRequest const& request),
-              (override));
+  SetCertificateMap,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -204,39 +175,32 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, SetCertificateMap(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetCertificateMap,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               SetCertificateMapRequest const& request),
-              (override));
+  SetCertificateMap, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetCertificateMap(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetCertificateMap(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetCertificateMap,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetCertificateMap, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetProxyHeader(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetProxyHeader(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetProxyHeader,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetProxyHeaderRequest const& request),
-              (override));
+  SetProxyHeader,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -245,39 +209,32 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, SetProxyHeader(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetProxyHeader,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               SetProxyHeaderRequest const& request),
-              (override));
+  SetProxyHeader, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetProxyHeader(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetProxyHeader(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetProxyHeader,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetProxyHeader, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetSslCertificates(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetSslCertificates(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetSslCertificates,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetSslCertificatesRequest const& request),
-              (override));
+  SetSslCertificates,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -286,39 +243,32 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, SetSslCertificates(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetSslCertificates,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               SetSslCertificatesRequest const& request),
-              (override));
+  SetSslCertificates, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetSslCertificates(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetSslCertificates(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetSslCertificates,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetSslCertificates, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetSslPolicy(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetSslPolicy(Matcher<google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetSslPolicy,
-              (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetSslPolicyRequest const& request),
-              (override));
+  SetSslPolicy,
+  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -327,24 +277,20 @@ class MockTargetSslProxiesConnection
   /// EXPECT_CALL(*mock, SetSslPolicy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetSslPolicy,
-              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                               SetSslPolicyRequest const& request),
-              (override));
+  SetSslPolicy, (NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetSslPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetSslPolicy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetSslPolicy,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetSslPolicy, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

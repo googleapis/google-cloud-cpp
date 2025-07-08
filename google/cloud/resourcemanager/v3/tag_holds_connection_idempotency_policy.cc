@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TagHoldsConnectionIdempotencyPolicy::~TagHoldsConnectionIdempotencyPolicy() =
-    default;
+TagHoldsConnectionIdempotencyPolicy::~TagHoldsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TagHoldsConnectionIdempotencyPolicy>
 TagHoldsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TagHoldsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TagHoldsConnectionIdempotencyPolicy::CreateTagHold(
-    google::cloud::resourcemanager::v3::CreateTagHoldRequest const&) {
+Idempotency TagHoldsConnectionIdempotencyPolicy::CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagHoldsConnectionIdempotencyPolicy::DeleteTagHold(
-    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&) {
+Idempotency TagHoldsConnectionIdempotencyPolicy::DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagHoldsConnectionIdempotencyPolicy::ListTagHolds(
-    google::cloud::resourcemanager::v3::ListTagHoldsRequest) {  // NOLINT
+Idempotency TagHoldsConnectionIdempotencyPolicy::ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagHoldsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency TagHoldsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TagHoldsConnectionIdempotencyPolicy>
-MakeDefaultTagHoldsConnectionIdempotencyPolicy() {
+    MakeDefaultTagHoldsConnectionIdempotencyPolicy() {
   return std::make_unique<TagHoldsConnectionIdempotencyPolicy>();
 }
 

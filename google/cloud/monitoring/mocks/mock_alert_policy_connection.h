@@ -30,8 +30,7 @@ namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3_mocks::MockAlertPolicyServiceConnection
-/// directly.
+/// @deprecated Use monitoring_v3_mocks::MockAlertPolicyServiceConnection directly.
 using ::google::cloud::monitoring_v3_mocks::MockAlertPolicyServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallConnection::~FirewallConnection() = default;
 
-StreamRange<google::appengine::v1::FirewallRule>
-FirewallConnection::ListIngressRules(
-    google::appengine::v1::
-        ListIngressRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::appengine::v1::FirewallRule> FirewallConnection::ListIngressRules(
+    google::appengine::v1::ListIngressRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::FirewallRule>>();
 }
@@ -70,23 +68,26 @@ FirewallConnection::UpdateIngressRule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status FirewallConnection::DeleteIngressRule(
+Status
+FirewallConnection::DeleteIngressRule(
     google::appengine::v1::DeleteIngressRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<FirewallConnection> MakeFirewallConnection(Options options) {
+std::shared_ptr<FirewallConnection> MakeFirewallConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 FirewallPolicyOptionList>(options, __func__);
-  options = appengine_v1_internal::FirewallDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      FirewallPolicyOptionList>(options, __func__);
+  options = appengine_v1_internal::FirewallDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = appengine_v1_internal::CreateDefaultFirewallStub(std::move(auth),
-                                                               options);
+  auto stub = appengine_v1_internal::CreateDefaultFirewallStub(
+    std::move(auth), options);
   return appengine_v1_internal::MakeFirewallTracingConnection(
       std::make_shared<appengine_v1_internal::FirewallConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

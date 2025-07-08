@@ -17,9 +17,9 @@
 // source: google/cloud/dataplex/v1/content.proto
 
 #include "google/cloud/dataplex/v1/internal/content_connection_impl.h"
-#include "google/cloud/dataplex/v1/internal/content_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dataplex/v1/internal/content_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,36 +32,34 @@ namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataplex_v1::ContentServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dataplex_v1::ContentServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dataplex_v1::ContentServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<dataplex_v1::ContentServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dataplex_v1::ContentServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ContentServiceConnectionImpl::ContentServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dataplex_v1_internal::ContentServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ContentServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ContentServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::CreateContent(
-    google::cloud::dataplex::v1::CreateContentRequest const& request) {
+ContentServiceConnectionImpl::CreateContent(google::cloud::dataplex::v1::CreateContentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -74,8 +72,7 @@ ContentServiceConnectionImpl::CreateContent(
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::UpdateContent(
-    google::cloud::dataplex::v1::UpdateContentRequest const& request) {
+ContentServiceConnectionImpl::UpdateContent(google::cloud::dataplex::v1::UpdateContentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -87,8 +84,8 @@ ContentServiceConnectionImpl::UpdateContent(
       *current, request, __func__);
 }
 
-Status ContentServiceConnectionImpl::DeleteContent(
-    google::cloud::dataplex::v1::DeleteContentRequest const& request) {
+Status
+ContentServiceConnectionImpl::DeleteContent(google::cloud::dataplex::v1::DeleteContentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -101,8 +98,7 @@ Status ContentServiceConnectionImpl::DeleteContent(
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::GetContent(
-    google::cloud::dataplex::v1::GetContentRequest const& request) {
+ContentServiceConnectionImpl::GetContent(google::cloud::dataplex::v1::GetContentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -114,8 +110,8 @@ ContentServiceConnectionImpl::GetContent(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+ContentServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -127,8 +123,8 @@ StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+ContentServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -141,8 +137,7 @@ StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+ContentServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -155,33 +150,27 @@ ContentServiceConnectionImpl::TestIamPermissions(
 }
 
 StreamRange<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::ListContent(
-    google::cloud::dataplex::v1::ListContentRequest request) {
+ContentServiceConnectionImpl::ListContent(google::cloud::dataplex::v1::ListContentRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListContent(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Content>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Content>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListContentRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListContentRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListContentRequest const&
-                       request) {
+                   google::cloud::dataplex::v1::ListContentRequest const& request) {
               return stub->ListContent(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListContentResponse r) {
-        std::vector<google::cloud::dataplex::v1::Content> result(
-            r.content().size());
+        std::vector<google::cloud::dataplex::v1::Content> result(r.content().size());
         auto& messages = *r.mutable_content();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -189,33 +178,27 @@ ContentServiceConnectionImpl::ListContent(
 }
 
 StreamRange<google::cloud::location::Location>
-ContentServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+ContentServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -223,8 +206,7 @@ ContentServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-ContentServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+ContentServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -237,21 +219,17 @@ ContentServiceConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-ContentServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ContentServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -261,8 +239,7 @@ ContentServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -270,8 +247,7 @@ ContentServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ContentServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ContentServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -283,8 +259,8 @@ ContentServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ContentServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+ContentServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -296,8 +272,8 @@ Status ContentServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status ContentServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+ContentServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

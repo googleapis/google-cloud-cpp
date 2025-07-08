@@ -17,10 +17,10 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_option_defaults.h"
-#include "google/cloud/policytroubleshooter/v1/iam_checker_connection.h"
-#include "google/cloud/policytroubleshooter/v1/iam_checker_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_connection.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,29 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options IamCheckerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IAM_CHECKER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_IAM_CHECKER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_IAM_CHECKER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_IAM_CHECKER_AUTHORITY",
       "policytroubleshooter.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()) {
     options.set<policytroubleshooter_v1::IamCheckerRetryPolicyOption>(
         policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<policytroubleshooter_v1::IamCheckerBackoffPolicyOption>()) {
     options.set<policytroubleshooter_v1::IamCheckerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<policytroubleshooter_v1::
-                       IamCheckerConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption>(
-        policytroubleshooter_v1::
-            MakeDefaultIamCheckerConnectionIdempotencyPolicy());
+  if (!options.has<policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption>()) {
+    options.set<policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption>(
+        policytroubleshooter_v1::MakeDefaultIamCheckerConnectionIdempotencyPolicy());
   }
 
   return options;

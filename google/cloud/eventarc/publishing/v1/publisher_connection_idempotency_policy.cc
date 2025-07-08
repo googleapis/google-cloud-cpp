@@ -26,33 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PublisherConnectionIdempotencyPolicy::~PublisherConnectionIdempotencyPolicy() =
-    default;
+PublisherConnectionIdempotencyPolicy::~PublisherConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
 PublisherConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PublisherConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-PublisherConnectionIdempotencyPolicy::PublishChannelConnectionEvents(
-    google::cloud::eventarc::publishing::v1::
-        PublishChannelConnectionEventsRequest const&) {
+Idempotency PublisherConnectionIdempotencyPolicy::PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PublisherConnectionIdempotencyPolicy::PublishEvents(
-    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&) {
+Idempotency PublisherConnectionIdempotencyPolicy::PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PublisherConnectionIdempotencyPolicy::Publish(
-    google::cloud::eventarc::publishing::v1::PublishRequest const&) {
+Idempotency PublisherConnectionIdempotencyPolicy::Publish(google::cloud::eventarc::publishing::v1::PublishRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
-MakeDefaultPublisherConnectionIdempotencyPolicy() {
+    MakeDefaultPublisherConnectionIdempotencyPolicy() {
   return std::make_unique<PublisherConnectionIdempotencyPolicy>();
 }
 

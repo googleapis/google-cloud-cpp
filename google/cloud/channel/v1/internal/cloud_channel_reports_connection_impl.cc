@@ -17,8 +17,8 @@
 // source: google/cloud/channel/v1/reports_service.proto
 
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_connection_impl.h"
-#include "google/cloud/channel/v1/internal/cloud_channel_reports_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_reports_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
@@ -33,96 +33,80 @@ namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<channel_v1::CloudChannelReportsServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<channel_v1::CloudChannelReportsServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    channel_v1::CloudChannelReportsServiceConnectionIdempotencyPolicy>
+std::unique_ptr<channel_v1::CloudChannelReportsServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<channel_v1::
-               CloudChannelReportsServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<channel_v1::CloudChannelReportsServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options
-      .get<channel_v1::CloudChannelReportsServicePollingPolicyOption>()
-      ->clone();
+  return options.get<channel_v1::CloudChannelReportsServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
-CloudChannelReportsServiceConnectionImpl::
-    CloudChannelReportsServiceConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<channel_v1_internal::CloudChannelReportsServiceStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          CloudChannelReportsServiceConnection::options())) {}
+CloudChannelReportsServiceConnectionImpl::CloudChannelReportsServiceConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<channel_v1_internal::CloudChannelReportsServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        CloudChannelReportsServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-CloudChannelReportsServiceConnectionImpl::RunReportJob(
-    google::cloud::channel::v1::RunReportJobRequest const& request) {
+CloudChannelReportsServiceConnectionImpl::RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RunReportJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::channel::v1::RunReportJobResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::channel::v1::RunReportJobRequest const& request) {
-        return stub->AsyncRunReportJob(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::channel::v1::RunReportJobResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::channel::v1::RunReportJobResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::channel::v1::RunReportJobRequest const& request) {
+     return stub->AsyncRunReportJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::channel::v1::RunReportJobResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceConnectionImpl::RunReportJob(
-    NoAwaitTag,
-    google::cloud::channel::v1::RunReportJobRequest const& request) {
+      NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RunReportJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::channel::v1::RunReportJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::RunReportJobRequest const& request) {
         return stub_->RunReportJob(context, options, request);
       },
       *current, request, __func__);
@@ -130,63 +114,50 @@ CloudChannelReportsServiceConnectionImpl::RunReportJob(
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceConnectionImpl::RunReportJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to RunReportJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to RunReportJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::channel::v1::RunReportJobResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::channel::v1::RunReportJobResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::channel::v1::RunReportJobResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::channel::v1::RunReportJobResponse>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::channel::v1::Row>
-CloudChannelReportsServiceConnectionImpl::FetchReportResults(
-    google::cloud::channel::v1::FetchReportResultsRequest request) {
+CloudChannelReportsServiceConnectionImpl::FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->FetchReportResults(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::channel::v1::Row>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::channel::v1::Row>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::channel::v1::FetchReportResultsRequest const& r) {
+          Options const& options, google::cloud::channel::v1::FetchReportResultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::channel::v1::FetchReportResultsRequest const&
-                       request) {
+                   google::cloud::channel::v1::FetchReportResultsRequest const& request) {
               return stub->FetchReportResults(context, options, request);
             },
             options, r, function_name);
@@ -200,34 +171,27 @@ CloudChannelReportsServiceConnectionImpl::FetchReportResults(
 }
 
 StreamRange<google::cloud::channel::v1::Report>
-CloudChannelReportsServiceConnectionImpl::ListReports(
-    google::cloud::channel::v1::ListReportsRequest request) {
+CloudChannelReportsServiceConnectionImpl::ListReports(google::cloud::channel::v1::ListReportsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListReports(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::channel::v1::Report>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::channel::v1::Report>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::channel::v1::ListReportsRequest const& r) {
+          Options const& options, google::cloud::channel::v1::ListReportsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::channel::v1::ListReportsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::channel::v1::ListReportsRequest const& request) {
               return stub->ListReports(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::channel::v1::ListReportsResponse r) {
-        std::vector<google::cloud::channel::v1::Report> result(
-            r.reports().size());
+        std::vector<google::cloud::channel::v1::Report> result(r.reports().size());
         auto& messages = *r.mutable_reports();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -235,22 +199,17 @@ CloudChannelReportsServiceConnectionImpl::ListReports(
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelReportsServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+CloudChannelReportsServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -260,8 +219,7 @@ CloudChannelReportsServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -269,8 +227,7 @@ CloudChannelReportsServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelReportsServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+CloudChannelReportsServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -282,8 +239,8 @@ CloudChannelReportsServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status CloudChannelReportsServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+CloudChannelReportsServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -295,8 +252,8 @@ Status CloudChannelReportsServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status CloudChannelReportsServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+CloudChannelReportsServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

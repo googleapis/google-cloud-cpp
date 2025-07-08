@@ -17,14 +17,14 @@
 // source: google/cloud/sql/v1/cloud_sql_flags.proto
 
 #include "google/cloud/sql/v1/sql_flags_connection.h"
-#include "google/cloud/sql/v1/internal/sql_flags_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_flags_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_flags_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/sql/v1/internal/sql_flags_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_flags_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_flags_options.h"
 #include <memory>
 #include <utility>
 

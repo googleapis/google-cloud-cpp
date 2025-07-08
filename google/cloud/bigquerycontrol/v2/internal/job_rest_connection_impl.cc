@@ -35,94 +35,86 @@ JobServiceRestConnectionImpl::JobServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquerycontrol_v2_internal::JobServiceRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      JobServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        JobServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::v2::JobCancelResponse>
-JobServiceRestConnectionImpl::CancelJob(
-    google::cloud::bigquery::v2::CancelJobRequest const& request) {
+JobServiceRestConnectionImpl::CancelJob(google::cloud::bigquery::v2::CancelJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelJob(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::CancelJobRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::CancelJobRequest const& request) {
         return stub_->CancelJob(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job> JobServiceRestConnectionImpl::GetJob(
-    google::cloud::bigquery::v2::GetJobRequest const& request) {
+StatusOr<google::cloud::bigquery::v2::Job>
+JobServiceRestConnectionImpl::GetJob(google::cloud::bigquery::v2::GetJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetJob(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::GetJobRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::GetJobRequest const& request) {
         return stub_->GetJob(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceRestConnectionImpl::InsertJob(
-    google::cloud::bigquery::v2::InsertJobRequest const& request) {
+JobServiceRestConnectionImpl::InsertJob(google::cloud::bigquery::v2::InsertJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertJob(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::InsertJobRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::InsertJobRequest const& request) {
         return stub_->InsertJob(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status JobServiceRestConnectionImpl::DeleteJob(
-    google::cloud::bigquery::v2::DeleteJobRequest const& request) {
+Status
+JobServiceRestConnectionImpl::DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteJob(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::DeleteJobRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::DeleteJobRequest const& request) {
         return stub_->DeleteJob(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatJob>
-JobServiceRestConnectionImpl::ListJobs(
-    google::cloud::bigquery::v2::ListJobsRequest request) {
+JobServiceRestConnectionImpl::ListJobs(google::cloud::bigquery::v2::ListJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::v2::ListFormatJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::v2::ListFormatJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigquerycontrol_v2::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquerycontrol_v2::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::bigquery::v2::ListJobsRequest const& r) {
+          Options const& options, google::cloud::bigquery::v2::ListJobsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                rest_internal::RestContext& rest_context,
-                Options const& options,
-                google::cloud::bigquery::v2::ListJobsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::bigquery::v2::ListJobsRequest const& request) {
               return stub->ListJobs(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::bigquery::v2::JobList r) {
-        std::vector<google::cloud::bigquery::v2::ListFormatJob> result(
-            r.jobs().size());
+        std::vector<google::cloud::bigquery::v2::ListFormatJob> result(r.jobs().size());
         auto& messages = *r.mutable_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -130,29 +122,26 @@ JobServiceRestConnectionImpl::ListJobs(
 }
 
 StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
-JobServiceRestConnectionImpl::GetQueryResults(
-    google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+JobServiceRestConnectionImpl::GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetQueryResults(request),
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
         return stub_->GetQueryResults(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::QueryResponse>
-JobServiceRestConnectionImpl::Query(
-    google::cloud::bigquery::v2::PostQueryRequest const& request) {
+JobServiceRestConnectionImpl::Query(google::cloud::bigquery::v2::PostQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Query(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::PostQueryRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::PostQueryRequest const& request) {
         return stub_->Query(rest_context, options, request);
       },
       *current, request, __func__);

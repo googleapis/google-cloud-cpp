@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
 MetadataServiceConnection::CreateMetadataStore(
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::MetadataStore>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::MetadataStore>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,15 +51,15 @@ MetadataServiceConnection::CreateMetadataStore(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
 MetadataServiceConnection::CreateMetadataStore(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::MetadataStore>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::MetadataStore>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
@@ -68,21 +68,18 @@ MetadataServiceConnection::GetMetadataStore(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::MetadataStore>
-MetadataServiceConnection::ListMetadataStores(
-    google::cloud::aiplatform::v1::
-        ListMetadataStoresRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::MetadataStore> MetadataServiceConnection::ListMetadataStores(
+    google::cloud::aiplatform::v1::ListMetadataStoresRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::MetadataStore>>();
 }
 
-future<StatusOr<
-    google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
 MetadataServiceConnection::DeleteMetadataStore(
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -90,16 +87,15 @@ MetadataServiceConnection::DeleteMetadataStore(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
 MetadataServiceConnection::DeleteMetadataStore(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -114,10 +110,8 @@ MetadataServiceConnection::GetArtifact(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceConnection::ListArtifacts(
-    google::cloud::aiplatform::v1::
-        ListArtifactsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Artifact> MetadataServiceConnection::ListArtifacts(
+    google::cloud::aiplatform::v1::ListArtifactsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Artifact>>();
 }
@@ -132,46 +126,48 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnection::DeleteArtifact(
     google::cloud::aiplatform::v1::DeleteArtifactRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnection::DeleteArtifact(
-    NoAwaitTag, google::cloud::aiplatform::v1::DeleteArtifactRequest const&) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnection::DeleteArtifact(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
 MetadataServiceConnection::PurgeArtifacts(
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnection::PurgeArtifacts(
-    NoAwaitTag, google::cloud::aiplatform::v1::PurgeArtifactsRequest const&) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
 MetadataServiceConnection::PurgeArtifacts(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -186,10 +182,8 @@ MetadataServiceConnection::GetContext(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Context>
-MetadataServiceConnection::ListContexts(
-    google::cloud::aiplatform::v1::
-        ListContextsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Context> MetadataServiceConnection::ListContexts(
+    google::cloud::aiplatform::v1::ListContextsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Context>>();
 }
@@ -204,53 +198,53 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnection::DeleteContext(
     google::cloud::aiplatform::v1::DeleteContextRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnection::DeleteContext(
-    NoAwaitTag, google::cloud::aiplatform::v1::DeleteContextRequest const&) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteContextRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnection::DeleteContext(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
 MetadataServiceConnection::PurgeContexts(
     google::cloud::aiplatform::v1::PurgeContextsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnection::PurgeContexts(
-    NoAwaitTag, google::cloud::aiplatform::v1::PurgeContextsRequest const&) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
 MetadataServiceConnection::PurgeContexts(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
 MetadataServiceConnection::AddContextArtifactsAndExecutions(
-    google::cloud::aiplatform::v1::
-        AddContextArtifactsAndExecutionsRequest const&) {
+    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -284,10 +278,8 @@ MetadataServiceConnection::GetExecution(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Execution>
-MetadataServiceConnection::ListExecutions(
-    google::cloud::aiplatform::v1::
-        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Execution> MetadataServiceConnection::ListExecutions(
+    google::cloud::aiplatform::v1::ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Execution>>();
 }
@@ -302,46 +294,48 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnection::DeleteExecution(
     google::cloud::aiplatform::v1::DeleteExecutionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnection::DeleteExecution(
-    NoAwaitTag, google::cloud::aiplatform::v1::DeleteExecutionRequest const&) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnection::DeleteExecution(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
 MetadataServiceConnection::PurgeExecutions(
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnection::PurgeExecutions(
-    NoAwaitTag, google::cloud::aiplatform::v1::PurgeExecutionsRequest const&) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
 MetadataServiceConnection::PurgeExecutions(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
@@ -352,8 +346,7 @@ MetadataServiceConnection::AddExecutionEvents(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceConnection::QueryExecutionInputsAndOutputs(
-    google::cloud::aiplatform::v1::
-        QueryExecutionInputsAndOutputsRequest const&) {
+    google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -369,10 +362,8 @@ MetadataServiceConnection::GetMetadataSchema(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceConnection::ListMetadataSchemas(
-    google::cloud::aiplatform::v1::
-        ListMetadataSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::MetadataSchema> MetadataServiceConnection::ListMetadataSchemas(
+    google::cloud::aiplatform::v1::ListMetadataSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::MetadataSchema>>();
 }
@@ -383,10 +374,8 @@ MetadataServiceConnection::QueryArtifactLineageSubgraph(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-MetadataServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> MetadataServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -397,12 +386,14 @@ MetadataServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> MetadataServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+MetadataServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> MetadataServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+MetadataServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -413,10 +404,8 @@ MetadataServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-MetadataServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> MetadataServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -427,12 +416,14 @@ MetadataServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status MetadataServiceConnection::DeleteOperation(
+Status
+MetadataServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status MetadataServiceConnection::CancelOperation(
+Status
+MetadataServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -446,18 +437,17 @@ MetadataServiceConnection::WaitOperation(
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 MetadataServicePolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      MetadataServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::MetadataServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultMetadataServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeMetadataServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::MetadataServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

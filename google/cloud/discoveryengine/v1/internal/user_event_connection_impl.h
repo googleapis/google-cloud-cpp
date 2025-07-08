@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_USER_EVENT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_USER_EVENT_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_stub.h"
 #include "google/cloud/discoveryengine/v1/user_event_connection.h"
 #include "google/cloud/discoveryengine/v1/user_event_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/user_event_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,54 +46,48 @@ class UserEventServiceConnectionImpl
   ~UserEventServiceConnectionImpl() override = default;
 
   UserEventServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<discoveryengine_v1_internal::UserEventServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<discoveryengine_v1_internal::UserEventServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
-      google::cloud::discoveryengine::v1::WriteUserEventRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::UserEvent>
+  WriteUserEvent(google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) override;
 
-  StatusOr<google::api::HttpBody> CollectUserEvent(
-      google::cloud::discoveryengine::v1::CollectUserEventRequest const&
-          request) override;
+  StatusOr<google::api::HttpBody>
+  CollectUserEvent(google::cloud::discoveryengine::v1::CollectUserEventRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  PurgeUserEvents(NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
   PurgeUserEvents(
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
-      override;
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+  ImportUserEvents(google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  ImportUserEvents(NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
   ImportUserEvents(
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> ImportUserEvents(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
-          request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-  ImportUserEvents(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

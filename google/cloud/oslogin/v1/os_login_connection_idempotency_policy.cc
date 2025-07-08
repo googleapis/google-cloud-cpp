@@ -26,51 +26,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-OsLoginServiceConnectionIdempotencyPolicy::
-    ~OsLoginServiceConnectionIdempotencyPolicy() = default;
+OsLoginServiceConnectionIdempotencyPolicy::~OsLoginServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>
 OsLoginServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<OsLoginServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::CreateSshPublicKey(
-    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::DeletePosixAccount(
-    google::cloud::oslogin::v1::DeletePosixAccountRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::DeleteSshPublicKey(
-    google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::GetLoginProfile(
-    google::cloud::oslogin::v1::GetLoginProfileRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::GetSshPublicKey(
-    google::cloud::oslogin::v1::GetSshPublicKeyRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::ImportSshPublicKey(
-    google::cloud::oslogin::v1::ImportSshPublicKeyRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsLoginServiceConnectionIdempotencyPolicy::UpdateSshPublicKey(
-    google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const&) {
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>
-MakeDefaultOsLoginServiceConnectionIdempotencyPolicy() {
+    MakeDefaultOsLoginServiceConnectionIdempotencyPolicy() {
   return std::make_unique<OsLoginServiceConnectionIdempotencyPolicy>();
 }
 

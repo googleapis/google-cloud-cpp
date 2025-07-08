@@ -31,124 +31,118 @@ WebSecurityScannerAuth::WebSecurityScannerAuth(
     std::shared_ptr<WebSecurityScannerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerAuth::CreateScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-        request) {
+StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> WebSecurityScannerAuth::CreateScanConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateScanConfig(context, options, request);
 }
 
 Status WebSecurityScannerAuth::DeleteScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteScanConfig(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerAuth::GetScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-        request) {
+StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> WebSecurityScannerAuth::GetScanConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetScanConfig(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
-WebSecurityScannerAuth::ListScanConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
-        request) {
+StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse> WebSecurityScannerAuth::ListScanConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListScanConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerAuth::UpdateScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-        request) {
+StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> WebSecurityScannerAuth::UpdateScanConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateScanConfig(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerAuth::StartScanRun(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::websecurityscanner::v1::ScanRun> WebSecurityScannerAuth::StartScanRun(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartScanRun(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerAuth::GetScanRun(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::websecurityscanner::v1::ScanRun> WebSecurityScannerAuth::GetScanRun(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetScanRun(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
-WebSecurityScannerAuth::ListScanRuns(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse> WebSecurityScannerAuth::ListScanRuns(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListScanRuns(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerAuth::StopScanRun(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::websecurityscanner::v1::ScanRun> WebSecurityScannerAuth::StopScanRun(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopScanRun(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
-WebSecurityScannerAuth::ListCrawledUrls(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
-        request) {
+StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse> WebSecurityScannerAuth::ListCrawledUrls(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCrawledUrls(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::Finding>
-WebSecurityScannerAuth::GetFinding(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::websecurityscanner::v1::Finding> WebSecurityScannerAuth::GetFinding(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFinding(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
-WebSecurityScannerAuth::ListFindings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse> WebSecurityScannerAuth::ListFindings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFindings(context, options, request);
 }
 
-StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-WebSecurityScannerAuth::ListFindingTypeStats(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-        request) {
+StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse> WebSecurityScannerAuth::ListFindingTypeStats(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFindingTypeStats(context, options, request);

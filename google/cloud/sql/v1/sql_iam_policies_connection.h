@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_IAM_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_IAM_POLICIES_CONNECTION_H
 
-#include "google/cloud/sql/v1/internal/sql_iam_policies_retry_traits.h"
-#include "google/cloud/sql/v1/sql_iam_policies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/sql/v1/internal/sql_iam_policies_retry_traits.h"
+#include "google/cloud/sql/v1/sql_iam_policies_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_iam_policies.pb.h>
@@ -42,8 +42,7 @@ class SqlIamPoliciesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `SqlIamPoliciesServiceConnection` based on counting
- * errors.
+ * A retry policy for `SqlIamPoliciesServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,8 +51,7 @@ class SqlIamPoliciesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlIamPoliciesServiceLimitedErrorCountRetryPolicy
-    : public SqlIamPoliciesServiceRetryPolicy {
+class SqlIamPoliciesServiceLimitedErrorCountRetryPolicy : public SqlIamPoliciesServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,18 +60,15 @@ class SqlIamPoliciesServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(
       SqlIamPoliciesServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(
       SqlIamPoliciesServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SqlIamPoliciesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +88,7 @@ class SqlIamPoliciesServiceLimitedErrorCountRetryPolicy
   using BaseType = SqlIamPoliciesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      sql_v1_internal::SqlIamPoliciesServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlIamPoliciesServiceRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +101,7 @@ class SqlIamPoliciesServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlIamPoliciesServiceLimitedTimeRetryPolicy
-    : public SqlIamPoliciesServiceRetryPolicy {
+class SqlIamPoliciesServiceLimitedTimeRetryPolicy : public SqlIamPoliciesServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +126,12 @@ class SqlIamPoliciesServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlIamPoliciesServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SqlIamPoliciesServiceLimitedTimeRetryPolicy(
-      SqlIamPoliciesServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SqlIamPoliciesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlIamPoliciesServiceLimitedTimeRetryPolicy(
-      SqlIamPoliciesServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SqlIamPoliciesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlIamPoliciesServiceLimitedTimeRetryPolicy(SqlIamPoliciesServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SqlIamPoliciesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlIamPoliciesServiceLimitedTimeRetryPolicy(SqlIamPoliciesServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SqlIamPoliciesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,19 +153,16 @@ class SqlIamPoliciesServiceLimitedTimeRetryPolicy
   using BaseType = SqlIamPoliciesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      sql_v1_internal::SqlIamPoliciesServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlIamPoliciesServiceRetryTraits> impl_;
 };
 
 /**
- * The `SqlIamPoliciesServiceConnection` object for
- * `SqlIamPoliciesServiceClient`.
+ * The `SqlIamPoliciesServiceConnection` object for `SqlIamPoliciesServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlIamPoliciesServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SqlIamPoliciesServiceClient`.
+ * sets in `SqlIamPoliciesServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SqlIamPoliciesServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlIamPoliciesServiceConnection()`.
  *

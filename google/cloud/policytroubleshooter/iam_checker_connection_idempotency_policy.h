@@ -26,16 +26,11 @@ namespace cloud {
 namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// policytroubleshooter_v1::MakeDefaultIamCheckerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::policytroubleshooter_v1::
-    MakeDefaultIamCheckerConnectionIdempotencyPolicy;
+/// @deprecated Use policytroubleshooter_v1::MakeDefaultIamCheckerConnectionIdempotencyPolicy directly.
+using ::google::cloud::policytroubleshooter_v1::MakeDefaultIamCheckerConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicy directly.
-using ::google::cloud::policytroubleshooter_v1::
-    IamCheckerConnectionIdempotencyPolicy;
+/// @deprecated Use policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicy directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter

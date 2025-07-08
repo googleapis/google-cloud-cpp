@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_SESSION_ENTITY_TYPES_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_SESSION_ENTITY_TYPES_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_stub.h"
 #include "google/cloud/dialogflow_es/session_entity_types_connection.h"
 #include "google/cloud/dialogflow_es/session_entity_types_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/session_entity_types_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,50 +43,41 @@ class SessionEntityTypesConnectionImpl
   ~SessionEntityTypesConnectionImpl() override = default;
 
   SessionEntityTypesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::SessionEntityTypesStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_es_internal::SessionEntityTypesStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
-  ListSessionEntityTypes(
-      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request)
-      override;
+  ListSessionEntityTypes(google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  GetSessionEntityType(
-      google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request)
-      override;
+  GetSessionEntityType(google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  CreateSessionEntityType(
-      google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-          request) override;
+  CreateSessionEntityType(google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  UpdateSessionEntityType(
-      google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-          request) override;
+  UpdateSessionEntityType(google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request) override;
 
-  Status DeleteSessionEntityType(
-      google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-          request) override;
+  Status
+  DeleteSessionEntityType(google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

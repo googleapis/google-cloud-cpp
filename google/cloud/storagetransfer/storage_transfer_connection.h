@@ -27,27 +27,19 @@ namespace cloud {
 namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use storagetransfer_v1::MakeStorageTransferServiceConnection
-/// directly.
+/// @deprecated Use storagetransfer_v1::MakeStorageTransferServiceConnection directly.
 using ::google::cloud::storagetransfer_v1::MakeStorageTransferServiceConnection;
 
-/// @deprecated Use storagetransfer_v1::StorageTransferServiceConnection
-/// directly.
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceConnection directly.
 using ::google::cloud::storagetransfer_v1::StorageTransferServiceConnection;
 
-/// @deprecated Use
-/// storagetransfer_v1::StorageTransferServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// storagetransfer_v1::StorageTransferServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServiceLimitedTimeRetryPolicy;
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use storagetransfer_v1::StorageTransferServiceRetryPolicy
-/// directly.
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceRetryPolicy directly.
 using ::google::cloud::storagetransfer_v1::StorageTransferServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

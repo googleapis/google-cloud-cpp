@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEBACKUP_V1_BACKUP_FOR_GKE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEBACKUP_V1_BACKUP_FOR_GKE_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection.h"
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct BackupForGKEPollingPolicyOption {
  * @ingroup google-cloud-gkebackup-options
  */
 using BackupForGKEPolicyOptionList =
-    OptionList<BackupForGKERetryPolicyOption, BackupForGKEBackoffPolicyOption,
+    OptionList<BackupForGKERetryPolicyOption,
+               BackupForGKEBackoffPolicyOption,
                BackupForGKEPollingPolicyOption,
                BackupForGKEConnectionIdempotencyPolicyOption>;
 

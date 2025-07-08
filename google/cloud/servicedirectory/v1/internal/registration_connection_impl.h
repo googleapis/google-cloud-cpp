@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_REGISTRATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_REGISTRATION_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/servicedirectory/v1/internal/registration_retry_traits.h"
 #include "google/cloud/servicedirectory/v1/internal/registration_stub.h"
 #include "google/cloud/servicedirectory/v1/registration_connection.h"
 #include "google/cloud/servicedirectory/v1/registration_connection_idempotency_policy.h"
 #include "google/cloud/servicedirectory/v1/registration_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,87 +43,71 @@ class RegistrationServiceConnectionImpl
   ~RegistrationServiceConnectionImpl() override = default;
 
   RegistrationServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicedirectory_v1_internal::RegistrationServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<servicedirectory_v1_internal::RegistrationServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
-      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-          request) override;
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  CreateNamespace(google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request) override;
 
-  StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
-      google::cloud::servicedirectory::v1::ListNamespacesRequest request)
-      override;
+  StreamRange<google::cloud::servicedirectory::v1::Namespace>
+  ListNamespaces(google::cloud::servicedirectory::v1::ListNamespacesRequest request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  GetNamespace(google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
-      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-          request) override;
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  UpdateNamespace(google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request) override;
 
-  Status DeleteNamespace(
-      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-          request) override;
+  Status
+  DeleteNamespace(google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
-      google::cloud::servicedirectory::v1::CreateServiceRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  CreateService(google::cloud::servicedirectory::v1::CreateServiceRequest const& request) override;
 
-  StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
-      google::cloud::servicedirectory::v1::ListServicesRequest request)
-      override;
+  StreamRange<google::cloud::servicedirectory::v1::Service>
+  ListServices(google::cloud::servicedirectory::v1::ListServicesRequest request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
-      google::cloud::servicedirectory::v1::GetServiceRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  GetService(google::cloud::servicedirectory::v1::GetServiceRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  UpdateService(google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) override;
 
-  Status DeleteService(
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request)
-      override;
+  Status
+  DeleteService(google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
-      google::cloud::servicedirectory::v1::CreateEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  CreateEndpoint(google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) override;
 
-  StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
-      google::cloud::servicedirectory::v1::ListEndpointsRequest request)
-      override;
+  StreamRange<google::cloud::servicedirectory::v1::Endpoint>
+  ListEndpoints(google::cloud::servicedirectory::v1::ListEndpointsRequest request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
-      google::cloud::servicedirectory::v1::GetEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  GetEndpoint(google::cloud::servicedirectory::v1::GetEndpointRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
-      google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  UpdateEndpoint(google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) override;
 
-  Status DeleteEndpoint(
-      google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request)
-      override;
+  Status
+  DeleteEndpoint(google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

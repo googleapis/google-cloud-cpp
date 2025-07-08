@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_CLIENT_H
 
-#include "google/cloud/resourcemanager/v3/organizations_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/organizations_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class OrganizationsClient {
  public:
-  explicit OrganizationsClient(
-      std::shared_ptr<OrganizationsConnection> connection, Options opts = {});
+  explicit OrganizationsClient(std::shared_ptr<OrganizationsConnection> connection, Options opts = {});
   ~OrganizationsClient();
 
   ///@{
@@ -75,12 +74,10 @@ class OrganizationsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(OrganizationsClient const& a,
-                         OrganizationsClient const& b) {
+  friend bool operator==(OrganizationsClient const& a, OrganizationsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(OrganizationsClient const& a,
-                         OrganizationsClient const& b) {
+  friend bool operator!=(OrganizationsClient const& a, OrganizationsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +106,8 @@ class OrganizationsClient {
   /// [google.cloud.resourcemanager.v3.Organization]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L112}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::Organization>
+  GetOrganization(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -139,9 +136,8 @@ class OrganizationsClient {
   /// [google.cloud.resourcemanager.v3.Organization]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L112}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::Organization>
+  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -243,9 +239,7 @@ class OrganizationsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(
-      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request,
-      Options opts = {});
+  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +269,8 @@ class OrganizationsClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -310,8 +304,8 @@ class OrganizationsClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -341,8 +335,8 @@ class OrganizationsClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -376,8 +370,8 @@ class OrganizationsClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -410,9 +404,8 @@ class OrganizationsClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
 
   // clang-format off
   ///
@@ -445,9 +438,8 @@ class OrganizationsClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -473,8 +465,8 @@ class OrganizationsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -505,9 +497,8 @@ class OrganizationsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<OrganizationsConnection> connection_;

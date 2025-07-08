@@ -30,143 +30,160 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublisherStub::~PublisherStub() = default;
 
-StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::CreateTopic(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::Topic const& request) {
-  google::pubsub::v1::Topic response;
-  auto status = grpc_stub_->CreateTopic(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::pubsub::v1::Topic>
+DefaultPublisherStub::CreateTopic(
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::Topic const& request) {
+    google::pubsub::v1::Topic response;
+    auto status =
+        grpc_stub_->CreateTopic(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::UpdateTopic(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::UpdateTopicRequest const& request) {
-  google::pubsub::v1::Topic response;
-  auto status = grpc_stub_->UpdateTopic(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::pubsub::v1::Topic>
+DefaultPublisherStub::UpdateTopic(
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::UpdateTopicRequest const& request) {
+    google::pubsub::v1::Topic response;
+    auto status =
+        grpc_stub_->UpdateTopic(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::pubsub::v1::PublishResponse> DefaultPublisherStub::Publish(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::PublishRequest const& request) {
-  google::pubsub::v1::PublishResponse response;
-  auto status = grpc_stub_->Publish(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::pubsub::v1::PublishResponse>
+DefaultPublisherStub::Publish(
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::PublishRequest const& request) {
+    google::pubsub::v1::PublishResponse response;
+    auto status =
+        grpc_stub_->Publish(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::pubsub::v1::Topic> DefaultPublisherStub::GetTopic(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::GetTopicRequest const& request) {
-  google::pubsub::v1::Topic response;
-  auto status = grpc_stub_->GetTopic(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::pubsub::v1::Topic>
+DefaultPublisherStub::GetTopic(
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::GetTopicRequest const& request) {
+    google::pubsub::v1::Topic response;
+    auto status =
+        grpc_stub_->GetTopic(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::pubsub::v1::ListTopicsResponse>
 DefaultPublisherStub::ListTopics(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::ListTopicsRequest const& request) {
-  google::pubsub::v1::ListTopicsResponse response;
-  auto status = grpc_stub_->ListTopics(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::ListTopicsRequest const& request) {
+    google::pubsub::v1::ListTopicsResponse response;
+    auto status =
+        grpc_stub_->ListTopics(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 DefaultPublisherStub::ListTopicSubscriptions(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  google::pubsub::v1::ListTopicSubscriptionsResponse response;
-  auto status =
-      grpc_stub_->ListTopicSubscriptions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
+    google::pubsub::v1::ListTopicSubscriptionsResponse response;
+    auto status =
+        grpc_stub_->ListTopicSubscriptions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 DefaultPublisherStub::ListTopicSnapshots(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  google::pubsub::v1::ListTopicSnapshotsResponse response;
-  auto status = grpc_stub_->ListTopicSnapshots(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
+    google::pubsub::v1::ListTopicSnapshotsResponse response;
+    auto status =
+        grpc_stub_->ListTopicSnapshots(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultPublisherStub::DeleteTopic(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::DeleteTopicRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTopic(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultPublisherStub::DeleteTopic(
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::DeleteTopicRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteTopic(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 DefaultPublisherStub::DetachSubscription(
-    grpc::ClientContext& context, Options const&,
-    google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  google::pubsub::v1::DetachSubscriptionResponse response;
-  auto status = grpc_stub_->DetachSubscription(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::pubsub::v1::DetachSubscriptionRequest const& request) {
+    google::pubsub::v1::DetachSubscriptionResponse response;
+    auto status =
+        grpc_stub_->DetachSubscription(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultPublisherStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultPublisherStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultPublisherStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultPublisherStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultPublisherStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>

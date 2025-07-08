@@ -36,52 +36,46 @@ class UserEventServiceTracingConnection
   ~UserEventServiceTracingConnection() override = default;
 
   explicit UserEventServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::UserEventServiceConnection> child);
+    std::shared_ptr<discoveryengine_v1::UserEventServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
-      google::cloud::discoveryengine::v1::WriteUserEventRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::UserEvent>
+  WriteUserEvent(google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) override;
 
-  StatusOr<google::api::HttpBody> CollectUserEvent(
-      google::cloud::discoveryengine::v1::CollectUserEventRequest const&
-          request) override;
+  StatusOr<google::api::HttpBody>
+  CollectUserEvent(google::cloud::discoveryengine::v1::CollectUserEventRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  PurgeUserEvents(NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
   PurgeUserEvents(
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
-      override;
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+  ImportUserEvents(google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  ImportUserEvents(NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
   ImportUserEvents(
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> ImportUserEvents(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
-          request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-  ImportUserEvents(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::UserEventServiceConnection> child_;

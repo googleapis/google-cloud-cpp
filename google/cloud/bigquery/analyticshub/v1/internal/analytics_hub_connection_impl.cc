@@ -17,8 +17,8 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_connection_impl.h"
-#include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
@@ -35,75 +35,56 @@ namespace {
 
 std::unique_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicy>
+std::unique_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<bigquery_analyticshub_v1::
-               AnalyticsHubServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options
-      .get<bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>()
-      ->clone();
+  return options.get<bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 AnalyticsHubServiceConnectionImpl::AnalyticsHubServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_analyticshub_v1_internal::AnalyticsHubServiceStub>
-        stub,
+    std::shared_ptr<bigquery_analyticshub_v1_internal::AnalyticsHubServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), AnalyticsHubServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AnalyticsHubServiceConnection::options())) {}
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceConnectionImpl::ListDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-        request) {
+AnalyticsHubServiceConnectionImpl::ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDataExchanges(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::bigquery::analyticshub::v1::
-                                      ListDataExchangesRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::bigquery::analyticshub::v1::
-                       ListDataExchangesRequest const& request) {
+                   google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const& request) {
               return stub->ListDataExchanges(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse
-             r) {
-        std::vector<google::cloud::bigquery::analyticshub::v1::DataExchange>
-            result(r.data_exchanges().size());
+      [](google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse r) {
+        std::vector<google::cloud::bigquery::analyticshub::v1::DataExchange> result(r.data_exchanges().size());
         auto& messages = *r.mutable_data_exchanges();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -111,37 +92,27 @@ AnalyticsHubServiceConnectionImpl::ListDataExchanges(
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceConnectionImpl::ListOrgDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-        request) {
+AnalyticsHubServiceConnectionImpl::ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListOrgDataExchanges(request);
+  auto idempotency = idempotency_policy(*current)->ListOrgDataExchanges(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::bigquery::analyticshub::v1::
-                                      ListOrgDataExchangesRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::bigquery::analyticshub::v1::
-                       ListOrgDataExchangesRequest const& request) {
+                   google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest const& request) {
               return stub->ListOrgDataExchanges(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse
-             r) {
-        std::vector<google::cloud::bigquery::analyticshub::v1::DataExchange>
-            result(r.data_exchanges().size());
+      [](google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse r) {
+        std::vector<google::cloud::bigquery::analyticshub::v1::DataExchange> result(r.data_exchanges().size());
         auto& messages = *r.mutable_data_exchanges();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -149,98 +120,79 @@ AnalyticsHubServiceConnectionImpl::ListOrgDataExchanges(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceConnectionImpl::GetDataExchange(
-    google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataExchange(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 GetDataExchangeRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request) {
         return stub_->GetDataExchange(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceConnectionImpl::CreateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataExchange(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 CreateDataExchangeRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request) {
         return stub_->CreateDataExchange(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceConnectionImpl::UpdateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataExchange(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 UpdateDataExchangeRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request) {
         return stub_->UpdateDataExchange(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status AnalyticsHubServiceConnectionImpl::DeleteDataExchange(
-    google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
-        request) {
+Status
+AnalyticsHubServiceConnectionImpl::DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataExchange(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 DeleteDataExchangeRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request) {
         return stub_->DeleteDataExchange(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceConnectionImpl::ListListings(
-    google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
+AnalyticsHubServiceConnectionImpl::ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListListings(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
-              r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::ListListingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::bigquery::analyticshub::v1::
-                       ListListingsRequest const& request) {
+                   google::cloud::bigquery::analyticshub::v1::ListListingsRequest const& request) {
               return stub->ListListings(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::bigquery::analyticshub::v1::ListListingsResponse r) {
-        std::vector<google::cloud::bigquery::analyticshub::v1::Listing> result(
-            r.listings().size());
+        std::vector<google::cloud::bigquery::analyticshub::v1::Listing> result(r.listings().size());
         auto& messages = *r.mutable_listings();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -248,331 +200,263 @@ AnalyticsHubServiceConnectionImpl::ListListings(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceConnectionImpl::GetListing(
-    google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetListing(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-                 request) {
+             google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request) {
         return stub_->GetListing(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceConnectionImpl::CreateListing(
-    google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateListing(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request) {
         return stub_->CreateListing(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceConnectionImpl::UpdateListing(
-    google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateListing(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request) {
         return stub_->UpdateListing(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status AnalyticsHubServiceConnectionImpl::DeleteListing(
-    google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-        request) {
+Status
+AnalyticsHubServiceConnectionImpl::DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteListing(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request) {
         return stub_->DeleteListing(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-AnalyticsHubServiceConnectionImpl::SubscribeListing(
-    google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SubscribeListing(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 SubscribeListingRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request) {
         return stub_->SubscribeListing(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
-    google::cloud::bigquery::analyticshub::v1::
-        SubscribeDataExchangeRequest const& request) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->SubscribeDataExchange(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::bigquery::analyticshub::v1::
-                         SubscribeDataExchangeRequest const& request) {
-        return stub->AsyncSubscribeDataExchange(cq, std::move(context),
-                                                std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::bigquery::analyticshub::v1::
-              SubscribeDataExchangeResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
+     return stub->AsyncSubscribeDataExchange(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
-    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                    SubscribeDataExchangeRequest const& request) {
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SubscribeDataExchange(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 SubscribeDataExchangeRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
         return stub_->SubscribeDataExchange(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::bigquery::analyticshub::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::
-                                          v1::SubscribeDataExchangeResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to SubscribeDataExchange",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::bigquery::analyticshub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to SubscribeDataExchange",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::bigquery::analyticshub::v1::
-              SubscribeDataExchangeResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>,
+    polling_policy(*current), __func__);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-AnalyticsHubServiceConnectionImpl::RefreshSubscription(
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
-        request) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceConnectionImpl::RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RefreshSubscription(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::bigquery::analyticshub::v1::
-                         RefreshSubscriptionRequest const& request) {
-        return stub->AsyncRefreshSubscription(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::bigquery::analyticshub::v1::
-              RefreshSubscriptionResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
+     return stub->AsyncRefreshSubscription(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnectionImpl::RefreshSubscription(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RefreshSubscription(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 RefreshSubscriptionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
         return stub_->RefreshSubscription(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceConnectionImpl::RefreshSubscription(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::bigquery::analyticshub::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::
-                                          v1::RefreshSubscriptionResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to RefreshSubscription",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::bigquery::analyticshub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to RefreshSubscription",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::bigquery::analyticshub::v1::
-              RefreshSubscriptionResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceConnectionImpl::GetSubscription(
-    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSubscription(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 GetSubscriptionRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request) {
         return stub_->GetSubscription(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceConnectionImpl::ListSubscriptions(
-    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
-        request) {
+AnalyticsHubServiceConnectionImpl::ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSubscriptions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::bigquery::analyticshub::v1::
-                                      ListSubscriptionsRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::bigquery::analyticshub::v1::
-                       ListSubscriptionsRequest const& request) {
+                   google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const& request) {
               return stub->ListSubscriptions(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse
-             r) {
-        std::vector<google::cloud::bigquery::analyticshub::v1::Subscription>
-            result(r.subscriptions().size());
+      [](google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse r) {
+        std::vector<google::cloud::bigquery::analyticshub::v1::Subscription> result(r.subscriptions().size());
         auto& messages = *r.mutable_subscriptions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -580,39 +464,27 @@ AnalyticsHubServiceConnectionImpl::ListSubscriptions(
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceConnectionImpl::ListSharedResourceSubscriptions(
-    google::cloud::bigquery::analyticshub::v1::
-        ListSharedResourceSubscriptionsRequest request) {
+AnalyticsHubServiceConnectionImpl::ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListSharedResourceSubscriptions(request);
+  auto idempotency = idempotency_policy(*current)->ListSharedResourceSubscriptions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::bigquery::analyticshub::v1::
-              ListSharedResourceSubscriptionsRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::bigquery::analyticshub::v1::
-                       ListSharedResourceSubscriptionsRequest const& request) {
-              return stub->ListSharedResourceSubscriptions(context, options,
-                                                           request);
+                   google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest const& request) {
+              return stub->ListSharedResourceSubscriptions(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::bigquery::analyticshub::v1::
-             ListSharedResourceSubscriptionsResponse r) {
-        std::vector<google::cloud::bigquery::analyticshub::v1::Subscription>
-            result(r.shared_resource_subscriptions().size());
+      [](google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsResponse r) {
+        std::vector<google::cloud::bigquery::analyticshub::v1::Subscription> result(r.shared_resource_subscriptions().size());
         auto& messages = *r.mutable_shared_resource_subscriptions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -620,73 +492,62 @@ AnalyticsHubServiceConnectionImpl::ListSharedResourceSubscriptions(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-AnalyticsHubServiceConnectionImpl::RevokeSubscription(
-    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RevokeSubscription(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 RevokeSubscriptionRequest const& request) {
+             google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request) {
         return stub_->RevokeSubscription(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-AnalyticsHubServiceConnectionImpl::DeleteSubscription(
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
-        request) {
+AnalyticsHubServiceConnectionImpl::DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteSubscription(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::bigquery::analyticshub::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::bigquery::analyticshub::v1::
-                         DeleteSubscriptionRequest const& request) {
-        return stub->AsyncDeleteSubscription(cq, std::move(context),
-                                             std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::bigquery::analyticshub::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
+     return stub->AsyncDeleteSubscription(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnectionImpl::DeleteSubscription(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSubscription(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::analyticshub::v1::
-                 DeleteSubscriptionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
         return stub_->DeleteSubscription(context, options, request);
       },
       *current, request, __func__);
@@ -694,45 +555,36 @@ AnalyticsHubServiceConnectionImpl::DeleteSubscription(
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceConnectionImpl::DeleteSubscription(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::bigquery::analyticshub::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteSubscription",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::bigquery::analyticshub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteSubscription",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::bigquery::analyticshub::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::bigquery::analyticshub::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
-AnalyticsHubServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+AnalyticsHubServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -745,8 +597,7 @@ AnalyticsHubServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy>
-AnalyticsHubServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+AnalyticsHubServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -759,8 +610,7 @@ AnalyticsHubServiceConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AnalyticsHubServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+AnalyticsHubServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

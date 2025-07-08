@@ -30,10 +30,8 @@ namespace cloud {
 namespace storagetransfer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// storagetransfer_v1_mocks::MockStorageTransferServiceConnection directly.
-using ::google::cloud::storagetransfer_v1_mocks::
-    MockStorageTransferServiceConnection;
+/// @deprecated Use storagetransfer_v1_mocks::MockStorageTransferServiceConnection directly.
+using ::google::cloud::storagetransfer_v1_mocks::MockStorageTransferServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_mocks

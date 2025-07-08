@@ -39,11 +39,13 @@ class PoliciesTracingStub : public PoliciesStub {
   explicit PoliciesTracingStub(std::shared_ptr<PoliciesStub> child);
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v2::ListPoliciesRequest const& request) override;
 
   StatusOr<google::iam::v2::Policy> GetPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v2::GetPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicy(
@@ -53,7 +55,8 @@ class PoliciesTracingStub : public PoliciesStub {
       google::iam::v2::CreatePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicy(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v2::CreatePolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePolicy(
@@ -63,7 +66,8 @@ class PoliciesTracingStub : public PoliciesStub {
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePolicy(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicy(
@@ -73,11 +77,13 @@ class PoliciesTracingStub : public PoliciesStub {
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicy(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -94,8 +100,7 @@ class PoliciesTracingStub : public PoliciesStub {
 
  private:
   std::shared_ptr<PoliciesStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -31,9 +31,9 @@ CaseAttachmentServiceAuth::CaseAttachmentServiceAuth(
     std::shared_ptr<CaseAttachmentServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
-CaseAttachmentServiceAuth::ListAttachments(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::support::v2::ListAttachmentsResponse> CaseAttachmentServiceAuth::ListAttachments(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

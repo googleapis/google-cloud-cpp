@@ -29,176 +29,122 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    PrincipalAccessBoundaryPoliciesTracingConnection(
-        std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnection>
-            child)
+PrincipalAccessBoundaryPoliciesTracingConnection::PrincipalAccessBoundaryPoliciesTracingConnection(
+    std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    CreatePrincipalAccessBoundaryPolicy(
-        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesTracingConnection::CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "CreatePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::CreatePrincipalAccessBoundaryPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreatePrincipalAccessBoundaryPolicy(request));
+  return internal::EndSpan(std::move(span), child_->CreatePrincipalAccessBoundaryPolicy(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    CreatePrincipalAccessBoundaryPolicy(
-        NoAwaitTag,
-        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesTracingConnection::CreatePrincipalAccessBoundaryPolicy(
+    NoAwaitTag, google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "CreatePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::CreatePrincipalAccessBoundaryPolicy");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreatePrincipalAccessBoundaryPolicy(
-                                      NoAwaitTag{}, request));
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    CreatePrincipalAccessBoundaryPolicy(
-        google::longrunning::Operation const& operation) {
+PrincipalAccessBoundaryPoliciesTracingConnection::CreatePrincipalAccessBoundaryPolicy(
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "CreatePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::CreatePrincipalAccessBoundaryPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreatePrincipalAccessBoundaryPolicy(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreatePrincipalAccessBoundaryPolicy(operation));
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    GetPrincipalAccessBoundaryPolicy(
-        google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const&
-            request) {
-  auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "GetPrincipalAccessBoundaryPolicy");
+PrincipalAccessBoundaryPoliciesTracingConnection::GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v3::PrincipalAccessBoundaryPoliciesConnection::GetPrincipalAccessBoundaryPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetPrincipalAccessBoundaryPolicy(request));
+  return internal::EndSpan(*span, child_->GetPrincipalAccessBoundaryPolicy(request));
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    UpdatePrincipalAccessBoundaryPolicy(
-        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesTracingConnection::UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "UpdatePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::UpdatePrincipalAccessBoundaryPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdatePrincipalAccessBoundaryPolicy(request));
+  return internal::EndSpan(std::move(span), child_->UpdatePrincipalAccessBoundaryPolicy(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    UpdatePrincipalAccessBoundaryPolicy(
-        NoAwaitTag,
-        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesTracingConnection::UpdatePrincipalAccessBoundaryPolicy(
+    NoAwaitTag, google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "UpdatePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::UpdatePrincipalAccessBoundaryPolicy");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdatePrincipalAccessBoundaryPolicy(
-                                      NoAwaitTag{}, request));
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    UpdatePrincipalAccessBoundaryPolicy(
-        google::longrunning::Operation const& operation) {
+PrincipalAccessBoundaryPoliciesTracingConnection::UpdatePrincipalAccessBoundaryPolicy(
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "UpdatePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::UpdatePrincipalAccessBoundaryPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdatePrincipalAccessBoundaryPolicy(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdatePrincipalAccessBoundaryPolicy(operation));
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    DeletePrincipalAccessBoundaryPolicy(
-        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesTracingConnection::DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "DeletePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::DeletePrincipalAccessBoundaryPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeletePrincipalAccessBoundaryPolicy(request));
+  return internal::EndSpan(std::move(span), child_->DeletePrincipalAccessBoundaryPolicy(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    DeletePrincipalAccessBoundaryPolicy(
-        NoAwaitTag,
-        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesTracingConnection::DeletePrincipalAccessBoundaryPolicy(
+    NoAwaitTag, google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "DeletePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::DeletePrincipalAccessBoundaryPolicy");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePrincipalAccessBoundaryPolicy(
-                                      NoAwaitTag{}, request));
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    DeletePrincipalAccessBoundaryPolicy(
-        google::longrunning::Operation const& operation) {
+PrincipalAccessBoundaryPoliciesTracingConnection::DeletePrincipalAccessBoundaryPolicy(
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "DeletePrincipalAccessBoundaryPolicy");
+      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::DeletePrincipalAccessBoundaryPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeletePrincipalAccessBoundaryPolicy(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeletePrincipalAccessBoundaryPolicy(operation));
 }
 
 StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    ListPrincipalAccessBoundaryPolicies(
-        google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request) {
-  auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "ListPrincipalAccessBoundaryPolicies");
+PrincipalAccessBoundaryPoliciesTracingConnection::ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request) {
+  auto span = internal::MakeSpan("iam_v3::PrincipalAccessBoundaryPoliciesConnection::ListPrincipalAccessBoundaryPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListPrincipalAccessBoundaryPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::iam::v3::PrincipalAccessBoundaryPolicy>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PrincipalAccessBoundaryPoliciesTracingConnection::
-    SearchPrincipalAccessBoundaryPolicyBindings(
-        google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
-            request) {
-  auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::"
-      "SearchPrincipalAccessBoundaryPolicyBindings");
+PrincipalAccessBoundaryPoliciesTracingConnection::SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request) {
+  auto span = internal::MakeSpan("iam_v3::PrincipalAccessBoundaryPoliciesConnection::SearchPrincipalAccessBoundaryPolicyBindings");
   internal::OTelScope scope(span);
-  auto sr =
-      child_->SearchPrincipalAccessBoundaryPolicyBindings(std::move(request));
+  auto sr = child_->SearchPrincipalAccessBoundaryPolicyBindings(std::move(request));
   return internal::MakeTracedStreamRange<google::iam::v3::PolicyBinding>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "iam_v3::PrincipalAccessBoundaryPoliciesConnection::GetOperation");
+PrincipalAccessBoundaryPoliciesTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("iam_v3::PrincipalAccessBoundaryPoliciesConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -210,8 +156,7 @@ MakePrincipalAccessBoundaryPoliciesTracingConnection(
     std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PrincipalAccessBoundaryPoliciesTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<PrincipalAccessBoundaryPoliciesTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

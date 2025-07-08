@@ -32,13 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class GroundedGenerationServiceTracingStub
-    : public GroundedGenerationServiceStub {
+class GroundedGenerationServiceTracingStub : public GroundedGenerationServiceStub {
  public:
   ~GroundedGenerationServiceTracingStub() override = default;
 
-  explicit GroundedGenerationServiceTracingStub(
-      std::shared_ptr<GroundedGenerationServiceStub> child);
+  explicit GroundedGenerationServiceTracingStub(std::shared_ptr<GroundedGenerationServiceStub> child);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
@@ -48,34 +46,34 @@ class GroundedGenerationServiceTracingStub
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-  GenerateGroundedContent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-          request) override;
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse> GenerateGroundedContent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-  CheckGrounding(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse> CheckGrounding(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<GroundedGenerationServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -86,8 +84,7 @@ class GroundedGenerationServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<GroundedGenerationServiceStub>
-MakeGroundedGenerationServiceTracingStub(
+std::shared_ptr<GroundedGenerationServiceStub> MakeGroundedGenerationServiceTracingStub(
     std::shared_ptr<GroundedGenerationServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
