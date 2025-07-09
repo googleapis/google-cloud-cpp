@@ -23,22 +23,22 @@
 #include "google/cloud/status_or.h"
 #include "absl/types/variant.h"
 #include "google/protobuf/repeated_ptr_field.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <google/protobuf/field_mask.pb.h>
-#include <google/protobuf/util/time_util.h>
 #include <absl/types/optional.h>
+#include <grpcpp/support/sync_stream.h>
 #include <chrono>
-#include <cstddef>
+#include <functional>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <stack>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -92,7 +92,6 @@ function start_emulators() {
   io::log "Launching Cloud Bigtable emulators in the background"
   trap kill_emulators EXIT
 
-  local -r CBT_EMULATOR_CMD="/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
   "${CBT_EMULATOR_CMD}" -port "${emulator_port}" >emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 

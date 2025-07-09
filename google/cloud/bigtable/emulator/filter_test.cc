@@ -1918,42 +1918,23 @@ TEST(FiltersEndToEnd, ColumnRange) {
   filter.mutable_column_range_filter()->set_start_qualifier_closed("b00");
   filter.mutable_column_range_filter()->set_end_qualifier_open("b02");
 
-  struct Cell {
-    std::string row_key;
-    std::string column_family;
-    std::string column_qualifier;
-    std::int64_t timestamp_micros;
-    std::string value;
-
-    bool operator==(Cell const& other) const {
-      return this->row_key == other.row_key &&
-             this->column_family == other.column_family &&
-             this->column_qualifier == other.column_qualifier &&
-             this->timestamp_micros == other.timestamp_micros &&
-             this->value == other.value;
-    }
-  };
-
   auto maybe_stream = table->CreateCellStream(all_rows_set, filter);
   ASSERT_STATUS_OK(maybe_stream);
 
-  std::vector<Cell> expected = {
-      {row_key, "family1", "b00", 0, "bar"},
-      {row_key, "family1", "b01", 0, "bar"},
+  std::vector<TestCell> expected = {
+      {row_key, "family1", "b00", 0_ms, "bar"},
+      {row_key, "family1", "b01", 0_ms, "bar"},
   };
 
-  std::vector<Cell> actual;
+  std::vector<TestCell> actual;
   auto& stream = *maybe_stream;
   for (; stream; ++stream) {
-    actual.push_back({stream->row_key(), stream->column_family(),
-                      stream->column_qualifier(),
-                      stream->timestamp().count() * 1000, stream->value()});
+    actual.emplace_back(stream->row_key(), stream->column_family(),
+                        stream->column_qualifier(), stream->timestamp(),
+                        stream->value());
   }
 
-  ASSERT_EQ(expected.size(), actual.size());
-
-  ASSERT_TRUE(
-      std::is_permutation(expected.begin(), expected.end(), actual.begin()));
+  ASSERT_EQ(expected, actual);
 }
 
 }  // namespace emulator

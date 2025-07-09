@@ -16,33 +16,42 @@
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
-#include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/protobuf/util/field_mask_util.h"
-#include <grpc/grpc_security_constants.h>
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
+#include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/admin/v2/types.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/field_mask.pb.h>
 #include <absl/strings/match.h>
 #include <absl/strings/str_format.h>
 #include <absl/types/optional.h>
+#include <absl/types/variant.h>
 #include <grpcpp/support/sync_stream.h>
 #include <re2/re2.h>
+#include <cassert>
 #include <chrono>
 #include <climits>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
-#include <exception>
+#include <functional>
+#include <iostream>
+#include <map>
 #include <memory>
 #include <mutex>
-#include <random>
-#include <ratio>
-#include <optional>
+#include <ostream>
+#include <stack>
 #include <string>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -408,38 +417,25 @@ bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
   // internal_filter is either FamilyNameRegex or ColumnRange
   for (auto stream_it = unfinished_streams_.begin();
        stream_it != unfinished_streams_.end();) {
-    auto const* cf_stream =
-        dynamic_cast<FilteredColumnFamilyStream const*>(&(*stream_it)->impl());
+    auto* cf_stream =
+        dynamic_cast<FilteredColumnFamilyStream*>(&(*stream_it)->impl());
     assert(cf_stream);
-
-    // We need to call ApplyFilter on the column family stream. But
-    // ApplyFilter changes the data of the calling object so it cannot
-    // be const.
-    auto* cf_stream_mutable =
-        const_cast<FilteredColumnFamilyStream*>(cf_stream);
-    assert(cf_stream_mutable);
 
     if ((absl::holds_alternative<FamilyNameRegex>(internal_filter) &&
          !re2::RE2::PartialMatch(
-             cf_stream_mutable->column_family_name(),
+             cf_stream->column_family_name(),
              *absl::get<FamilyNameRegex>(internal_filter).regex)) ||
         (absl::holds_alternative<ColumnRange>(internal_filter) &&
          absl::get<ColumnRange>(internal_filter).column_family !=
-             cf_stream_mutable->column_family_name())) {
-      auto last_it = std::prev(unfinished_streams_.end());
-      if (stream_it == last_it) {
-        unfinished_streams_.pop_back();
-        break;
-      }
-
+             cf_stream->column_family_name())) {
       stream_it = unfinished_streams_.erase(stream_it);
       continue;
     }
 
     if (absl::holds_alternative<ColumnRange>(internal_filter) &&
         absl::get<ColumnRange>(internal_filter).column_family ==
-            cf_stream_mutable->column_family_name()) {
-      cf_stream_mutable->ApplyFilter(internal_filter);
+            cf_stream->column_family_name()) {
+      cf_stream->ApplyFilter(internal_filter);
     }
 
     stream_it++;
@@ -547,11 +543,15 @@ Table::CheckAndMutateRow(
 Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                        RowStreamer& row_streamer) const {
   std::shared_ptr<StringRangeSet> row_set;
-  if (request.has_rows()) {
+  // We need to check that, not only do we have rows, but that it is
+  // not empty (i.e. at least one of row_range or rows is specified).
+  if (request.has_rows() && (request.rows().row_ranges_size() > 0 ||
+                             request.rows().row_keys_size() > 0)) {
     auto maybe_row_set = CreateStringRangeSet(request.rows());
     if (!maybe_row_set) {
       return maybe_row_set.status();
     }
+
     row_set = std::make_shared<StringRangeSet>(*std::move(maybe_row_set));
   } else {
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
@@ -568,6 +568,10 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   if (!maybe_stream) {
     return maybe_stream.status();
   }
+
+  std::int64_t rows_count = 0;
+  absl::optional<std::string> current_row_key;
+
   CellStream& stream = *maybe_stream;
   for (; stream; ++stream) {
     std::cout << "Row: " << stream->row_key()
@@ -577,11 +581,25 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
               << " column_value: " << stream->value() << " label: "
               << (stream->HasLabel() ? stream->label() : std::string("unset"))
               << std::endl;
+
+    if (request.rows_limit() > 0) {
+      if (!current_row_key.has_value() ||
+          stream->row_key() != current_row_key.value()) {
+        rows_count++;
+        current_row_key = stream->row_key();
+      }
+
+      if (rows_count > request.rows_limit()) {
+        break;
+      }
+    }
+
     if (!row_streamer.Stream(*stream)) {
       std::cout << "HOW?" << std::endl;
       return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
     }
   }
+
   if (!row_streamer.Flush(true)) {
     std::cout << "Flush failed?" << std::endl;
     return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
@@ -602,65 +620,65 @@ bool Table::IsDeleteProtectedNoLock() const {
 Status Table::SampleRowKeys(
     double pass_probability,
     grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer) {
+  if (pass_probability <= 0.0) {
+    return InvalidArgumentError(
+        "The sampling probabality must be positive",
+        GCP_ERROR_INFO().WithMetadata("provided sampling probability",
+                                      absl::StrFormat("%f", pass_probability)));
+  }
+
+  auto sample_every =
+      static_cast<std::uint64_t>(std::ceil(1.0 / pass_probability));
+
   std::lock_guard<std::mutex> lock(mu_);
 
   // First, stream all rows and cells and compute the offsets.
   auto all_rows_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
-  auto maybe_all_rows_steam = CreateCellStream(all_rows_set, absl::nullopt);
-  if (!maybe_all_rows_steam) {
-    return maybe_all_rows_steam.status();
+  auto maybe_all_rows_stream = CreateCellStream(all_rows_set, absl::nullopt);
+  if (!maybe_all_rows_stream) {
+    return maybe_all_rows_stream.status();
   }
 
-  auto& stream = *maybe_all_rows_steam;
+  auto& stream = *maybe_all_rows_stream;
 
-  std::map<std::string, std::size_t> row_offset_map;
-  size_t row_offset = 0;
-
-  std::string current_row_key;
-  bool first_row = true;
-
-  std::map<std::string, std::size_t> column_family_size_map;
-  std::map<std::string, std::size_t> column_qualifier_size_map;
-  size_t timestamp_total_row_size = 0;
-  size_t value_total_row_size = 0;
+  absl::optional<std::string> first_row_key;
+  // The first row read will be used as a constant estimate of row
+  // sizes. If we are sampling 1/n rows, the value added to the offset
+  // (which is to be regarded as the size of all the rows before the
+  // sampled one) will be (n * row_size_estimate).
+  //
+  // That is every time a row is sampled, we do: offset += (n *
+  // row_size_estimate).
+  std::size_t row_size_estimate = 0;
 
   for (; stream; ++stream) {
-    auto row_key = stream->row_key();
-
-    if ((row_key != current_row_key) || first_row) {
-      row_offset += current_row_key.size();
-
-      for (auto const& cf : column_family_size_map) {
-        row_offset += cf.second;
-      }
-
-      for (auto const& cq : column_qualifier_size_map) {
-        row_offset += cq.second;
-      }
-
-      row_offset += timestamp_total_row_size;
-      row_offset += value_total_row_size;
-
-      // The rows before this (row_key) have this size in total.
-      row_offset_map[row_key] = row_offset;
-
-      current_row_key = row_key;
-
-      first_row = false;
-
-      column_family_size_map.clear();
-      column_qualifier_size_map.clear();
-      timestamp_total_row_size = 0;
-      value_total_row_size = 0;
+    if (first_row_key.has_value() &&
+        stream->row_key() != first_row_key.value()) {
+      break;
     }
 
-    column_family_size_map.emplace(stream->column_family(),
-                                   stream->column_family().size());
-    column_qualifier_size_map.emplace(stream->column_qualifier(),
-                                      stream->column_qualifier().size());
-    timestamp_total_row_size += sizeof(stream->timestamp());
-    value_total_row_size += stream->value().size();
+    first_row_key = stream->row_key();
+
+    row_size_estimate += stream->row_key().size();
+    row_size_estimate += stream->column_qualifier().size();
+    row_size_estimate += stream->value().size();
+    row_size_estimate += sizeof(stream->timestamp());
   }
+
+  if (!first_row_key.has_value()) {
+    // No rows in the table
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    resp.set_row_key("");
+    resp.set_offset_bytes(0);
+
+    auto opts = grpc::WriteOptions();
+    opts.set_last_message();
+
+    writer->WriteLast(std::move(resp), opts);
+    return Status();
+  }
+
+  std::int64_t offset_delta = sample_every * row_size_estimate;
 
   google::bigtable::v2::RowFilter sample_filter;
   sample_filter.set_row_sample_filter(pass_probability);
@@ -672,12 +690,15 @@ Status Table::SampleRowKeys(
 
   auto& sampled_stream = *maybe_stream;
 
-  bool wrote_a_sample = false;
+  std::int64_t offset = 0;
 
-  for (; sampled_stream; ++sampled_stream) {
+  bool wrote_a_sample;
+
+  for (; sampled_stream; sampled_stream.Next(NextMode::kRow)) {
     google::bigtable::v2::SampleRowKeysResponse resp;
+    offset += offset_delta;
     resp.set_row_key(sampled_stream->row_key());
-    resp.set_offset_bytes(row_offset_map[sampled_stream->row_key()]);
+    resp.set_offset_bytes(offset);
 
     writer->Write(std::move(resp));
 
@@ -685,26 +706,38 @@ Status Table::SampleRowKeys(
   }
 
   // Cloud bigtable client tests expect that, if they populated the
-  // table with at least one row, then at least one row sampele is
+  // table with at least one row, then at least one row sample is
   // returned.
   //
-  // In such a case, return the last row key.
-  if (!wrote_a_sample && !row_offset_map.empty()) {
-    auto it = std::prev(row_offset_map.end());
+  // In such a case, return any string that represents the last key,
+  // and an offset that is the estimated row size * the number of rows
+  // in the largest column family. We can return any string because
+  // the keys returned need not be in the table. See the proto
+  // specification.
+  if (!wrote_a_sample) {
+    std::size_t row_count_estimate = 0;
+
+    for (auto const& cf : *get()) {
+      if (cf.second->size() > row_count_estimate) {
+        row_count_estimate = cf.second->size();
+      }
+    }
+
+    std::int64_t this_offset = row_count_estimate * row_size_estimate;
 
     google::bigtable::v2::SampleRowKeysResponse resp;
-    resp.set_row_key(it->first);
-    resp.set_offset_bytes(it->second);
+    resp.set_row_key("last_key");
+    resp.set_offset_bytes(this_offset);
+    writer->Write(std::move(resp));
+
+    offset += this_offset;
   }
 
-  // Client code expects the last response to be an empty row key
-  // and moreover it also expects the offset for the last response
-  // to be more than every other offset.
   google::bigtable::v2::SampleRowKeysResponse resp;
   resp.set_row_key("");
   // Client test code expects offset_bytes to be strictly
   // increasing.
-  resp.set_offset_bytes(row_offset + 1);
+  resp.set_offset_bytes(offset + 1);
   auto opts = grpc::WriteOptions();
   opts.set_last_message();
   writer->WriteLast(std::move(resp), opts);
