@@ -25,7 +25,7 @@ service_dirs = [
 
 googleapis_deps = [
     "@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc",
-    "@com_google_googleapis//google/cloud/managedkafka/schemaregistry/v1:schemaregistry_cc_grpc"
+    "@com_google_googleapis//google/cloud/managedkafka/schemaregistry/v1:schemaregistry_cc_grpc",
 ]
 
 cc_gapic_library(
