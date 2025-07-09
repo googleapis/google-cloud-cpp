@@ -15,27 +15,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 
-#include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
-#include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
-#include <google/bigtable/admin/v2/table.pb.h>
+#include <google/bigtable/admin/v2/types.pb.h>
 #include <google/bigtable/v2/data.pb.h>
-#include <google/bigtable/v2/types.pb.h>
-#include <absl/strings/str_format.h>
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <map>
 #include <memory>
-#include <optional>
-#include <sstream>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

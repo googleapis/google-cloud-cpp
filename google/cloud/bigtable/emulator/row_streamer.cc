@@ -13,7 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/row_streamer.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/cloud/bigtable/emulator/cell_view.h"
+#include <google/bigtable/v2/bigtable.pb.h>
+#include <absl/types/optional.h>
+#include <grpcpp/support/sync_stream.h>
+#include <chrono>
+#include <utility>
 
 namespace google {
 namespace cloud {

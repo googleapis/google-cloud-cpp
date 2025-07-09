@@ -19,9 +19,15 @@
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
-#include <gmock/gmock.h>
+#include <google/longrunning/operations.pb.h>
+#include <google/protobuf/empty.pb.h>
 #include <grpcpp/grpcpp.h>
+#include <grpcpp/security/credentials.h>
+#include <grpcpp/support/status.h>
 #include <gtest/gtest.h>
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

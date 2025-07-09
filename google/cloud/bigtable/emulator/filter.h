@@ -17,7 +17,14 @@
 
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
+#include "google/cloud/status_or.h"
 #include <google/bigtable/v2/data.pb.h>
+#include <absl/types/internal/variant.h>
+#include <functional>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace re2 {
 class RE2;

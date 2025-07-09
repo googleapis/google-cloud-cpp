@@ -13,8 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+#include <re2/re2.h>
+#include <memory>
+#include <ostream>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -1,5 +1,12 @@
 #include "google/cloud/bigtable/emulator/test_util.h"
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
+#include <google/bigtable/admin/v2/table.pb.h>
+#include <google/bigtable/v2/bigtable.pb.h>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

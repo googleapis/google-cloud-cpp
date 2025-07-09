@@ -16,8 +16,14 @@
 #include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
-#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+#include <algorithm>
+#include <chrono>
+#include <iterator>
+#include <set>
+#include <sstream>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
