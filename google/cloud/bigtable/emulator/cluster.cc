@@ -13,10 +13,20 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/cluster.h"
+#include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/match.h"
+#include <google/bigtable/admin/v2/table.pb.h>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <ostream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

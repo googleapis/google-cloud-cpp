@@ -13,16 +13,26 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/bigtable/emulator/cell_view.h"
+#include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/internal/big_endian.h"
-#include <google/bigtable/v2/types.pb.h>
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/status_or.h"
+#include <google/bigtable/admin/v2/types.pb.h>
+#include <google/bigtable/v2/data.pb.h>
+#include <absl/strings/str_format.h>
 #include <absl/types/optional.h>
-#include <array>
+#include <absl/types/variant.h>
+#include <cassert>
 #include <chrono>
 #include <cstdint>
-#include <iterator>
+#include <functional>
 #include <map>
+#include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

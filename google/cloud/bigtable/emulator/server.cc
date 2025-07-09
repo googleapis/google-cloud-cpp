@@ -14,21 +14,30 @@
 
 #include "google/cloud/bigtable/emulator/server.h"
 #include "google/cloud/bigtable/emulator/cluster.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/bigtable/emulator/to_grpc_status.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/status_or.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
+#include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
+#include <google/longrunning/operations.pb.h>
+#include <google/protobuf/empty.pb.h>
 #include <google/protobuf/util/time_util.h>
 #include <absl/strings/str_cat.h>
-#include <absl/strings/str_format.h>
 #include <grpcpp/impl/call_op_set.h>
+#include <grpcpp/security/server_credentials.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
-#include <grpcpp/support/client_callback.h>
 #include <grpcpp/support/status.h>
+#include <grpcpp/support/sync_stream.h>
 #include <cstddef>
 #include <cstdint>
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

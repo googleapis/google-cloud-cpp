@@ -18,10 +18,8 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <absl/strings/match.h>
@@ -29,6 +27,7 @@
 #include <gtest/gtest.h>
 #include <chrono>
 #include <cstdint>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>

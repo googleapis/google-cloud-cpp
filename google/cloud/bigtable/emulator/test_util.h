@@ -16,8 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TEST_UTIL_H
 
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
+#include <cstdint>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

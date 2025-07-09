@@ -13,9 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/to_grpc_status.h"
+#include "google/cloud/status.h"
 #include "google/rpc/status.pb.h"
 #include <google/protobuf/any.pb.h>
 #include <google/rpc/error_details.pb.h>
+#include <grpcpp/support/status.h>
+#include <cstdint>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

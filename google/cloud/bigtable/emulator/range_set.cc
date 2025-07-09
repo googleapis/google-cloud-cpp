@@ -14,7 +14,15 @@
 
 #include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/status_or.h"
 #include <google/bigtable/v2/data.pb.h>
+#include <absl/types/variant.h>
+#include <algorithm>
+#include <cassert>
+#include <chrono>
+#include <ostream>
+#include <string>
 
 namespace google {
 namespace cloud {
