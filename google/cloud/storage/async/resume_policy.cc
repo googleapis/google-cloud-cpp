@@ -35,7 +35,7 @@ class LimitedErrorCountResumePolicyImpl : public ResumePolicy {
   }
   Action OnFinish(Status const& s) override {
     if (!s.ok()) ++error_count_;
-    return error_count_ > maximum_resumes_ ? kStop : kContinue;
+    return error_count_ >= maximum_resumes_ ? kStop : kContinue;
   }
 
  private:
