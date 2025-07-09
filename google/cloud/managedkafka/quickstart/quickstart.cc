@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/managedkafka/schemaregistry/v1/ EDIT HERE _client.h"
+#include "google/cloud/managedkafka/v1/managed_kafka_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -25,11 +25,11 @@ int main(int argc, char* argv[]) try {
 
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  namespace managedkafka = ::google::cloud::managedkafka_schemaregistry_v1;
-  auto client = managedkafka::ServiceClient(
-      managedkafka::MakeServiceConnection());  // EDIT HERE
+  namespace managedkafka = ::google::cloud::managedkafka_v1;
+  auto client = managedkafka::ManagedKafkaClient(
+      managedkafka::MakeManagedKafkaConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListClusters(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

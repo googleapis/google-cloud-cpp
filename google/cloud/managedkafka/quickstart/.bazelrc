@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,3 +28,6 @@ build:macos --host_cxxopt=-std=c++14
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
 build --experimental_convenience_symlinks=ignore
+
+#Our quickstarts do not yet support bzlmod
+build --noenable_bzlmod
