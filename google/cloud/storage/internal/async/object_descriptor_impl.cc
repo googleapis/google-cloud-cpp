@@ -248,7 +248,6 @@ bool ObjectDescriptorImpl::IsResumable(
   for (auto const& any : proto_status.details()) {
     auto error = google::storage::v2::BidiReadObjectError{};
     if (!any.UnpackTo(&error)) continue;
-    auto ranges = CopyActiveRanges();
     for (auto const& range : CopyActiveRanges()) {
       for (auto const& range_error : error.read_range_errors()) {
         if (range.first != range_error.read_id()) continue;
