@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_STUB_H
 
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/future.h"
 #include "google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h"
 #include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"

@@ -21,11 +21,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_SUB_BLOCKS_V1_INTERNAL_RESERVATION_SUB_BLOCKS_REST_LOGGING_DECORATOR_H
 
 #include "google/cloud/compute/reservation_sub_blocks/v1/internal/reservation_sub_blocks_rest_stub.h"
+#include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h>
 #include <memory>
 #include <set>
 #include <string>
