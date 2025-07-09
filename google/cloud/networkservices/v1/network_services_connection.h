@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CONNECTION_H
 
-#include "google/cloud/networkservices/v1/internal/network_services_retry_traits.h"
 #include "google/cloud/networkservices/v1/extensibility.pb.h"
+#include "google/cloud/networkservices/v1/internal/network_services_retry_traits.h"
 #include "google/cloud/networkservices/v1/network_services.pb.h"
 #include "google/cloud/networkservices/v1/network_services_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"

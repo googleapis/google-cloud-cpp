@@ -20,9 +20,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_SUB_BLOCKS_V1_RESERVATION_SUB_BLOCKS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_SUB_BLOCKS_V1_RESERVATION_SUB_BLOCKS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h>
 #include <memory>
 
 namespace google {
