@@ -1,4 +1,4 @@
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-service_dirs = ["v1/"]
+service_dirs = ["schemaregistry/v1/"]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc",
+    "@com_google_googleapis//google/cloud/managedkafka/schemaregistry/v1:managedkafka_cc_grpc",
 ]
 
 cc_gapic_library(

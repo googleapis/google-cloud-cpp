@@ -872,6 +872,10 @@
 ./include/google/cloud/managedidentities/v1/internal
 ./include/google/cloud/managedidentities/v1/mocks
 ./include/google/cloud/managedkafka
+./include/google/cloud/managedkafka/schemaregistry
+./include/google/cloud/managedkafka/schemaregistry/v1
+./include/google/cloud/managedkafka/schemaregistry/v1/internal
+./include/google/cloud/managedkafka/schemaregistry/v1/mocks
 ./include/google/cloud/managedkafka/v1
 ./include/google/cloud/managedkafka/v1/internal
 ./include/google/cloud/managedkafka/v1/mocks

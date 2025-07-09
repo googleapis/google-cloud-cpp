@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    managedkafka "Managed Service for Apache Kafka API" SERVICE_DIRS "v1/")
+    managedkafka "Managed Service for Apache Kafka API"
+    SERVICE_DIRS "schemaregistry/v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(managedkafka_quickstart "quickstart/quickstart.cc")
@@ -29,7 +30,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:managedkafka_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION)
+            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
+    )
     set_tests_properties(managedkafka_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

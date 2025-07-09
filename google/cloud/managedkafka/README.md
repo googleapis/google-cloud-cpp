@@ -18,7 +18,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/managedkafka/v1/managed_kafka_client.h"
+#include "google/cloud/managedkafka/schemaregistry/v1/ EDIT HERE _client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -30,11 +30,11 @@ int main(int argc, char* argv[]) try {
 
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  namespace managedkafka = ::google::cloud::managedkafka_v1;
-  auto client = managedkafka::ManagedKafkaClient(
-      managedkafka::MakeManagedKafkaConnection());
+  namespace managedkafka = ::google::cloud::managedkafka_schemaregistry_v1;
+  auto client = managedkafka::ServiceClient(
+      managedkafka::MakeServiceConnection());  // EDIT HERE
 
-  for (auto r : client.ListClusters(location.FullName())) {
+  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -56,6 +56,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/managed-kafka
+[cloud-service-docs]: https://cloud.google.com/managed-service-for-apache-kafka/docs
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/managedkafka/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/managedkafka
