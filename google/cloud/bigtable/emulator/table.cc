@@ -916,6 +916,30 @@ Status RowTransaction::DeleteFromColumn(
     return maybe_column_family.status();
   }
 
+  // We need to check if the given timerange is empty or reversed, but
+  // only up to the server's time accuracy (in our case, milliseconds)
+  // - For example a time range of [1000, 1200] would be empty.
+  if (delete_from_column.has_time_range()) {
+    auto start = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::microseconds(
+            delete_from_column.time_range().start_timestamp_micros()));
+    auto end = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::microseconds(
+            delete_from_column.time_range().end_timestamp_micros()));
+
+    // An end timestamp micros of 0 is to be interpreted as infinity,
+    // so we allow that.
+    if (end <= start &&
+        delete_from_column.time_range().end_timestamp_micros() != 0) {
+      return InvalidArgumentError(
+          "empty or reversed time range: the end timestamp must be more than "
+          "the start timestamp when they are truncated to the server's time "
+          "precision (milliseconds)",
+          GCP_ERROR_INFO().WithMetadata("delete_from_column proto",
+                                        delete_from_column.DebugString()));
+    }
+  }
+
   auto& column_family = maybe_column_family->get();
 
   auto deleted_cells = column_family.DeleteColumn(
