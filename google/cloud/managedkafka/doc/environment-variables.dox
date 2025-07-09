@@ -14,6 +14,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "managedkafka.googleapis.com")
   used by `MakeManagedKafkaConnection()`.
 
+- `GOOGLE_CLOUD_CPP_MANAGED_SCHEMA_REGISTRY_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "managedkafka.googleapis.com")
+  used by `MakeManagedSchemaRegistryConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

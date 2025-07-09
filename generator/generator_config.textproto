@@ -2862,6 +2862,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Managed Kafka schemaregistry
+service {
+  service_proto_path: "google/cloud/managedkafka/schemaregistry/v1/schema_registry.proto"
+  product_path: "google/cloud/managedkafka/schemaregistry/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Memcache
 service {
   service_proto_path: "google/cloud/memcache/v1/cloud_memcache.proto"
