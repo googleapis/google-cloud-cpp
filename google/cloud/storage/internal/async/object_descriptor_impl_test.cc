@@ -1249,7 +1249,9 @@ TEST(ObjectDescriptorImpl, ReadWithSubsequentStream) {
         });
       });
   EXPECT_CALL(*stream1, Finish).WillOnce([&]() {
-    return sequencer.PushBack("Finish[1]").then([](auto) { return Status{}; });
+    return sequencer.PushBack("Finish[1]").then([](auto) {
+      return PermanentError();
+    });
   });
   EXPECT_CALL(*stream1, Cancel).Times(1);
 
