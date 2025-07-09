@@ -801,8 +801,9 @@ StatusOr<EmptyResponse> StorageConnectionImpl::UploadFileSimple(
   return EmptyResponse();
 }
 
-StatusOr<std::unique_ptr<std::istream>> StorageConnectionImpl::UploadFileResumable(
-    std::string const& file_name, ResumableUploadRequest& request) {
+StatusOr<std::unique_ptr<std::istream>>
+StorageConnectionImpl::UploadFileResumable(std::string const& file_name,
+                                           ResumableUploadRequest& request) {
   auto upload_offset = request.GetOption<UploadFromOffset>().value_or(0);
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {

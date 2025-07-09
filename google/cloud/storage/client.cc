@@ -127,6 +127,21 @@ bool Client::UseSimpleUpload(std::string const& file_name, std::size_t& size) {
   return false;
 }
 
+StatusOr<ObjectMetadata> Client::UploadFileSimple(
+    std::string const& file_name, std::size_t file_size,
+    internal::InsertObjectMediaRequest& request) {
+  auto status = connection_->UploadFileSimple(file_name, file_size, request);
+  if (!status) return status.status();
+  return connection_->InsertObjectMedia(request);
+}
+
+StatusOr<ObjectMetadata> Client::UploadFileResumable(
+    std::string const& file_name, internal::ResumableUploadRequest& request) {
+  auto source = connection_->UploadFileResumable(file_name, request);
+  if (!source) return source.status();
+  return UploadStreamResumable(*source.value(), request);
+}
+
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source,
     internal::ResumableUploadRequest const& request) const {
