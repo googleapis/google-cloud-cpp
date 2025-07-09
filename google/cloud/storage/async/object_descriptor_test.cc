@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/object_descriptor.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -140,6 +141,48 @@ TEST(ObjectDescriptor, ReadLast) {
   ReadPayload payload;
   std::tie(payload, token) = *std::move(r1);
   EXPECT_THAT(payload.contents(), ElementsAre("er the lazy dog"));
+
+  auto r2 = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(r2);
+  std::tie(payload, token) = *std::move(r2);
+  EXPECT_FALSE(token.valid());
+}
+
+TEST(ObjectDescriptor, ReadExceedsMaxRange) {
+  auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  auto constexpr kMaxRange = 1024;
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<storage_experimental::MaximumRangeSizeOption>(
+              kMaxRange)));
+
+  EXPECT_CALL(*mock, MakeSubsequentStream).Times(1);
+
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
+        EXPECT_EQ(p.start, 100);
+        EXPECT_EQ(p.length, kMaxRange + 1);
+        auto reader = std::make_unique<MockAsyncReaderConnection>();
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([] {
+              return make_ready_future(
+                  ReadResponse(ReadPayload(std::string("some data"))));
+            })
+            .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+        return reader;
+      });
+
+  auto tested = ObjectDescriptor(mock);
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = tested.Read(100, kMaxRange + 1);
+  ASSERT_TRUE(token.valid());
+
+  auto r1 = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(r1);
+  ReadPayload payload;
+  std::tie(payload, token) = *std::move(r1);
+  EXPECT_THAT(payload.contents(), ElementsAre("some data"));
 
   auto r2 = reader.Read(std::move(token)).get();
   ASSERT_STATUS_OK(r2);
