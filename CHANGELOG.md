@@ -6,6 +6,10 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.40.0 - TBD
 
+### Updated Libraries
+
+- [ManagedKafka](/google/cloud/managedkafka/README.md) - add schemaregistry to the library
+
 ## v2.39.0 - 2025-07
 
 ### [Storage](/google/cloud/storage/README.md)
