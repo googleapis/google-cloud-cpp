@@ -385,6 +385,26 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       (google::cloud::config::v1::GetTerraformVersionRequest const& request),
       (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::ResourceChange>),
+              ListResourceChanges,
+              (google::cloud::config::v1::ListResourceChangesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::ResourceChange>, GetResourceChange,
+      (google::cloud::config::v1::GetResourceChangeRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::ResourceDrift>),
+              ListResourceDrifts,
+              (google::cloud::config::v1::ListResourceDriftsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::ResourceDrift>, GetResourceDrift,
+      (google::cloud::config::v1::GetResourceDriftRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));
