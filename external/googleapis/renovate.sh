@@ -47,6 +47,7 @@ BRANCH="master"
 if [[ -z "${COMMIT}" ]]; then
   COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
     "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
+  echo "${COMMIT}"
 fi
 
 if [[ -z "$COMMIT_DATE" ]]; then
@@ -104,44 +105,43 @@ if git diff --quiet bazel/workspace0.bzl \
   exit 0
 fi
 
-#banner "Regenerating libraries"
-## generate-libraries fails if it creates a diff, so ignore its status.
-#TRIGGER_TYPE='pr' ci/cloudbuild/build.sh \
-  #--docker --trigger=generate-libraries-pr || true
-#
-#banner "Creating commits"
-#git commit -m"chore: update googleapis SHA circa ${COMMIT_DATE}" \
-  #${PIPERORIGIN_REVID:+-m "${PIPERORIGIN_REVID}"} \
-  #bazel/workspace0.bzl cmake/GoogleapisConfig.cmake MODULE.bazel
-#if ! git diff --quiet external/googleapis/protodeps \
-  #external/googleapis/protolists; then
-  #git commit -m"Update the protodeps/protolists" \
-    #external/googleapis/protodeps external/googleapis/protolists
-#fi
-#if ! git diff --quiet .; then
-  #git commit -m"Regenerate libraries" .
-#fi
-#
-#banner "Showing git state"
-#git status --untracked-files=no
-#echo ""
-#git show-branch
-#
+banner "Regenerating libraries"
+# generate-libraries fails if it creates a diff, so ignore its status.
+TRIGGER_TYPE='pr' ci/cloudbuild/build.sh \
+  --docker --trigger=generate-libraries-pr || true
+
+banner "Creating commits"
+git commit -m"chore: update googleapis SHA circa ${COMMIT_DATE}" \
+  ${PIPERORIGIN_REVID:+-m "${PIPERORIGIN_REVID}"} \
+  bazel/workspace0.bzl cmake/GoogleapisConfig.cmake MODULE.bazel
+if ! git diff --quiet external/googleapis/protodeps \
+  external/googleapis/protolists; then
+  git commit -m"Update the protodeps/protolists" \
+    external/googleapis/protodeps external/googleapis/protolists
+fi
+if ! git diff --quiet .; then
+  git commit -m"Regenerate libraries" .
+fi
+
+banner "Showing git state"
+git status --untracked-files=no
+echo ""
+git show-branch
+
 banner "Creating tag in ${REPO}"
 TAG="${TAG:-0.0.0-$(date +"%Y%m%d")-${COMMIT:0:8}}"
-#tag_googleapis
+tag_googleapis
 
 banner "Confirming presence of generated googleapis module in bazel-central-registry"
 JSON=$(gh search prs --repo=bazelbuild/bazel-central-registry --state=open --match=title "Publish googleapis@${TAG}" --json=url,title --order=desc)
 
 function filter_json() {
-   set -x
-   jq -r --arg tag "${TAG}" '.[] | select(.title | test('\"'$tag'\"'))' <<< $"{json}"
+   jq -r --arg tag "${TAG}" '.[] | select(.title | test("'$TAG'"))' <<< "${JSON}"
 }
 
 while true; do
   FILTERED_JSON=$(filter_json)
-  if -n "${FILTERED_JSON}"; then
+  if [[ -n "${FILTERED_JSON}" ]]; then
     URL=$(jq '.url' <<< "${FILTERED_JSON}")
     echo
     banner "Found PR with new googleapis module in bazel-centra-registry: ${URL}"
