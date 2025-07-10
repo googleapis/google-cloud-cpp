@@ -37,22 +37,52 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     : resume_policy_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
-      stream_(std::move(stream)),
-      options_(std::move(options)) {}
+      options_(std::move(options)),
+      streams_{std::move(stream)} {
+  AddNewActiveRanges();
+}
 
-ObjectDescriptorImpl::~ObjectDescriptorImpl() { stream_->Cancel(); }
+ObjectDescriptorImpl::~ObjectDescriptorImpl() {
+  for (auto const& stream : streams_) {
+    stream->Cancel();
+  }
+}
 
 void ObjectDescriptorImpl::Start(
     google::storage::v2::BidiReadObjectResponse first_response) {
   OnRead(std::move(first_response));
 }
 
-void ObjectDescriptorImpl::Cancel() { stream_->Cancel(); }
+void ObjectDescriptorImpl::Cancel() {
+  for (auto const& stream : streams_) {
+    stream->Cancel();
+  }
+}
+
+void ObjectDescriptorImpl::CancelStream(
+    std::shared_ptr<OpenStream> const& stream) {
+  stream->Cancel();
+}
 
 absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {
   std::unique_lock<std::mutex> lk(mu_);
   return metadata_;
+}
+
+void ObjectDescriptorImpl::MakeSubsequentStream() {
+  auto request = google::storage::v2::BidiReadObjectRequest{};
+
+  *request.mutable_read_object_spec() = read_object_spec_;
+  auto stream_result = make_stream_(std::move(request)).get();
+  auto stream = std::move(stream_result->stream);
+
+  std::unique_lock<std::mutex> lk(mu_);
+  active_stream_ = streams_.size();
+  streams_.push_back(std::move(stream));
+  AddNewActiveRanges(lk);
+  lk.unlock();
+  OnRead(std::move(stream_result->first_response));
 }
 
 std::unique_ptr<storage_experimental::AsyncReaderConnection>
@@ -69,7 +99,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
 
   std::unique_lock<std::mutex> lk(mu_);
   auto const id = ++read_id_generator_;
-  active_ranges_.emplace(id, range);
+  active_ranges_[active_stream_].emplace(id, range);
   auto& read_range = *next_request_.add_read_ranges();
   read_range.set_read_id(id);
   read_range.set_read_offset(p.start);
@@ -146,9 +176,10 @@ void ObjectDescriptorImpl::OnRead(
 
 void ObjectDescriptorImpl::CleanupDoneRanges(
     std::unique_lock<std::mutex> const&) {
-  for (auto i = active_ranges_.begin(); i != active_ranges_.end();) {
+  auto& active_ranges = active_ranges_[active_stream_];
+  for (auto i = active_ranges.begin(); i != active_ranges.end();) {
     if (i->second->IsDone()) {
-      i = active_ranges_.erase(i);
+      i = active_ranges.erase(i);
     } else {
       ++i;
     }
@@ -176,6 +207,10 @@ void ObjectDescriptorImpl::OnFinish(Status const& status) {
   for (auto const& kv : copy) {
     kv.second->OnFinish(status);
   }
+  CancelStream(streams_[active_stream_]);
+  streams_.erase(streams_.begin() + active_stream_);
+  active_ranges_.erase(active_ranges_.begin() + active_stream_);
+  active_stream_ = streams_.size();
 }
 
 void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
@@ -185,7 +220,7 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
   ApplyRedirectErrors(read_object_spec_, proto_status);
   auto request = google::storage::v2::BidiReadObjectRequest{};
   *request.mutable_read_object_spec() = read_object_spec_;
-  for (auto const& kv : active_ranges_) {
+  for (auto const& kv : active_ranges_[active_stream_]) {
     auto range = kv.second->RangeForResume(kv.first);
     if (!range) continue;
     *request.add_read_ranges() = *std::move(range);
@@ -200,7 +235,9 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
 void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
   if (!result) return OnFinish(std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
-  stream_ = std::move(result->stream);
+  active_stream_ = streams_.size();
+  streams_.push_back(std::move(result->stream));
+  AddNewActiveRanges(lk);
   // TODO(#15105) - this should be done without release the lock.
   Flush(std::move(lk));
   OnRead(std::move(result->first_response));
@@ -211,7 +248,6 @@ bool ObjectDescriptorImpl::IsResumable(
   for (auto const& any : proto_status.details()) {
     auto error = google::storage::v2::BidiReadObjectError{};
     if (!any.UnpackTo(&error)) continue;
-    auto ranges = CopyActiveRanges();
     for (auto const& range : CopyActiveRanges()) {
       for (auto const& range_error : error.read_range_errors()) {
         if (range.first != range_error.read_id()) continue;
