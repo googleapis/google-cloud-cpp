@@ -245,9 +245,9 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
     btadmin::UpdateTableMetadata res_md;
     res_md.set_name(request->table().name());
     *res_md.mutable_start_time() =
-        google::protobuf::util::TimeUtil::GetCurrentTime();
+        (google::protobuf::util::TimeUtil::GetCurrentTime)();
     *res_md.mutable_end_time() =
-        google::protobuf::util::TimeUtil::GetCurrentTime();
+        (google::protobuf::util::TimeUtil::GetCurrentTime)();
     response->set_name("UpdateTable");
     response->mutable_metadata()->PackFrom(std::move(res_md));
     response->set_done(true);
