@@ -96,6 +96,7 @@ google_cloud_cpp_spanner_hdrs = [
     "interval.h",
     "json.h",
     "keys.h",
+    "lock_hint.h",
     "mutations.h",
     "numeric.h",
     "oid.h",

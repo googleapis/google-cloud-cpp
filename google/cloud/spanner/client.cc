@@ -54,11 +54,13 @@ RowStream Client::Read(std::string table, KeySet keys,
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
   internal::OptionsSpan span(std::move(opts));
+  auto lock_hint = ExtractOpt<LockHintOption>(opts);
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           Transaction::ReadOnlyOptions()),
                       std::move(table), std::move(keys), std::move(columns),
                       ToReadOptions(internal::CurrentOptions()), absl::nullopt,
-                      false, std::move(directed_read_option)});
+                      false, std::move(directed_read_option),
+                      std::move(lock_hint)});
 }
 
 RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
@@ -67,30 +69,35 @@ RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
   internal::OptionsSpan span(std::move(opts));
+  auto lock_hint = ExtractOpt<LockHintOption>(opts);
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           std::move(transaction_options)),
                       std::move(table), std::move(keys), std::move(columns),
                       ToReadOptions(internal::CurrentOptions()), absl::nullopt,
-                      false, std::move(directed_read_option)});
+                      false, std::move(directed_read_option),
+                      std::move(lock_hint)});
 }
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
                        std::vector<std::string> columns, Options opts) {
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  auto lock_hint = ExtractOpt<LockHintOption>(opts);
   internal::OptionsSpan span(std::move(opts));
   return conn_->Read({std::move(transaction), std::move(table), std::move(keys),
                       std::move(columns),
                       ToReadOptions(internal::CurrentOptions()), absl::nullopt,
-                      false, std::move(directed_read_option)});
+                      false, std::move(directed_read_option),
+                      std::move(lock_hint)});
 }
 
 RowStream Client::Read(ReadPartition const& read_partition, Options opts) {
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
+  auto lock_hint = ExtractOpt<LockHintOption>(opts);
   internal::OptionsSpan span(std::move(opts));
   return conn_->Read(spanner_internal::MakeReadParams(
-      read_partition, std::move(directed_read_option)));
+      read_partition, std::move(directed_read_option), std::move(lock_hint)));
 }
 
 StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
@@ -100,7 +107,8 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
   return conn_->PartitionRead(
       {{std::move(transaction), std::move(table), std::move(keys),
         std::move(columns), ToReadOptions(internal::CurrentOptions()),
-        absl::nullopt, false, DirectedReadOption::Type{}},
+        absl::nullopt, false, DirectedReadOption::Type{},
+        LockHint::kLockHintUnspecified},
        ToPartitionOptions(internal::CurrentOptions())});
 }
 
