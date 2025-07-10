@@ -2811,7 +2811,7 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Liscense Manager
+# License Manager
 service {
   service_proto_path: "google/cloud/licensemanager/v1/licensemanager.proto"
   product_path: "google/cloud/licensemanager/v1"

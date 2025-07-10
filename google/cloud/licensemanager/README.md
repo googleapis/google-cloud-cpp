@@ -19,23 +19,23 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/licensemanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/licensemanager/v1/license_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const location = google::cloud::Location(argv[1], "-");
 
   namespace licensemanager = ::google::cloud::licensemanager_v1;
-  auto client = licensemanager::ServiceClient(
-      licensemanager::MakeServiceConnection());  // EDIT HERE
+  auto client = licensemanager::LicenseManagerClient(
+      licensemanager::MakeLicenseManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListConfigurations(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
