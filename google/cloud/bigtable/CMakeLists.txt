@@ -26,6 +26,7 @@ set(DOXYGEN_EXCLUDE_SYMBOLS
     "benchmarks"
     "bigtable_admin_internal"
     "bigtable_internal"
+    "emulator"
     "internal"
     "testing"
     "examples"
@@ -204,6 +205,8 @@ add_library(
     internal/retry_context.cc
     internal/retry_context.h
     internal/retry_traits.h
+    internal/row_range_helpers.cc
+    internal/row_range_helpers.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
@@ -511,6 +514,8 @@ if (BUILD_TESTING)
     add_subdirectory(test_proxy)
     add_subdirectory(tests)
 endif ()
+
+add_subdirectory(emulator)
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
