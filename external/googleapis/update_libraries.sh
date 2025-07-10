@@ -186,6 +186,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/language/v1:language_cc_grpc" \
       "@com_google_googleapis//google/cloud/language/v2:language_cc_grpc"
   )"
+  ["licensemanager"]="@com_google_googleapis//google/cloud/licensemanager/v1:licensemanager_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["lustre"]="@com_google_googleapis//google/cloud/lustre/v1:lustre_cc_grpc"
