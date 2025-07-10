@@ -1,0 +1,48 @@
+/*!
+
+@mainpage License Manager API C++ Client Library
+
+An idiomatic C++ client library for the [License Manager API][cloud-service-docs].
+
+License Manager is a tool to manage and track third-party licenses on
+Google Cloud.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/licensemanager/quickstart/` directory,
+which should give you a taste of the License Manager API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`licensemanager_v1::LicenseManagerClient`](@ref google::cloud::licensemanager_v1::LicenseManagerClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`licensemanager_v1::LicenseManagerClient`](@ref google::cloud::licensemanager_v1::LicenseManagerClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref licensemanager-override-endpoint - describes how to override the default
+  endpoint.
+- @ref licensemanager-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref licensemanager-override-retry - describes how to change the default retry
+  policies.
+- @ref licensemanager-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/compute/docs/instances/windows/ms-licensing
+
+*/
