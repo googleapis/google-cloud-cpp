@@ -28,14 +28,12 @@ namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::TempFile;
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::Return;
 
 class ConnectionImplFileUploadTest : public ::testing::Test {
  protected:
-  std::shared_ptr<StorageConnectionImpl> MakeConnection() {
+  static std::shared_ptr<StorageConnectionImpl> MakeConnection() {
     auto mock = std::make_unique<MockGenericStub>();
     EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
     return StorageConnectionImpl::Create(std::move(mock));
