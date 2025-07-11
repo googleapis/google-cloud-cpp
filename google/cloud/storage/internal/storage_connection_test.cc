@@ -30,6 +30,7 @@ using ::google::cloud::testing_util::StatusIs;
 class TestStorageConnection : public StorageConnection {
  public:
   ~TestStorageConnection() override = default;
+  // LCOV_EXCL_START
   MOCK_METHOD(ClientOptions const&, client_options, (), (const, override));
   MOCK_METHOD(StatusOr<ListBucketsResponse>, ListBuckets,
               (ListBucketsRequest const&), (override));
@@ -142,6 +143,7 @@ class TestStorageConnection : public StorageConnection {
               (GetNotificationRequest const&), (override));
   MOCK_METHOD(StatusOr<EmptyResponse>, DeleteNotification,
               (DeleteNotificationRequest const&), (override));
+  // LCOV_EXCL_STOP
 };
 
 TEST(StorageConnectionTest, UploadFileSimpleUnimplemented) {

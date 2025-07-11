@@ -18,6 +18,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <iterator>
+#if !defined(_WIN32)
+#include <sys/stat.h>
+#endif  // !defined(_WIN32)
 
 namespace google {
 namespace cloud {
@@ -113,6 +116,25 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileResumableNonExistentFile) {
       connection->UploadFileResumable("/no/such/file/exists.txt", request);
   EXPECT_THAT(stream, StatusIs(StatusCode::kNotFound));
 }
+
+#if !defined(_WIN32)
+TEST_F(ConnectionImplFileUploadTest, UploadFileResumableUnreadable) {
+  auto connection = MakeConnection();
+  auto const contents = std::string{"some resumable contents"};
+  TempFile temp(contents);
+
+  // Make the file unreadable.
+  ASSERT_EQ(0, chmod(temp.name().c_str(), 0000));
+
+  // The implementation should detect that it cannot open the file.
+  ResumableUploadRequest request("test-bucket", "test-object");
+  auto stream = connection->UploadFileResumable(temp.name(), request);
+  EXPECT_THAT(stream, StatusIs(StatusCode::kNotFound));
+
+  // Restore permissions so the TempFile destructor can delete it.
+  (void)chmod(temp.name().c_str(), 0600);
+}
+#endif  // !defined(_WIN32)
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileResumableOffsetLargerThanSize) {
   auto connection = MakeConnection();
