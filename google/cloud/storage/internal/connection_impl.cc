@@ -782,8 +782,8 @@ StatusOr<std::unique_ptr<std::string>> StorageConnectionImpl::UploadFileSimple(
                                                   GCP_ERROR_INFO());
   }
 
-  auto payload =
-      std::make_unique<std::string>(static_cast<std::size_t>(upload_size), char{});
+  auto payload = std::make_unique<std::string>(
+      static_cast<std::size_t>(upload_size), char{});
   is.seekg(upload_offset, std::ios::beg);
   // We need to use `&payload[0]` until C++17
   // NOLINTNEXTLINE(readability-container-data-pointer)
@@ -798,7 +798,7 @@ StatusOr<std::unique_ptr<std::string>> StorageConnectionImpl::UploadFileSimple(
   }
   is.close();
 
-  return std::move(payload);
+  return payload;
 }
 
 StatusOr<std::unique_ptr<std::istream>>

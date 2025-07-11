@@ -287,15 +287,17 @@ TEST_F(ObjectTest, UploadFileResumable) {
   auto const contents = std::string{"some not so simple contents"};
 
   EXPECT_CALL(*mock_, CreateResumableUpload)
-      .WillOnce(Return(internal::CreateResumableUploadResponse{"test-upload-id"}));
-  EXPECT_CALL(*mock_, UploadChunk).WillOnce(Return(make_status_or(
-      internal::QueryResumableUploadResponse{absl::nullopt, expected})));
+      .WillOnce(
+          Return(internal::CreateResumableUploadResponse{"test-upload-id"}));
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillOnce(Return(make_status_or(
+          internal::QueryResumableUploadResponse{absl::nullopt, expected})));
 
   TempFile temp(contents);
   auto client = ClientForMock();
-  auto actual = client.UploadFile(
-      temp.name(), "test-bucket-name", "test-object-name",
-      UseResumableUploadSession(""));
+  auto actual =
+      client.UploadFile(temp.name(), "test-bucket-name", "test-object-name",
+                        UseResumableUploadSession(""));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }

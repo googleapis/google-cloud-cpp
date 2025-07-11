@@ -106,8 +106,7 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
                storage::internal::InsertObjectMediaRequest&),
               (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<std::istream>>, UploadFileResumable,
-              (std::string const&,
-               storage::internal::ResumableUploadRequest&),
+              (std::string const&, storage::internal::ResumableUploadRequest&),
               (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,

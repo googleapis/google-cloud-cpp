@@ -111,13 +111,14 @@ class StorageConnection {
   virtual StatusOr<QueryResumableUploadResponse> UploadChunk(
       UploadChunkRequest const& request) = 0;
   virtual StatusOr<std::unique_ptr<std::string>> UploadFileSimple(
-      std::string const& file_name, std::size_t file_size,
-      InsertObjectMediaRequest& request) {
+      [[maybe_unused]] std::string const& file_name,
+      [[maybe_unused]] std::size_t file_size,
+      [[maybe_unused]] InsertObjectMediaRequest& request) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
   virtual StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
-      std::string const& file_name,
-      ResumableUploadRequest& request) {
+      [[maybe_unused]] std::string const& file_name,
+      [[maybe_unused]] ResumableUploadRequest& request) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
   ///@}

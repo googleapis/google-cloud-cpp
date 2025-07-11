@@ -103,8 +103,7 @@ class StorageConnectionImpl
       std::string const& file_name, std::size_t file_size,
       InsertObjectMediaRequest& request) override;
   StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
-      std::string const& file_name,
-      ResumableUploadRequest& request) override;
+      std::string const& file_name, ResumableUploadRequest& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
