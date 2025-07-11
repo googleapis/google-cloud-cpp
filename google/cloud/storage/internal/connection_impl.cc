@@ -757,7 +757,7 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
   return RetryError(last_status, *retry_policy, __func__);
 }
 
-StatusOr<EmptyResponse> StorageConnectionImpl::UploadFileSimple(
+StatusOr<std::unique_ptr<std::string>> StorageConnectionImpl::UploadFileSimple(
     std::string const& file_name, std::size_t file_size,
     InsertObjectMediaRequest& request) {
   auto upload_offset = request.GetOption<UploadFromOffset>().value_or(0);
@@ -782,23 +782,23 @@ StatusOr<EmptyResponse> StorageConnectionImpl::UploadFileSimple(
                                                   GCP_ERROR_INFO());
   }
 
-  std::string payload(static_cast<std::size_t>(upload_size), char{});
+  auto payload =
+      std::make_unique<std::string>(static_cast<std::size_t>(upload_size), char{});
   is.seekg(upload_offset, std::ios::beg);
   // We need to use `&payload[0]` until C++17
   // NOLINTNEXTLINE(readability-container-data-pointer)
-  is.read(&payload[0], payload.size());
-  if (static_cast<std::size_t>(is.gcount()) < payload.size()) {
+  is.read(&(*payload)[0], payload->size());
+  if (static_cast<std::size_t>(is.gcount()) < payload->size()) {
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name << "): Actual read ("
-       << is.gcount() << ") is smaller than upload_size (" << payload.size()
+       << is.gcount() << ") is smaller than upload_size (" << payload->size()
        << ")";
     return google::cloud::internal::InternalError(std::move(os).str(),
                                                   GCP_ERROR_INFO());
   }
   is.close();
-  request.set_payload(payload);
 
-  return EmptyResponse();
+  return std::move(payload);
 }
 
 StatusOr<std::unique_ptr<std::istream>>

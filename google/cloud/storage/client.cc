@@ -129,14 +129,15 @@ bool Client::UseSimpleUpload(std::string const& file_name, std::size_t& size) {
 
 StatusOr<ObjectMetadata> Client::UploadFileSimple(
     std::string const& file_name, std::size_t file_size,
-    internal::InsertObjectMediaRequest& request) {
-  auto status = connection_->UploadFileSimple(file_name, file_size, request);
-  if (!status) return status.status();
+    internal::InsertObjectMediaRequest request) {
+  auto payload = connection_->UploadFileSimple(file_name, file_size, request);
+  if (!payload) return payload.status();
+  request.set_payload(*payload.value());
   return connection_->InsertObjectMedia(request);
 }
 
 StatusOr<ObjectMetadata> Client::UploadFileResumable(
-    std::string const& file_name, internal::ResumableUploadRequest& request) {
+    std::string const& file_name, internal::ResumableUploadRequest request) {
   auto source = connection_->UploadFileResumable(file_name, request);
   if (!source) return source.status();
   return UploadStreamResumable(*source.value(), request);

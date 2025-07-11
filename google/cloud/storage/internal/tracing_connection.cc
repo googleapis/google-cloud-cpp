@@ -235,7 +235,7 @@ TracingConnection::UploadChunk(
   return internal::EndSpan(*span, impl_->UploadChunk(request));
 }
 
-StatusOr<storage::internal::EmptyResponse> TracingConnection::UploadFileSimple(
+StatusOr<std::unique_ptr<std::string>> TracingConnection::UploadFileSimple(
     std::string const& file_name, std::size_t file_size,
     storage::internal::InsertObjectMediaRequest& request) {
   auto span =

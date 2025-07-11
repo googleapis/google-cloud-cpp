@@ -3511,7 +3511,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, request);
+    return UploadFileResumable(file_name, std::move(request));
   }
 
   // The version of UploadFile() where UseResumableUploadSession is *not* one of
@@ -3530,11 +3530,11 @@ class Client {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});
       request.set_multiple_options(std::forward<Options>(options)...);
-      return UploadFileSimple(file_name, file_size, request);
+      return UploadFileSimple(file_name, file_size, std::move(request));
     }
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, request);
+    return UploadFileResumable(file_name, std::move(request));
   }
 
   static bool UseSimpleUpload(std::string const& file_name, std::size_t& size);

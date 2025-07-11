@@ -98,7 +98,7 @@ class TracingConnection : public storage::internal::StorageConnection {
       storage::internal::DeleteResumableUploadRequest const& request) override;
   StatusOr<storage::internal::QueryResumableUploadResponse> UploadChunk(
       storage::internal::UploadChunkRequest const& request) override;
-  StatusOr<storage::internal::EmptyResponse> UploadFileSimple(
+  StatusOr<std::unique_ptr<std::string>> UploadFileSimple(
       std::string const& file_name,
       std::size_t file_size,
       storage::internal::InsertObjectMediaRequest& request) override;
