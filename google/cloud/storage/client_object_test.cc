@@ -258,9 +258,9 @@ TEST_F(ObjectTest, UploadFileSimple) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected =
+  ObjectMetadata expected =
       storage::internal::ObjectMetadataParser::FromString(text).value();
-  auto const contents = std::string{"some simple contents"};
+  std::string const contents = std::string{"some simple contents"};
 
   EXPECT_CALL(*mock_, InsertObjectMedia)
       .WillOnce([&](internal::InsertObjectMediaRequest const& request) {
@@ -272,7 +272,7 @@ TEST_F(ObjectTest, UploadFileSimple) {
 
   TempFile temp(contents);
   auto client = ClientForMock();
-  auto actual =
+  StatusOr<ObjectMetadata> actual =
       client.UploadFile(temp.name(), "test-bucket-name", "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
@@ -282,9 +282,9 @@ TEST_F(ObjectTest, UploadFileResumable) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected =
+  ObjectMetadata expected =
       storage::internal::ObjectMetadataParser::FromString(text).value();
-  auto const contents = std::string{"some not so simple contents"};
+  std::string const contents = std::string{"some not so simple contents"};
 
   EXPECT_CALL(*mock_, CreateResumableUpload)
       .WillOnce(
@@ -295,7 +295,7 @@ TEST_F(ObjectTest, UploadFileResumable) {
 
   TempFile temp(contents);
   auto client = ClientForMock();
-  auto actual =
+  StatusOr<ObjectMetadata> actual =
       client.UploadFile(temp.name(), "test-bucket-name", "test-object-name",
                         UseResumableUploadSession(""));
   ASSERT_STATUS_OK(actual);

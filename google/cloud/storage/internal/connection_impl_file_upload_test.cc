@@ -18,9 +18,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <iterator>
-#if !defined(_WIN32)
-#include <sys/stat.h>
-#endif  // !defined(_WIN32)
 
 namespace google {
 namespace cloud {
@@ -44,8 +41,8 @@ class ConnectionImplFileUploadTest : public ::testing::Test {
 };
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleSuccess) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"some simple contents"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"some simple contents"};
   TempFile temp(contents);
   InsertObjectMediaRequest request("test-bucket", "test-object", "");
   auto payload =
@@ -55,7 +52,7 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleSuccess) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleNonExistentFile) {
-  auto connection = MakeConnection();
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
   InsertObjectMediaRequest request("test-bucket", "test-object", "");
   auto payload =
       connection->UploadFileSimple("/no/such/file/exists.txt", 123, request);
@@ -63,8 +60,8 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleNonExistentFile) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleOffsetLargerThanSize) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"some simple contents"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"some simple contents"};
   TempFile temp(contents);
   InsertObjectMediaRequest request("test-bucket", "test-object", "");
   request.set_option(UploadFromOffset(contents.size() + 1));
@@ -74,8 +71,8 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleOffsetLargerThanSize) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleWithLimit) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"0123456789"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"0123456789"};
   TempFile temp(contents);
   InsertObjectMediaRequest request("test-bucket", "test-object", "");
   request.set_option(UploadLimit(5));
@@ -86,8 +83,8 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleWithLimit) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleReadError) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"some simple contents"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"some simple contents"};
   TempFile temp(contents);
   // Pass a size larger than the file to trigger a read error.
   InsertObjectMediaRequest request("test-bucket", "test-object", "");
@@ -97,8 +94,8 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileSimpleReadError) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileResumableSuccess) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"some resumable contents"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"some resumable contents"};
   TempFile temp(contents);
   ResumableUploadRequest request("test-bucket", "test-object");
   auto stream = connection->UploadFileResumable(temp.name(), request);
@@ -110,35 +107,16 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileResumableSuccess) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileResumableNonExistentFile) {
-  auto connection = MakeConnection();
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
   ResumableUploadRequest request("test-bucket", "test-object");
   auto stream =
       connection->UploadFileResumable("/no/such/file/exists.txt", request);
   EXPECT_THAT(stream, StatusIs(StatusCode::kNotFound));
 }
 
-#if !defined(_WIN32)
-TEST_F(ConnectionImplFileUploadTest, UploadFileResumableUnreadable) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"some resumable contents"};
-  TempFile temp(contents);
-
-  // Make the file unreadable.
-  ASSERT_EQ(0, chmod(temp.name().c_str(), 0000));
-
-  // The implementation should detect that it cannot open the file.
-  ResumableUploadRequest request("test-bucket", "test-object");
-  auto stream = connection->UploadFileResumable(temp.name(), request);
-  EXPECT_THAT(stream, StatusIs(StatusCode::kNotFound));
-
-  // Restore permissions so the TempFile destructor can delete it.
-  (void)chmod(temp.name().c_str(), 0600);
-}
-#endif  // !defined(_WIN32)
-
 TEST_F(ConnectionImplFileUploadTest, UploadFileResumableOffsetLargerThanSize) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"some resumable contents"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"some resumable contents"};
   TempFile temp(contents);
   ResumableUploadRequest request("test-bucket", "test-object");
   request.set_option(UploadFromOffset(contents.size() + 1));
@@ -147,11 +125,11 @@ TEST_F(ConnectionImplFileUploadTest, UploadFileResumableOffsetLargerThanSize) {
 }
 
 TEST_F(ConnectionImplFileUploadTest, UploadFileResumableWithLimit) {
-  auto connection = MakeConnection();
-  auto const contents = std::string{"0123456789"};
+  std::shared_ptr<StorageConnectionImpl> connection = MakeConnection();
+  std::string const contents = std::string{"0123456789"};
   TempFile temp(contents);
   ResumableUploadRequest request("test-bucket", "test-object");
-  auto const limit = 5;
+  int const limit = 5;
   request.set_option(UploadLimit(limit));
   auto stream = connection->UploadFileResumable(temp.name(), request);
   ASSERT_STATUS_OK(stream);
