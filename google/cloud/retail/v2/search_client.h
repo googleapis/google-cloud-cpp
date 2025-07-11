@@ -125,7 +125,7 @@ class SearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.SearchRequest]: @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L105}
-  /// [google.cloud.retail.v2.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L888}
+  /// [google.cloud.retail.v2.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L912}
   ///
   // clang-format on
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(

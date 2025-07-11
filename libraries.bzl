@@ -173,6 +173,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "ids",
     "kms",
     "language",
+    "licensemanager",
     "logging",
     "lustre",
     "managedidentities",

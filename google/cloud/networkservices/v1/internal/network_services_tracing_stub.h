@@ -87,6 +87,89 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
           request) override;
 
+  StatusOr<google::cloud::networkservices::v1::ListWasmPluginVersionsResponse>
+  ListWasmPluginVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListWasmPluginVersionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+  GetWasmPluginVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateWasmPluginVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateWasmPluginVersion(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteWasmPluginVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWasmPluginVersion(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ListWasmPluginsResponse>
+  ListWasmPlugins(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListWasmPluginsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::networkservices::v1::WasmPlugin> GetWasmPlugin(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetWasmPluginRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateWasmPlugin(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateWasmPlugin(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateWasmPlugin(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateWasmPlugin(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteWasmPlugin(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWasmPlugin(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request) override;
+
   StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
   ListGateways(grpc::ClientContext& context, Options const& options,
                google::cloud::networkservices::v1::ListGatewaysRequest const&

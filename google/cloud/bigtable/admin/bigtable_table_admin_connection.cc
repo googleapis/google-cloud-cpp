@@ -309,6 +309,71 @@ BigtableTableAdminConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnection::CreateSchemaBundle(
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::SchemaBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::CreateSchemaBundle(
+    NoAwaitTag, google::bigtable::admin::v2::CreateSchemaBundleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnection::CreateSchemaBundle(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::SchemaBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnection::UpdateSchemaBundle(
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::SchemaBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::UpdateSchemaBundle(
+    NoAwaitTag, google::bigtable::admin::v2::UpdateSchemaBundleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnection::UpdateSchemaBundle(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::SchemaBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminConnection::GetSchemaBundle(
+    google::bigtable::admin::v2::GetSchemaBundleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminConnection::ListSchemaBundles(
+    google::bigtable::admin::v2::
+        ListSchemaBundlesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::SchemaBundle>>();
+}
+
+Status BigtableTableAdminConnection::DeleteSchemaBundle(
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminConnection::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const&) {

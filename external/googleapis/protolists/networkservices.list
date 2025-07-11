@@ -1,6 +1,7 @@
 @com_google_googleapis//google/cloud/networkservices/v1:common.proto
 @com_google_googleapis//google/cloud/networkservices/v1:dep.proto
 @com_google_googleapis//google/cloud/networkservices/v1:endpoint_policy.proto
+@com_google_googleapis//google/cloud/networkservices/v1:extensibility.proto
 @com_google_googleapis//google/cloud/networkservices/v1:gateway.proto
 @com_google_googleapis//google/cloud/networkservices/v1:grpc_route.proto
 @com_google_googleapis//google/cloud/networkservices/v1:http_route.proto

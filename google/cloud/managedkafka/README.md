@@ -56,6 +56,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/managed-kafka
+[cloud-service-docs]: https://cloud.google.com/managed-service-for-apache-kafka/docs
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/managedkafka/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/managedkafka

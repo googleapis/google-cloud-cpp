@@ -1021,6 +1021,257 @@ BigtableTableAdminConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnectionImpl::CreateSchemaBundle(
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSchemaBundle(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::SchemaBundle>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::bigtable::admin::v2::CreateSchemaBundleRequest const&
+              request) {
+        return stub->AsyncCreateSchemaBundle(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::SchemaBundle>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnectionImpl::CreateSchemaBundle(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSchemaBundle(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateSchemaBundleRequest const&
+                 request) {
+        return stub_->CreateSchemaBundle(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnectionImpl::CreateSchemaBundle(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::bigtable::admin::v2::
+                   CreateSchemaBundleMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::bigtable::admin::v2::SchemaBundle>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSchemaBundle",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::bigtable::admin::v2::SchemaBundle>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::SchemaBundle>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnectionImpl::UpdateSchemaBundle(
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSchemaBundle(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::SchemaBundle>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::bigtable::admin::v2::UpdateSchemaBundleRequest const&
+              request) {
+        return stub->AsyncUpdateSchemaBundle(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::SchemaBundle>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnectionImpl::UpdateSchemaBundle(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSchemaBundle(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateSchemaBundleRequest const&
+                 request) {
+        return stub_->UpdateSchemaBundle(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminConnectionImpl::UpdateSchemaBundle(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::bigtable::admin::v2::
+                   UpdateSchemaBundleMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::bigtable::admin::v2::SchemaBundle>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateSchemaBundle",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::bigtable::admin::v2::SchemaBundle>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::SchemaBundle>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminConnectionImpl::GetSchemaBundle(
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSchemaBundle(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+        return stub_->GetSchemaBundle(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminConnectionImpl::ListSchemaBundles(
+    google::bigtable::admin::v2::ListSchemaBundlesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSchemaBundles(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::bigtable::admin::v2::SchemaBundle>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::bigtable::admin::v2::ListSchemaBundlesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::bigtable::admin::v2::ListSchemaBundlesRequest const&
+                       request) {
+              return stub->ListSchemaBundles(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::bigtable::admin::v2::ListSchemaBundlesResponse r) {
+        std::vector<google::bigtable::admin::v2::SchemaBundle> result(
+            r.schema_bundles().size());
+        auto& messages = *r.mutable_schema_bundles();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+Status BigtableTableAdminConnectionImpl::DeleteSchemaBundle(
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSchemaBundle(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::DeleteSchemaBundleRequest const&
+                 request) {
+        return stub_->DeleteSchemaBundle(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminConnectionImpl::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
