@@ -919,7 +919,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
     return res;
   }
   if (filter.has_cells_per_column_limit_filter()) {
-    std::int64_t cells_per_column_limit =
+    std::int32_t cells_per_column_limit =
         filter.cells_per_column_limit_filter();
     if (cells_per_column_limit < 0) {
       return InvalidArgumentError(
