@@ -52,7 +52,7 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.72.0", repo_name = "com_github_grpc_grpc")
-bazel_dep(name = "googleapis", version = "0.0.0-20250604-de157ca3")
+bazel_dep(name = "googleapis", version = "0.0.0-20250604-de157ca3", repo_name = "com_google_googleapis")
 
 switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
 switched_rules.use_languages(
