@@ -59,4 +59,3 @@ switched_rules.use_languages(
     cc = True,
     grpc = True,
 )
-use_repo(switched_rules, "com_google_googleapis_imports")
