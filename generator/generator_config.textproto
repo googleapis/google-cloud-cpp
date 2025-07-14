@@ -2811,6 +2811,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# License Manager
+service {
+  service_proto_path: "google/cloud/licensemanager/v1/licensemanager.proto"
+  product_path: "google/cloud/licensemanager/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"

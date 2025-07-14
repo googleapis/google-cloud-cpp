@@ -857,6 +857,10 @@
 ./include/google/cloud/language/v2
 ./include/google/cloud/language/v2/internal
 ./include/google/cloud/language/v2/mocks
+./include/google/cloud/licensemanager
+./include/google/cloud/licensemanager/v1
+./include/google/cloud/licensemanager/v1/internal
+./include/google/cloud/licensemanager/v1/mocks
 ./include/google/cloud/logging
 ./include/google/cloud/logging/mocks
 ./include/google/cloud/logging/v2
@@ -1466,6 +1470,8 @@
 ./lib64/cmake/google_cloud_cpp_kms_mocks
 ./lib64/cmake/google_cloud_cpp_language
 ./lib64/cmake/google_cloud_cpp_language_mocks
+./lib64/cmake/google_cloud_cpp_licensemanager
+./lib64/cmake/google_cloud_cpp_licensemanager_mocks
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_logging_mocks
 ./lib64/cmake/google_cloud_cpp_lustre

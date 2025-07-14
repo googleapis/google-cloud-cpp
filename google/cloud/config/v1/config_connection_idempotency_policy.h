@@ -109,6 +109,18 @@ class ConfigConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetTerraformVersion(
       google::cloud::config::v1::GetTerraformVersionRequest const& request);
 
+  virtual google::cloud::Idempotency ListResourceChanges(
+      google::cloud::config::v1::ListResourceChangesRequest request);
+
+  virtual google::cloud::Idempotency GetResourceChange(
+      google::cloud::config::v1::GetResourceChangeRequest const& request);
+
+  virtual google::cloud::Idempotency ListResourceDrifts(
+      google::cloud::config::v1::ListResourceDriftsRequest request);
+
+  virtual google::cloud::Idempotency GetResourceDrift(
+      google::cloud::config::v1::GetResourceDriftRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
