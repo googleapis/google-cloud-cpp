@@ -53,8 +53,8 @@ RowStream Client::Read(std::string table, KeySet keys,
                        std::vector<std::string> columns, Options opts) {
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
-  internal::OptionsSpan span(std::move(opts));
   auto lock_hint = ExtractOpt<LockHintOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           Transaction::ReadOnlyOptions()),
                       std::move(table), std::move(keys), std::move(columns),
@@ -68,8 +68,8 @@ RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
                        std::vector<std::string> columns, Options opts) {
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
-  internal::OptionsSpan span(std::move(opts));
   auto lock_hint = ExtractOpt<LockHintOption>(opts);
+  internal::OptionsSpan span(std::move(opts));
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           std::move(transaction_options)),
                       std::move(table), std::move(keys), std::move(columns),
