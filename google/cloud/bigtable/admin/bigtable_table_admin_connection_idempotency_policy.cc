@@ -161,6 +161,31 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateSchemaBundle(
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::UpdateSchemaBundle(
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetSchemaBundle(
+    google::bigtable::admin::v2::GetSchemaBundleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ListSchemaBundles(
+    google::bigtable::admin::v2::ListSchemaBundlesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::DeleteSchemaBundle(
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>
 MakeDefaultBigtableTableAdminConnectionIdempotencyPolicy() {
   return std::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>();

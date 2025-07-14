@@ -149,6 +149,26 @@ Idempotency ConfigConnectionIdempotencyPolicy::GetTerraformVersion(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ConfigConnectionIdempotencyPolicy::ListResourceChanges(
+    google::cloud::config::v1::ListResourceChangesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::GetResourceChange(
+    google::cloud::config::v1::GetResourceChangeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::ListResourceDrifts(
+    google::cloud::config::v1::ListResourceDriftsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::GetResourceDrift(
+    google::cloud::config::v1::GetResourceDriftRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency ConfigConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
