@@ -14,6 +14,8 @@
 
 """Examples for the Cloud Pub/Sub C++ client library."""
 
+load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_samples")
 load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 load(":pubsub_samples_common.bzl", "pubsub_samples_common_hdrs", "pubsub_samples_common_srcs")
