@@ -17,7 +17,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
@@ -78,8 +78,8 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<RetryContext> retry_context_ =
-      std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> operation_context_ =
+      std::make_shared<OperationContext>();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

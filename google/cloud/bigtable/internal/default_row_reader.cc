@@ -64,7 +64,7 @@ void DefaultRowReader::MakeRequest() {
   auto const& options = internal::CurrentOptions();
   context_ = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context_, options);
-  retry_context_.PreCall(*context_);
+  operation_context_.PreCall(*context_);
   stream_ = stub_->ReadRows(context_, options, request);
   stream_is_open_ = true;
 
@@ -79,7 +79,7 @@ bool DefaultRowReader::NextChunk() {
     if (absl::holds_alternative<Status>(v)) {
       last_status_ = absl::get<Status>(std::move(v));
       response_ = {};
-      retry_context_.PostCall(*context_);
+      operation_context_.PostCall(*context_);
       context_.reset();
       return false;
     }
