@@ -4940,7 +4940,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListServiceLbPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L123}
+  /// [google.cloud.networkservices.v1.ListServiceLbPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L163}
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
   ///
   // clang-format on
@@ -4979,7 +4979,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListServiceLbPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L123}
+  /// [google.cloud.networkservices.v1.ListServiceLbPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L163}
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
   ///
   // clang-format on
@@ -5007,7 +5007,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L160}
+  /// [google.cloud.networkservices.v1.GetServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L200}
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
   ///
   // clang-format on
@@ -5037,7 +5037,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L160}
+  /// [google.cloud.networkservices.v1.GetServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L200}
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
   ///
   // clang-format on
@@ -5078,7 +5078,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L172}
+  /// [google.cloud.networkservices.v1.CreateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L212}
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
   ///
   // clang-format on
@@ -5136,7 +5136,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L172}
+  /// [google.cloud.networkservices.v1.CreateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L212}
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
   ///
   // clang-format on
@@ -5207,7 +5207,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
-  /// [google.cloud.networkservices.v1.UpdateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L194}
+  /// [google.cloud.networkservices.v1.UpdateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
@@ -5264,7 +5264,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.ServiceLbPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L34}
-  /// [google.cloud.networkservices.v1.UpdateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L194}
+  /// [google.cloud.networkservices.v1.UpdateServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
@@ -5329,7 +5329,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L209}
+  /// [google.cloud.networkservices.v1.DeleteServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L249}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -5380,7 +5380,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L209}
+  /// [google.cloud.networkservices.v1.DeleteServiceLbPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_lb_policy.proto#L249}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
