@@ -195,14 +195,14 @@ add_library(
     internal/logging_data_client.h
     internal/mutate_rows_limiter.cc
     internal/mutate_rows_limiter.h
+    internal/operation_context.cc
+    internal/operation_context.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/rate_limiter.cc
     internal/rate_limiter.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
-    internal/retry_context.cc
-    internal/retry_context.h
     internal/retry_traits.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
@@ -440,9 +440,9 @@ if (BUILD_TESTING)
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/mutate_rows_limiter_test.cc
+        internal/operation_context_test.cc
         internal/prefix_range_end_test.cc
         internal/rate_limiter_test.cc
-        internal/retry_context_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         legacy_table_test.cc

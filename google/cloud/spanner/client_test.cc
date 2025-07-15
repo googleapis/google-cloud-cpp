@@ -138,6 +138,58 @@ TEST(ClientTest, ReadSuccess) {
                                   IsOkAndHolds(RowType("Ann", 42))));
 }
 
+TEST(ClientTest, ReadWithLockHint) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "Id",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
+  google::spanner::v1::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
+
+  EXPECT_CALL(*conn, Read)
+      .WillOnce([&metadata](Connection::ReadParams const& params) {
+        EXPECT_THAT(
+            params.directed_read_option,
+            VariantWith<IncludeReplicas>(AllOf(
+                Property(&IncludeReplicas::replica_selections,
+                         ElementsAre(ReplicaSelection(ReplicaType::kReadOnly))),
+                Property(&IncludeReplicas::auto_failover_disabled, true))));
+        EXPECT_THAT(params.lock_hint, Eq(LockHint::kLockHintShared));
+        auto source = std::make_unique<MockResultSetSource>();
+        EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+        EXPECT_CALL(*source, NextRow())
+            .WillOnce(Return(spanner_mocks::MakeRow("Steve", 12)))
+            .WillOnce(Return(spanner_mocks::MakeRow("Ann", 42)))
+            .WillOnce(Return(Row()));
+        return RowStream(std::move(source));
+      });
+
+  KeySet keys = KeySet::All();
+  auto rows = client.Read("table", std::move(keys), {"column1", "column2"},
+                          Options{}
+                              .set<DirectedReadOption>(IncludeReplicas(
+                                  {ReplicaSelection(ReplicaType::kReadOnly)},
+                                  /*auto_failover_disabled=*/true))
+                              .set<LockHintOption>(LockHint::kLockHintShared));
+
+  using RowType = std::tuple<std::string, std::int64_t>;
+  auto stream = StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType("Steve", 12)),
+                                  IsOkAndHolds(RowType("Ann", 42))));
+}
+
 TEST(ClientTest, ReadFailure) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
@@ -404,7 +456,8 @@ TEST(ClientTest, CommitMutatorSuccess) {
 
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {},
+                                            {},  {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
@@ -453,7 +506,8 @@ TEST(ClientTest, CommitMutatorSuccess) {
 TEST(ClientTest, CommitMutatorRollback) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {},
+                                            {},  {}, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
@@ -495,7 +549,8 @@ TEST(ClientTest, CommitMutatorRollback) {
 TEST(ClientTest, CommitMutatorRollbackError) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {},
+                                            {},  {}, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(

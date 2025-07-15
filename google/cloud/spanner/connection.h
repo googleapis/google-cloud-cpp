@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/commit_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/keys.h"
+#include "google/cloud/spanner/lock_hint.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/partition_options.h"
@@ -81,6 +82,7 @@ class Connection {
     absl::optional<std::string> partition_token;
     bool partition_data_boost = false;  // when partition_token
     DirectedReadOption::Type directed_read_option;
+    LockHint lock_hint;
   };
 
   /// Wrap the arguments to `PartitionRead()`.
