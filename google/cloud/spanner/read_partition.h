@@ -175,7 +175,7 @@ struct ReadPartitionInternals {
   static spanner::Connection::ReadParams MakeReadParams(
       spanner::ReadPartition const& read_partition,
       spanner::DirectedReadOption::Type directed_read_option,
-      spanner::OrderByOption::Type order_by_option,
+      spanner::OrderBy order_by,
       spanner::LockHint lock_hint) {
     return spanner::Connection::ReadParams{
         MakeTransactionFromIds(
@@ -188,7 +188,7 @@ struct ReadPartitionInternals {
         read_partition.PartitionToken(),
         read_partition.DataBoost(),
         std::move(directed_read_option),
-        std::move(order_by_option),
+        order_by,
         lock_hint};
   }
 };
@@ -209,7 +209,7 @@ inline spanner::ReadPartition MakeReadPartition(
 inline spanner::Connection::ReadParams MakeReadParams(
     spanner::ReadPartition const& read_partition,
     spanner::DirectedReadOption::Type directed_read_option,
-    spanner::OrderBy order_by
+    spanner::OrderBy order_by,
     spanner::LockHint lock_hint) {
   return ReadPartitionInternals::MakeReadParams(read_partition,
                                                 std::move(directed_read_option),
