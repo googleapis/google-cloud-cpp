@@ -113,8 +113,7 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
       {{std::move(transaction), std::move(table), std::move(keys),
         std::move(columns), ToReadOptions(internal::CurrentOptions()),
         absl::nullopt, false, DirectedReadOption::Type{},
-        OrderBy::kOrderByUnspecified,
-        LockHint::kLockHintUnspecified},
+        OrderBy::kOrderByUnspecified, LockHint::kLockHintUnspecified},
        ToPartitionOptions(internal::CurrentOptions())});
 }
 
