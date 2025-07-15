@@ -1,0 +1,14 @@
+{
+    "api_id": "managedkafka.googleapis.com",
+    "api_shortname": "managedkafka",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/managedkafka/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1376234%20status=open",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Managed Service for Apache Kafka API",
+    "product_documentation": "https://cloud.google.com/managed-service-for-apache-kafka/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

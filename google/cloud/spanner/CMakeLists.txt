@@ -176,6 +176,7 @@ add_library(
     json.h
     keys.cc
     keys.h
+    lock_hint.h
     mutations.cc
     mutations.h
     numeric.cc

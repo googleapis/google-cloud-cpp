@@ -36,13 +36,13 @@ struct TransactionContext {
   bool route_to_leader;
   std::string const& tag;
   std::int64_t seqno;
+  absl::optional<std::shared_ptr<SpannerStub>> stub;
 };
 
 template <typename Functor>
 using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
     Functor, SessionHolder&,
-    StatusOr<google::spanner::v1::TransactionSelector>&,
-    TransactionContext const&>;
+    StatusOr<google::spanner::v1::TransactionSelector>&, TransactionContext&>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -97,13 +97,14 @@ class TransactionImpl {
     static_assert(google::cloud::internal::is_invocable<
                       Functor, SessionHolder&,
                       StatusOr<google::spanner::v1::TransactionSelector>&,
-                      TransactionContext const&>::value,
+                      TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{route_to_leader_, tag_, 0};
+    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
       cond_.wait(lock, [this] { return state_ != State::kPending; });
+      ctx.stub = stub_;
       if (state_ == State::kDone) {
         lock.unlock();
         return f(session_, selector_, ctx);
@@ -118,6 +119,7 @@ class TransactionImpl {
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);
+        stub_ = ctx.stub;
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
         done = (state_ == State::kDone);
@@ -155,6 +157,7 @@ class TransactionImpl {
   bool route_to_leader_;
   std::string tag_;
   std::int64_t seqno_;
+  absl::optional<std::shared_ptr<SpannerStub>> stub_ = absl::nullopt;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

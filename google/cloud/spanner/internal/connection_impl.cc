@@ -205,6 +205,21 @@ google::spanner::v1::ReadRequest_OrderBy ProtoOrderBy(
   return google::spanner::v1::ReadRequest_OrderBy_ORDER_BY_UNSPECIFIED;
 }
 
+google::spanner::v1::ReadRequest_LockHint ProtoLockHint(
+    absl::optional<spanner::LockHint> const& order_by) {
+  if (order_by) {
+    switch (*order_by) {
+      case spanner::LockHint::kLockHintUnspecified:
+        return google::spanner::v1::ReadRequest_LockHint_LOCK_HINT_UNSPECIFIED;
+      case spanner::LockHint::kLockHintShared:
+        return google::spanner::v1::ReadRequest_LockHint_LOCK_HINT_SHARED;
+      case spanner::LockHint::kLockHintExclusive:
+        return google::spanner::v1::ReadRequest_LockHint_LOCK_HINT_EXCLUSIVE;
+    }
+  }
+  return google::spanner::v1::ReadRequest_LockHint_LOCK_HINT_UNSPECIFIED;
+}
+
 // Converts a `google::protobuf::Timestamp` to a `spanner::Timestamp`, but
 // substitutes the maximal value for any conversion error. This is needed
 // when, for example, a response commit_timestamp is out of range but the
@@ -361,7 +376,7 @@ spanner::RowStream ConnectionImpl::Read(ReadParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return ReadImpl(session, s, ctx, std::move(params));
       });
 }
@@ -372,7 +387,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionRead(
       std::move(params.read_params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return PartitionReadImpl(session, s, ctx, params.read_params,
                                  params.partition_options);
       });
@@ -383,7 +398,7 @@ spanner::RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return ExecuteQueryImpl(session, s, ctx, std::move(params));
       });
 }
@@ -393,7 +408,7 @@ StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return ExecuteDmlImpl(session, s, ctx, std::move(params));
       });
 }
@@ -403,7 +418,7 @@ spanner::ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return ProfileQueryImpl(session, s, ctx, std::move(params));
       });
 }
@@ -414,7 +429,7 @@ StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDml(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return ProfileDmlImpl(session, s, ctx, std::move(params));
       });
 }
@@ -424,7 +439,7 @@ StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return AnalyzeSqlImpl(session, s, ctx, std::move(params));
       });
 }
@@ -438,7 +453,7 @@ StatusOr<spanner::PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
   return Visit(txn, [this, &params](
                         SessionHolder& session,
                         StatusOr<google::spanner::v1::TransactionSelector>& s,
-                        TransactionContext const& ctx) {
+                        TransactionContext& ctx) {
     return ExecutePartitionedDmlImpl(session, s, ctx, std::move(params));
   });
 }
@@ -449,7 +464,7 @@ StatusOr<std::vector<spanner::QueryPartition>> ConnectionImpl::PartitionQuery(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return PartitionQueryImpl(session, s, ctx, params);
       });
 }
@@ -460,7 +475,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return ExecuteBatchDmlImpl(session, s, ctx, std::move(params));
       });
 }
@@ -470,7 +485,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::Commit(CommitParams params) {
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
         return CommitImpl(session, s, ctx, std::move(params));
       });
 }
@@ -479,7 +494,7 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
   return Visit(std::move(params.transaction),
                [this](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      TransactionContext const& ctx) {
+                      TransactionContext& ctx) {
                  return RollbackImpl(session, s, ctx);
                });
 }
@@ -494,9 +509,15 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWrite(
  * an error if `session` is empty and no `Session` can be allocated.
  */
 Status ConnectionImpl::PrepareSession(SessionHolder& session,
-                                      bool dissociate_from_pool) {
+                                      Session::Mode mode) {
   if (!session) {
-    auto session_or = session_pool_->Allocate(dissociate_from_pool);
+    StatusOr<SessionHolder> session_or;
+    if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+      session_or = session_pool_->Multiplexed(mode);
+    } else {
+      session_or = session_pool_->Allocate(mode);
+    }
+
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -515,7 +536,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
  */
 StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, google::spanner::v1::TransactionOptions options,
-    std::string request_tag, TransactionContext const& ctx, char const* func) {
+    std::string request_tag, TransactionContext& ctx, char const* func) {
   google::spanner::v1::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
@@ -525,7 +546,13 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
   begin.mutable_request_options()->set_request_tag(std::move(request_tag));
   begin.mutable_request_options()->set_transaction_tag(ctx.tag);
 
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
+
   auto const& current = internal::CurrentOptions();
   auto response = RetryLoop(
       RetryPolicyPrototype(current)->clone(),
@@ -548,7 +575,7 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
 spanner::RowStream ConnectionImpl::ReadImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, ReadParams params) {
+    TransactionContext& ctx, ReadParams params) {
   if (!s.ok()) {
     return MakeStatusOnlyResult<spanner::RowStream>(s.status());
   }
@@ -564,6 +591,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   request->set_table(std::move(params.table));
   request->set_index(std::move(params.read_options.index_name));
   request->set_order_by(ProtoOrderBy(params.order_by));
+  request->set_lock_hint(ProtoLockHint(params.lock_hint));
   for (auto&& column : params.columns) {
     request->add_columns(std::move(column));
   }
@@ -589,7 +617,12 @@ spanner::RowStream ConnectionImpl::ReadImpl(
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
   auto factory = [stub, request, route_to_leader = ctx.route_to_leader,
@@ -648,7 +681,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
 StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, ReadParams const& params,
+    TransactionContext& ctx, ReadParams const& params,
     spanner::PartitionOptions const& partition_options) {
   if (!s.ok()) {
     return s.status();
@@ -656,7 +689,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
-  auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
+  auto prepare_status = PrepareSession(session, Session::Mode::kDisassociated);
   if (!prepare_status.ok()) {
     return prepare_status;
   }
@@ -672,7 +705,12 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_key_set() = ToProto(params.keys);
   *request.mutable_partition_options() = ToProto(partition_options);
 
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
@@ -730,7 +768,7 @@ template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params,
+    TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
     std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
@@ -808,7 +846,7 @@ template <typename ResultType>
 ResultType ConnectionImpl::CommonQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params,
+    TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   if (!s.ok()) {
     return MakeStatusOnlyResult<ResultType>(s.status());
@@ -821,7 +859,12 @@ ResultType ConnectionImpl::CommonQueryImpl(
   // Capture a copy of of these to ensure the `shared_ptr<>` remains valid
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto const& retry_policy_prototype = RetryPolicyPrototype();
   auto const& backoff_policy_prototype = BackoffPolicyPrototype();
   auto const tracing_enabled = RpcStreamTracingEnabled();
@@ -869,7 +912,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
 spanner::RowStream ConnectionImpl::ExecuteQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params) {
+    TransactionContext& ctx, SqlParams params) {
   return CommonQueryImpl<spanner::RowStream>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
@@ -878,7 +921,7 @@ spanner::RowStream ConnectionImpl::ExecuteQueryImpl(
 spanner::ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params) {
+    TransactionContext& ctx, SqlParams params) {
   return CommonQueryImpl<spanner::ProfileQueryResult>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::PROFILE);
@@ -888,7 +931,7 @@ template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params,
+    TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   if (!s.ok()) {
     return s.status();
@@ -901,7 +944,12 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   // Capture a copy of of these to ensure the `shared_ptr<>` remains valid
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto const& retry_policy_prototype = RetryPolicyPrototype(*current);
   auto const& backoff_policy_prototype = BackoffPolicyPrototype(*current);
@@ -935,7 +983,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
 StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params) {
+    TransactionContext& ctx, SqlParams params) {
   return CommonDmlImpl<spanner::DmlResult>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
@@ -944,7 +992,7 @@ StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
 StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params) {
+    TransactionContext& ctx, SqlParams params) {
   return CommonDmlImpl<spanner::ProfileDmlResult>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::PROFILE);
@@ -953,7 +1001,7 @@ StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
 StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, SqlParams params) {
+    TransactionContext& ctx, SqlParams params) {
   auto result = CommonDmlImpl<spanner::ProfileDmlResult>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::PLAN);
@@ -967,14 +1015,14 @@ StatusOr<std::vector<spanner::QueryPartition>>
 ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, PartitionQueryParams const& params) {
+    TransactionContext& ctx, PartitionQueryParams const& params) {
   if (!s.ok()) {
     return s.status();
   }
 
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
-  auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
+  auto prepare_status = PrepareSession(session, Session::Mode::kDisassociated);
   if (!prepare_status.ok()) {
     return prepare_status;
   }
@@ -989,7 +1037,12 @@ ConnectionImpl::PartitionQueryImpl(
       std::move(*sql_statement.mutable_param_types());
   *request.mutable_partition_options() = ToProto(params.partition_options);
 
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
@@ -1039,7 +1092,7 @@ ConnectionImpl::PartitionQueryImpl(
 StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, ExecuteBatchDmlParams params) {
+    TransactionContext& ctx, ExecuteBatchDmlParams params) {
   if (!s.ok()) {
     return s.status();
   }
@@ -1066,7 +1119,12 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   auto const& current = internal::CurrentOptions();
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
@@ -1113,7 +1171,7 @@ StatusOr<spanner::PartitionedDmlResult>
 ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, ExecutePartitionedDmlParams params) {
+    TransactionContext& ctx, ExecutePartitionedDmlParams params) {
   if (!s.ok()) {
     return s.status();
   }
@@ -1157,7 +1215,7 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
 StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx, CommitParams params) {
+    TransactionContext& ctx, CommitParams params) {
   if (!s.ok()) {
     // Fail the commit if the transaction has been invalidated.
     return s.status();
@@ -1213,7 +1271,12 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   }
 
   auto const& current = internal::CurrentOptions();
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto response = RetryLoop(
       RetryPolicyPrototype(current)->clone(),
       BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
@@ -1240,7 +1303,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 Status ConnectionImpl::RollbackImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    TransactionContext const& ctx) {
+    TransactionContext& ctx) {
   if (!s.ok()) {
     return s.status();
   }
@@ -1267,7 +1330,12 @@ Status ConnectionImpl::RollbackImpl(
   google::spanner::v1::RollbackRequest request;
   request.set_session(session->session_name());
   request.set_transaction_id(s->id());
-  auto stub = session_pool_->GetStub(*session);
+  std::shared_ptr<SpannerStub> stub;
+  if (session->is_multiplexed()) {
+    stub = session_pool_->GetStub(*session, ctx);
+  } else {
+    stub = session_pool_->GetStub(*session);
+  }
   auto const& current = internal::CurrentOptions();
   auto status = RetryLoop(
       RetryPolicyPrototype(current)->clone(),
@@ -1316,6 +1384,8 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
     request.set_exclude_txn_from_change_streams(true);
   }
 
+  // There's no client-side transaction involved with BatchWrite, so no need
+  // to store the resulting stub in the case of a Multiplexed Session.
   auto stub = session_pool_->GetStub(*session);
   auto factory = [stub = std::move(stub)](
                      google::spanner::v1::BatchWriteRequest const& request) {

@@ -186,11 +186,16 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/language/v1:language_cc_grpc" \
       "@com_google_googleapis//google/cloud/language/v2:language_cc_grpc"
   )"
+  ["licensemanager"]="@com_google_googleapis//google/cloud/licensemanager/v1:licensemanager_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["lustre"]="@com_google_googleapis//google/cloud/lustre/v1:lustre_cc_grpc"
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
-  ["managedkafka"]="@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
+  ["managedkafka"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/managedkafka/schemaregistry/v1:schemaregistry_cc_grpc" \
+      "@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
+  )"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
   ["memorystore"]="@com_google_googleapis//google/cloud/memorystore/v1:memorystore_cc_grpc"
   ["metastore"]="$(

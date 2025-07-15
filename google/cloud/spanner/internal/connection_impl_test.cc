@@ -215,6 +215,10 @@ MATCHER_P(HasOrderBy, order_by, "has order_by") {
   return arg.order_by() == order_by;
 }
 
+MATCHER_P(HasLockHint, lock_hint, "has lock_hint") {
+  return arg.lock_hint() == lock_hint;
+}
+
 // Ideally this would be a matcher, but matcher args are `const` and `RowStream`
 // only has non-const methods.
 bool ContainsNoRows(spanner::RowStream& rows) {
@@ -4166,6 +4170,85 @@ TEST(ConnectionImplTest, ReadRequestOrderByParameterNoOrder) {
                                       false,
                                       spanner::DirectedReadOption::Type{},
                                       spanner::OrderBy::kOrderByNoOrder};
+  auto rows1 = conn->Read(read_params);
+  for (auto const& row : rows1) {
+    (void)row;
+  }
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("test-session-name", "txn1", false, ""));
+}
+
+TEST(ConnectionImplTest, ReadRequestLockHintParameterUnspecified) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock,
+              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  Sequence s;
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, _,
+          AllOf(HasSession("test-session-name"),
+                HasLockHint(
+                    google::spanner::v1::ReadRequest::LOCK_HINT_UNSPECIFIED))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(MakeReader<google::spanner::v1::PartialResultSet>(
+          {R"pb(metadata: { transaction: { id: "txn1" } })pb"}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
+  // Scenario 1: No explicit OrderBy (should map to UNSPECIFIED)
+  spanner::ReadOptions read_options;
+  spanner::Transaction txn1 =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows1 = conn->Read(
+      {txn1, "table", spanner::KeySet::All(), {"col"}, read_options});
+  for (auto const& row : rows1) {
+    (void)row;
+  }
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("test-session-name", "txn1", false, ""));
+}
+
+TEST(ConnectionImplTest, ReadRequestLockHintShared) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock,
+              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  Sequence s;
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, _,
+          AllOf(
+              HasSession("test-session-name"),
+              HasLockHint(google::spanner::v1::ReadRequest::LOCK_HINT_SHARED))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(MakeReader<google::spanner::v1::PartialResultSet>(
+          {R"pb(metadata: { transaction: { id: "txn1" } })pb"}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::ReadOptions read_options;
+  spanner::Transaction txn1 =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto read_params =
+      spanner::Connection::ReadParams{txn1,
+                                      "table",
+                                      spanner::KeySet::All(),
+                                      {"col"},
+                                      read_options,
+                                      absl::nullopt,
+                                      false,
+                                      spanner::DirectedReadOption::Type{},
+                                      spanner::LockHint::kLockHintShared};
   auto rows1 = conn->Read(read_params);
   for (auto const& row : rows1) {
     (void)row;

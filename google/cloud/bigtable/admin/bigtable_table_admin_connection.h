@@ -323,6 +323,38 @@ class BigtableTableAdminConnection {
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  CreateSchemaBundle(
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateSchemaBundle(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  CreateSchemaBundle(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle(
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateSchemaBundle(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::bigtable::admin::v2::SchemaBundle> GetSchemaBundle(
+      google::bigtable::admin::v2::GetSchemaBundleRequest const& request);
+
+  virtual StreamRange<google::bigtable::admin::v2::SchemaBundle>
+  ListSchemaBundles(
+      google::bigtable::admin::v2::ListSchemaBundlesRequest request);
+
+  virtual Status DeleteSchemaBundle(
+      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request);
+
   virtual future<
       StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(

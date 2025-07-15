@@ -207,7 +207,8 @@ TEST(ReadPartitionTest, MakeReadParams) {
       expected_partition.Partition(),
       IncludeReplicas({ReplicaSelection(ReplicaType::kReadWrite)},
                       /*auto_failover_disabled=*/true),
-      google::cloud::spanner::OrderBy::kOrderByNoOrder);
+      google::cloud::spanner::OrderBy::kOrderByNoOrder,
+      google::cloud::spanner::LockHint::kLockHintExclusive);
 
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_EQ(params.read_options, read_options);
@@ -216,6 +217,8 @@ TEST(ReadPartitionTest, MakeReadParams) {
   EXPECT_EQ(params.keys, KeySet::All());
   EXPECT_EQ(params.table, "Students");
   EXPECT_EQ(params.order_by, google::cloud::spanner::OrderBy::kOrderByNoOrder);
+  EXPECT_EQ(params.lock_hint,
+            google::cloud::spanner::LockHint::kLockHintExclusive);
   EXPECT_THAT(params.transaction,
               HasSessionAndTransaction("session", "txn-id", true, "tag"));
   EXPECT_THAT(

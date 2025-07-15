@@ -47,7 +47,7 @@ void AsyncRowReader::MakeRequest() {
   internal::ScopedCallContext scope(call_context_);
   context_ = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context_, *call_context_.options);
-  retry_context_->PreCall(*context_);
+  operation_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
@@ -220,7 +220,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     TryGiveRowToUser();
     return;
   }
-  retry_context_->PostCall(*context_);
+  operation_context_->PostCall(*context_);
   context_.reset();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,
