@@ -4248,6 +4248,7 @@ TEST(ConnectionImplTest, ReadRequestLockHintShared) {
                                       absl::nullopt,
                                       false,
                                       spanner::DirectedReadOption::Type{},
+                                      spanner::OrderBy::kOrderByUnspecified,
                                       spanner::LockHint::kLockHintShared};
   auto rows1 = conn->Read(read_params);
   for (auto const& row : rows1) {

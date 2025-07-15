@@ -61,8 +61,7 @@ RowStream Client::Read(std::string table, KeySet keys,
                       std::move(table), std::move(keys), std::move(columns),
                       ToReadOptions(internal::CurrentOptions()), absl::nullopt,
                       false, std::move(directed_read_option),
-                      std::move(order_by),
-                      std::move(lock_hint)});
+                      std::move(order_by), std::move(lock_hint)});
 }
 
 RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
@@ -78,7 +77,7 @@ RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
                       std::move(table), std::move(keys), std::move(columns),
                       ToReadOptions(internal::CurrentOptions()), absl::nullopt,
                       false, std::move(directed_read_option),
-                      std::move(order_by),std::move(lock_hint)});
+                      std::move(order_by), std::move(lock_hint)});
 }
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
@@ -92,7 +91,7 @@ RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
                       std::move(columns),
                       ToReadOptions(internal::CurrentOptions()), absl::nullopt,
                       false, std::move(directed_read_option),
-                      std::move(order_by),std::move(lock_hint)});
+                      std::move(order_by), std::move(lock_hint)});
 }
 
 RowStream Client::Read(ReadPartition const& read_partition, Options opts) {
@@ -102,7 +101,8 @@ RowStream Client::Read(ReadPartition const& read_partition, Options opts) {
   auto lock_hint = ExtractOpt<LockHintOption>(opts);
   internal::OptionsSpan span(std::move(opts));
   return conn_->Read(spanner_internal::MakeReadParams(
-      read_partition, std::move(directed_read_option), std::move(order_by), std::move(lock_hint)));
+      read_partition, std::move(directed_read_option), std::move(order_by),
+      std::move(lock_hint)));
 }
 
 StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
