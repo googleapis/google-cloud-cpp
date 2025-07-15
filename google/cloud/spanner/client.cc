@@ -433,3 +433,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+
