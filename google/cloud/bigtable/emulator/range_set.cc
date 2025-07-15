@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <cassert>
 #include <chrono>
+#include <iterator>
 #include <ostream>
 #include <string>
 
@@ -571,6 +572,52 @@ std::ostream& operator<<(std::ostream& os,
   }
   os << ")";
   return os;
+}
+
+bool ConsecutiveStringsOfMaxLen(std::string const& a, std::string const& b,
+                                std::size_t max_len) {
+  assert(a.length() <= max_len);
+  assert(b.length() <= max_len);
+
+  if (max_len == 0) {
+    return false;
+  }
+
+  if (a.length() < max_len) {
+    return internal::ConsecutiveRowKeys(a, b);
+  }
+
+  // Note that at this point we are guaranteed that a is not empty but
+  // let us be sure.
+  assert(!a.empty());
+
+  // What is the rightmost index that we can increment by 1 to get
+  // the next string in lexicographic order.
+  absl::optional<std::size_t> index_to_inc = absl::nullopt;
+
+  for (auto it = a.rbegin(); it != a.rend(); it++) {
+    char c = *it;
+    if (c < CHAR_MAX) {
+      index_to_inc = (a.length() - 1) - std::distance(a.rbegin(), it);
+      break;
+    }
+  }
+
+  if (!index_to_inc.has_value()) {
+    // a is the last string in lexicographical order for strings of
+    // max_len chars, so it has no successor.
+    return false;
+  }
+
+  std::string successor_to_a;
+  // A copy but if we want we could fix that by a comparison in 3
+  // parts. However, row keys that are at maximum length are the rare
+  // exception, presumably.
+  successor_to_a = a;
+
+  successor_to_a[index_to_inc.value()] += 1;
+
+  return successor_to_a == b;
 }
 
 }  // namespace emulator

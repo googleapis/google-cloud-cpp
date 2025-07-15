@@ -191,6 +191,9 @@ bool operator==(TimestampRangeSet::Range const& lhs,
 std::ostream& operator<<(std::ostream& os,
                          TimestampRangeSet::Range const& range);
 
+bool ConsecutiveStringsOfMaxLen(std::string const& a, std::string const& b,
+                                std::size_t max_len);
+
 // For testing only.
 namespace detail {
 
