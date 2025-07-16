@@ -15,6 +15,7 @@
 #include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/cloud/opentelemetry/internal/time_series.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
