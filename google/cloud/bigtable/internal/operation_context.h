@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/clock.h"
 #include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
@@ -51,6 +52,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class OperationContext {
  public:
+  using Clock = ::google::cloud::internal::SteadyClock;
+
   // Adds stored bigtable cookies as client metadata.
   void PreCall(grpc::ClientContext& context);
   // Stores bigtable cookies returned as server metadata.
