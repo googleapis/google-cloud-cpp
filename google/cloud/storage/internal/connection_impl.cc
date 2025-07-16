@@ -14,10 +14,13 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include <chrono>
+#include <fstream>
 #include <functional>
 #include <memory>
 #include <sstream>
@@ -752,6 +755,103 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
     return result;
   }
   return RetryError(last_status, *retry_policy, __func__);
+}
+
+StatusOr<std::unique_ptr<std::string>> StorageConnectionImpl::UploadFileSimple(
+    std::string const& file_name, std::size_t file_size,
+    InsertObjectMediaRequest& request) {
+  auto upload_offset = request.GetOption<UploadFromOffset>().value_or(0);
+  if (file_size < upload_offset) {
+    std::ostringstream os;
+    os << __func__ << "(" << request << ", " << file_name
+       << "): UploadFromOffset (" << upload_offset
+       << ") is bigger than the size of file source (" << file_size << ")";
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
+  }
+  auto upload_size = (std::min)(
+      request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
+      file_size - upload_offset);
+
+  std::ifstream is(file_name, std::ios::binary);
+  if (!is.is_open()) {
+    std::ostringstream os;
+    os << __func__ << "(" << request << ", " << file_name
+       << "): cannot open upload file source";
+    return google::cloud::internal::NotFoundError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
+  }
+
+  auto payload = std::make_unique<std::string>(
+      static_cast<std::size_t>(upload_size), char{});
+  is.seekg(upload_offset, std::ios::beg);
+  // We need to use `&payload[0]` until C++17
+  // NOLINTNEXTLINE(readability-container-data-pointer)
+  is.read(&(*payload)[0], payload->size());
+  if (static_cast<std::size_t>(is.gcount()) < payload->size()) {
+    std::ostringstream os;
+    os << __func__ << "(" << request << ", " << file_name << "): Actual read ("
+       << is.gcount() << ") is smaller than upload_size (" << payload->size()
+       << ")";
+    return google::cloud::internal::InternalError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
+  }
+  is.close();
+
+  return payload;
+}
+
+StatusOr<std::unique_ptr<std::istream>>
+StorageConnectionImpl::UploadFileResumable(std::string const& file_name,
+                                           ResumableUploadRequest& request) {
+  auto upload_offset = request.GetOption<UploadFromOffset>().value_or(0);
+  auto status = google::cloud::internal::status(file_name);
+  if (!is_regular(status)) {
+    GCP_LOG(WARNING) << "Trying to upload " << file_name
+                     << R"""( which is not a regular file.
+This is often a problem because:
+  - Some non-regular files are infinite sources of data, and the load will
+    never complete.
+  - Some non-regular files can only be read once, and UploadFile() may need to
+    read the file more than once to compute the checksum and hashes needed to
+    preserve data integrity.
+
+Consider using UploadLimit option or Client::WriteObject(). You may also need to disable data
+integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
+)""";
+  } else {
+    std::error_code size_err;
+    auto file_size = google::cloud::internal::file_size(file_name, size_err);
+    if (size_err) {
+      return google::cloud::internal::NotFoundError(size_err.message(),
+                                                    GCP_ERROR_INFO());
+    }
+    if (file_size < upload_offset) {
+      std::ostringstream os;
+      os << __func__ << "(" << request << ", " << file_name
+         << "): UploadFromOffset (" << upload_offset
+         << ") is bigger than the size of file source (" << file_size << ")";
+      return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                           GCP_ERROR_INFO());
+    }
+
+    auto upload_size = (std::min)(
+        request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
+        file_size - upload_offset);
+    request.set_option(UploadContentLength(upload_size));
+  }
+  auto source = std::make_unique<std::ifstream>(file_name, std::ios::binary);
+  if (!source->is_open()) {
+    std::ostringstream os;
+    os << __func__ << "(" << request << ", " << file_name
+       << "): cannot open upload file source";
+    return google::cloud::internal::NotFoundError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
+  }
+  // We set its offset before passing it to `UploadStreamResumable` so we don't
+  // need to compute `UploadFromOffset` again.
+  source->seekg(upload_offset, std::ios::beg);
+  return std::unique_ptr<std::istream>(std::move(source));
 }
 
 StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(
