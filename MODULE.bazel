@@ -52,21 +52,6 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.72.0", repo_name = "com_github_grpc_grpc")
-bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
-archive_override(
-    module_name = "googleapis",
-    integrity = "sha256-EGb0gE5GntYUBMu5uNFez8u6i5eCh3Oe1C2PTdbLkqY=",
-    patch_strip = 1,
-    patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-f6801ce4e1df0541abb8d1e996cb36363c41fb8d",
-    urls = [
-        "https://github.com/googleapis/googleapis/archive/f6801ce4e1df0541abb8d1e996cb36363c41fb8d.tar.gz",
-    ],
-)
-
-switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
-switched_rules.use_languages(
-    cc = True,
-    grpc = True,
-)
-use_repo(switched_rules, "com_google_googleapis_imports")
+bazel_dep(name = "googleapis", version = "0.0.0-20250703-f9d6fe4a", repo_name = "com_google_googleapis")
+bazel_dep(name = "googleapis-cc", version = "1.0.0")
+bazel_dep(name = "googleapis-grpc-cc", version = "1.0.0")
