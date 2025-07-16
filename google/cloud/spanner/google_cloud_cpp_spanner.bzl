@@ -101,6 +101,7 @@ google_cloud_cpp_spanner_hdrs = [
     "numeric.h",
     "oid.h",
     "options.h",
+    "order_by.h",
     "partition_options.h",
     "partitioned_dml_result.h",
     "polling_policy.h",
