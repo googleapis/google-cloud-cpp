@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "absl/strings/match.h"
 
 namespace google {
@@ -20,19 +20,19 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void RetryContext::PreCall(grpc::ClientContext& context) {
+void OperationContext::PreCall(grpc::ClientContext& context) {
   for (auto const& h : cookies_) {
     context.AddMetadata(h.first, h.second);
   }
   context.AddMetadata("bigtable-attempt", std::to_string(attempt_number_++));
 }
 
-void RetryContext::PostCall(grpc::ClientContext const& context) {
+void OperationContext::PostCall(grpc::ClientContext const& context) {
   ProcessMetadata(context.GetServerInitialMetadata());
   ProcessMetadata(context.GetServerTrailingMetadata());
 }
 
-void RetryContext::ProcessMetadata(
+void OperationContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
   for (auto const& kv : metadata) {
     auto key = std::string{kv.first.data(), kv.first.size()};

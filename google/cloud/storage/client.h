@@ -3530,7 +3530,7 @@ class Client {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});
       request.set_multiple_options(std::forward<Options>(options)...);
-      return UploadFileSimple(file_name, file_size, request);
+      return UploadFileSimple(file_name, file_size, std::move(request));
     }
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
