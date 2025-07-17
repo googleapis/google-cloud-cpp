@@ -122,9 +122,8 @@ void OperationContext::ElementDelivery(grpc::ClientContext const&) {
 
 OperationContext::OperationContext(
     ResourceLabels const&, DataLabels const&,
-    std::vector<std::shared_ptr<Metric const>> const&,
-    std::shared_ptr<Clock> clock)
-    : clock_(std::move(clock)) {}
+    std::vector<std::shared_ptr<Metric const>> const&, std::shared_ptr<Clock>) {
+}
 
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   for (auto const& h : cookies_) {

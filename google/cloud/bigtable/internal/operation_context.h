@@ -61,9 +61,9 @@ class OperationContext {
  public:
   using Clock = ::google::cloud::internal::SteadyClock;
 
-  // The default constructor is used by the SimpleOperationContextFactory.
+  // The default constructor is used when metric support is unavailable or
+  // disabled.
   OperationContext() = default;
-
   OperationContext(ResourceLabels const& resource_labels,
                    DataLabels const& data_labels,
                    std::vector<std::shared_ptr<Metric const>> const& metrics,
@@ -87,11 +87,13 @@ class OperationContext {
 
   std::unordered_map<std::string, std::string> cookies_;
   int attempt_number_ = 0;
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   std::vector<std::shared_ptr<Metric>> cloned_metrics_;
   std::shared_ptr<Clock> clock_ = std::make_shared<Clock>();
   Clock::time_point operation_start_;
   Clock::time_point attempt_start_;
   bool first_response_ = true;
+#endif  //  GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
