@@ -872,7 +872,7 @@ TEST_F(ClientIntegrationTest, ReadWithLockHint) {
   auto commit_result = client_->Commit(
       [&client](google::cloud::spanner::Transaction const& txn)
           -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
-        // Read SingerId 1 and apply LockHint to the  Read operation
+        // Read row 1 and apply LockHint to the Read operation
         auto rows = client.Read(
             txn, "Singers",
             google::cloud::spanner::KeySet().AddKey(
@@ -889,7 +889,7 @@ TEST_F(ClientIntegrationTest, ReadWithLockHint) {
         EXPECT_EQ(std::get<1>(*row), "test-fname-1");
         EXPECT_EQ(std::get<2>(*row), "test-lname-1");
 
-        // Update row 1 (same row as read).
+        // Update same row as read.
         auto update_result = client.ExecuteDml(
             txn, google::cloud::spanner::SqlStatement(
                      "UPDATE Singers SET LastName = @new_lname "
