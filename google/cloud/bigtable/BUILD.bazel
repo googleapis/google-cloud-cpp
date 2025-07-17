@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 load(":google_cloud_cpp_bigtable.bzl", "google_cloud_cpp_bigtable_hdrs", "google_cloud_cpp_bigtable_srcs")
@@ -20,6 +21,16 @@ load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hd
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
+
+bool_flag(
+    name = "enable_metrics",
+    build_setting_default = True,
+)
+
+config_setting(
+    name = "metrics_enabled",
+    flag_values = {":enable_metrics": "true"},
+)
 
 filegroup(
     name = "public_hdrs",
@@ -31,6 +42,10 @@ cc_library(
     name = "google_cloud_cpp_bigtable",
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
+    local_defines = select({
+        ":metrics_enabled": ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
+        "//conditions:default": [],
+    }),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -45,7 +60,14 @@ cc_library(
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/rpc:error_details_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
-    ],
+    ] + select({
+        ":metrics_enabled": [
+            "//:opentelemetry",
+            "@io_opentelemetry_cpp//api",
+            "@io_opentelemetry_cpp//sdk/src/metrics",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 filegroup(
