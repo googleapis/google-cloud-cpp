@@ -1016,6 +1016,104 @@ ConfigConnectionImpl::GetTerraformVersion(
       *current, request, __func__);
 }
 
+StreamRange<google::cloud::config::v1::ResourceChange>
+ConfigConnectionImpl::ListResourceChanges(
+    google::cloud::config::v1::ListResourceChangesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListResourceChanges(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::config::v1::ResourceChange>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<config_v1::ConfigRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::config::v1::ListResourceChangesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::config::v1::ListResourceChangesRequest const&
+                       request) {
+              return stub->ListResourceChanges(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::config::v1::ListResourceChangesResponse r) {
+        std::vector<google::cloud::config::v1::ResourceChange> result(
+            r.resource_changes().size());
+        auto& messages = *r.mutable_resource_changes();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigConnectionImpl::GetResourceChange(
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetResourceChange(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::GetResourceChangeRequest const& request) {
+        return stub_->GetResourceChange(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::config::v1::ResourceDrift>
+ConfigConnectionImpl::ListResourceDrifts(
+    google::cloud::config::v1::ListResourceDriftsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListResourceDrifts(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::config::v1::ResourceDrift>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<config_v1::ConfigRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::config::v1::ListResourceDriftsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::config::v1::ListResourceDriftsRequest const&
+                       request) {
+              return stub->ListResourceDrifts(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::config::v1::ListResourceDriftsResponse r) {
+        std::vector<google::cloud::config::v1::ResourceDrift> result(
+            r.resource_drifts().size());
+        auto& messages = *r.mutable_resource_drifts();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigConnectionImpl::GetResourceDrift(
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetResourceDrift(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::GetResourceDriftRequest const& request) {
+        return stub_->GetResourceDrift(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 ConfigConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/grpc_options.h"
@@ -105,16 +105,16 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  RetryContext retry_context;
+  OperationContext operation_context;
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
-      [this, &retry_context](
+      [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::MutateRowRequest const& request) {
-        retry_context.PreCall(context);
+        operation_context.PreCall(context);
         auto s = stub_->MutateRow(context, options, request);
-        retry_context.PostCall(context);
+        operation_context.PostCall(context);
         return s;
       },
       *current, request, __func__);
@@ -144,18 +144,19 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
              is_idempotent ? Idempotency::kIdempotent
                            : Idempotency::kNonIdempotent,
              background_->cq(),
-             [stub = stub_, retry_context = std::make_shared<RetryContext>()](
+             [stub = stub_,
+              operation_context = std::make_shared<OperationContext>()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::bigtable::v2::MutateRowRequest const& request) {
-               retry_context->PreCall(*context);
+               operation_context->PreCall(*context);
                auto f = stub->AsyncMutateRow(cq, context, std::move(options),
                                              request);
                return f.then(
-                   [retry_context, context = std::move(context)](auto f) {
+                   [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     retry_context->PostCall(*context);
+                     operation_context->PostCall(*context);
                      return s;
                    });
              },
@@ -255,15 +256,15 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
   auto const idempotency = idempotency_policy(*current)->is_idempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
-  RetryContext retry_context;
+  OperationContext operation_context;
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency,
-      [this, &retry_context](
+      [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-        retry_context.PreCall(context);
+        operation_context.PreCall(context);
         auto s = stub_->CheckAndMutateRow(context, options, request);
-        retry_context.PostCall(context);
+        operation_context.PostCall(context);
         return s;
       },
       *current, request, __func__);
@@ -300,19 +301,20 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), idempotency,
              background_->cq(),
-             [stub = stub_, retry_context = std::make_shared<RetryContext>()](
+             [stub = stub_,
+              operation_context = std::make_shared<OperationContext>()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::bigtable::v2::CheckAndMutateRowRequest const&
                      request) {
-               retry_context->PreCall(*context);
+               operation_context->PreCall(*context);
                auto f = stub->AsyncCheckAndMutateRow(
                    cq, context, std::move(options), request);
                return f.then(
-                   [retry_context, context = std::move(context)](auto f) {
+                   [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     retry_context->PostCall(*context);
+                     operation_context->PostCall(*context);
                      return s;
                    });
              },
@@ -339,11 +341,11 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   std::vector<bigtable::RowKeySample> samples;
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
-  RetryContext retry_context;
+  OperationContext operation_context;
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
-    retry_context.PreCall(*context);
+    operation_context.PreCall(*context);
     auto stream = stub_->SampleRowKeys(context, Options{}, request);
 
     struct UnpackVariant {
@@ -372,7 +374,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
                                    Idempotency::kIdempotent,
                                    enable_server_retries(*current));
     if (!delay) return std::move(delay).status();
-    retry_context.PostCall(*context);
+    operation_context.PostCall(*context);
     // A new stream invalidates previously returned samples.
     samples.clear();
     std::this_thread::sleep_for(*delay);

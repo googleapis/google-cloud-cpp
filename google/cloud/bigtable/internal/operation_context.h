@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
 
 #include "google/cloud/bigtable/version.h"
 #include <grpcpp/grpcpp.h>
@@ -27,7 +27,7 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A Bigtable-specific context that persists across retries.
+ * A Bigtable-specific context that persists across retries in an operation.
  *
  * The client communicates with the server via metadata, prefixed with
  * "x-goog-cbt-cookie". This helps the server associate RPCs with a single
@@ -38,18 +38,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @code
  * Result Connection::Foo() {
- *   RetryContext retry_context;
+ *   OperationContext operation_context;
  *   return RetryLoop(...,
- *     [retry_context, &stub] (auto& context, auto const& request) {
- *       retry_context.PreCall(context);
+ *     [operation_context, &stub] (auto& context, auto const& request) {
+ *       operation_context.PreCall(context);
  *       auto result = stub.Foo(context, request);
- *       retry_context.PostCall(context);
+ *       operation_context.PostCall(context);
  *       return result;
  *     }, ...);
  * }
  * @endcode
  */
-class RetryContext {
+class OperationContext {
  public:
   // Adds stored bigtable cookies as client metadata.
   void PreCall(grpc::ClientContext& context);
@@ -70,4 +70,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H

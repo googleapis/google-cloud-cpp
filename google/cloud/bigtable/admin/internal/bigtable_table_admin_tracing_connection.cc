@@ -400,6 +400,97 @@ BigtableTableAdminTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminTracingConnection::CreateSchemaBundle(
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateSchemaBundle");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateSchemaBundle(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::CreateSchemaBundle(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateSchemaBundle");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateSchemaBundle(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminTracingConnection::CreateSchemaBundle(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateSchemaBundle");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateSchemaBundle(operation));
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminTracingConnection::UpdateSchemaBundle(
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateSchemaBundle");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateSchemaBundle(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::UpdateSchemaBundle(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateSchemaBundle");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateSchemaBundle(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+BigtableTableAdminTracingConnection::UpdateSchemaBundle(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateSchemaBundle");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateSchemaBundle(operation));
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminTracingConnection::GetSchemaBundle(
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::GetSchemaBundle");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSchemaBundle(request));
+}
+
+StreamRange<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminTracingConnection::ListSchemaBundles(
+    google::bigtable::admin::v2::ListSchemaBundlesRequest request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::ListSchemaBundles");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListSchemaBundles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::SchemaBundle>(std::move(span),
+                                                 std::move(sr));
+}
+
+Status BigtableTableAdminTracingConnection::DeleteSchemaBundle(
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::DeleteSchemaBundle");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSchemaBundle(request));
+}
+
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminTracingConnection::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {

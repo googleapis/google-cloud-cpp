@@ -284,6 +284,34 @@ ConfigConnection::GetTerraformVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::config::v1::ResourceChange>
+ConfigConnection::ListResourceChanges(
+    google::cloud::config::v1::
+        ListResourceChangesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::config::v1::ResourceChange>>();
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigConnection::GetResourceChange(
+    google::cloud::config::v1::GetResourceChangeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::config::v1::ResourceDrift>
+ConfigConnection::ListResourceDrifts(
+    google::cloud::config::v1::
+        ListResourceDriftsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::config::v1::ResourceDrift>>();
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigConnection::GetResourceDrift(
+    google::cloud::config::v1::GetResourceDriftRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location> ConfigConnection::ListLocations(
     google::cloud::location::
         ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
