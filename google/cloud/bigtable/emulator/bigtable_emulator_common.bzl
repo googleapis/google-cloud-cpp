@@ -22,6 +22,7 @@ bigtable_emulator_common_hdrs = [
     "column_family.h",
     "filter.h",
     "filtered_map.h",
+    "limits.h",
     "range_set.h",
     "row_streamer.h",
     "server.h",
