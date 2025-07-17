@@ -114,7 +114,7 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
           google::bigtable::v2::MutateRowRequest const& request) {
         operation_context.PreCall(context);
         auto s = stub_->MutateRow(context, options, request);
-        operation_context.PostCall(context);
+        operation_context.PostCall(context, s.status());
         return s;
       },
       *current, request, __func__);
@@ -156,7 +156,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     operation_context->PostCall(*context);
+                     operation_context->PostCall(*context, s.status());
                      return s;
                    });
              },
@@ -264,7 +264,7 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
         operation_context.PreCall(context);
         auto s = stub_->CheckAndMutateRow(context, options, request);
-        operation_context.PostCall(context);
+        operation_context.PostCall(context, s.status());
         return s;
       },
       *current, request, __func__);
@@ -314,7 +314,7 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     operation_context->PostCall(*context);
+                     operation_context->PostCall(*context, s.status());
                      return s;
                    });
              },
@@ -374,7 +374,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
                                    Idempotency::kIdempotent,
                                    enable_server_retries(*current));
     if (!delay) return std::move(delay).status();
-    operation_context.PostCall(*context);
+    operation_context.PostCall(*context, status);
     // A new stream invalidates previously returned samples.
     samples.clear();
     std::this_thread::sleep_for(*delay);
