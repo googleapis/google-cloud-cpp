@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/storage/internal/tracing_connection.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -744,6 +745,35 @@ TEST(TracingClientTest, UploadFileResumable) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, DownloadStreamToFile) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, DownloadStreamToFile)
+      .WillOnce([](auto&&, auto const&, auto const&) {
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return PermanentError();
+      });
+  auto under_test = TracingConnection(mock);
+  storage::ObjectReadStream stream;
+  storage::internal::ReadObjectRangeRequest request("test-bucket",
+                                                    "test-object");
+  auto actual = under_test.DownloadStreamToFile(std::move(stream),
+                                                "test-file.txt", request);
+
+  auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
+  auto const msg = PermanentError().message();
+  EXPECT_THAT(actual, StatusIs(code, msg));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanNamed("storage::Client::DownloadFile/DownloadStreamToFile"),
+                SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListBucketAcl) {

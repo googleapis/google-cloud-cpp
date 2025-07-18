@@ -18,6 +18,7 @@
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invocation_id_generator.h"
@@ -104,6 +105,9 @@ class StorageConnectionImpl
       InsertObjectMediaRequest& request) override;
   StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
       std::string const& file_name, ResumableUploadRequest& request) override;
+  Status DownloadStreamToFile(ObjectReadStream&& stream,
+                              std::string const& file_name,
+                              ReadObjectRangeRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
