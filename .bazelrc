@@ -34,6 +34,10 @@ build:macos --cxxopt=-std=c++17
 build:linux --host_cxxopt=-std=c++17
 build:macos --host_cxxopt=-std=c++17
 
+# Explicitly register the Xcode toolchain for macOS builds to resolve toolchain
+# issues when using Bzlmod.
+build:macos --extra_toolchains=@local_config_xcode//:all
+
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
