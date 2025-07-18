@@ -38,6 +38,8 @@ add_library(
     configure_basic_tracing.h
     internal/monitored_resource.cc
     internal/monitored_resource.h
+    internal/monitoring_exporter.cc
+    internal/monitoring_exporter.h
     internal/recordable.cc
     internal/recordable.h
     internal/resource_detector_impl.cc
@@ -126,6 +128,7 @@ add_subdirectory(integration_tests)
 set(opentelemetry_unit_tests
     # cmake-format: sort
     internal/monitored_resource_test.cc
+    internal/monitoring_exporter_test.cc
     internal/recordable_test.cc
     internal/resource_detector_impl_test.cc
     internal/time_series_test.cc

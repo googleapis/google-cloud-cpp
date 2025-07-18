@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/time_series.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/chrono_output.h"
@@ -324,6 +325,37 @@ TEST(ToMetric, PointAttributesOverServiceResourceAttributes) {
                            Pair("service_instance_id", "point-instance")));
 }
 
+TEST(ToMetric, ResourceFilter) {
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.name_ = "test";
+
+  opentelemetry::sdk::metrics::PointAttributes point_attributes = {
+      {"service_name", "point-name"},
+      {"service_namespace", "point-namespace"},
+      {"service_instance_id", "point-instance"},
+      {sc::kServiceName, "resource-name"},
+      {sc::kServiceNamespace, "resource-namespace"},
+      {sc::kServiceInstanceId, "resource-instance"},
+  };
+
+  auto resource = opentelemetry::sdk::resource::Resource::Create({});
+
+  auto resource_filter_fn =
+      [resource_labels = std::set<std::string>{
+           sc::kServiceName, sc::kServiceNamespace,
+           sc::kServiceInstanceId}](std::string const& l) {
+        return internal::Contains(resource_labels, l);
+      };
+
+  auto metric = ToMetric(md, point_attributes, &resource, PrefixWithWorkload,
+                         resource_filter_fn);
+  EXPECT_THAT(
+      metric.labels(),
+      UnorderedElementsAre(Pair("service_name", "point-name"),
+                           Pair("service_namespace", "point-namespace"),
+                           Pair("service_instance_id", "point-instance")));
+}
+
 TEST(SumPointData, Simple) {
   auto const start = std::chrono::system_clock::now();
   auto const end = start + std::chrono::seconds(5);
@@ -561,6 +593,38 @@ TEST(ToMonitoredResource, Custom) {
 
   auto mr = ToMonitoredResource(rm, custom);
   EXPECT_THAT(mr, AllOf(IsProtoEqual(custom), Not(IsTestResource())));
+}
+
+TEST(IsEmptyTimeSeries, EmptyResourceMetrics) {
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  EXPECT_TRUE(IsEmptyTimeSeries(rm));
+}
+
+TEST(IsEmptyTimeSeries, EmptyScopeMetrics) {
+  opentelemetry::sdk::metrics::ScopeMetrics sm;
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  rm.scope_metric_data_.push_back(std::move(sm));
+  EXPECT_TRUE(IsEmptyTimeSeries(rm));
+}
+
+TEST(IsEmptyTimeSeries, EmptyMetricData) {
+  opentelemetry::sdk::metrics::MetricData md;
+  opentelemetry::sdk::metrics::ScopeMetrics sm;
+  sm.metric_data_.push_back(std::move(md));
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  rm.scope_metric_data_.push_back(std::move(sm));
+  EXPECT_TRUE(IsEmptyTimeSeries(rm));
+}
+
+TEST(IsEmptyTimeSeries, NonEmptyPointData) {
+  opentelemetry::sdk::metrics::PointDataAttributes pda;
+  opentelemetry::sdk::metrics::MetricData md;
+  md.point_data_attr_.push_back(std::move(pda));
+  opentelemetry::sdk::metrics::ScopeMetrics sm;
+  sm.metric_data_.push_back(std::move(md));
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  rm.scope_metric_data_.push_back(std::move(sm));
+  EXPECT_FALSE(IsEmptyTimeSeries(rm));
 }
 
 TEST(ToTimeSeries, Sum) {
