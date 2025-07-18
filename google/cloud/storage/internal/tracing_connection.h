@@ -104,6 +104,9 @@ class TracingConnection : public storage::internal::StorageConnection {
   StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
       std::string const& file_name,
       storage::internal::ResumableUploadRequest& request) override;
+  Status DownloadStreamToFile(
+      storage::ObjectReadStream&&, std::string const&,
+      storage::internal::ReadObjectRangeRequest const&) override;
 
   StatusOr<storage::internal::ListBucketAclResponse> ListBucketAcl(
       storage::internal::ListBucketAclRequest const& request) override;
