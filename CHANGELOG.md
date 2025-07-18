@@ -15,6 +15,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### Updated Libraries
 
+- [BigQuery](/google/cloud/bigquery/README.md) - added support for datapolicies/v2
 - [ManagedKafka](/google/cloud/managedkafka/README.md) - add schemaregistry to the library
 
 ## v2.39.0 - 2025-07
