@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-JLDsEVCdmGOdD0NcdYyYdYvwXlaFeGT6lSp9jkYjCaY=",
+    integrity = "sha256-ZtwaUUok0Q1AQ5O/m8W9YsvfIb2yJ+Roi7uoXKwS3Gg=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-6e5b74e4f8194149542348a40881a5d792a59a0e",
+    strip_prefix = "googleapis-fecd7d35f46753b45bf4519f6342495a181740c9",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/6e5b74e4f8194149542348a40881a5d792a59a0e.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/fecd7d35f46753b45bf4519f6342495a181740c9.tar.gz",
     ],
 )
 
