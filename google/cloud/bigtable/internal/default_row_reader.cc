@@ -79,7 +79,7 @@ bool DefaultRowReader::NextChunk() {
     if (absl::holds_alternative<Status>(v)) {
       last_status_ = absl::get<Status>(std::move(v));
       response_ = {};
-      operation_context_.PostCall(*context_);
+      operation_context_.PostCall(*context_, {});
       context_.reset();
       return false;
     }

@@ -17,15 +17,22 @@
 
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/clock.h"
+#include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <map>
+#include <memory>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct DataLabels;
+struct ResourceLabels;
+class Metric;
 
 /**
  * A Bigtable-specific context that persists across retries in an operation.
@@ -54,18 +61,39 @@ class OperationContext {
  public:
   using Clock = ::google::cloud::internal::SteadyClock;
 
-  // Adds stored bigtable cookies as client metadata.
-  void PreCall(grpc::ClientContext& context);
-  // Stores bigtable cookies returned as server metadata.
-  void PostCall(grpc::ClientContext const& context);
+  // The default constructor is used when metric support is unavailable or
+  // disabled.
+  OperationContext() = default;
+  OperationContext(ResourceLabels const& resource_labels,
+                   DataLabels const& data_labels,
+                   std::vector<std::shared_ptr<Metric const>> const& metrics,
+                   std::shared_ptr<Clock> clock);
+
+  // Called before each RPC attempt.
+  void PreCall(grpc::ClientContext& client_context);
+  // Called after receiving RPC attempt response.
+  void PostCall(grpc::ClientContext const& client_context,
+                google::cloud::Status const& status);
+  // A hook that executes at the end of a client operation.
+  void OnDone(Status const& status);
+  // Called during operations that allow the user to iterate over data
+  // synchronously or asynchronously.
+  void ElementRequest(grpc::ClientContext const& client_context);
+  void ElementDelivery(grpc::ClientContext const& client_context);
 
  private:
-  // Adds cookies that start with "x-goog-cbt-cookie" to the cookie jar.
   void ProcessMetadata(
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
 
   std::unordered_map<std::string, std::string> cookies_;
   int attempt_number_ = 0;
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  std::vector<std::shared_ptr<Metric>> cloned_metrics_;
+  std::shared_ptr<Clock> clock_ = std::make_shared<Clock>();
+  Clock::time_point operation_start_;
+  Clock::time_point attempt_start_;
+  bool first_response_ = true;
+#endif  //  GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
