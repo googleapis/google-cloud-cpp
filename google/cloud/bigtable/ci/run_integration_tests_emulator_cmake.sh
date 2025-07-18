@@ -41,6 +41,12 @@ fi
 CBT_INSTANCE_ADMIN_EMULATOR_START=(
   "${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
 )
+
+# Configure run_emulators_utils.sh to find the cbt emulator.
+CBT_EMULATOR_CMD=(
+  "${BINARY_DIR}/google/cloud/bigtable/emulator/emulator"
+)
+
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 cd "${BINARY_DIR}"
