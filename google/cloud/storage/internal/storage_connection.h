@@ -45,6 +45,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+class ParallelUploadFileShard;
 class ObjectReadStreambuf;
 
 /**
@@ -118,6 +119,8 @@ class StorageConnection {
       std::string const&, ResumableUploadRequest&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
+  virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<ParallelUploadFileShard>, bool);
   ///@}
 
   ///@{
