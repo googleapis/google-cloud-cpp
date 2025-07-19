@@ -87,6 +87,18 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
     spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
+  static void InsertUnorderedSingers() {
+    auto commit_result = client_->Commit(
+        Mutations{InsertMutationBuilder("Singers",
+                                        {"SingerId", "FirstName", "LastName"})
+                      .EmplaceRow(3, "test-fname-3", "test-lname-3")
+                      .EmplaceRow(1, "test-fname-1", "test-lname-1")
+                      .EmplaceRow(2, "test-fname-2", "test-lname-2")
+                      .Build()},
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
+    ASSERT_STATUS_OK(commit_result);
+  }
+
   static std::unique_ptr<Client> client_;
 };
 
@@ -832,6 +844,80 @@ TEST_F(ClientIntegrationTest, DirectedReadWithinReadWriteTransaction) {
                                                : StatusCode::kInvalidArgument,
                                HasSubstr("Directed reads can only be performed "
                                          "in a read-only transaction")));
+}
+
+/// @test Verify that Read() returns rows ordered by primary key.
+TEST_F(ClientIntegrationTest, ReadWithOrderByPrimaryKey) {
+  ASSERT_NO_FATAL_FAILURE(InsertUnorderedSingers());
+
+  auto rows = client_->Read(
+      "Singers", KeySet::All(), {"SingerId", "FirstName", "LastName"},
+      Options{}.set<OrderByOption>(OrderBy::kOrderByPrimaryKey));
+
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  std::vector<std::int64_t> actual_singer_ids;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (!row) break;
+    actual_singer_ids.push_back(std::get<0>(*row));
+  }
+  EXPECT_THAT(actual_singer_ids, ::testing::ElementsAre(1, 2, 3));
+}
+
+TEST_F(ClientIntegrationTest, ReadWithLockHint) {
+  // Insert initial data: SingerId 1 and 2.
+  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+
+  auto& client = *client_;
+
+  auto commit_result = client_->Commit(
+      [&client](google::cloud::spanner::Transaction const& txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        // Read row 1 and apply LockHint to the Read operation
+        auto rows = client.Read(
+            txn, "Singers",
+            google::cloud::spanner::KeySet().AddKey(
+                google::cloud::spanner::MakeKey(1)),
+            {"SingerId", "FirstName", "LastName"},
+            Options{}.set<LockHintOption>(LockHint::kLockHintExclusive));
+
+        using RowType = std::tuple<std::int64_t, std::string, std::string>;
+        auto row = GetSingularRow(StreamOf<RowType>(rows));
+        if (!row) {
+          return std::move(row).status();
+        }
+        EXPECT_EQ(std::get<0>(*row), 1);
+        EXPECT_EQ(std::get<1>(*row), "test-fname-1");
+        EXPECT_EQ(std::get<2>(*row), "test-lname-1");
+
+        // Update same row as read.
+        auto update_result = client.ExecuteDml(
+            txn, google::cloud::spanner::SqlStatement(
+                     "UPDATE Singers SET LastName = @new_lname "
+                     "WHERE SingerId = @id",
+                     {{"new_lname",
+                       google::cloud::spanner::Value("Updated-lname-1")},
+                      {"id", google::cloud::spanner::Value(1)}}));
+        if (!update_result) {
+          return std::move(update_result).status();
+        }
+        return google::cloud::spanner::Mutations{};
+      });
+
+  // Verify that the transaction successfully committed.
+  EXPECT_STATUS_OK(commit_result);
+
+  // After the commit, read the data directly to verify the update.
+  auto rows_after_commit =
+      client_->Read("Singers",
+                    google::cloud::spanner::KeySet().AddKey(
+                        google::cloud::spanner::MakeKey(1)),
+                    {"SingerId", "FirstName", "LastName"});
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  auto updated_row = GetSingularRow(StreamOf<RowType>(rows_after_commit));
+  ASSERT_STATUS_OK(updated_row);
+  EXPECT_EQ(std::get<0>(*updated_row), 1);
+  EXPECT_EQ(std::get<1>(*updated_row), "test-fname-1");
+  EXPECT_EQ(std::get<2>(*updated_row), "Updated-lname-1");
 }
 
 StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
