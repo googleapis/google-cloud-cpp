@@ -255,6 +255,14 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
                            impl_->UploadFileResumable(file_name, request));
 }
 
+StatusOr<std::unique_ptr<std::size_t>> TracingConnection::WriteObjectBufferSize(
+    storage::internal::ResumableUploadRequest const& request) {
+  auto span =
+      internal::MakeSpan("storage::Client::WriteObject/WriteObjectBufferSize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->WriteObjectBufferSize(request));
+}
+
 StatusOr<storage::internal::ListBucketAclResponse>
 TracingConnection::ListBucketAcl(
     storage::internal::ListBucketAclRequest const& request) {

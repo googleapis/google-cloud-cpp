@@ -769,9 +769,9 @@ StatusOr<std::unique_ptr<std::string>> StorageConnectionImpl::UploadFileSimple(
     return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
                                                          GCP_ERROR_INFO());
   }
-  auto upload_size = (std::min)(
-      request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-      file_size - upload_offset);
+  auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                    file_size - upload_offset),
+                                file_size - upload_offset);
 
   std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
@@ -835,9 +835,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
                                                            GCP_ERROR_INFO());
     }
 
-    auto upload_size = (std::min)(
-        request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-        file_size - upload_offset);
+    auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                      file_size - upload_offset),
+                                  file_size - upload_offset);
     request.set_option(UploadContentLength(upload_size));
   }
   auto source = std::make_unique<std::ifstream>(file_name, std::ios::binary);
@@ -852,6 +852,16 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   // need to compute `UploadFromOffset` again.
   source->seekg(upload_offset, std::ios::beg);
   return std::unique_ptr<std::istream>(std::move(source));
+}
+
+StatusOr<std::unique_ptr<std::size_t>>
+StorageConnectionImpl::WriteObjectBufferSize(
+    ResumableUploadRequest const& request) {
+  auto const& current = google::cloud::internal::CurrentOptions();
+  std::size_t const buffer_size =
+      request.GetOption<UploadBufferSize>().value_or(
+          current.get<UploadBufferSizeOption>());
+  return std::make_unique<std::size_t>(buffer_size);
 }
 
 StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(
