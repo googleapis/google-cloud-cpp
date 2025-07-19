@@ -45,6 +45,7 @@ StatusOr<CreateOrResumeResponse> CreateOrResume(
                                 std::move(response->payload)};
 }
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 StatusOr<ObjectMetadata> StorageConnection::ExecuteParallelUploadFile(
     std::vector<ParallelUploadFileShard>, bool) {
   return Status(
