@@ -45,9 +45,9 @@ StatusOr<CreateOrResumeResponse> CreateOrResume(
                                 std::move(response->payload)};
 }
 
-// NOLINTNEXTLINE(performance-unnecessary-value-param)
 StatusOr<ObjectMetadata> StorageConnection::ExecuteParallelUploadFile(
-    std::vector<ParallelUploadFileShard>, bool) {
+    std::vector<ParallelUploadFileShard>,
+    bool) {  // NOLINT(performance-unnecessary-value-param)
   return Status(
       StatusCode::kUnimplemented,
       "ExecuteParallelUploadFile() is not implemented by this Object");
