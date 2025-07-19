@@ -97,9 +97,7 @@ ObjectWriteStream Client::WriteObjectImpl(
     error_stream.Close();
     return error_stream;
   }
-  auto const& current = google::cloud::internal::CurrentOptions();
-  auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
-      current.get<UploadBufferSizeOption>());
+  std::size_t const buffer_size = *connection_->WriteObjectBufferSize(request).value();
   return ObjectWriteStream(std::make_unique<internal::ObjectWriteStreambuf>(
       connection_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,

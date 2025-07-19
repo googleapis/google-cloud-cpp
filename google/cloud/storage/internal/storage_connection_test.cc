@@ -160,6 +160,13 @@ TEST(StorageConnectionTest, UploadFileResumableUnimplemented) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
 }
 
+TEST(StorageConnectionTest, WriteObjectBufferSizeUnimplemented) {
+  TestStorageConnection connection;
+  ResumableUploadRequest request;
+  auto response = connection.WriteObjectBufferSize(request);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
