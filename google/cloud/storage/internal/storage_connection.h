@@ -120,9 +120,7 @@ class StorageConnection {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
   virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
-      std::vector<ParallelUploadFileShard>, bool) {
-    return Status(StatusCode::kUnimplemented, "unimplemented");
-  }
+      std::vector<ParallelUploadFileShard>, bool);
   ///@}
 
   ///@{

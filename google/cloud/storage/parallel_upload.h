@@ -1199,7 +1199,7 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
   }
 
   return internal::ClientImplDetails::GetConnection(client)
-      ->ExecuteParallelUploadFile(*std::move(shards), ignore_cleanup_failures);
+      ->ExecuteParallelUploadFile(std::move(*shards), ignore_cleanup_failures);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

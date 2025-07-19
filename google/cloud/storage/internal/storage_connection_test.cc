@@ -164,7 +164,7 @@ TEST(StorageConnectionTest, UploadFileResumableUnimplemented) {
 TEST(StorageConnectionTest, ExecuteParallelUploadFileUnimplemented) {
   TestStorageConnection connection;
   std::vector<ParallelUploadFileShard> shards;
-  bool ignore_cleanup_failures;
+  bool ignore_cleanup_failures = false;
   auto response = connection.ExecuteParallelUploadFile(std::move(shards),
                                                        ignore_cleanup_failures);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));

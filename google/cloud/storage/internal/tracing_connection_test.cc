@@ -757,9 +757,9 @@ TEST(TracingClientTest, ExecuteParallelUploadFile) {
           });
   auto under_test = TracingConnection(mock);
   std::vector<storage::internal::ParallelUploadFileShard> shards;
-  bool ignore_cleanup_failures;
-  auto actual =
-      under_test.ExecuteParallelUploadFile(shards, ignore_cleanup_failures);
+  bool ignore_cleanup_failures = false;
+  auto actual = under_test.ExecuteParallelUploadFile(std::move(shards),
+                                                     ignore_cleanup_failures);
 
   auto const code = PermanentError().code();
   auto const code_str = StatusCodeToString(code);

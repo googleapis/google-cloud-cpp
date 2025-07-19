@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
