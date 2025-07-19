@@ -1191,7 +1191,7 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
       "Provided Option not found in ParallelUploadFileSupportedOptions.");
 
   auto shards = internal::CreateParallelUploadShards::Create(
-      std::move(client), std::move(file_name), std::move(bucket_name),
+      client, std::move(file_name), std::move(bucket_name),
       std::move(object_name), std::move(prefix),
       std::forward<Options>(options)...);
   if (!shards) {
