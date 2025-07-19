@@ -255,6 +255,17 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
                            impl_->UploadFileResumable(file_name, request));
 }
 
+StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
+    std::vector<storage::internal::ParallelUploadFileShard> shards,
+    bool ignore_cleanup_failures) {
+  auto span = internal::MakeSpan(
+      "storage::ParallelUploadFile/ExecuteParallelUploadFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, impl_->ExecuteParallelUploadFile(std::move(shards),
+                                              ignore_cleanup_failures));
+}
+
 StatusOr<storage::internal::ListBucketAclResponse>
 TracingConnection::ListBucketAcl(
     storage::internal::ListBucketAclRequest const& request) {

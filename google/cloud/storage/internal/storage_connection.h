@@ -118,6 +118,10 @@ class StorageConnection {
       std::string const&, ResumableUploadRequest&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
+  virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<ParallelUploadFileShard>, bool) {
+    return Status(StatusCode::kUnimplemented, "unimplemented");
+  }
   ///@}
 
   ///@{

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -157,6 +158,15 @@ TEST(StorageConnectionTest, UploadFileResumableUnimplemented) {
   TestStorageConnection connection;
   ResumableUploadRequest request;
   auto response = connection.UploadFileResumable("test-file.txt", request);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
+}
+
+TEST(StorageConnectionTest, ExecuteParallelUploadFileUnimplemented) {
+  TestStorageConnection connection;
+  std::vector<ParallelUploadFileShard> shards;
+  bool ignore_cleanup_failures;
+  auto response = connection.ExecuteParallelUploadFile(std::move(shards),
+                                                       ignore_cleanup_failures);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
 }
 
