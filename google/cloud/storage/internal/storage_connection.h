@@ -118,7 +118,7 @@ class StorageConnection {
       std::string const&, ResumableUploadRequest&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
-  virtual StatusOr<std::unique_ptr<std::size_t>> WriteObjectBufferSize(
+  virtual StatusOr<std::size_t> WriteObjectBufferSize(
       ResumableUploadRequest const&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }

@@ -255,7 +255,7 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
                            impl_->UploadFileResumable(file_name, request));
 }
 
-StatusOr<std::unique_ptr<std::size_t>> TracingConnection::WriteObjectBufferSize(
+StatusOr<std::size_t> TracingConnection::WriteObjectBufferSize(
     storage::internal::ResumableUploadRequest const& request) {
   auto span =
       internal::MakeSpan("storage::Client::WriteObject/WriteObjectBufferSize");

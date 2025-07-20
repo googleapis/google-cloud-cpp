@@ -854,14 +854,11 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return std::unique_ptr<std::istream>(std::move(source));
 }
 
-StatusOr<std::unique_ptr<std::size_t>>
-StorageConnectionImpl::WriteObjectBufferSize(
+StatusOr<std::size_t> StorageConnectionImpl::WriteObjectBufferSize(
     ResumableUploadRequest const& request) {
   auto const& current = google::cloud::internal::CurrentOptions();
-  std::size_t const buffer_size =
-      request.GetOption<UploadBufferSize>().value_or(
-          current.get<UploadBufferSizeOption>());
-  return std::make_unique<std::size_t>(buffer_size);
+  return request.GetOption<UploadBufferSize>().value_or(
+      current.get<UploadBufferSizeOption>());
 }
 
 StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(
