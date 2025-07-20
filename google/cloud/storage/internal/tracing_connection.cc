@@ -258,8 +258,8 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
 Status TracingConnection::DownloadStreamToFile(
     storage::ObjectReadStream&& stream, std::string const& file_name,
     storage::internal::ReadObjectRangeRequest const& request) {
-  auto span =
-      internal::MakeSpan("storage::Client::DownloadFile/DownloadStreamToFile");
+  auto span = internal::MakeSpan(
+      "storage::Client::DownloadToFile/DownloadStreamToFile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->DownloadStreamToFile(
                                       std::move(stream), file_name, request));

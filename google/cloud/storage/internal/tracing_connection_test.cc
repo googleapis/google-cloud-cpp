@@ -768,12 +768,12 @@ TEST(TracingClientTest, DownloadStreamToFile) {
   EXPECT_THAT(actual, StatusIs(code, msg));
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(
-          AllOf(SpanNamed("storage::Client::DownloadFile/DownloadStreamToFile"),
-                SpanHasInstrumentationScope(), SpanKindIsClient(),
-                SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                SpanHasAttributes(OTelAttribute<std::string>(
-                    "gl-cpp.status_code", code_str)))));
+      ElementsAre(AllOf(
+          SpanNamed("storage::Client::DownloadToFile/DownloadStreamToFile"),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListBucketAcl) {
