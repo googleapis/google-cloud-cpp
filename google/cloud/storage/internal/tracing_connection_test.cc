@@ -751,8 +751,7 @@ TEST(TracingClientTest, ExecuteParallelUploadFile) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ExecuteParallelUploadFile)
       .WillOnce(
-          [](std::vector<std::thread>
-                 threads,  // NOLINT(performance-unnecessary-value-param)
+          [](std::vector<std::thread>,  // NOLINT(performance-unnecessary-value-param)
              std::vector<
                  storage::internal::
                      ParallelUploadFileShard>,  // NOLINT(performance-unnecessary-value-param)
