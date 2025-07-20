@@ -106,6 +106,7 @@ class TracingConnection : public storage::internal::StorageConnection {
       std::string const& file_name,
       storage::internal::ResumableUploadRequest& request) override;
   StatusOr<storage::ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<std::thread> threads,
       std::vector<storage::internal::ParallelUploadFileShard> shards,
       bool ignore_cleanup_failures) override;
 

@@ -110,7 +110,8 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (std::string const&, storage::internal::ResumableUploadRequest&),
               (override));
   MOCK_METHOD(StatusOr<ObjectMetadata>, ExecuteParallelUploadFile,
-              (std::vector<storage::internal::ParallelUploadFileShard>, bool),
+              (std::vector<std::thread>,
+               std::vector<storage::internal::ParallelUploadFileShard>, bool),
               (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,

@@ -38,6 +38,7 @@
 #include "google/cloud/status_or.h"
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -120,7 +121,7 @@ class StorageConnection {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
   virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
-      std::vector<ParallelUploadFileShard>, bool);
+      std::vector<std::thread>, std::vector<ParallelUploadFileShard>, bool);
   ///@}
 
   ///@{

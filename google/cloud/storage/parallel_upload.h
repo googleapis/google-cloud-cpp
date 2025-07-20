@@ -1198,8 +1198,18 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
     return shards.status();
   }
 
+  std::vector<std::thread> threads;
+  threads.reserve(shards->size());
+  for (auto& shard : *shards) {
+    threads.emplace_back([&shard] {
+      // We can safely ignore the status - if something fails we'll know
+      // when obtaining final metadata.
+      shard.Upload();
+    });
+  }
   return internal::ClientImplDetails::GetConnection(client)
-      ->ExecuteParallelUploadFile(std::move(*shards), ignore_cleanup_failures);
+      ->ExecuteParallelUploadFile(std::move(threads), std::move(*shards),
+                                  ignore_cleanup_failures);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

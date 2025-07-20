@@ -751,7 +751,9 @@ TEST(TracingClientTest, ExecuteParallelUploadFile) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ExecuteParallelUploadFile)
       .WillOnce(
-          [](std::vector<
+          [](std::vector<std::thread>
+                 threads,  // NOLINT(performance-unnecessary-value-param)
+             std::vector<
                  storage::internal::
                      ParallelUploadFileShard>,  // NOLINT(performance-unnecessary-value-param)
              bool) {
@@ -759,10 +761,11 @@ TEST(TracingClientTest, ExecuteParallelUploadFile) {
             return PermanentError();
           });
   auto under_test = TracingConnection(mock);
+  std::vector<std::thread> threads;
   std::vector<storage::internal::ParallelUploadFileShard> shards;
   bool ignore_cleanup_failures = false;
-  auto actual = under_test.ExecuteParallelUploadFile(std::move(shards),
-                                                     ignore_cleanup_failures);
+  auto actual = under_test.ExecuteParallelUploadFile(
+      std::move(threads), std::move(shards), ignore_cleanup_failures);
 
   auto const code = PermanentError().code();
   auto const code_str = StatusCodeToString(code);

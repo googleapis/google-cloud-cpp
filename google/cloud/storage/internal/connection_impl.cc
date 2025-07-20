@@ -856,16 +856,8 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 }
 
 StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
+    std::vector<std::thread> threads,
     std::vector<ParallelUploadFileShard> shards, bool ignore_cleanup_failures) {
-  std::vector<std::thread> threads;
-  threads.reserve(shards.size());
-  for (auto& shard : shards) {
-    threads.emplace_back([&shard] {
-      // We can safely ignore the status - if something fails we'll know
-      // when obtaining final metadata.
-      shard.Upload();
-    });
-  }
   for (auto& thread : threads) {
     thread.join();
   }
