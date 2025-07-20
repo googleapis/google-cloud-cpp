@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/limits.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/internal/big_endian.h"
@@ -300,6 +301,13 @@ Status Table::DoMutationsWithPossibleRollback(
     std::string const& row_key,
     google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> const&
         mutations) {
+  if (row_key.size() > kMaxRowLen) {
+    return InvalidArgumentError(
+        "The row_key is longer than 4KiB",
+        GCP_ERROR_INFO().WithMetadata("row_key size",
+                                      absl::StrFormat("%zu", row_key.size())));
+  }
+
   RowTransaction row_transaction(this->get(), row_key);
 
   for (auto const& mutation : mutations) {
@@ -458,6 +466,15 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
     google::bigtable::v2::RowSet const& row_set) {
   StringRangeSet res;
   for (auto const& row_key : row_set.row_keys()) {
+    if (row_key.size() > kMaxRowLen) {
+      return InvalidArgumentError(
+          "The row_key in row_set is longer than 4KiB",
+          GCP_ERROR_INFO()
+              .WithMetadata("row_key size",
+                            absl::StrFormat("%zu", row_key.size()))
+              .WithMetadata("row_set", row_set.DebugString()));
+    }
+
     if (row_key.empty()) {
       return InvalidArgumentError(
           "`row_key` empty",
@@ -484,6 +501,16 @@ Table::CheckAndMutateRow(
   std::lock_guard<std::mutex> lock(mu_);
 
   auto const& row_key = request.row_key();
+
+  if (row_key.size() > kMaxRowLen) {
+    return InvalidArgumentError(
+        "The row_key is longer than 4KiB",
+        GCP_ERROR_INFO()
+            .WithMetadata("row_key size",
+                          absl::StrFormat("%zu", row_key.size()))
+            .WithMetadata("CheckAndMutateRequest", request.DebugString()));
+  }
+
   if (row_key.empty()) {
     return InvalidArgumentError(
         "row key required",
@@ -766,6 +793,14 @@ Status Table::DropRowRange(
   }
 
   auto const& row_prefix = request.row_key_prefix();
+  if (request.row_key_prefix().size() > kMaxRowLen) {
+    return InvalidArgumentError(
+        "The row_key_prefix is longer than 4KiB",
+        GCP_ERROR_INFO().WithMetadata(
+            "row_key_prefix size",
+            absl::StrFormat("%zu", request.row_key_prefix().size())));
+  }
+
   if (row_prefix.empty()) {
     return InvalidArgumentError(
         "Row prefix provided is empty.",
@@ -790,6 +825,13 @@ Status Table::DropRowRange(
 StatusOr<::google::bigtable::v2::ReadModifyWriteRowResponse>
 Table::ReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  if (request.row_key().size() > kMaxRowLen) {
+    return InvalidArgumentError(
+        "The row_key is longer than 4KiB",
+        GCP_ERROR_INFO().WithMetadata(
+            "row_key size", absl::StrFormat("%zu", request.row_key().size())));
+  }
+
   std::lock_guard<std::mutex> lock(mu_);
 
   RowTransaction row_transaction(this->get(), request.row_key());

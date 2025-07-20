@@ -19,7 +19,6 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <chrono>
-#include <climits>
 #include <iterator>
 #include <set>
 #include <sstream>
@@ -815,52 +814,6 @@ TEST(StringRangeSet, IntersectDistinct) {
   srs.Intersect({StringRangeSet::Range("col2", false, "col2", false)});
   std::set<StringRangeSet::Range, StringRangeSet::Range::StartLess> empty;
   ASSERT_EQ(empty, srs.disjoint_ranges());
-}
-
-TEST(ConsecutiveStringsOfMaxLen, ZeroLen) {
-  std::string a;
-  std::string b;
-
-  ASSERT_FALSE(ConsecutiveStringsOfMaxLen(a, b, 0));
-}
-
-TEST(ConsecutiveStringsOfMaxLen, ShorterThanMaxLen) {
-  std::string a;
-  std::string b;
-  b.push_back('\0');
-
-  ASSERT_TRUE(ConsecutiveStringsOfMaxLen(a, b, 1));
-
-  a = "a";
-  b = "a";
-  b.push_back('\0');
-
-  ASSERT_TRUE(ConsecutiveStringsOfMaxLen(a, b, 2));
-}
-
-TEST(ConsecutiveStringsOfMaxLen, FirstHasMaxLen) {
-  std::string a = "a";
-  std::string b = "b";
-
-  ASSERT_TRUE(ConsecutiveStringsOfMaxLen(a, b, 1));
-
-  a = "a";
-  b = "c";
-
-  ASSERT_FALSE(ConsecutiveStringsOfMaxLen(a, b, 1));
-
-  // Test the case where the first string is at max length and the
-  // terminal char or chars cannot be incremented because they are at
-  // maximum value.
-  a = "a";
-  a.push_back(CHAR_MAX);
-  a.push_back(CHAR_MAX);
-
-  b = "b";
-  b.push_back(CHAR_MAX);
-  b.push_back(CHAR_MAX);
-
-  ASSERT_TRUE(ConsecutiveStringsOfMaxLen(a, b, 3));
 }
 
 }  // anonymous namespace
