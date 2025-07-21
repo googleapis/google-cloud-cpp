@@ -42,8 +42,8 @@ MonitoringExporter::MonitoringExporter(
       formatter_(options.get<otel::MetricNameFormatterOption>()),
       use_service_time_series_(options.get<otel::ServiceTimeSeriesOption>()),
       mr_proto_(internal::FetchOption<otel::MonitoredResourceOption>(options)),
-      dynamic_resource_fn_(std::move(resource_fn)),
-      resource_filter_fn_(std::move(filter_fn)) {}
+      dynamic_resource_fn_(std::move(dynamic_resource_fn)),
+      resource_filter_fn_(std::move(resource_filter_fn)) {}
 
 MonitoringExporter::MonitoringExporter(
     Project project,
