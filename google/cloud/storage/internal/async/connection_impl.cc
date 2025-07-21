@@ -306,7 +306,7 @@ AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
-  auto current = internal::MakeImmutableOptions(p.options);
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
   std::int64_t persisted_size = 0;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
