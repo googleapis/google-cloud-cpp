@@ -32,6 +32,7 @@
 #include <absl/strings/str_format.h>
 #include <absl/types/optional.h>
 #include <absl/types/variant.h>
+#include <grpcpp/support/byte_buffer.h>
 #include <grpcpp/support/sync_stream.h>
 #include <re2/re2.h>
 #include <cassert>
