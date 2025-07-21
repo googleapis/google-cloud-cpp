@@ -223,6 +223,26 @@ struct IdempotentMutationPolicyOption {
 };
 
 /**
+ * Enable [client-side metrics]
+ *
+ * When this option is enabled (the default), the client will export telemetry
+ * to [Google Cloud Monitoring]. This information can help identify performance
+ * bottlenecks, and is generally useful for monitoring and troubleshooting
+ * applications.
+ *
+ * Sending this data does not incur any billing charges, and requires minimal
+ * CPU (a single RPC every few minutes) or memory (a few KiB to batch the
+ * telemetry).
+ *
+ * [client-side metrics]:
+ * https://cloud.google.com/bigtable/docs/client-side-metrics [Google Cloud
+ * Monitoring]: https://cloud.google.com/monitoring/docs
+ */
+struct EnableMetricsOption {
+  using Type = bool;
+};
+
+/**
  * Metrics export period.
  *
  * When `EnableMetricsOption` is enabled, this option controls the frequency at
@@ -237,7 +257,8 @@ struct MetricsPeriodOption {
 
 using DataPolicyOptionList =
     OptionList<DataRetryPolicyOption, DataBackoffPolicyOption,
-               IdempotentMutationPolicyOption, MetricsPeriodOption>;
+               IdempotentMutationPolicyOption, EnableMetricsOption,
+               MetricsPeriodOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

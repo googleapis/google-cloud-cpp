@@ -137,17 +137,6 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
     return internal::Contains(resource_labels, key);
   };
 
-  auto reader_options =
-      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
-  reader_options.export_interval_millis = std::chrono::seconds(60);
-  reader_options.export_timeout_millis = std::chrono::seconds(1);
-  if (options.has<bigtable::MetricsPeriodOption>()) {
-    auto period = options.get<bigtable::MetricsPeriodOption>();
-    if (period > std::chrono::seconds(5)) {
-      reader_options.export_interval_millis = period;
-    }
-  }
-
   options.set<otel::ServiceTimeSeriesOption>(true)
       .set<otel::MetricNameFormatterOption>(
           [](auto name) { return kBigtableMetricNamePath + name; });
@@ -161,6 +150,12 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
     exporter = otel_internal::MakeMonitoringExporter(
         dynamic_resource_fn, resource_filter_fn, std::move(options));
   }
+
+  auto reader_options =
+      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
+  reader_options.export_timeout_millis = std::chrono::seconds(1);
+  reader_options.export_interval_millis =
+      options.get<bigtable::MetricsPeriodOption>();
 
   auto reader =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::Create(

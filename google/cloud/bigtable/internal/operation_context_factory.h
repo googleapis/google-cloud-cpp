@@ -30,6 +30,10 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// This class contains methods for each service RPC, each of which, creates a
+// OperationContext for use with that RPC. If Metrics are available and enabled,
+// the resulting OperationContext contains clones of the Metrics applicable to
+// that service RPC.
 class OperationContextFactory {
  public:
   virtual ~OperationContextFactory() = 0;
