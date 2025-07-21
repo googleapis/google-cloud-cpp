@@ -222,9 +222,22 @@ struct IdempotentMutationPolicyOption {
   using Type = std::shared_ptr<bigtable::IdempotentMutationPolicy>;
 };
 
+/**
+ * Metrics export period.
+ *
+ * When `EnableMetricsOption` is enabled, this option controls the frequency at
+ * which metrics are exported to [Google Cloud Monitoring]. The default is 60
+ * seconds. Values below 5 seconds are ignored.
+ *
+ * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
+ */
+struct MetricsPeriodOption {
+  using Type = std::chrono::seconds;
+};
+
 using DataPolicyOptionList =
     OptionList<DataRetryPolicyOption, DataBackoffPolicyOption,
-               IdempotentMutationPolicyOption>;
+               IdempotentMutationPolicyOption, MetricsPeriodOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

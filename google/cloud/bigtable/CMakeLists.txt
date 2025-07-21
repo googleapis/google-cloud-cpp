@@ -199,6 +199,8 @@ add_library(
     internal/mutate_rows_limiter.h
     internal/operation_context.cc
     internal/operation_context.h
+    internal/operation_context_factory.cc
+    internal/operation_context_factory.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/rate_limiter.cc
