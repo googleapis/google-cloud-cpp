@@ -305,7 +305,7 @@ ToTimeSeriesWithResources(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter,
     ResourceFilterDataFn const& resource_filter_fn,
-    MonitoredResourceFromDataFn const& resource_fn) {
+    MonitoredResourceFromDataFn const& dynamic_resource_fn) {
   std::unordered_map<std::string,
                      std::vector<google::monitoring::v3::TimeSeries>>
       tss_map;
@@ -316,7 +316,7 @@ ToTimeSeriesWithResources(
         *ts.mutable_metric() =
             ToMetric(metric_data, pda.attributes, data.resource_,
                      metrics_name_formatter, resource_filter_fn);
-        auto p = resource_fn(pda);
+        auto p = dynamic_resource_fn(pda);
         *ts.mutable_resource() = std::move(p.second);
         tss_map[p.first].push_back(std::move(ts));
       };

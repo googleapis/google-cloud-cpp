@@ -33,10 +33,16 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// For use with dynamic monitored resources, this function constructs the
+// correct MonitoredResource from the PointDataAttributes passed in. This
+// function is called in ToTimeSeriesWithResources.
 using MonitoredResourceFromDataFn =
     std::function<std::pair<std::string, google::api::MonitoredResource>(
         opentelemetry::sdk::metrics::PointDataAttributes const&)>;
 
+// For use with dynamic monitored resources, this function is used in ToMetric
+// to indicate which labels should be skipped when populating the labels field
+// of the google::api::Metric proto.
 using ResourceFilterDataFn = std::function<bool(std::string const&)>;
 
 class MonitoringExporter final
@@ -44,8 +50,9 @@ class MonitoringExporter final
  public:
   MonitoringExporter(
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
-      otel_internal::MonitoredResourceFromDataFn resource_fn,
-      otel_internal::ResourceFilterDataFn filter_fn, Options const& options);
+      otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn,
+      otel_internal::ResourceFilterDataFn resource_filter_fn,
+      Options const& options);
 
   MonitoringExporter(
       Project project,
@@ -77,19 +84,21 @@ class MonitoringExporter final
   otel::MetricNameFormatterOption::Type formatter_;
   bool use_service_time_series_;
   absl::optional<google::api::MonitoredResource> mr_proto_;
-  otel_internal::MonitoredResourceFromDataFn resource_fn_;
-  otel_internal::ResourceFilterDataFn filter_fn_;
+  otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn_;
+  otel_internal::ResourceFilterDataFn resource_filter_fn_;
 };
 
 Options DefaultOptions(Options o);
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(MonitoredResourceFromDataFn resource_fn,
-                       ResourceFilterDataFn filter_fn, Options options = {});
+MakeMonitoringExporter(MonitoredResourceFromDataFn dynamic_resource_fn,
+                       ResourceFilterDataFn resource_filter_fn,
+                       Options options = {});
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    MonitoredResourceFromDataFn resource_fn, ResourceFilterDataFn filter_fn,
+    MonitoredResourceFromDataFn dynamic_resource_fn,
+    ResourceFilterDataFn resource_filter_fn,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options = {});
 

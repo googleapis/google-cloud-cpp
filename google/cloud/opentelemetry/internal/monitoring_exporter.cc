@@ -35,14 +35,15 @@ std::string FormatProjectFullName(std::string const& project) {
 
 MonitoringExporter::MonitoringExporter(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
-    otel_internal::MonitoredResourceFromDataFn resource_fn,
-    otel_internal::ResourceFilterDataFn filter_fn, Options const& options)
+    otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn,
+    otel_internal::ResourceFilterDataFn resource_filter_fn,
+    Options const& options)
     : client_(std::move(conn)),
       formatter_(options.get<otel::MetricNameFormatterOption>()),
       use_service_time_series_(options.get<otel::ServiceTimeSeriesOption>()),
       mr_proto_(internal::FetchOption<otel::MonitoredResourceOption>(options)),
-      resource_fn_(std::move(resource_fn)),
-      filter_fn_(std::move(filter_fn)) {}
+      dynamic_resource_fn_(std::move(resource_fn)),
+      resource_filter_fn_(std::move(filter_fn)) {}
 
 MonitoringExporter::MonitoringExporter(
     Project project,
@@ -97,9 +98,9 @@ opentelemetry::sdk::common::ExportResult MonitoringExporter::ExportImpl(
   }
 
   std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
-  if (resource_fn_) {
+  if (dynamic_resource_fn_) {
     auto tss_map = otel_internal::ToTimeSeriesWithResources(
-        data, formatter_, filter_fn_, resource_fn_);
+        data, formatter_, resource_filter_fn_, dynamic_resource_fn_);
     for (auto& tss : tss_map) {
       requests = otel_internal::ToRequests(FormatProjectFullName(tss.first),
                                            std::move(tss.second));
@@ -125,24 +126,26 @@ Options DefaultOptions(Options o) {
 }
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(MonitoredResourceFromDataFn resource_fn,
-                       ResourceFilterDataFn filter_fn, Options options) {
+MakeMonitoringExporter(MonitoredResourceFromDataFn dynamic_resource_fn,
+                       ResourceFilterDataFn resource_filter_fn,
+                       Options options) {
   auto connection = monitoring_v3::MakeMetricServiceConnection(options);
   options = DefaultOptions(std::move(options));
   return std::make_unique<otel_internal::MonitoringExporter>(
-      std::move(connection), std::move(resource_fn), std::move(filter_fn),
-      std::move(options));
+      std::move(connection), std::move(dynamic_resource_fn),
+      std::move(resource_filter_fn), std::move(options));
 }
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    MonitoredResourceFromDataFn resource_fn, ResourceFilterDataFn filter_fn,
+    MonitoredResourceFromDataFn dynamic_resource_fn,
+    ResourceFilterDataFn resource_filter_fn,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options) {
   options = DefaultOptions(std::move(options));
   return std::make_unique<otel_internal::MonitoringExporter>(
-      std::move(conn), std::move(resource_fn), std::move(filter_fn),
-      std::move(options));
+      std::move(conn), std::move(dynamic_resource_fn),
+      std::move(resource_filter_fn), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
