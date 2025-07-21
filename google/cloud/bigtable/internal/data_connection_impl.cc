@@ -91,8 +91,7 @@ DataConnectionImpl::DataConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-
-  if (options.get<bigtable::EnableMetricsOption>()) {
+  if (options_.get<bigtable::EnableMetricsOption>()) {
     // The client_uid is eventually used in conjunction with other data labels
     // to identify metric data points. This pseudorandom string is used to aid
     // in disambiguation.

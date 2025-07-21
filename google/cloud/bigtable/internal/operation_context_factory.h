@@ -107,11 +107,11 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& table_name, std::string const& app_profile) override;
 
  private:
-  std::shared_ptr<OperationContext::Clock> clock_ =
-      std::make_shared<OperationContext::Clock>();
   std::string client_uid_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
 
+  // These vectors are initialized exactly once and the initialization is
+  // delayed until the first time the corresponding method is called.
   std::vector<std::shared_ptr<Metric const>> read_row_metrics_;
   std::vector<std::shared_ptr<Metric const>> read_rows_metrics_;
   std::vector<std::shared_ptr<Metric const>> mutate_row_metrics_;
