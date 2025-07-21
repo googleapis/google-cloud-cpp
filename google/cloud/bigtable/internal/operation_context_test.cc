@@ -159,28 +159,28 @@ class CloningMetric : public Metric {
 };
 
 TEST(OperationContextMetricTest, MetricPreCall) {
-  auto first_attempt = std::chrono::steady_clock::now();
+  auto expected_first_attempt = std::chrono::steady_clock::now();
   auto mock_metric = std::make_unique<MockMetric>();
 
   EXPECT_CALL(*mock_metric, PreCall)
       .WillOnce(
           [&](opentelemetry::context::Context const&, PreCallParams const& p) {
-            EXPECT_THAT(p.attempt_start, Eq(first_attempt));
+            EXPECT_THAT(p.attempt_start, Eq(expected_first_attempt));
             EXPECT_TRUE(p.first_attempt);
           })
-      .WillOnce(
-          [&](opentelemetry::context::Context const&, PreCallParams const& p) {
-            EXPECT_THAT(p.attempt_start,
-                        Eq(first_attempt + std::chrono::milliseconds(5)));
-            EXPECT_FALSE(p.first_attempt);
-          });
+      .WillOnce([&](opentelemetry::context::Context const&,
+                    PreCallParams const& p) {
+        EXPECT_THAT(p.attempt_start,
+                    Eq(expected_first_attempt + std::chrono::milliseconds(5)));
+        EXPECT_FALSE(p.first_attempt);
+      });
 
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<FakeSteadyClock>();
   OperationContext operation_context({}, {}, {fake_metric}, clock);
   grpc::ClientContext client_context;
 
-  clock->SetTime(first_attempt);
+  clock->SetTime(expected_first_attempt);
   operation_context.PreCall(client_context);
   clock->AdvanceTime(std::chrono::milliseconds(5));
   operation_context.PreCall(client_context);
