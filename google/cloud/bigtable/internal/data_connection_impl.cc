@@ -196,11 +196,12 @@ future<std::vector<bigtable::FailedMutation>>
 DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto operation_context = std::make_shared<OperationContext>();
   return AsyncBulkApplier::Create(
       background_->cq(), stub_, limiter_, retry_policy(*current),
       backoff_policy(*current), enable_server_retries(*current),
       *idempotency_policy(*current), app_profile_id(*current), table_name,
-      std::move(mut));
+      std::move(mut), std::move(operation_context));
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
