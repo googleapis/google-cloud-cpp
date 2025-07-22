@@ -204,7 +204,6 @@ google_cloud_cpp_bigtable_srcs = [
     "internal/prefix_range_end.cc",
     "internal/rate_limiter.cc",
     "internal/readrowsparser.cc",
-    "internal/retry_context.cc",
     "internal/row_range_helpers.cc",
     "internal/traced_row_reader.cc",
     "metadata_update_policy.cc",
