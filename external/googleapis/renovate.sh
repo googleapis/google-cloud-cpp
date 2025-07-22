@@ -24,30 +24,12 @@ function banner() {
   SEPARATOR=Y
 }
 
-# Uses a shallow clone of "${REPO}" and tags at the specified "${COMMIT}"
-# The format of the commit is 0.0.0-YYYYMMDD-[8-char-SHA] by default, but can be overriden.
-# You must specify the "TOKEN" environment variable with your GH token in order to create the tag
-function tag_googleapis() {
-  set -x
-  GOOGLEAPIS="$(mktemp -d)"
-  if [[ -z "${TOKEN}" ]]; then
-    echo "Env var TOKEN must set to a valid GH token"
-    exit 1
-  fi
-  git clone --depth 1 "https://${TOKEN}@github.com/${REPO}" ${GOOGLEAPIS}
-  pushd "${GOOGLEAPIS}"
-  git tag "${TAG}"
-  git push --tags && MESSAGE="Successfully tagged ${REPO} with ${TAG}"
-  set +x
-}
-
 banner "Determining googleapis HEAD commit and tarball checksum"
-REPO="${REPO:-googleapis/googleapis}"
+REPO="googleapis/googleapis"
 BRANCH="master"
 if [[ -z "${COMMIT}" ]]; then
   COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
     "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
-  echo "${COMMIT}"
 fi
 
 if [[ -z "$COMMIT_DATE" ]]; then
@@ -127,26 +109,3 @@ banner "Showing git state"
 git status --untracked-files=no
 echo ""
 git show-branch
-
-banner "Creating tag in ${REPO}"
-TAG="${TAG:-0.0.0-$(date +"%Y%m%d")-${COMMIT:0:8}}"
-tag_googleapis
-
-banner "Confirming presence of generated googleapis module in bazel-central-registry"
-JSON=$(gh search prs --repo=bazelbuild/bazel-central-registry --state=open --match=title "Publish googleapis@${TAG}" --json=url,title --order=desc)
-
-function filter_json() {
-   jq -r --arg tag "${TAG}" '.[] | select(.title | test("'$TAG'"))' <<< "${JSON}"
-}
-
-while true; do
-  FILTERED_JSON=$(filter_json)
-  if [[ -n "${FILTERED_JSON}" ]]; then
-    URL=$(jq '.url' <<< "${FILTERED_JSON}")
-    echo
-    banner "Found PR with new googleapis module in bazel-centra-registry: ${URL}"
-    exit 0
-  fi
-  sleep 5
-  printf '.'
-done
