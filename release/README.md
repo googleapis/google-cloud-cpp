@@ -18,6 +18,16 @@ aim for a commit SHA from 5-7 days ago (TODO(#13062): automate this update
 process). Specifying `COMMIT` and `COMMIT_DATE` when running `renovate.sh` can
 be used to achieve this.
 
+### a. Publish to BCR
+
+Run the `release/publish-bcr.sh` script.
+This will create a PR in the `bazelbuild/publish-to-bcr` repository.
+You will need to oversee this PR and ensure it is merged before proceeding.
+
+```bash
+bash release/publish-bcr.sh
+```
+
 ## 1. Preparing for a release
 
 To create a new release you need to perform some maintenance tasks, these are
