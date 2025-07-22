@@ -10,23 +10,25 @@ project that need to create a new release. We expect the reader to be familiar
 the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
-## 0. Verify most recent googleapis SHA adheres to policy
+## 0. Update googleapis and Publish to BCR
 
-In order to ensure that our released version includes a SHA of the service proto
-definitions that is both current and stable ([googleapis-sha-update-policy]),
-aim for a commit SHA from 5-7 days ago (TODO(#13062): automate this update
-process). Specifying `COMMIT` and `COMMIT_DATE` when running `renovate.sh` can
-be used to achieve this.
+First, ensure that our release includes a `googleapis` commit that adheres to
+our [update policy][googleapis-sha-update-policy]. This generally means aiming
+for a commit that is 5-7 days old. You may need to run the `renovate.sh` script
+with a specific `COMMIT` and `COMMIT_DATE` to select the desired commit.
 
-### a. Publish to BCR
-
-Run the `release/publish-bcr.sh` script.
-This will create a PR in the `bazelbuild/publish-to-bcr` repository.
-You will need to oversee this PR and ensure it is merged before proceeding.
+Once the `googleapis` commit has been updated in our repository and the change
+is merged, run the `release/publish-bcr.sh` script using the same selected COMMIT.
+This script will create a Pull Request in the `googleapis/googleapis` repository to publish our new
+version to the Bazel Central Registry. You will need to provide the version
+number and the corresponding `googleapis` commit SHA to the script. Oversee the
+generated PR and ensure it is merged before proceeding with the release.
 
 ```bash
-bash release/publish-bcr.sh
+release/publish-bcr.sh --ref "${COMMIT}"
 ```
+
+You can find more information about running the script in [its readme](https://github.com/googleapis/googleapis/blob/e1b12be90da62015f0bea9026d217f0abc32cafe/.bcr/README.md)
 
 ## 1. Preparing for a release
 
