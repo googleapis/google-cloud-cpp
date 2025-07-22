@@ -21,7 +21,6 @@ add_library(
     cluster.h
     column_family.cc
     column_family.h
-    column_family_test.cc
     filter.cc
     filter.h
     filtered_map.h
