@@ -17,6 +17,8 @@
 
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "absl/types/optional.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <grpcpp/server.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <grpcpp/support/sync_stream.h>
 #include <string>

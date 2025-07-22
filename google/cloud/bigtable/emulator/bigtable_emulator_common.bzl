@@ -33,7 +33,6 @@ bigtable_emulator_common_hdrs = [
 bigtable_emulator_common_srcs = [
     "cluster.cc",
     "column_family.cc",
-    "column_family_test.cc",
     "filter.cc",
     "range_set.cc",
     "row_streamer.cc",
