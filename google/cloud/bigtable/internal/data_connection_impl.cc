@@ -385,10 +385,11 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
 future<StatusOr<std::vector<bigtable::RowKeySample>>>
 DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto operation_context = std::make_shared<OperationContext>();
   return AsyncRowSampler::Create(
       background_->cq(), stub_, retry_policy(*current),
       backoff_policy(*current), enable_server_retries(*current),
-      app_profile_id(*current), table_name);
+      app_profile_id(*current), table_name, std::move(operation_context));
 }
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
