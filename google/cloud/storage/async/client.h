@@ -370,6 +370,47 @@ class AsyncClient {
       google::storage::v2::ReadObjectRequest request, std::int64_t offset,
       std::int64_t limit, Options opts = {});
 
+  /**
+   * Reads the full contents of an object.
+   *
+   * When satisfied, the returned future has the full contents of the given
+   * object.
+   *
+   * Be aware that this will accumulate all the bytes in memory. For large
+   * objects, this function may fail with `StatusCode::kResourceExhausted` if
+   * the system runs out of memory. If you need to process large objects,
+   * consider using `ReadObject()` instead.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc read-all
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. Once the download
+   * starts, this operation will automatically resume the download if is
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ReadPayload>> ReadAll(BucketName const& bucket_name,
+                                        std::string object_name,
+                                        Options opts = {});
+
+  /**
+   * @copydoc ReadAll(BucketName const&, std::string, Options)
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional. Any values for
+   *     `read_offset()` and `read_limit()` are ignored. To read a range of
+   *     the object use `ReadObjectRange()`.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ReadPayload>> ReadAll(
+      google::storage::v2::ReadObjectRequest request, Options opts = {});
+
   /*
   [start-appendable-object-upload]
   Initiates a [resumable upload][resumable-link] for an appendable object.
