@@ -440,11 +440,13 @@ void DataConnectionImpl::AsyncReadRows(
     std::int64_t rows_limit, bigtable::Filter filter) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto reverse = internal::CurrentOptions().get<bigtable::ReverseScanOption>();
+  auto operation_context = std::make_shared<OperationContext>();
   bigtable_internal::AsyncRowReader::Create(
       background_->cq(), stub_, app_profile_id(*current), table_name,
       std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
       std::move(filter), reverse, retry_policy(*current),
-      backoff_policy(*current), enable_server_retries(*current));
+      backoff_policy(*current), enable_server_retries(*current),
+      std::move(operation_context));
 }
 
 future<StatusOr<std::pair<bool, bigtable::Row>>>
