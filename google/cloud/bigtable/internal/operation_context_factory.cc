@@ -139,7 +139,7 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
 
   auto reader_options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
-  reader_options.export_timeout_millis = std::chrono::seconds(1);
+  reader_options.export_timeout_millis = std::chrono::seconds(30);
   reader_options.export_interval_millis =
       options.get<bigtable::MetricsPeriodOption>();
 
