@@ -1286,7 +1286,10 @@ TEST(ObjectDescriptorImpl, ReadWithSubsequentStream) {
 
   // Mock factory for subsequent streams
   MockFactory factory;
-  EXPECT_CALL(factory, Call).WillOnce([&](Request const&) {
+  EXPECT_CALL(factory, Call).WillOnce([&](Request const& request) {
+    EXPECT_TRUE(request.read_object_spec().has_read_handle());
+    EXPECT_EQ(request.read_object_spec().read_handle().handle(),
+              "handle-12345");
     auto stream_result = OpenStreamResult{
         std::make_shared<OpenStream>(std::move(stream2)), Response{}};
     return make_ready_future(make_status_or(std::move(stream_result)));
@@ -1330,16 +1333,18 @@ TEST(ObjectDescriptorImpl, ReadWithSubsequentStream) {
   EXPECT_EQ(next.second, "Read[1.eos]");
   next.first.set_value(true);
 
-  // The first stream should be finishing now.
+  // Create and switch to a new stream. This happens before the first
+  // stream is finished.
+  tested->MakeSubsequentStream();
+
+  // The events are interleaved. Based on the log, Finish[1] comes first.
   auto finish1 = sequencer.PopFrontWithName();
   EXPECT_EQ(finish1.second, "Finish[1]");
-  finish1.first.set_value(true);
-
-  // Create and switch to a new stream
-  tested->MakeSubsequentStream();
 
   auto read2 = sequencer.PopFrontWithName();
   EXPECT_EQ(read2.second, "Read[2]");
+  finish1.first.set_value(true);
+
   // Start a read on the second stream
   auto reader2 = tested->Read({200, 200});
   auto future2 = reader2->Read();
