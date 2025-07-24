@@ -75,15 +75,14 @@ bool DefaultRowReader::NextChunk() {
   ++processed_chunks_count_;
   while (processed_chunks_count_ >= response_.chunks_size()) {
     processed_chunks_count_ = 0;
-    auto v = stream_->Read();
-    if (absl::holds_alternative<Status>(v)) {
-      last_status_ = absl::get<Status>(std::move(v));
+    auto status = stream_->Read(&response_);
+    if (status.has_value()) {
+      last_status_ = *std::move(status);
       response_ = {};
       operation_context_.PostCall(*context_, {});
       context_.reset();
       return false;
     }
-    response_ = absl::get<google::bigtable::v2::ReadRowsResponse>(std::move(v));
     if (!response_.last_scanned_row_key().empty()) {
       last_read_row_key_ = std::move(*response_.mutable_last_scanned_row_key());
     }
@@ -181,8 +180,8 @@ void DefaultRowReader::Cancel() {
   stream_->Cancel();
 
   // Also drain any data left unread
-  while (absl::holds_alternative<google::bigtable::v2::ReadRowsResponse>(
-      stream_->Read())) {
+  google::bigtable::v2::ReadRowsResponse response;
+  while (!stream_->Read(&response).has_value()) {
   }
 
   context_.reset();

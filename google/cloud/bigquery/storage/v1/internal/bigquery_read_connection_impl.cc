@@ -95,10 +95,16 @@ BigQueryReadConnectionImpl::ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       BigQueryReadReadRowsStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::bigquery::storage::v1::ReadRowsResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<Status,
+                           google::cloud::bigquery::storage::v1::ReadRowsResponse> {
+        google::cloud::bigquery::storage::v1::ReadRowsResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

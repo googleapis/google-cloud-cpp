@@ -76,6 +76,7 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::ByMove;
+using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::Field;
@@ -88,6 +89,7 @@ using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
 using ::testing::Sequence;
+using ::testing::SetArgPointee;
 using ::testing::StartsWith;
 using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
@@ -324,7 +326,7 @@ template <typename ResponseType>
 class MockStreamingReadRpc : public internal::StreamingReadRpc<ResponseType> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read, (ResponseType*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -338,7 +340,8 @@ std::unique_ptr<MockStreamingReadRpc<ResponseType>> MakeReader(
   for (auto& response : responses) {
     EXPECT_CALL(*reader, Read)
         .InSequence(s)
-        .WillOnce(Return(std::move(response)));
+        .WillOnce(DoAll(SetArgPointee<0>(std::move(response)),
+                        Return(absl::nullopt)));
   }
   EXPECT_CALL(*reader, Read).InSequence(s).WillOnce(Return(std::move(status)));
   return reader;
@@ -1359,7 +1362,8 @@ TEST(ConnectionImplTest, QueryOptions) {
     )pb";
     PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
-    EXPECT_CALL(*stream, Read).WillOnce(Return(response));
+    EXPECT_CALL(*stream, Read)
+        .WillOnce(DoAll(SetArgPointee<0>(response), Return(absl::nullopt)));
     {
       InSequence seq;
 

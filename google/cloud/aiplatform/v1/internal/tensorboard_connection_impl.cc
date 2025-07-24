@@ -1054,10 +1054,16 @@ TensorboardServiceConnectionImpl::ReadTensorboardBlobData(
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       TensorboardServiceReadTensorboardBlobDataStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<Status, google::cloud::aiplatform::v1::
+                                       ReadTensorboardBlobDataResponse> {
+        google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>

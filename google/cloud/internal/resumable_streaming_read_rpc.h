@@ -91,14 +91,14 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override { impl_->Cancel(); }
 
-  absl::variant<Status, ResponseType> Read() override {
-    auto response = impl_->Read();
-    if (absl::holds_alternative<ResponseType>(response)) {
-      updater_(absl::get<ResponseType>(response), request_);
+  absl::optional<Status> Read(ResponseType* response) override {
+    auto opt_status = impl_->Read(response);
+    if (!opt_status.has_value()) {
+      updater_(*response, request_);
       has_received_data_ = true;
-      return response;
+      return absl::nullopt;
     }
-    auto last_status = absl::get<Status>(std::move(response));
+    auto last_status = *opt_status;
     if (last_status.ok()) return last_status;
     // Need to start a retry loop to connect again. Note that we *retry* to
     // start a streaming read, but once the streaming read succeeds at least
@@ -117,13 +117,14 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
       sleeper_(backoff_policy->OnCompletion());
       has_received_data_ = false;
       impl_ = stream_factory_(request_);
-      auto r = impl_->Read();
-      if (absl::holds_alternative<ResponseType>(r)) {
-        updater_(absl::get<ResponseType>(r), request_);
+
+      auto next_opt_status = impl_->Read(response);
+      if (!next_opt_status.has_value()) {
+        updater_(*response, request_);
         has_received_data_ = true;
-        return r;
+        return absl::nullopt;
       }
-      last_status = absl::get<Status>(std::move(r));
+      last_status = *std::move(next_opt_status);
     }
     return last_status;
   }

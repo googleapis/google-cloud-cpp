@@ -139,19 +139,13 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   absl::optional<PartialResultSet> Read(
       absl::optional<std::string> const&) override {
-    struct Visitor {
-      Status& final_status;
-
-      absl::optional<PartialResultSet> operator()(Status s) {
-        final_status = std::move(s);
-        return absl::nullopt;
-      }
-      absl::optional<PartialResultSet> operator()(
-          google::spanner::v1::PartialResultSet result) {
-        return PartialResultSet{std::move(result), false};
-      }
-    };
-    return absl::visit(Visitor{final_status_}, reader_->Read());
+    google::spanner::v1::PartialResultSet result;
+    auto status = reader_->Read(&result);
+    if (status.has_value()) {
+      final_status_ = *std::move(status);
+      return absl::nullopt;
+    }
+    return PartialResultSet{std::move(result), false};
   }
 
   Status Finish() override { return final_status_; }
@@ -336,13 +330,8 @@ class StreamingPartitionedDmlResult {
 };
 
 // Converts a `BatchWriteResponse` proto to a `spanner::BatchedCommitResult`.
-absl::variant<Status, spanner::BatchedCommitResult> FromProto(
-    absl::variant<Status, google::spanner::v1::BatchWriteResponse> proto) {
-  if (absl::holds_alternative<Status>(proto)) {
-    return absl::get<Status>(std::move(proto));
-  }
-  auto response =
-      absl::get<google::spanner::v1::BatchWriteResponse>(std::move(proto));
+spanner::BatchedCommitResult FromProto(
+    google::spanner::v1::BatchWriteResponse response) {
   auto const& indexes = response.indexes();
   auto status = MakeStatusFromRpcError(response.status());
   spanner::BatchedCommitResult result;
@@ -1408,17 +1397,21 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
   // session into the stream range so that it is not returned to the pool
   // until the stream is exhausted.
   return internal::MakeStreamRange<spanner::BatchedCommitResult>(
-      [reader = std::move(reader), session = std::move(session)] {
-        auto result = FromProto(reader->Read());
-        if (absl::holds_alternative<Status>(result)) {
+      [reader = std::move(reader),
+       session = std::move(session)]() -> absl::variant<
+          Status, spanner::BatchedCommitResult> {
+        google::spanner::v1::BatchWriteResponse response;
+        auto result = reader->Read(&response);
+        if (result.has_value()) {
           // "Session not found" can really only happen on the first
           // response, but, rather than tracking that, we just check
           // on non-first failures too.
-          if (IsSessionNotFound(absl::get<Status>(result))) {
+          if (IsSessionNotFound(*result)) {
             session->set_bad();
           }
+          return *result;
         }
-        return result;
+        return FromProto(response);
       });
 }
 

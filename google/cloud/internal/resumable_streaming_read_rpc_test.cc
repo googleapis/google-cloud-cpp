@@ -41,12 +41,10 @@ struct FakeResponse {
   std::string token;
 };
 
-using ReadReturn = absl::variant<Status, FakeResponse>;
-
 class MockStreamingReadRpc : public StreamingReadRpc<FakeResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(ReadReturn, Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read, (FakeResponse*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -56,18 +54,6 @@ struct TestRetryablePolicy {
            (s.code() == google::cloud::StatusCode::kPermissionDenied);
   }
 };
-
-ReadReturn AsReadReturn(FakeResponse response) { return response; }
-
-ReadReturn StreamSuccess() { return Status{}; }
-
-ReadReturn TransientFailure() {
-  return Status(StatusCode::kUnavailable, "try-again");
-}
-
-ReadReturn PermanentFailure() {
-  return Status(StatusCode::kPermissionDenied, "uh-oh");
-}
 
 class MockStub {
  public:
@@ -108,9 +94,15 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
         EXPECT_THAT(request.token, IsEmpty());
         auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(AsReadReturn(FakeResponse{"value-0", "token-1"})))
-            .WillOnce(Return(AsReadReturn(FakeResponse{"value-1", "token-2"})))
-            .WillOnce(Return(TransientFailure()));
+            .WillOnce([](FakeResponse* r) {
+              *r = FakeResponse{"value-0", "token-1"};
+              return absl::nullopt;
+            })
+            .WillOnce([](FakeResponse* r) {
+              *r = FakeResponse{"value-1", "token-2"};
+              return absl::nullopt;
+            })
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       })
       .WillOnce([](FakeRequest const& request) {
@@ -118,8 +110,11 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
         EXPECT_THAT(request.token, "token-2");
         auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(AsReadReturn(FakeResponse{"value-2", "token-2"})))
-            .WillOnce(Return(StreamSuccess()));
+            .WillOnce([](FakeResponse* r) {
+              *r = FakeResponse{"value-2", "token-2"};
+              return absl::nullopt;
+            })
+            .WillOnce(Return(Status{}));
         return stream;
       });
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
@@ -132,13 +127,13 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
 
   std::vector<std::string> values;
   for (;;) {
-    auto v = reader->Read();
-    if (absl::holds_alternative<FakeResponse>(v)) {
-      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
-      continue;
+    FakeResponse response;
+    auto status = reader->Read(&response);
+    if (status.has_value()) {
+      EXPECT_THAT(*status, IsOk());
+      break;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)), IsOk());
-    break;
+    values.push_back(response.value);
   }
   EXPECT_THAT(values, ElementsAre("value-0", "value-1", "value-2"));
 }
@@ -148,12 +143,14 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
   EXPECT_CALL(mock, StreamingRead)
       .WillOnce([](FakeRequest const&) {
         auto stream = std::make_unique<MockStreamingReadRpc>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
         auto stream = std::make_unique<MockStreamingReadRpc>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
@@ -161,23 +158,29 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
         // because its successful Read() resets the retry policy.
         auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(AsReadReturn(FakeResponse{"value-0", "token-1"})))
-            .WillOnce(Return(TransientFailure()));
+            .WillOnce([](FakeResponse* r) {
+              *r = FakeResponse{"value-0", "token-1"};
+              return absl::nullopt;
+            })
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
         auto stream = std::make_unique<MockStreamingReadRpc>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
         auto stream = std::make_unique<MockStreamingReadRpc>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
         auto stream = std::make_unique<MockStreamingReadRpc>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
       });
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
@@ -190,14 +193,14 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
 
   std::vector<std::string> values;
   for (;;) {
-    auto v = reader->Read();
-    if (absl::holds_alternative<FakeResponse>(v)) {
-      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
-      continue;
+    FakeResponse response;
+    auto status = reader->Read(&response);
+    if (status.has_value()) {
+      EXPECT_THAT(*status,
+                  StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+      break;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)),
-                StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
-    break;
+    values.push_back(response.value);
   }
   EXPECT_THAT(values, ElementsAre("value-0"));
 }
@@ -210,13 +213,17 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
         // because its successful Read() resets the retry policy.
         auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(AsReadReturn(FakeResponse{"value-0", "token-1"})))
-            .WillOnce(Return(PermanentFailure()));
+            .WillOnce([](FakeResponse* r) {
+              *r = FakeResponse{"value-0", "token-1"};
+              return absl::nullopt;
+            })
+            .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
         auto stream = std::make_unique<MockStreamingReadRpc>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
         return stream;
       });
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
@@ -229,14 +236,14 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
 
   std::vector<std::string> values;
   for (;;) {
-    auto v = reader->Read();
-    if (absl::holds_alternative<FakeResponse>(v)) {
-      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
-      continue;
+    FakeResponse response;
+    auto status = reader->Read(&response);
+    if (status.has_value()) {
+      EXPECT_THAT(*status,
+                  StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+      break;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)),
-                StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
-    break;
+    values.push_back(response.value);
   }
   EXPECT_THAT(values, ElementsAre("value-0"));
 }
@@ -245,7 +252,8 @@ TEST(ResumableStreamingReadRpc, PermanentFailureAtStart) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead).WillOnce([](FakeRequest const&) {
     auto stream = std::make_unique<MockStreamingReadRpc>();
-    EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
+    EXPECT_CALL(*stream, Read)
+        .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
     return stream;
   });
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
@@ -258,14 +266,14 @@ TEST(ResumableStreamingReadRpc, PermanentFailureAtStart) {
 
   std::vector<std::string> values;
   for (;;) {
-    auto v = reader->Read();
-    if (absl::holds_alternative<FakeResponse>(v)) {
-      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
-      continue;
+    FakeResponse response;
+    auto status = reader->Read(&response);
+    if (status.has_value()) {
+      EXPECT_THAT(*status,
+                  StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+      break;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)),
-                StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
-    break;
+    values.push_back(response.value);
   }
   EXPECT_THAT(values, IsEmpty());
 }
