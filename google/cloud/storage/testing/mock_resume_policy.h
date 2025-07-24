@@ -26,6 +26,9 @@ namespace testing {
 class MockResumePolicy : public storage_experimental::ResumePolicy {
  public:
   ~MockResumePolicy() override = default;
+
+  MOCK_METHOD(std::unique_ptr<storage_experimental::ResumePolicy>, clone, (),
+              (const, override));
   MOCK_METHOD(void, OnStartSuccess, (), (override));
   MOCK_METHOD(ResumePolicy::Action, OnFinish, (Status const&), (override));
 };
