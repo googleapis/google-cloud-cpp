@@ -54,6 +54,7 @@ class DefaultRowReader : public RowReaderImpl {
       bigtable::Filter filter, bool reverse,
       std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
+      std::shared_ptr<OperationContext> operation_context,
       Sleeper sleeper = [](auto d) { std::this_thread::sleep_for(d); });
 
   ~DefaultRowReader() override;
@@ -102,7 +103,7 @@ class DefaultRowReader : public RowReaderImpl {
   bool enable_server_retries_;
   Sleeper sleeper_;
   std::shared_ptr<grpc::ClientContext> context_;
-  OperationContext operation_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   std::unique_ptr<
