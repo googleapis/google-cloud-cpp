@@ -151,18 +151,18 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
 }
 
 absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
-  grpc::Status status;
+  grpc::Status grpc_status;
   if (!stream_) MakeRequest();
   while (!parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
           std::move(*(response_.mutable_chunks(processed_chunks_count_))),
-          status);
-      if (!status.ok()) {
-        operation_context_->PostCall(*client_context_,
-                                     MakeStatusFromRpcError(status));
+          grpc_status);
+      if (!grpc_status.ok()) {
+        auto status = MakeStatusFromRpcError(grpc_status);
+        operation_context_->PostCall(*client_context_, status);
         called_post_call_ = true;
-        return MakeStatusFromRpcError(status);
+        return std::move(status);
       }
       continue;
     }
@@ -172,14 +172,14 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
     // fails during cleanup.
     stream_is_open_ = false;
     if (!last_status_.ok()) return last_status_;
-    parser_->HandleEndOfStream(status);
-    return MakeStatusFromRpcError(status);
+    parser_->HandleEndOfStream(grpc_status);
+    return MakeStatusFromRpcError(grpc_status);
   }
 
   // We have a complete row in the parser.
-  bigtable::Row parsed_row = parser_->Next(status);
+  bigtable::Row parsed_row = parser_->Next(grpc_status);
 
-  if (!status.ok()) return MakeStatusFromRpcError(status);
+  if (!grpc_status.ok()) return MakeStatusFromRpcError(grpc_status);
 
   ++rows_count_;
   last_read_row_key_ = parsed_row.row_key();
