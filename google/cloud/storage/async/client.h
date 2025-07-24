@@ -399,7 +399,23 @@ class AsyncClient {
                                         Options opts = {});
 
   /**
-   * @copydoc ReadAll(BucketName const&, std::string, Options)
+   * Reads the full contents of an object.
+   *
+   * When satisfied, the returned future has the full contents of the given
+   * object.
+   *
+   * Be aware that this will accumulate all the bytes in memory. For large
+   * objects, this function may fail with `StatusCode::kResourceExhausted` if
+   * the system runs out of memory. If you need to process large objects,
+   * consider using `ReadObject()` instead.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc read-all
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. Once the download
+   * starts, this operation will automatically resume the download if is
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
    *
    * @param request the request contents, it must include the bucket name and
    *     object names. Many other fields are optional. Any values for
