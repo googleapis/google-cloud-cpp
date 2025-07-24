@@ -13,6 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/testing_util/fake_clock.h"
+#endif
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/internal/make_status.h"
@@ -75,6 +80,54 @@ v2::MutateRowsResponse MakeResponse(
   return resp;
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+class MockMetric : public bigtable_internal::Metric {
+ public:
+  MOCK_METHOD(void, PreCall,
+              (opentelemetry::context::Context const&,
+               bigtable_internal::PreCallParams const&),
+              (override));
+  MOCK_METHOD(void, PostCall,
+              (opentelemetry::context::Context const&,
+               grpc::ClientContext const&,
+               bigtable_internal::PostCallParams const&),
+              (override));
+  MOCK_METHOD(void, OnDone,
+              (opentelemetry::context::Context const&,
+               bigtable_internal::OnDoneParams const&),
+              (override));
+  MOCK_METHOD(void, ElementRequest,
+              (opentelemetry::context::Context const&,
+               bigtable_internal::ElementRequestParams const&),
+              (override));
+  MOCK_METHOD(void, ElementDelivery,
+              (opentelemetry::context::Context const&,
+               bigtable_internal::ElementDeliveryParams const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+              (bigtable_internal::ResourceLabels resource_labels,
+               bigtable_internal::DataLabels data_labels),
+              (const, override));
+};
+
+// This class is a vehicle to get a MockMetric into the OperationContext object.
+class CloningMetric : public bigtable_internal::Metric {
+ public:
+  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
+      : metric_(std::move(metric)) {}
+  std::unique_ptr<bigtable_internal::Metric> clone(
+      bigtable_internal::ResourceLabels,
+      bigtable_internal::DataLabels) const override {
+    return std::move(metric_);
+  }
+
+ private:
+  mutable std::unique_ptr<MockMetric> metric_;
+};
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 class BulkMutatorTest : public ::testing::Test {
  protected:
   testing_util::ValidateMetadataFixture metadata_fixture_;
@@ -82,7 +135,23 @@ class BulkMutatorTest : public ::testing::Test {
 
 TEST_F(BulkMutatorTest, Simple) {
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
 
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
+      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context =
+      std::make_shared<bigtable_internal::OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
@@ -99,7 +168,8 @@ TEST_F(BulkMutatorTest, Simple) {
 
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+                                         std::move(mut),
+                                         std::move(operation_context));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
@@ -113,6 +183,23 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
   // In this test we create a Mutation for two rows, one of which will fail.
   // First create the mutation.
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
+      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context =
+      std::make_shared<bigtable_internal::OperationContext>();
+#endif
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
@@ -144,7 +231,8 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
 
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+                                         std::move(mut),
+                                         std::move(operation_context));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -163,6 +251,23 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
   // Create a bulk mutation with two SetCell() mutations.
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
+      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context =
+      std::make_shared<bigtable_internal::OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       // The first RPC return one recoverable and one unrecoverable failure.
@@ -193,7 +298,8 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
 
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+                                         std::move(mut),
+                                         std::move(operation_context));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -214,6 +320,23 @@ TEST_F(BulkMutatorTest, PartialStream) {
   // for all requests.  Create a BulkMutation with two entries.
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
+      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context =
+      std::make_shared<bigtable_internal::OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       // This will be the stream returned by the first request.  It is missing
@@ -244,7 +367,8 @@ TEST_F(BulkMutatorTest, PartialStream) {
 
   auto policy = DefaultIdempotentMutationPolicy();
   bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+                                         std::move(mut),
+                                         std::move(operation_context));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice: for the r1 and r2 cases.
@@ -305,8 +429,9 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -358,8 +483,9 @@ TEST_F(BulkMutatorTest, RetryInfoHeeded) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
@@ -390,8 +516,9 @@ TEST_F(BulkMutatorTest, RetryInfoIgnored) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
@@ -430,8 +557,9 @@ TEST_F(BulkMutatorTest, UnconfirmedAreFailed) {
   // PERMISSION_DENIED (not retryable).
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
@@ -459,8 +587,9 @@ TEST_F(BulkMutatorTest, ConfiguresContext) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
@@ -490,8 +619,9 @@ TEST_F(BulkMutatorTest, MutationStatusReportedOnOkStream) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   bigtable_internal::NoopMutateRowsLimiter limiter;
   auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
@@ -527,8 +657,9 @@ TEST_F(BulkMutatorTest, ReportEitherRetryableMutationFailOrStreamFail) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   bigtable_internal::NoopMutateRowsLimiter limiter;
   auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
@@ -574,8 +705,9 @@ TEST_F(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   bigtable_internal::NoopMutateRowsLimiter limiter;
   auto status = mutator.MakeOneRequest(*mock, limiter, Options{});
@@ -616,8 +748,9 @@ TEST_F(BulkMutatorTest, Throttling) {
   }
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto status = mutator.MakeOneRequest(*mock_stub, *mock_limiter, Options{});
@@ -657,8 +790,9 @@ TEST_F(BulkMutatorTest, BigtableCookies) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      kAppProfile, kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   bigtable_internal::NoopMutateRowsLimiter limiter;
@@ -669,7 +803,6 @@ TEST_F(BulkMutatorTest, BigtableCookies) {
   status = mutator.MakeOneRequest(*mock, limiter, Options{});
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

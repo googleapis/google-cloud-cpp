@@ -117,7 +117,8 @@ class BulkMutator {
  public:
   BulkMutator(std::string const& app_profile_id, std::string const& table_name,
               bigtable::IdempotentMutationPolicy& idempotent_policy,
-              bigtable::BulkMutation mut);
+              bigtable::BulkMutation mut,
+              std::shared_ptr<OperationContext> operation_context);
 
   /// Return true if there are pending mutations in the mutator
   bool HasPendingMutations() const { return state_.HasPendingMutations(); }
@@ -135,7 +136,7 @@ class BulkMutator {
 
  protected:
   BulkMutatorState state_;
-  OperationContext operation_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
