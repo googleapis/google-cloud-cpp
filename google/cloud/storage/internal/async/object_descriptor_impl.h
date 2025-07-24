@@ -38,6 +38,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ObjectDescriptorImpl
     : public storage_experimental::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
+ private:
+  struct Stream {
+    std::shared_ptr<OpenStream> stream;
+    std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
+    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
+  };
+
  public:
   ObjectDescriptorImpl(
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
@@ -72,27 +79,18 @@ class ObjectDescriptorImpl
   // This may seem expensive, but it is less bug-prone than iterating over
   // the map with the lock held.
   auto CopyActiveRanges(std::unique_lock<std::mutex> const&) const {
-    return active_ranges_[active_stream_];
+    return streams_.back().active_ranges;
   }
 
   auto CopyActiveRanges() const {
     return CopyActiveRanges(std::unique_lock<std::mutex>(mu_));
   }
 
-  auto AddNewActiveRanges(std::unique_lock<std::mutex> const&) {
-    std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
-    return active_ranges_.push_back(std::move(active_ranges));
-  }
-
-  auto AddNewActiveRanges() {
-    return AddNewActiveRanges(std::unique_lock<std::mutex>(mu_));
-  }
-
   auto CurrentStream(std::unique_lock<std::mutex>) const {
-    return streams_[active_stream_];
+    return streams_.back().stream;
   }
 
-  static void CancelStream(std::shared_ptr<OpenStream> const& stream);
+  void CancelStream(std::shared_ptr<OpenStream> const& stream);
   void Flush(std::unique_lock<std::mutex> lk);
   void OnWrite(bool ok);
   void DoRead(std::unique_lock<std::mutex>);
@@ -106,7 +104,7 @@ class ObjectDescriptorImpl
   bool IsResumable(Status const& status,
                    google::rpc::Status const& proto_status);
 
-  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
+  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_prototype_;
   OpenStreamFactory make_stream_;
 
   mutable std::mutex mu_;
@@ -116,11 +114,8 @@ class ObjectDescriptorImpl
   bool write_pending_ = false;
   google::storage::v2::BidiReadObjectRequest next_request_;
 
-  std::vector<std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>>>
-      active_ranges_;
   Options options_;
-  std::size_t active_stream_ = 0;
-  std::vector<std::shared_ptr<OpenStream>> streams_;
+  std::vector<Stream> streams_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
