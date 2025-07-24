@@ -162,7 +162,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
         auto status = MakeStatusFromRpcError(grpc_status);
         operation_context_->PostCall(*client_context_, status);
         called_post_call_ = true;
-        return std::move(status);
+        return status;
       }
       continue;
     }
