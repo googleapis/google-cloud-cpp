@@ -90,7 +90,6 @@ class ObjectDescriptorImpl
     return streams_.back().stream;
   }
 
-  void CancelStream(std::shared_ptr<OpenStream> const& stream);
   void Flush(std::unique_lock<std::mutex> lk);
   void OnWrite(bool ok);
   void DoRead(std::unique_lock<std::mutex>);
