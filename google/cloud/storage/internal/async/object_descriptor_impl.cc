@@ -59,11 +59,6 @@ void ObjectDescriptorImpl::Cancel() {
   }
 }
 
-void ObjectDescriptorImpl::CancelStream(
-    std::shared_ptr<OpenStream> const& stream) {
-  stream->Cancel();
-}
-
 absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {
   std::unique_lock<std::mutex> lk(mu_);
@@ -77,9 +72,8 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   auto stream_result = make_stream_(std::move(request)).get();
 
   std::unique_lock<std::mutex> lk(mu_);
-  streams_.push_back(Stream{std::move(stream_result->stream),
-                            {},
-                            resume_policy_prototype_->clone()});
+  streams_.push_back(Stream{
+      std::move(stream_result->stream), {}, resume_policy_prototype_->clone()});
   lk.unlock();
   OnRead(std::move(stream_result->first_response));
 }
@@ -231,9 +225,8 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
 void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
   if (!result) return OnFinish(std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
-  streams_.push_back(Stream{std::move(result->stream),
-                            {},
-                            resume_policy_prototype_->clone()});
+  streams_.push_back(
+      Stream{std::move(result->stream), {}, resume_policy_prototype_->clone()});
   // TODO(#15105) - this should be done without release the lock.
   Flush(std::move(lk));
   OnRead(std::move(result->first_response));
@@ -254,7 +247,7 @@ bool ObjectDescriptorImpl::IsResumable(
     return true;
   }
   return streams_.back().resume_policy->OnFinish(status) ==
-           storage_experimental::ResumePolicy::kContinue;
+         storage_experimental::ResumePolicy::kContinue;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
