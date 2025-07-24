@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
+#include <google/bigtable/v2/response_params.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/context.h>
 #include <memory>
@@ -49,7 +50,11 @@ struct DataLabels {
 };
 
 using LabelMap = std::unordered_map<std::string, std::string>;
-LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
+LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d);
+
+absl::optional<google::bigtable::v2::ResponseParams>
+GetResponseParamsFromTrailingMetadata(
+    grpc::ClientContext const& client_context);
 
 struct PreCallParams {
   OperationContext::Clock::time_point attempt_start;

@@ -26,6 +26,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 #include <string>
@@ -88,7 +89,26 @@ DataConnectionImpl::DataConnectionImpl(
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
       options_(internal::MergeOptions(std::move(options),
-                                      DataConnection::options())) {}
+                                      DataConnection::options())) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  if (options_.get<bigtable::EnableMetricsOption>()) {
+    // The client_uid is eventually used in conjunction with other data labels
+    // to identify metric data points. This pseudorandom string is used to aid
+    // in disambiguation.
+    auto gen = internal::MakeDefaultPRNG();
+    std::string client_uid =
+        internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+    operation_context_factory_ =
+        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid));
+  } else {
+    operation_context_factory_ =
+        std::make_unique<SimpleOperationContextFactory>();
+  }
+#else
+  operation_context_factory_ =
+      std::make_unique<SimpleOperationContextFactory>();
+#endif
+}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
@@ -196,11 +216,12 @@ future<std::vector<bigtable::FailedMutation>>
 DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto operation_context = std::make_shared<OperationContext>();
   return AsyncBulkApplier::Create(
       background_->cq(), stub_, limiter_, retry_policy(*current),
       backoff_policy(*current), enable_server_retries(*current),
       *idempotency_policy(*current), app_profile_id(*current), table_name,
-      std::move(mut));
+      std::move(mut), std::move(operation_context));
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
@@ -385,10 +406,11 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
 future<StatusOr<std::vector<bigtable::RowKeySample>>>
 DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto operation_context = std::make_shared<OperationContext>();
   return AsyncRowSampler::Create(
       background_->cq(), stub_, retry_policy(*current),
       backoff_policy(*current), enable_server_retries(*current),
-      app_profile_id(*current), table_name);
+      app_profile_id(*current), table_name, std::move(operation_context));
 }
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
