@@ -63,10 +63,11 @@ void DefaultRowReader::MakeRequest() {
   }
 
   auto const& options = internal::CurrentOptions();
-  context_ = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context_, options);
-  operation_context_->PreCall(*context_);
-  stream_ = stub_->ReadRows(context_, options, request);
+  client_context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*client_context_, options);
+  operation_context_->PreCall(*client_context_);
+  called_post_call_ = false;
+  stream_ = stub_->ReadRows(client_context_, options, request);
   stream_is_open_ = true;
 
   parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
@@ -79,8 +80,9 @@ bool DefaultRowReader::NextChunk() {
     auto v = stream_->Read();
     if (absl::holds_alternative<Status>(v)) {
       last_status_ = absl::get<Status>(std::move(v));
+      operation_context_->PostCall(*client_context_, last_status_);
+      called_post_call_ = true;
       response_ = {};
-      context_.reset();
       return false;
     }
     response_ = absl::get<google::bigtable::v2::ReadRowsResponse>(std::move(v));
@@ -95,7 +97,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   // We only want to call ElementRequest if an RPC has previously been
   // made.
   if (stream_is_open_) {
-    operation_context_->ElementRequest(*context_);
+    operation_context_->ElementRequest(*client_context_);
   }
   if (operation_cancelled_) {
     return internal::CancelledError(
@@ -105,7 +107,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   while (true) {
     auto variant = AdvanceOrFail();
     if (absl::holds_alternative<bigtable::Row>(variant)) {
-      operation_context_->ElementDelivery(*context_);
+      operation_context_->ElementDelivery(*client_context_);
       return absl::get<bigtable::Row>(std::move(variant));
     }
 
@@ -145,28 +147,23 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
 
     // If we reach this place, we failed and need to restart the call.
     MakeRequest();
-    // TODO(sdhart): update PostCall to take an optional<Status>. We don't
-    // get the status from the stream until the end and with the ability to
-    // cancel, we may never get it.
-    operation_context_->PostCall(*context_, {});
   }
 }
 
 absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
   grpc::Status status;
-  if (!stream_) {
-    MakeRequest();
-    // TODO(sdhart): update PostCall to take an optional<Status>. We don't
-    // get the status from the stream until the end and with the ability to
-    // cancel, we may never get it.
-    operation_context_->PostCall(*context_, {});
-  }
+  if (!stream_) MakeRequest();
   while (!parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
           std::move(*(response_.mutable_chunks(processed_chunks_count_))),
           status);
-      if (!status.ok()) return MakeStatusFromRpcError(status);
+      if (!status.ok()) {
+        operation_context_->PostCall(*client_context_,
+                                     MakeStatusFromRpcError(status));
+        called_post_call_ = true;
+        return MakeStatusFromRpcError(status);
+      }
       continue;
     }
 
@@ -193,6 +190,10 @@ void DefaultRowReader::Cancel() {
   // As the destructor also calls Cancel, we want to call OnDone exactly once.
   // If parser_ == nullptr, then we know no RPC was ever attempted.
   if (!operation_cancelled_ && parser_) {
+    if (!called_post_call_) {
+      called_post_call_ = true;
+      operation_context_->PostCall(*client_context_, last_status_);
+    }
     operation_context_->OnDone(last_status_);
   }
   operation_cancelled_ = true;
@@ -204,7 +205,7 @@ void DefaultRowReader::Cancel() {
       stream_->Read())) {
   }
 
-  context_.reset();
+  client_context_.reset();
   stream_is_open_ = false;
 }
 

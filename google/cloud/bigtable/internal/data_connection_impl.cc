@@ -116,7 +116,8 @@ DataConnectionImpl::DataConnectionImpl(
     std::string client_uid =
         internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
     operation_context_factory_ =
-        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid));
+        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid),
+                                                         options_);
   } else {
     operation_context_factory_ =
         std::make_unique<SimpleOperationContextFactory>();
