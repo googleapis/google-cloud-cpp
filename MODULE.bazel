@@ -16,7 +16,7 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "3.0.0-rc",  # Updated by CMake
+    version = "3.0.0-rc0",
     compatibility_level = 3,  # Updated by CMake
 )
 
