@@ -43,6 +43,7 @@ class ObjectDescriptorImpl
     std::shared_ptr<OpenStream> stream;
     std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
     std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
+    bool write_pending = false;
   };
 
  public:
@@ -110,7 +111,6 @@ class ObjectDescriptorImpl
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
   absl::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
-  bool write_pending_ = false;
   google::storage::v2::BidiReadObjectRequest next_request_;
 
   Options options_;

@@ -108,8 +108,10 @@ ObjectDescriptorImpl::Read(ReadParams p) {
 }
 
 void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk) {
-  if (write_pending_ || next_request_.read_ranges().empty()) return;
-  write_pending_ = true;
+  if (streams_.back().write_pending || next_request_.read_ranges().empty()) {
+    return;
+  }
+  streams_.back().write_pending = true;
   google::storage::v2::BidiReadObjectRequest request;
   request.Swap(&next_request_);
 
@@ -125,7 +127,7 @@ void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk) {
 void ObjectDescriptorImpl::OnWrite(bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   if (!ok) return DoFinish(std::move(lk));
-  write_pending_ = false;
+  streams_.back().write_pending = false;
   Flush(std::move(lk));
 }
 
@@ -215,7 +217,7 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
     if (!range) continue;
     *request.add_read_ranges() = *std::move(range);
   }
-  write_pending_ = true;
+  streams_.back().write_pending = true;
   lk.unlock();
   make_stream_(std::move(request)).then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnResume(f.get());
