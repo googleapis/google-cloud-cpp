@@ -31,6 +31,7 @@
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
@@ -116,6 +117,10 @@ class StorageConnection {
   }
   virtual StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
       std::string const&, ResumableUploadRequest&) {
+    return Status(StatusCode::kUnimplemented, "unimplemented");
+  }
+  virtual Status DownloadStreamToFile(ObjectReadStream&&, std::string const&,
+                                      ReadObjectRangeRequest const&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
   ///@}
