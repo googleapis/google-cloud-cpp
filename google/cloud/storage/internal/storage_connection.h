@@ -38,6 +38,7 @@
 #include "google/cloud/status_or.h"
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -45,6 +46,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+class ParallelUploadFileShard;
 class ObjectReadStreambuf;
 
 /**
@@ -118,6 +120,8 @@ class StorageConnection {
       std::string const&, ResumableUploadRequest&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
+  virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<std::thread>, std::vector<ParallelUploadFileShard>, bool);
   ///@}
 
   ///@{

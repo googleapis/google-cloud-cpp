@@ -746,6 +746,41 @@ TEST(TracingClientTest, UploadFileResumable) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, ExecuteParallelUploadFile) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, ExecuteParallelUploadFile)
+      .WillOnce(
+          [](std::vector<
+                 std::thread>,  // NOLINT(performance-unnecessary-value-param)
+             std::vector<
+                 storage::internal::
+                     ParallelUploadFileShard>,  // NOLINT(performance-unnecessary-value-param)
+             bool) {
+            EXPECT_TRUE(ThereIsAnActiveSpan());
+            return PermanentError();
+          });
+  auto under_test = TracingConnection(mock);
+  std::vector<std::thread> threads;
+  std::vector<storage::internal::ParallelUploadFileShard> shards;
+  bool ignore_cleanup_failures = false;
+  auto actual = under_test.ExecuteParallelUploadFile(
+      std::move(threads), std::move(shards), ignore_cleanup_failures);
+
+  auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
+  auto const msg = PermanentError().message();
+  EXPECT_THAT(actual, StatusIs(code));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanNamed("storage::ParallelUploadFile/ExecuteParallelUploadFile"),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gl-cpp.status_code", code_str)))));
+}
+
 TEST(TracingClientTest, ListBucketAcl) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
