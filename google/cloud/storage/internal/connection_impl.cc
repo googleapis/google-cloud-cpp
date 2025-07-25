@@ -854,6 +854,13 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return std::unique_ptr<std::istream>(std::move(source));
 }
 
+StatusOr<std::size_t> StorageConnectionImpl::WriteObjectBufferSize(
+    ResumableUploadRequest const& request) {
+  auto const& current = google::cloud::internal::CurrentOptions();
+  return request.GetOption<UploadBufferSize>().value_or(
+      current.get<UploadBufferSizeOption>());
+}
+
 StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
