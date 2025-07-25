@@ -25,7 +25,10 @@ class LimitedErrorCountResumePolicyImpl : public ResumePolicy {
  public:
   explicit LimitedErrorCountResumePolicyImpl(int maximum_resumes)
       : maximum_resumes_(maximum_resumes) {}
-  ~LimitedErrorCountResumePolicyImpl() override = default;
+
+  std::unique_ptr<ResumePolicy> clone() const override {
+    return std::make_unique<LimitedErrorCountResumePolicyImpl>(*this);
+  }
 
   void OnStartSuccess() override {
     // For this policy we are only interested in the number of failures.
@@ -46,7 +49,10 @@ class LimitedErrorCountResumePolicyImpl : public ResumePolicy {
 class StopOnConsecutiveErrorsResumePolicyImpl : public ResumePolicy {
  public:
   StopOnConsecutiveErrorsResumePolicyImpl() = default;
-  ~StopOnConsecutiveErrorsResumePolicyImpl() override = default;
+
+  std::unique_ptr<ResumePolicy> clone() const override {
+    return std::make_unique<StopOnConsecutiveErrorsResumePolicyImpl>(*this);
+  }
 
   void OnStartSuccess() override { next_action_ = kContinue; }
   Action OnFinish(Status const&) override {
@@ -58,8 +64,6 @@ class StopOnConsecutiveErrorsResumePolicyImpl : public ResumePolicy {
 };
 
 }  // namespace
-
-ResumePolicy::~ResumePolicy() = default;
 
 ResumePolicyFactory LimitedErrorCountResumePolicy(int maximum_resumes) {
   return [maximum_resumes]() -> std::unique_ptr<ResumePolicy> {
