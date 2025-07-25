@@ -1,0 +1,14 @@
+{
+    "api_id": "bigquerydatapolicy.googleapis.com",
+    "api_shortname": "bigquerydatapolicy",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/bigquery/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:187149%20status=open",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "BigQuery Data Policy API",
+    "product_documentation": "https://cloud.google.com/bigquery/docs/column-data-masking-intro",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
