@@ -59,6 +59,23 @@ inline bool enable_server_retries(Options const& options) {
   return options.get<EnableServerRetriesOption>();
 }
 
+// This function allows for ReadRow and ReadRowsFull to provide an instance of
+// an OperationContext specific to that operation.
+bigtable::RowReader ReadRowsHelper(
+    std::shared_ptr<BigtableStub>& stub,
+    internal::ImmutableOptions const& current,
+    bigtable::ReadRowsParams
+        params,  // NOLINT(performance-unnecessary-value-param)
+    std::shared_ptr<OperationContext>
+        operation_context) {  // NOLINT(performance-unnecessary-value-param)
+  auto impl = std::make_shared<DefaultRowReader>(
+      stub, std::move(params.app_profile_id), std::move(params.table_name),
+      std::move(params.row_set), params.rows_limit, std::move(params.filter),
+      params.reverse, retry_policy(*current), backoff_policy(*current),
+      enable_server_retries(*current), std::move(operation_context));
+  return MakeRowReader(std::move(impl));
+}
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -99,7 +116,8 @@ DataConnectionImpl::DataConnectionImpl(
     std::string client_uid =
         internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
     operation_context_factory_ =
-        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid));
+        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid),
+                                                         options_);
   } else {
     operation_context_factory_ =
         std::make_unique<SimpleOperationContextFactory>();
@@ -231,12 +249,9 @@ DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
     bigtable::ReadRowsParams params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto impl = std::make_shared<DefaultRowReader>(
-      stub_, std::move(params.app_profile_id), std::move(params.table_name),
-      std::move(params.row_set), params.rows_limit, std::move(params.filter),
-      params.reverse, retry_policy(*current), backoff_policy(*current),
-      enable_server_retries(*current));
-  return MakeRowReader(std::move(impl));
+  auto operation_context = std::make_shared<OperationContext>();
+  return ReadRowsHelper(stub_, current, std::move(params),
+                        std::move(operation_context));
 }
 
 StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
@@ -245,9 +260,16 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   auto current = google::cloud::internal::SaveCurrentOptions();
   bigtable::RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
-  auto reader = ReadRowsFull(bigtable::ReadRowsParams{
-      table_name, app_profile_id(*current), std::move(row_set), rows_limit,
-      std::move(filter)});
+  // TODO(sdhart): ensure OperationContext::OnDone is called correctly.
+  // TODO(sdhart): add ReadRow tests once we call
+  //  OperationContextFactory::ReadRow to create the operation_context.
+  auto operation_context = std::make_shared<OperationContext>();
+  auto reader =
+      ReadRowsHelper(stub_, current,
+                     bigtable::ReadRowsParams{
+                         table_name, app_profile_id(*current),
+                         std::move(row_set), rows_limit, std::move(filter)},
+                     std::move(operation_context));
 
   auto it = reader.begin();
   if (it == reader.end()) return std::make_pair(false, bigtable::Row("", {}));

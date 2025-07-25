@@ -17,6 +17,10 @@
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/internal/make_status.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/testing_util/fake_clock.h"
+#endif
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -98,6 +102,48 @@ std::vector<StatusOr<bigtable::RowKeyType>> StatusOrRowKeys(
   return rows;
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+class MockMetric : public Metric {
+ public:
+  MOCK_METHOD(void, PreCall,
+              (opentelemetry::context::Context const&, PreCallParams const&),
+              (override));
+  MOCK_METHOD(void, PostCall,
+              (opentelemetry::context::Context const&,
+               grpc::ClientContext const&, PostCallParams const&),
+              (override));
+  MOCK_METHOD(void, OnDone,
+              (opentelemetry::context::Context const&, OnDoneParams const&),
+              (override));
+  MOCK_METHOD(void, ElementRequest,
+              (opentelemetry::context::Context const&,
+               ElementRequestParams const&),
+              (override));
+  MOCK_METHOD(void, ElementDelivery,
+              (opentelemetry::context::Context const&,
+               ElementDeliveryParams const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+              (ResourceLabels resource_labels, DataLabels data_labels),
+              (const, override));
+};
+
+// This class is a vehicle to get a MockMetric into the OperationContext object.
+class CloningMetric : public Metric {
+ public:
+  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
+      : metric_(std::move(metric)) {}
+  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+    return std::move(metric_);
+  }
+
+ private:
+  mutable std::unique_ptr<MockMetric> metric_;
+};
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 class DefaultRowReaderTest : public ::testing::Test {
  protected:
   // Ensure that we set up the ClientContext once per stream
@@ -123,6 +169,26 @@ class DefaultRowReaderTest : public ::testing::Test {
 };
 
 TEST_F(DefaultRowReaderTest, EmptyReaderHasNoRows) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -141,12 +207,32 @@ TEST_F(DefaultRowReaderTest, EmptyReaderHasNoRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), IsEmpty());
 }
 
 TEST_F(DefaultRowReaderTest, ReadOneRow) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -167,12 +253,33 @@ TEST_F(DefaultRowReaderTest, ReadOneRow) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, StreamIsDrained) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -204,7 +311,8 @@ TEST_F(DefaultRowReaderTest, StreamIsDrained) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
@@ -217,6 +325,25 @@ TEST_F(DefaultRowReaderTest, StreamIsDrained) {
 }
 
 TEST_F(DefaultRowReaderTest, RetryThenSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -245,12 +372,33 @@ TEST_F(DefaultRowReaderTest, RetryThenSuccess) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, NoRetryOnPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -267,13 +415,34 @@ TEST_F(DefaultRowReaderTest, NoRetryOnPermanentError) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kPermissionDenied)));
 }
 
 TEST_F(DefaultRowReaderTest, RetryPolicyExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .Times(kNumRetries + 1)
@@ -301,13 +470,33 @@ TEST_F(DefaultRowReaderTest, RetryPolicyExhausted) {
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), std::move(backoff), false,
-      mock_sleeper.AsStdFunction());
+      std::move(operation_context), mock_sleeper.AsStdFunction());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -339,12 +528,33 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -385,12 +595,33 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -427,12 +658,33 @@ TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), backoff_.clone(), false);
+      false, std::move(retry), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -472,12 +724,33 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), backoff_.clone(), false);
+      false, std::move(retry), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -526,12 +799,33 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), backoff_.clone(), false);
+      false, std::move(retry), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -555,13 +849,33 @@ TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kInternal)));
 }
 
 TEST_F(DefaultRowReaderTest, NoRetryOnEmptyRowSet) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -584,12 +898,32 @@ TEST_F(DefaultRowReaderTest, NoRetryOnEmptyRowSet) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r2")));
 }
 
 TEST_F(DefaultRowReaderTest, RowLimitIsSent) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -606,12 +940,31 @@ TEST_F(DefaultRowReaderTest, RowLimitIsSent) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(), 42,
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
-      backoff_.clone(), false);
+      backoff_.clone(), false, std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), IsEmpty());
 }
 
 TEST_F(DefaultRowReaderTest, RowLimitIsDecreasedOnRetry) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -641,12 +994,31 @@ TEST_F(DefaultRowReaderTest, RowLimitIsDecreasedOnRetry) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(), 42,
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
-      backoff_.clone(), false);
+      backoff_.clone(), false, std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -670,12 +1042,31 @@ TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(), 1,
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
-      backoff_.clone(), false);
+      backoff_.clone(), false, std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -707,7 +1098,8 @@ TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   auto it = reader.begin();
@@ -726,15 +1118,33 @@ TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
 }
 
 TEST_F(DefaultRowReaderTest, CancelBeforeBegin) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone).Times(0);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows).Times(0);
-
-  internal::OptionsSpan span(TestOptions(/*expected_streams=*/0));
 
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 
   // Manually cancel the call before a stream was created.
@@ -750,22 +1160,61 @@ TEST_F(DefaultRowReaderTest, CancelBeforeBegin) {
 }
 
 TEST_F(DefaultRowReaderTest, RowReaderConstructorDoesNotCallRpc) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone).Times(0);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   // The RowReader constructor/destructor by themselves should not
   // invoke the RPC or create parsers (the latter restriction because
   // parsers are per-connection and non-reusable).
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows).Times(0);
 
-  internal::OptionsSpan span(TestOptions(/*expected_streams=*/0));
-
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
 }
 
 TEST_F(DefaultRowReaderTest, RetryUsesNewContext) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .Times(kNumRetries + 1)
@@ -790,13 +1239,34 @@ TEST_F(DefaultRowReaderTest, RetryUsesNewContext) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, retry_.clone(), backoff_.clone(), false);
+      false, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(3);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(3);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -826,7 +1296,8 @@ TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone(), false);
+      true, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(
       StatusOrRowKeys(reader),
@@ -834,6 +1305,26 @@ TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
 }
 
 TEST_F(DefaultRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -860,7 +1351,8 @@ TEST_F(DefaultRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone(), false);
+      true, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(
       StatusOrRowKeys(reader),
@@ -871,6 +1363,26 @@ TEST_F(DefaultRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
 }
 
 TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -911,7 +1423,8 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone(), false);
+      true, retry_.clone(), backoff_.clone(), false,
+      std::move(operation_context));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r3")));
 }
@@ -944,13 +1457,34 @@ TEST_F(DefaultRowReaderTest, BigtableCookies) {
   auto impl = std::make_shared<DefaultRowReader>(
       mock, kAppProfile, kTableName, bigtable::RowSet("r1"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, retry_.clone(), backoff_.clone(), false);
+      true, retry_.clone(), backoff_.clone(), false,
+      std::make_shared<OperationContext>());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kPermissionDenied)));
 }
 
 TEST_F(DefaultRowReaderTest, RetryInfoHeeded) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto const delay = ms(std::chrono::minutes(5));
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
@@ -986,12 +1520,32 @@ TEST_F(DefaultRowReaderTest, RetryInfoHeeded) {
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone(), true,
-      mock_sleeper.AsStdFunction());
+      std::move(operation_context), mock_sleeper.AsStdFunction());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, RetryInfoIgnored) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto const delay = ms(std::chrono::minutes(5));
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
@@ -1015,7 +1569,7 @@ TEST_F(DefaultRowReaderTest, RetryInfoIgnored) {
       mock, kAppProfile, kTableName, bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone(), false,
-      mock_sleeper.AsStdFunction());
+      std::move(operation_context), mock_sleeper.AsStdFunction());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
   EXPECT_THAT(StatusOrRowKeys(reader),
               ElementsAre(StatusIs(StatusCode::kResourceExhausted)));
