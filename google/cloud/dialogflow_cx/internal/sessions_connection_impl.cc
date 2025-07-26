@@ -95,10 +95,16 @@ SessionsConnectionImpl::ServerStreamingDetectIntent(
       google::cloud::dialogflow::cx::v3::DetectIntentRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       SessionsServerStreamingDetectIntentStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status, google::cloud::dialogflow::cx::v3::DetectIntentResponse> {
+        google::cloud::dialogflow::cx::v3::DetectIntentResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

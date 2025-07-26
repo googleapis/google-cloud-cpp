@@ -135,8 +135,10 @@ TEST_F(StorageStubFactory, ReadObject) {
       stub->ReadObject(std::make_shared<grpc::ClientContext>(),
                        Options{}.set<UserAgentProductsOption>({"test-only/1"}),
                        google::storage::v2::ReadObjectRequest{});
-  EXPECT_THAT(stream->Read(),
-              VariantWith<Status>(StatusIs(StatusCode::kUnavailable)));
+  google::storage::v2::ReadObjectResponse response;
+  auto status = stream->Read(&response);
+  EXPECT_TRUE(status.has_value());
+  EXPECT_THAT(*status, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ReadObject")));
 }
 

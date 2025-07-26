@@ -70,13 +70,13 @@ TEST(StreamingReadRpcImpl, SuccessfulStream) {
       std::make_shared<grpc::ClientContext>(), std::move(mock));
   std::vector<std::string> values;
   for (;;) {
-    auto v = impl.Read();
-    if (absl::holds_alternative<FakeResponse>(v)) {
-      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
-      continue;
+    FakeResponse response;
+    auto status = impl.Read(&response);
+    if (status.has_value()) {
+      EXPECT_THAT(*status, IsOk());
+      break;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)), IsOk());
-    break;
+    values.push_back(response.value);
   }
   EXPECT_THAT(values, ElementsAre("value-0", "value-1", "value-2"));
 }
@@ -88,7 +88,10 @@ TEST(StreamingReadRpcImpl, EmptyStream) {
 
   StreamingReadRpcImpl<FakeResponse> impl(
       std::make_shared<grpc::ClientContext>(), std::move(mock));
-  EXPECT_THAT(impl.Read(), VariantWith<Status>(IsOk()));
+  FakeResponse response;
+  auto status = impl.Read(&response);
+  ASSERT_TRUE(status.has_value());
+  EXPECT_THAT(*status, IsOk());
 }
 
 TEST(StreamingReadRpcImpl, EmptyWithError) {
@@ -100,8 +103,10 @@ TEST(StreamingReadRpcImpl, EmptyWithError) {
 
   StreamingReadRpcImpl<FakeResponse> impl(
       std::make_shared<grpc::ClientContext>(), std::move(mock));
-  EXPECT_THAT(impl.Read(), VariantWith<Status>(StatusIs(
-                               StatusCode::kPermissionDenied, "uh-oh")));
+  FakeResponse response;
+  auto status = impl.Read(&response);
+  ASSERT_TRUE(status.has_value());
+  EXPECT_THAT(*status, StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
 TEST(StreamingReadRpcImpl, ErrorAfterData) {
@@ -120,14 +125,13 @@ TEST(StreamingReadRpcImpl, ErrorAfterData) {
       std::make_shared<grpc::ClientContext>(), std::move(mock));
   std::vector<std::string> values;
   for (;;) {
-    auto v = impl.Read();
-    if (absl::holds_alternative<FakeResponse>(v)) {
-      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
-      continue;
+    FakeResponse response;
+    auto status = impl.Read(&response);
+    if (status.has_value()) {
+      EXPECT_THAT(*status, StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
+      break;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)),
-                StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
-    break;
+    values.push_back(response.value);
   }
   EXPECT_THAT(values, ElementsAre("test-value-0"));
 }
@@ -153,8 +157,11 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
     StreamingReadRpcImpl<FakeResponse> impl(
         std::make_shared<grpc::ClientContext>(), std::move(mock));
     std::vector<std::string> values;
-    values.push_back(absl::get<FakeResponse>(impl.Read()).value);
-    values.push_back(absl::get<FakeResponse>(impl.Read()).value);
+    FakeResponse response;
+    EXPECT_FALSE(impl.Read(&response).has_value());
+    values.push_back(response.value);
+    EXPECT_FALSE(impl.Read(&response).has_value());
+    values.push_back(response.value);
     EXPECT_THAT(values, ElementsAre("value-0", "value-1"));
   }
   EXPECT_THAT(log.ExtractLines(),
@@ -181,8 +188,11 @@ TEST(StreamingReadRpcImpl, HandleUnfinishedExpected) {
       StreamingReadRpcImpl<FakeResponse> impl(
           std::make_shared<grpc::ClientContext>(), std::move(mock));
       std::vector<std::string> values;
-      values.push_back(absl::get<FakeResponse>(impl.Read()).value);
-      values.push_back(absl::get<FakeResponse>(impl.Read()).value);
+      FakeResponse response;
+      EXPECT_FALSE(impl.Read(&response).has_value());
+      values.push_back(response.value);
+      EXPECT_FALSE(impl.Read(&response).has_value());
+      values.push_back(response.value);
       EXPECT_THAT(values, ElementsAre("value-0", "value-1"));
     }
     EXPECT_THAT(log.ExtractLines(),
@@ -194,8 +204,10 @@ TEST(StreamingReadRpcImpl, ErrorStream) {
   auto under_test = StreamingReadRpcError<FakeResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
   under_test.Cancel();  // just a smoke test
-  EXPECT_THAT(under_test.Read(), VariantWith<Status>(StatusIs(
-                                     StatusCode::kPermissionDenied, "uh-oh")));
+  FakeResponse response;
+  auto status = under_test.Read(&response);
+  ASSERT_TRUE(status.has_value());
+  EXPECT_THAT(*status, StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
 }  // namespace
