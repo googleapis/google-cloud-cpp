@@ -48,15 +48,6 @@ ResourceLabels ResourceLabelsFromTableName(std::string const& table_name) {
   return resource_labels;
 }
 
-// This is a placeholder/example until first actual Metric is added.
-class NoopMetric : public Metric {
- public:
-  ~NoopMetric() override = default;
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
-    return std::make_unique<NoopMetric>();
-  }
-};
-
 }  // namespace
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
@@ -230,13 +221,12 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
   static bool const kMetricsInitialized = [this]() {
     if (read_row_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(read_row_metrics_, v);
     }
     return true;
@@ -262,14 +252,13 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
   static bool const kMetricsInitialized = [this]() {
     if (read_rows_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<FirstResponseLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(read_rows_metrics_, v);
     }
     return true;
@@ -295,13 +284,12 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
   static bool const kMetricsInitialized = [this]() {
     if (mutate_row_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(mutate_row_metrics_, v);
     }
     return true;
@@ -327,13 +315,12 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
   static bool const kMetricsInitialized = [this]() {
     if (mutate_rows_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(mutate_rows_metrics_, v);
     }
     return true;
@@ -360,13 +347,12 @@ MetricsOperationContextFactory::CheckAndMutateRow(
   static bool const kMetricsInitialized = [this]() {
     if (check_and_mutate_row_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(check_and_mutate_row_metrics_, v);
     }
     return true;
@@ -392,13 +378,12 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
   static bool const kMetricsInitialized = [this]() {
     if (sample_row_keys_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(sample_row_keys_metrics_, v);
     }
     return true;
@@ -425,13 +410,12 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
   static bool const kMetricsInitialized = [this]() {
     if (read_modify_write_row_metrics_.empty()) {
       std::vector<std::shared_ptr<Metric const>> v;
-      // v.emplace_back(std::make_shared<OperationLatency>(provider_));
+      v.emplace_back(std::make_shared<OperationLatency>(provider_));
       // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
       // v.emplace_back(std::make_shared<RetryCount>(provider_));
       // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
       // v.emplace_back(std::make_shared<ServerLatency>(provider_));
       // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      v.emplace_back(std::make_shared<NoopMetric>());
       swap(read_modify_write_row_metrics_, v);
     }
     return true;

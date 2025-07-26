@@ -23,6 +23,9 @@
 #include <google/bigtable/v2/response_params.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/context.h>
+#include <opentelemetry/metrics/meter.h>
+#include <opentelemetry/metrics/meter_provider.h>
+#include <opentelemetry/metrics/sync_instruments.h>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -97,6 +100,28 @@ class Metric {
                                ElementDeliveryParams const&) {}
   virtual std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
                                         DataLabels data_labels) const = 0;
+};
+
+class OperationLatency : public Metric {
+ public:
+  OperationLatency(
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
+  void PreCall(opentelemetry::context::Context const&,
+               PreCallParams const& p) override;
+  void PostCall(opentelemetry::context::Context const& context,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+  void OnDone(opentelemetry::context::Context const& context,
+              OnDoneParams const& p) override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  std::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      operation_latencies_;
+  OperationContext::Clock::time_point operation_start_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

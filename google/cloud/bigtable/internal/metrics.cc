@@ -21,6 +21,10 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+auto constexpr kMeterInstrumentationScope = "bigtable";
+auto constexpr kMeterInstrumentationScopeVersion = "v1";
+}  // namespace
 
 LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d) {
   return {
@@ -53,6 +57,49 @@ GetResponseParamsFromTrailingMetadata(
 }
 
 Metric::~Metric() = default;
+
+OperationLatency::OperationLatency(
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
+    : operation_latencies_(provider
+                               ->GetMeter(kMeterInstrumentationScope,
+                                          kMeterInstrumentationScopeVersion)
+                               ->CreateDoubleHistogram("operation_latencies")
+                               .release()) {}
+
+void OperationLatency::PreCall(opentelemetry::context::Context const&,
+                               PreCallParams const& p) {
+  if (p.first_attempt) {
+    operation_start_ = p.attempt_start;
+  }
+}
+
+void OperationLatency::PostCall(opentelemetry::context::Context const&,
+                                grpc::ClientContext const& client_context,
+                                PostCallParams const&) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+}
+
+void OperationLatency::OnDone(opentelemetry::context::Context const& context,
+                              OnDoneParams const& p) {
+  data_labels_.status = StatusCodeToString(p.operation_status.code());
+  auto operation_elapsed = std::chrono::duration_cast<LatencyDuration>(
+      p.operation_end - operation_start_);
+  operation_latencies_->Record(operation_elapsed.count(),
+                               IntoLabelMap(resource_labels_, data_labels_),
+                               context);
+}
+
+std::unique_ptr<Metric> OperationLatency::clone(ResourceLabels resource_labels,
+                                                DataLabels data_labels) const {
+  auto m = std::make_unique<OperationLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
