@@ -105,7 +105,8 @@ class Metric {
 class OperationLatency : public Metric {
  public:
   explicit OperationLatency(
-      std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
                PreCallParams const& p) override;
   void PostCall(opentelemetry::context::Context const& context,
@@ -119,7 +120,7 @@ class OperationLatency : public Metric {
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::shared_ptr<opentelemetry::metrics::Histogram<double>>
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
   OperationContext::Clock::time_point operation_start_;
 };

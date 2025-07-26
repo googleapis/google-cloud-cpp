@@ -30,7 +30,6 @@ namespace {
 using ::google::cloud::testing_util::FakeSteadyClock;
 using ::google::cloud::testing_util::SetServerMetadata;
 
-using ::testing::_;
 using ::testing::A;
 using ::testing::Eq;
 using ::testing::Pair;
@@ -39,16 +38,15 @@ using ::testing::UnorderedElementsAre;
 using ::opentelemetry::metrics::Counter;
 using ::opentelemetry::metrics::Histogram;
 using ::opentelemetry::metrics::ObservableInstrument;
-using ::opentelemetry::metrics::SynchronousInstrument;
 using ::opentelemetry::metrics::UpDownCounter;
 
 template <typename T>
 class MockHistogram : public opentelemetry::metrics::Histogram<T> {
  public:
-  MOCK_METHOD(void, Record,
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
               (T value, opentelemetry::context::Context const& context),
               (noexcept, override));
-  MOCK_METHOD(void, Record,
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
               (T value,
                opentelemetry::common::KeyValueIterable const& attributes,
                opentelemetry::context::Context const& context),
@@ -58,94 +56,94 @@ class MockHistogram : public opentelemetry::metrics::Histogram<T> {
 class MockMeter : public opentelemetry::metrics::Meter {
  public:
   MOCK_METHOD(opentelemetry::nostd::unique_ptr<Counter<uint64_t>>,
-              CreateUInt64Counter,
+              CreateUInt64Counter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::unique_ptr<Counter<double>>,
-              CreateDoubleCounter,
+              CreateDoubleCounter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateInt64ObservableCounter,
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
+  MOCK_METHOD(
+      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
+      CreateInt64ObservableCounter,  // NOLINT(bugprone-exception-escape)
+      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
+       opentelemetry::nostd::string_view),
+      (noexcept, override));
 
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateDoubleObservableCounter,
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
+  MOCK_METHOD(
+      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
+      CreateDoubleObservableCounter,  // NOLINT(bugprone-exception-escape)
+      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
+       opentelemetry::nostd::string_view),
+      (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::unique_ptr<Histogram<uint64_t>>,
-              CreateUInt64Histogram,
+              CreateUInt64Histogram,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::unique_ptr<Histogram<double>>,
-              CreateDoubleHistogram,
+              CreateDoubleHistogram,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateInt64ObservableGauge,
+              CreateInt64ObservableGauge,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateDoubleObservableGauge,
+              CreateDoubleObservableGauge,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::unique_ptr<UpDownCounter<int64_t>>,
-              CreateInt64UpDownCounter,
+              CreateInt64UpDownCounter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
   MOCK_METHOD(opentelemetry::nostd::unique_ptr<UpDownCounter<double>>,
-              CreateDoubleUpDownCounter,
+              CreateDoubleUpDownCounter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateInt64ObservableUpDownCounter,
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
+  MOCK_METHOD(
+      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
+      CreateInt64ObservableUpDownCounter,  // NOLINT(bugprone-exception-escape)
+      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
+       opentelemetry::nostd::string_view),
+      (noexcept, override));
 
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateDoubleObservableUpDownCounter,
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
+  MOCK_METHOD(
+      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
+      CreateDoubleObservableUpDownCounter,  // NOLINT(bugprone-exception-escape)
+      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
+       opentelemetry::nostd::string_view),
+      (noexcept, override));
 };
 
 class MockMeterProvider : public opentelemetry::metrics::MeterProvider {
  public:
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
-              GetMeter,
+              GetMeter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
@@ -244,7 +242,8 @@ TEST(OperationLatencyTest, FirstAttemptSuccess) {
                 Pair("app_profile", "my-app-profile")));
       });
 
-  auto mock_meter = std::make_shared<MockMeter>();
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
   EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
       .WillOnce([mock = std::move(mock_histogram)](
                     opentelemetry::nostd::string_view name,
@@ -254,7 +253,8 @@ TEST(OperationLatencyTest, FirstAttemptSuccess) {
         return std::move(mock);
       });
 
-  auto mock_provider = std::make_shared<MockMeterProvider>();
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
@@ -308,7 +308,8 @@ TEST(OperationLatencyTest, ThirdAttemptSuccess) {
                 Pair("app_profile", "my-app-profile")));
       });
 
-  auto mock_meter = std::make_shared<MockMeter>();
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
   EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
       .WillOnce([mock = std::move(mock_histogram)](
                     opentelemetry::nostd::string_view name,
@@ -318,7 +319,8 @@ TEST(OperationLatencyTest, ThirdAttemptSuccess) {
         return std::move(mock);
       });
 
-  auto mock_provider = std::make_shared<MockMeterProvider>();
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,

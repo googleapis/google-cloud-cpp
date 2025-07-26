@@ -59,7 +59,8 @@ GetResponseParamsFromTrailingMetadata(
 Metric::~Metric() = default;
 
 OperationLatency::OperationLatency(
-    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
     : operation_latencies_(provider
                                ->GetMeter(kMeterInstrumentationScope,
                                           kMeterInstrumentationScopeVersion)
