@@ -1057,8 +1057,9 @@ TensorboardServiceConnectionImpl::ReadTensorboardBlobData(
   return internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
       [resumable = std::move(resumable)]()
-          -> absl::variant<Status, google::cloud::aiplatform::v1::
-                                       ReadTensorboardBlobDataResponse> {
+          -> absl::variant<
+              Status,
+              google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse> {
         google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse response;
         auto status = resumable->Read(&response);
         if (status.has_value()) return *status;

@@ -589,10 +589,11 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
-              *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK},
-                                          {1, grpc::StatusCode::UNAVAILABLE},
-                                          {2, grpc::StatusCode::PERMISSION_DENIED},
-                                          {3, grpc::StatusCode::UNAVAILABLE}});
+              *r = MakeBulkApplyResponse(
+                  {{0, grpc::StatusCode::OK},
+                   {1, grpc::StatusCode::UNAVAILABLE},
+                   {2, grpc::StatusCode::PERMISSION_DENIED},
+                   {3, grpc::StatusCode::UNAVAILABLE}});
               return absl::nullopt;
             })
             .WillOnce(Return(Status()));
@@ -761,8 +762,8 @@ TEST_F(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
             // Our retry and backoff policies should take effect.
             EXPECT_CALL(*stream, Read)
                 .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
-                  *r =
-                      MakeBulkApplyResponse({{0, grpc::StatusCode::UNAVAILABLE}});
+                  *r = MakeBulkApplyResponse(
+                      {{0, grpc::StatusCode::UNAVAILABLE}});
                   return absl::nullopt;
                 })
                 .WillOnce(Return(Status()));
@@ -1623,9 +1624,9 @@ TEST_F(DataConnectionTest, SampleRowsBigtableCookie) {
             metadata_fixture_.SetServerMetadata(
                 *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
             auto stream = std::make_unique<MockSampleRowKeysStream>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientError()));
-        return stream;
-      })
+            EXPECT_CALL(*stream, Read).WillOnce(Return(TransientError()));
+            return stream;
+          })
       .WillOnce(
           [this](auto context, auto const&, v2::SampleRowKeysRequest const&) {
             // Verify that the next request includes the bigtable cookie from

@@ -1491,11 +1491,12 @@ TEST_F(DefaultRowReaderTest, RetryInfoHeeded) {
       .WillOnce([delay](auto, auto const&,
                         google::bigtable::v2::ReadRowsRequest const&) {
         auto stream = std::make_unique<MockReadRowsStream>();
-        EXPECT_CALL(*stream, Read).WillOnce([delay](google::bigtable::v2::ReadRowsResponse*) {
-          auto s = internal::ResourceExhaustedError("try again");
-          internal::SetRetryInfo(s, internal::RetryInfo{delay});
-          return s;
-        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([delay](google::bigtable::v2::ReadRowsResponse*) {
+              auto s = internal::ResourceExhaustedError("try again");
+              internal::SetRetryInfo(s, internal::RetryInfo{delay});
+              return s;
+            });
         return stream;
       })
       .WillOnce([](auto, auto const&,
@@ -1552,11 +1553,12 @@ TEST_F(DefaultRowReaderTest, RetryInfoIgnored) {
       .WillOnce([delay](auto, auto const&,
                         google::bigtable::v2::ReadRowsRequest const&) {
         auto stream = std::make_unique<MockReadRowsStream>();
-        EXPECT_CALL(*stream, Read).WillOnce([delay](google::bigtable::v2::ReadRowsResponse*) {
-          auto s = internal::ResourceExhaustedError("try again");
-          internal::SetRetryInfo(s, internal::RetryInfo{delay});
-          return s;
-        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([delay](google::bigtable::v2::ReadRowsResponse*) {
+              auto s = internal::ResourceExhaustedError("try again");
+              internal::SetRetryInfo(s, internal::RetryInfo{delay});
+              return s;
+            });
         return stream;
       });
 

@@ -119,8 +119,8 @@ PredictionServiceConnectionImpl::StreamRawPredict(
       retry_policy(*current), backoff_policy(*current), factory,
       PredictionServiceStreamRawPredictStreamingUpdater, request);
   return internal::MakeStreamRange<google::api::HttpBody>(
-      [resumable = std::move(resumable)]()
-          -> absl::variant<Status, google::api::HttpBody> {
+      [resumable = std::move(
+           resumable)]() -> absl::variant<Status, google::api::HttpBody> {
         google::api::HttpBody response;
         auto status = resumable->Read(&response);
         if (status.has_value()) return *status;

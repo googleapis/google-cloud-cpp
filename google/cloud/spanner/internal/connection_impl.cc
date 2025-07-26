@@ -1397,9 +1397,8 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
   // session into the stream range so that it is not returned to the pool
   // until the stream is exhausted.
   return internal::MakeStreamRange<spanner::BatchedCommitResult>(
-      [reader = std::move(reader),
-       session = std::move(session)]() -> absl::variant<
-          Status, spanner::BatchedCommitResult> {
+      [reader = std::move(reader), session = std::move(session)]()
+          -> absl::variant<Status, spanner::BatchedCommitResult> {
         google::spanner::v1::BatchWriteResponse response;
         auto result = reader->Read(&response);
         if (result.has_value()) {

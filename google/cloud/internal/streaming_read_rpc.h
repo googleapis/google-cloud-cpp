@@ -15,9 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_H
 
-#include <memory>
-#include <string>
-
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
@@ -27,6 +24,8 @@
 #include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
