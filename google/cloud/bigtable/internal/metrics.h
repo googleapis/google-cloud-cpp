@@ -104,7 +104,7 @@ class Metric {
 
 class OperationLatency : public Metric {
  public:
-  OperationLatency(
+  explicit OperationLatency(
       std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
                PreCallParams const& p) override;

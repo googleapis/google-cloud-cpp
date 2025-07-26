@@ -155,7 +155,7 @@ void MetricsOperationContextFactory::InitializeProvider(
   auto constexpr kZoneLabel = "zone";
 
   auto dynamic_resource_fn =
-      [&](opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
+      [=](opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
         google::api::MonitoredResource resource;
         resource.set_type(kResourceType);
         auto& labels = *resource.mutable_labels();
