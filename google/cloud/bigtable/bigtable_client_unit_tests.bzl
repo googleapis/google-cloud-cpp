@@ -61,6 +61,7 @@ bigtable_client_unit_tests = [
     "internal/logging_data_client_test.cc",
     "internal/metrics_test.cc",
     "internal/mutate_rows_limiter_test.cc",
+    "internal/operation_context_factory_test.cc",
     "internal/operation_context_test.cc",
     "internal/prefix_range_end_test.cc",
     "internal/rate_limiter_test.cc",

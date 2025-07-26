@@ -84,7 +84,15 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   MetricsOperationContextFactory(
       std::string client_uid,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+      std::shared_ptr<OperationContext::Clock> clock =
+          std::make_shared<OperationContext::Clock>(),
       Options options = {});
+
+  // This constructs an instance only suitable for testing. The provided metric
+  // is copied into every RPC metric vector, preventing normal Metric
+  // initialization and skipping OpenTelemetry provider initialization.
+  MetricsOperationContextFactory(std::string client_uid,
+                                 std::shared_ptr<Metric const> const& metric);
 
   std::shared_ptr<OperationContext> ReadRow(
       std::string const& table_name, std::string const& app_profile) override;
@@ -107,7 +115,12 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& table_name, std::string const& app_profile) override;
 
  private:
+  void InitializeProvider(
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+      Options options);
+
   std::string client_uid_;
+  std::shared_ptr<OperationContext::Clock> clock_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
 
   // These vectors are initialized exactly once and the initialization is

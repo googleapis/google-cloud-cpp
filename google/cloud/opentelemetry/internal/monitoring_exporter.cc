@@ -129,7 +129,9 @@ std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(MonitoredResourceFromDataFn dynamic_resource_fn,
                        ResourceFilterDataFn resource_filter_fn,
                        Options options) {
-  auto connection = monitoring_v3::MakeMetricServiceConnection(options);
+  // TODO(#15321): Determine which options, if any, should be passed along from
+  //  the options parameter to MakeMetricServiceConnection.
+  auto connection = monitoring_v3::MakeMetricServiceConnection();
   options = DefaultOptions(std::move(options));
   return std::make_unique<otel_internal::MonitoringExporter>(
       std::move(connection), std::move(dynamic_resource_fn),
