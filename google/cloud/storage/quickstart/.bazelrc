@@ -30,5 +30,4 @@ build:macos --host_cxxopt=-std=c++17
 build --experimental_convenience_symlinks=ignore
 
 #Our quickstarts do not yet support bzlmod
-build --noenable_bzlmod
 build --enable_workspace

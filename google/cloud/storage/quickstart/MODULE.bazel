@@ -1,0 +1,3 @@
+module(name = "storage-quickstart")
+
+bazel_dep(name = "google_cloud_cpp", version = "3.0.0-rc0")
