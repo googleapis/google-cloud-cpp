@@ -15,6 +15,10 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/testing_util/fake_clock.h"
+#endif
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
@@ -210,6 +214,17 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
       std::move(background), std::move(stub), std::move(limiter), Options{});
 }
 
+std::shared_ptr<DataConnectionImpl> TestConnection(
+    std::shared_ptr<BigtableStub> stub,
+    std::unique_ptr<OperationContextFactory> operation_context_factory,
+    std::shared_ptr<MutateRowsLimiter> limiter =
+        std::make_shared<NoopMutateRowsLimiter>()) {
+  auto background = internal::MakeBackgroundThreadsFactory()();
+  return std::make_shared<DataConnectionImpl>(
+      std::move(background), std::move(stub),
+      std::move(operation_context_factory), std::move(limiter), Options{});
+}
+
 TEST(TransformReadModifyWriteRowResponse, Basic) {
   v2::ReadModifyWriteRowResponse response;
   auto constexpr kText = R"pb(
@@ -248,6 +263,111 @@ TEST(TransformReadModifyWriteRowResponse, Basic) {
                                        MatchCell(c3), MatchCell(c4)));
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+class MockMetric : public Metric {
+ public:
+  MOCK_METHOD(void, PreCall,
+              (opentelemetry::context::Context const&, PreCallParams const&),
+              (override));
+  MOCK_METHOD(void, PostCall,
+              (opentelemetry::context::Context const&,
+               grpc::ClientContext const&, PostCallParams const&),
+              (override));
+  MOCK_METHOD(void, OnDone,
+              (opentelemetry::context::Context const&, OnDoneParams const&),
+              (override));
+  MOCK_METHOD(void, ElementRequest,
+              (opentelemetry::context::Context const&,
+               ElementRequestParams const&),
+              (override));
+  MOCK_METHOD(void, ElementDelivery,
+              (opentelemetry::context::Context const&,
+               ElementDeliveryParams const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+              (ResourceLabels resource_labels, DataLabels data_labels),
+              (const, override));
+};
+
+// This class is a vehicle to get a MockMetric into the OperationContext object.
+class CloningMetric : public Metric {
+ public:
+  explicit CloningMetric(std::unique_ptr<MockMetric> metric) {
+    metrics_.push_back(std::move(metric));
+  }
+  explicit CloningMetric(std::vector<std::unique_ptr<MockMetric>> metrics)
+      : metrics_(std::move(metrics)) {
+    std::reverse(metrics_.begin(), metrics_.end());
+  }
+
+  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+    auto m = std::move(metrics_.back());
+    metrics_.pop_back();
+    return m;
+  }
+
+ private:
+  mutable std::vector<std::unique_ptr<MockMetric>> metrics_;
+};
+
+class FakeOperationContextFactory : public OperationContextFactory {
+ public:
+  FakeOperationContextFactory(ResourceLabels r, DataLabels d,
+                              std::shared_ptr<Metric> metric,
+                              std::shared_ptr<OperationContext::Clock> clock)
+      : resource_labels_(std::move(r)),
+        data_labels_(std::move(d)),
+        clock_(std::move(clock)) {
+    metrics_.push_back(std::move(metric));
+  }
+
+  std::shared_ptr<OperationContext> ReadRow(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+  std::shared_ptr<OperationContext> ReadRows(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+  std::shared_ptr<OperationContext> MutateRow(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+  std::shared_ptr<OperationContext> MutateRows(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+  std::shared_ptr<OperationContext> CheckAndMutateRow(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+  std::shared_ptr<OperationContext> SampleRowKeys(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+  std::shared_ptr<OperationContext> ReadModifyWriteRow(
+      std::string const& name, std::string const& app_profile) override {
+    return Helper(name, app_profile);
+  }
+
+ private:
+  std::shared_ptr<OperationContext> Helper(std::string const& name,
+                                           std::string const& app_profile) {
+    resource_labels_.table = name;
+    data_labels_.app_profile = app_profile;
+    return std::make_shared<OperationContext>(resource_labels_, data_labels_,
+                                              metrics_, clock_);
+  }
+
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  std::vector<std::shared_ptr<Metric const>> metrics_;
+  std::shared_ptr<OperationContext::Clock> clock_;
+};
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 class DataConnectionTest : public ::testing::Test {
  protected:
   Options CallOptions() {
@@ -265,6 +385,21 @@ class DataConnectionTest : public ::testing::Test {
 };
 
 TEST_F(DataConnectionTest, ApplySuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
@@ -275,13 +410,28 @@ TEST_F(DataConnectionTest, ApplySuccess) {
         return v2::MutateRowResponse{};
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(DataConnectionTest, ApplyPermanentFailure) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
@@ -292,13 +442,28 @@ TEST_F(DataConnectionTest, ApplyPermanentFailure) {
         return PermanentError();
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
@@ -316,13 +481,28 @@ TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
         return v2::MutateRowResponse{};
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(DataConnectionTest, ApplyRetryExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .Times(kNumRetries + 1)
@@ -341,7 +521,7 @@ TEST_F(DataConnectionTest, ApplyRetryExhausted) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto status = conn->Apply(kTableName, IdempotentMutation("row"));
@@ -375,6 +555,21 @@ TEST_F(DataConnectionTest, ApplyRetryIdempotency) {
 }
 
 TEST_F(DataConnectionTest, ApplyBigtableCookie) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([this](grpc::ClientContext& context, Options const&,
@@ -401,7 +596,7 @@ TEST_F(DataConnectionTest, ApplyBigtableCookie) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptionsWithoutClientContextSetup().set<DataBackoffPolicyOption>(
           std::move(mock_b)));
@@ -410,6 +605,21 @@ TEST_F(DataConnectionTest, ApplyBigtableCookie) {
 }
 
 TEST_F(DataConnectionTest, AsyncApplySuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
@@ -420,7 +630,7 @@ TEST_F(DataConnectionTest, AsyncApplySuccess) {
         return make_ready_future(make_status_or(v2::MutateRowResponse{}));
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
   ASSERT_STATUS_OK(status.get());
@@ -445,6 +655,21 @@ TEST_F(DataConnectionTest, AsyncApplyPermanentFailure) {
 }
 
 TEST_F(DataConnectionTest, AsyncApplyRetryExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .Times(kNumRetries + 1)
@@ -464,7 +689,7 @@ TEST_F(DataConnectionTest, AsyncApplyRetryExhausted) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto status = conn->AsyncApply(kTableName, IdempotentMutation("row"));
@@ -537,13 +762,43 @@ TEST_F(DataConnectionTest, AsyncApplyBigtableCookie) {
 }
 
 TEST_F(DataConnectionTest, BulkApplyEmpty) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone).Times(0);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   auto actual = conn->BulkApply(kTableName, bigtable::BulkMutation());
   CheckFailedMutations(actual, {});
 }
 
 TEST_F(DataConnectionTest, BulkApplySuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   bigtable::BulkMutation mut(IdempotentMutation("r0"),
                              IdempotentMutation("r1"));
 
@@ -565,13 +820,28 @@ TEST_F(DataConnectionTest, BulkApplySuccess) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
 
 TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 2},
                                                     {TransientError(), 3}};
   bigtable::BulkMutation mut(
@@ -615,13 +885,28 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
 
 TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   bigtable::BulkMutation mut(IdempotentMutation("returned"),
                              IdempotentMutation("forgotten"));
 
@@ -655,13 +940,27 @@ TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
 
 TEST_F(DataConnectionTest, BulkApplyStreamRetryExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
   std::vector<bigtable::FailedMutation> expected = {{TransientError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
@@ -685,7 +984,7 @@ TEST_F(DataConnectionTest, BulkApplyStreamRetryExhausted) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto actual = conn->BulkApply(kTableName, std::move(mut));
@@ -693,6 +992,21 @@ TEST_F(DataConnectionTest, BulkApplyStreamRetryExhausted) {
 }
 
 TEST_F(DataConnectionTest, BulkApplyStreamPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   std::vector<bigtable::FailedMutation> expected = {{PermanentError(), 0}};
   bigtable::BulkMutation mut(IdempotentMutation("row"));
 
@@ -707,7 +1021,7 @@ TEST_F(DataConnectionTest, BulkApplyStreamPermanentError) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
@@ -1004,6 +1318,21 @@ TEST_F(DataConnectionTest, ReadRowsRetryInfoIgnored) {
 }
 
 TEST_F(DataConnectionTest, ReadRowEmpty) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -1019,7 +1348,7 @@ TEST_F(DataConnectionTest, ReadRowEmpty) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   ASSERT_STATUS_OK(resp);
@@ -1027,6 +1356,21 @@ TEST_F(DataConnectionTest, ReadRowEmpty) {
 }
 
 TEST_F(DataConnectionTest, ReadRowSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -1053,7 +1397,7 @@ TEST_F(DataConnectionTest, ReadRowSuccess) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   ASSERT_STATUS_OK(resp);
@@ -1062,6 +1406,21 @@ TEST_F(DataConnectionTest, ReadRowSuccess) {
 }
 
 TEST_F(DataConnectionTest, ReadRowFailure) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](auto, auto const&,
@@ -1077,13 +1436,36 @@ TEST_F(DataConnectionTest, ReadRowFailure) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->ReadRow(kTableName, "row", TestFilter());
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(DataConnectionTest, CheckAndMutateRowSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric1 = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric1, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric1, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric1, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric1, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric1, ElementDelivery).Times(0);
+  auto mock_metric2 = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric2, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric2, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric2, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric2, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric2, ElementDelivery).Times(0);
+  std::vector<std::unique_ptr<MockMetric>> v;
+  v.push_back(std::move(mock_metric1));
+  v.push_back(std::move(mock_metric2));
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(v));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1122,7 +1504,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowSuccess) {
         return resp;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto predicate = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
                                            {t1, t2}, {f1, f2});
@@ -1174,6 +1556,21 @@ TEST_F(DataConnectionTest, CheckAndMutateRowIdempotency) {
 }
 
 TEST_F(DataConnectionTest, CheckAndMutateRowPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1194,7 +1591,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowPermanentError) {
         return PermanentError();
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto status = conn->CheckAndMutateRow(kTableName, "row", TestFilter(),
                                         {t1, t2}, {f1, f2});
@@ -1202,6 +1599,21 @@ TEST_F(DataConnectionTest, CheckAndMutateRowPermanentError) {
 }
 
 TEST_F(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1230,7 +1642,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions()
           .set<DataBackoffPolicyOption>(std::move(mock_b))
@@ -1284,6 +1696,30 @@ TEST_F(DataConnectionTest, CheckAndMutateRowBigtableCookie) {
 }
 
 TEST_F(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric1 = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric1, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric1, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric1, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric1, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric1, ElementDelivery).Times(0);
+  auto mock_metric2 = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric2, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric2, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric2, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric2, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric2, ElementDelivery).Times(0);
+  std::vector<std::unique_ptr<MockMetric>> v;
+  v.push_back(std::move(mock_metric1));
+  v.push_back(std::move(mock_metric2));
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(v));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1322,7 +1758,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
         return make_ready_future(make_status_or(resp));
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto predicate = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                                 {t1, t2}, {f1, f2})
@@ -1377,6 +1813,21 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
 }
 
 TEST_F(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1398,7 +1849,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
             PermanentError());
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto status = conn->AsyncCheckAndMutateRow(kTableName, "row", TestFilter(),
                                              {t1, t2}, {f1, f2});
@@ -1406,6 +1857,21 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
 }
 
 TEST_F(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
   auto t2 = bigtable::SetCell("f2", "c2", ms(0), "true2");
   auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
@@ -1435,7 +1901,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions()
           .set<DataBackoffPolicyOption>(std::move(mock_b))
@@ -1493,9 +1959,26 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowBigtableCookie) {
 }
 
 TEST_F(DataConnectionTest, SampleRowsSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
-      .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const& request) {
+      .WillOnce([this](auto client_context, auto const&,
+                       v2::SampleRowKeysRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockSampleRowKeysStream>();
@@ -1515,7 +1998,7 @@ TEST_F(DataConnectionTest, SampleRowsSuccess) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto samples = conn->SampleRows(kTableName);
@@ -1526,6 +2009,21 @@ TEST_F(DataConnectionTest, SampleRowsSuccess) {
 }
 
 TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
       .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const& request) {
@@ -1553,7 +2051,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto samples = conn->SampleRows(kTableName);
   ASSERT_STATUS_OK(samples);
@@ -1563,6 +2061,21 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
 }
 
 TEST_F(DataConnectionTest, SampleRowsRetryExhausted) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
       .Times(kNumRetries + 1)
@@ -1585,7 +2098,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryExhausted) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(kNumRetries + 1);
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions()
           .set<DataBackoffPolicyOption>(std::move(mock_b))
@@ -1595,9 +2108,26 @@ TEST_F(DataConnectionTest, SampleRowsRetryExhausted) {
 }
 
 TEST_F(DataConnectionTest, SampleRowsPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, SampleRowKeys)
-      .WillOnce([](auto, auto const&, v2::SampleRowKeysRequest const& request) {
+      .WillOnce([this](auto client_context, auto const&,
+                       v2::SampleRowKeysRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockSampleRowKeysStream>();
@@ -1608,7 +2138,7 @@ TEST_F(DataConnectionTest, SampleRowsPermanentError) {
   MockFunction<void(grpc::ClientContext&)> mock_setup;
   EXPECT_CALL(mock_setup, Call).Times(1);
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto samples = conn->SampleRows(kTableName);
@@ -1716,6 +2246,21 @@ TEST_F(DataConnectionTest, AsyncSampleRows) {
 }
 
 TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   v2::ReadModifyWriteRowResponse response;
   auto constexpr kText = R"pb(
     row {
@@ -1745,7 +2290,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
   req.set_table_name(kTableName);
   req.set_row_key("row");
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto row = conn->ReadModifyWriteRow(req);
   ASSERT_STATUS_OK(row);
@@ -1756,6 +2301,21 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
 }
 
 TEST_F(DataConnectionTest, ReadModifyWriteRowPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
@@ -1771,13 +2331,28 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowPermanentError) {
   req.set_table_name(kTableName);
   req.set_row_key("row");
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto row = conn->ReadModifyWriteRow(req);
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
@@ -1800,7 +2375,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
     return clone;
   });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(
       CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto row = conn->ReadModifyWriteRow(req);
@@ -1808,6 +2383,21 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
 }
 
 TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   v2::ReadModifyWriteRowResponse response;
   auto constexpr kText = R"pb(
     row {
@@ -1824,8 +2414,10 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
-      .WillOnce([&response](google::cloud::CompletionQueue&, auto, auto,
-                            v2::ReadModifyWriteRowRequest const& request) {
+      .WillOnce([&response, this](
+                    google::cloud::CompletionQueue&, auto client_context, auto,
+                    v2::ReadModifyWriteRowRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -1837,8 +2429,12 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
   req.set_table_name(kTableName);
   req.set_row_key("row");
 
-  auto conn = TestConnection(std::move(mock));
-  internal::OptionsSpan span(CallOptions());
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+
+  auto conn = TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   ASSERT_STATUS_OK(row);
   EXPECT_EQ("row", row->row_key());
@@ -1848,10 +2444,26 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
 }
 
 TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
-                   v2::ReadModifyWriteRowRequest const& request) {
+      .WillOnce([this](google::cloud::CompletionQueue&, auto client_context,
+                       auto, v2::ReadModifyWriteRowRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -1864,8 +2476,12 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
   req.set_table_name(kTableName);
   req.set_row_key("row");
 
-  auto conn = TestConnection(std::move(mock));
-  internal::OptionsSpan span(CallOptions());
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+
+  auto conn = TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(
+      CallOptions().set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -1873,8 +2489,9 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
 TEST_F(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
-                   v2::ReadModifyWriteRowRequest const& request) {
+      .WillOnce([this](google::cloud::CompletionQueue&, auto client_context,
+                       auto, v2::ReadModifyWriteRowRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -1894,9 +2511,14 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
     return clone;
   });
 
+  MockFunction<void(grpc::ClientContext&)> mock_setup;
+  EXPECT_CALL(mock_setup, Call).Times(1);
+
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<DataBackoffPolicyOption>(std::move(mock_b)));
+      CallOptions()
+          .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
+          .set<DataBackoffPolicyOption>(std::move(mock_b)));
   auto row = conn->AsyncReadModifyWriteRow(req).get();
   EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
 }
@@ -1960,6 +2582,21 @@ TEST_F(DataConnectionTest, AsyncReadRowsReverseScan) {
 }
 
 TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](CompletionQueue const&, auto, auto,
@@ -1983,7 +2620,7 @@ TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   ASSERT_STATUS_OK(resp);
@@ -1991,6 +2628,21 @@ TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
 }
 
 TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](CompletionQueue const&, auto, auto,
@@ -2025,7 +2677,7 @@ TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
         return stream;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   ASSERT_STATUS_OK(resp);
@@ -2034,6 +2686,21 @@ TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
 }
 
 TEST_F(DataConnectionTest, AsyncReadRowFailure) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([](CompletionQueue const&, auto, auto,
@@ -2049,7 +2716,7 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
         return std::make_unique<ErrorStream>(PermanentError());
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
