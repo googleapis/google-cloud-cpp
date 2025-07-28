@@ -48,18 +48,6 @@ ResourceLabels ResourceLabelsFromTableName(std::string const& table_name) {
   return resource_labels;
 }
 
-// This is a placeholder/example until first actual Metric is added.
-class NoopMetric : public Metric {
- public:
-  ~NoopMetric() override = default;
-  NoopMetric(std::string const&,
-             std::shared_ptr<opentelemetry::metrics::MeterProvider> const&) {}
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
-    return std::make_unique<NoopMetric>(
-        "", std::shared_ptr<opentelemetry::metrics::MeterProvider>{});
-  }
-};
-
 }  // namespace
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
@@ -247,15 +235,14 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
   auto constexpr kRpc = "ReadRow";
   absl::call_once(read_row_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(read_row_metrics_.metrics, v);
   });
 
@@ -276,17 +263,15 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
   auto constexpr kRpc = "ReadRows";
   absl::call_once(read_rows_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc,
-    //    provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
-    //    provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(read_rows_metrics_.metrics, v);
   });
 
@@ -307,15 +292,14 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
   auto constexpr kRpc = "MutateRow";
   absl::call_once(mutate_row_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(mutate_row_metrics_.metrics, v);
   });
 
@@ -336,15 +320,14 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
   auto constexpr kRpc = "MutateRows";
   absl::call_once(mutate_rows_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(mutate_rows_metrics_.metrics, v);
   });
 
@@ -366,15 +349,14 @@ MetricsOperationContextFactory::CheckAndMutateRow(
   auto constexpr kRpc = "CheckAndMutateRow";
   absl::call_once(check_and_mutate_row_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(check_and_mutate_row_metrics_.metrics, v);
   });
 
@@ -396,15 +378,14 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
   auto constexpr kRpc = "SampleRowKeys";
   absl::call_once(sample_row_keys_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(sample_row_keys_metrics_.metrics, v);
   });
 
@@ -426,15 +407,14 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
   auto constexpr kRpc = "ReadModifyWriteRow";
   absl::call_once(read_modify_write_row_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
-    //    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    //    v.emplace_back(
-    //        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
-    //    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
-    //    provider_));
-    v.emplace_back(std::make_shared<NoopMetric>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
     swap(read_modify_write_row_metrics_.metrics, v);
   });
 
