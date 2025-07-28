@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/monitoring/v3/metric_connection.h"
+#include "absl/base/call_once.h"
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
 #include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -125,13 +126,17 @@ class MetricsOperationContextFactory : public OperationContextFactory {
 
   // These vectors are initialized exactly once and the initialization is
   // delayed until the first time the corresponding method is called.
-  std::vector<std::shared_ptr<Metric const>> read_row_metrics_;
-  std::vector<std::shared_ptr<Metric const>> read_rows_metrics_;
-  std::vector<std::shared_ptr<Metric const>> mutate_row_metrics_;
-  std::vector<std::shared_ptr<Metric const>> mutate_rows_metrics_;
-  std::vector<std::shared_ptr<Metric const>> check_and_mutate_row_metrics_;
-  std::vector<std::shared_ptr<Metric const>> sample_row_keys_metrics_;
-  std::vector<std::shared_ptr<Metric const>> read_modify_write_row_metrics_;
+  struct MetricHolder {
+    absl::once_flag once;
+    std::vector<std::shared_ptr<Metric const>> metrics;
+  };
+  MetricHolder read_row_metrics_;
+  MetricHolder read_rows_metrics_;
+  MetricHolder mutate_row_metrics_;
+  MetricHolder mutate_rows_metrics_;
+  MetricHolder check_and_mutate_row_metrics_;
+  MetricHolder sample_row_keys_metrics_;
+  MetricHolder read_modify_write_row_metrics_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
