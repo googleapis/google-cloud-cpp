@@ -157,6 +157,28 @@ void RenameObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void MoveObject(google::cloud::storage::Client client,
+                std::vector<std::string> const& argv) {
+  //! [move_object] [START storage_move_object]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_object_name) {
+    StatusOr<gcs::ObjectMetadata> metadata = client.MoveObject(
+        bucket_name, source_object_name, destination_object_name);
+    if (!metadata) throw std::move(metadata).status();
+
+    std::cout << "Successfully renamed " << source_object_name << " to "
+              << destination_object_name << " in bucket " << bucket_name
+              << ".\n";
+  }
+
+  //! [move_object] [END storage_move_object]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -251,6 +273,16 @@ void RunAll(std::vector<std::string> const& argv) {
 
   (void)client.DeleteObject(destination_bucket_name, dst_object_name);
   (void)client.DeleteObject(bucket_name, src_object_name);
+
+  std::cout << "\nCreating an object to run the MoveObject() example"
+            << std::endl;
+  (void)client.InsertObject(bucket_name, old_object_name, kText).value();
+
+  std::cout << "\nRunning the MoveObject() example" << std::endl;
+  MoveObject(client, {bucket_name, old_object_name, new_object_name});
+
+  std::cout << "\nCleanup" << std::endl;
+  (void)client.DeleteObject(bucket_name, new_object_name);
 }
 
 }  // namespace
@@ -275,6 +307,10 @@ int main(int argc, char* argv[]) {
           "rename-object",
           {"<bucket-name>", "<old-object-name>", "<new-object-name>"},
           RenameObject),
+        examples::CreateCommandEntry(
+          "move-object",
+          {"<bucket-name>", "<source-object-name>", "<destination-object-name>"},
+          MoveObject),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
