@@ -31,11 +31,12 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
-    std::string const& app_profile_id, std::string const& table_name) {
-  std::shared_ptr<AsyncRowSampler> sampler(
-      new AsyncRowSampler(std::move(cq), std::move(stub),
-                          std::move(retry_policy), std::move(backoff_policy),
-                          enable_server_retries, app_profile_id, table_name));
+    std::string const& app_profile_id, std::string const& table_name,
+    std::shared_ptr<OperationContext> operation_context) {
+  std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
+      std::move(cq), std::move(stub), std::move(retry_policy),
+      std::move(backoff_policy), enable_server_retries, app_profile_id,
+      table_name, std::move(operation_context)));
   sampler->StartIteration();
   return sampler->promise_.get_future();
 }
@@ -44,7 +45,8 @@ AsyncRowSampler::AsyncRowSampler(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
-    std::string const& app_profile_id, std::string const& table_name)
+    std::string const& app_profile_id, std::string const& table_name,
+    std::shared_ptr<OperationContext> operation_context)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       retry_policy_(std::move(retry_policy)),
@@ -54,7 +56,8 @@ AsyncRowSampler::AsyncRowSampler(
       table_name_(std::move(table_name)),
       promise_([this] { keep_reading_ = false; }),
       options_(internal::SaveCurrentOptions()),
-      call_context_(options_) {}
+      call_context_(options_),
+      operation_context_(std::move(operation_context)) {}
 
 void AsyncRowSampler::StartIteration() {
   v2::SampleRowKeysRequest request;
@@ -62,13 +65,13 @@ void AsyncRowSampler::StartIteration() {
   request.set_table_name(table_name_);
 
   internal::ScopedCallContext scope(call_context_);
-  context_ = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context_, *call_context_.options);
-  operation_context_->PreCall(*context_);
+  client_context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*client_context_, *call_context_.options);
+  operation_context_->PreCall(*client_context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead<v2::SampleRowKeysResponse>(
-      stub_->AsyncSampleRowKeys(cq_, context_, options_, request),
+      stub_->AsyncSampleRowKeys(cq_, client_context_, options_, request),
       [self](v2::SampleRowKeysResponse response) {
         return self->OnRead(std::move(response));
       },
@@ -84,8 +87,11 @@ future<bool> AsyncRowSampler::OnRead(v2::SampleRowKeysResponse response) {
 }
 
 void AsyncRowSampler::OnFinish(Status const& status) {
+  operation_context_->PostCall(*client_context_, status);
+
   if (status.ok()) {
     promise_.set_value(std::move(samples_));
+    operation_context_->OnDone(status);
     return;
   }
   auto delay = internal::Backoff(status, "AsyncSampleRows", *retry_policy_,
@@ -93,11 +99,11 @@ void AsyncRowSampler::OnFinish(Status const& status) {
                                  enable_server_retries_);
   if (!delay) {
     promise_.set_value(std::move(delay).status());
+    operation_context_->OnDone(status);
     return;
   }
 
-  operation_context_->PostCall(*context_);
-  context_.reset();
+  client_context_.reset();
   samples_.clear();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,

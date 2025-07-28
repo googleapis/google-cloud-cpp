@@ -318,6 +318,34 @@ TEST(OptionsTest, BigtableEndpointEnvVarsOverrideUniverseDomain) {
             "emulator-host:8000");
 }
 
+TEST(OptionsTest, EnableMetrics) {
+  Options options;
+  options = DefaultOptions(std::move(options));
+  EXPECT_TRUE(options.get<EnableMetricsOption>());
+
+  options = Options{}.set<EnableMetricsOption>(true);
+  options = DefaultOptions(std::move(options));
+  EXPECT_TRUE(options.get<EnableMetricsOption>());
+
+  options = Options{}.set<EnableMetricsOption>(false);
+  options = DefaultOptions(std::move(options));
+  EXPECT_FALSE(options.get<EnableMetricsOption>());
+}
+
+TEST(OptionsTest, MetricsPeriod) {
+  Options options;
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ(options.get<MetricsPeriodOption>(), std::chrono::seconds(60));
+
+  options.set<MetricsPeriodOption>(std::chrono::seconds(30));
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ(options.get<MetricsPeriodOption>(), std::chrono::seconds(30));
+
+  options.set<MetricsPeriodOption>(std::chrono::seconds(3));
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ(options.get<MetricsPeriodOption>(), std::chrono::seconds(60));
+}
+
 TEST(EndpointEnvTest, EmulatorEnvOnly) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
 
