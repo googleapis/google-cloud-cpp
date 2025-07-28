@@ -331,7 +331,7 @@ class StreamingPartitionedDmlResult {
 
 // Converts a `BatchWriteResponse` proto to a `spanner::BatchedCommitResult`.
 spanner::BatchedCommitResult FromProto(
-    google::spanner::v1::BatchWriteResponse response) {
+    google::spanner::v1::BatchWriteResponse const& response) {
   auto const& indexes = response.indexes();
   auto status = MakeStatusFromRpcError(response.status());
   spanner::BatchedCommitResult result;

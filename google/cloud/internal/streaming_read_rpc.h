@@ -134,7 +134,7 @@ class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override {}
 
-  absl::optional<Status> Read(ResponseType* response) override {
+  absl::optional<Status> Read(ResponseType* /*response*/) override {
     return status_;
   }
 
