@@ -61,9 +61,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "platforms",
         urls = [
-            "https://github.com/bazelbuild/platforms/releases/download/0.0.11/platforms-0.0.11.tar.gz",
+            "https://github.com/bazelbuild/platforms/releases/download/1.0.0/platforms-1.0.0.tar.gz",
         ],
-        sha256 = "29742e87275809b5e598dc2f04d86960cc7a55b3067d97221c9abbc9926bff0f",
+        sha256 = "3384eb1c30762704fbe38e440204e114154086c8fc8a8c2e3e28441028c019a8",
     )
 
     # Load rules_cc, used by googletest
@@ -71,20 +71,20 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.17/rules_cc-0.0.17.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.1.4/rules_cc-0.1.4.tar.gz",
         ],
-        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
-        strip_prefix = "rules_cc-0.0.17",
+        sha256 = "0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b",
+        strip_prefix = "rules_cc-0.1.4",
     )
 
     # protobuf requires this
     maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f",
+        sha256 = "51b5105a760b353773f904d2bbc5e664d0987fbaf22265164de65d43e910d8ac",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.8.1/bazel-skylib-1.8.1.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.8.1/bazel-skylib-1.8.1.tar.gz",
         ],
     )
 
@@ -93,9 +93,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.22.0/rules_apple.3.22.0.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/4.1.1/rules_apple.4.1.1.tar.gz",
         ],
-        sha256 = "a78f26c22ac8d6e3f3fcaad50eace4d9c767688bd7254b75bdf4a6735b299f6a",
+        sha256 = "e21e13568f6cbd1167a3b4c29ee865440c11b680153a7b6014ee15e64cc57c2d",
     )
 
     # Load Abseil
@@ -126,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/f01a17a560b4fbc888fd552c978f4e1f8614100b.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/fecd7d35f46753b45bf4519f6342495a181740c9.tar.gz",
         ],
-        sha256 = "be41dc99017f2fc7cccf115081947e354d33a37943ede9f5dd705b668bce7f29",
-        strip_prefix = "googleapis-f01a17a560b4fbc888fd552c978f4e1f8614100b",
+        sha256 = "66dc1a514a24d10d404393bf9bc5bd62cbdf21bdb227e4688bbba85cac12dc68",
+        strip_prefix = "googleapis-fecd7d35f46753b45bf4519f6342495a181740c9",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]

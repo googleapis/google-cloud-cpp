@@ -126,7 +126,7 @@ class NodeGroupControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.CreateNodeGroupRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/node_groups.proto#L86}
-  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L947}
+  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L962}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
@@ -184,7 +184,7 @@ class NodeGroupControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.CreateNodeGroupRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/node_groups.proto#L86}
-  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L947}
+  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L962}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
@@ -252,7 +252,7 @@ class NodeGroupControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L947}
+  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L962}
   /// [google.cloud.dataproc.v1.ResizeNodeGroupRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/node_groups.proto#L122}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
@@ -307,7 +307,7 @@ class NodeGroupControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L947}
+  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L962}
   /// [google.cloud.dataproc.v1.ResizeNodeGroupRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/node_groups.proto#L122}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
@@ -366,7 +366,7 @@ class NodeGroupControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.GetNodeGroupRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/node_groups.proto#L164}
-  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L947}
+  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L962}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
@@ -397,7 +397,7 @@ class NodeGroupControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.GetNodeGroupRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/node_groups.proto#L164}
-  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L947}
+  /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L962}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
