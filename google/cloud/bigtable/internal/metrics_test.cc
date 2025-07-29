@@ -36,7 +36,9 @@ using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 using ::opentelemetry::metrics::Counter;
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
 using ::opentelemetry::metrics::Gauge;
+#endif
 using ::opentelemetry::metrics::Histogram;
 using ::opentelemetry::metrics::ObservableInstrument;
 using ::opentelemetry::metrics::UpDownCounter;
