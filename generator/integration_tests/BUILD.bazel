@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
 load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 
@@ -31,16 +31,16 @@ proto_library(
         "test_request_id.proto",
     ],
     deps = [
-        "@com_google_googleapis//google/api:annotations_proto",
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_googleapis//google/api:field_info_proto",
-        "@com_google_googleapis//google/api:resource_proto",
-        "@com_google_googleapis//google/api:routing_proto",
-        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
-        "@com_google_googleapis//google/iam/v1:policy_proto",
-        "@com_google_googleapis//google/longrunning:operations_proto",
-        "@com_google_googleapis//google/rpc:status_proto",
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:client_proto",
+        "@googleapis//google/api:field_behavior_proto",
+        "@googleapis//google/api:field_info_proto",
+        "@googleapis//google/api:resource_proto",
+        "@googleapis//google/api:routing_proto",
+        "@googleapis//google/iam/v1:iam_policy_proto",
+        "@googleapis//google/iam/v1:policy_proto",
+        "@googleapis//google/longrunning:operations_proto",
+        "@googleapis//google/rpc:status_proto",
         "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:empty_proto",
@@ -107,7 +107,7 @@ cc_library(
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "@abseil-cpp//absl/strings",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
     ],
 )
 
@@ -132,7 +132,7 @@ filegroup(
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in glob(["tests/*.cc"])]
 

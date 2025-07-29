@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
 load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 
@@ -26,9 +26,9 @@ proto_library(
     name = "test_proxy_proto",
     srcs = ["test_proxy.proto"],
     deps = [
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_proto",
-        "@com_google_googleapis//google/rpc:status_proto",
+        "@googleapis//google/api:client_proto",
+        "@googleapis//google/bigtable/v2:bigtable_proto",
+        "@googleapis//google/rpc:status_proto",
         "@com_google_protobuf//:duration_proto",
     ],
 )

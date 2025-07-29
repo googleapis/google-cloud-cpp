@@ -51,7 +51,7 @@ VARIATIONS = {
         #        "//protos:system_includes",
         "//protos/google/cloud/storage/tests:storage_conformance_tests_cc_proto",
         "@abseil-cpp//absl/strings",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in storage_client_integration_tests for v_label, v_env in VARIATIONS.items()]
 
@@ -79,6 +79,6 @@ VARIATIONS = {
         #        "//protos:system_includes",
         "//protos/google/cloud/storage/tests:storage_conformance_tests_cc_proto",
         "@abseil-cpp//absl/strings",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in ["universe_domain_integration_test.cc"]]
