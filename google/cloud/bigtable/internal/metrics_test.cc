@@ -36,6 +36,7 @@ using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 using ::opentelemetry::metrics::Counter;
+using ::opentelemetry::metrics::Gauge;
 using ::opentelemetry::metrics::Histogram;
 using ::opentelemetry::metrics::ObservableInstrument;
 using ::opentelemetry::metrics::UpDownCounter;
@@ -43,6 +44,14 @@ using ::opentelemetry::metrics::UpDownCounter;
 template <typename T>
 class MockHistogram : public opentelemetry::metrics::Histogram<T> {
  public:
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T value), (noexcept, override));
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T, opentelemetry::common::KeyValueIterable const&),
+              (noexcept, override));
+
+#endif
   MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
               (T value, opentelemetry::context::Context const& context),
               (noexcept, override));
@@ -114,6 +123,22 @@ class MockMeter : public opentelemetry::metrics::Meter {
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Gauge<int64_t>>,
+              CreateInt64Gauge,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+
+  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Gauge<double>>,
+              CreateDoubleGauge,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+#endif
+
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
               CreateInt64ObservableGauge,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
@@ -159,12 +184,29 @@ class MockMeter : public opentelemetry::metrics::Meter {
 
 class MockMeterProvider : public opentelemetry::metrics::MeterProvider {
  public:
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
+              GetMeter,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::common::KeyValueIterable const*),
+              (noexcept, override));
+
+  MOCK_METHOD(void, RemoveMeter,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+
+#else
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
               GetMeter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
+#endif
 };
 
 TEST(LabelMap, IntoLabelMap) {
@@ -273,9 +315,16 @@ TEST(OperationLatencyTest, FirstAttemptSuccess) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
+#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
@@ -339,9 +388,16 @@ TEST(OperationLatencyTest, ThirdAttemptSuccess) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
+#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
@@ -419,9 +475,16 @@ TEST(AttemptLatencyTest, NoRetry) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
+#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
@@ -515,9 +578,16 @@ TEST(AttemptLatencyTest, ThreeAttempts) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
+#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
@@ -590,9 +660,16 @@ TEST(RetryCountTest, NoRetry) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
+#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
@@ -656,9 +733,16 @@ TEST(RetryCountTest, ThreeAttempts) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
+#endif
         EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
