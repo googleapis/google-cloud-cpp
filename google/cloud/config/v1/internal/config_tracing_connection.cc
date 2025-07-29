@@ -374,6 +374,47 @@ ConfigTracingConnection::GetTerraformVersion(
   return internal::EndSpan(*span, child_->GetTerraformVersion(request));
 }
 
+StreamRange<google::cloud::config::v1::ResourceChange>
+ConfigTracingConnection::ListResourceChanges(
+    google::cloud::config::v1::ListResourceChangesRequest request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::ListResourceChanges");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListResourceChanges(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::config::v1::ResourceChange>(std::move(span),
+                                                 std::move(sr));
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigTracingConnection::GetResourceChange(
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::GetResourceChange");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetResourceChange(request));
+}
+
+StreamRange<google::cloud::config::v1::ResourceDrift>
+ConfigTracingConnection::ListResourceDrifts(
+    google::cloud::config::v1::ListResourceDriftsRequest request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::ListResourceDrifts");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListResourceDrifts(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::config::v1::ResourceDrift>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigTracingConnection::GetResourceDrift(
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::GetResourceDrift");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetResourceDrift(request));
+}
+
 StreamRange<google::cloud::location::Location>
 ConfigTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

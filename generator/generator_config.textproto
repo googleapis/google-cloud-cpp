@@ -2811,6 +2811,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# License Manager
+service {
+  service_proto_path: "google/cloud/licensemanager/v1/licensemanager.proto"
+  product_path: "google/cloud/licensemanager/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"
@@ -2859,6 +2867,14 @@ service {
   service_proto_path: "google/cloud/managedkafka/v1/managed_kafka.proto"
   product_path: "google/cloud/managedkafka/v1"
   initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Managed Kafka schemaregistry
+service {
+  service_proto_path: "google/cloud/managedkafka/schemaregistry/v1/schema_registry.proto"
+  product_path: "google/cloud/managedkafka/schemaregistry/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -3029,6 +3045,7 @@ service {
 # Network Services (aka Traffic Director)
 service {
   service_proto_path: "google/cloud/networkservices/v1/network_services.proto"
+  additional_proto_files: ["google/cloud/networkservices/v1/extensibility.proto"]
   product_path: "google/cloud/networkservices/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]

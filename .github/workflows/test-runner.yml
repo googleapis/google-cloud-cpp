@@ -54,7 +54,8 @@ jobs:
     needs: [debug]
     if: >-
       ${{
-          ((github.event.pull_request.author_association == 'MEMBER' ||
+          ((github.event.pull_request.author_association == 'OWNER' ||
+           github.event.pull_request.author_association == 'MEMBER' ||
            github.event.pull_request.author_association == 'COLLABORATOR') &&
           github.event_name == 'pull_request_target') ||
           github.event_name == 'push' ||

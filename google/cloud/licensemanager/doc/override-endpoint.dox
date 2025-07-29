@@ -1,0 +1,25 @@
+/*!
+@page licensemanager-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `licensemanager_v1::LicenseManagerClient`:
+
+@snippet license_manager_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page licensemanager_v1::LicenseManagerClient-endpoint-snippet Override licensemanager_v1::LicenseManagerClient Endpoint Configuration
+
+@snippet google/cloud/licensemanager/v1/samples/license_manager_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

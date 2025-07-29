@@ -327,6 +327,145 @@ class MockDepServiceConnection
       DeleteLbRouteExtension, (google::longrunning::Operation const& operation),
       (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::AuthzExtension>),
+      ListAuthzExtensions,
+      (google::cloud::networkservices::v1::ListAuthzExtensionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::AuthzExtension>,
+      GetAuthzExtension,
+      (google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAuthzExtension(Matcher<google::cloud::networkservices::v1::CreateAuthzExtensionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>,
+      CreateAuthzExtension,
+      (google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAuthzExtension(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAuthzExtension,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAuthzExtension(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>,
+      CreateAuthzExtension, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAuthzExtension(Matcher<google::cloud::networkservices::v1::UpdateAuthzExtensionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>,
+      UpdateAuthzExtension,
+      (google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAuthzExtension(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAuthzExtension,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAuthzExtension(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>,
+      UpdateAuthzExtension, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAuthzExtension(Matcher<google::cloud::networkservices::v1::DeleteAuthzExtensionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteAuthzExtension,
+      (google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAuthzExtension(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAuthzExtension,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAuthzExtension(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteAuthzExtension, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));
