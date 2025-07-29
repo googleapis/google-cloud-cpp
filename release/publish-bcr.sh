@@ -16,8 +16,16 @@
 
 set -euo pipefail
 
-tmpdir="$(mktemp -d)"
-trap "rm -rf ${tmpdir}" EXIT
-git clone https://github.com/googleapis/googleapis "${tmpdir}"
+tmpdir="/tmp/googleapis-publish-to-bcr"
+if [[ ! -d "${tmpdir}" ]]; then
+  git clone https://github.com/googleapis/googleapis "${tmpdir}"
+fi
 
-bash "${tmpdir}/.bcr/publish-to-bcr.sh" $@
+# Reset folder
+pushd "${tmpdir}"
+git reset --hard
+git clean -d -f
+git fetch --all
+git checkout master
+
+bash ".bcr/publish-to-bcr.sh" $@

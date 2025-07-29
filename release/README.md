@@ -25,8 +25,12 @@ number and the corresponding `googleapis` commit SHA to the script. Oversee the
 generated PR and ensure it is merged before proceeding with the release.
 
 ```bash
-release/publish-bcr.sh --ref "${COMMIT}"
+release/publish-bcr.sh --ref "${COMMIT}" --bcr_organization "${your_gh_id}"
 ```
+
+Note that either `--bcr_organization` or `--bcr_folder` are necessary in order for
+the script to use your fork of `bazel-central-registry`.
+Pushes to the original `bazelbuild/bazel-central-registry` are not allowed.
 
 You can find more information about running the script in [its readme](https://github.com/googleapis/googleapis/blob/e1b12be90da62015f0bea9026d217f0abc32cafe/.bcr/README.md)
 
