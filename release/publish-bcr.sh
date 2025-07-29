@@ -28,4 +28,4 @@ git clean -d -f
 git fetch --all
 git checkout master
 
-bash ".bcr/publish-to-bcr.sh" $@
+bash ".bcr/publish-to-bcr.sh" "${@}"
