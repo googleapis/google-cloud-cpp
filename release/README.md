@@ -18,21 +18,23 @@ for a commit that is 5-7 days old. You may need to run the `renovate.sh` script
 with a specific `COMMIT` and `COMMIT_DATE` to select the desired commit.
 
 Once the `googleapis` commit has been updated in our repository and the change
-is merged, run the `release/publish-bcr.sh` script using the same selected COMMIT.
-This script will create a Pull Request in the `googleapis/googleapis` repository to publish our new
-version to the Bazel Central Registry. You will need to provide the version
-number and the corresponding `googleapis` commit SHA to the script. Oversee the
-generated PR and ensure it is merged before proceeding with the release.
+is merged, run the `release/publish-bcr.sh` script using the same selected
+COMMIT. This script will create a Pull Request in the `googleapis/googleapis`
+repository to publish our new version to the Bazel Central Registry. You will
+need to provide the version number and the corresponding `googleapis` commit SHA
+to the script. Oversee the generated PR and ensure it is merged before
+proceeding with the release.
 
 ```bash
 release/publish-bcr.sh --ref "${COMMIT}" --bcr_organization "${your_gh_id}"
 ```
 
-Note that either `--bcr_organization` or `--bcr_folder` are necessary in order for
-the script to use your fork of `bazel-central-registry`.
-Pushes to the original `bazelbuild/bazel-central-registry` are not allowed.
+Note that either `--bcr_organization` or `--bcr_folder` are necessary in order
+for the script to use your fork of `bazel-central-registry`. Pushes to the
+original `bazelbuild/bazel-central-registry` are not allowed.
 
-You can find more information about running the script in [its readme](https://github.com/googleapis/googleapis/blob/e1b12be90da62015f0bea9026d217f0abc32cafe/.bcr/README.md)
+You can find more information about running the script in
+[its readme](https://github.com/googleapis/googleapis/blob/e1b12be90da62015f0bea9026d217f0abc32cafe/.bcr/README.md)
 
 ## 1. Preparing for a release
 
