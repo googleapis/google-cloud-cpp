@@ -275,13 +275,13 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreating an object to run the MoveObject() example"
             << std::endl;
-  (void)client.InsertObject(bucket_name, old_object_name, kText).value();
+  (void)client.InsertObject(bucket_name, src_object_name, kText).value();
 
   std::cout << "\nRunning the MoveObject() example" << std::endl;
-  MoveObject(client, {bucket_name, old_object_name, new_object_name});
+  MoveObject(client, {bucket_name, src_object_name, dst_object_name});
 
   std::cout << "\nCleanup" << std::endl;
-  (void)client.DeleteObject(bucket_name, new_object_name);
+  (void)client.DeleteObject(bucket_name, dst_object_name);
 }
 
 }  // namespace
