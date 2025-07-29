@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Getting vcpkg, cmake, and opentelemetry to actually build with the STL
+// enabled is more trouble than it's worth for these unit tests.
+#if !defined(_WIN32) && !defined(__APPLE_)
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 #include "google/cloud/bigtable/internal/metrics.h"
@@ -789,3 +792,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#endif  // !defined(_WIN32) && !defined(__APPLE_)
