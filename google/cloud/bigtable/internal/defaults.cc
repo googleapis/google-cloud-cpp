@@ -221,6 +221,17 @@ Options DefaultOptions(Options opts) {
   products.insert(products.begin(),
                   ::google::cloud::internal::UserAgentPrefix());
 
+  if (!opts.has<EnableMetricsOption>()) {
+    opts.set<EnableMetricsOption>(true);
+  }
+
+  if (opts.get<EnableMetricsOption>()) {
+    if (!opts.has<MetricsPeriodOption>() ||
+        (opts.get<MetricsPeriodOption>() < std::chrono::seconds(5))) {
+      opts.set<MetricsPeriodOption>(std::chrono::seconds(60));
+    }
+  }
+
   return opts;
 }
 

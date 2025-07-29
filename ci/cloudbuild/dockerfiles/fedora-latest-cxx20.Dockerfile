@@ -159,6 +159,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
         -DWITH_EXAMPLES=OFF \
+        -DWITH_STL=CXX20 \
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
