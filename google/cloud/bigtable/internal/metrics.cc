@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
+LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d) {
   return {
       {"project_id", r.project_id},
       {"instance", r.instance},
@@ -36,6 +36,20 @@ LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
       {"app_profile", d.app_profile},
       {"status", d.status},
   };
+}
+
+absl::optional<google::bigtable::v2::ResponseParams>
+GetResponseParamsFromTrailingMetadata(
+    grpc::ClientContext const& client_context) {
+  auto metadata = client_context.GetServerTrailingMetadata();
+  auto iter = metadata.find("x-goog-ext-425905942-bin");
+  if (iter == metadata.end()) return absl::nullopt;
+  google::bigtable::v2::ResponseParams p;
+  // The value for this key should always be the same in a response, so we
+  // return the first value we find.
+  std::string value{iter->second.data(), iter->second.size()};
+  if (p.ParseFromString(value)) return p;
+  return absl::nullopt;
 }
 
 Metric::~Metric() = default;
