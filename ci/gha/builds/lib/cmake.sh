@@ -58,7 +58,7 @@ function cmake::common_args() {
   if [[ -n "${VCPKG_TRIPLET:-}" ]]; then
     args+=("-DVCPKG_TARGET_TRIPLET=${VCPKG_TRIPLET}")
   fi
-  args+=("-DVCPKG_OVERLAY_PORTS=../vcpkg-overlays")
+  args+=("-DVCPKG_OVERLAY_PORTS=ci/gha/builds/vcpkg-overlays")
   printf "%s\n" "${args[@]}"
 }
 
