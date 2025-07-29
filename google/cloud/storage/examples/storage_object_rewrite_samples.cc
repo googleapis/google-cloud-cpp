@@ -178,7 +178,6 @@ void MoveObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -307,10 +306,10 @@ int main(int argc, char* argv[]) {
           "rename-object",
           {"<bucket-name>", "<old-object-name>", "<new-object-name>"},
           RenameObject),
-        examples::CreateCommandEntry(
-          "move-object",
-          {"<bucket-name>", "<source-object-name>", "<destination-object-name>"},
-          MoveObject),
+      examples::CreateCommandEntry("move-object",
+                                   {"<bucket-name>", "<source-object-name>",
+                                    "<destination-object-name>"},
+                                   MoveObject),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
