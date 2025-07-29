@@ -43,14 +43,16 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
       std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
-      std::string const& app_profile_id, std::string const& table_name);
+      std::string const& app_profile_id, std::string const& table_name,
+      std::shared_ptr<OperationContext> operation_context);
 
  private:
   AsyncRowSampler(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
                   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                   std::unique_ptr<BackoffPolicy> backoff_policy,
                   bool enable_server_retries, std::string const& app_profile_id,
-                  std::string const& table_name);
+                  std::string const& table_name,
+                  std::shared_ptr<OperationContext> operation_context);
 
   void StartIteration();
   future<bool> OnRead(google::bigtable::v2::SampleRowKeysResponse response);
@@ -69,9 +71,8 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
   internal::ImmutableOptions options_;
   internal::CallContext call_context_;
-  std::shared_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<OperationContext> operation_context_ =
-      std::make_shared<OperationContext>();
+  std::shared_ptr<grpc::ClientContext> client_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

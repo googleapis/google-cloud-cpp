@@ -64,13 +64,14 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                      bigtable::Filter filter, bool reverse,
                      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                      std::unique_ptr<BackoffPolicy> backoff_policy,
-                     bool enable_server_retries) {
+                     bool enable_server_retries,
+                     std::shared_ptr<OperationContext> operation_context) {
     auto reader = std::shared_ptr<AsyncRowReader>(new AsyncRowReader(
         std::move(cq), std::move(stub), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),
         std::move(row_set), rows_limit, std::move(filter), reverse,
         std::move(retry_policy), std::move(backoff_policy),
-        enable_server_retries));
+        enable_server_retries, std::move(operation_context)));
     reader->MakeRequest();
   }
 
@@ -82,7 +83,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                  bigtable::Filter filter, bool reverse,
                  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy,
-                 bool enable_server_retries)
+                 bool enable_server_retries,
+                 std::shared_ptr<OperationContext> operation_context)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
         app_profile_id_(std::move(app_profile_id)),
@@ -97,7 +99,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
         backoff_policy_(std::move(backoff_policy)),
         enable_server_retries_(enable_server_retries),
         options_(internal::SaveCurrentOptions()),
-        call_context_(options_) {}
+        call_context_(options_),
+        operation_context_(std::move(operation_context)) {}
 
   void MakeRequest();
 
@@ -105,7 +108,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
    * Called when the user asks for more rows via satisfying the future returned
    * from the row callback.
    */
-  void UserWantsRows() { TryGiveRowToUser(); }
+  void UserWantsRows();
 
   /**
    * Attempt to call a user callback.
@@ -175,9 +178,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   int recursion_level_ = 0;
   internal::ImmutableOptions options_;
   internal::CallContext call_context_;
-  std::shared_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<OperationContext> operation_context_ =
-      std::make_shared<OperationContext>();
+  std::shared_ptr<grpc::ClientContext> client_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
