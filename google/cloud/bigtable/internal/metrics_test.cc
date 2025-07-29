@@ -14,7 +14,7 @@
 
 // Getting vcpkg, cmake, and opentelemetry to actually build with the STL
 // enabled is more trouble than it's worth for these unit tests.
-#if !defined(_WIN32) && !defined(__OSX__)
+#if !defined(_WIN32) && !defined(__MACH__)
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 #include "google/cloud/bigtable/internal/metrics.h"
