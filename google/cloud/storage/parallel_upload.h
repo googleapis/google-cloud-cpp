@@ -1190,8 +1190,9 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
       internal::IsOptionSupportedWithParallelUpload<Options...>::value,
       "Provided Option not found in ParallelUploadFileSupportedOptions.");
 
+  auto connection = internal::ClientImplDetails::GetConnection(client);
   auto shards = internal::CreateParallelUploadShards::Create(
-      client, std::move(file_name), std::move(bucket_name),
+      std::move(client), std::move(file_name), std::move(bucket_name),
       std::move(object_name), std::move(prefix),
       std::forward<Options>(options)...);
   if (!shards) {
@@ -1207,9 +1208,8 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
       shard.Upload();
     });
   }
-  return internal::ClientImplDetails::GetConnection(client)
-      ->ExecuteParallelUploadFile(std::move(threads), std::move(*shards),
-                                  ignore_cleanup_failures);
+  return connection->ExecuteParallelUploadFile(
+      std::move(threads), std::move(*shards), ignore_cleanup_failures);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
