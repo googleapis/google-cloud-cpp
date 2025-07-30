@@ -55,6 +55,17 @@ TEST(BucketIpFilterTest, VpcNetworkSource) {
   EXPECT_NE(source, copy);
 }
 
+TEST(BucketIpFilterTest, VpcNetworkSourceOrderMatters) {
+  BucketIpFilterVpcNetworkSource const source1{"projects/p/global/networks/n",
+                                               {"1.2.3.4/32", "5.6.7.8/32"}};
+  BucketIpFilterVpcNetworkSource const source2{"projects/p/global/networks/n",
+                                               {"5.6.7.8/32", "1.2.3.4/32"}};
+
+  // The two sources have the same elements but in a different order.
+  // They should NOT be equal.
+  EXPECT_NE(source1, source2);
+}
+
 TEST(BucketIpFilterTest, IpFilter) {
   BucketIpFilter filter;
   filter.mode = "Enabled";
@@ -74,6 +85,28 @@ TEST(BucketIpFilterTest, IpFilter) {
 
   copy.mode = "Disabled";
   EXPECT_NE(filter, copy);
+}
+
+TEST(BucketIpFilterTest, IpFilterOrderMatters) {
+  BucketIpFilter filter1;
+  filter1.vpc_network_sources =
+      absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>(
+          {BucketIpFilterVpcNetworkSource{"projects/p/global/networks/n",
+                                          {"1.2.3.4/32"}},
+           BucketIpFilterVpcNetworkSource{"projects/p/global/networks/m",
+                                          {"5.6.7.8/32"}}});
+
+  BucketIpFilter filter2;
+  filter2.vpc_network_sources =
+      absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>(
+          {BucketIpFilterVpcNetworkSource{"projects/p/global/networks/m",
+                                          {"5.6.7.8/32"}},
+           BucketIpFilterVpcNetworkSource{"projects/p/global/networks/n",
+                                          {"1.2.3.4/32"}}});
+
+  // The two filters have the same elements but in a different order.
+  // They should NOT be equal.
+  EXPECT_NE(filter1, filter2);
 }
 
 }  // namespace

@@ -519,6 +519,46 @@ TEST(PatchBucketRequestTest, DiffSetIpFilterMultipleCidrRanges) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetIpFilterMultipleCidrRangesAndNetworks) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_ip_filter();
+  BucketMetadata updated = original;
+  BucketIpFilter ip_filter;
+  ip_filter.mode = "Enabled";
+  ip_filter.allow_all_service_agent_access = true;
+  ip_filter.allow_cross_org_vpcs = true;
+  ip_filter.public_network_source =
+      BucketIpFilterPublicNetworkSource{{"1.2.3.4/32"}};
+  ip_filter.vpc_network_sources =
+      absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>(
+          {BucketIpFilterVpcNetworkSource{"projects/p/global/networks/n",
+                                          {"5.6.7.8/32", "8.7.6.5/32"}},
+           BucketIpFilterVpcNetworkSource{"projects/p/global/networks/m",
+                                          {"9.0.1.2/32"}}});
+  updated.set_ip_filter(std::move(ip_filter));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
+      "ipFilter": {
+          "mode": "Enabled",
+          "allowAllServiceAgentAccess": true,
+          "allowCrossOrgVpcs": true,
+          "publicNetworkSource": {
+              "allowedIpCidrRanges": ["1.2.3.4/32"]
+          },
+          "vpcNetworkSources": [{
+              "network": "projects/p/global/networks/n",
+              "allowedIpCidrRanges": ["5.6.7.8/32", "8.7.6.5/32"]
+          }, {
+              "network": "projects/p/global/networks/m",
+              "allowedIpCidrRanges": ["9.0.1.2/32"]
+          }]
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchBucketRequestTest, DiffResetIpFilter) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_ip_filter(BucketIpFilter{});
