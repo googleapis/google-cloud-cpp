@@ -84,8 +84,6 @@ jobs:
           spanner
         )
         core2_features=(
-          pubsub
-          pubsublite
           storage
           storage_grpc
         )
