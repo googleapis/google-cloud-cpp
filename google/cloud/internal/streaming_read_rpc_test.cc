@@ -28,7 +28,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
-using ::testing::VariantWith;
 
 struct FakeRequest {
   std::string key;
