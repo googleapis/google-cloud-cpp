@@ -43,6 +43,6 @@ cc_library(
         ":google_cloud_cpp_oauth2",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_oauth2_unit_tests]

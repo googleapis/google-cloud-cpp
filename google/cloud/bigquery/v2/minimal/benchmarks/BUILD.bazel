@@ -33,7 +33,7 @@ cc_library(
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -50,8 +50,8 @@ cc_library(
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
     ],
 ) for test in experimental_bigquery_rest_client_benchmark_unit_tests]
 

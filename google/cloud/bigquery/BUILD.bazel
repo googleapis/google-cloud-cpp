@@ -37,15 +37,15 @@ service_dirs = [
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc",
-    "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc",
+    "@googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc",
+    "@googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc",
+    "@googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc",
+    "@googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc",
+    "@googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc",
+    "@googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc",
+    "@googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc",
+    "@googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc",
+    "@googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc",
 ]
 
 cc_gapic_library(
@@ -83,7 +83,7 @@ cc_library(
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_bigquery_rest",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 )
 
@@ -98,7 +98,7 @@ cc_library(
         ":google_cloud_cpp_bigquery_rest_mocks",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -112,6 +112,6 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 ) for test in bigquery_rest_unit_tests]

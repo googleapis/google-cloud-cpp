@@ -43,11 +43,11 @@ cc_library(
         "//:common",
         "@abseil-cpp//absl/debugging:failure_signal_handler",
         "@abseil-cpp//absl/debugging:symbolize",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ] + select({
         "//google/cloud:enable_opentelemetry": [
-            "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
-            "@io_opentelemetry_cpp//sdk/src/trace",
+            "@opentelemetry-cpp//exporters/memory:in_memory_span_exporter",
+            "@opentelemetry-cpp//sdk/src/trace",
         ],
         "//conditions:default": [],
     }),
@@ -71,7 +71,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_testing",
         "//:common",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_testing_unit_tests]
 
@@ -83,12 +83,12 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_github_grpc_grpc//:grpc++",
-        #        "@com_google_googleapis//:googleapis_system_includes",
-        "@com_google_googleapis//google/api:annotations_cc_proto",
-        "@com_google_googleapis//google/api:routing_cc_proto",
-        "@com_google_googletest//:gtest_main",
-        "@com_google_protobuf//:protobuf",
+        "@grpc//:grpc++",
+        #        "@googleapis//:googleapis_system_includes",
+        "@googleapis//google/api:annotations_cc_proto",
+        "@googleapis//google/api:routing_cc_proto",
+        "@googletest//:gtest_main",
+        "@protobuf//:protobuf",
     ],
 )
 
@@ -110,8 +110,8 @@ cc_library(
     deps = [
         ":google_cloud_cpp_testing_grpc",
         "//:common",
-        "@com_google_googletest//:gtest_main",
-        "@com_google_protobuf//:protobuf",
+        "@googletest//:gtest_main",
+        "@protobuf//:protobuf",
     ],
 ) for test in google_cloud_cpp_testing_grpc_unit_tests]
 
@@ -122,7 +122,7 @@ cc_library(
     hdrs = google_cloud_cpp_testing_rest_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_rest_internal",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 

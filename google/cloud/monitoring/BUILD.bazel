@@ -26,9 +26,9 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/monitoring/dashboard/v1:dashboard_cc_grpc",
-    "@com_google_googleapis//google/monitoring/metricsscope/v1:metricsscope_cc_grpc",
-    "@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc",
+    "@googleapis//google/monitoring/dashboard/v1:dashboard_cc_grpc",
+    "@googleapis//google/monitoring/metricsscope/v1:metricsscope_cc_grpc",
+    "@googleapis//google/monitoring/v3:monitoring_cc_grpc",
 ]
 
 cc_gapic_library(

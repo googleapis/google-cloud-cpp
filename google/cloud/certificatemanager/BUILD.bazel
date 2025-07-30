@@ -24,8 +24,8 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/certificatemanager/logging/v1:logging_cc_grpc",
-    "@com_google_googleapis//google/cloud/certificatemanager/v1:certificatemanager_cc_grpc",
+    "@googleapis//google/cloud/certificatemanager/logging/v1:logging_cc_grpc",
+    "@googleapis//google/cloud/certificatemanager/v1:certificatemanager_cc_grpc",
 ]
 
 cc_gapic_library(
