@@ -184,22 +184,22 @@ def gl_cpp_workspace0(name = None):
             "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
         ],
         repo_mapping = {
-            "@com_google_absl": "@abseil-cpp",
+            "@abseil-cpp": "@abseil-cpp",
         },
         sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
         strip_prefix = "grpc-1.71.0",
     )
 
-    # We use the cc_proto_library() rule from @com_google_protobuf, which
+    # We use the cc_proto_library() rule from @protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
-        actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+        actual = "@grpc//src/compiler:grpc_cpp_plugin",
     )
 
     native.bind(
         name = "grpc_lib",
-        actual = "@com_github_grpc_grpc//:grpc++",
+        actual = "@grpc//:grpc++",
     )
 
     # We need libcurl for the Google Cloud Storage client.
@@ -250,8 +250,8 @@ def gl_cpp_workspace0(name = None):
         sha256 = "4b6eeb852f075133c21b95948017f13a3e21740e55b921d27e42970a47314297",
         strip_prefix = "opentelemetry-cpp-1.20.0",
         repo_mapping = {
-            "@curl": "@com_github_curl_curl",
+            "@curl": "@curl",
             "@com_github_google_benchmark": "@com_github_benchmark",
-            "@github_nlohmann_json": "@com_github_nlohmann_json",
+            "@github_nlohmann_json": "@nlohmann_json",
         },
     )

@@ -72,7 +72,7 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
         visibility = ["//:__pkg__"],
         deps = [
             ":google_cloud_cpp_" + name,
-            "@com_google_googletest//:gtest",
+            "@googletest//:gtest",
         ],
     )
 

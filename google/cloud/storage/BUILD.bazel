@@ -77,17 +77,17 @@ cc_library(
         "@abseil-cpp//absl/algorithm:container",
         "@abseil-cpp//absl/strings",
         "@abseil-cpp//absl/time",
-        "@com_github_curl_curl//:curl",
-        "@com_github_google_crc32c//:crc32c",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_github_nlohmann_json//:json",
-        "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
-        "@com_google_googleapis//google/storage/v2:storage_cc_proto",
+        "@curl//:curl",
+        "@crc32c//:crc32c",
+        "@grpc//:grpc++",
+        "@nlohmann_json//:json",
+        "@googleapis//google/storage/v2:storage_cc_grpc",
+        "@googleapis//google/storage/v2:storage_cc_proto",
     ] + select({
         ":grpc_metrics_enabled": [
             "//:opentelemetry",
-            "@com_github_grpc_grpc//:grpcpp_otel_plugin",
-            "@io_opentelemetry_cpp//sdk/src/metrics",
+            "@grpc//:grpcpp_otel_plugin",
+            "@opentelemetry-cpp//sdk/src/metrics",
         ],
         "//conditions:default": [],
     }),
@@ -110,7 +110,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 )
 
@@ -146,9 +146,9 @@ cc_library(
         "@abseil-cpp//absl/time",
         "@abseil-cpp//absl/types:span",
         "@abseil-cpp//absl/types:variant",
-        "@com_github_curl_curl//:curl",
-        "@com_github_google_crc32c//:crc32c",
-        "@com_github_nlohmann_json//:json",
+        "@curl//:curl",
+        "@crc32c//:crc32c",
+        "@nlohmann_json//:json",
     ] + select({
         "@platforms//os:windows": [],
         "//conditions:default": [
@@ -177,7 +177,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         "//:common",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 )
 
@@ -194,8 +194,8 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_github_curl_curl//:curl",
-        "@com_google_googletest//:gtest_main",
+        "@curl//:curl",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -211,8 +211,8 @@ cc_library(
         ":storage_client_testing",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_github_curl_curl//:curl",
-        "@com_google_googletest//:gtest_main",
+        "@curl//:curl",
+        "@googletest//:gtest_main",
     ] + select({
         "@platforms//os:windows": [],
         "//conditions:default": [
@@ -246,9 +246,9 @@ cc_library(
         "//:mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_github_curl_curl//:curl",
-        "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
+        "@curl//:curl",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
     ],
 ) for test in storage_client_grpc_unit_tests]
 
