@@ -305,6 +305,14 @@ DatabaseAdminConnection::ListBackupSchedules(
       StreamRange<google::spanner::admin::database::v1::BackupSchedule>>();
 }
 
+StatusOr<
+    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
+DatabaseAdminConnection::InternalUpdateGraphOperation(
+    google::spanner::admin::database::v1::
+        InternalUpdateGraphOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::longrunning::Operation>
 DatabaseAdminConnection::ListOperations(
     google::longrunning::

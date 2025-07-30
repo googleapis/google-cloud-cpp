@@ -123,8 +123,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L612}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L620}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
@@ -162,8 +162,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L612}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L620}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
@@ -211,9 +211,9 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.database.v1.CreateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L699}
-  /// [google.spanner.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L647}
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
+  /// [google.spanner.admin.database.v1.CreateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L707}
+  /// [google.spanner.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L655}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -275,9 +275,9 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.database.v1.CreateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L699}
-  /// [google.spanner.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L647}
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
+  /// [google.spanner.admin.database.v1.CreateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L707}
+  /// [google.spanner.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L655}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -335,8 +335,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L708}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L716}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
@@ -365,8 +365,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L708}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L716}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
@@ -440,11 +440,11 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.Database.reconciling]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L607}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L735}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L747}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L721}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.Database.reconciling]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L615}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L743}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L755}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L729}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -536,11 +536,11 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.Database.reconciling]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L607}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L735}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L747}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L721}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.Database.reconciling]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L615}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L743}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L755}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L729}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -614,8 +614,8 @@ class DatabaseAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L846}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L766}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L854}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L774}
   ///
   // clang-format on
   future<
@@ -678,8 +678,8 @@ class DatabaseAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L846}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L766}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L854}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L774}
   ///
   // clang-format on
   future<
@@ -740,7 +740,7 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L882}
+  /// [google.spanner.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L890}
   ///
   // clang-format on
   Status DropDatabase(std::string const& database, Options opts = {});
@@ -770,7 +770,7 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L882}
+  /// [google.spanner.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L890}
   ///
   // clang-format on
   Status DropDatabase(
@@ -800,8 +800,8 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operations]: @googleapis_reference_link{google/longrunning/operations.proto#L55}
-  /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L894}
-  /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L908}
+  /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L902}
+  /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L916}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
@@ -833,8 +833,8 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operations]: @googleapis_reference_link{google/longrunning/operations.proto#L55}
-  /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L894}
-  /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L908}
+  /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L902}
+  /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L916}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
@@ -1727,9 +1727,9 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.RestoreDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1108}
-  /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1010}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.RestoreDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1116}
+  /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1018}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -1800,9 +1800,9 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L504}
-  /// [google.spanner.admin.database.v1.RestoreDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1108}
-  /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1010}
+  /// [google.spanner.admin.database.v1.Database]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L512}
+  /// [google.spanner.admin.database.v1.RestoreDatabaseMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1116}
+  /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1018}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -1878,7 +1878,7 @@ class DatabaseAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L923}
+  /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L931}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
@@ -1925,7 +1925,7 @@ class DatabaseAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L923}
+  /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L931}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
@@ -2057,8 +2057,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.DatabaseRole]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1182}
-  /// [google.spanner.admin.database.v1.ListDatabaseRolesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1196}
+  /// [google.spanner.admin.database.v1.DatabaseRole]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1190}
+  /// [google.spanner.admin.database.v1.ListDatabaseRolesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1204}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::DatabaseRole>
@@ -2096,8 +2096,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.DatabaseRole]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1182}
-  /// [google.spanner.admin.database.v1.ListDatabaseRolesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1196}
+  /// [google.spanner.admin.database.v1.DatabaseRole]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1190}
+  /// [google.spanner.admin.database.v1.ListDatabaseRolesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1204}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::DatabaseRole>
@@ -2126,8 +2126,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.AddSplitPointsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1232}
-  /// [google.spanner.admin.database.v1.AddSplitPointsResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1257}
+  /// [google.spanner.admin.database.v1.AddSplitPointsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1240}
+  /// [google.spanner.admin.database.v1.AddSplitPointsResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1265}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
@@ -2160,8 +2160,8 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.AddSplitPointsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1232}
-  /// [google.spanner.admin.database.v1.AddSplitPointsResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1257}
+  /// [google.spanner.admin.database.v1.AddSplitPointsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1240}
+  /// [google.spanner.admin.database.v1.AddSplitPointsResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1265}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
@@ -2491,6 +2491,71 @@ class DatabaseAdminClient {
   StreamRange<google::spanner::admin::database::v1::BackupSchedule>
   ListBackupSchedules(
       google::spanner::admin::database::v1::ListBackupSchedulesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// This is an internal API called by Spanner Graph jobs. You should never need
+  /// to call this API directly.
+  ///
+  /// @param database  Internal field, do not use directly.
+  /// @param operation_id  Internal field, do not use directly.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.spanner.admin.database.v1.InternalUpdateGraphOperationResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.spanner.admin.database.v1.InternalUpdateGraphOperationRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1295}
+  /// [google.spanner.admin.database.v1.InternalUpdateGraphOperationResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1314}
+  ///
+  // clang-format on
+  StatusOr<google::spanner::admin::database::v1::
+               InternalUpdateGraphOperationResponse>
+  InternalUpdateGraphOperation(std::string const& database,
+                               std::string const& operation_id,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// This is an internal API called by Spanner Graph jobs. You should never need
+  /// to call this API directly.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.spanner.admin.database.v1.InternalUpdateGraphOperationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.spanner.admin.database.v1.InternalUpdateGraphOperationResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.spanner.admin.database.v1.InternalUpdateGraphOperationRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1295}
+  /// [google.spanner.admin.database.v1.InternalUpdateGraphOperationResponse]: @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L1314}
+  ///
+  // clang-format on
+  StatusOr<google::spanner::admin::database::v1::
+               InternalUpdateGraphOperationResponse>
+  InternalUpdateGraphOperation(
+      google::spanner::admin::database::v1::
+          InternalUpdateGraphOperationRequest const& request,
       Options opts = {});
 
   // clang-format off

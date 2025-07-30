@@ -164,6 +164,37 @@ SecureSourceManagerAuth::CreateRepository(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdateRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateRepository(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::UpdateRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRepository(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerAuth::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -192,6 +223,108 @@ SecureSourceManagerAuth::DeleteRepository(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRepository(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListHooksResponse>
+SecureSourceManagerAuth::ListHooks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListHooksRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListHooks(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerAuth::GetHook(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetHook(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCreateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateHook(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::CreateHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateHook(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateHook(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::UpdateHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateHook(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncDeleteHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteHook(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::DeleteHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteHook(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerAuth::GetIamPolicyRepo(
@@ -330,6 +463,688 @@ SecureSourceManagerAuth::DeleteBranchRule(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBranchRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCreatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreatePullRequest(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::CreatePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerAuth::GetPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListPullRequestsResponse>
+SecureSourceManagerAuth::ListPullRequests(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPullRequests(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdatePullRequest(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::UpdatePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePullRequest(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncMergePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncMergePullRequest(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::MergePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MergePullRequest(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncOpenPullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncOpenPullRequest(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::OpenPullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->OpenPullRequest(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncClosePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncClosePullRequest(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::ClosePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ClosePullRequest(context, options, request);
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsResponse>
+SecureSourceManagerAuth::ListPullRequestFileDiffs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestFileDiffsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPullRequestFileDiffs(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchTreeResponse>
+SecureSourceManagerAuth::FetchTree(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchTreeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchTree(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerAuth::FetchBlob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchBlob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCreateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateIssue(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::CreateIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateIssue(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerAuth::GetIssue(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIssue(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssuesResponse>
+SecureSourceManagerAuth::ListIssues(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListIssuesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListIssues(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateIssue(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::UpdateIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateIssue(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncDeleteIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteIssue(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::DeleteIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIssue(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncOpenIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncOpenIssue(cq, *std::move(context),
+                                     std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::OpenIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->OpenIssue(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCloseIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCloseIssue(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerAuth::CloseIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CloseIssue(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerAuth::GetPullRequestComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPullRequestComment(context, options, request);
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse>
+SecureSourceManagerAuth::ListPullRequestComments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestCommentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCreatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreatePullRequestComment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::CreatePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePullRequestComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdatePullRequestComment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::UpdatePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePullRequestComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncDeletePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeletePullRequestComment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::DeletePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePullRequestComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncBatchCreatePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBatchCreatePullRequestComments(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::BatchCreatePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreatePullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncResolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncResolvePullRequestComments(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::ResolvePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResolvePullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUnresolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUnresolvePullRequestComments(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::UnresolvePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UnresolvePullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCreateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateIssueComment(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::CreateIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateIssueComment(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerAuth::GetIssueComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIssueComment(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssueCommentsResponse>
+SecureSourceManagerAuth::ListIssueComments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListIssueComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateIssueComment(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::UpdateIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateIssueComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncDeleteIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteIssueComment(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::DeleteIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIssueComment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

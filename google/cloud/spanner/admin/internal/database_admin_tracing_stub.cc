@@ -445,6 +445,22 @@ DatabaseAdminTracingStub::ListBackupSchedules(
       context, *span, child_->ListBackupSchedules(context, options, request));
 }
 
+StatusOr<
+    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
+DatabaseAdminTracingStub::InternalUpdateGraphOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::
+        InternalUpdateGraphOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.database.v1.DatabaseAdmin",
+                             "InternalUpdateGraphOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->InternalUpdateGraphOperation(context, options, request));
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DatabaseAdminTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,

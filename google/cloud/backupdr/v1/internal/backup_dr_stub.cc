@@ -441,6 +441,36 @@ StatusOr<google::longrunning::Operation> DefaultBackupDRStub::CreateBackupPlan(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncUpdateBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::UpdateBackupPlanRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBackupPlan(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultBackupDRStub::UpdateBackupPlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackupPlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlan>
 DefaultBackupDRStub::GetBackupPlan(
     grpc::ClientContext& context, Options const&,
@@ -495,6 +525,32 @@ StatusOr<google::longrunning::Operation> DefaultBackupDRStub::DeleteBackupPlan(
   return response;
 }
 
+StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+DefaultBackupDRStub::GetBackupPlanRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request) {
+  google::cloud::backupdr::v1::BackupPlanRevision response;
+  auto status = grpc_stub_->GetBackupPlanRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlanRevisionsResponse>
+DefaultBackupDRStub::ListBackupPlanRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListBackupPlanRevisionsResponse response;
+  auto status =
+      grpc_stub_->ListBackupPlanRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupDRStub::AsyncCreateBackupPlanAssociation(
     google::cloud::CompletionQueue& cq,
@@ -531,6 +587,42 @@ DefaultBackupDRStub::CreateBackupPlanAssociation(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupDRStub::AsyncUpdateBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBackupPlanAssociation(context, request,
+                                                            cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::UpdateBackupPlanAssociation(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateBackupPlanAssociation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
 DefaultBackupDRStub::GetBackupPlanAssociation(
     grpc::ClientContext& context, Options const&,
@@ -553,6 +645,22 @@ DefaultBackupDRStub::ListBackupPlanAssociations(
   google::cloud::backupdr::v1::ListBackupPlanAssociationsResponse response;
   auto status =
       grpc_stub_->ListBackupPlanAssociations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::
+             FetchBackupPlanAssociationsForResourceTypeResponse>
+DefaultBackupDRStub::FetchBackupPlanAssociationsForResourceType(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::
+        FetchBackupPlanAssociationsForResourceTypeRequest const& request) {
+  google::cloud::backupdr::v1::
+      FetchBackupPlanAssociationsForResourceTypeResponse response;
+  auto status = grpc_stub_->FetchBackupPlanAssociationsForResourceType(
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -618,6 +726,35 @@ StatusOr<google::longrunning::Operation> DefaultBackupDRStub::TriggerBackup(
     google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->TriggerBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+DefaultBackupDRStub::GetDataSourceReference(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request) {
+  google::cloud::backupdr::v1::DataSourceReference response;
+  auto status =
+      grpc_stub_->GetDataSourceReference(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::
+             FetchDataSourceReferencesForResourceTypeResponse>
+DefaultBackupDRStub::FetchDataSourceReferencesForResourceType(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::
+        FetchDataSourceReferencesForResourceTypeRequest const& request) {
+  google::cloud::backupdr::v1::FetchDataSourceReferencesForResourceTypeResponse
+      response;
+  auto status = grpc_stub_->FetchDataSourceReferencesForResourceType(
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

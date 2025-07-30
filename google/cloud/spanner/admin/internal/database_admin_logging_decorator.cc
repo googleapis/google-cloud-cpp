@@ -496,6 +496,21 @@ DatabaseAdminLogging::ListBackupSchedules(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
+DatabaseAdminLogging::InternalUpdateGraphOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::
+        InternalUpdateGraphOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::
+                 InternalUpdateGraphOperationRequest const& request) {
+        return child_->InternalUpdateGraphOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DatabaseAdminLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,

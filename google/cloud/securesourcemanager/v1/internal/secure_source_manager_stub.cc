@@ -185,6 +185,40 @@ DefaultSecureSourceManagerStub::CreateRepository(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdateRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateRepository(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdateRepository(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -212,6 +246,123 @@ DefaultSecureSourceManagerStub::DeleteRepository(
         request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListHooksResponse>
+DefaultSecureSourceManagerStub::ListHooks(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::ListHooksRequest const& request) {
+  google::cloud::securesourcemanager::v1::ListHooksResponse response;
+  auto status = grpc_stub_->ListHooks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+DefaultSecureSourceManagerStub::GetHook(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request) {
+  google::cloud::securesourcemanager::v1::Hook response;
+  auto status = grpc_stub_->GetHook(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCreateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CreateHookRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::CreateHookRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateHook(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreateHook(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateHook(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdateHookRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateHook(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdateHook(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateHook(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncDeleteHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::DeleteHookRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteHook(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeleteHook(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteHook(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -377,6 +528,780 @@ DefaultSecureSourceManagerStub::DeleteBranchRule(
         request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteBranchRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCreatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreatePullRequest(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreatePullRequest(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePullRequest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+DefaultSecureSourceManagerStub::GetPullRequest(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::PullRequest response;
+  auto status = grpc_stub_->GetPullRequest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListPullRequestsResponse>
+DefaultSecureSourceManagerStub::ListPullRequests(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::ListPullRequestsResponse response;
+  auto status = grpc_stub_->ListPullRequests(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdatePullRequest(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdatePullRequest(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePullRequest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncMergePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncMergePullRequest(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::MergePullRequest(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MergePullRequest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncOpenPullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncOpenPullRequest(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::OpenPullRequest(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->OpenPullRequest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncClosePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncClosePullRequest(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::ClosePullRequest(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ClosePullRequest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsResponse>
+DefaultSecureSourceManagerStub::ListPullRequestFileDiffs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestFileDiffsRequest const& request) {
+  google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsResponse
+      response;
+  auto status =
+      grpc_stub_->ListPullRequestFileDiffs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchTreeResponse>
+DefaultSecureSourceManagerStub::FetchTree(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::FetchTreeRequest const& request) {
+  google::cloud::securesourcemanager::v1::FetchTreeResponse response;
+  auto status = grpc_stub_->FetchTree(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+DefaultSecureSourceManagerStub::FetchBlob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request) {
+  google::cloud::securesourcemanager::v1::FetchBlobResponse response;
+  auto status = grpc_stub_->FetchBlob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCreateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CreateIssueRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateIssue(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreateIssue(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIssue(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+DefaultSecureSourceManagerStub::GetIssue(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request) {
+  google::cloud::securesourcemanager::v1::Issue response;
+  auto status = grpc_stub_->GetIssue(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssuesResponse>
+DefaultSecureSourceManagerStub::ListIssues(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::ListIssuesRequest const& request) {
+  google::cloud::securesourcemanager::v1::ListIssuesResponse response;
+  auto status = grpc_stub_->ListIssues(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateIssue(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdateIssue(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateIssue(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncDeleteIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteIssue(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeleteIssue(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIssue(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncOpenIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::OpenIssueRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::OpenIssueRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncOpenIssue(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::OpenIssue(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->OpenIssue(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCloseIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CloseIssueRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCloseIssue(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CloseIssue(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CloseIssue(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+DefaultSecureSourceManagerStub::GetPullRequestComment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::PullRequestComment response;
+  auto status = grpc_stub_->GetPullRequestComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse>
+DefaultSecureSourceManagerStub::ListPullRequestComments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestCommentsRequest const& request) {
+  google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse
+      response;
+  auto status =
+      grpc_stub_->ListPullRequestComments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCreatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CreatePullRequestCommentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestCommentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreatePullRequestComment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreatePullRequestComment(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreatePullRequestComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdatePullRequestCommentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestCommentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdatePullRequestComment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdatePullRequestComment(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdatePullRequestComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncDeletePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::DeletePullRequestCommentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 DeletePullRequestCommentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeletePullRequestComment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeletePullRequestComment(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeletePullRequestComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncBatchCreatePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::securesourcemanager::v1::
+                                        BatchCreatePullRequestCommentsRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 BatchCreatePullRequestCommentsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchCreatePullRequestComments(context, request,
+                                                               cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::BatchCreatePullRequestComments(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchCreatePullRequestComments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncResolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 ResolvePullRequestCommentsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncResolvePullRequestComments(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::ResolvePullRequestComments(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ResolvePullRequestComments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUnresolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::securesourcemanager::v1::
+                                        UnresolvePullRequestCommentsRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 UnresolvePullRequestCommentsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUnresolvePullRequestComments(context, request,
+                                                             cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UnresolvePullRequestComments(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UnresolvePullRequestComments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCreateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 CreateIssueCommentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateIssueComment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreateIssueComment(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIssueComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+DefaultSecureSourceManagerStub::GetIssueComment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::IssueComment response;
+  auto status = grpc_stub_->GetIssueComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssueCommentsResponse>
+DefaultSecureSourceManagerStub::ListIssueComments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::ListIssueCommentsResponse response;
+  auto status = grpc_stub_->ListIssueComments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 UpdateIssueCommentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateIssueComment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdateIssueComment(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateIssueComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncDeleteIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::securesourcemanager::v1::
+                 DeleteIssueCommentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteIssueComment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeleteIssueComment(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIssueComment(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

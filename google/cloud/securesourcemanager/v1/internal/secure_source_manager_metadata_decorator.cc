@@ -153,6 +153,31 @@ SecureSourceManagerMetadata::CreateRepository(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdateRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("repository.name=",
+                           internal::UrlEncode(request.repository().name())));
+  return child_->AsyncUpdateRepository(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdateRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("repository.name=",
+                           internal::UrlEncode(request.repository().name())));
+  return child_->UpdateRepository(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -173,6 +198,89 @@ SecureSourceManagerMetadata::DeleteRepository(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRepository(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListHooksResponse>
+SecureSourceManagerMetadata::ListHooks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListHooksRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListHooks(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerMetadata::GetHook(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetHook(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCreateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateHook(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreateHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateHook(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("hook.name=", internal::UrlEncode(request.hook().name())));
+  return child_->AsyncUpdateHook(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdateHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("hook.name=", internal::UrlEncode(request.hook().name())));
+  return child_->UpdateHook(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncDeleteHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteHook(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeleteHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteHook(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerMetadata::GetIamPolicyRepo(
@@ -292,6 +400,554 @@ SecureSourceManagerMetadata::DeleteBranchRule(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBranchRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCreatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePullRequest(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreatePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerMetadata::GetPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetPullRequest(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListPullRequestsResponse>
+SecureSourceManagerMetadata::ListPullRequests(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListPullRequests(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("pull_request.name=",
+                           internal::UrlEncode(request.pull_request().name())));
+  return child_->AsyncUpdatePullRequest(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdatePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("pull_request.name=",
+                           internal::UrlEncode(request.pull_request().name())));
+  return child_->UpdatePullRequest(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncMergePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncMergePullRequest(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::MergePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->MergePullRequest(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncOpenPullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncOpenPullRequest(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::OpenPullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->OpenPullRequest(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncClosePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncClosePullRequest(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::ClosePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ClosePullRequest(context, options, request);
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsResponse>
+SecureSourceManagerMetadata::ListPullRequestFileDiffs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestFileDiffsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListPullRequestFileDiffs(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchTreeResponse>
+SecureSourceManagerMetadata::FetchTree(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchTreeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  return child_->FetchTree(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerMetadata::FetchBlob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  return child_->FetchBlob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCreateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateIssue(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreateIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateIssue(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerMetadata::GetIssue(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetIssue(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssuesResponse>
+SecureSourceManagerMetadata::ListIssues(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListIssuesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListIssues(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("issue.name=", internal::UrlEncode(request.issue().name())));
+  return child_->AsyncUpdateIssue(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdateIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("issue.name=", internal::UrlEncode(request.issue().name())));
+  return child_->UpdateIssue(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncDeleteIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteIssue(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeleteIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteIssue(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncOpenIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncOpenIssue(cq, std::move(context), std::move(options),
+                                request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerMetadata::OpenIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->OpenIssue(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCloseIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCloseIssue(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CloseIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CloseIssue(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerMetadata::GetPullRequestComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetPullRequestComment(context, options, request);
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse>
+SecureSourceManagerMetadata::ListPullRequestComments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestCommentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListPullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCreatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePullRequestComment(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreatePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePullRequestComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("pull_request_comment.name=",
+                   internal::UrlEncode(request.pull_request_comment().name())));
+  return child_->AsyncUpdatePullRequestComment(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdatePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("pull_request_comment.name=",
+                   internal::UrlEncode(request.pull_request_comment().name())));
+  return child_->UpdatePullRequestComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncDeletePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePullRequestComment(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeletePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePullRequestComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncBatchCreatePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchCreatePullRequestComments(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::BatchCreatePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreatePullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncResolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncResolvePullRequestComments(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::ResolvePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ResolvePullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUnresolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncUnresolvePullRequestComments(cq, std::move(context),
+                                                   std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UnresolvePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->UnresolvePullRequestComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCreateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateIssueComment(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreateIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateIssueComment(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerMetadata::GetIssueComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetIssueComment(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssueCommentsResponse>
+SecureSourceManagerMetadata::ListIssueComments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListIssueComments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("issue_comment.name=",
+                   internal::UrlEncode(request.issue_comment().name())));
+  return child_->AsyncUpdateIssueComment(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdateIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("issue_comment.name=",
+                   internal::UrlEncode(request.issue_comment().name())));
+  return child_->UpdateIssueComment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncDeleteIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteIssueComment(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeleteIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteIssueComment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
