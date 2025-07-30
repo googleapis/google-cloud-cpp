@@ -39,7 +39,7 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         os: [ macos-14 ]
-        shard: [ Core1, Core2, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Shard5, Other ]
+        shard: [ Core2 ]
         exclude:
         # Only full builds include shards with generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -84,10 +84,12 @@ jobs:
           spanner
         )
         core2_features=(
-          pubsub
-          pubsublite
           storage
           storage_grpc
+        )
+        core3_features=(
+          pubsub
+          pubsublite
         )
         # These are the libraries with the most "clients". To build the list
         # run something like this and find the midpoint:
@@ -214,6 +216,9 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Core2" ]]; then
           features="$(printf ",%s" "${core2_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core3" ]]; then
+          features="$(printf ",%s" "${core3_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "AIPlatform" ]]; then
@@ -236,6 +241,7 @@ jobs:
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
+          skipped_features+=("${core3_features[@]}")
           skipped_features+=(compute)
           skipped_features+=(aiplatform)
           skipped_features+=("${shard1_features[@]}")
