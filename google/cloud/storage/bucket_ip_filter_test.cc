@@ -33,6 +33,15 @@ TEST(BucketIpFilterTest, PublicNetworkSource) {
   EXPECT_NE(source, copy);
 }
 
+TEST(BucketIpFilterTest, PublicNetworkSourceOrderMatters) {
+  BucketIpFilterPublicNetworkSource const source1{{"1.2.3.4/32", "5.6.7.8/32"}};
+  BucketIpFilterPublicNetworkSource const source2{{"5.6.7.8/32", "1.2.3.4/32"}};
+
+  // The two sources have the same elements but in a different order.
+  // They should NOT be equal.
+  EXPECT_NE(source1, source2);
+}
+
 TEST(BucketIpFilterTest, VpcNetworkSource) {
   BucketIpFilterVpcNetworkSource source;
   source.network = "projects/p/global/networks/n";

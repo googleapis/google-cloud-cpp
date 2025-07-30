@@ -129,7 +129,7 @@ BucketMetadata CreateBucketMetadataForTest() {
         },
         "vpcNetworkSources": [{
           "network": "projects/p/global/networks/n",
-          "allowedIpCidrRanges": ["5.6.7.8/32"]
+          "allowedIpCidrRanges": ["5.6.7.8/32", "5.6.7.9/32"]
         }]
       },
       "id": "test-bucket",
@@ -261,9 +261,10 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_THAT(actual.ip_filter().public_network_source->allowed_ip_cidr_ranges,
               ElementsAre("1.2.3.4/32"));
   ASSERT_TRUE(actual.ip_filter().vpc_network_sources.has_value());
-  EXPECT_THAT(*actual.ip_filter().vpc_network_sources,
-              ElementsAre(BucketIpFilterVpcNetworkSource{
-                  "projects/p/global/networks/n", {"5.6.7.8/32"}}));
+  EXPECT_THAT(
+      *actual.ip_filter().vpc_network_sources,
+      ElementsAre(BucketIpFilterVpcNetworkSource{
+          "projects/p/global/networks/n", {"5.6.7.8/32", "5.6.7.9/32"}}));
 
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
@@ -1354,7 +1355,8 @@ TEST(BucketMetadataPatchBuilder, SetIpFilter) {
       {"vpcNetworkSources",
        nlohmann::json::array({
            {{"network", "projects/p/global/networks/n"},
-            {"allowedIpCidrRanges", nlohmann::json::array({"5.6.7.8/32"})}},
+            {"allowedIpCidrRanges",
+             nlohmann::json::array({"5.6.7.8/32", "5.6.7.9/32"})}},
            {{"network", "projects/p/global/networks/m"},
             {"allowedIpCidrRanges", nlohmann::json::array({"9.0.1.2/32"})}},
        })},

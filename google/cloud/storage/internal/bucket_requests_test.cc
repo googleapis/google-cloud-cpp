@@ -492,6 +492,33 @@ TEST(PatchBucketRequestTest, DiffSetIpFilter) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetIpFilterMultipleCidrRanges) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_ip_filter();
+  BucketMetadata updated = original;
+  BucketIpFilter ip_filter;
+  ip_filter.mode = "Enabled";
+  ip_filter.vpc_network_sources =
+      absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>({
+          BucketIpFilterVpcNetworkSource{"projects/p/global/networks/n",
+                                         {"1.2.3.4/32", "5.6.7.8/32"}},
+      });
+  updated.set_ip_filter(std::move(ip_filter));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
+      "ipFilter": {
+          "mode": "Enabled",
+          "vpcNetworkSources": [{
+              "network": "projects/p/global/networks/n",
+              "allowedIpCidrRanges": ["1.2.3.4/32", "5.6.7.8/32"]
+          }]
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchBucketRequestTest, DiffResetIpFilter) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_ip_filter(BucketIpFilter{});

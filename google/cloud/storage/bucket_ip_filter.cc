@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_ip_filter.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include <iostream>
 
@@ -33,13 +34,8 @@ bool operator!=(BucketIpFilterPublicNetworkSource const& lhs,
 
 std::ostream& operator<<(std::ostream& os,
                          BucketIpFilterPublicNetworkSource const& rhs) {
-  os << "BucketIpFilterPublicNetworkSource={allowed_ip_cidr_ranges=[";
-  char const* sep = "";
-  for (auto const& r : rhs.allowed_ip_cidr_ranges) {
-    os << sep << r;
-    sep = ", ";
-  }
-  return os << "]}";
+  return os << "BucketIpFilterPublicNetworkSource={allowed_ip_cidr_ranges=["
+            << absl::StrJoin(rhs.allowed_ip_cidr_ranges, ", ") << "]}";
 }
 
 bool operator==(BucketIpFilterVpcNetworkSource const& lhs,
@@ -55,14 +51,9 @@ bool operator!=(BucketIpFilterVpcNetworkSource const& lhs,
 
 std::ostream& operator<<(std::ostream& os,
                          BucketIpFilterVpcNetworkSource const& rhs) {
-  os << "BucketIpFilterVpcNetworkSource={network=" << rhs.network
-     << ", allowed_ip_cidr_ranges=[";
-  char const* sep = "";
-  for (auto const& r : rhs.allowed_ip_cidr_ranges) {
-    os << sep << r;
-    sep = ", ";
-  }
-  return os << "]}";
+  return os << "BucketIpFilterVpcNetworkSource={network=" << rhs.network
+            << ", allowed_ip_cidr_ranges=["
+            << absl::StrJoin(rhs.allowed_ip_cidr_ranges, ", ") << "]}";
 }
 
 bool operator==(BucketIpFilter const& lhs, BucketIpFilter const& rhs) {
@@ -79,27 +70,22 @@ bool operator!=(BucketIpFilter const& lhs, BucketIpFilter const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, BucketIpFilter const& rhs) {
   google::cloud::internal::IosFlagsSaver save_format(os);
-  os << "BucketIpFilter={";
-  os << "mode=" << rhs.mode.value_or("") << ", ";
+  os << "BucketIpFilter={mode=" << rhs.mode.value_or("");
   if (rhs.allow_all_service_agent_access) {
-    os << "allow_all_service_agent_access=" << std::boolalpha
-       << *rhs.allow_all_service_agent_access << ", ";
+    os << ", allow_all_service_agent_access=" << std::boolalpha
+       << *rhs.allow_all_service_agent_access;
   }
   if (rhs.allow_cross_org_vpcs) {
-    os << "allow_cross_org_vpcs=" << std::boolalpha << *rhs.allow_cross_org_vpcs
-       << ", ";
+    os << ", allow_cross_org_vpcs=" << std::boolalpha
+       << *rhs.allow_cross_org_vpcs;
   }
   if (rhs.public_network_source) {
-    os << "public_network_source=" << *rhs.public_network_source << ", ";
+    os << ", public_network_source=" << *rhs.public_network_source;
   }
   if (rhs.vpc_network_sources) {
-    os << "vpc_network_sources=[";
-    char const* sep = "";
-    for (auto const& r : *rhs.vpc_network_sources) {
-      os << sep << r;
-      sep = ", ";
-    }
-    os << "]";
+    os << ", vpc_network_sources=["
+       << absl::StrJoin(*rhs.vpc_network_sources, ", ", absl::StreamFormatter())
+       << "]";
   }
   return os << "}";
 }
