@@ -25,8 +25,8 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:agentendpoint_cc_grpc",
-    "@com_google_googleapis//google/cloud/osconfig/v1:osconfig_cc_grpc",
+    "@googleapis//google/cloud/osconfig/agentendpoint/v1:agentendpoint_cc_grpc",
+    "@googleapis//google/cloud/osconfig/v1:osconfig_cc_grpc",
 ]
 
 cc_gapic_library(

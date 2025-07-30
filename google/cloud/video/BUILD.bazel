@@ -26,9 +26,9 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/video/livestream/v1:livestream_cc_grpc",
-    "@com_google_googleapis//google/cloud/video/stitcher/v1:stitcher_cc_grpc",
-    "@com_google_googleapis//google/cloud/video/transcoder/v1:transcoder_cc_grpc",
+    "@googleapis//google/cloud/video/livestream/v1:livestream_cc_grpc",
+    "@googleapis//google/cloud/video/stitcher/v1:stitcher_cc_grpc",
+    "@googleapis//google/cloud/video/transcoder/v1:transcoder_cc_grpc",
 ]
 
 cc_gapic_library(

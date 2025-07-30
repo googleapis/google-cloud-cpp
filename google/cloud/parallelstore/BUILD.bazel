@@ -21,7 +21,7 @@ licenses(["notice"])  # Apache 2.0
 service_dirs = ["v1/"]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/parallelstore/v1:parallelstore_cc_grpc",
+    "@googleapis//google/cloud/parallelstore/v1:parallelstore_cc_grpc",
 ]
 
 cc_gapic_library(

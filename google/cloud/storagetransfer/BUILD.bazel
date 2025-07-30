@@ -24,7 +24,7 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc",
+    "@googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc",
 ]
 
 cc_gapic_library(

@@ -60,6 +60,6 @@ cc_library(
         "//:bigtable",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in bigtable_benchmarks_unit_tests]

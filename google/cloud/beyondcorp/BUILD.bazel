@@ -26,9 +26,9 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc",
-    "@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc",
-    "@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc",
+    "@googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc",
+    "@googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc",
+    "@googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc",
 ]
 
 cc_gapic_library(

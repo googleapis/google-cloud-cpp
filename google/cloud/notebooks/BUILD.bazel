@@ -25,8 +25,8 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc",
-    "@com_google_googleapis//google/cloud/notebooks/v2:notebooks_cc_grpc",
+    "@googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc",
+    "@googleapis//google/cloud/notebooks/v2:notebooks_cc_grpc",
 ]
 
 cc_gapic_library(

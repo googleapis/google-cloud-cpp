@@ -63,7 +63,7 @@ def compute_library(service_dir, inner_deps = []):
         visibility = ["//:__pkg__"],
         deps = [
             ":google_cloud_cpp_compute_" + service,
-            "@com_google_googletest//:gtest",
+            "@googletest//:gtest",
         ],
     )
 

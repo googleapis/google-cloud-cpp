@@ -23,7 +23,7 @@ service_dirs = ["v1/"]
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/sql/v1:sql_cc_proto",
+    "@googleapis//google/cloud/sql/v1:sql_cc_proto",
 ]
 
 cc_gapic_library(

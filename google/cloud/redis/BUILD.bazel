@@ -25,8 +25,8 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/redis/cluster/v1:cluster_cc_grpc",
-    "@com_google_googleapis//google/cloud/redis/v1:redis_cc_grpc",
+    "@googleapis//google/cloud/redis/cluster/v1:cluster_cc_grpc",
+    "@googleapis//google/cloud/redis/v1:redis_cc_grpc",
 ]
 
 cc_gapic_library(

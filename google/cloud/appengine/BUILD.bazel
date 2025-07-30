@@ -24,9 +24,9 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/appengine/legacy:legacy_cc_grpc",
-    "@com_google_googleapis//google/appengine/logging/v1:logging_cc_grpc",
-    "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc",
+    "@googleapis//google/appengine/legacy:legacy_cc_grpc",
+    "@googleapis//google/appengine/logging/v1:logging_cc_grpc",
+    "@googleapis//google/appengine/v1:appengine_cc_grpc",
 ]
 
 cc_gapic_library(

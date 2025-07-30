@@ -27,6 +27,6 @@ licenses(["notice"])  # Apache 2.0
         "//:opentelemetry",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in opentelemetry_integration_tests]

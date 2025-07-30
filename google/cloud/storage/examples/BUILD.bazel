@@ -43,7 +43,7 @@ cc_library(
         "//:storage",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in storage_examples_unit_tests]
 
@@ -73,7 +73,7 @@ cc_library(
         "//:storage_grpc_mocks",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in storage_grpc_unit_tests]
 
