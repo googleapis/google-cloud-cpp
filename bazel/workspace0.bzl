@@ -126,6 +126,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
         ],
+        repo_mapping = {"@googletest": "@com_google_googletest"},
         sha256 = "78c676fc63881529bf97bf9d45948d905a66833fbfa5318ea2cd7478cb98f399",
         strip_prefix = "googletest-1.16.0",
     )
@@ -137,6 +138,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/googleapis/googleapis/archive/f9d6fe4a6ad9ed89dfc315f284124d2104377940.tar.gz",
         ],
+        repo_mapping = {"@googleapis": "@com_google_googleapis"},
         sha256 = "a1b2315f7eb290e2876b19839da1cc7916b36f93c88921f90d0daab58755a8a3",
         strip_prefix = "googleapis-f9d6fe4a6ad9ed89dfc315f284124d2104377940",
         # build_file = Label("//bazel:googleapis.BUILD"),
@@ -157,6 +159,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
         ],
+        repo_mapping = {"@protobuf": "@com_google_protobuf"},
         sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
         strip_prefix = "protobuf-31.1",
     )
@@ -185,6 +188,7 @@ def gl_cpp_workspace0(name = None):
         ],
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
+            "@grpc": "@com_github_grpc_grpc",
         },
         sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
         strip_prefix = "grpc-1.71.0",
@@ -209,6 +213,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
         ],
+        repo_mapping = {"@curl": "@com_github_curl_curl"},
         sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
         strip_prefix = "curl-7.69.1",
         build_file = Label("//bazel:curl.BUILD"),
@@ -221,6 +226,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
+        repo_mapping = {"@nlohmann_json": "@com_github_nlohmann_json"},
         sha256 = "0d8ef5af7f9794e3263480193c491549b2ba6cc74bb018906202ada498a79406",
         strip_prefix = "json-3.11.3",
     )
@@ -232,6 +238,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
         ],
+        repo_mapping = {"@crc32c": "@com_github_google_crc32c"},
         sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
         strip_prefix = "crc32c-1.1.2",
         build_file = Label("//bazel:crc32c.BUILD"),
@@ -253,5 +260,6 @@ def gl_cpp_workspace0(name = None):
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",
             "@github_nlohmann_json": "@com_github_nlohmann_json",
+            "@opentelemetry-cpp": "@io_opentelemetry_cpp",
         },
     )
