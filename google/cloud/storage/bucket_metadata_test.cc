@@ -1337,7 +1337,7 @@ TEST(BucketMetadataPatchBuilder, SetIpFilter) {
   ip_filter.vpc_network_sources =
       absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>(
           {BucketIpFilterVpcNetworkSource{"projects/p/global/networks/n",
-                                          {"5.6.7.8/32"}},
+                                          {"5.6.7.8/32", "5.6.7.9/32"}},
            BucketIpFilterVpcNetworkSource{"projects/p/global/networks/m",
                                           {"9.0.1.2/32"}}});
   builder.SetIpFilter(ip_filter);
