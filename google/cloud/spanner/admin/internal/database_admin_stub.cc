@@ -470,6 +470,22 @@ DefaultDatabaseAdminStub::ListBackupSchedules(
   return response;
 }
 
+StatusOr<
+    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
+DefaultDatabaseAdminStub::InternalUpdateGraphOperation(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::
+        InternalUpdateGraphOperationRequest const& request) {
+  google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse
+      response;
+  auto status =
+      grpc_stub_->InternalUpdateGraphOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDatabaseAdminStub::ListOperations(
     grpc::ClientContext& context, Options const&,

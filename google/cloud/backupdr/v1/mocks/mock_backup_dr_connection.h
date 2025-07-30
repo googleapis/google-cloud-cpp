@@ -479,6 +479,45 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
               CreateBackupPlan,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupPlan(Matcher<google::cloud::backupdr::v1::UpdateBackupPlanRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>,
+      UpdateBackupPlan,
+      (google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateBackupPlan(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateBackupPlan,
+      (NoAwaitTag,
+       google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateBackupPlan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>,
+              UpdateBackupPlan,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::backupdr::v1::BackupPlan>, GetBackupPlan,
       (google::cloud::backupdr::v1::GetBackupPlanRequest const& request),
@@ -528,6 +567,18 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
               DeleteBackupPlan,
               (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>,
+              GetBackupPlanRevision,
+              (google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>),
+      ListBackupPlanRevisions,
+      (google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code
@@ -571,6 +622,49 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
       CreateBackupPlanAssociation,
       (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupPlanAssociation(Matcher<google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
+      UpdateBackupPlanAssociation,
+      (google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateBackupPlanAssociation(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateBackupPlanAssociation,
+      (NoAwaitTag,
+       google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupPlanAssociation(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
+      UpdateBackupPlanAssociation,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>,
       GetBackupPlanAssociation,
@@ -583,6 +677,12 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
       ListBackupPlanAssociations,
       (google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request),
       (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>),
+              FetchBackupPlanAssociationsForResourceType,
+              (google::cloud::backupdr::v1::
+                   FetchBackupPlanAssociationsForResourceTypeRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -665,6 +765,18 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
       future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
       TriggerBackup, (google::longrunning::Operation const& operation),
       (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::DataSourceReference>,
+              GetDataSourceReference,
+              (google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::DataSourceReference>),
+              FetchDataSourceReferencesForResourceType,
+              (google::cloud::backupdr::v1::
+                   FetchDataSourceReferencesForResourceTypeRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///

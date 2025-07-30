@@ -408,6 +408,13 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::
+                           InternalUpdateGraphOperationResponse>,
+              InternalUpdateGraphOperation,
+              (google::spanner::admin::database::v1::
+                   InternalUpdateGraphOperationRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
               (google::longrunning::ListOperationsRequest request), (override));
 

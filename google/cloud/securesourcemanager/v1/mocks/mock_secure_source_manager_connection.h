@@ -206,6 +206,48 @@ class MockSecureSourceManagerConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// UpdateRepository(Matcher<google::cloud::securesourcemanager::v1::UpdateRepositoryRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
+      UpdateRepository,
+      (google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateRepository(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateRepository,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
+      UpdateRepository, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// DeleteRepository(Matcher<google::cloud::securesourcemanager::v1::DeleteRepositoryRequest
   /// const&>(_)))
   /// @endcode
@@ -242,6 +284,137 @@ class MockSecureSourceManagerConnection
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
       DeleteRepository, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::Hook>), ListHooks,
+      (google::cloud::securesourcemanager::v1::ListHooksRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securesourcemanager::v1::Hook>, GetHook,
+      (google::cloud::securesourcemanager::v1::GetHookRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateHook(Matcher<google::cloud::securesourcemanager::v1::CreateHookRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>,
+              CreateHook,
+              (google::cloud::securesourcemanager::v1::CreateHookRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateHook(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateHook,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::CreateHookRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateHook(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>,
+              CreateHook, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateHook(Matcher<google::cloud::securesourcemanager::v1::UpdateHookRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>,
+              UpdateHook,
+              (google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateHook(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateHook,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateHook(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>,
+              UpdateHook, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteHook(Matcher<google::cloud::securesourcemanager::v1::DeleteHookRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteHook,
+      (google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteHook(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteHook,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteHook(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteHook, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicyRepo,
@@ -396,6 +569,874 @@ class MockSecureSourceManagerConnection
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
       DeleteBranchRule, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePullRequest(Matcher<google::cloud::securesourcemanager::v1::CreatePullRequestRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      CreatePullRequest,
+      (google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePullRequest(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreatePullRequest,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePullRequest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      CreatePullRequest, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>,
+      GetPullRequest,
+      (google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::PullRequest>),
+      ListPullRequests,
+      (google::cloud::securesourcemanager::v1::ListPullRequestsRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePullRequest(Matcher<google::cloud::securesourcemanager::v1::UpdatePullRequestRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      UpdatePullRequest,
+      (google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePullRequest(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdatePullRequest,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePullRequest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      UpdatePullRequest, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MergePullRequest(Matcher<google::cloud::securesourcemanager::v1::MergePullRequestRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      MergePullRequest,
+      (google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MergePullRequest(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, MergePullRequest,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, MergePullRequest(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      MergePullRequest, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// OpenPullRequest(Matcher<google::cloud::securesourcemanager::v1::OpenPullRequestRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      OpenPullRequest,
+      (google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, OpenPullRequest(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, OpenPullRequest,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, OpenPullRequest(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      OpenPullRequest, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ClosePullRequest(Matcher<google::cloud::securesourcemanager::v1::ClosePullRequestRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      ClosePullRequest,
+      (google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ClosePullRequest(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ClosePullRequest,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ClosePullRequest(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>,
+      ClosePullRequest, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::FileDiff>),
+      ListPullRequestFileDiffs,
+      (google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>),
+      FetchTree,
+      (google::cloud::securesourcemanager::v1::FetchTreeRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>,
+      FetchBlob,
+      (google::cloud::securesourcemanager::v1::FetchBlobRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateIssue(Matcher<google::cloud::securesourcemanager::v1::CreateIssueRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              CreateIssue,
+              (google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateIssue(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateIssue,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateIssue(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              CreateIssue, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>, GetIssue,
+      (google::cloud::securesourcemanager::v1::GetIssueRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::Issue>), ListIssues,
+      (google::cloud::securesourcemanager::v1::ListIssuesRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateIssue(Matcher<google::cloud::securesourcemanager::v1::UpdateIssueRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              UpdateIssue,
+              (google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateIssue(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateIssue,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateIssue(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              UpdateIssue, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIssue(Matcher<google::cloud::securesourcemanager::v1::DeleteIssueRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteIssue,
+      (google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteIssue(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteIssue,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteIssue(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteIssue, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// OpenIssue(Matcher<google::cloud::securesourcemanager::v1::OpenIssueRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+      OpenIssue,
+      (google::cloud::securesourcemanager::v1::OpenIssueRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, OpenIssue(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, OpenIssue,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::OpenIssueRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, OpenIssue(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              OpenIssue, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CloseIssue(Matcher<google::cloud::securesourcemanager::v1::CloseIssueRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              CloseIssue,
+              (google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CloseIssue(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CloseIssue,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CloseIssue(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>,
+              CloseIssue, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>,
+      GetPullRequestComment,
+      (google::cloud::securesourcemanager::v1::
+           GetPullRequestCommentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>),
+      ListPullRequestComments,
+      (google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePullRequestComment(Matcher<google::cloud::securesourcemanager::v1::CreatePullRequestCommentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>,
+      CreatePullRequestComment,
+      (google::cloud::securesourcemanager::v1::
+           CreatePullRequestCommentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePullRequestComment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreatePullRequestComment,
+              (NoAwaitTag, google::cloud::securesourcemanager::v1::
+                               CreatePullRequestCommentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePullRequestComment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>,
+      CreatePullRequestComment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePullRequestComment(Matcher<google::cloud::securesourcemanager::v1::UpdatePullRequestCommentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>,
+      UpdatePullRequestComment,
+      (google::cloud::securesourcemanager::v1::
+           UpdatePullRequestCommentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePullRequestComment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UpdatePullRequestComment,
+              (NoAwaitTag, google::cloud::securesourcemanager::v1::
+                               UpdatePullRequestCommentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePullRequestComment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>,
+      UpdatePullRequestComment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePullRequestComment(Matcher<google::cloud::securesourcemanager::v1::DeletePullRequestCommentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeletePullRequestComment,
+      (google::cloud::securesourcemanager::v1::
+           DeletePullRequestCommentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePullRequestComment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeletePullRequestComment,
+              (NoAwaitTag, google::cloud::securesourcemanager::v1::
+                               DeletePullRequestCommentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePullRequestComment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeletePullRequestComment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreatePullRequestComments(Matcher<google::cloud::securesourcemanager::v1::BatchCreatePullRequestCommentsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::
+                                  BatchCreatePullRequestCommentsResponse>>,
+              BatchCreatePullRequestComments,
+              (google::cloud::securesourcemanager::v1::
+                   BatchCreatePullRequestCommentsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCreatePullRequestComments(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              BatchCreatePullRequestComments,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::
+                   BatchCreatePullRequestCommentsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreatePullRequestComments(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::
+                                  BatchCreatePullRequestCommentsResponse>>,
+              BatchCreatePullRequestComments,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResolvePullRequestComments(Matcher<google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::
+                                  ResolvePullRequestCommentsResponse>>,
+              ResolvePullRequestComments,
+              (google::cloud::securesourcemanager::v1::
+                   ResolvePullRequestCommentsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResolvePullRequestComments(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ResolvePullRequestComments,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::
+                   ResolvePullRequestCommentsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResolvePullRequestComments(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::
+                                  ResolvePullRequestCommentsResponse>>,
+              ResolvePullRequestComments,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UnresolvePullRequestComments(Matcher<google::cloud::securesourcemanager::v1::UnresolvePullRequestCommentsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::
+                                  UnresolvePullRequestCommentsResponse>>,
+              UnresolvePullRequestComments,
+              (google::cloud::securesourcemanager::v1::
+                   UnresolvePullRequestCommentsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UnresolvePullRequestComments(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UnresolvePullRequestComments,
+              (NoAwaitTag,
+               google::cloud::securesourcemanager::v1::
+                   UnresolvePullRequestCommentsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UnresolvePullRequestComments(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::securesourcemanager::v1::
+                                  UnresolvePullRequestCommentsResponse>>,
+              UnresolvePullRequestComments,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateIssueComment(Matcher<google::cloud::securesourcemanager::v1::CreateIssueCommentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>,
+      CreateIssueComment,
+      (google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateIssueComment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateIssueComment,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateIssueComment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>,
+      CreateIssueComment, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securesourcemanager::v1::IssueComment>,
+      GetIssueComment,
+      (google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::securesourcemanager::v1::IssueComment>),
+      ListIssueComments,
+      (google::cloud::securesourcemanager::v1::ListIssueCommentsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateIssueComment(Matcher<google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>,
+      UpdateIssueComment,
+      (google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateIssueComment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateIssueComment,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateIssueComment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>,
+      UpdateIssueComment, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIssueComment(Matcher<google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteIssueComment,
+      (google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteIssueComment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteIssueComment,
+      (NoAwaitTag,
+       google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIssueComment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteIssueComment, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
