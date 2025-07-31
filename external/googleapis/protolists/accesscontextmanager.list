@@ -1,6 +1,6 @@
-@com_google_googleapis//google/identity/accesscontextmanager/type:device_resources.proto
-@com_google_googleapis//google/identity/accesscontextmanager/v1:access_context_manager.proto
-@com_google_googleapis//google/identity/accesscontextmanager/v1:access_level.proto
-@com_google_googleapis//google/identity/accesscontextmanager/v1:access_policy.proto
-@com_google_googleapis//google/identity/accesscontextmanager/v1:gcp_user_access_binding.proto
-@com_google_googleapis//google/identity/accesscontextmanager/v1:service_perimeter.proto
+@googleapis//google/identity/accesscontextmanager/type:device_resources.proto
+@googleapis//google/identity/accesscontextmanager/v1:access_context_manager.proto
+@googleapis//google/identity/accesscontextmanager/v1:access_level.proto
+@googleapis//google/identity/accesscontextmanager/v1:access_policy.proto
+@googleapis//google/identity/accesscontextmanager/v1:gcp_user_access_binding.proto
+@googleapis//google/identity/accesscontextmanager/v1:service_perimeter.proto

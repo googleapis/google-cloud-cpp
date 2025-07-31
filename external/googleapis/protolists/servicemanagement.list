@@ -1,2 +1,2 @@
-@com_google_googleapis//google/api/servicemanagement/v1:resources.proto
-@com_google_googleapis//google/api/servicemanagement/v1:servicemanager.proto
+@googleapis//google/api/servicemanagement/v1:resources.proto
+@googleapis//google/api/servicemanagement/v1:servicemanager.proto

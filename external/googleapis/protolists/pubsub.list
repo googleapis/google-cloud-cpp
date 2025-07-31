@@ -1,2 +1,2 @@
-@com_google_googleapis//google/pubsub/v1:pubsub.proto
-@com_google_googleapis//google/pubsub/v1:schema.proto
+@googleapis//google/pubsub/v1:pubsub.proto
+@googleapis//google/pubsub/v1:schema.proto

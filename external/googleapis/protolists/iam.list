@@ -1,2 +1,2 @@
-@com_google_googleapis//google/iam/admin/v1:audit_data.proto
-@com_google_googleapis//google/iam/admin/v1:iam.proto
+@googleapis//google/iam/admin/v1:audit_data.proto
+@googleapis//google/iam/admin/v1:iam.proto

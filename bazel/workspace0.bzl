@@ -133,7 +133,7 @@ def gl_cpp_workspace0(name = None):
     # Load the googleapis dependency.
     maybe(
         http_archive,
-        name = "com_google_googleapis",
+        name = "googleapis",
         urls = [
             "https://github.com/googleapis/googleapis/archive/f6801ce4e1df0541abb8d1e996cb36363c41fb8d.tar.gz",
         ],

@@ -24,8 +24,8 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc",
-    "@com_google_googleapis//grafeas/v1:grafeas_cc_grpc",
+    "@googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc",
+    "@googleapis//grafeas/v1:grafeas_cc_grpc",
 ]
 
 cc_gapic_library(

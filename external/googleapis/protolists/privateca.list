@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/security/privateca/v1:resources.proto
-@com_google_googleapis//google/cloud/security/privateca/v1:service.proto
+@googleapis//google/cloud/security/privateca/v1:resources.proto
+@googleapis//google/cloud/security/privateca/v1:service.proto

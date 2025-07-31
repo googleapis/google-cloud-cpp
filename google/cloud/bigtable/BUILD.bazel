@@ -55,11 +55,11 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "@abseil-cpp//absl/strings:str_format",
-        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
-        "@com_google_googleapis//google/rpc:error_details_cc_proto",
-        "@com_github_grpc_grpc//:grpc++",
+        "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
+        "@googleapis//google/rpc:error_details_cc_proto",
+        "@grpc//:grpc++",
     ] + select({
         ":metrics_enabled": [
             "//:opentelemetry",
@@ -89,7 +89,7 @@ cc_library(
         ":google_cloud_cpp_bigtable",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -106,7 +106,7 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -124,7 +124,7 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in bigtable_client_unit_tests]
 
@@ -141,6 +141,6 @@ cc_test(
         "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )

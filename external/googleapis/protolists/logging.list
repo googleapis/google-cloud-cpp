@@ -1,4 +1,4 @@
-@com_google_googleapis//google/logging/v2:log_entry.proto
-@com_google_googleapis//google/logging/v2:logging.proto
-@com_google_googleapis//google/logging/v2:logging_config.proto
-@com_google_googleapis//google/logging/v2:logging_metrics.proto
+@googleapis//google/logging/v2:log_entry.proto
+@googleapis//google/logging/v2:logging.proto
+@googleapis//google/logging/v2:logging_config.proto
+@googleapis//google/logging/v2:logging_metrics.proto

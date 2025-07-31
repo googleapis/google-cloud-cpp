@@ -1,6 +1,6 @@
-@com_google_googleapis//google/cloud/networksecurity/v1:authorization_policy.proto
-@com_google_googleapis//google/cloud/networksecurity/v1:client_tls_policy.proto
-@com_google_googleapis//google/cloud/networksecurity/v1:common.proto
-@com_google_googleapis//google/cloud/networksecurity/v1:network_security.proto
-@com_google_googleapis//google/cloud/networksecurity/v1:server_tls_policy.proto
-@com_google_googleapis//google/cloud/networksecurity/v1:tls.proto
+@googleapis//google/cloud/networksecurity/v1:authorization_policy.proto
+@googleapis//google/cloud/networksecurity/v1:client_tls_policy.proto
+@googleapis//google/cloud/networksecurity/v1:common.proto
+@googleapis//google/cloud/networksecurity/v1:network_security.proto
+@googleapis//google/cloud/networksecurity/v1:server_tls_policy.proto
+@googleapis//google/cloud/networksecurity/v1:tls.proto

@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/essentialcontacts/v1:enums.proto
-@com_google_googleapis//google/cloud/essentialcontacts/v1:service.proto
+@googleapis//google/cloud/essentialcontacts/v1:enums.proto
+@googleapis//google/cloud/essentialcontacts/v1:service.proto
