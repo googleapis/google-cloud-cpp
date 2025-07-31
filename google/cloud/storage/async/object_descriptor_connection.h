@@ -59,6 +59,8 @@ class ObjectDescriptorConnection {
    * Starts a new range read in the current descriptor.
    */
   virtual std::unique_ptr<AsyncReaderConnection> Read(ReadParams p) = 0;
+
+  virtual void MakeSubsequentStream() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

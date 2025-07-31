@@ -38,6 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ObjectDescriptorImpl
     : public storage_experimental::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
+ private:
+  struct Stream {
+    std::shared_ptr<OpenStream> stream;
+    std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
+    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
+    bool write_pending = false;
+  };
+
  public:
   ObjectDescriptorImpl(
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
@@ -62,6 +70,8 @@ class ObjectDescriptorImpl
   std::unique_ptr<storage_experimental::AsyncReaderConnection> Read(
       ReadParams p) override;
 
+  void MakeSubsequentStream() override;
+
  private:
   std::weak_ptr<ObjectDescriptorImpl> WeakFromThis() {
     return shared_from_this();
@@ -70,14 +80,16 @@ class ObjectDescriptorImpl
   // This may seem expensive, but it is less bug-prone than iterating over
   // the map with the lock held.
   auto CopyActiveRanges(std::unique_lock<std::mutex> const&) const {
-    return active_ranges_;
+    return streams_.back().active_ranges;
   }
 
   auto CopyActiveRanges() const {
     return CopyActiveRanges(std::unique_lock<std::mutex>(mu_));
   }
 
-  auto CurrentStream(std::unique_lock<std::mutex>) const { return stream_; }
+  auto CurrentStream(std::unique_lock<std::mutex>) const {
+    return streams_.back().stream;
+  }
 
   void Flush(std::unique_lock<std::mutex> lk);
   void OnWrite(bool ok);
@@ -92,19 +104,17 @@ class ObjectDescriptorImpl
   bool IsResumable(Status const& status,
                    google::rpc::Status const& proto_status);
 
-  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
+  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_prototype_;
   OpenStreamFactory make_stream_;
 
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
-  std::shared_ptr<OpenStream> stream_;
   absl::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
-  bool write_pending_ = false;
   google::storage::v2::BidiReadObjectRequest next_request_;
 
-  std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges_;
   Options options_;
+  std::vector<Stream> streams_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
