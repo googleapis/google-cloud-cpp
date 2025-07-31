@@ -1,2 +1,2 @@
-@com_google_googleapis//google/api/serviceusage/v1:resources.proto
-@com_google_googleapis//google/api/serviceusage/v1:serviceusage.proto
+@googleapis//google/api/serviceusage/v1:resources.proto
+@googleapis//google/api/serviceusage/v1:serviceusage.proto

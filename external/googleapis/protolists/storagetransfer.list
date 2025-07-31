@@ -1,2 +1,2 @@
-@com_google_googleapis//google/storagetransfer/v1:transfer.proto
-@com_google_googleapis//google/storagetransfer/v1:transfer_types.proto
+@googleapis//google/storagetransfer/v1:transfer.proto
+@googleapis//google/storagetransfer/v1:transfer_types.proto

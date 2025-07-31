@@ -433,7 +433,7 @@ licenses(["notice"])  # Apache 2.0
 service_dirs = ["$service_subdirectory$"]
 
 googleapis_deps = [
-    "@com_google_googleapis//$directory$:$library$_cc_grpc",
+    "@googleapis//$directory$:$library$_cc_grpc",
 ]
 
 cc_gapic_library(

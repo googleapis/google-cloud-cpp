@@ -1,6 +1,6 @@
-@com_google_googleapis//google/cloud/pubsublite/v1:admin.proto
-@com_google_googleapis//google/cloud/pubsublite/v1:common.proto
-@com_google_googleapis//google/cloud/pubsublite/v1:cursor.proto
-@com_google_googleapis//google/cloud/pubsublite/v1:publisher.proto
-@com_google_googleapis//google/cloud/pubsublite/v1:subscriber.proto
-@com_google_googleapis//google/cloud/pubsublite/v1:topic_stats.proto
+@googleapis//google/cloud/pubsublite/v1:admin.proto
+@googleapis//google/cloud/pubsublite/v1:common.proto
+@googleapis//google/cloud/pubsublite/v1:cursor.proto
+@googleapis//google/cloud/pubsublite/v1:publisher.proto
+@googleapis//google/cloud/pubsublite/v1:subscriber.proto
+@googleapis//google/cloud/pubsublite/v1:topic_stats.proto
