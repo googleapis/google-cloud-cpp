@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/storagebatchoperations/v1:storage_batch_operations.proto
-@com_google_googleapis//google/cloud/storagebatchoperations/v1:storage_batch_operations_types.proto
+@googleapis//google/cloud/storagebatchoperations/v1:storage_batch_operations.proto
+@googleapis//google/cloud/storagebatchoperations/v1:storage_batch_operations_types.proto

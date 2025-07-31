@@ -1,5 +1,5 @@
-@com_google_googleapis//google/cloud/gkehub/v1/configmanagement:configmanagement.proto
-@com_google_googleapis//google/cloud/gkehub/v1/multiclusteringress:multiclusteringress.proto
-@com_google_googleapis//google/cloud/gkehub/v1:feature.proto
-@com_google_googleapis//google/cloud/gkehub/v1:membership.proto
-@com_google_googleapis//google/cloud/gkehub/v1:service.proto
+@googleapis//google/cloud/gkehub/v1/configmanagement:configmanagement.proto
+@googleapis//google/cloud/gkehub/v1/multiclusteringress:multiclusteringress.proto
+@googleapis//google/cloud/gkehub/v1:feature.proto
+@googleapis//google/cloud/gkehub/v1:membership.proto
+@googleapis//google/cloud/gkehub/v1:service.proto

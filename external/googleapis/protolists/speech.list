@@ -1,5 +1,5 @@
-@com_google_googleapis//google/cloud/speech/v1:cloud_speech.proto
-@com_google_googleapis//google/cloud/speech/v1:cloud_speech_adaptation.proto
-@com_google_googleapis//google/cloud/speech/v1:resource.proto
-@com_google_googleapis//google/cloud/speech/v2:cloud_speech.proto
-@com_google_googleapis//google/cloud/speech/v2:locations_metadata.proto
+@googleapis//google/cloud/speech/v1:cloud_speech.proto
+@googleapis//google/cloud/speech/v1:cloud_speech_adaptation.proto
+@googleapis//google/cloud/speech/v1:resource.proto
+@googleapis//google/cloud/speech/v2:cloud_speech.proto
+@googleapis//google/cloud/speech/v2:locations_metadata.proto
