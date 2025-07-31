@@ -13,11 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_connection.h"
-<<<<<<< HEAD
-#include "google/cloud/storage/parallel_upload.h"
-=======
 #include "google/cloud/storage/internal/object_write_streambuf.h"
->>>>>>> 6b350ef5c6 (changing approach to generate the traces)
+#include "google/cloud/storage/parallel_upload.h"
 #include <utility>
 #include <vector>
 
@@ -49,7 +46,6 @@ StatusOr<CreateOrResumeResponse> CreateOrResume(
                                 std::move(response->payload)};
 }
 
-<<<<<<< HEAD
 StatusOr<ObjectMetadata> StorageConnection::ExecuteParallelUploadFile(
     std::vector<std::thread>,  // NOLINT(performance-unnecessary-value-param)
     std::vector<
@@ -58,11 +54,11 @@ StatusOr<ObjectMetadata> StorageConnection::ExecuteParallelUploadFile(
   return Status(
       StatusCode::kUnimplemented,
       "ExecuteParallelUploadFile() is not implemented by this Object");
-=======
+}
+
 StatusOr<ObjectWriteStreamParams> StorageConnection::SetupObjectWriteStream(
     ResumableUploadRequest const&) {
   return Status(StatusCode::kUnimplemented, "unimplemented");
->>>>>>> 6b350ef5c6 (changing approach to generate the traces)
 }
 
 }  // namespace internal

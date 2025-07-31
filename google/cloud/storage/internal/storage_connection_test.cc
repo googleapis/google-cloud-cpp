@@ -161,7 +161,6 @@ TEST(StorageConnectionTest, UploadFileResumableUnimplemented) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
 }
 
-<<<<<<< HEAD
 TEST(StorageConnectionTest, ExecuteParallelUploadFileUnimplemented) {
   TestStorageConnection connection;
   std::vector<std::thread> threads;
@@ -172,10 +171,7 @@ TEST(StorageConnectionTest, ExecuteParallelUploadFileUnimplemented) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
 }
 
-TEST(StorageConnectionTest, WriteObjectBufferSizeUnimplemented) {
-=======
 TEST(StorageConnectionTest, SetupObjectWriteStreamUnimplemented) {
->>>>>>> 6b350ef5c6 (changing approach to generate the traces)
   TestStorageConnection connection;
   ResumableUploadRequest request;
   auto response = connection.SetupObjectWriteStream(request);

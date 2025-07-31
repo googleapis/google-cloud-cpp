@@ -256,7 +256,6 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
                            impl_->UploadFileResumable(file_name, request));
 }
 
-<<<<<<< HEAD
 StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
     std::vector<std::thread> threads,
     std::vector<storage::internal::ParallelUploadFileShard> shards,
@@ -269,11 +268,8 @@ StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
                                       ignore_cleanup_failures));
 }
 
-StatusOr<std::size_t> TracingConnection::WriteObjectBufferSize(
-=======
 StatusOr<storage::internal::ObjectWriteStreamParams>
 TracingConnection::SetupObjectWriteStream(
->>>>>>> 6b350ef5c6 (changing approach to generate the traces)
     storage::internal::ResumableUploadRequest const& request) {
   auto span =
       internal::MakeSpan("storage::Client::WriteObject/SetupObjectWriteStream");

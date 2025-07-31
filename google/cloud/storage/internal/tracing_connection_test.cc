@@ -746,7 +746,6 @@ TEST(TracingClientTest, UploadFileResumable) {
                       "gl-cpp.status_code", code_str)))));
 }
 
-<<<<<<< HEAD
 TEST(TracingClientTest, ExecuteParallelUploadFile) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
@@ -782,10 +781,7 @@ TEST(TracingClientTest, ExecuteParallelUploadFile) {
               OTelAttribute<std::string>("gl-cpp.status_code", code_str)))));
 }
 
-TEST(TracingClientTest, WriteObjectBufferSize) {
-=======
 TEST(TracingClientTest, SetupObjectWriteStream) {
->>>>>>> 6b350ef5c6 (changing approach to generate the traces)
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, SetupObjectWriteStream).WillOnce([](auto const&) {

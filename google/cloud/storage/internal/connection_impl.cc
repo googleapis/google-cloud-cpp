@@ -856,7 +856,6 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return std::unique_ptr<std::istream>(std::move(source));
 }
 
-<<<<<<< HEAD
 StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
     std::vector<std::thread> threads,
     std::vector<ParallelUploadFileShard> shards, bool ignore_cleanup_failures) {
@@ -871,10 +870,7 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
   return res;
 }
 
-StatusOr<std::size_t> StorageConnectionImpl::WriteObjectBufferSize(
-=======
 StatusOr<ObjectWriteStreamParams> StorageConnectionImpl::SetupObjectWriteStream(
->>>>>>> 6b350ef5c6 (changing approach to generate the traces)
     ResumableUploadRequest const& request) {
   auto const& current = google::cloud::internal::CurrentOptions();
   ObjectWriteStreamParams params;
