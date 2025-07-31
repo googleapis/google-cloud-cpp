@@ -266,9 +266,10 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc, provider_)); 
     // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
-    // provider_)); v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc,
-    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_)); 
+    // v.emplace_back(std::make_shared<ServerLatency>(kRpc,
     // provider_));
     // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
     // provider_));
