@@ -224,10 +224,16 @@ ConversationalSearchServiceConnectionImpl::StreamAnswerQuery(
       google::cloud::discoveryengine::v1::AnswerQueryRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       ConversationalSearchServiceStreamAnswerQueryStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::discoveryengine::v1::AnswerQueryResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status, google::cloud::discoveryengine::v1::AnswerQueryResponse> {
+        google::cloud::discoveryengine::v1::AnswerQueryResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>

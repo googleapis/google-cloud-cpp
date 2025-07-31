@@ -22,7 +22,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
+#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
@@ -54,12 +54,16 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
     reader_->Cancel();
     GCP_LOG(DEBUG) << prefix << "() >> (void)";
   }
-  absl::variant<Status, ResponseType> Read() override {
+  absl::optional<Status> Read(ResponseType* response) override {
     auto const prefix = std::string(__func__) + "(" + request_id_ + ")";
     GCP_LOG(DEBUG) << prefix << "() << (void)";
-    auto result = reader_->Read();
-    GCP_LOG(DEBUG) << prefix << "() >> "
-                   << absl::visit(ResultVisitor(tracing_options_), result);
+    auto result = reader_->Read(response);
+    if (result.has_value()) {
+      GCP_LOG(DEBUG) << prefix << "() >> " << *result;
+    } else {
+      GCP_LOG(DEBUG) << prefix << "() >> "
+                     << DebugString(*response, tracing_options_);
+    }
     return result;
   }
   RpcMetadata GetRequestMetadata() const override {
@@ -70,24 +74,6 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
   }
 
  private:
-  class ResultVisitor {
-   public:
-    explicit ResultVisitor(TracingOptions tracing_options)
-        : tracing_options_(std::move(tracing_options)) {}
-
-    std::string operator()(Status const& status) {
-      std::stringstream output;
-      output << status;
-      return output.str();
-    }
-    std::string operator()(ResponseType const& response) {
-      return DebugString(response, tracing_options_);
-    }
-
-   private:
-    TracingOptions tracing_options_;
-  };
-
   std::unique_ptr<StreamingReadRpc<ResponseType>> reader_;
   TracingOptions tracing_options_;
   std::string request_id_;
