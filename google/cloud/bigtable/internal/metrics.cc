@@ -117,17 +117,6 @@ void OperationLatency::PostCall(opentelemetry::context::Context const&,
 void OperationLatency::OnDone(opentelemetry::context::Context const& context,
                               OnDoneParams const& p) {
   data_labels_.status = StatusCodeToString(p.operation_status.code());
-  // printf("operation latencyyyyyy");
-  //   absl::PrintF("Resource Labels: project_id: %s, instance: %s, table: %s, cluster: %s, zone: %s\n",
-  //            resource_labels_.project_id,
-  //            resource_labels_.instance,
-  //            resource_labels_.table,
-  //            resource_labels_.cluster,
-  //            resource_labels_.zone);
-  //   absl::PrintF("Data Labels: method: %s, streaming: %v, status: %s\n",
-  //            data_labels_.method,
-  //            data_labels_.streaming,
-  //            data_labels_.status);
   auto operation_elapsed = std::chrono::duration_cast<LatencyDuration>(
       p.operation_end - operation_start_);
   operation_latencies_->Record(operation_elapsed.count(),
@@ -228,62 +217,51 @@ FirstResponseLatency::FirstResponseLatency(
     std::string const& instrumentation_scope,
     opentelemetry::nostd::shared_ptr<
         opentelemetry::metrics::MeterProvider> const& provider)
-    : first_response_latencies_(provider
-                               ->GetMeter(instrumentation_scope,
-                                          kMeterInstrumentationScopeVersion)
-                               ->CreateDoubleHistogram("first_response_latencies")) {}
+    : first_response_latencies_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram("first_response_latencies")) {}
 
 void FirstResponseLatency::PreCall(opentelemetry::context::Context const&,
-                               PreCallParams const& p) {
+                                   PreCallParams const& p) {
   if (p.first_attempt) {
     operation_start_ = p.attempt_start;
   }
 }
 
-void FirstResponseLatency::PostCall(opentelemetry::context::Context const& context,
-                                grpc::ClientContext const& client_context,
-                                PostCallParams const& p) {
+void FirstResponseLatency::PostCall(
+    opentelemetry::context::Context const& context,
+    grpc::ClientContext const& client_context, PostCallParams const& p) {
   auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
-  printf("post call\n\n");
   if (response_params) {
     resource_labels_.cluster = response_params->cluster_id();
     resource_labels_.zone = response_params->zone_id();
   }
 }
 
-void FirstResponseLatency::ElementDelivery(opentelemetry::context::Context const&,
-                              ElementDeliveryParams const& p) {
-  printf("element delivery\n\n");
+void FirstResponseLatency::ElementDelivery(
+    opentelemetry::context::Context const&, ElementDeliveryParams const& p) {
   if (p.first_response) {
     first_response_latency_ = std::chrono::duration_cast<LatencyDuration>(
-      p.element_delivery - operation_start_);
-    absl::PrintF("ElementDelivery: [this=%p] Latency calculated and stored: %f ms.\n",
-                 this, first_response_latency_.count());
+        p.element_delivery - operation_start_);
+    latency_captured_ = true;
   }
 }
 
-void FirstResponseLatency::OnDone(opentelemetry::context::Context const& context,
-                              OnDoneParams const& p) {
-  absl::PrintF("OnDone: [this=%p] Checking for latency value...\n", this);
-  absl::PrintF("latency value: %f", first_response_latency_.count());
-  if (first_response_latency_.count() > 0) {
+void FirstResponseLatency::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const& p) {
+  if (latency_captured_) {
     data_labels_.status = StatusCodeToString(p.operation_status.code());
-    absl::PrintF("  Final Resource Labels: { project_id: %s, instance: %s, table: %s, cluster: %s, zone: %s }\n",
-                 resource_labels_.project_id, resource_labels_.instance,
-                 resource_labels_.table, resource_labels_.cluster,
-                 resource_labels_.zone);
-    absl::PrintF("  Final Data Labels: { method: %s, streaming: %v, status: %s }\n",
-                 data_labels_.method, data_labels_.streaming, data_labels_.status);
-    auto m = IntoLabelMap(resource_labels_, data_labels_);
-    first_response_latencies_->Record(first_response_latency_.count(), std::move(m), context);
-    printf("Metrics were recorded.");
-  } else {
-    printf(" onDone, no data was recorded");
+    auto m = IntoLabelMap(resource_labels_, data_labels_,
+                          std::set<std::string>{"streaming"});
+    first_response_latencies_->Record(first_response_latency_.count(),
+                                      std::move(m), context);
   }
 }
 
-std::unique_ptr<Metric> FirstResponseLatency::clone(ResourceLabels resource_labels,
-                                                DataLabels data_labels) const {
+std::unique_ptr<Metric> FirstResponseLatency::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
   auto m = std::make_unique<FirstResponseLatency>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);

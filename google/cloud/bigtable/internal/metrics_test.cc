@@ -785,6 +785,144 @@ TEST(RetryCountTest, ThreeAttempts) {
   clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 
+TEST(FirstResponseLatency, Success) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(2.0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("first_response_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  FirstResponseLatency first_response_latency("my-instrument-scope",
+                                              mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",   "my-streaming", "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = first_response_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clock->SetTime(std::chrono::steady_clock::now());
+  clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::milliseconds(2));
+  clone->ElementDelivery(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::milliseconds(5));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(5));
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
+TEST(FirstResponseLatency, NoDataReceived) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .Times(0);
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("first_response_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  FirstResponseLatency first_response_latency("my-instrument-scope",
+                                              mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",   "my-streaming", "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = first_response_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  // ElementDelivery is not called.
+  clock->SetTime(std::chrono::steady_clock::now());
+  clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::milliseconds(5));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
+  clock->AdvanceTime(std::chrono::milliseconds(5));
+  clone->OnDone(otel_context,
+                {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

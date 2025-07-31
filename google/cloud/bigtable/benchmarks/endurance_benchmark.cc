@@ -151,7 +151,7 @@ OperationResult RunOneReadRows(
     bigtable::Table& table, Benchmark const& benchmark,
     google::cloud::internal::DefaultPRNG& generator) {
   constexpr int kReadRowsCount = 100;
-  auto row_set = bigtable::RowSet() ;
+  auto row_set = bigtable::RowSet();
 
   for (int i = 0; i != kReadRowsCount; ++i) {
     row_set.Append(benchmark.MakeRandomKey(generator));
@@ -166,10 +166,9 @@ OperationResult RunOneReadRows(
     }
     return google::cloud::Status{};
   };
-  
+
   return Benchmark::TimeOperation(std::move(op));
 }
-
 
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark const& benchmark,
