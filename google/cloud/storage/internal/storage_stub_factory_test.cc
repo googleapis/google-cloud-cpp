@@ -47,7 +47,6 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::VariantWith;
 
 // The point of these tests is to verify that the `CreateStorageStub` factory
 // function injects the right decorators. We do this by observing the

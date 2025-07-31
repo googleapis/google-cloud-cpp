@@ -157,8 +157,8 @@ apk update && \
 
 Alpine's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil, so we use the normal `pkg-config` binary, which seems to not suffer from
-this bottleneck. For more details see
+Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
+from this bottleneck. For more details see
 https://github.com/pkgconf/pkgconf/issues/229 and
 https://github.com/googleapis/google-cloud-cpp/issues/7052
 
@@ -173,8 +173,8 @@ sudo make install && \
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default, pkgconf does not search in these directories. We need to explicitly set
-the search path.
+default, pkgconf does not search in these directories. We need to explicitly
+set the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
@@ -182,9 +182,9 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 
 #### Dependencies
 
-The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included with
-Alpine >= 3.19 meet `google-cloud-cpp`'s requirements. We can simply install the
-development packages
+The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included
+with Alpine >= 3.19 meet `google-cloud-cpp`'s requirements. We can simply
+install the development packages
 
 ```bash
 apk update && \
@@ -194,9 +194,8 @@ apk update && \
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -249,8 +248,8 @@ sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
         patch unzip tar wget zip
 ```
 
-Fedora:40 includes packages, with recent enough versions, for most of the direct
-dependencies of `google-cloud-cpp`.
+Fedora:40 includes packages, with recent enough versions, for most of the
+direct dependencies of `google-cloud-cpp`.
 
 ```bash
 sudo dnf makecache && \
@@ -264,9 +263,9 @@ If you are not planning to use `pkg-config(1)` you can skip these steps.
 
 Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+you may want to use a recent version of the standard `pkg-config` binary. If
+not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -278,18 +277,17 @@ sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
 ```
 
-Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting with
-Fedora:38. If you using Fedora >= 38 or you are not planning to use
-`pkg-config(1)` you can ignore this step. Alternatively, you can install RE2 and
-gRPC from source.
-
+Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting
+with Fedora:38. If you using Fedora >= 38 or you are not planning to use
+`pkg-config(1)` you can ignore this step.  Alternatively, you can install RE2
+and gRPC from source.
 ```
 sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default, pkgconf does not search in these directories. We need to explicitly set
-the search path.
+default, pkgconf does not search in these directories. We need to explicitly
+set the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
@@ -297,9 +295,8 @@ export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/loca
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -368,8 +365,8 @@ sudo zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
-does not search for shared libraries in these directories by default. There are
-multiple ways to solve this problem, the following steps are one solution:
+does not search for shared libraries in these directories by default. There
+are multiple ways to solve this problem, the following steps are one solution:
 
 ```bash
 (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
@@ -380,9 +377,8 @@ export PATH=/usr/local/bin:${PATH}
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -404,7 +400,8 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-Use the following environment variables to configure the compiler used by CMake.
+Use the following environment variables to configure the compiler used by
+CMake.
 
 export CXX=g++-8
 
@@ -463,9 +460,9 @@ If you are not planning to use `pkg-config(1)` you can skip these steps.
 
 Ubuntu's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+you may want to use a recent version of the standard `pkg-config` binary. If
+not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -481,7 +478,8 @@ ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 
 #### crc32c
 
-The project depends on the Crc32c library, we need to compile this from source:
+The project depends on the Crc32c library, we need to compile this from
+source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
@@ -501,9 +499,8 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -562,8 +559,9 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` propagates
-the version of C++ used to compile Abseil to anything that depends on Abseil.
+We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` 
+propagates the version of C++ used to compile Abseil to anything that depends
+on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -602,8 +600,8 @@ sudo ldconfig
 
 #### gRPC
 
-We also need a version of gRPC that is recent enough to support the Google Cloud
-Platform proto files. We install it using:
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -628,7 +626,8 @@ sudo ldconfig
 
 #### crc32c
 
-The project depends on the Crc32c library, we need to compile this from source:
+The project depends on the Crc32c library, we need to compile this from
+source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
@@ -648,10 +647,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
@@ -669,9 +668,8 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -730,8 +728,9 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` propagates
-the version of C++ used to compile Abseil to anything that depends on Abseil.
+We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` 
+propagates the version of C++ used to compile Abseil to anything that depends
+on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -770,9 +769,9 @@ sudo ldconfig
 
 #### RE2
 
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. You can skip this build and use the system's package if you are not
-planning to use pkg-config.
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
@@ -789,8 +788,8 @@ sudo ldconfig
 
 #### gRPC
 
-We also need a version of gRPC that is recent enough to support the Google Cloud
-Platform proto files. We install it using:
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -815,7 +814,8 @@ sudo ldconfig
 
 #### crc32c
 
-The project depends on the Crc32c library, we need to compile this from source:
+The project depends on the Crc32c library, we need to compile this from
+source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
@@ -835,10 +835,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
@@ -856,9 +856,8 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -930,9 +929,9 @@ If you are not planning to use `pkg-config(1)` you can skip these steps.
 
 Debian's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+you may want to use a recent version of the standard `pkg-config` binary. If
+not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -947,7 +946,8 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgcon
 
 #### crc32c
 
-The project depends on the Crc32c library, we need to compile this from source:
+The project depends on the Crc32c library, we need to compile this from
+source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
@@ -967,9 +967,8 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -1027,9 +1026,10 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-Debian 11 ships with Abseil==20200923.3. Unfortunately, the current gRPC version
-needs Abseil >= 20210324. Enabling `ABSL_PROPAGATE_CXX_STD` propagates the
-version of C++ used to compile Abseil to anything that depends on Abseil.
+Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC
+version needs Abseil >= 20210324. Enabling `ABSL_PROPAGATE_CXX_STD`
+propagates the version of C++ used to compile Abseil to anything that depends
+on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -1048,7 +1048,8 @@ sudo ldconfig
 
 #### crc32c
 
-The project depends on the Crc32c library, we need to compile this from source:
+The project depends on the Crc32c library, we need to compile this from
+source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
@@ -1068,8 +1069,7 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-Debian 11 also ships with nlohmann-json==3.9.1, which is recent enough for our
-needs:
+Debian 11 also ships with nlohmann-json==3.9.1, which is recent enough for our needs:
 
 ```bash
 sudo apt-get update && \
@@ -1078,10 +1078,10 @@ sudo apt-get --no-install-recommends install -y nlohmann-json3-dev
 
 #### Protobuf
 
-Unless you are only using the Google Cloud Storage library the project needs
-Protobuf and gRPC. Unfortunately the version of Protobuf that ships with Debian
-11 is not recent enough to support the protos published by Google Cloud. We need
-to build from source:
+Unless you are only using the Google Cloud Storage library the project
+needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
+with Debian 11 is not recent enough to support the protos published by
+Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
@@ -1099,9 +1099,9 @@ sudo ldconfig
 
 #### RE2
 
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. You can skip this build and use the system's package if you are not
-planning to use pkg-config.
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
@@ -1142,9 +1142,8 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
@@ -1190,8 +1189,8 @@ cmake --build cmake-out --target install
 <summary>Rocky Linux (9)</summary>
 <br>
 
-Install the minimal development tools, libcurl, OpenSSL, and the c-ares library
-(required by gRPC):
+Install the minimal development tools, libcurl, OpenSSL, and the c-ares
+library (required by gRPC):
 
 ```bash
 sudo dnf makecache && \
@@ -1203,10 +1202,10 @@ sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
-slow when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
-may want to use a recent version of the standard `pkg-config` binary. If not,
-`sudo dnf install pkgconfig` should work.
+slow when handling `.pc` files with lots of `Requires:` deps, which happens
+with Abseil. If you plan to use `pkg-config` with any of the installed
+artifacts, you may want to use a recent version of the standard `pkg-config`
+binary. If not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
@@ -1220,8 +1219,8 @@ sudo ldconfig && cd /var/tmp && rm -fr build
 
 The following steps will install libraries and tools in `/usr/local`. By
 default, Rocky Linux 9 does not search for shared libraries in these
-directories, there are multiple ways to solve this problem, the following steps
-are one solution:
+directories, there are multiple ways to solve this problem, the following
+steps are one solution:
 
 ```bash
 (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
@@ -1234,8 +1233,8 @@ export PATH=/usr/local/bin:${PATH}
 
 Rocky Linux 9 includes a package for Abseil, unfortunately, this package is
 incomplete, as it lacks the CMake support files for it. We need to compile
-Abseiil from source. Enabling `ABSL_PROPAGATE_CXX_STD` propagates the version of
-C++ used to compile Abseil to anything that depends on Abseil.
+Abseiil from source. Enabling `ABSL_PROPAGATE_CXX_STD` propagates the version
+of C++ used to compile Abseil to anything that depends on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -1254,8 +1253,8 @@ sudo ldconfig
 
 #### Protobuf
 
-Rocky Linux ships with Protobuf 3.14.x. Some of the libraries in
-`google-cloud-cpp` require Protobuf >= 3.15.8. For simplicity, we will just
+Rocky Linux ships with Protobuf 3.14.x.  Some of the libraries in
+`google-cloud-cpp` require Protobuf >= 3.15.8.  For simplicity, we will just
 install Protobuf (and any downstream packages) from source.
 
 ```bash
@@ -1275,9 +1274,9 @@ sudo ldconfig
 
 #### RE2
 
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. You can skip this build and use the system's package if you are not
-planning to use pkg-config.
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
@@ -1294,10 +1293,10 @@ sudo ldconfig
 
 #### gRPC
 
-We also need a version of gRPC that is recent enough to support the Google Cloud
-Platform proto files. Note that gRPC overrides the default C++ standard version
-to C++14, we need to configure it to use the platform's default. We manually
-install it using:
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. Note that gRPC overrides the default C++ standard
+version to C++14, we need to configure it to use the platform's default. We
+manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
@@ -1323,7 +1322,8 @@ sudo ldconfig
 
 #### crc32c
 
-The project depends on the Crc32c library, we need to compile this from source:
+The project depends on the Crc32c library, we need to compile this from
+source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
@@ -1343,10 +1343,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
@@ -1364,9 +1364,8 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
+The project has an **optional** dependency on the OpenTelemetry library.
+We recommend installing this library because:
 - the dependency will become required in the google-cloud-cpp v3.x series.
 - it is needed to produce distributed traces of the library.
 
