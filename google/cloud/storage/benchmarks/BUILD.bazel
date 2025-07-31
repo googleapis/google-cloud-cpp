@@ -35,7 +35,7 @@ cc_library(
         "//:storage",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@curl//:curl",
+        "@curl",
         "@googleapis//google/storage/v2:storage_cc_grpc",
         "@googleapis//google/storage/v2:storage_cc_proto",
     ],
@@ -56,7 +56,7 @@ cc_library(
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@abseil-cpp//absl/strings",
-        "@curl//:curl",
+        "@curl",
     ],
 ) for program in storage_benchmark_programs]
 
@@ -73,7 +73,7 @@ cc_library(
         "//:storage",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@curl//:curl",
+        "@curl",
         "@googletest//:gtest_main",
     ],
 ) for test in storage_benchmarks_unit_tests]

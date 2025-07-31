@@ -93,7 +93,7 @@ cc_test(
         "//:spanner",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@curl//:curl",
+        "@curl",
     ],
 )
 

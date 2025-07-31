@@ -279,7 +279,7 @@ cc_library(
         ":google_cloud_cpp_common",
         "@abseil-cpp//absl/functional:function_ref",
         "@abseil-cpp//absl/types:span",
-        "@curl//:curl",
+        "@curl",
         "@nlohmann_json//:json",
     ] + select({
         "@platforms//os:windows": [],
