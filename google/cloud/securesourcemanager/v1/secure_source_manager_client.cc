@@ -247,6 +247,55 @@ SecureSourceManagerClient::CreateRepository(
   return connection_->CreateRepository(operation);
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerClient::UpdateRepository(
+    google::cloud::securesourcemanager::v1::Repository const& repository,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateRepositoryRequest request;
+  *request.mutable_repository() = repository;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRepository(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdateRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::Repository const& repository,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateRepositoryRequest request;
+  *request.mutable_repository() = repository;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRepository(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerClient::UpdateRepository(
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRepository(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdateRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRepository(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerClient::UpdateRepository(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRepository(operation);
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerClient::DeleteRepository(std::string const& name,
                                             Options opts) {
@@ -289,6 +338,169 @@ SecureSourceManagerClient::DeleteRepository(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(operation);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerClient::ListHooks(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListHooksRequest request;
+  request.set_parent(parent);
+  return connection_->ListHooks(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerClient::ListHooks(
+    google::cloud::securesourcemanager::v1::ListHooksRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListHooks(std::move(request));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerClient::GetHook(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::GetHookRequest request;
+  request.set_name(name);
+  return connection_->GetHook(request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerClient::GetHook(
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetHook(request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerClient::CreateHook(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::Hook const& hook,
+    std::string const& hook_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateHookRequest request;
+  request.set_parent(parent);
+  *request.mutable_hook() = hook;
+  request.set_hook_id(hook_id);
+  return connection_->CreateHook(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::CreateHook(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::Hook const& hook,
+    std::string const& hook_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateHookRequest request;
+  request.set_parent(parent);
+  *request.mutable_hook() = hook;
+  request.set_hook_id(hook_id);
+  return connection_->CreateHook(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerClient::CreateHook(
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateHook(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::CreateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateHook(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerClient::CreateHook(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateHook(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerClient::UpdateHook(
+    google::cloud::securesourcemanager::v1::Hook const& hook,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateHookRequest request;
+  *request.mutable_hook() = hook;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateHook(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::UpdateHook(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::Hook const& hook,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateHookRequest request;
+  *request.mutable_hook() = hook;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateHook(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerClient::UpdateHook(
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHook(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::UpdateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHook(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerClient::UpdateHook(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHook(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteHook(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteHookRequest request;
+  request.set_name(name);
+  return connection_->DeleteHook(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::DeleteHook(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteHookRequest request;
+  request.set_name(name);
+  return connection_->DeleteHook(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteHook(
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHook(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::DeleteHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHook(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteHook(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHook(operation);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::GetIamPolicyRepo(
@@ -512,6 +724,1077 @@ SecureSourceManagerClient::DeleteBranchRule(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBranchRule(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::CreatePullRequest(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreatePullRequestRequest request;
+  request.set_parent(parent);
+  *request.mutable_pull_request() = pull_request;
+  return connection_->CreatePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreatePullRequest(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreatePullRequestRequest request;
+  request.set_parent(parent);
+  *request.mutable_pull_request() = pull_request;
+  return connection_->CreatePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::CreatePullRequest(
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::CreatePullRequest(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePullRequest(operation);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerClient::GetPullRequest(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::GetPullRequestRequest request;
+  request.set_name(name);
+  return connection_->GetPullRequest(request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerClient::GetPullRequest(
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPullRequest(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerClient::ListPullRequests(std::string const& parent,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListPullRequestsRequest request;
+  request.set_parent(parent);
+  return connection_->ListPullRequests(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerClient::ListPullRequests(
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPullRequests(std::move(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::UpdatePullRequest(
+    google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdatePullRequestRequest request;
+  *request.mutable_pull_request() = pull_request;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdatePullRequestRequest request;
+  *request.mutable_pull_request() = pull_request;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::UpdatePullRequest(
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::UpdatePullRequest(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePullRequest(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::MergePullRequest(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::MergePullRequestRequest request;
+  request.set_name(name);
+  return connection_->MergePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::MergePullRequest(NoAwaitTag, std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::MergePullRequestRequest request;
+  request.set_name(name);
+  return connection_->MergePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::MergePullRequest(
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MergePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::MergePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MergePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::MergePullRequest(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MergePullRequest(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::OpenPullRequest(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::OpenPullRequestRequest request;
+  request.set_name(name);
+  return connection_->OpenPullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::OpenPullRequest(NoAwaitTag, std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::OpenPullRequestRequest request;
+  request.set_name(name);
+  return connection_->OpenPullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::OpenPullRequest(
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenPullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::OpenPullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenPullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::OpenPullRequest(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenPullRequest(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::ClosePullRequest(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ClosePullRequestRequest request;
+  request.set_name(name);
+  return connection_->ClosePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::ClosePullRequest(NoAwaitTag, std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ClosePullRequestRequest request;
+  request.set_name(name);
+  return connection_->ClosePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::ClosePullRequest(
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ClosePullRequest(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::ClosePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ClosePullRequest(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerClient::ClosePullRequest(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ClosePullRequest(operation);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+SecureSourceManagerClient::ListPullRequestFileDiffs(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+      request;
+  request.set_name(name);
+  return connection_->ListPullRequestFileDiffs(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+SecureSourceManagerClient::ListPullRequestFileDiffs(
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPullRequestFileDiffs(std::move(request));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>
+SecureSourceManagerClient::FetchTree(
+    google::cloud::securesourcemanager::v1::FetchTreeRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchTree(std::move(request));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerClient::FetchBlob(
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchBlob(request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::CreateIssue(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::Issue const& issue, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateIssueRequest request;
+  request.set_parent(parent);
+  *request.mutable_issue() = issue;
+  return connection_->CreateIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::CreateIssue(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::Issue const& issue, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateIssueRequest request;
+  request.set_parent(parent);
+  *request.mutable_issue() = issue;
+  return connection_->CreateIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::CreateIssue(
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::CreateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::CreateIssue(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateIssue(operation);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerClient::GetIssue(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::GetIssueRequest request;
+  request.set_name(name);
+  return connection_->GetIssue(request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerClient::GetIssue(
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIssue(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerClient::ListIssues(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListIssuesRequest request;
+  request.set_parent(parent);
+  return connection_->ListIssues(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerClient::ListIssues(
+    google::cloud::securesourcemanager::v1::ListIssuesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListIssues(std::move(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::UpdateIssue(
+    google::cloud::securesourcemanager::v1::Issue const& issue,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateIssueRequest request;
+  *request.mutable_issue() = issue;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::UpdateIssue(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::Issue const& issue,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateIssueRequest request;
+  *request.mutable_issue() = issue;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::UpdateIssue(
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::UpdateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::UpdateIssue(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIssue(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteIssue(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteIssueRequest request;
+  request.set_name(name);
+  return connection_->DeleteIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::DeleteIssue(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteIssueRequest request;
+  request.set_name(name);
+  return connection_->DeleteIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteIssue(
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::DeleteIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteIssue(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssue(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::OpenIssue(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::OpenIssueRequest request;
+  request.set_name(name);
+  return connection_->OpenIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::OpenIssue(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::OpenIssueRequest request;
+  request.set_name(name);
+  return connection_->OpenIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::OpenIssue(
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::OpenIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::OpenIssue(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->OpenIssue(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::CloseIssue(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CloseIssueRequest request;
+  request.set_name(name);
+  return connection_->CloseIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::CloseIssue(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CloseIssueRequest request;
+  request.set_name(name);
+  return connection_->CloseIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::CloseIssue(
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CloseIssue(request);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerClient::CloseIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CloseIssue(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerClient::CloseIssue(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CloseIssue(operation);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerClient::GetPullRequestComment(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest request;
+  request.set_name(name);
+  return connection_->GetPullRequestComment(request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerClient::GetPullRequestComment(
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPullRequestComment(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerClient::ListPullRequestComments(std::string const& parent,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListPullRequestComments(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerClient::ListPullRequestComments(
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPullRequestComments(std::move(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerClient::CreatePullRequestComment(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::PullRequestComment const&
+        pull_request_comment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreatePullRequestCommentRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_pull_request_comment() = pull_request_comment;
+  return connection_->CreatePullRequestComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreatePullRequestComment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::PullRequestComment const&
+        pull_request_comment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreatePullRequestCommentRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_pull_request_comment() = pull_request_comment;
+  return connection_->CreatePullRequestComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerClient::CreatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePullRequestComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreatePullRequestComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePullRequestComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerClient::CreatePullRequestComment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePullRequestComment(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerClient::UpdatePullRequestComment(
+    google::cloud::securesourcemanager::v1::PullRequestComment const&
+        pull_request_comment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdatePullRequestCommentRequest
+      request;
+  *request.mutable_pull_request_comment() = pull_request_comment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePullRequestComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdatePullRequestComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::PullRequestComment const&
+        pull_request_comment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdatePullRequestCommentRequest
+      request;
+  *request.mutable_pull_request_comment() = pull_request_comment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePullRequestComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerClient::UpdatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePullRequestComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdatePullRequestComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePullRequestComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerClient::UpdatePullRequestComment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePullRequestComment(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeletePullRequestComment(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeletePullRequestCommentRequest
+      request;
+  request.set_name(name);
+  return connection_->DeletePullRequestComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeletePullRequestComment(NoAwaitTag,
+                                                    std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeletePullRequestCommentRequest
+      request;
+  request.set_name(name);
+  return connection_->DeletePullRequestComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeletePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePullRequestComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeletePullRequestComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePullRequestComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeletePullRequestComment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePullRequestComment(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerClient::BatchCreatePullRequestComments(
+    std::string const& parent,
+    std::vector<google::cloud::securesourcemanager::v1::
+                    CreatePullRequestCommentRequest> const& requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::BatchCreatePullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreatePullRequestComments(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::BatchCreatePullRequestComments(
+    NoAwaitTag, std::string const& parent,
+    std::vector<google::cloud::securesourcemanager::v1::
+                    CreatePullRequestCommentRequest> const& requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::BatchCreatePullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreatePullRequestComments(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerClient::BatchCreatePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreatePullRequestComments(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::BatchCreatePullRequestComments(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreatePullRequestComments(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerClient::BatchCreatePullRequestComments(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreatePullRequestComments(operation);
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerClient::ResolvePullRequestComments(
+    std::string const& parent, std::vector<std::string> const& names,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->ResolvePullRequestComments(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::ResolvePullRequestComments(
+    NoAwaitTag, std::string const& parent,
+    std::vector<std::string> const& names, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->ResolvePullRequestComments(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerClient::ResolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResolvePullRequestComments(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::ResolvePullRequestComments(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResolvePullRequestComments(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerClient::ResolvePullRequestComments(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResolvePullRequestComments(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerClient::UnresolvePullRequestComments(
+    std::string const& parent, std::vector<std::string> const& names,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UnresolvePullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->UnresolvePullRequestComments(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UnresolvePullRequestComments(
+    NoAwaitTag, std::string const& parent,
+    std::vector<std::string> const& names, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UnresolvePullRequestCommentsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->UnresolvePullRequestComments(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerClient::UnresolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnresolvePullRequestComments(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UnresolvePullRequestComments(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnresolvePullRequestComments(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerClient::UnresolvePullRequestComments(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnresolvePullRequestComments(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerClient::CreateIssueComment(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateIssueCommentRequest request;
+  request.set_parent(parent);
+  *request.mutable_issue_comment() = issue_comment;
+  return connection_->CreateIssueComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateIssueComment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateIssueCommentRequest request;
+  request.set_parent(parent);
+  *request.mutable_issue_comment() = issue_comment;
+  return connection_->CreateIssueComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerClient::CreateIssueComment(
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateIssueComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateIssueComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerClient::CreateIssueComment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateIssueComment(operation);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerClient::GetIssueComment(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::GetIssueCommentRequest request;
+  request.set_name(name);
+  return connection_->GetIssueComment(request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerClient::GetIssueComment(
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIssueComment(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerClient::ListIssueComments(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request;
+  request.set_parent(parent);
+  return connection_->ListIssueComments(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerClient::ListIssueComments(
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListIssueComments(std::move(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerClient::UpdateIssueComment(
+    google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest request;
+  *request.mutable_issue_comment() = issue_comment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateIssueComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest request;
+  *request.mutable_issue_comment() = issue_comment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateIssueComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerClient::UpdateIssueComment(
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIssueComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIssueComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerClient::UpdateIssueComment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIssueComment(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteIssueComment(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest request;
+  request.set_name(name);
+  return connection_->DeleteIssueComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteIssueComment(NoAwaitTag,
+                                              std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest request;
+  request.set_name(name);
+  return connection_->DeleteIssueComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteIssueComment(
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssueComment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssueComment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteIssueComment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssueComment(operation);
 }
 
 StreamRange<google::cloud::location::Location>

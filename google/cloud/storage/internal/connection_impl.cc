@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -852,6 +853,20 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   // need to compute `UploadFromOffset` again.
   source->seekg(upload_offset, std::ios::beg);
   return std::unique_ptr<std::istream>(std::move(source));
+}
+
+StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
+    std::vector<std::thread> threads,
+    std::vector<ParallelUploadFileShard> shards, bool ignore_cleanup_failures) {
+  for (auto& thread : threads) {
+    thread.join();
+  }
+  auto res = shards[0].WaitForCompletion().get();
+  auto cleanup_res = shards[0].EagerCleanup();
+  if (!cleanup_res.ok() && !ignore_cleanup_failures) {
+    return cleanup_res;
+  }
+  return res;
 }
 
 StatusOr<std::size_t> StorageConnectionImpl::WriteObjectBufferSize(

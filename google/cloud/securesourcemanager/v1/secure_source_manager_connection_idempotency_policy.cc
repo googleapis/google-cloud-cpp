@@ -71,8 +71,38 @@ Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateRepository(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateRepository(
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListHooks(
+    google::cloud::securesourcemanager::v1::ListHooksRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetHook(
+    google::cloud::securesourcemanager::v1::GetHookRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateHook(
+    google::cloud::securesourcemanager::v1::CreateHookRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateHook(
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteHook(
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -115,6 +145,176 @@ Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateBranchRule(
 
 Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteBranchRule(
     google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreatePullRequest(
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetPullRequest(
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListPullRequests(
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdatePullRequest(
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::MergePullRequest(
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::OpenPullRequest(
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ClosePullRequest(
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::ListPullRequestFileDiffs(
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestFileDiffsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::FetchTree(
+    google::cloud::securesourcemanager::v1::FetchTreeRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::FetchBlob(
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateIssue(
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetIssue(
+    google::cloud::securesourcemanager::v1::GetIssueRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListIssues(
+    google::cloud::securesourcemanager::v1::ListIssuesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateIssue(
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteIssue(
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::OpenIssue(
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CloseIssue(
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::GetPullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        GetPullRequestCommentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::ListPullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestCommentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::CreatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::UpdatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::DeletePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::BatchCreatePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::ResolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecureSourceManagerConnectionIdempotencyPolicy::UnresolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateIssueComment(
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetIssueComment(
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListIssueComments(
+    google::cloud::securesourcemanager::v1::
+        ListIssueCommentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateIssueComment(
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteIssueComment(
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -97,6 +97,18 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateRepository(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateRepository(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -108,6 +120,52 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
       grpc::ClientContext& context, Options options,
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::ListHooksResponse> ListHooks(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::ListHooksRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::Hook> GetHook(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetHookRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateHook(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateHook(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateHook(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateHook(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteHook(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteHookRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteHook(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::DeleteHookRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
       grpc::ClientContext& context, Options const& options,
@@ -166,6 +224,303 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
   StatusOr<google::longrunning::Operation> DeleteBranchRule(
       grpc::ClientContext& context, Options options,
       google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePullRequest(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreatePullRequest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequest> GetPullRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::ListPullRequestsResponse>
+  ListPullRequests(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePullRequest(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdatePullRequest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncMergePullRequest(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> MergePullRequest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncOpenPullRequest(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> OpenPullRequest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncClosePullRequest(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ClosePullRequest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsResponse>
+  ListPullRequestFileDiffs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::
+          ListPullRequestFileDiffsRequest const& request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::FetchTreeResponse> FetchTree(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::FetchTreeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse> FetchBlob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::FetchBlobRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateIssue(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateIssue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::Issue> GetIssue(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetIssueRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::ListIssuesResponse>
+  ListIssues(grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::ListIssuesRequest const&
+                 request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateIssue(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateIssue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteIssue(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteIssue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncOpenIssue(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> OpenIssue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCloseIssue(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CloseIssue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+  GetPullRequestComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::
+          GetPullRequestCommentRequest const& request) override;
+
+  StatusOr<
+      google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse>
+  ListPullRequestComments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::
+          ListPullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreatePullRequestComment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::
+          CreatePullRequestCommentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreatePullRequestComment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::
+          CreatePullRequestCommentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdatePullRequestComment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::
+          UpdatePullRequestCommentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdatePullRequestComment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::
+          UpdatePullRequestCommentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeletePullRequestComment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::
+          DeletePullRequestCommentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePullRequestComment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::
+          DeletePullRequestCommentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchCreatePullRequestComments(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCreatePullRequestComments(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncResolvePullRequestComments(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ResolvePullRequestComments(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUnresolvePullRequestComments(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UnresolvePullRequestComments(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateIssueComment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateIssueComment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+  GetIssueComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::ListIssueCommentsResponse>
+  ListIssueComments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::ListIssueCommentsRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateIssueComment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateIssueComment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteIssueComment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteIssueComment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
           request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

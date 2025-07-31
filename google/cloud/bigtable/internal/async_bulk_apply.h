@@ -48,7 +48,8 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       std::string const& app_profile_id, std::string const& table_name,
-      bigtable::BulkMutation mut);
+      bigtable::BulkMutation mut,
+      std::shared_ptr<OperationContext> operation_context);
 
  private:
   AsyncBulkApplier(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
@@ -58,7 +59,8 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
                    bool enable_server_retries,
                    bigtable::IdempotentMutationPolicy& idempotent_policy,
                    std::string const& app_profile_id,
-                   std::string const& table_name, bigtable::BulkMutation mut);
+                   std::string const& table_name, bigtable::BulkMutation mut,
+                   std::shared_ptr<OperationContext> operation_context);
 
   void StartIteration();
   void MakeRequest();
@@ -77,9 +79,8 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   promise<std::vector<bigtable::FailedMutation>> promise_;
   internal::ImmutableOptions options_;
   internal::CallContext call_context_;
-  std::shared_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<OperationContext> operation_context_ =
-      std::make_shared<OperationContext>();
+  std::shared_ptr<grpc::ClientContext> client_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
