@@ -1,0 +1,10 @@
+module(name = "bzlmod-consumer-test")
+
+bazel_dep(name = "google_cloud_cpp", version = "3.0.0-rc0")
+bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "rules_cc", version = "0.1.1")
+
+local_path_override(
+    module_name = "google_cloud_cpp",
+    path = "/workspace/google-cloud-cpp",
+)
