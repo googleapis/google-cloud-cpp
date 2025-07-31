@@ -102,6 +102,8 @@ add_library(
     internal/async/connection_fwd.h
     internal/async/connection_impl.cc
     internal/async/connection_impl.h
+    internal/async/connection_logging.cc
+    internal/async/connection_logging.h
     internal/async/connection_tracing.cc
     internal/async/connection_tracing.h
     internal/async/default_options.cc
@@ -110,6 +112,8 @@ add_library(
     internal/async/handle_redirect_error.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
+    internal/async/object_descriptor_connection_logging.cc
+    internal/async/object_descriptor_connection_logging.h
     internal/async/object_descriptor_connection_tracing.cc
     internal/async/object_descriptor_connection_tracing.h
     internal/async/object_descriptor_impl.cc
@@ -132,6 +136,8 @@ add_library(
     internal/async/reader_connection_factory.h
     internal/async/reader_connection_impl.cc
     internal/async/reader_connection_impl.h
+    internal/async/reader_connection_logging.cc
+    internal/async/reader_connection_logging.h
     internal/async/reader_connection_resume.cc
     internal/async/reader_connection_resume.h
     internal/async/reader_connection_tracing.cc
