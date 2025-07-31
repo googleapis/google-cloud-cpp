@@ -105,6 +105,7 @@ class TracingConnection : public storage::internal::StorageConnection {
   StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
       std::string const& file_name,
       storage::internal::ResumableUploadRequest& request) override;
+<<<<<<< HEAD
   StatusOr<storage::ObjectMetadata> ExecuteParallelUploadFile(
       std::vector<std::thread> threads,
       std::vector<storage::internal::ParallelUploadFileShard> shards,
@@ -115,6 +116,10 @@ class TracingConnection : public storage::internal::StorageConnection {
       std::vector<std::thread> threads,
       std::vector<storage::internal::ParallelUploadFileShard> shards,
       bool ignore_cleanup_failures) override;
+=======
+  StatusOr<storage::internal::ObjectWriteStreamParams> SetupObjectWriteStream(
+      storage::internal::ResumableUploadRequest const& request) override;
+>>>>>>> 6b350ef5c6 (changing approach to generate the traces)
 
   StatusOr<storage::internal::ListBucketAclResponse> ListBucketAcl(
       storage::internal::ListBucketAclRequest const& request) override;

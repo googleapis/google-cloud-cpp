@@ -97,19 +97,14 @@ ObjectWriteStream Client::WriteObjectImpl(
     error_stream.Close();
     return error_stream;
   }
-  std::size_t const buffer_size =
-      connection_->WriteObjectBufferSize(request).value();
+  internal::ObjectWriteStreamParams params =
+      connection_->SetupObjectWriteStream(request).value();
   return ObjectWriteStream(std::make_unique<internal::ObjectWriteStreambuf>(
       connection_, request, std::move(response->upload_id),
-      response->committed_size, std::move(response->metadata), buffer_size,
-      internal::CreateHashFunction(request),
-      internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(""),
-          request.GetOption<MD5HashValue>().value_or(""),
-      },
-      internal::CreateHashValidator(request),
-      request.GetOption<AutoFinalize>().value_or(
-          AutoFinalizeConfig::kEnabled)));
+      response->committed_size, std::move(response->metadata),
+      params.buffer_size, std::move(params.hash_function),
+      std::move(params.known_hashes), std::move(params.hash_validator),
+      params.auto_finalize));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name, std::size_t& size) {

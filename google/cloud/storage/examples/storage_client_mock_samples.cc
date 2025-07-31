@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -83,8 +84,11 @@ TEST(StorageMockingSamples, MockWriteObject) {
   using gcs::internal::QueryResumableUploadResponse;
   EXPECT_CALL(*mock, CreateResumableUpload)
       .WillOnce(Return(CreateResumableUploadResponse{"test-only-upload-id"}));
-  EXPECT_CALL(*mock, WriteObjectBufferSize)
-      .WillOnce(Return(google::cloud::make_status_or(std::size_t(1))));
+  EXPECT_CALL(*mock, SetupObjectWriteStream)
+      .WillOnce([](gcs::internal::ResumableUploadRequest const&) {
+        return google::cloud::make_status_or(
+            gcs::internal::ObjectWriteStreamParams{});
+      });
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(Return(QueryResumableUploadResponse{
           /*.committed_size=*/absl::nullopt,
@@ -141,8 +145,11 @@ TEST(StorageMockingSamples, MockWriteObjectFailure) {
   using gcs::internal::QueryResumableUploadResponse;
   EXPECT_CALL(*mock, CreateResumableUpload)
       .WillOnce(Return(CreateResumableUploadResponse{"test-only-upload-id"}));
-  EXPECT_CALL(*mock, WriteObjectBufferSize)
-      .WillOnce(Return(google::cloud::make_status_or(std::size_t(1))));
+  EXPECT_CALL(*mock, SetupObjectWriteStream)
+      .WillOnce([](gcs::internal::ResumableUploadRequest const&) {
+        return google::cloud::make_status_or(
+            gcs::internal::ObjectWriteStreamParams{});
+      });
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(Return(google::cloud::Status{
           google::cloud::StatusCode::kInvalidArgument, "Invalid Argument"}));

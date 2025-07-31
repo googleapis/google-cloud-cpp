@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/connection_impl.h"
+#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/filesystem.h"
@@ -855,6 +856,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return std::unique_ptr<std::istream>(std::move(source));
 }
 
+<<<<<<< HEAD
 StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
     std::vector<std::thread> threads,
     std::vector<ParallelUploadFileShard> shards, bool ignore_cleanup_failures) {
@@ -870,10 +872,23 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
 }
 
 StatusOr<std::size_t> StorageConnectionImpl::WriteObjectBufferSize(
+=======
+StatusOr<ObjectWriteStreamParams> StorageConnectionImpl::SetupObjectWriteStream(
+>>>>>>> 6b350ef5c6 (changing approach to generate the traces)
     ResumableUploadRequest const& request) {
   auto const& current = google::cloud::internal::CurrentOptions();
-  return request.GetOption<UploadBufferSize>().value_or(
+  ObjectWriteStreamParams params;
+  params.buffer_size = request.GetOption<UploadBufferSize>().value_or(
       current.get<UploadBufferSizeOption>());
+  params.hash_function = internal::CreateHashFunction(request);
+  params.known_hashes = {
+      request.GetOption<Crc32cChecksumValue>().value_or(""),
+      request.GetOption<MD5HashValue>().value_or(""),
+  };
+  params.hash_validator = internal::CreateHashValidator(request);
+  params.auto_finalize =
+      request.GetOption<AutoFinalize>().value_or(AutoFinalizeConfig::kEnabled);
+  return params;
 }
 
 StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(

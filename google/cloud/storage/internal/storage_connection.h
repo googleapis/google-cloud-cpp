@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/empty_response.h"
+#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/internal/notification_requests.h"
@@ -120,12 +121,17 @@ class StorageConnection {
       std::string const&, ResumableUploadRequest&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
+<<<<<<< HEAD
   virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
       std::vector<std::thread>, std::vector<ParallelUploadFileShard>, bool);
   virtual StatusOr<std::size_t> WriteObjectBufferSize(
       ResumableUploadRequest const&) {
     return Status(StatusCode::kUnimplemented, "unimplemented");
   }
+=======
+  virtual StatusOr<ObjectWriteStreamParams> SetupObjectWriteStream(
+      ResumableUploadRequest const&);
+>>>>>>> 6b350ef5c6 (changing approach to generate the traces)
   ///@}
 
   ///@{

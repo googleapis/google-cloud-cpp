@@ -109,11 +109,15 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
   MOCK_METHOD(StatusOr<std::unique_ptr<std::istream>>, UploadFileResumable,
               (std::string const&, storage::internal::ResumableUploadRequest&),
               (override));
+<<<<<<< HEAD
   MOCK_METHOD(StatusOr<ObjectMetadata>, ExecuteParallelUploadFile,
               (std::vector<std::thread>,
                std::vector<storage::internal::ParallelUploadFileShard>, bool),
               (override));
   MOCK_METHOD(StatusOr<std::size_t>, WriteObjectBufferSize,
+=======
+  MOCK_METHOD(StatusOr<internal::ObjectWriteStreamParams>, SetupObjectWriteStream,
+>>>>>>> 6b350ef5c6 (changing approach to generate the traces)
               (storage::internal::ResumableUploadRequest const&), (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,

@@ -746,6 +746,7 @@ TEST(TracingClientTest, UploadFileResumable) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+<<<<<<< HEAD
 TEST(TracingClientTest, ExecuteParallelUploadFile) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
@@ -782,16 +783,19 @@ TEST(TracingClientTest, ExecuteParallelUploadFile) {
 }
 
 TEST(TracingClientTest, WriteObjectBufferSize) {
+=======
+TEST(TracingClientTest, SetupObjectWriteStream) {
+>>>>>>> 6b350ef5c6 (changing approach to generate the traces)
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, WriteObjectBufferSize).WillOnce([](auto const&) {
+  EXPECT_CALL(*mock, SetupObjectWriteStream).WillOnce([](auto const&) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
   auto under_test = TracingConnection(mock);
   storage::internal::ResumableUploadRequest request("test-bucket",
                                                     "test-object");
-  auto actual = under_test.WriteObjectBufferSize(request);
+  auto actual = under_test.SetupObjectWriteStream(request);
 
   auto const code = PermanentError().code();
   auto const code_str = StatusCodeToString(code);
@@ -799,12 +803,12 @@ TEST(TracingClientTest, WriteObjectBufferSize) {
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(
-          AllOf(SpanNamed("storage::Client::WriteObject/WriteObjectBufferSize"),
-                SpanHasInstrumentationScope(), SpanKindIsClient(),
-                SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                SpanHasAttributes(OTelAttribute<std::string>(
-                    "gl-cpp.status_code", code_str)))));
+      ElementsAre(AllOf(
+          SpanNamed("storage::Client::WriteObject/SetupObjectWriteStream"),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListBucketAcl) {
