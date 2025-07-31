@@ -168,6 +168,13 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListBackupSchedules(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+DatabaseAdminConnectionIdempotencyPolicy::InternalUpdateGraphOperation(
+    google::spanner::admin::database::v1::
+        InternalUpdateGraphOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListOperations(
     google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

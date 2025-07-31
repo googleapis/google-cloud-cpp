@@ -104,6 +104,10 @@ class StorageConnectionImpl
       InsertObjectMediaRequest& request) override;
   StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
       std::string const& file_name, ResumableUploadRequest& request) override;
+  StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<std::thread> threads,
+      std::vector<ParallelUploadFileShard> shards,
+      bool ignore_cleanup_failures) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
