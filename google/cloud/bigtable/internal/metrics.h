@@ -184,6 +184,8 @@ class FirstResponseLatency : public Metric {
                 PostCallParams const& p) override;
   void ElementDelivery(opentelemetry::context::Context const&,
                       ElementDeliveryParams const&) override;
+   void OnDone(opentelemetry::context::Context const& context,
+              OnDoneParams const& p) override;
   
   std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
                                 DataLabels data_labels) const override;
@@ -194,6 +196,9 @@ class FirstResponseLatency : public Metric {
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
      first_response_latencies_;
   OperationContext::Clock::time_point operation_start_;
+  LatencyDuration first_response_latency_;
+
+
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
