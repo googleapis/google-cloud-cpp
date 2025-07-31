@@ -855,6 +855,41 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return std::unique_ptr<std::istream>(std::move(source));
 }
 
+Status StorageConnectionImpl::DownloadStreamToFile(
+    ObjectReadStream&& stream, std::string const& file_name,
+    ReadObjectRangeRequest const& request) {
+  auto const* func = __func__;
+  auto msg = [&request, &file_name, func](char const* what) {
+    std::ostringstream os;
+    os << func << "(" << request << ", " << file_name << "): " << what;
+    return std::move(os).str();
+  };
+
+  // Open the destination file, and immediate raise an exception on failure.
+  std::ofstream os(file_name, std::ios::binary);
+  if (!os.is_open()) {
+    return google::cloud::internal::InvalidArgumentError(
+        msg("cannot open download destination file - ofstream::open()"),
+        GCP_ERROR_INFO());
+  }
+
+  auto const& current = google::cloud::internal::CurrentOptions();
+  auto const size = current.get<DownloadBufferSizeOption>();
+  std::unique_ptr<char[]> buffer(new char[size]);
+  do {
+    stream.read(buffer.get(), size);
+    os.write(buffer.get(), stream.gcount());
+  } while (os.good() && stream.good());
+  os.close();
+  if (!os.good()) {
+    return google::cloud::internal::UnknownError(
+        msg("cannot close download destination file - ofstream::close()"),
+        GCP_ERROR_INFO());
+  }
+  if (stream.bad()) return stream.status();
+  return Status();
+}
+
 StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
     std::vector<std::thread> threads,
     std::vector<ParallelUploadFileShard> shards, bool ignore_cleanup_failures) {
