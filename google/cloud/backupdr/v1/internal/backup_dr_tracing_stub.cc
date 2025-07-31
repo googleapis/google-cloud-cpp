@@ -401,6 +401,32 @@ StatusOr<google::longrunning::Operation> BackupDRTracingStub::CreateBackupPlan(
                            child_->CreateBackupPlan(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncUpdateBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackupPlan");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateBackupPlan(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::UpdateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackupPlan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBackupPlan(context, options, request));
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlan>
 BackupDRTracingStub::GetBackupPlan(
     grpc::ClientContext& context, Options const& options,
@@ -451,6 +477,32 @@ StatusOr<google::longrunning::Operation> BackupDRTracingStub::DeleteBackupPlan(
                            child_->DeleteBackupPlan(context, options, request));
 }
 
+StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRTracingStub::GetBackupPlanRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetBackupPlanRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetBackupPlanRevision(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlanRevisionsResponse>
+BackupDRTracingStub::ListBackupPlanRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListBackupPlanRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListBackupPlanRevisions(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupDRTracingStub::AsyncCreateBackupPlanAssociation(
     google::cloud::CompletionQueue& cq,
@@ -481,6 +533,36 @@ BackupDRTracingStub::CreateBackupPlanAssociation(
       child_->CreateBackupPlanAssociation(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncUpdateBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateBackupPlanAssociation(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::UpdateBackupPlanAssociation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackupPlanAssociation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateBackupPlanAssociation(context, options, request));
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
 BackupDRTracingStub::GetBackupPlanAssociation(
     grpc::ClientContext& context, Options const& options,
@@ -507,6 +589,22 @@ BackupDRTracingStub::ListBackupPlanAssociations(
   return internal::EndSpan(
       context, *span,
       child_->ListBackupPlanAssociations(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::
+             FetchBackupPlanAssociationsForResourceTypeResponse>
+BackupDRTracingStub::FetchBackupPlanAssociationsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::
+        FetchBackupPlanAssociationsForResourceTypeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                             "FetchBackupPlanAssociationsForResourceType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchBackupPlanAssociationsForResourceType(
+                               context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -562,6 +660,35 @@ StatusOr<google::longrunning::Operation> BackupDRTracingStub::TriggerBackup(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TriggerBackup(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRTracingStub::GetDataSourceReference(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetDataSourceReference");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetDataSourceReference(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::
+             FetchDataSourceReferencesForResourceTypeResponse>
+BackupDRTracingStub::FetchDataSourceReferencesForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::
+        FetchDataSourceReferencesForResourceTypeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                             "FetchDataSourceReferencesForResourceType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchDataSourceReferencesForResourceType(
+                               context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -692,6 +692,29 @@ DatabaseAdminClient::ListBackupSchedules(
   return connection_->ListBackupSchedules(std::move(request));
 }
 
+StatusOr<
+    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
+DatabaseAdminClient::InternalUpdateGraphOperation(
+    std::string const& database, std::string const& operation_id,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::InternalUpdateGraphOperationRequest
+      request;
+  request.set_database(database);
+  request.set_operation_id(operation_id);
+  return connection_->InternalUpdateGraphOperation(request);
+}
+
+StatusOr<
+    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
+DatabaseAdminClient::InternalUpdateGraphOperation(
+    google::spanner::admin::database::v1::
+        InternalUpdateGraphOperationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InternalUpdateGraphOperation(request);
+}
+
 StreamRange<google::longrunning::Operation> DatabaseAdminClient::ListOperations(
     std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

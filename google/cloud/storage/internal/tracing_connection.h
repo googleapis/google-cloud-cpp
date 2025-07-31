@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
 #include <memory>
 #include <string>
@@ -107,6 +108,10 @@ class TracingConnection : public storage::internal::StorageConnection {
   Status DownloadStreamToFile(
       storage::ObjectReadStream&&, std::string const&,
       storage::internal::ReadObjectRangeRequest const&) override;
+  StatusOr<storage::ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<std::thread> threads,
+      std::vector<storage::internal::ParallelUploadFileShard> shards,
+      bool ignore_cleanup_failures) override;
 
   StatusOr<storage::internal::ListBucketAclResponse> ListBucketAcl(
       storage::internal::ListBucketAclRequest const& request) override;

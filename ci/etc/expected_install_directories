@@ -131,6 +131,9 @@
 ./include/google/cloud/bigquery/datapolicies/v1
 ./include/google/cloud/bigquery/datapolicies/v1/internal
 ./include/google/cloud/bigquery/datapolicies/v1/mocks
+./include/google/cloud/bigquery/datapolicies/v2
+./include/google/cloud/bigquery/datapolicies/v2/internal
+./include/google/cloud/bigquery/datapolicies/v2/mocks
 ./include/google/cloud/bigquery/datatransfer
 ./include/google/cloud/bigquery/datatransfer/v1
 ./include/google/cloud/bigquery/datatransfer/v1/internal

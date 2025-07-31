@@ -108,6 +108,10 @@ class StorageConnectionImpl
   Status DownloadStreamToFile(ObjectReadStream&& stream,
                               std::string const& file_name,
                               ReadObjectRangeRequest const& request) override;
+  StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<std::thread> threads,
+      std::vector<ParallelUploadFileShard> shards,
+      bool ignore_cleanup_failures) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
