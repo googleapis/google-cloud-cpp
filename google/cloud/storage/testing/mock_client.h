@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
@@ -107,6 +108,10 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<std::istream>>, UploadFileResumable,
               (std::string const&, storage::internal::ResumableUploadRequest&),
+              (override));
+  MOCK_METHOD(StatusOr<ObjectMetadata>, ExecuteParallelUploadFile,
+              (std::vector<std::thread>,
+               std::vector<storage::internal::ParallelUploadFileShard>, bool),
               (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,
