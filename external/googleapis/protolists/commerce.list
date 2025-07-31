@@ -1,3 +1,3 @@
-@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:license_management_service.proto
-@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:order.proto
-@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_service.proto
+@googleapis//google/cloud/commerce/consumer/procurement/v1:license_management_service.proto
+@googleapis//google/cloud/commerce/consumer/procurement/v1:order.proto
+@googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_service.proto

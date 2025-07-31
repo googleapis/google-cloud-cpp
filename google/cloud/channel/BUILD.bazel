@@ -24,7 +24,7 @@ service_dirs = [
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/channel/v1:channel_cc_grpc",
+    "@googleapis//google/cloud/channel/v1:channel_cc_grpc",
 ]
 
 cc_gapic_library(

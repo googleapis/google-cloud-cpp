@@ -1,4 +1,4 @@
-@com_google_googleapis//google/cloud/certificatemanager/logging/v1:logs.proto
-@com_google_googleapis//google/cloud/certificatemanager/v1:certificate_issuance_config.proto
-@com_google_googleapis//google/cloud/certificatemanager/v1:certificate_manager.proto
-@com_google_googleapis//google/cloud/certificatemanager/v1:trust_config.proto
+@googleapis//google/cloud/certificatemanager/logging/v1:logs.proto
+@googleapis//google/cloud/certificatemanager/v1:certificate_issuance_config.proto
+@googleapis//google/cloud/certificatemanager/v1:certificate_manager.proto
+@googleapis//google/cloud/certificatemanager/v1:trust_config.proto

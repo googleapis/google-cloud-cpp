@@ -1,6 +1,6 @@
-@com_google_googleapis//google/cloud/apphub/v1:apphub_service.proto
-@com_google_googleapis//google/cloud/apphub/v1:application.proto
-@com_google_googleapis//google/cloud/apphub/v1:attributes.proto
-@com_google_googleapis//google/cloud/apphub/v1:service.proto
-@com_google_googleapis//google/cloud/apphub/v1:service_project_attachment.proto
-@com_google_googleapis//google/cloud/apphub/v1:workload.proto
+@googleapis//google/cloud/apphub/v1:apphub_service.proto
+@googleapis//google/cloud/apphub/v1:application.proto
+@googleapis//google/cloud/apphub/v1:attributes.proto
+@googleapis//google/cloud/apphub/v1:service.proto
+@googleapis//google/cloud/apphub/v1:service_project_attachment.proto
+@googleapis//google/cloud/apphub/v1:workload.proto

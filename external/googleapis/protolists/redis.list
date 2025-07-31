@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/redis/cluster/v1:cloud_redis_cluster.proto
-@com_google_googleapis//google/cloud/redis/v1:cloud_redis.proto
+@googleapis//google/cloud/redis/cluster/v1:cloud_redis_cluster.proto
+@googleapis//google/cloud/redis/v1:cloud_redis.proto

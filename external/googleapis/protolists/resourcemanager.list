@@ -1,7 +1,7 @@
-@com_google_googleapis//google/cloud/resourcemanager/v3:folders.proto
-@com_google_googleapis//google/cloud/resourcemanager/v3:organizations.proto
-@com_google_googleapis//google/cloud/resourcemanager/v3:projects.proto
-@com_google_googleapis//google/cloud/resourcemanager/v3:tag_bindings.proto
-@com_google_googleapis//google/cloud/resourcemanager/v3:tag_holds.proto
-@com_google_googleapis//google/cloud/resourcemanager/v3:tag_keys.proto
-@com_google_googleapis//google/cloud/resourcemanager/v3:tag_values.proto
+@googleapis//google/cloud/resourcemanager/v3:folders.proto
+@googleapis//google/cloud/resourcemanager/v3:organizations.proto
+@googleapis//google/cloud/resourcemanager/v3:projects.proto
+@googleapis//google/cloud/resourcemanager/v3:tag_bindings.proto
+@googleapis//google/cloud/resourcemanager/v3:tag_holds.proto
+@googleapis//google/cloud/resourcemanager/v3:tag_keys.proto
+@googleapis//google/cloud/resourcemanager/v3:tag_values.proto

@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/optimization/v1:async_model.proto
-@com_google_googleapis//google/cloud/optimization/v1:fleet_routing.proto
+@googleapis//google/cloud/optimization/v1:async_model.proto
+@googleapis//google/cloud/optimization/v1:fleet_routing.proto
