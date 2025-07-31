@@ -20,6 +20,8 @@ cc_test(
     name = "impersonation_tests",
     timeout = "long",
     srcs = ["impersonation_tests.cc"],
+    # TODO(#15332) - remove gtest_filter to re-enable the tests when credential's issuer is recovered from failure
+    args = ["--gtest_filter=-ExternalAccountImpersonationTest.EAToSAImpersonationRest:ExternalAccountImpersonationTest.EAToSAImpersonationGrpc"],
     tags = [
         "integration-test",
         "ud-only",
