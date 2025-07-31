@@ -108,6 +108,8 @@ class StorageConnectionImpl
       std::vector<std::thread> threads,
       std::vector<ParallelUploadFileShard> shards,
       bool ignore_cleanup_failures) override;
+  StatusOr<ObjectWriteStreamParams> SetupObjectWriteStream(
+      ResumableUploadRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

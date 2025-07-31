@@ -18,8 +18,9 @@
 #include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
-#include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include <iostream>
 #include <memory>
 #include <string>
@@ -31,6 +32,21 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ObjectWriteStream;
 namespace internal {
+class StorageConnection;
+
+/**
+ * The parameters to construct an `ObjectWriteStreambuf`.
+ *
+ * This is an implementation detail, only used by the library to create the
+ * streambuf.
+ */
+struct ObjectWriteStreamParams {
+  std::size_t buffer_size;
+  std::unique_ptr<HashFunction> hash_function;
+  HashValues known_hashes;
+  std::unique_ptr<HashValidator> hash_validator;
+  AutoFinalizeConfig auto_finalize;
+};
 
 /**
  * Defines a compilation barrier for libcurl.

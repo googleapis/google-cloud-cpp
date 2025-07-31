@@ -268,6 +268,15 @@ StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
                                       ignore_cleanup_failures));
 }
 
+StatusOr<storage::internal::ObjectWriteStreamParams>
+TracingConnection::SetupObjectWriteStream(
+    storage::internal::ResumableUploadRequest const& request) {
+  auto span =
+      internal::MakeSpan("storage::Client::WriteObject/SetupObjectWriteStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->SetupObjectWriteStream(request));
+}
+
 StatusOr<storage::internal::ListBucketAclResponse>
 TracingConnection::ListBucketAcl(
     storage::internal::ListBucketAclRequest const& request) {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/connection_impl.h"
+#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/filesystem.h"
@@ -867,6 +868,23 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::ExecuteParallelUploadFile(
     return cleanup_res;
   }
   return res;
+}
+
+StatusOr<ObjectWriteStreamParams> StorageConnectionImpl::SetupObjectWriteStream(
+    ResumableUploadRequest const& request) {
+  auto const& current = google::cloud::internal::CurrentOptions();
+  ObjectWriteStreamParams params;
+  params.buffer_size = request.GetOption<UploadBufferSize>().value_or(
+      current.get<UploadBufferSizeOption>());
+  params.hash_function = internal::CreateHashFunction(request);
+  params.known_hashes = {
+      request.GetOption<Crc32cChecksumValue>().value_or(""),
+      request.GetOption<MD5HashValue>().value_or(""),
+  };
+  params.hash_validator = internal::CreateHashValidator(request);
+  params.auto_finalize =
+      request.GetOption<AutoFinalize>().value_or(AutoFinalizeConfig::kEnabled);
+  return params;
 }
 
 StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(
