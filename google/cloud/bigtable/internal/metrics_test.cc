@@ -801,8 +801,8 @@ TEST(FirstResponseLatency, Success) {
                 Pair("project_id", "my-project-id"),
                 Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
                 Pair("table", "my-table"), Pair("zone", "my-zone"),
-                Pair("method", "my-method"),
-                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("method", "my-method"), Pair("status", "OK"),
+                Pair("client_name", "my-client-name"),
                 Pair("client_uid", "my-client-uid"),
                 Pair("app_profile", "my-app-profile")));
       });
@@ -840,7 +840,7 @@ TEST(FirstResponseLatency, Success) {
                                               mock_provider);
   ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
                                  ""};
-  DataLabels data_labels{"my-method",   "my-streaming", "my-client-name",
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
                          "my-client-uid", "my-app-profile", ""};
   auto clone = first_response_latency.clone(resource_labels, data_labels);
 
@@ -902,7 +902,7 @@ TEST(FirstResponseLatency, NoDataReceived) {
                                               mock_provider);
   ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
                                  ""};
-  DataLabels data_labels{"my-method",   "my-streaming", "my-client-name",
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
                          "my-client-uid", "my-app-profile", ""};
   auto clone = first_response_latency.clone(resource_labels, data_labels);
 
@@ -916,11 +916,13 @@ TEST(FirstResponseLatency, NoDataReceived) {
   clock->SetTime(std::chrono::steady_clock::now());
   clone->PreCall(otel_context, {clock->Now(), true});
   clock->AdvanceTime(std::chrono::milliseconds(5));
-  clone->PostCall(otel_context, client_context,
-                  {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
+  clone->PostCall(
+      otel_context, client_context,
+      {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
   clock->AdvanceTime(std::chrono::milliseconds(5));
-  clone->OnDone(otel_context,
-                {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
+  clone->OnDone(
+      otel_context,
+      {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
 }
 
 }  // namespace

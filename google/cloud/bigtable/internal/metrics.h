@@ -198,7 +198,7 @@ class FirstResponseLatency : public Metric {
       first_response_latencies_;
   OperationContext::Clock::time_point operation_start_;
   LatencyDuration first_response_latency_;
-   bool latency_captured_ = false;
+  bool latency_captured_ = false;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
