@@ -63,7 +63,7 @@ using bigtable::benchmarks::ParseArgs;
 /// Run an iteration of the test, returns the number of operations.
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark const& benchmark,
-    std::chrono::seconds test_duration);
+    std::chrono::seconds test_duration, bool include_read_rows);
 
 }  // anonymous namespace
 
@@ -91,7 +91,8 @@ int main(int argc, char* argv[]) {
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
-                                  std::ref(benchmark), options->test_duration));
+                                  std::ref(benchmark), options->test_duration,
+                                  options->include_read_rows));
   }
 
   // Wait for the threads and combine all the results.
@@ -172,7 +173,7 @@ OperationResult RunOneReadRows(
 
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark const& benchmark,
-    std::chrono::seconds test_duration) {
+    std::chrono::seconds test_duration, bool include_read_rows) {
   BenchmarkResult partial = {};
 
   auto table = benchmark.MakeTable();
@@ -183,20 +184,18 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
   auto end = start + test_duration;
 
   for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
-    auto op_result = RunOneReadRows(table, benchmark, generator);
+    auto op_result = RunOneReadRow(table, benchmark, generator);
     if (!op_result.status.ok()) {
       return op_result.status;
     }
     partial.operations.emplace_back(op_result);
     ++partial.row_count;
 
-    op_result = RunOneReadRow(table, benchmark, generator);
-    if (!op_result.status.ok()) {
-      return op_result.status;
+    if (include_read_rows) {
+      op_result = RunOneReadRows(table, benchmark, generator);
+    } else {
+      op_result = RunOneReadRow(table, benchmark, generator);
     }
-    partial.operations.emplace_back(op_result);
-    ++partial.row_count;
-    op_result = RunOneReadRow(table, benchmark, generator);
     if (!op_result.status.ok()) {
       return op_result.status;
     }

@@ -197,8 +197,7 @@ class FirstResponseLatency : public Metric {
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;
   OperationContext::Clock::time_point operation_start_;
-  LatencyDuration first_response_latency_;
-  bool latency_captured_ = false;
+  absl::optional<LatencyDuration> first_response_latency_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

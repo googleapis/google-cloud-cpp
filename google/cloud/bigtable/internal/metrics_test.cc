@@ -850,10 +850,13 @@ TEST(FirstResponseLatency, Success) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto clock = std::make_shared<FakeSteadyClock>();
 
+  // Verify that only the first response is recorded.
   clock->SetTime(std::chrono::steady_clock::now());
   clone->PreCall(otel_context, {clock->Now(), true});
   clock->AdvanceTime(std::chrono::milliseconds(2));
   clone->ElementDelivery(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::milliseconds(5));
+  clone->ElementDelivery(otel_context, {clock->Now(), false});
   clock->AdvanceTime(std::chrono::milliseconds(5));
   clone->PostCall(otel_context, client_context,
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});

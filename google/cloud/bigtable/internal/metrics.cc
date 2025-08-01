@@ -245,17 +245,16 @@ void FirstResponseLatency::ElementDelivery(
   if (p.first_response) {
     first_response_latency_ = std::chrono::duration_cast<LatencyDuration>(
         p.element_delivery - operation_start_);
-    latency_captured_ = true;
   }
 }
 
 void FirstResponseLatency::OnDone(
     opentelemetry::context::Context const& context, OnDoneParams const& p) {
-  if (latency_captured_) {
+  if (first_response_latency_) {
     data_labels_.status = StatusCodeToString(p.operation_status.code());
     auto m = IntoLabelMap(resource_labels_, data_labels_,
                           std::set<std::string>{"streaming"});
-    first_response_latencies_->Record(first_response_latency_.count(),
+    first_response_latencies_->Record(first_response_latency_->count(),
                                       std::move(m), context);
   }
 }
