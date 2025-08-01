@@ -333,6 +333,28 @@ StatusOr<google::longrunning::Operation> BackupDRMetadata::CreateBackupPlan(
   return child_->CreateBackupPlan(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncUpdateBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("backup_plan.name=",
+                           internal::UrlEncode(request.backup_plan().name())));
+  return child_->AsyncUpdateBackupPlan(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::UpdateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup_plan.name=",
+                           internal::UrlEncode(request.backup_plan().name())));
+  return child_->UpdateBackupPlan(context, options, request);
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlan>
 BackupDRMetadata::GetBackupPlan(
     grpc::ClientContext& context, Options const& options,
@@ -371,6 +393,25 @@ StatusOr<google::longrunning::Operation> BackupDRMetadata::DeleteBackupPlan(
   return child_->DeleteBackupPlan(context, options, request);
 }
 
+StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRMetadata::GetBackupPlanRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackupPlanRevision(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlanRevisionsResponse>
+BackupDRMetadata::ListBackupPlanRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupPlanRevisions(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupDRMetadata::AsyncCreateBackupPlanAssociation(
     google::cloud::CompletionQueue& cq,
@@ -394,6 +435,33 @@ BackupDRMetadata::CreateBackupPlanAssociation(
   return child_->CreateBackupPlanAssociation(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncUpdateBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("backup_plan_association.name=",
+                           internal::UrlEncode(
+                               request.backup_plan_association().name())));
+  return child_->AsyncUpdateBackupPlanAssociation(cq, std::move(context),
+                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::UpdateBackupPlanAssociation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup_plan_association.name=",
+                           internal::UrlEncode(
+                               request.backup_plan_association().name())));
+  return child_->UpdateBackupPlanAssociation(context, options, request);
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
 BackupDRMetadata::GetBackupPlanAssociation(
     grpc::ClientContext& context, Options const& options,
@@ -412,6 +480,18 @@ BackupDRMetadata::ListBackupPlanAssociations(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackupPlanAssociations(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::
+             FetchBackupPlanAssociationsForResourceTypeResponse>
+BackupDRMetadata::FetchBackupPlanAssociationsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::
+        FetchBackupPlanAssociationsForResourceTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->FetchBackupPlanAssociationsForResourceType(context, options,
+                                                            request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -455,6 +535,27 @@ StatusOr<google::longrunning::Operation> BackupDRMetadata::TriggerBackup(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->TriggerBackup(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRMetadata::GetDataSourceReference(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDataSourceReference(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::
+             FetchDataSourceReferencesForResourceTypeResponse>
+BackupDRMetadata::FetchDataSourceReferencesForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::
+        FetchDataSourceReferencesForResourceTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->FetchDataSourceReferencesForResourceType(context, options,
+                                                          request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

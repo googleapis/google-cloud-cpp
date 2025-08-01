@@ -467,6 +467,103 @@ SecureSourceManagerConnectionImpl::CreateRepository(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerConnectionImpl::UpdateRepository(
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRepository(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Repository>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+              request) {
+        return stub->AsyncUpdateRepository(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Repository>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdateRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRepository(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+              request) {
+        return stub_->UpdateRepository(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerConnectionImpl::UpdateRepository(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Repository>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateRepository",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Repository>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Repository>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnectionImpl::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
@@ -537,6 +634,337 @@ SecureSourceManagerConnectionImpl::DeleteRepository(
         StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
         internal::InvalidArgumentError(
             "operation does not correspond to DeleteRepository",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerConnectionImpl::ListHooks(
+    google::cloud::securesourcemanager::v1::ListHooksRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListHooks(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::Hook>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::ListHooksRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securesourcemanager::v1::ListHooksRequest const&
+                    request) {
+              return stub->ListHooks(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::ListHooksResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::Hook> result(
+            r.hooks().size());
+        auto& messages = *r.mutable_hooks();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerConnectionImpl::GetHook(
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetHook(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::GetHookRequest const&
+                 request) { return stub_->GetHook(context, options, request); },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnectionImpl::CreateHook(
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateHook(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Hook>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::CreateHookRequest const&
+              request) {
+        return stub->AsyncCreateHook(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Hook>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CreateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateHook(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::CreateHookRequest const&
+                 request) {
+        return stub_->CreateHook(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnectionImpl::CreateHook(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Hook>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateHook",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Hook>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Hook>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnectionImpl::UpdateHook(
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateHook(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Hook>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+              request) {
+        return stub->AsyncUpdateHook(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Hook>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateHook(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+                 request) {
+        return stub_->UpdateHook(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnectionImpl::UpdateHook(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Hook>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateHook",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Hook>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Hook>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteHook(
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteHook(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+              request) {
+        return stub->AsyncDeleteHook(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::DeleteHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteHook(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+                 request) {
+        return stub_->DeleteHook(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteHook(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteHook",
             GCP_ERROR_INFO().WithMetadata("operation",
                                           operation.metadata().DebugString())));
   }
@@ -922,6 +1350,2126 @@ SecureSourceManagerConnectionImpl::DeleteBranchRule(
         StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
         internal::InvalidArgumentError(
             "operation does not correspond to DeleteBranchRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::CreatePullRequest(
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePullRequest(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         CreatePullRequestRequest const& request) {
+        return stub->AsyncCreatePullRequest(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CreatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePullRequest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestRequest const& request) {
+        return stub_->CreatePullRequest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::CreatePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePullRequest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerConnectionImpl::GetPullRequest(
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPullRequest(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+              request) {
+        return stub_->GetPullRequest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerConnectionImpl::ListPullRequests(
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListPullRequests(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::PullRequest>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::securesourcemanager::v1::
+                       ListPullRequestsRequest const& request) {
+              return stub->ListPullRequests(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::ListPullRequestsResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::PullRequest> result(
+            r.pull_requests().size());
+        auto& messages = *r.mutable_pull_requests();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::UpdatePullRequest(
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePullRequest(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         UpdatePullRequestRequest const& request) {
+        return stub->AsyncUpdatePullRequest(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePullRequest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestRequest const& request) {
+        return stub_->UpdatePullRequest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::UpdatePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePullRequest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::MergePullRequest(
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MergePullRequest(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+              request) {
+        return stub->AsyncMergePullRequest(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::MergePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MergePullRequest(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+              request) {
+        return stub_->MergePullRequest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::MergePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to MergePullRequest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::OpenPullRequest(
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->OpenPullRequest(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+              request) {
+        return stub->AsyncOpenPullRequest(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::OpenPullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->OpenPullRequest(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+              request) {
+        return stub_->OpenPullRequest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::OpenPullRequest(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to OpenPullRequest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::ClosePullRequest(
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ClosePullRequest(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+              request) {
+        return stub->AsyncClosePullRequest(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::ClosePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ClosePullRequest(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+              request) {
+        return stub_->ClosePullRequest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnectionImpl::ClosePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ClosePullRequest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequest>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+SecureSourceManagerConnectionImpl::ListPullRequestFileDiffs(
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListPullRequestFileDiffs(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::FileDiff>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::
+              ListPullRequestFileDiffsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::securesourcemanager::v1::
+                       ListPullRequestFileDiffsRequest const& request) {
+              return stub->ListPullRequestFileDiffs(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::
+             ListPullRequestFileDiffsResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::FileDiff> result(
+            r.file_diffs().size());
+        auto& messages = *r.mutable_file_diffs();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>
+SecureSourceManagerConnectionImpl::FetchTree(
+    google::cloud::securesourcemanager::v1::FetchTreeRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->FetchTree(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::FetchTreeRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securesourcemanager::v1::FetchTreeRequest const&
+                    request) {
+              return stub->FetchTree(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::FetchTreeResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::TreeEntry> result(
+            r.tree_entries().size());
+        auto& messages = *r.mutable_tree_entries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerConnectionImpl::FetchBlob(
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchBlob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::FetchBlobRequest const&
+                 request) {
+        return stub_->FetchBlob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::CreateIssue(
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateIssue(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+              request) {
+        return stub->AsyncCreateIssue(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CreateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIssue(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+                 request) {
+        return stub_->CreateIssue(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::CreateIssue(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateIssue",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerConnectionImpl::GetIssue(
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIssue(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::GetIssueRequest const&
+                 request) {
+        return stub_->GetIssue(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerConnectionImpl::ListIssues(
+    google::cloud::securesourcemanager::v1::ListIssuesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListIssues(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::Issue>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::ListIssuesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securesourcemanager::v1::ListIssuesRequest const&
+                    request) {
+              return stub->ListIssues(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::ListIssuesResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::Issue> result(
+            r.issues().size());
+        auto& messages = *r.mutable_issues();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::UpdateIssue(
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateIssue(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+              request) {
+        return stub->AsyncUpdateIssue(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIssue(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+                 request) {
+        return stub_->UpdateIssue(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::UpdateIssue(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateIssue",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteIssue(
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteIssue(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+              request) {
+        return stub->AsyncDeleteIssue(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::DeleteIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIssue(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+                 request) {
+        return stub_->DeleteIssue(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteIssue(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteIssue",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::OpenIssue(
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->OpenIssue(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::OpenIssueRequest const&
+              request) {
+        return stub->AsyncOpenIssue(cq, std::move(context), std::move(options),
+                                    request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::OpenIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->OpenIssue(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::OpenIssueRequest const&
+                 request) {
+        return stub_->OpenIssue(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::OpenIssue(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to OpenIssue",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::CloseIssue(
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CloseIssue(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+              request) {
+        return stub->AsyncCloseIssue(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CloseIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CloseIssue(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+                 request) {
+        return stub_->CloseIssue(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnectionImpl::CloseIssue(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CloseIssue",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::Issue>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::Issue>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerConnectionImpl::GetPullRequestComment(
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPullRequestComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 GetPullRequestCommentRequest const& request) {
+        return stub_->GetPullRequestComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerConnectionImpl::ListPullRequestComments(
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListPullRequestComments(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::securesourcemanager::v1::
+                                      ListPullRequestCommentsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::securesourcemanager::v1::
+                       ListPullRequestCommentsRequest const& request) {
+              return stub->ListPullRequestComments(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse
+             r) {
+        std::vector<google::cloud::securesourcemanager::v1::PullRequestComment>
+            result(r.pull_request_comments().size());
+        auto& messages = *r.mutable_pull_request_comments();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnectionImpl::CreatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePullRequestComment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequestComment>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         CreatePullRequestCommentRequest const& request) {
+        return stub->AsyncCreatePullRequestComment(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequestComment>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CreatePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    CreatePullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePullRequestComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestCommentRequest const& request) {
+        return stub_->CreatePullRequestComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnectionImpl::CreatePullRequestComment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePullRequestComment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequestComment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequestComment>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnectionImpl::UpdatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePullRequestComment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequestComment>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         UpdatePullRequestCommentRequest const& request) {
+        return stub->AsyncUpdatePullRequestComment(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequestComment>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdatePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    UpdatePullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePullRequestComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestCommentRequest const& request) {
+        return stub_->UpdatePullRequestComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnectionImpl::UpdatePullRequestComment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePullRequestComment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::PullRequestComment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::PullRequestComment>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeletePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePullRequestComment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         DeletePullRequestCommentRequest const& request) {
+        return stub->AsyncDeletePullRequestComment(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::DeletePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    DeletePullRequestCommentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePullRequestComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 DeletePullRequestCommentRequest const& request) {
+        return stub_->DeletePullRequestComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeletePullRequestComment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePullRequestComment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerConnectionImpl::BatchCreatePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchCreatePullRequestComments(
+          request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         BatchCreatePullRequestCommentsRequest const& request) {
+        return stub->AsyncBatchCreatePullRequestComments(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::
+              BatchCreatePullRequestCommentsResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::BatchCreatePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchCreatePullRequestComments(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 BatchCreatePullRequestCommentsRequest const& request) {
+        return stub_->BatchCreatePullRequestComments(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerConnectionImpl::BatchCreatePullRequestComments(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::
+                     BatchCreatePullRequestCommentsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchCreatePullRequestComments",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::
+              BatchCreatePullRequestCommentsResponse>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerConnectionImpl::ResolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResolvePullRequestComments(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         ResolvePullRequestCommentsRequest const& request) {
+        return stub->AsyncResolvePullRequestComments(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::
+              ResolvePullRequestCommentsResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::ResolvePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    ResolvePullRequestCommentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResolvePullRequestComments(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 ResolvePullRequestCommentsRequest const& request) {
+        return stub_->ResolvePullRequestComments(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerConnectionImpl::ResolvePullRequestComments(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::securesourcemanager::v1::
+                                          ResolvePullRequestCommentsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResolvePullRequestComments",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::
+              ResolvePullRequestCommentsResponse>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerConnectionImpl::UnresolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UnresolvePullRequestComments(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         UnresolvePullRequestCommentsRequest const& request) {
+        return stub->AsyncUnresolvePullRequestComments(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::
+              UnresolvePullRequestCommentsResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UnresolvePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UnresolvePullRequestComments(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UnresolvePullRequestCommentsRequest const& request) {
+        return stub_->UnresolvePullRequestComments(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerConnectionImpl::UnresolvePullRequestComments(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::
+                     UnresolvePullRequestCommentsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UnresolvePullRequestComments",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::
+              UnresolvePullRequestCommentsResponse>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnectionImpl::CreateIssueComment(
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateIssueComment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::IssueComment>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         CreateIssueCommentRequest const& request) {
+        return stub->AsyncCreateIssueComment(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::IssueComment>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CreateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIssueComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 CreateIssueCommentRequest const& request) {
+        return stub_->CreateIssueComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnectionImpl::CreateIssueComment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateIssueComment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::IssueComment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::IssueComment>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerConnectionImpl::GetIssueComment(
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIssueComment(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+              request) {
+        return stub_->GetIssueComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerConnectionImpl::ListIssueComments(
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListIssueComments(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::IssueComment>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::securesourcemanager::v1::
+                                      ListIssueCommentsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::securesourcemanager::v1::
+                       ListIssueCommentsRequest const& request) {
+              return stub->ListIssueComments(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::ListIssueCommentsResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::IssueComment>
+            result(r.issue_comments().size());
+        auto& messages = *r.mutable_issue_comments();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnectionImpl::UpdateIssueComment(
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateIssueComment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::IssueComment>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         UpdateIssueCommentRequest const& request) {
+        return stub->AsyncUpdateIssueComment(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::IssueComment>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIssueComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UpdateIssueCommentRequest const& request) {
+        return stub_->UpdateIssueComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnectionImpl::UpdateIssueComment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateIssueComment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::IssueComment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::IssueComment>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteIssueComment(
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteIssueComment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::securesourcemanager::v1::
+                         DeleteIssueCommentRequest const& request) {
+        return stub->AsyncDeleteIssueComment(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::DeleteIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIssueComment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 DeleteIssueCommentRequest const& request) {
+        return stub_->DeleteIssueComment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteIssueComment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteIssueComment",
             GCP_ERROR_INFO().WithMetadata("operation",
                                           operation.metadata().DebugString())));
   }
