@@ -35,7 +35,7 @@ bazel_dep(name = "rules_python", version = "1.4.1")
 bazel_dep(name = "rules_apple", version = "3.16.0")
 bazel_dep(name = "googletest", version = "1.15.2")
 
-bazel_dep(name = "google_benchmark", version = "1.9.2", dev_dependency = True, repo_name = "com_google_benchmark")
+bazel_dep(name = "google_benchmark", version = "1.9.4", dev_dependency = True, repo_name = "com_google_benchmark")
 bazel_dep(name = "yaml-cpp", version = "0.8.0", dev_dependency = True, repo_name = "com_github_jbeder_yaml_cpp")
 bazel_dep(name = "pugixml", version = "1.15", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
 
