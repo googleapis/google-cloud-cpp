@@ -230,9 +230,9 @@ void FirstResponseLatency::PreCall(opentelemetry::context::Context const&,
   }
 }
 
-void FirstResponseLatency::PostCall(
-    opentelemetry::context::Context const& context,
-    grpc::ClientContext const& client_context, PostCallParams const& p) {
+void FirstResponseLatency::PostCall(opentelemetry::context::Context const&,
+                                    grpc::ClientContext const& client_context,
+                                    PostCallParams const& p) {
   auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
   if (response_params) {
     resource_labels_.cluster = response_params->cluster_id();
@@ -250,7 +250,7 @@ void FirstResponseLatency::ElementDelivery(
 }
 
 void FirstResponseLatency::OnDone(
-    opentelemetry::context::Context const& context, OnDoneParams const& p) {
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
   if (latency_captured_) {
     data_labels_.status = StatusCodeToString(p.operation_status.code());
     auto m = IntoLabelMap(resource_labels_, data_labels_,
