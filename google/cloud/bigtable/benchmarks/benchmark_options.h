@@ -40,6 +40,7 @@ struct BenchmarkOptions {
   bool use_embedded_server = false;
   int parallel_requests = 10;
   bool exit_after_parse = false;
+  bool include_read_rows = false;
 };
 
 google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(

@@ -91,6 +91,11 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        [&options](std::string const& val) {
          options.use_embedded_server = ParseBoolean(val).value_or(true);
        }},
+      {"--include-read-rows", "whether to execute ReadRows for benchmarking",
+       [&options](std::string const& val) {
+         options.include_read_rows = ParseBoolean(val).value_or(true);
+       }},
+
   };
 
   auto usage = BuildUsage(desc, argv[0]);

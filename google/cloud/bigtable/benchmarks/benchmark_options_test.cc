@@ -34,7 +34,8 @@ TEST(BenchmarkOptions, Basic) {
   auto options = ParseBenchmarkOptions(
       {"self-test", "--project-id=test-project", "--instance-id=test-instance",
        "--app-profile-id=test-app-profile-id", "--table-size=10000",
-       "--test-duration=300s", "--use-embedded-server=true"},
+       "--test-duration=300s", "--use-embedded-server=true",
+       "--include-read-rows=true"},
       "");
   ASSERT_STATUS_OK(options);
   EXPECT_FALSE(options->exit_after_parse);
@@ -44,6 +45,7 @@ TEST(BenchmarkOptions, Basic) {
   EXPECT_EQ(10000, options->table_size);
   EXPECT_EQ(300, options->test_duration.count());
   EXPECT_EQ(true, options->use_embedded_server);
+  EXPECT_EQ(true, options->include_read_rows);
 }
 
 TEST(BenchmarkOptions, Defaults) {
