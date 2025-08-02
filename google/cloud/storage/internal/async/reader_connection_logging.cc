@@ -16,7 +16,6 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/log.h"
-#include "google/cloud/options.h"
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -50,8 +49,9 @@ class ReaderConnectionLogging : public AsyncReaderConnection {
                        << absl::get<Status>(response).message();
       } else {
         auto const& payload = absl::get<ReadPayload>(response);
-        GCP_LOG(DEBUG) << "ReaderConnectionLogging::Read() >> payload.size="
-                       << payload.size();
+        GCP_LOG(DEBUG) << "ReaderConnectionLogging::Read() >>"
+                       << " payload.size=" << payload.size()
+                       << ", offset=" << payload.offset();
       }
       return response;
     });
@@ -71,7 +71,7 @@ std::unique_ptr<storage_experimental::AsyncReaderConnection>
 MakeLoggingReaderConnection(
     Options const& options,
     std::unique_ptr<storage_experimental::AsyncReaderConnection> impl) {
-  auto const components = options.get<LoggingComponentsOption>();
+  auto const& components = options.get<LoggingComponentsOption>();
   if (std::find(components.begin(), components.end(), "rpc") ==
       components.end()) {
     return impl;

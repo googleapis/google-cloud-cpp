@@ -15,9 +15,11 @@
 #include "google/cloud/storage/internal/async/object_descriptor_connection_logging.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/async/reader_connection_logging.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/log.h"
 #include <memory>
 #include <string>
+#include <algorithm>
 #include <utility>
 
 namespace google {
@@ -42,7 +44,8 @@ class ObjectDescriptorConnectionLogging : public ObjectDescriptorConnection {
   }
 
   std::unique_ptr<AsyncReaderConnection> Read(ReadParams p) override {
-    GCP_LOG(INFO) << "ObjectDescriptorConnection::Read called";
+    GCP_LOG(INFO) << "ObjectDescriptorConnection::Read("
+                  << "start=" << p.start << ", length=" << p.length << ")";
     auto conn = child_->Read(std::move(p));
     return MakeLoggingReaderConnection(options(), std::move(conn));
   }
@@ -55,7 +58,13 @@ class ObjectDescriptorConnectionLogging : public ObjectDescriptorConnection {
 
 std::shared_ptr<storage_experimental::ObjectDescriptorConnection>
 MakeLoggingObjectDescriptorConnection(
-    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl) {
+    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl,
+    Options const& options) {
+  auto const& components = options.get<LoggingComponentsOption>();
+  if (std::find(components.begin(), components.end(), "rpc") ==
+      components.end()) {
+    return impl;
+  }
   return std::make_shared<ObjectDescriptorConnectionLogging>(std::move(impl));
 }
 

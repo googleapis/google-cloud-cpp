@@ -1,0 +1,311 @@
+// Copyright 2025 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/storage/internal/async/connection_logging.h"
+#include "google/cloud/storage/async/object_descriptor_connection.h"
+#include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/storage/internal/async/object_descriptor_connection_logging.h"
+#include "google/cloud/storage/internal/async/reader_connection_logging.h"
+#include "google/cloud/storage/mocks/mock_async_connection.h"
+#include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
+#include "google/cloud/storage/mocks/mock_async_reader_connection.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/log.h"
+#include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <gmock/gmock.h>
+
+namespace google {
+namespace cloud {
+namespace storage_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage_experimental::AsyncConnection;
+using ::google::cloud::storage_experimental::AsyncReaderConnection;
+using ::google::cloud::storage_experimental::ObjectDescriptorConnection;
+using ::google::cloud::storage_mocks::MockAsyncConnection;
+using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
+using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
+using ::google::cloud::testing_util::ScopedLog;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
+using ::testing::HasSubstr;
+using ::testing::NotNull;
+using ::testing::Return;
+
+Options LoggingEnabled() {
+  return Options{}.set<LoggingComponentsOption>({"rpc"});
+}
+
+TEST(ConnectionLogging, Disabled) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(Options{}));
+  auto actual = MakeLoggingAsyncConnection(mock);
+  EXPECT_EQ(actual.get(), mock.get());
+}
+
+TEST(ConnectionLogging, Enabled) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(LoggingEnabled()));
+  auto actual = MakeLoggingAsyncConnection(mock);
+  EXPECT_NE(actual.get(), mock.get());
+}
+
+TEST(ConnectionLogging, InsertObjectSuccess) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, InsertObject)
+      .WillOnce(Return(
+          make_ready_future(make_status_or(google::storage::v2::Object{}))));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->InsertObject({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("InsertObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("InsertObject succeeded")));
+}
+
+TEST(ConnectionLogging, InsertObjectError) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, InsertObject)
+      .WillOnce(Return(make_ready_future(
+          StatusOr<google::storage::v2::Object>(PermanentError()))));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->InsertObject({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("InsertObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("InsertObject failed")));
+}
+
+TEST(ConnectionLogging, OpenSuccess) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, Open).WillOnce([] {
+    auto od_mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+    EXPECT_CALL(*od_mock, options).WillRepeatedly(Return(LoggingEnabled()));
+    EXPECT_CALL(*od_mock, Read).WillOnce([](auto) {
+      auto reader = std::make_unique<MockAsyncReaderConnection>();
+      EXPECT_CALL(*reader, Read)
+          .WillOnce(Return(make_ready_future(
+              AsyncReaderConnection::ReadResponse(Status{}))));
+      return reader;
+    });
+    return make_ready_future(
+        StatusOr<std::shared_ptr<ObjectDescriptorConnection>>(
+            std::move(od_mock)));
+  });
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  auto od = conn->Open({{}, LoggingEnabled()}).get();
+  ASSERT_STATUS_OK(od);
+  auto reader = (*od)->Read({});
+  ASSERT_THAT(reader, NotNull());
+  (void)reader->Read().get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Open(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Open succeeded")));
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ObjectDescriptorConnection::Read")));
+}
+
+TEST(ConnectionLogging, OpenError) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, Open).WillOnce([] {
+    return make_ready_future(
+        StatusOr<std::shared_ptr<ObjectDescriptorConnection>>(
+            PermanentError()));
+  });
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  auto od = conn->Open({{}, LoggingEnabled()}).get();
+  EXPECT_THAT(od, StatusIs(PermanentError().code()));
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Open(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Open failed")));
+}
+
+TEST(ConnectionLogging, ReadObjectSuccess) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ReadObject).WillOnce([] {
+    auto reader = std::make_unique<MockAsyncReaderConnection>();
+    EXPECT_CALL(*reader, Read)
+        .WillOnce(Return(
+            make_ready_future(AsyncReaderConnection::ReadResponse(Status{}))));
+    return make_ready_future(
+        StatusOr<std::unique_ptr<AsyncReaderConnection>>(std::move(reader)));
+  });
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  auto reader = conn->ReadObject({{}, LoggingEnabled()}).get();
+  ASSERT_STATUS_OK(reader);
+  (void)(*reader)->Read().get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObject succeeded")));
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ReaderConnectionLogging::Read() <<")));
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ReaderConnectionLogging::Read() >> status")));
+}
+
+TEST(ConnectionLogging, ReadObjectError) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ReadObject).WillOnce([] {
+    return make_ready_future(
+        StatusOr<std::unique_ptr<AsyncReaderConnection>>(PermanentError()));
+  });
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  auto reader = conn->ReadObject({{}, LoggingEnabled()}).get();
+  EXPECT_THAT(reader, StatusIs(PermanentError().code()));
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObject failed")));
+}
+
+TEST(ConnectionLogging, ReadObjectRangeSuccess) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ReadObjectRange)
+      .WillOnce(Return(make_ready_future(
+          make_status_or(storage_experimental::ReadPayload{}))));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->ReadObjectRange({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ReadObjectRange(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObjectRange succeeded")));
+}
+
+TEST(ConnectionLogging, ReadObjectRangeError) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ReadObjectRange)
+      .WillOnce(Return(make_ready_future(
+          StatusOr<storage_experimental::ReadPayload>(PermanentError()))));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->ReadObjectRange({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ReadObjectRange(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObjectRange failed")));
+}
+
+TEST(ConnectionLogging, ComposeObjectSuccess) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ComposeObject)
+      .WillOnce(Return(
+          make_ready_future(make_status_or(google::storage::v2::Object{}))));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->ComposeObject({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ComposeObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ComposeObject succeeded")));
+}
+
+TEST(ConnectionLogging, ComposeObjectError) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ComposeObject)
+      .WillOnce(Return(make_ready_future(
+          StatusOr<google::storage::v2::Object>(PermanentError()))));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->ComposeObject({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ComposeObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ComposeObject failed")));
+}
+
+TEST(ConnectionLogging, DeleteObjectSuccess) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->DeleteObject({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteObject succeeded")));
+}
+
+TEST(ConnectionLogging, DeleteObjectError) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce(Return(make_ready_future(PermanentError())));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  (void)conn->DeleteObject({}).get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteObject(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteObject failed")));
+}
+
+}  // namespace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage_internal
+}  // namespace cloud
+}  // namespace google

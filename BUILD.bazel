@@ -259,3 +259,11 @@ bool_flag(
     name = "enable_opentelemetry",
     build_setting_default = False,
 )
+
+cc_binary(
+    name = "logging_decorator",
+    srcs = ["logging_decorator.cc"],
+    deps = [
+        "//:storage_grpc",
+    ],
+)

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OBJECT_DESCRIPTOR_CONNECTION_LOGGING_H
 
 #include "google/cloud/storage/async/object_descriptor_connection.h"
+#include "google/cloud/options.h"
 #include <memory>
 
 namespace google {
@@ -25,7 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<storage_experimental::ObjectDescriptorConnection>
 MakeLoggingObjectDescriptorConnection(
-    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl);
+    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl,
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

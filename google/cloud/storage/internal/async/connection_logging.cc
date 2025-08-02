@@ -15,14 +15,14 @@
 #include "google/cloud/storage/internal/async/connection_logging.h"
 #include "google/cloud/storage/internal/async/object_descriptor_connection_logging.h"
 #include "google/cloud/storage/internal/async/reader_connection_logging.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/log.h"
 #include "google/cloud/tracing_options.h"
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>
-#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -45,7 +45,11 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override {
-    GCP_LOG(INFO) << "InsertObject called";
+    GCP_LOG(INFO) << "InsertObject("
+                  << "bucket="
+                  << p.request.write_object_spec().resource().bucket()
+                  << ", object="
+                  << p.request.write_object_spec().resource().name() << ")";
     auto fut = child_->InsertObject(std::move(p));
     return fut.then([](auto f) {
       auto result = f.get();
@@ -60,38 +64,48 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<std::shared_ptr<ObjectDescriptorConnection>>> Open(
       OpenParams p) override {
-    GCP_LOG(INFO) << "Open called";
+    GCP_LOG(INFO) << "Open("
+                  << "bucket=" << p.read_spec.bucket()
+                  << ", object=" << p.read_spec.object() << ")";
+    auto options = p.options;
     auto fut = child_->Open(std::move(p));
-    return fut.then([](auto f) -> StatusOr<std::shared_ptr<ObjectDescriptorConnection>> {
-      auto od = f.get();
-      if (!od) {
-        GCP_LOG(ERROR) << "Open failed: " << od.status();
-        return std::move(od).status();
-      }
-      GCP_LOG(INFO) << "Open succeeded";
-      return MakeLoggingObjectDescriptorConnection(*std::move(od));
-    });
+    return fut.then(
+        [options](
+            auto f) -> StatusOr<std::shared_ptr<ObjectDescriptorConnection>> {
+          auto od = f.get();
+          if (!od) {
+            GCP_LOG(ERROR) << "Open failed: " << od.status();
+            return std::move(od).status();
+          }
+          GCP_LOG(INFO) << "Open succeeded";
+          return MakeLoggingObjectDescriptorConnection(*std::move(od), options);
+        });
   }
 
   future<StatusOr<std::unique_ptr<AsyncReaderConnection>>> ReadObject(
       ReadObjectParams p) override {
-    GCP_LOG(INFO) << "ReadObject called";
-    auto fut = child_->ReadObject(std::move(p));
+    GCP_LOG(INFO) << "ReadObject("
+                  << "bucket=" << p.request.bucket()
+                  << ", object=" << p.request.object() << ")";
     auto options = p.options;
-    return fut.then([options](auto f) -> StatusOr<std::unique_ptr<AsyncReaderConnection>> {
-      auto r = f.get();
-      if (!r) {
-        GCP_LOG(ERROR) << "ReadObject failed: " << r.status();
-        return std::move(r).status();
-      }
-      GCP_LOG(INFO) << "ReadObject succeeded";
-      return MakeLoggingReaderConnection(options, *std::move(r));
-    });
+    auto fut = child_->ReadObject(std::move(p));
+    return fut.then(
+        [options](auto f) -> StatusOr<std::unique_ptr<AsyncReaderConnection>> {
+          auto r = f.get();
+          if (!r) {
+            GCP_LOG(ERROR) << "ReadObject failed: " << r.status();
+            return std::move(r).status();
+          }
+          GCP_LOG(INFO) << "ReadObject succeeded";
+          return MakeLoggingReaderConnection(options, *std::move(r));
+        });
   }
 
   future<StatusOr<storage_experimental::ReadPayload>> ReadObjectRange(
       ReadObjectParams p) override {
-    GCP_LOG(INFO) << "ReadObjectRange called";
+    GCP_LOG(INFO) << "ReadObjectRange("
+                  << "bucket=" << p.request.bucket()
+                  << ", object=" << p.request.object() << ")";
     auto fut = child_->ReadObjectRange(std::move(p));
     return fut.then([](auto f) {
       auto result = f.get();
@@ -116,8 +130,8 @@ class AsyncConnectionLogging : public AsyncConnection {
     return child_->ResumeAppendableObjectUpload(std::move(p));
   }
 
-  future<StatusOr<std::unique_ptr<AsyncWriterConnection>>> StartUnbufferedUpload(
-      UploadParams p) override {
+  future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
+  StartUnbufferedUpload(UploadParams p) override {
     // TODO(#15114) - implement logging for writer connections
     return child_->StartUnbufferedUpload(std::move(p));
   }
@@ -142,7 +156,9 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<google::storage::v2::Object>> ComposeObject(
       ComposeObjectParams p) override {
-    GCP_LOG(INFO) << "ComposeObject called";
+    GCP_LOG(INFO) << "ComposeObject("
+                  << "bucket=" << p.request.destination().bucket()
+                  << ", object=" << p.request.destination().name() << ")";
     auto fut = child_->ComposeObject(std::move(p));
     return fut.then([](auto f) {
       auto result = f.get();
@@ -156,7 +172,9 @@ class AsyncConnectionLogging : public AsyncConnection {
   }
 
   future<Status> DeleteObject(DeleteObjectParams p) override {
-    GCP_LOG(INFO) << "DeleteObject called";
+    GCP_LOG(INFO) << "DeleteObject("
+                  << "bucket=" << p.request.bucket()
+                  << ", object=" << p.request.object() << ")";
     auto fut = child_->DeleteObject(std::move(p));
     return fut.then([](auto f) {
       auto result = f.get();
@@ -181,10 +199,12 @@ class AsyncConnectionLogging : public AsyncConnection {
 
 }  // namespace
 
-std::shared_ptr<storage_experimental::AsyncConnection> MakeLoggingAsyncConnection(
+std::shared_ptr<storage_experimental::AsyncConnection>
+MakeLoggingAsyncConnection(
     std::shared_ptr<storage_experimental::AsyncConnection> impl) {
   auto const components = impl->options().get<LoggingComponentsOption>();
-  if (std::find(components.begin(), components.end(), "rpc") == components.end()) {
+  if (std::find(components.begin(), components.end(), "rpc") ==
+      components.end()) {
     return impl;
   }
   return std::make_shared<AsyncConnectionLogging>(std::move(impl));
