@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_connection.h"
-#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include <utility>
 #include <vector>

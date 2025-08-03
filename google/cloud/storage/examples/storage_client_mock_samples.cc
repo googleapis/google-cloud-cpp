@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 #include <algorithm>
