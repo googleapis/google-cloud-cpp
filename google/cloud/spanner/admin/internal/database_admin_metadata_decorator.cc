@@ -371,16 +371,6 @@ DatabaseAdminMetadata::ListBackupSchedules(
   return child_->ListBackupSchedules(context, options, request);
 }
 
-StatusOr<
-    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
-DatabaseAdminMetadata::InternalUpdateGraphOperation(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::database::v1::
-        InternalUpdateGraphOperationRequest const& request) {
-  SetMetadata(context, options);
-  return child_->InternalUpdateGraphOperation(context, options, request);
-}
-
 StatusOr<google::longrunning::ListOperationsResponse>
 DatabaseAdminMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,
