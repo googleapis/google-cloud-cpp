@@ -42,7 +42,7 @@ AsyncClient::AsyncClient(Options options) {
   if (std::find(components.begin(), components.end(), "rpc") !=
       components.end()) {
     connection_ =
-        storage_internal::MakeLoggingAsyncConnection(std::move(connection));
+        storage_internal::MakeLoggingAsyncConnection(std::move(connection_));
   }
 }
 

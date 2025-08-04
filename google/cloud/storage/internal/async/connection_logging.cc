@@ -45,41 +45,14 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override {
-    GCP_LOG(INFO) << "InsertObject("
-                  << "bucket="
-                  << p.request.write_object_spec().resource().bucket()
-                  << ", object="
-                  << p.request.write_object_spec().resource().name() << ")";
-    auto fut = child_->InsertObject(std::move(p));
-    return fut.then([](auto f) {
-      auto result = f.get();
-      if (!result.ok()) {
-        GCP_LOG(ERROR) << "InsertObject failed: " << result.status();
-      } else {
-        GCP_LOG(INFO) << "InsertObject succeeded";
-      }
-      return result;
-    });
+    // TODO - implement logging for insert connection
+    return child_->InsertObject(std::move(p));
   }
 
   future<StatusOr<std::shared_ptr<ObjectDescriptorConnection>>> Open(
       OpenParams p) override {
-    GCP_LOG(INFO) << "Open("
-                  << "bucket=" << p.read_spec.bucket()
-                  << ", object=" << p.read_spec.object() << ")";
-    auto options = p.options;
-    auto fut = child_->Open(std::move(p));
-    return fut.then(
-        [options](
-            auto f) -> StatusOr<std::shared_ptr<ObjectDescriptorConnection>> {
-          auto od = f.get();
-          if (!od) {
-            GCP_LOG(ERROR) << "Open failed: " << od.status();
-            return std::move(od).status();
-          }
-          GCP_LOG(INFO) << "Open succeeded";
-          return MakeLoggingObjectDescriptorConnection(*std::move(od), options);
-        });
+    // TODO - implement logging for open connection
+    return child_->Open(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncReaderConnection>>> ReadObject(
@@ -120,76 +93,54 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartAppendableObjectUpload(AppendableUploadParams p) override {
-    // TODO(#15114) - implement logging for writer connections
+    // TODO - implement logging for start appendable upload connection
     return child_->StartAppendableObjectUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeAppendableObjectUpload(AppendableUploadParams p) override {
-    // TODO(#15114) - implement logging for writer connections
+    // TODO - implement logging for resume appendable upload connection
     return child_->ResumeAppendableObjectUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override {
-    // TODO(#15114) - implement logging for writer connections
+    // TODO - implement logging for start unbuffered upload connection
     return child_->StartUnbufferedUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>> StartBufferedUpload(
       UploadParams p) override {
-    // TODO(#15114) - implement logging for writer connections
+    // TODO - implement logging for start buffered upload connection
     return child_->StartBufferedUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeUnbufferedUpload(ResumeUploadParams p) override {
-    // TODO(#15114) - implement logging for writer connections
+    // TODO - implement logging for resume unbuffered upload connection
     return child_->ResumeUnbufferedUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>> ResumeBufferedUpload(
       ResumeUploadParams p) override {
-    // TODO(#15114) - implement logging for writer connections
+    // TODO - implement logging for resume buffered upload connection
     return child_->ResumeBufferedUpload(std::move(p));
   }
 
   future<StatusOr<google::storage::v2::Object>> ComposeObject(
       ComposeObjectParams p) override {
-    GCP_LOG(INFO) << "ComposeObject("
-                  << "bucket=" << p.request.destination().bucket()
-                  << ", object=" << p.request.destination().name() << ")";
-    auto fut = child_->ComposeObject(std::move(p));
-    return fut.then([](auto f) {
-      auto result = f.get();
-      if (!result.ok()) {
-        GCP_LOG(ERROR) << "ComposeObject failed: " << result.status();
-      } else {
-        GCP_LOG(INFO) << "ComposeObject succeeded";
-      }
-      return result;
-    });
+    // TODO - implement logging for compose connection
+    return child_->ComposeObject(std::move(p));
   }
 
   future<Status> DeleteObject(DeleteObjectParams p) override {
-    GCP_LOG(INFO) << "DeleteObject("
-                  << "bucket=" << p.request.bucket()
-                  << ", object=" << p.request.object() << ")";
-    auto fut = child_->DeleteObject(std::move(p));
-    return fut.then([](auto f) {
-      auto result = f.get();
-      if (!result.ok()) {
-        GCP_LOG(ERROR) << "DeleteObject failed: " << result;
-      } else {
-        GCP_LOG(INFO) << "DeleteObject succeeded";
-      }
-      return result;
-    });
+    // TODO - implement logging for delete connection
+    return child_->DeleteObject(std::move(p));
   }
 
   std::shared_ptr<AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) override {
-    // TODO(#15114) - implement logging for rewriter connections
+    // TODO - implement logging for rewrite connection
     return child_->RewriteObject(std::move(p));
   }
 
