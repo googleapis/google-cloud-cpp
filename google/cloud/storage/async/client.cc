@@ -35,18 +35,15 @@ using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 AsyncClient::AsyncClient(Options options) {
   options = storage_internal::DefaultOptionsAsync(std::move(options));
   background_ = MakeBackgroundThreadsFactory(options)();
-  auto connection = storage_internal::MakeAsyncConnection(background_->cq(),
-                                                          std::move(options));
-  auto const components = connection->options().get<LoggingComponentsOption>();
-  // if (std::find(components.begin(), components.end(), "rpc") !=
-  // components.end()) {
+  connection_ = storage_internal::MakeTracingAsyncConnection(
+      storage_internal::MakeAsyncConnection(background_->cq(),
+                                            std::move(options)));
+  auto const components = connection_->options().get<LoggingComponentsOption>();
   if (std::find(components.begin(), components.end(), "rpc") !=
       components.end()) {
-    connection =
+    connection_ =
         storage_internal::MakeLoggingAsyncConnection(std::move(connection));
   }
-  connection_ =
-      storage_internal::MakeTracingAsyncConnection(std::move(connection));
 }
 
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)

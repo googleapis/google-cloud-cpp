@@ -17,8 +17,6 @@
 // in the final rendering.
 //! [async-includes]
 #include "google/cloud/storage/async/client.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/async/read_all.h"
 
 //! [async-includes]
@@ -39,50 +37,6 @@
 
 namespace {
 namespace examples = ::google::cloud::storage::examples;
-
-void LoggingDecoratorCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 2) {
-    throw examples::Usage{"logging-decorator <bucket-name> <object-name>"};
-  }
-  //! [logging-decorator]
-  namespace gcs_ex = google::cloud::storage_experimental;
-  namespace g = google::cloud;
-  [](std::string const& bucket_name, std::string const& object_name) {
-    // 1. Enable a log sink to see the output.
-    //    This sends all log messages to stderr. Alternatively, you can set the
-    //    `GOOGLE_CLOUD_CPP_ENABLE_CLOG` environment variable to "yes".
-    g::LogSink::EnableStdClog();
-
-    // 2. Create the client with logging enabled for the "rpc" component.
-    //    This is the key step that activates your logging decorator.
-    auto client = gcs_ex::AsyncClient(
-        g::Options{}.set<g::LoggingComponentsOption>({"rpc"}));
-
-    // 3. Use the client as you normally would.
-    //    The logging decorator is now active and will print messages for
-    //    each operation.
-    std::cout << "Calling InsertObject for " << object_name << "...\n";
-    auto object = client
-                      .InsertObject(gcs_ex::BucketName(bucket_name),
-                                    object_name, "Hello World!")
-                      .get();
-
-    if (!object) {
-      std::cerr << "Error inserting object: " << object.status() << "\n";
-      return;
-    }
-
-    std::cout << "Successfully inserted " << object->name() << " in bucket "
-              << object->bucket() << "\n";
-
-    // Clean up the object.
-    (void)client.DeleteObject(gcs_ex::BucketName(bucket_name), object_name)
-        .get();
-    std::cout << "Cleaned up object.\n";
-  }
-  //! [logging-decorator]
-  (argv.at(0), argv.at(1));
-}
 
 void CreateClient() {
   //! [async-client]
@@ -1106,7 +1060,6 @@ int main(int argc, char* argv[]) try {
   examples::Example example({
       {"create-client", CreateClientCommand},
       {"create-client-with-dp", CreateClientWithDPCommand},
-      {"logging-decorator", LoggingDecoratorCommand},
       make_entry("insert-object", {}, InsertObject),
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
