@@ -17,9 +17,9 @@
 #include "google/cloud/storage/internal/async/reader_connection_logging.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/log.h"
+#include <algorithm>
 #include <memory>
 #include <string>
-#include <algorithm>
 #include <utility>
 
 namespace google {

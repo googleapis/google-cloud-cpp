@@ -36,8 +36,6 @@ using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::Not;
-using ::testing::Return;
 
 Options LoggingEnabled() {
   return Options{}.set<LoggingComponentsOption>({"rpc"});

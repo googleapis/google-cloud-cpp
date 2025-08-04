@@ -45,13 +45,13 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override {
-    // TODO - implement logging for insert connection
+    // TODO(shubhamkaushal): - implement logging for insert connection
     return child_->InsertObject(std::move(p));
   }
 
   future<StatusOr<std::shared_ptr<ObjectDescriptorConnection>>> Open(
       OpenParams p) override {
-    // TODO - implement logging for open connection
+    // TODO(shubhamkaushal): - implement logging for open connection
     return child_->Open(std::move(p));
   }
 
@@ -93,54 +93,60 @@ class AsyncConnectionLogging : public AsyncConnection {
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartAppendableObjectUpload(AppendableUploadParams p) override {
-    // TODO - implement logging for start appendable upload connection
+    // TODO(shubhamkaushal): - implement logging for start appendable upload
+    // connection
     return child_->StartAppendableObjectUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeAppendableObjectUpload(AppendableUploadParams p) override {
-    // TODO - implement logging for resume appendable upload connection
+    // TODO(shubhamkaushal): - implement logging for resume appendable upload
+    // connection
     return child_->ResumeAppendableObjectUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override {
-    // TODO - implement logging for start unbuffered upload connection
+    // TODO(shubhamkaushal): - implement logging for start unbuffered upload
+    // connection
     return child_->StartUnbufferedUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>> StartBufferedUpload(
       UploadParams p) override {
-    // TODO - implement logging for start buffered upload connection
+    // TODO(shubhamkaushal): - implement logging for start buffered upload
+    // connection
     return child_->StartBufferedUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeUnbufferedUpload(ResumeUploadParams p) override {
-    // TODO - implement logging for resume unbuffered upload connection
+    // TODO(shubhamkaushal): - implement logging for resume unbuffered upload
+    // connection
     return child_->ResumeUnbufferedUpload(std::move(p));
   }
 
   future<StatusOr<std::unique_ptr<AsyncWriterConnection>>> ResumeBufferedUpload(
       ResumeUploadParams p) override {
-    // TODO - implement logging for resume buffered upload connection
+    // TODO(shubhamkaushal): - implement logging for resume buffered upload
+    // connection
     return child_->ResumeBufferedUpload(std::move(p));
   }
 
   future<StatusOr<google::storage::v2::Object>> ComposeObject(
       ComposeObjectParams p) override {
-    // TODO - implement logging for compose connection
+    // TODO(shubhamkaushal): - implement logging for compose connection
     return child_->ComposeObject(std::move(p));
   }
 
   future<Status> DeleteObject(DeleteObjectParams p) override {
-    // TODO - implement logging for delete connection
+    // TODO(shubhamkaushal): - implement logging for delete connection
     return child_->DeleteObject(std::move(p));
   }
 
   std::shared_ptr<AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) override {
-    // TODO - implement logging for rewrite connection
+    // TODO(shubhamkaushal): - implement logging for rewrite connection
     return child_->RewriteObject(std::move(p));
   }
 
