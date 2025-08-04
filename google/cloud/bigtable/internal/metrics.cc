@@ -213,6 +213,60 @@ std::unique_ptr<Metric> RetryCount::clone(ResourceLabels resource_labels,
   return m;
 }
 
+FirstResponseLatency::FirstResponseLatency(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : first_response_latencies_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram("first_response_latencies")) {}
+
+void FirstResponseLatency::PreCall(opentelemetry::context::Context const&,
+                                   PreCallParams const& p) {
+  if (p.first_attempt) {
+    operation_start_ = p.attempt_start;
+  }
+}
+
+void FirstResponseLatency::PostCall(opentelemetry::context::Context const&,
+                                    grpc::ClientContext const& client_context,
+                                    PostCallParams const&) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+}
+
+void FirstResponseLatency::ElementDelivery(
+    opentelemetry::context::Context const&, ElementDeliveryParams const& p) {
+  if (p.first_response) {
+    first_response_latency_ = std::chrono::duration_cast<LatencyDuration>(
+        p.element_delivery - operation_start_);
+  }
+}
+
+void FirstResponseLatency::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const& p) {
+  if (first_response_latency_) {
+    data_labels_.status = StatusCodeToString(p.operation_status.code());
+    auto m = IntoLabelMap(resource_labels_, data_labels_,
+                          std::set<std::string>{"streaming"});
+    first_response_latencies_->Record(first_response_latency_->count(),
+                                      std::move(m), context);
+  }
+}
+
+std::unique_ptr<Metric> FirstResponseLatency::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
+  auto m = std::make_unique<FirstResponseLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
