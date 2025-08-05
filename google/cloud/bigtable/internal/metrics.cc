@@ -18,8 +18,8 @@
 #include "google/cloud/bigtable/version.h"
 #include <algorithm>
 #include <map>
-#include <set>
 #include <regex>
+#include <set>
 
 namespace google {
 namespace cloud {

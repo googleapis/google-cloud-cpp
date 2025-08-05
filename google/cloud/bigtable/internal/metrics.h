@@ -60,8 +60,7 @@ absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);
 
-absl::optional<double> 
-GetServerLatencyFromInitialMetadata(
+absl::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context);
 
 struct PreCallParams {
