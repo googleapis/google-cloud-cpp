@@ -99,12 +99,11 @@ absl::optional<double> GetServerLatencyFromInitialMetadata(
   if (!std::regex_search(server_timing_value, match, kServerTimingPattern)) {
     return absl::nullopt;
   }
-  try {
-    double latency_ms = std::stod(match[1].str());
+  double latency_ms;
+  if (absl::SimpleAtod(match[1].str(), &latency_ms)) {
     return latency_ms;
-  } catch (std::exception const& e) {
-    return absl::nullopt;
   }
+  return absl::nullopt;
 }
 
 Metric::~Metric() = default;
