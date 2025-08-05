@@ -20,12 +20,18 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
-We have begun instrumenting the `Bigtable::DataConnection` class to collect
+- We have begun instrumenting the `Bigtable::DataConnection` class to collect
 several [Client Side Metrics](https://cloud.google.com/bigtable/docs/client-side-metrics),
 free of charge. These metrics will be collected by
 default if both the [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-cpp)
 and [Google Cloud Monitoring](google/cloud/monitoring/README.md) dependencies are
 available. Users can opt-out by setting the `bigtable::EnableMetricsOption` to `false`.
+
+- The following metrics are available in Bigtable:
+  - AttemptLatency
+  - OperationLatency
+  - RetryCount
+  - FirstResponseLatency
 
 ### [Spanner](/google/cloud/spanner/README.md)
 
