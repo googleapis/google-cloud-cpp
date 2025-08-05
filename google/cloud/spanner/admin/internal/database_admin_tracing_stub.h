@@ -217,13 +217,6 @@ class DatabaseAdminTracingStub : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
           request) override;
 
-  StatusOr<google::spanner::admin::database::v1::
-               InternalUpdateGraphOperationResponse>
-  InternalUpdateGraphOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::database::v1::
-          InternalUpdateGraphOperationRequest const& request) override;
-
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;

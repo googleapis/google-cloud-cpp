@@ -392,17 +392,6 @@ DatabaseAdminAuth::ListBackupSchedules(
   return child_->ListBackupSchedules(context, options, request);
 }
 
-StatusOr<
-    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
-DatabaseAdminAuth::InternalUpdateGraphOperation(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::database::v1::
-        InternalUpdateGraphOperationRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->InternalUpdateGraphOperation(context, options, request);
-}
-
 StatusOr<google::longrunning::ListOperationsResponse>
 DatabaseAdminAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,

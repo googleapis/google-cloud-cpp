@@ -338,12 +338,6 @@ class DatabaseAdminConnection {
   ListBackupSchedules(
       google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
 
-  virtual StatusOr<google::spanner::admin::database::v1::
-                       InternalUpdateGraphOperationResponse>
-  InternalUpdateGraphOperation(
-      google::spanner::admin::database::v1::
-          InternalUpdateGraphOperationRequest const& request);
-
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);
 

@@ -1060,23 +1060,6 @@ DatabaseAdminConnectionImpl::ListBackupSchedules(
       });
 }
 
-StatusOr<
-    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
-DatabaseAdminConnectionImpl::InternalUpdateGraphOperation(
-    google::spanner::admin::database::v1::
-        InternalUpdateGraphOperationRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InternalUpdateGraphOperation(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::database::v1::
-                 InternalUpdateGraphOperationRequest const& request) {
-        return stub_->InternalUpdateGraphOperation(context, options, request);
-      },
-      *current, request, __func__);
-}
-
 StreamRange<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::ListOperations(
     google::longrunning::ListOperationsRequest request) {

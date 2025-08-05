@@ -27,7 +27,7 @@ void CreateJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  //! [storage_batch_create_job]
+  // [START storage_batch_create_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
      std::string const& project_id, std::string const& job_id,
@@ -47,7 +47,7 @@ void CreateJob(
     if (!result) throw result.status();
     std::cout << "Created job: " << result->name() << "\n";
   }
-  //! [storage_batch_create_job]
+  // [END storage_batch_create_job]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -55,7 +55,7 @@ void ListJobs(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  //! [storage_batch_list_jobs]
+  // [START storage_batch_list_jobs]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
      std::string const& project_id) {
@@ -66,7 +66,7 @@ void ListJobs(
       std::cout << job->name() << "\n";
     }
   }
-  //! [storage_batch_list_jobs]
+  // [END storage_batch_list_jobs]
   (std::move(client), argv.at(0));
 }
 
@@ -74,7 +74,7 @@ void GetJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  //! [storage_batch_get_job]
+  // [START storage_batch_get_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
      std::string const& project_id, std::string const& job_id) {
@@ -85,7 +85,7 @@ void GetJob(
     if (!job) throw job.status();
     std::cout << "Got job: " << job->name() << "\n";
   }
-  //! [storage_batch_get_job]
+  // [END storage_batch_get_job]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -93,7 +93,7 @@ void CancelJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  //! [storage_batch_cancel_job]
+  // [START storage_batch_cancel_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
      std::string const& project_id, std::string const& job_id) {
@@ -104,7 +104,7 @@ void CancelJob(
     if (!response) throw response.status();
     std::cout << "Cancelled job: " << name << "\n";
   }
-  //! [storage_batch_cancel_job]
+  // [END storage_batch_cancel_job]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -112,7 +112,7 @@ void DeleteJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  //! [storage_batch_delete_job]
+  // [START storage_batch_delete_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
      std::string const& project_id, std::string const& job_id) {
@@ -123,7 +123,7 @@ void DeleteJob(
     if (!status.ok()) throw status;
     std::cout << "Deleted job: " << name << "\n";
   }
-  //! [storage_batch_delete_job]
+  // [END storage_batch_delete_job]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
