@@ -16,6 +16,7 @@
 
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
+#include "absl/strings/numbers.h"
 #include <algorithm>
 #include <map>
 #include <regex>
