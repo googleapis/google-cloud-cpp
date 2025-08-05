@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <map>
 #include <set>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -83,6 +84,27 @@ GetResponseParamsFromTrailingMetadata(
   std::string value{iter->second.data(), iter->second.size()};
   if (p.ParseFromString(value)) return p;
   return absl::nullopt;
+}
+
+absl::optional<double> GetServerLatencyFromInitialMetadata(
+    grpc::ClientContext const& client_context) {
+  static std::regex const kServerTimingPattern(R"(.*; dur=(\d+))");
+  auto metadata = client_context.GetServerInitialMetadata();
+  auto iter = metadata.find("server-timing");
+  if (iter == metadata.end()) {
+    return absl::nullopt;
+  }
+  std::string server_timing_value(iter->second.data(), iter->second.size());
+  std::smatch match;
+  if (!std::regex_search(server_timing_value, match, kServerTimingPattern)) {
+    return absl::nullopt;
+  }
+  try {
+    double latency_ms = std::stod(match[1].str());
+    return latency_ms;
+  } catch (std::exception const& e) {
+    return absl::nullopt;
+  }
 }
 
 Metric::~Metric() = default;
@@ -262,6 +284,39 @@ void FirstResponseLatency::OnDone(
 std::unique_ptr<Metric> FirstResponseLatency::clone(
     ResourceLabels resource_labels, DataLabels data_labels) const {
   auto m = std::make_unique<FirstResponseLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
+ServerLatency::ServerLatency(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : server_latencies_(provider
+                            ->GetMeter(instrumentation_scope,
+                                       kMeterInstrumentationScopeVersion)
+                            ->CreateDoubleHistogram("server_latencies")) {}
+
+void ServerLatency::PostCall(opentelemetry::context::Context const& context,
+                             grpc::ClientContext const& client_context,
+                             PostCallParams const& p) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+  data_labels_.status = StatusCodeToString(p.attempt_status.code());
+  auto server_latency = GetServerLatencyFromInitialMetadata(client_context);
+  if (server_latency) {
+    auto m = IntoLabelMap(resource_labels_, data_labels_);
+    server_latencies_->Record(*server_latency, std::move(m), context);
+  }
+}
+
+std::unique_ptr<Metric> ServerLatency::clone(ResourceLabels resource_labels,
+                                             DataLabels data_labels) const {
+  auto m = std::make_unique<ServerLatency>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);
   return m;
