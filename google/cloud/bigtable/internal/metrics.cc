@@ -16,7 +16,11 @@
 
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
+#include "absl/strings/charconv.h"
+#include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
+#include "absl/strings/str_split.h"
+#include "absl/strings/strip.h"
 #include <algorithm>
 #include <map>
 #include <regex>
@@ -89,20 +93,25 @@ GetResponseParamsFromTrailingMetadata(
 
 absl::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context) {
-  static std::regex const kServerTimingPattern(R"(.*; dur=(\d+))");
-  auto metadata = client_context.GetServerInitialMetadata();
-  auto iter = metadata.find("server-timing");
-  if (iter == metadata.end()) {
+  auto const& initial_metadata = client_context.GetServerInitialMetadata();
+  auto it = initial_metadata.find("server-timing");
+  if (it == initial_metadata.end()) {
     return absl::nullopt;
   }
-  std::string server_timing_value(iter->second.data(), iter->second.size());
-  std::smatch match;
-  if (!std::regex_search(server_timing_value, match, kServerTimingPattern)) {
-    return absl::nullopt;
-  }
-  double latency_ms;
-  if (absl::SimpleAtod(match[1].str(), &latency_ms)) {
-    return latency_ms;
+
+  absl::string_view value(it->second.data(), it->second.length());
+
+  for (absl::string_view part : absl::StrSplit(value, ';')) {
+    part = absl::StripAsciiWhitespace(part);
+    if (absl::ConsumePrefix(&part, "dur=")) {
+      double dur_value;
+      auto result =
+          absl::from_chars(part.data(), part.data() + part.size(), dur_value);
+      if (result.ec == std::errc()) {
+        return dur_value;
+      }
+      return absl::nullopt;
+    }
   }
   return absl::nullopt;
 }

@@ -957,7 +957,7 @@ TEST(ServerLatency, SingleSuccess) {
       .WillOnce([](double value,
                    opentelemetry::common::KeyValueIterable const& attributes,
                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(15.0));
+        EXPECT_THAT(value, Eq(15.013));
         EXPECT_THAT(
             MakeAttributesMap(attributes),
             UnorderedElementsAre(
@@ -1011,7 +1011,7 @@ TEST(ServerLatency, SingleSuccess) {
   response_params.set_cluster_id("my-cluster");
   response_params.set_zone_id("my-zone");
   RpcMetadata server_metadata;
-  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15");
+  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15.013");
   server_metadata.trailers.emplace("x-goog-ext-425905942-bin",
                                    response_params.SerializeAsString());
   SetServerMetadata(client_context, server_metadata);
