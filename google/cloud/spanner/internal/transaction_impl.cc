@@ -21,6 +21,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TransactionImpl::~TransactionImpl() = default;
 
+void TransactionImpl::UpdatePrecommitToken(
+    absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+        token) {
+  if (!token.has_value()) return;
+  if (!precommit_token_.has_value()) {
+    precommit_token_ = std::move(token);
+    return;
+  }
+
+  if (token->seq_num() > precommit_token_->seq_num()) {
+    precommit_token_ = std::move(token);
+    return;
+  }
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud

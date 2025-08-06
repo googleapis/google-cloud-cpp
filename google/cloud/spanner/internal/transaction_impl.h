@@ -37,6 +37,8 @@ struct TransactionContext {
   std::string const& tag;
   std::int64_t seqno;
   absl::optional<std::shared_ptr<SpannerStub>> stub;
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token;
 };
 
 template <typename Functor>
@@ -99,15 +101,19 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt};
+    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt,
+                           absl::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       ctx.stub = stub_;
+      ctx.precommit_token = precommit_token_;
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(session_, selector_, ctx);
+        auto result = f(session_, selector_, ctx);
+        UpdatePrecommitToken(ctx.precommit_token);
+        return result;
       }
       state_ = State::kPending;
     }
@@ -120,6 +126,7 @@ class TransactionImpl {
       {
         std::lock_guard<std::mutex> lock(mu_);
         stub_ = ctx.stub;
+        UpdatePrecommitToken(ctx.precommit_token);
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
         done = (state_ == State::kDone);
@@ -143,6 +150,10 @@ class TransactionImpl {
   }
 
  private:
+  void UpdatePrecommitToken(
+      absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+          token);
+
   enum class State {
     kBegin,    // waiting for a future visitor to assign a transaction ID
     kPending,  // waiting for an active visitor to assign a transaction ID
@@ -158,6 +169,8 @@ class TransactionImpl {
   std::string tag_;
   std::int64_t seqno_;
   absl::optional<std::shared_ptr<SpannerStub>> stub_ = absl::nullopt;
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token_ = absl::nullopt;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
