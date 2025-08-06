@@ -948,7 +948,7 @@ TEST(GetServerLatencyFromInitialMetadata, EmptyHeader) {
   EXPECT_FALSE(result);
 }
 
-TEST(GetServerLatencyFromInitialMetadata, FirstDurPicked) {
+TEST(GetServerLatencyFromInitialMetadata, MultipleDurValuesInHeader) {
   grpc::ClientContext client_context;
   RpcMetadata server_metadata;
   server_metadata.headers.emplace("server-timing",
@@ -958,6 +958,16 @@ TEST(GetServerLatencyFromInitialMetadata, FirstDurPicked) {
   auto result = GetServerLatencyFromInitialMetadata(client_context);
   ASSERT_TRUE(result);
   EXPECT_THAT(result, Eq(2.1));
+}
+
+TEST(GetServerLatencyFromInitialMetadata, NoGfePresent) {
+  grpc::ClientContext client_context;
+  RpcMetadata server_metadata;
+  server_metadata.headers.emplace("server-timing", "gcp; dur=123");
+  SetServerMetadata(client_context, server_metadata);
+
+  auto result = GetServerLatencyFromInitialMetadata(client_context);
+  EXPECT_FALSE(result);
 }
 
 TEST(ServerLatency, SingleSuccess) {
