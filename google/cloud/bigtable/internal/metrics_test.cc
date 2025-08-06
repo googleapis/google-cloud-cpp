@@ -948,6 +948,17 @@ TEST(GetServerLatencyFromInitialMetadata, EmptyHeader) {
   EXPECT_FALSE(result);
 }
 
+TEST(GetServerLatencyFromInitialMetadata, FirstDurPicked) {
+  grpc::ClientContext client_context;
+  RpcMetadata server_metadata;
+server_metadata.headers.emplace("server-timing", " gfet4t7; dur=2.1, gcp; dur=123");
+  SetServerMetadata(client_context, server_metadata);
+
+  auto result = GetServerLatencyFromInitialMetadata(client_context);
+  ASSERT_TRUE(result);
+  EXPECT_THAT(result, Eq(2.1));
+}
+
 TEST(ServerLatency, SingleSuccess) {
   auto mock_histogram = std::make_unique<MockHistogram<double>>();
   EXPECT_CALL(
