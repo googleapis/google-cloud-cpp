@@ -931,12 +931,12 @@ TEST(FirstResponseLatency, NoDataReceived) {
 TEST(GetServerLatencyFromInitialMetadata, NonEmptyHeader) {
   grpc::ClientContext client_context;
   RpcMetadata server_metadata;
-  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=10");
+  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=10.5");
   SetServerMetadata(client_context, server_metadata);
 
   auto result = GetServerLatencyFromInitialMetadata(client_context);
   ASSERT_TRUE(result);
-  EXPECT_THAT(result, Eq(10.0));
+  EXPECT_THAT(result, Eq(10.5));
 }
 
 TEST(GetServerLatencyFromInitialMetadata, EmptyHeader) {
