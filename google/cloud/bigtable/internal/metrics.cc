@@ -100,18 +100,31 @@ absl::optional<double> GetServerLatencyFromInitialMetadata(
 
   absl::string_view value(it->second.data(), it->second.length());
 
-  for (absl::string_view part : absl::StrSplit(value, ';')) {
-    part = absl::StripAsciiWhitespace(part);
-    if (absl::ConsumePrefix(&part, "dur=")) {
-      double dur_value;
-      auto result =
-          absl::from_chars(part.data(), part.data() + part.size(), dur_value);
-      if (result.ec == std::errc()) {
-        return dur_value;
+  for (absl::string_view entry : absl::StrSplit(value, ',')) {
+    entry = absl::StripAsciiWhitespace(entry);
+    std::vector<absl::string_view> parts = absl::StrSplit(entry, ';');
+    if (parts.empty()) {
+      continue;
+    }
+
+    absl::string_view metric_name = absl::StripAsciiWhitespace(parts[0]);
+    if (metric_name == "gfet4t7") {
+      // Look for the "dur" parameter within its parts.
+      for (size_t i = 1; i < parts.size(); ++i) {
+        absl::string_view param = absl::StripAsciiWhitespace(parts[i]);
+        if (absl::ConsumePrefix(&param, "dur=")) {
+          double dur_value;
+          auto result = absl::from_chars(
+              param.data(), param.data() + param.size(), dur_value);
+          if (result.ec == std::errc()) {
+            return dur_value;
+          }
+          return absl::nullopt;
+        }
       }
-      return absl::nullopt;
     }
   }
+
   return absl::nullopt;
 }
 
