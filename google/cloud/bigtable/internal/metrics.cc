@@ -23,7 +23,6 @@
 #include "absl/strings/strip.h"
 #include <algorithm>
 #include <map>
-#include <regex>
 #include <set>
 
 namespace google {
