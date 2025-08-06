@@ -159,7 +159,7 @@ void RenameObject(google::cloud::storage::Client client,
 
 void MoveObject(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
-  //! [move_object] [START storage_move_object]
+  // [START storage_move_object]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
@@ -174,7 +174,7 @@ void MoveObject(google::cloud::storage::Client client,
               << ".\n";
   }
 
-  //! [move_object] [END storage_move_object]
+  // [END storage_move_object]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
