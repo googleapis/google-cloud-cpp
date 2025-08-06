@@ -951,7 +951,8 @@ TEST(GetServerLatencyFromInitialMetadata, EmptyHeader) {
 TEST(GetServerLatencyFromInitialMetadata, FirstDurPicked) {
   grpc::ClientContext client_context;
   RpcMetadata server_metadata;
-server_metadata.headers.emplace("server-timing", " gfet4t7; dur=2.1, gcp; dur=123");
+  server_metadata.headers.emplace("server-timing",
+                                  " gfet4t7; dur=2.1, gcp; dur=123");
   SetServerMetadata(client_context, server_metadata);
 
   auto result = GetServerLatencyFromInitialMetadata(client_context);
