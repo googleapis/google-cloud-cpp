@@ -79,10 +79,10 @@ LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
 bool HasServerTiming(grpc::ClientContext const& client_context) {
   auto const& initial_metadata = client_context.GetServerInitialMetadata();
   auto it = initial_metadata.find("server-timing");
-  if (it != initial_metadata.end()) {
-    return true;
+  if (it == initial_metadata.end()) {
+    return false;
   }
-  return false;
+  return true;
 }
 
 absl::optional<google::bigtable::v2::ResponseParams>
@@ -103,7 +103,7 @@ absl::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context) {
   auto const& initial_metadata = client_context.GetServerInitialMetadata();
   auto it = initial_metadata.find("server-timing");
-  if (it != initial_metadata.end()) {
+  if (it == initial_metadata.end()) {
     return absl::nullopt;
   }
 
