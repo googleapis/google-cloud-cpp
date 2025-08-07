@@ -103,7 +103,7 @@ absl::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context) {
   auto const& initial_metadata = client_context.GetServerInitialMetadata();
   auto it = initial_metadata.find("server-timing");
-  if (it == initial_metadata.end()) {
+  if (it != initial_metadata.end()) {
     return absl::nullopt;
   }
 
@@ -373,12 +373,15 @@ void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const& con
   }
   auto const& status = p.attempt_status;
   data_labels_.status = StatusCodeToString(status.code());
-  if (!status.ok() &&
-      status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
-      !HasServerTiming(client_context)) {
+  if (status.code() != google::cloud::StatusCode::kDeadlineExceeded && 
+  !HasServerTiming(client_context)) {
     num_errors_++;
+    absl::PrintF("NumErrors : %f.\n",
+                 this, num_errors_);
+    absl::PrintF("Status: [this=%p] : %s.\n",
+                 this, StatusCodeToString(status.code()));
     connectivity_error_count_->Add(
-        num_errors_,
+        3,
         IntoLabelMap(resource_labels_, data_labels_,
                      std::set<std::string>{"streaming"}),
         context);
