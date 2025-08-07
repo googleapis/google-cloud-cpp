@@ -373,9 +373,9 @@ absl::variant<Status, spanner::BatchedCommitResult> FromProto(
 template <typename T>
 absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
-  std::uniform_int_distribution<std::uint64_t> d(0, m.size() - 1);
+  std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
-  auto index = static_cast<int>(d(rng));
+  auto index = d(rng);
   return m[index];
 }
 
@@ -1258,18 +1258,16 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       break;
     }
     case google::spanner::v1::TransactionSelector::kBegin: {
-      StatusOr<google::spanner::v1::Transaction> begin;
+      absl::optional<google::spanner::v1::Mutation> mutation = absl::nullopt;
       if (session->is_multiplexed()) {
         // Commit requests containing Mutations on multiplexed sessions require
         // a random mutation key in order for the service to generate a
         // precommit token.
-        begin =
-            BeginTransaction(session, selector->begin(), std::string(), ctx,
-                             GetRandomElement(request.mutations()), __func__);
-      } else {
-        begin = BeginTransaction(session, selector->begin(), std::string(), ctx,
-                                 absl::nullopt, __func__);
+        mutation = GetRandomElement(request.mutations());
       }
+
+      auto begin = BeginTransaction(session, selector->begin(), std::string(),
+                                    ctx, mutation, __func__);
       if (!begin.ok()) {
         selector = begin.status();  // invalidate the transaction
         return begin.status();
@@ -1311,24 +1309,24 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
             current, request, func);
       };
 
-  auto response = retry_loop_fn(ctx.precommit_token);
-  if (!response) {
-    auto status = std::move(response).status();
-    if (IsSessionNotFound(status)) session->set_bad();
-    return status;
-  }
-
   // If the CommitResponse contains a precommit token, it's a signal from the
-  // SpannerFE that it wants us to retry the commit with the new token.
-  if (response->has_precommit_token()) {
-    ctx.precommit_token = response->precommit_token();
+  // SpannerFE that it wants us to retry the commit with the new token. It is
+  // technically possible for this to occur more than 0 or 1 times, but however
+  // unlikely, the SDK has to account for the possibility. Additionally, the
+  // mutations do not need to be sent on retries, saving some resources.
+  decltype(retry_loop_fn(ctx.precommit_token)) response;
+  do {
     response = retry_loop_fn(ctx.precommit_token);
     if (!response) {
       auto status = std::move(response).status();
       if (IsSessionNotFound(status)) session->set_bad();
       return status;
     }
-  }
+    if (response->has_precommit_token()) {
+      ctx.precommit_token = response->precommit_token();
+      request.mutable_mutations()->Clear();
+    }
+  } while (response->has_precommit_token());
 
   spanner::CommitResult r;
   r.commit_timestamp = MakeTimestamp(response->commit_timestamp());

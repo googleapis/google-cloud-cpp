@@ -113,8 +113,7 @@ class TransactionImpl {
         lock.unlock();
         auto result = f(session_, selector_, ctx);
         lock.lock();
-        UpdatePrecommitToken(ctx.precommit_token);
-        lock.unlock();
+        UpdatePrecommitToken(lock, ctx.precommit_token);
         return result;
       }
       state_ = State::kPending;
@@ -126,9 +125,9 @@ class TransactionImpl {
       auto r = f(session_, selector_, ctx);
       bool done = false;
       {
-        std::lock_guard<std::mutex> lock(mu_);
+        std::unique_lock<std::mutex> lock(mu_);
         stub_ = ctx.stub;
-        UpdatePrecommitToken(ctx.precommit_token);
+        UpdatePrecommitToken(lock, ctx.precommit_token);
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
         done = (state_ == State::kDone);
@@ -153,6 +152,7 @@ class TransactionImpl {
 
  private:
   void UpdatePrecommitToken(
+      std::unique_lock<std::mutex> const&,
       absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
           token);
 

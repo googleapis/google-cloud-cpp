@@ -2956,7 +2956,7 @@ TEST(ConnectionImplTest, MutationCommitSuccess) {
   EXPECT_EQ(3, commit->commit_stats->mutation_count);
 }
 
-TEST(ConnectionImplTest, MutationCommitRetrySuccess) {
+TEST(ConnectionImplTest, MutationCommitRetryOnceSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
@@ -2993,29 +2993,114 @@ TEST(ConnectionImplTest, MutationCommitRetrySuccess) {
   retry_token.set_precommit_token("retry-precommit-token");
   retry_token.set_seq_num(1);
 
+  std::int64_t original_mutations_size = mutations.size();
   EXPECT_CALL(*mock, Commit)
-      .WillOnce([commit_timestamp, retry_token](
-                    grpc::ClientContext&, Options const&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::spanner::v1::CommitRequest const& request) {
         EXPECT_EQ("multiplexed", request.session());
         EXPECT_FALSE(request.has_single_use_transaction());
         EXPECT_EQ(3, request.mutations_size());
         EXPECT_TRUE(request.return_commit_stats());
         EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
-        return MakeCommitResponse(
-            commit_timestamp, spanner::CommitStats{request.mutations_size()},
-            retry_token);
+        return MakeCommitResponse(commit_timestamp,
+                                  spanner::CommitStats{original_mutations_size},
+                                  retry_token);
       })
-      .WillOnce([commit_timestamp, retry_token](
-                    grpc::ClientContext&, Options const&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token", 1));
+        return MakeCommitResponse(
+            commit_timestamp, spanner::CommitStats{original_mutations_size});
+      });
+
+  auto options =
+      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+  auto conn = MakeConnectionImpl(db, mock, options);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
+                              spanner::CommitOptions{}.set_return_stats(true)});
+  ASSERT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(3, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, MutationCommitRetryMoreThanOnceSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  spanner::Mutations mutations;
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-1"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-2"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-3"}));
+
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [&](grpc::ClientContext&, Options const&,
+              google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            EXPECT_TRUE(request.has_mutation_key());
+            return MakeTestTransaction(token);
+          });
+
+  auto const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  google::spanner::v1::MultiplexedSessionPrecommitToken retry_token_1;
+  retry_token_1.set_precommit_token("retry-precommit-token-1");
+  retry_token_1.set_seq_num(1);
+  google::spanner::v1::MultiplexedSessionPrecommitToken retry_token_2;
+  retry_token_2.set_precommit_token("retry-precommit-token-2");
+  retry_token_2.set_seq_num(2);
+
+  std::int64_t original_mutations_size = mutations.size();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::spanner::v1::CommitRequest const& request) {
         EXPECT_EQ("multiplexed", request.session());
         EXPECT_FALSE(request.has_single_use_transaction());
         EXPECT_EQ(3, request.mutations_size());
         EXPECT_TRUE(request.return_commit_stats());
-        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token", 1));
+        EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
+        return MakeCommitResponse(commit_timestamp,
+                                  spanner::CommitStats{original_mutations_size},
+                                  retry_token_1);
+      })
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token-1", 1));
+        return MakeCommitResponse(commit_timestamp,
+                                  spanner::CommitStats{original_mutations_size},
+                                  retry_token_2);
+      })
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token-2", 2));
         return MakeCommitResponse(
-            commit_timestamp, spanner::CommitStats{request.mutations_size()});
+            commit_timestamp, spanner::CommitStats{original_mutations_size});
       });
 
   auto options =
