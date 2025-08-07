@@ -66,6 +66,8 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
         deps = ["//:common", "//:grpc_utils"] + googleapis_deps + additional_deps,
     )
 
+    alias(name = "@com_google_googletest//:gtest", actual = "@googletest//:gtest")
+
     native.cc_library(
         name = "google_cloud_cpp_" + name + "_mocks",
         hdrs = [":mocks"],

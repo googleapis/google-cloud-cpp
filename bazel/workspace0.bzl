@@ -122,13 +122,15 @@ def gl_cpp_workspace0(name = None):
     # //:.*mocks targets, which are public.
     maybe(
         http_archive,
-        name = "com_google_googletest",
+        #name = "com_google_googletest",
+        name = "googletest",
         urls = [
             "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
         ],
         sha256 = "78c676fc63881529bf97bf9d45948d905a66833fbfa5318ea2cd7478cb98f399",
         strip_prefix = "googletest-1.16.0",
     )
+
 
     # Load the googleapis dependency.
     maybe(
@@ -179,7 +181,7 @@ def gl_cpp_workspace0(name = None):
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
         http_archive,
-        name = "com_github_grpc_grpc",
+        name = "grpc",
         urls = [
             "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
         ],
@@ -194,12 +196,12 @@ def gl_cpp_workspace0(name = None):
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
-        actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+        actual = "@grpc//src/compiler:grpc_cpp_plugin",
     )
 
     native.bind(
         name = "grpc_lib",
-        actual = "@com_github_grpc_grpc//:grpc++",
+        actual = "@grpc//:grpc++",
     )
 
     # We need libcurl for the Google Cloud Storage client.
@@ -217,7 +219,7 @@ def gl_cpp_workspace0(name = None):
     # We need the nlohmann_json library
     maybe(
         http_archive,
-        name = "com_github_nlohmann_json",
+        name = "nlohmann_json",
         urls = [
             "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
@@ -228,7 +230,7 @@ def gl_cpp_workspace0(name = None):
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
     maybe(
         http_archive,
-        name = "com_github_google_crc32c",
+        name = "crc32c",
         urls = [
             "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
         ],
@@ -243,7 +245,7 @@ def gl_cpp_workspace0(name = None):
     # Open Telemetry
     maybe(
         http_archive,
-        name = "io_opentelemetry_cpp",
+        name = "opentelemetry-cpp",
         urls = [
             "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz",
         ],

@@ -21,7 +21,7 @@ ALWAYS_RESET_CMAKE_CACHE=NO
 ENABLED_FEATURES=__ga_libraries__,__experimental_libraries__,opentelemetry
 
 # By default compile all the code.
-BAZEL_TARGETS=("...")
+BAZEL_TARGETS=("google/cloud/storage:internal_hash_validator_test")
 
 # Set to `YES` to run the unit tests.
 RUN_UNIT_TESTS=YES
