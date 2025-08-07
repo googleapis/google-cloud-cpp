@@ -122,7 +122,6 @@ def gl_cpp_workspace0(name = None):
     # //:.*mocks targets, which are public.
     maybe(
         http_archive,
-        #name = "com_google_googletest",
         name = "googletest",
         urls = [
             "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
@@ -130,7 +129,6 @@ def gl_cpp_workspace0(name = None):
         sha256 = "78c676fc63881529bf97bf9d45948d905a66833fbfa5318ea2cd7478cb98f399",
         strip_prefix = "googletest-1.16.0",
     )
-
 
     # Load the googleapis dependency.
     maybe(
@@ -143,13 +141,23 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "googleapis-f9d6fe4a6ad9ed89dfc315f284124d2104377940",
         # build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
-        #   patches = ["googleapis.patch"]
-        # NOTE: This should only be used while developing with a new
-        # protobuf message. No changes to `patches` should ever be
-        # committed to the main branch.
+        patches = [
+
+            # NOTE: This should only be used while developing with a new
+            # protobuf message. No changes to `patches` should ever be
+            # committed to the main branch.
+            #"googleapis.patch",
+
+            # Mirrors the patch from the current bazel module
+            "//bazel:remove_upb_c_rules.patch",
+        ],
         patch_tool = "patch",
-        patch_args = ["-p1", "-l", "-n"],
-        patches = [],
+
+        # Use the following args when developing with a new proto message
+        # patch_args = ["-p1", "-l", "-n"],
+        repo_mapping = {
+            "@com_github_grpc_grpc": "@grpc"
+        }
     )
 
     # Load protobuf.
@@ -162,6 +170,7 @@ def gl_cpp_workspace0(name = None):
         sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
         strip_prefix = "protobuf-31.1",
     )
+
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
     # 2023-02-01 the version loaded by gRPC-1.51 does not compile with Clang-15.
@@ -178,6 +187,23 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "boringssl-82a53d8c902f940eb1310f76a0b96c40c67f632f",
     )
 
+    # We manually bring this gRPC dependency
+    http_archive(
+        name = "io_bazel_rules_go",
+        sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+        ],
+        patches = [
+            #"@grpc//bazel:rules_go.patch",
+        ],
+        patch_args = ["-p1"],
+        repo_mapping = {
+            #"@io_bazel_rules_go": "@rules_go",
+        },
+    )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
         http_archive,
@@ -187,9 +213,15 @@ def gl_cpp_workspace0(name = None):
         ],
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
+            "@com_github_grpc_grpc": "@grpc",
         },
         sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
         strip_prefix = "grpc-1.71.0",
+    )
+
+    native.bind(
+        name = "protocol_compiler",
+        actual = "@com_google_protobuf//:protoc",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which

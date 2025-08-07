@@ -19,6 +19,7 @@ load(
     "apple_rules_dependencies",
 )
 
+
 def gl_cpp_workspace1(name = None):
     """Loads dependencies needed to use the google-cloud-cpp libraries.
 
