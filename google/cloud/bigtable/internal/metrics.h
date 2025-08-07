@@ -61,6 +61,9 @@ absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);
 
+absl::optional<double> GetServerLatencyFromInitialMetadata(
+    grpc::ClientContext const& client_context);
+
 struct PreCallParams {
   OperationContext::Clock::time_point attempt_start;
   bool first_attempt;
@@ -199,6 +202,25 @@ class FirstResponseLatency : public Metric {
       first_response_latencies_;
   OperationContext::Clock::time_point operation_start_;
   absl::optional<LatencyDuration> first_response_latency_;
+};
+
+class ServerLatency : public Metric {
+ public:
+  ServerLatency(std::string const& instrumentation_scope,
+                opentelemetry::nostd::shared_ptr<
+                    opentelemetry::metrics::MeterProvider> const& provider);
+  void PostCall(opentelemetry::context::Context const& context,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      server_latencies_;
 };
 
 class ConnectivityErrorCount : public Metric {

@@ -16,6 +16,11 @@
 
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
+#include "absl/strings/charconv.h"
+#include "absl/strings/match.h"
+#include "absl/strings/numbers.h"
+#include "absl/strings/str_split.h"
+#include "absl/strings/strip.h"
 #include <algorithm>
 #include <map>
 #include <set>
@@ -91,6 +96,44 @@ GetResponseParamsFromTrailingMetadata(
   // return the first value we find.
   std::string value{iter->second.data(), iter->second.size()};
   if (p.ParseFromString(value)) return p;
+  return absl::nullopt;
+}
+
+absl::optional<double> GetServerLatencyFromInitialMetadata(
+    grpc::ClientContext const& client_context) {
+  auto const& initial_metadata = client_context.GetServerInitialMetadata();
+  auto it = initial_metadata.find("server-timing");
+  if (it == initial_metadata.end()) {
+    return absl::nullopt;
+  }
+
+  absl::string_view value(it->second.data(), it->second.length());
+
+  for (absl::string_view entry : absl::StrSplit(value, ',')) {
+    entry = absl::StripAsciiWhitespace(entry);
+    std::vector<absl::string_view> parts = absl::StrSplit(entry, ';');
+    if (parts.empty()) {
+      continue;
+    }
+
+    absl::string_view metric_name = absl::StripAsciiWhitespace(parts[0]);
+    if (metric_name == "gfet4t7") {
+      // Look for the "dur" parameter within its parts.
+      for (size_t i = 1; i < parts.size(); ++i) {
+        absl::string_view param = absl::StripAsciiWhitespace(parts[i]);
+        if (absl::ConsumePrefix(&param, "dur=")) {
+          double dur_value;
+          auto result = absl::from_chars(
+              param.data(), param.data() + param.size(), dur_value);
+          if (result.ec == std::errc()) {
+            return dur_value;
+          }
+          return absl::nullopt;
+        }
+      }
+    }
+  }
+
   return absl::nullopt;
 }
 
@@ -271,6 +314,39 @@ void FirstResponseLatency::OnDone(
 std::unique_ptr<Metric> FirstResponseLatency::clone(
     ResourceLabels resource_labels, DataLabels data_labels) const {
   auto m = std::make_unique<FirstResponseLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
+ServerLatency::ServerLatency(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : server_latencies_(provider
+                            ->GetMeter(instrumentation_scope,
+                                       kMeterInstrumentationScopeVersion)
+                            ->CreateDoubleHistogram("server_latencies")) {}
+
+void ServerLatency::PostCall(opentelemetry::context::Context const& context,
+                             grpc::ClientContext const& client_context,
+                             PostCallParams const& p) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+  data_labels_.status = StatusCodeToString(p.attempt_status.code());
+  auto server_latency = GetServerLatencyFromInitialMetadata(client_context);
+  if (server_latency) {
+    auto m = IntoLabelMap(resource_labels_, data_labels_);
+    server_latencies_->Record(*server_latency, std::move(m), context);
+  }
+}
+
+std::unique_ptr<Metric> ServerLatency::clone(ResourceLabels resource_labels,
+                                             DataLabels data_labels) const {
+  auto m = std::make_unique<ServerLatency>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);
   return m;
