@@ -112,7 +112,9 @@ class TransactionImpl {
       if (state_ == State::kDone) {
         lock.unlock();
         auto result = f(session_, selector_, ctx);
+        lock.lock();
         UpdatePrecommitToken(ctx.precommit_token);
+        lock.unlock();
         return result;
       }
       state_ = State::kPending;

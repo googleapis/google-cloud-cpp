@@ -1260,6 +1260,9 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     case google::spanner::v1::TransactionSelector::kBegin: {
       StatusOr<google::spanner::v1::Transaction> begin;
       if (session->is_multiplexed()) {
+        // Commit requests containing Mutations on multiplexed sessions require
+        // a random mutation key in order for the service to generate a
+        // precommit token.
         begin =
             BeginTransaction(session, selector->begin(), std::string(), ctx,
                              GetRandomElement(request.mutations()), __func__);
