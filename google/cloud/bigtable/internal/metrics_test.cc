@@ -928,6 +928,275 @@ TEST(FirstResponseLatency, NoDataReceived) {
       {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
 }
 
+TEST(GetServerLatencyFromInitialMetadata, NonEmptyHeader) {
+  grpc::ClientContext client_context;
+  RpcMetadata server_metadata;
+  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=10.5");
+  SetServerMetadata(client_context, server_metadata);
+
+  auto result = GetServerLatencyFromInitialMetadata(client_context);
+  ASSERT_TRUE(result);
+  EXPECT_THAT(result, Eq(10.5));
+}
+
+TEST(GetServerLatencyFromInitialMetadata, EmptyHeader) {
+  grpc::ClientContext client_context;
+  RpcMetadata server_metadata;
+  SetServerMetadata(client_context, server_metadata);
+
+  auto result = GetServerLatencyFromInitialMetadata(client_context);
+  EXPECT_FALSE(result);
+}
+
+TEST(GetServerLatencyFromInitialMetadata, MultipleDurValuesInHeader) {
+  grpc::ClientContext client_context;
+  RpcMetadata server_metadata;
+  server_metadata.headers.emplace("server-timing",
+                                  " gfet4t7; dur=2.1, gcp; dur=123");
+  SetServerMetadata(client_context, server_metadata);
+
+  auto result = GetServerLatencyFromInitialMetadata(client_context);
+  ASSERT_TRUE(result);
+  EXPECT_THAT(result, Eq(2.1));
+}
+
+TEST(GetServerLatencyFromInitialMetadata, NoGfePresent) {
+  grpc::ClientContext client_context;
+  RpcMetadata server_metadata;
+  server_metadata.headers.emplace("server-timing", "gcp; dur=123");
+  SetServerMetadata(client_context, server_metadata);
+
+  auto result = GetServerLatencyFromInitialMetadata(client_context);
+  EXPECT_FALSE(result);
+}
+
+TEST(ServerLatency, SingleSuccess) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(15.013));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("server_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  ServerLatency server_latency("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = server_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  google::bigtable::v2::ResponseParams response_params;
+  response_params.set_cluster_id("my-cluster");
+  response_params.set_zone_id("my-zone");
+  RpcMetadata server_metadata;
+  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15.013");
+  server_metadata.trailers.emplace("x-goog-ext-425905942-bin",
+                                   response_params.SerializeAsString());
+  SetServerMetadata(client_context, server_metadata);
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
+TEST(ServerLatency, TwoAttempts) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(15.0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      })
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(10.0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "DEADLINE_EXCEEDED"),
+                Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("server_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  ServerLatency server_latency("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = server_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  google::bigtable::v2::ResponseParams response_params;
+  response_params.set_cluster_id("my-cluster");
+  response_params.set_zone_id("my-zone");
+  RpcMetadata server_metadata;
+  server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15");
+  server_metadata.trailers.emplace("x-goog-ext-425905942-bin",
+                                   response_params.SerializeAsString());
+  SetServerMetadata(client_context, server_metadata);
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  grpc::ClientContext client_context_two;
+  RpcMetadata server_metadata_two;
+  server_metadata_two.headers.emplace("server-timing", "gfet4t7; dur=10");
+  server_metadata_two.trailers.emplace("x-goog-ext-425905942-bin",
+                                       response_params.SerializeAsString());
+  SetServerMetadata(client_context_two, server_metadata_two);
+  clone->PostCall(
+      otel_context, client_context_two,
+      {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
+}
+
+TEST(ServerLatency, NoServerTiming) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .Times(0);
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("server_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  ServerLatency server_latency("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = server_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
