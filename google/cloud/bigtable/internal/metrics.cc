@@ -363,9 +363,9 @@ ConnectivityErrorCount::ConnectivityErrorCount(
               ->CreateUInt64Counter("connectivity_error_count")
               .release()) {}
 
-void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const& context,
-                                      grpc::ClientContext const& client_context,
-                                      PostCallParams const& p) {
+void ConnectivityErrorCount::PostCall(
+    opentelemetry::context::Context const& context,
+    grpc::ClientContext const& client_context, PostCallParams const& p) {
   auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
   if (response_params) {
     resource_labels_.cluster = response_params->cluster_id();
@@ -373,15 +373,12 @@ void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const& con
   }
   auto const& status = p.attempt_status;
   data_labels_.status = StatusCodeToString(status.code());
-  if (status.code() != google::cloud::StatusCode::kDeadlineExceeded && 
-  !HasServerTiming(client_context)) {
+  if (!status.ok() &&
+      status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
+      !HasServerTiming(client_context)) {
     num_errors_++;
-    absl::PrintF("NumErrors : %f.\n",
-                 this, num_errors_);
-    absl::PrintF("Status: [this=%p] : %s.\n",
-                 this, StatusCodeToString(status.code()));
     connectivity_error_count_->Add(
-        3,
+        num_errors_,
         IntoLabelMap(resource_labels_, data_labels_,
                      std::set<std::string>{"streaming"}),
         context);
