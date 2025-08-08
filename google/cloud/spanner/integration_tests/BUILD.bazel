@@ -13,6 +13,7 @@
 # limitations under the License.
 
 load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests")
+load(":spanner_client_session_mode_sensitive_integration_tests.bzl", "spanner_client_session_mode_sensitive_integration_tests")
 
 package(default_visibility = ["//visibility:private"])
 
@@ -37,3 +38,30 @@ licenses(["notice"])  # Apache 2.0
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in spanner_client_integration_tests]
+
+VARIATIONS = {
+    "session-pool": {"GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE": "pool"},
+    "session-multiplexed": {"GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE": "multiplexed"},
+}
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", "") + "-" + v_label,
+    timeout = "eternal",
+    srcs = [test],
+    env = v_env,
+    tags = [
+        "integration-test",
+        "integration-test-" + v_label,
+    ],
+    deps = [
+        "//:common",
+        "//:spanner",
+        "//:spanner_mocks",
+        "//google/cloud/spanner:spanner_client_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//protos:system_includes",
+        "//protos/google/cloud/spanner/testing:singer_cc_proto",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in spanner_client_session_mode_sensitive_integration_tests for v_label, v_env in VARIATIONS.items()]
