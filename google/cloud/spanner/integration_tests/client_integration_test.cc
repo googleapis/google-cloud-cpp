@@ -55,7 +55,7 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
     auto session_mode =
         internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE");
     if (session_mode.has_value() && *session_mode == "multiplexed") {
-      options.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+      options.set<spanner::EnableMultiplexedSessionOption>({});
     }
     client_ = std::make_unique<Client>(
         MakeConnection(GetDatabase(), std::move(options)));

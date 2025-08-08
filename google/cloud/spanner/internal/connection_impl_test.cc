@@ -2169,8 +2169,7 @@ TEST(ConnectionImplTest, MultiplexedExecuteBatchDmlSuccess) {
       spanner::SqlStatement("UPDATE ..."),
   };
 
-  auto options =
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
   auto conn = MakeConnectionImpl(db, mock, options);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction(
@@ -2945,8 +2944,7 @@ TEST(ConnectionImplTest, MutationCommitSuccess) {
             commit_timestamp, spanner::CommitStats{request.mutations_size()});
       });
 
-  auto options =
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
   auto conn = MakeConnectionImpl(db, mock, options);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
@@ -3017,8 +3015,7 @@ TEST(ConnectionImplTest, MutationCommitRetryOnceSuccess) {
             commit_timestamp, spanner::CommitStats{original_mutations_size});
       });
 
-  auto options =
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
   auto conn = MakeConnectionImpl(db, mock, options);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
@@ -3103,8 +3100,7 @@ TEST(ConnectionImplTest, MutationCommitRetryMoreThanOnceSuccess) {
             commit_timestamp, spanner::CommitStats{original_mutations_size});
       });
 
-  auto options =
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
   auto conn = MakeConnectionImpl(db, mock, options);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
@@ -3188,8 +3184,7 @@ TEST(ConnectionImplTest, MultiplexedPrecommitUpdated) {
         });
   }
 
-  auto options =
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
   auto conn = MakeConnectionImpl(db, mock, options);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
