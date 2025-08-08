@@ -166,6 +166,9 @@ Status PartialResultSetSource::ReadFromStream() {
     }
     stats_ = std::move(*result_set->result.mutable_stats());
   }
+  if (result_set->result.has_precommit_token()) {
+    precommit_token_ = std::move(*result_set->result.mutable_precommit_token());
+  }
 
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
   // used the token to resume an interrupted stream), then we must discard
