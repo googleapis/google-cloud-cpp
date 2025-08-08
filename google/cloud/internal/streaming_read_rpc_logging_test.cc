@@ -16,7 +16,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/types/variant.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/duration.pb.h>
 #include <gmock/gmock.h>
 
@@ -34,7 +34,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
  public:
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read, (ResponseType*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -55,39 +55,32 @@ TEST_F(StreamingReadRpcLoggingTest, Cancel) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, Read) {
-  struct ResultVisitor {
-    void operator()(Status const& status) {
-      EXPECT_EQ(status.code(), StatusCode::kInvalidArgument);
-      EXPECT_EQ(status.message(), "Invalid argument.");
-    }
-    void operator()(google::protobuf::Duration const& response) {
-      EXPECT_EQ(response.seconds(), 42);
-    }
-  };
-
   auto mock =
       std::make_unique<MockStreamingReadRpc<google::protobuf::Duration>>();
-  EXPECT_CALL(*mock, Read())
-      .WillOnce([] {
-        google::protobuf::Duration result;
-        result.set_seconds(42);
-        return result;
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([](google::protobuf::Duration* response) {
+        response->set_seconds(42);
+        return absl::optional<Status>{};
       })
-      .WillOnce([] {
-        Status status(StatusCode::kInvalidArgument, "Invalid argument.");
-        return status;
+      .WillOnce([](google::protobuf::Duration*) {
+        return Status(StatusCode::kInvalidArgument, "Invalid argument.");
       });
   StreamingReadRpcLogging<google::protobuf::Duration> reader(
       std::move(mock), TracingOptions{},
       google::cloud::internal::RequestIdForLogging());
-  auto result = reader.Read();
-  absl::visit(ResultVisitor(), result);
+
+  google::protobuf::Duration response;
+  auto result = reader.Read(&response);
+  ASSERT_FALSE(result.has_value());
+  EXPECT_EQ(response.seconds(), 42);
   auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("42s")));
 
-  result = reader.Read();
-  absl::visit(ResultVisitor(), result);
+  result = reader.Read(&response);
+  ASSERT_TRUE(result.has_value());
+  EXPECT_EQ(result->code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(result->message(), "Invalid argument.");
   log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(

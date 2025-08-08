@@ -352,8 +352,16 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(
           retry_policy(*current), backoff_policy(*current), factory,
           $service_name$$method_name$StreamingUpdater, request);
-  return internal::MakeStreamRange(internal::StreamReader<$response_type$>(
-      [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<$response_type$>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status,
+              $response_type$> {
+        $response_type$ response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 )""";
   }

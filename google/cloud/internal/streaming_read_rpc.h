@@ -21,7 +21,7 @@
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
+#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
@@ -52,8 +52,9 @@ class StreamingReadRpc {
   /// Cancel the RPC, this is needed to terminate the RPC "early".
   virtual void Cancel() = 0;
 
-  /// Return the next element, or the final RPC status.
-  virtual absl::variant<Status, ResponseType> Read() = 0;
+  /// Populates the next element and returns nullopt, or the final RPC status in
+  /// the optional.
+  virtual absl::optional<Status> Read(ResponseType* response) = 0;
 
   /**
    * Return the request metadata.
@@ -92,9 +93,8 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override { context_->TryCancel(); }
 
-  absl::variant<Status, ResponseType> Read() override {
-    ResponseType response;
-    if (stream_->Read(&response)) return response;
+  absl::optional<Status> Read(ResponseType* response) override {
+    if (stream_->Read(response)) return absl::nullopt;
     return Finish();
   }
 
@@ -134,7 +134,9 @@ class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override {}
 
-  absl::variant<Status, ResponseType> Read() override { return status_; }
+  absl::optional<Status> Read(ResponseType* /*response*/) override {
+    return status_;
+  }
 
   RpcMetadata GetRequestMetadata() const override { return {}; }
 

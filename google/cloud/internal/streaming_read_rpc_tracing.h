@@ -47,10 +47,10 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
     impl_->Cancel();
   }
 
-  absl::variant<Status, ResponseType> Read() override {
-    auto result = impl_->Read();
-    if (absl::holds_alternative<Status>(result)) {
-      return End(absl::get<Status>(result));
+  absl::optional<Status> Read(ResponseType* response) override {
+    auto result = impl_->Read(response);
+    if (result.has_value()) {
+      return End(*result);
     }
     span_->AddEvent("message", {{"message.type", "RECEIVED"},
                                 {"message.id", ++read_count_}});
