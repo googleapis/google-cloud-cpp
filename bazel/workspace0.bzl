@@ -156,8 +156,8 @@ def gl_cpp_workspace0(name = None):
         # Use the following args when developing with a new proto message
         # patch_args = ["-p1", "-l", "-n"],
         repo_mapping = {
-            "@com_github_grpc_grpc": "@grpc"
-        }
+            "@com_github_grpc_grpc": "@grpc",
+        },
     )
 
     # Load protobuf.
@@ -170,7 +170,6 @@ def gl_cpp_workspace0(name = None):
         sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
         strip_prefix = "protobuf-31.1",
     )
-
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
     # 2023-02-01 the version loaded by gRPC-1.51 does not compile with Clang-15.

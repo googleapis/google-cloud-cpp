@@ -15,11 +15,11 @@
 """Load dependencies needed for google-cloud-cpp development / Phase 2."""
 
 load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
-load("@grpc//bazel:grpc_deps.bzl", "grpc_deps")
 load(
     "@googleapis//:repository_rules.bzl",
     "switched_rules_by_language",
 )
+load("@grpc//bazel:grpc_deps.bzl", "grpc_deps")
 load("@rules_cc//cc:repositories.bzl", "rules_cc_dependencies")
 
 def gl_cpp_workspace2(name = None):

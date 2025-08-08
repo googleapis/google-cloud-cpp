@@ -14,9 +14,9 @@
 
 """Load dependencies needed for google-cloud-cpp development / Phase 3."""
 
-load("@grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
-load("@googletest//:googletest_deps.bzl", "googletest_deps")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+load("@googletest//:googletest_deps.bzl", "googletest_deps")
+load("@grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
 load("@opentelemetry-cpp//bazel:repository.bzl", "opentelemetry_cpp_deps")
 
 def gl_cpp_workspace3(name = None):
