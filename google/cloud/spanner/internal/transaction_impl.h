@@ -52,26 +52,16 @@ using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
 class TransactionImpl {
  public:
   TransactionImpl(google::spanner::v1::TransactionSelector selector,
-                  bool route_to_leader, std::string tag)
-      : TransactionImpl(/*session=*/{}, std::move(selector), route_to_leader,
-                        std::move(tag)) {}
+                  bool route_to_leader, std::string tag);
 
   TransactionImpl(TransactionImpl const& impl,
                   google::spanner::v1::TransactionSelector selector,
-                  bool route_to_leader, std::string tag)
-      : TransactionImpl(impl.session_, std::move(selector), route_to_leader,
-                        std::move(tag)) {}
+                  bool route_to_leader, std::string tag);
 
-  TransactionImpl(SessionHolder session,
-                  google::spanner::v1::TransactionSelector selector,
-                  bool route_to_leader, std::string tag)
-      : session_(std::move(session)),
-        selector_(std::move(selector)),
-        route_to_leader_(route_to_leader),
-        tag_(std::move(tag)),
-        seqno_(0) {
-    state_ = selector_->has_begin() ? State::kBegin : State::kDone;
-  }
+  TransactionImpl(
+      SessionHolder session, google::spanner::v1::TransactionSelector selector,
+      bool route_to_leader, std::string tag,
+      absl::optional<std::string> multiplexed_session_previous_transaction_id);
 
   ~TransactionImpl();
 
