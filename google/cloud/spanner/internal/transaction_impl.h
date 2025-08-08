@@ -140,13 +140,6 @@ class TransactionImpl {
 #endif
   }
 
-  absl::optional<std::string> id() const {
-    if (selector_.ok() && selector_->has_id()) {
-      return selector_->id();
-    }
-    return absl::nullopt;
-  }
-
  private:
   void UpdatePrecommitToken(
       std::unique_lock<std::mutex> const&,
