@@ -235,10 +235,10 @@ void ReadAll(google::cloud::storage_experimental::AsyncClient& client,
          std::string object_name) -> google::cloud::future<std::uint64_t> {
     // For small objects, consider `ReadAll()` which accumulates all the
     // contents in memory using background threads.
-    auto payload = (co_await gcs_ex::ReadAll(client.ReadObject(
-                        gcs_ex::BucketName(std::move(bucket_name)),
-                        std::move(object_name))))
-                       .value();
+    auto payload =
+        (co_await client.ReadAll(gcs_ex::BucketName(std::move(bucket_name)),
+                                 std::move(object_name)))
+            .value();
     std::uint64_t count = 0;
     for (auto const& buffer : payload.contents()) {
       count += std::count(buffer.begin(), buffer.end(), '\n');

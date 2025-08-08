@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/read_all.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/internal/async/default_options.h"
@@ -110,6 +111,22 @@ future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
   return connection_->ReadObjectRange(
       {std::move(request),
        internal::MergeOptions(std::move(opts), connection_->options())});
+}
+
+future<StatusOr<ReadPayload>> AsyncClient::ReadAll(
+    BucketName const& bucket_name, std::string object_name, Options opts) {
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket(bucket_name.FullName());
+  request.set_object(std::move(object_name));
+  return ReadAll(std::move(request), std::move(opts));
+}
+
+future<StatusOr<ReadPayload>> AsyncClient::ReadAll(
+    google::storage::v2::ReadObjectRequest request, Options opts) {
+  request.clear_read_offset();
+  request.clear_read_limit();
+  return storage_experimental::ReadAll(
+      ReadObject(std::move(request), std::move(opts)));
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
