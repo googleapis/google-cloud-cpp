@@ -248,6 +248,7 @@ bool ObjectDescriptorImpl::IsResumable(
     CleanupDoneRanges(std::unique_lock<std::mutex>(mu_));
     return true;
   }
+  std::unique_lock<std::mutex> lk(mu_);
   return streams_.back().resume_policy->OnFinish(status) ==
          storage_experimental::ResumePolicy::kContinue;
 }
