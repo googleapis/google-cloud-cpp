@@ -97,6 +97,19 @@ class SecureSourceManagerTracingConnection
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
   CreateRepository(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  UpdateRepository(
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateRepository(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  UpdateRepository(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteRepository(
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
@@ -109,6 +122,50 @@ class SecureSourceManagerTracingConnection
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteRepository(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::Hook> ListHooks(
+      google::cloud::securesourcemanager::v1::ListHooksRequest request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::Hook> GetHook(
+      google::cloud::securesourcemanager::v1::GetHookRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> CreateHook(
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateHook(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> CreateHook(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> UpdateHook(
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateHook(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> UpdateHook(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteHook(google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+                 request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteHook(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteHookRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteHook(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
       google::iam::v1::GetIamPolicyRequest const& request) override;
@@ -165,6 +222,307 @@ class SecureSourceManagerTracingConnection
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteBranchRule(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  CreatePullRequest(
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreatePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  CreatePullRequest(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequest> GetPullRequest(
+      google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+          request) override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+  ListPullRequests(
+      google::cloud::securesourcemanager::v1::ListPullRequestsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  UpdatePullRequest(
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdatePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  UpdatePullRequest(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  MergePullRequest(
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> MergePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  MergePullRequest(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  OpenPullRequest(
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> OpenPullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  OpenPullRequest(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  ClosePullRequest(
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ClosePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  ClosePullRequest(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+  ListPullRequestFileDiffs(
+      google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+          request) override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::TreeEntry> FetchTree(
+      google::cloud::securesourcemanager::v1::FetchTreeRequest request)
+      override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse> FetchBlob(
+      google::cloud::securesourcemanager::v1::FetchBlobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CreateIssue(
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CreateIssue(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::Issue> GetIssue(
+      google::cloud::securesourcemanager::v1::GetIssueRequest const& request)
+      override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::Issue> ListIssues(
+      google::cloud::securesourcemanager::v1::ListIssuesRequest request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> UpdateIssue(
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> UpdateIssue(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssue(google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+                  request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssue(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> OpenIssue(
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> OpenIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> OpenIssue(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CloseIssue(
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CloseIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CloseIssue(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+  GetPullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          GetPullRequestCommentRequest const& request) override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+  ListPullRequestComments(
+      google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  CreatePullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          CreatePullRequestCommentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreatePullRequestComment(
+      NoAwaitTag, google::cloud::securesourcemanager::v1::
+                      CreatePullRequestCommentRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  CreatePullRequestComment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  UpdatePullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          UpdatePullRequestCommentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdatePullRequestComment(
+      NoAwaitTag, google::cloud::securesourcemanager::v1::
+                      UpdatePullRequestCommentRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  UpdatePullRequestComment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeletePullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          DeletePullRequestCommentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePullRequestComment(
+      NoAwaitTag, google::cloud::securesourcemanager::v1::
+                      DeletePullRequestCommentRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeletePullRequestComment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      BatchCreatePullRequestCommentsResponse>>
+  BatchCreatePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCreatePullRequestComments(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      BatchCreatePullRequestCommentsResponse>>
+  BatchCreatePullRequestComments(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      ResolvePullRequestCommentsResponse>>
+  ResolvePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ResolvePullRequestComments(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      ResolvePullRequestCommentsResponse>>
+  ResolvePullRequestComments(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      UnresolvePullRequestCommentsResponse>>
+  UnresolvePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UnresolvePullRequestComments(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      UnresolvePullRequestCommentsResponse>>
+  UnresolvePullRequestComments(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  CreateIssueComment(
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  CreateIssueComment(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+  GetIssueComment(
+      google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+          request) override;
+
+  StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+  ListIssueComments(
+      google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  UpdateIssueComment(
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  UpdateIssueComment(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssueComment(
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssueComment(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/internal/tracing_object_read_source.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
 #include <string>
@@ -253,6 +254,18 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
                            impl_->UploadFileResumable(file_name, request));
+}
+
+StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
+    std::vector<std::thread> threads,
+    std::vector<storage::internal::ParallelUploadFileShard> shards,
+    bool ignore_cleanup_failures) {
+  auto span = internal::MakeSpan(
+      "storage::ParallelUploadFile/ExecuteParallelUploadFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->ExecuteParallelUploadFile(
+                                      std::move(threads), std::move(shards),
+                                      ignore_cleanup_failures));
 }
 
 StatusOr<storage::internal::ListBucketAclResponse>

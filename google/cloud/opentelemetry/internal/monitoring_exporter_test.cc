@@ -18,6 +18,8 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/sdk/metrics/export/metric_producer.h>
+#include <opentelemetry/sdk/resource/resource.h>
 
 namespace google {
 namespace cloud {

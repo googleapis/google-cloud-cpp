@@ -45,17 +45,22 @@ void AsyncRowReader::MakeRequest() {
   parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
 
   internal::ScopedCallContext scope(call_context_);
-  context_ = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context_, *call_context_.options);
-  operation_context_->PreCall(*context_);
+  client_context_ = std::make_shared<grpc::ClientContext>();
+  internal::ConfigureContext(*client_context_, *call_context_.options);
+  operation_context_->PreCall(*client_context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncReadRows(cq_, context_, options_, request),
+      stub_->AsyncReadRows(cq_, client_context_, options_, request),
       [self](v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },
       [self](Status s) { self->OnStreamFinished(std::move(s)); });
+}
+
+void AsyncRowReader::UserWantsRows() {
+  operation_context_->ElementRequest(*client_context_);
+  TryGiveRowToUser();
 }
 
 void AsyncRowReader::TryGiveRowToUser() {
@@ -102,6 +107,7 @@ void AsyncRowReader::TryGiveRowToUser() {
 
   auto self = this->shared_from_this();
   bool const break_recursion = recursion_level_ >= 100;
+  operation_context_->ElementDelivery(*client_context_);
   on_row_(std::move(row)).then([self, break_recursion](future<bool> fut) {
     bool should_cancel;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -165,6 +171,7 @@ future<bool> AsyncRowReader::OnDataReceived(
 }
 
 void AsyncRowReader::OnStreamFinished(Status status) {
+  operation_context_->PostCall(*client_context_, status);
   // assert(!continue_reading_);
   if (status_.ok()) {
     status_ = std::move(status);
@@ -206,6 +213,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   if (status_.ok()) {
     // We've successfully finished the scan.
     whole_op_finished_ = true;
+    operation_context_->OnDone(status_);
     TryGiveRowToUser();
     return;
   }
@@ -217,11 +225,11 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     // Can't retry.
     status_ = std::move(delay).status();
     whole_op_finished_ = true;
+    operation_context_->OnDone(status_);
     TryGiveRowToUser();
     return;
   }
-  operation_context_->PostCall(*context_, {});
-  context_.reset();
+  client_context_.reset();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,
                                "Async Backoff")

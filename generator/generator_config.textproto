@@ -445,6 +445,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/bigquery/datapolicies/v2/datapolicy.proto"
+  product_path: "google/cloud/bigquery/datapolicies/v2"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
   product_path: "google/cloud/bigquery/datatransfer/v1"
   forwarding_product_path: "google/cloud/bigquery"
@@ -3656,6 +3663,7 @@ service {
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   omit_repo_metadata: true
+  omitted_rpcs: ["InternalUpdateGraphOperation"]
 }
 
 service {
