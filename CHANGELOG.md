@@ -4,7 +4,9 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.40.0 - TBD
+## v2.41.0 - TBD
+
+## v2.40.0 - 2025-08
 
 ### New Libraries
 
@@ -17,6 +19,36 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [BigQuery](/google/cloud/bigquery/README.md) - added support for datapolicies/v2
 - [ManagedKafka](/google/cloud/managedkafka/README.md) - add schemaregistry to the library
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- We have begun instrumenting the `Bigtable::DataConnection` class to collect
+several [Client Side Metrics](https://cloud.google.com/bigtable/docs/client-side-metrics),
+free of charge. These metrics will be collected by
+default if both the [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-cpp)
+and [Google Cloud Monitoring](google/cloud/monitoring/README.md) dependencies are
+available. Users can opt-out by setting the `bigtable::EnableMetricsOption` to `false`.
+
+- The following metrics are available in Bigtable:
+  - AttemptLatency
+  - OperationLatency
+  - RetryCount
+  - FirstResponseLatency
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add support for order_by enum ([#15240](https://github.com/googleapis/google-cloud-cpp/pull/15240))
+- feat(spanner): add support for lock_hint enum ([#15249](https://github.com/googleapis/google-cloud-cpp/pull/15249))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Create OTel tracing decorator for `storage:: ParallelUploadFile()` ([#15289](https://github.com/googleapis/google-cloud-cpp/pull/15289))
+- fix(storage): Fix the bucket name not found error ([#15274](https://github.com/googleapis/google-cloud-cpp/pull/15274))
+- feat(storage): Create OTel tracing decorator for `Client::UploadFile()` ([#15245](https://github.com/googleapis/google-cloud-cpp/pull/15245))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-07-30T06:44:36-07:00](https://github.com/googleapis/googleapis/tree/f6801ce4e1df0541abb8d1e996cb36363c41fb8d)
 
 ## v2.39.0 - 2025-07
 
