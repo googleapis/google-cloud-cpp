@@ -301,7 +301,6 @@ void SetClusterZone(grpc::ClientContext& client_context,
   SetServerMetadata(client_context, server_metadata);
 }
 
-
 TEST(OperationLatencyTest, FirstAttemptSuccess) {
   auto mock_histogram = std::make_unique<MockHistogram<double>>();
   EXPECT_CALL(
