@@ -157,19 +157,26 @@ def gl_cpp_workspace0(name = None):
         # patch_args = ["-p1", "-l", "-n"],
         repo_mapping = {
             "@com_github_grpc_grpc": "@grpc",
+            "@com_google_protobuf": "@protobuf",
         },
     )
 
     # Load protobuf.
     maybe(
         http_archive,
-        name = "com_google_protobuf",
+        name = "protobuf",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
         ],
         sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
         strip_prefix = "protobuf-31.1",
+        repo_mapping = {
+            "@com_google_protobuf": "@protobuf",
+        },
     )
+
+    #native.bind(name = 'cc_toolchain', actual = '@protobuf//:cc_toolchain')
+    #register_toolchains("@protobuf//:cc_toolchain")
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
     # 2023-02-01 the version loaded by gRPC-1.51 does not compile with Clang-15.
@@ -207,17 +214,23 @@ def gl_cpp_workspace0(name = None):
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
             "@com_github_grpc_grpc": "@grpc",
+            "@com_google_protobuf": "@protobuf",
         },
         sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
         strip_prefix = "grpc-1.71.0",
+        # gRPC patches a file in @com_google_protobuf, but the patch expects a version different
+        # from the one in our workspace.
+        patches = [
+            "//bazel:grpc.patch"
+        ]
     )
 
     native.bind(
         name = "protocol_compiler",
-        actual = "@com_google_protobuf//:protoc",
+        actual = "@protobuf//:protoc",
     )
 
-    # We use the cc_proto_library() rule from @com_google_protobuf, which
+    # We use the cc_proto_library() rule from @protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
