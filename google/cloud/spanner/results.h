@@ -70,6 +70,17 @@ class ResultSourceInterface {
    *     for more information.
    */
   virtual absl::optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
+
+  /**
+   * A precommit token is included if the read-write transaction is on
+   * a multiplexed session. The precommit token with the highest sequence
+   * number from this transaction attempt is added to the Commit request for
+   * this transaction by the library.
+   */
+  virtual absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const {
+    return absl::nullopt;
+  }
 };
 
 /**

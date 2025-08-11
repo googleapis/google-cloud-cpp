@@ -258,6 +258,10 @@ class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
   absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const override {
+    return absl::nullopt;
+  }
 
  private:
   google::cloud::Status status_;
@@ -296,6 +300,14 @@ class DmlResultSetSource : public spanner::ResultSourceInterface {
       return result_set_.stats();
     }
     return {};
+  }
+
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const override {
+    if (result_set_.has_precommit_token()) {
+      return result_set_.precommit_token();
+    }
+    return absl::nullopt;
   }
 
  private:
@@ -356,6 +368,15 @@ absl::variant<Status, spanner::BatchedCommitResult> FromProto(
     result.commit_timestamp = std::move(status);
   }
   return result;
+}
+
+template <typename T>
+absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
+  if (m.empty()) return absl::nullopt;
+  std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
+  auto rng = internal::MakeDefaultPRNG();
+  auto index = d(rng);
+  return m[index];
 }
 
 }  // namespace
@@ -539,12 +560,16 @@ std::shared_ptr<SpannerStub> ConnectionImpl::GetStubBasedOnSessionMode(
  *
  * @param session identifies the Session to use.
  * @param options `TransactionOptions` to use in the request.
+ * @param mutation Required for read-write transactions on a multiplexed session
+ *  that commit mutations but do not perform any reads or queries. Should be
+ *  selected at random from mutations.
  * @param func identifies the calling function for logging purposes.
  *   It should generally be passed the value of `__func__`.
  */
 StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, google::spanner::v1::TransactionOptions options,
-    std::string request_tag, TransactionContext& ctx, char const* func) {
+    std::string request_tag, TransactionContext& ctx,
+    absl::optional<google::spanner::v1::Mutation> mutation, char const* func) {
   google::spanner::v1::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
@@ -553,6 +578,9 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
   // the transaction instead.
   begin.mutable_request_options()->set_request_tag(std::move(request_tag));
   begin.mutable_request_options()->set_transaction_tag(ctx.tag);
+  if (mutation) {
+    *begin.mutable_mutation_key() = *mutation;
+  }
 
   auto stub = GetStubBasedOnSessionMode(*session, ctx);
   auto const& current = internal::CurrentOptions();
@@ -571,7 +599,18 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     if (IsSessionNotFound(status)) session->set_bad();
     return status;
   }
+
+  if (response->has_precommit_token()) {
+    ctx.precommit_token = response->precommit_token();
+  }
   return *response;
+}
+
+StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
+    SessionHolder& session, google::spanner::v1::TransactionOptions options,
+    std::string request_tag, TransactionContext& ctx, char const* func) {
+  return BeginTransaction(session, std::move(options), std::move(request_tag),
+                          ctx, absl::nullopt, func);
 }
 
 spanner::RowStream ConnectionImpl::ReadImpl(
@@ -645,6 +684,9 @@ spanner::RowStream ConnectionImpl::ReadImpl(
         factory, Idempotency::kIdempotent, RetryPolicyPrototype()->clone(),
         BackoffPolicyPrototype()->clone());
     auto reader = PartialResultSetSource::Create(std::move(rpc));
+    if (reader.ok()) {
+      ctx.precommit_token = (*reader)->PrecommitToken();
+    }
     if (selector->has_begin()) {
       if (reader.ok()) {
         auto metadata = (*reader)->Metadata();
@@ -803,6 +845,9 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
 
   for (;;) {
     auto reader = retry_resume_fn(request);
+    if (reader.ok()) {
+      ctx.precommit_token = (*reader)->PrecommitToken();
+    }
     if (selector->has_begin()) {
       if (reader.ok()) {
         auto metadata = (*reader)->Metadata();
@@ -1097,6 +1142,9 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
           return stub->ExecuteBatchDml(context, options, request);
         },
         current, request, __func__);
+    if (response.ok() && response->has_precommit_token()) {
+      ctx.precommit_token = response->precommit_token();
+    }
     if (selector->has_begin()) {
       if (response.ok() && response->result_sets_size() > 0) {
         if (!response->result_sets(0).metadata().has_transaction()) {
@@ -1210,8 +1258,16 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       break;
     }
     case google::spanner::v1::TransactionSelector::kBegin: {
+      absl::optional<google::spanner::v1::Mutation> mutation = absl::nullopt;
+      if (session->is_multiplexed()) {
+        // Commit requests containing Mutations on multiplexed sessions require
+        // a random mutation key in order for the service to generate a
+        // precommit token.
+        mutation = GetRandomElement(request.mutations());
+      }
+
       auto begin = BeginTransaction(session, selector->begin(), std::string(),
-                                    ctx, __func__);
+                                    ctx, std::move(mutation), __func__);
       if (!begin.ok()) {
         selector = begin.status();  // invalidate the transaction
         return begin.status();
@@ -1231,20 +1287,47 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 
   auto stub = GetStubBasedOnSessionMode(*session, ctx);
   auto const& current = internal::CurrentOptions();
-  auto response = RetryLoop(
-      RetryPolicyPrototype(current)->clone(),
-      BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context, Options const& options,
-              google::spanner::v1::CommitRequest const& request) {
-        RouteToLeader(context);  // always for Commit()
-        return stub->Commit(context, options, request);
-      },
-      current, request, __func__);
-  if (!response) {
-    auto status = std::move(response).status();
-    if (IsSessionNotFound(status)) session->set_bad();
-    return status;
-  }
+
+  char const* calling_func = __func__;
+  auto retry_loop_fn =
+      [&, func = std::move(calling_func)](
+          absl::optional<
+              google::spanner::v1::MultiplexedSessionPrecommitToken> const&
+              token) {
+        if (token.has_value()) {
+          *request.mutable_precommit_token() = *token;
+        }
+
+        return RetryLoop(
+            RetryPolicyPrototype(current)->clone(),
+            BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
+            [&stub](grpc::ClientContext& context, Options const& options,
+                    google::spanner::v1::CommitRequest const& request) {
+              RouteToLeader(context);  // always for Commit()
+              return stub->Commit(context, options, request);
+            },
+            current, request, func);
+      };
+
+  // If the CommitResponse contains a precommit token, it's a signal from the
+  // SpannerFE that it wants us to retry the commit with the new token. It is
+  // technically possible for this to occur more than 0 or 1 times, but however
+  // unlikely, the SDK has to account for the possibility. Additionally, the
+  // mutations do not need to be sent on retries, saving some resources.
+  decltype(retry_loop_fn(ctx.precommit_token)) response;
+  do {
+    response = retry_loop_fn(ctx.precommit_token);
+    if (!response) {
+      auto status = std::move(response).status();
+      if (IsSessionNotFound(status)) session->set_bad();
+      return status;
+    }
+    if (response->has_precommit_token()) {
+      ctx.precommit_token = response->precommit_token();
+      request.mutable_mutations()->Clear();
+    }
+  } while (response->has_precommit_token());
+
   spanner::CommitResult r;
   r.commit_timestamp = MakeTimestamp(response->commit_timestamp());
   if (response->has_commit_stats()) {
