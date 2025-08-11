@@ -60,6 +60,11 @@ class PartialResultSetSource : public spanner::ResultSourceInterface {
     return stats_;
   }
 
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const override {
+    return precommit_token_;
+  }
+
  private:
   explicit PartialResultSetSource(
       std::unique_ptr<PartialResultSetReader> reader);
@@ -77,6 +82,11 @@ class PartialResultSetSource : public spanner::ResultSourceInterface {
   // The `PartialResultSet.stats` received in the last response, corresponding
   // to the `QueryMode` implied by the particular streaming read/query type.
   absl::optional<google::spanner::v1::ResultSetStats> stats_;
+
+  // Each PartialResultSet proto message can contain a token when using a
+  // multiplexed session.
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token_ = absl::nullopt;
 
   // `Row`s ready to be returned by `NextRow()`.
   std::deque<spanner::Row> rows_;

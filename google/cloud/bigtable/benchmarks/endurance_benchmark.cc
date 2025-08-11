@@ -63,7 +63,7 @@ using bigtable::benchmarks::ParseArgs;
 /// Run an iteration of the test, returns the number of operations.
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark const& benchmark,
-    std::chrono::seconds test_duration);
+    std::chrono::seconds test_duration, bool include_read_rows);
 
 }  // anonymous namespace
 
@@ -91,7 +91,8 @@ int main(int argc, char* argv[]) {
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
-                                  std::ref(benchmark), options->test_duration));
+                                  std::ref(benchmark), options->test_duration,
+                                  options->include_read_rows));
   }
 
   // Wait for the threads and combine all the results.
@@ -147,9 +148,32 @@ OperationResult RunOneReadRow(bigtable::Table& table,
   return Benchmark::TimeOperation(std::move(op));
 }
 
+OperationResult RunOneReadRows(
+    bigtable::Table& table, Benchmark const& benchmark,
+    google::cloud::internal::DefaultPRNG& generator) {
+  constexpr int kReadRowsCount = 100;
+  auto row_set = bigtable::RowSet();
+
+  for (int i = 0; i != kReadRowsCount; ++i) {
+    row_set.Append(benchmark.MakeRandomKey(generator));
+  }
+
+  auto op = [&table, &row_set]() -> google::cloud::Status {
+    auto reader = table.ReadRows(
+        std::move(row_set),
+        bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0", "field9"));
+    for (auto const& row : reader) {
+      if (!row) return std::move(row).status();
+    }
+    return google::cloud::Status{};
+  };
+
+  return Benchmark::TimeOperation(std::move(op));
+}
+
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark const& benchmark,
-    std::chrono::seconds test_duration) {
+    std::chrono::seconds test_duration, bool include_read_rows) {
   BenchmarkResult partial = {};
 
   auto table = benchmark.MakeTable();
@@ -166,12 +190,18 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     }
     partial.operations.emplace_back(op_result);
     ++partial.row_count;
-    op_result = RunOneReadRow(table, benchmark, generator);
+
+    if (include_read_rows) {
+      op_result = RunOneReadRows(table, benchmark, generator);
+    } else {
+      op_result = RunOneReadRow(table, benchmark, generator);
+    }
     if (!op_result.status.ok()) {
       return op_result.status;
     }
     partial.operations.emplace_back(op_result);
     ++partial.row_count;
+
     op_result = RunOneApply(table, benchmark, generator);
     if (!op_result.status.ok()) {
       return op_result.status;

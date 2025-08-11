@@ -128,10 +128,6 @@ class DatabaseAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListBackupSchedules(
       google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
 
-  virtual google::cloud::Idempotency InternalUpdateGraphOperation(
-      google::spanner::admin::database::v1::
-          InternalUpdateGraphOperationRequest const& request);
-
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);
 

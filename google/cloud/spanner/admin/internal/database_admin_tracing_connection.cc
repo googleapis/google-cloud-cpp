@@ -414,18 +414,6 @@ DatabaseAdminTracingConnection::ListBackupSchedules(
                                                             std::move(sr));
 }
 
-StatusOr<
-    google::spanner::admin::database::v1::InternalUpdateGraphOperationResponse>
-DatabaseAdminTracingConnection::InternalUpdateGraphOperation(
-    google::spanner::admin::database::v1::
-        InternalUpdateGraphOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "spanner_admin::DatabaseAdminConnection::InternalUpdateGraphOperation");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->InternalUpdateGraphOperation(request));
-}
-
 StreamRange<google::longrunning::Operation>
 DatabaseAdminTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {
