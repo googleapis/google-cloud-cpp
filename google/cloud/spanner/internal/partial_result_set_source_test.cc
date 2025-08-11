@@ -52,7 +52,7 @@ struct StringOption {
 // Create the `PartialResultSetSource` within an `OptionsSpan` that has its
 // `StringOption` set to the current test name, so that we might check that
 // all `PartialResultSetReader` calls happen within a matching span.
-StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>
+StatusOr<std::unique_ptr<PartialResultSourceInterface>>
 CreatePartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
                              Options opts = {}) {
   internal::OptionsSpan span(internal::MergeOptions(

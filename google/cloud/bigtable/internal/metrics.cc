@@ -39,11 +39,12 @@ auto constexpr kMeterInstrumentationScopeVersion = "v1";
 // time.
 LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
                       std::set<std::string> const& filtered_data_labels) {
-  LabelMap labels = {{"project_id", r.project_id},
-                     {"instance", r.instance},
-                     {"table", r.table},
-                     {"cluster", r.cluster},
-                     {"zone", r.zone}};
+  LabelMap labels = {
+      {"project_id", r.project_id},
+      {"instance", r.instance},
+      {"table", r.table},
+      {"cluster", r.cluster.empty() ? "<unspecified>" : r.cluster},
+      {"zone", r.zone.empty() ? "global" : r.zone}};
   std::map<std::string, std::string> data = {{
       {"method", d.method},
       {"streaming", d.streaming},

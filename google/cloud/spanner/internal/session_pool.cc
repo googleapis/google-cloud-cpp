@@ -94,7 +94,7 @@ SessionPool::SessionPool(spanner::Database db,
 
 void SessionPool::Initialize() {
   internal::OptionsSpan span(opts_);
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
     std::unique_lock<std::mutex> lk(mu_);
     CreateMultiplexedSession(lk);
     ScheduleMultiplexedBackgroundWork(multiplexed_session_background_interval_);
@@ -120,7 +120,7 @@ SessionPool::~SessionPool() {
   // they must not have successfully finished a call to `lock()` on the
   // `weak_ptr` to `this` they hold. Any in-progress or subsequent `lock()`
   // will now return `nullptr`, in which case no work is done.
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
     current_multiplexed_timer_.cancel();
   } else {
     current_timer_.cancel();
@@ -442,7 +442,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(Session::Mode mode) {
 }
 
 StatusOr<SessionHolder> SessionPool::Multiplexed(Session::Mode mode) {
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
     std::unique_lock<std::mutex> lk(mu_);
     if (mode == Session::Mode::kDisassociated && multiplexed_session_.ok()) {
       // For disassociated sessions, only used in partitioned operations, we do

@@ -6,6 +6,14 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.41.0 - TBD
 
+### [Spanner](/google/cloud/spanner/README.md)
+
+- [Multiplexed session](https://cloud.google.com/spanner/docs/sessions#multiplexed_sessions)
+support is now available. To enable Multiplexed sessions, add the
+`spanner::EnableMultiplexedSessionOption` to `Options` when calling
+`spanner::MakeConnection`. This enables Multiplexed sessions on all operations
+read-only, read-write, and partitioned.
+
 ## v2.40.0 - 2025-08
 
 ### New Libraries
