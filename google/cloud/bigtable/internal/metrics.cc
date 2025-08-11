@@ -86,6 +86,12 @@ bool HasServerTiming(grpc::ClientContext const& client_context) {
   return true;
 }
 
+bool IsConnectionError(google::cloud::Status const& status,
+                       grpc::ClientContext const& client_context) {
+  return status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
+         !HasServerTiming(client_context);
+}
+
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context) {
@@ -374,16 +380,15 @@ void ConnectivityErrorCount::PostCall(
   }
   auto const& status = p.attempt_status;
   data_labels_.status = StatusCodeToString(status.code());
-  if (!status.ok() &&
-      status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
-      !HasServerTiming(client_context)) {
-    num_errors_++;
-    connectivity_error_count_->Add(
+  if (resource_labels_.cluster.empty() || resource_labels_.zone.empty() ||
+      IsConnectionError(status, client_context)) {
+    ++num_errors_;
+  }
+  connectivity_error_count_->Add(
         num_errors_,
         IntoLabelMap(resource_labels_, data_labels_,
                      std::set<std::string>{"streaming"}),
         context);
-  }
 }
 
 std::unique_ptr<Metric> ConnectivityErrorCount::clone(ResourceLabels resource_labels,
