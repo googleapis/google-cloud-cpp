@@ -529,7 +529,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
                                       Session::Mode mode) {
   if (!session) {
     StatusOr<SessionHolder> session_or;
-    if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+    if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
       session_or = session_pool_->Multiplexed(mode);
     } else {
       session_or = session_pool_->Allocate(mode);
