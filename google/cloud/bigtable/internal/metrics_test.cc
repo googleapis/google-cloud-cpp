@@ -488,12 +488,13 @@ TEST(OperationLatencyTest, UsesDefaultClusterAndZone) {
   opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
       std::make_shared<MockMeter>();
   EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
-      .WillOnce(
-          [mock = std::move(mock_histogram)](
-              opentelemetry::nostd::string_view name, auto, auto) mutable {
-            EXPECT_THAT(name, Eq("operation_latencies"));
-            return std::move(mock);
-          });
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("operation_latencies"));
+        return std::move(mock);
+      });
 
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
@@ -1013,8 +1014,10 @@ TEST(RetryCountTest, UsesDefaultClusterAndZone) {
 
   clock->SetTime(std::chrono::steady_clock::now());
   clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::microseconds(1234));
   clone->PostCall(otel_context, client_context,
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
   clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 
