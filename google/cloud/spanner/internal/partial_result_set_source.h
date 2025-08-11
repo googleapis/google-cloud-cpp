@@ -37,15 +37,32 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class PrecommitInterface {
+ public:
+  /**
+   * A precommit token is included if the read-write transaction is on
+   * a multiplexed session. The precommit token with the highest sequence
+   * number from this transaction attempt is added to the Commit request for
+   * this transaction by the library.
+   */
+  virtual absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const {
+    return absl::nullopt;
+  }
+};
+
+class PartialResultSourceInterface : public spanner::ResultSourceInterface,
+                                     public PrecommitInterface {};
+
 /**
  * This class serves as a bridge between the gRPC `PartialResultSet` streaming
  * reader and the spanner `ResultSet`, and is used to iterate over the rows
  * returned from a read operation.
  */
-class PartialResultSetSource : public spanner::ResultSourceInterface {
+class PartialResultSetSource : public PartialResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
-  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
       std::unique_ptr<PartialResultSetReader> reader);
 
   ~PartialResultSetSource() override;

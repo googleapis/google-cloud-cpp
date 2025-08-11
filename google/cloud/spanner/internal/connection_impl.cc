@@ -258,10 +258,6 @@ class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
   absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
-  PrecommitToken() const override {
-    return absl::nullopt;
-  }
 
  private:
   google::cloud::Status status_;
@@ -274,11 +270,11 @@ ResultType MakeStatusOnlyResult(Status status) {
       std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
-class DmlResultSetSource : public spanner::ResultSourceInterface {
+class DmlResultSetSource : public PartialResultSourceInterface {
  public:
-  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
       google::spanner::v1::ResultSet result_set) {
-    return std::unique_ptr<spanner::ResultSourceInterface>(
+    return std::unique_ptr<PartialResultSourceInterface>(
         new DmlResultSetSource(std::move(result_set)));
   }
 
@@ -802,7 +798,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
-    std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
+    std::function<StatusOr<std::unique_ptr<PartialResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
   if (!selector.ok()) return selector.status();
@@ -901,7 +897,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
       [stub, retry_policy_prototype, backoff_policy_prototype,
        route_to_leader = ctx.route_to_leader, tracing_enabled,
        tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
-      -> StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> {
+      -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     auto factory = [stub, request, route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
@@ -979,7 +975,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
       [function_name, stub, retry_policy_prototype, backoff_policy_prototype,
        session, route_to_leader = ctx.route_to_leader,
        current](google::spanner::v1::ExecuteSqlRequest& request) mutable
-      -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
+      -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     StatusOr<google::spanner::v1::ResultSet> response = RetryLoop(
         retry_policy_prototype->clone(), backoff_policy_prototype->clone(),
         Idempotency::kIdempotent,
