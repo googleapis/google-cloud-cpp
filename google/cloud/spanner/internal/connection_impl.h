@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/status.h"
@@ -72,6 +73,11 @@ class ConnectionImpl : public spanner::Connection {
 
   std::shared_ptr<SpannerStub> GetStubBasedOnSessionMode(
       Session& session, TransactionContext& ctx);
+
+  StatusOr<google::spanner::v1::Transaction> BeginTransaction(
+      SessionHolder& session, google::spanner::v1::TransactionOptions options,
+      std::string request_tag, TransactionContext& ctx,
+      absl::optional<google::spanner::v1::Mutation> mutation, char const* func);
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       SessionHolder& session, google::spanner::v1::TransactionOptions options,

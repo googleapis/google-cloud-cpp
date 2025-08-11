@@ -252,7 +252,8 @@ using SessionPoolOptionList = OptionList<
     RouteToLeaderOption, SessionCreatorRoleOption, SessionPoolMinSessionsOption,
     SessionPoolMaxSessionsPerChannelOption, SessionPoolMaxIdleSessionsOption,
     SessionPoolActionOnExhaustionOption, SessionPoolKeepAliveIntervalOption,
-    SessionPoolLabelsOption>;
+    SessionPoolLabelsOption,
+    spanner_experimental::EnableMultiplexedSessionOption>;
 
 /**
  * Option for `google::cloud::Options` to set the optimizer version used in an
