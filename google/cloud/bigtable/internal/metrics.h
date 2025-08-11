@@ -57,8 +57,8 @@ LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
                       std::set<std::string> const& filtered_data_labels = {});
 
 bool HasServerTiming(grpc::ClientContext const& client_context);
-bool IsConnectionError(google::cloud::Status const& status,
-                       grpc::ClientContext const& client_context);
+bool IsConnectivityError(google::cloud::Status const& status,
+                         grpc::ClientContext const& client_context);
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);

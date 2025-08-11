@@ -86,8 +86,8 @@ bool HasServerTiming(grpc::ClientContext const& client_context) {
   return true;
 }
 
-bool IsConnectionError(google::cloud::Status const& status,
-                       grpc::ClientContext const& client_context) {
+bool IsConnectivityError(google::cloud::Status const& status,
+                         grpc::ClientContext const& client_context) {
   return status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
          !HasServerTiming(client_context);
 }
@@ -381,7 +381,7 @@ void ConnectivityErrorCount::PostCall(
   auto const& status = p.attempt_status;
   data_labels_.status = StatusCodeToString(status.code());
   if (resource_labels_.cluster.empty() || resource_labels_.zone.empty() ||
-      IsConnectionError(status, client_context)) {
+      IsConnectivityError(status, client_context)) {
     ++num_errors_;
   }
   connectivity_error_count_->Add(
