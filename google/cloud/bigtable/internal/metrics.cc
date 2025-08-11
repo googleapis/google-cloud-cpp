@@ -385,10 +385,10 @@ void ConnectivityErrorCount::PostCall(
     ++num_errors_;
   }
   connectivity_error_count_->Add(
-        num_errors_,
-        IntoLabelMap(resource_labels_, data_labels_,
-                     std::set<std::string>{"streaming"}),
-        context);
+      num_errors_,
+      IntoLabelMap(resource_labels_, data_labels_,
+                   std::set<std::string>{"streaming"}),
+      context);
 }
 
 std::unique_ptr<Metric> ConnectivityErrorCount::clone(ResourceLabels resource_labels,
