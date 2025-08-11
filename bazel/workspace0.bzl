@@ -209,15 +209,15 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.74.1.tar.gz",
         ],
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
             "@com_github_grpc_grpc": "@grpc",
             "@com_google_protobuf": "@protobuf",
         },
-        sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
-        strip_prefix = "grpc-1.71.0",
+        sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
+        strip_prefix = "grpc-1.74.1",
         # gRPC patches a file in @com_google_protobuf, but the patch expects a version different
         # from the one in our workspace.
         patches = [
