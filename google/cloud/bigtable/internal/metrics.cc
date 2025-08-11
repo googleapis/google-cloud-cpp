@@ -391,8 +391,8 @@ void ConnectivityErrorCount::PostCall(
       context);
 }
 
-std::unique_ptr<Metric> ConnectivityErrorCount::clone(ResourceLabels resource_labels,
-                                          DataLabels data_labels) const {
+std::unique_ptr<Metric> ConnectivityErrorCount::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
   auto m = std::make_unique<ConnectivityErrorCount>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);
