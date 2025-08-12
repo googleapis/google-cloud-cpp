@@ -344,6 +344,56 @@ std::unique_ptr<Metric> ServerLatency::clone(ResourceLabels resource_labels,
   return m;
 }
 
+ApplicationBlockingLatency::ApplicationBlockingLatency(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : application_blocking_latencies_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram("application_latencies")) {}
+
+void ApplicationBlockingLatency::ElementDelivery(
+    opentelemetry::context::Context const&, ElementDeliveryParams const& p) {
+  element_delivery_time_ = p.element_delivery;
+}
+
+void ApplicationBlockingLatency::ElementRequest(
+    opentelemetry::context::Context const&, ElementRequestParams const& p) {
+  auto application_blocking_latency =
+      std::chrono::duration_cast<LatencyDuration>(p.element_request -
+                                                  element_delivery_time_);
+  pending_latencies_.push_back(application_blocking_latency);
+}
+
+void ApplicationBlockingLatency::PostCall(
+    opentelemetry::context::Context const&,
+    grpc::ClientContext const& client_context, PostCallParams const&) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+}
+
+void ApplicationBlockingLatency::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
+  auto m = IntoLabelMap(resource_labels_, data_labels_,
+                        std::set<std::string>{"streaming", "status"});
+  for (auto const& latency : pending_latencies_) {
+    application_blocking_latencies_->Record(latency.count(), m, context);
+  }
+}
+
+std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
+  auto m = std::make_unique<ApplicationBlockingLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
