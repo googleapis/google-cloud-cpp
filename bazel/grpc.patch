@@ -1,24 +1,29 @@
-index 84e8668b32..62d1bcb89a 100644
+diff --git a/bazel/grpc_deps.bzl b/bazel/grpc_deps.bzl
+index 6752260f16..6108187095 100644
 --- bazel/grpc_deps.bzl
 +++ bazel/grpc_deps.bzl
-@@ -55,22 +55,6 @@ def grpc_deps():
+@@ -55,26 +55,6 @@ def grpc_deps():
              ],
          )
  
 -    if "com_google_protobuf" not in native.existing_rules():
 -        http_archive(
 -            name = "com_google_protobuf",
--            sha256 = "cf2db029202bb8eb1471b9bae387cc475d15d9e99c547e6906155033f81249a5",
--            strip_prefix = "protobuf-2d4414f384dc499af113b5991ce3eaa9df6dd931",
+-            sha256 = "d0e3a75876a81e1536028bb9cf9181382b198da4cc6fa6aef86879ef629ac807",
+-            strip_prefix = "protobuf-74211c0dfc2777318ab53c2cd2c317a2ef9012de",
 -            urls = [
--                # https://github.com/protocolbuffers/protobuf/commits/v29.0
--                "https://storage.googleapis.com/grpc-bazel-mirror/github.com/protocolbuffers/protobuf/archive/2d4414f384dc499af113b5991ce3eaa9df6dd931.tar.gz",
--                "https://github.com/protocolbuffers/protobuf/archive/2d4414f384dc499af113b5991ce3eaa9df6dd931.tar.gz",
+-                # https://github.com/protocolbuffers/protobuf/commits/v31.1
+-                "https://storage.googleapis.com/grpc-bazel-mirror/github.com/protocolbuffers/protobuf/archive/74211c0dfc2777318ab53c2cd2c317a2ef9012de.tar.gz",
+-                "https://github.com/protocolbuffers/protobuf/archive/74211c0dfc2777318ab53c2cd2c317a2ef9012de.tar.gz",
 -            ],
 -            patches = [
 -                "@com_github_grpc_grpc//third_party:protobuf.patch",
 -            ],
 -            patch_args = ["-p1"],
+-            repo_mapping = {
+-                "@abseil-cpp": "@com_google_absl",
+-                "@googletest": "@com_google_googletest",
+-            },
 -        )
 -
      if "com_google_googletest" not in native.existing_rules():
