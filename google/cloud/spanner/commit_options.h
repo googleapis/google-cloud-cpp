@@ -107,6 +107,15 @@ class CommitOptions {
     return max_commit_delay_;
   }
 
+  CommitOptions& set_exclude_txn_from_change_streams(bool exclude) {
+    exclude_txn_from_change_streams_ = exclude;
+    return *this;
+  }
+
+  absl::optional<bool> const& exclude_txn_from_change_streams() const {
+    return exclude_txn_from_change_streams_;
+  }
+
  private:
   // Note that CommitRequest.request_options.request_tag is ignored,
   // so we do not even provide a mechanism to specify one.
@@ -114,6 +123,7 @@ class CommitOptions {
   absl::optional<RequestPriority> request_priority_;
   absl::optional<std::string> transaction_tag_;
   absl::optional<std::chrono::milliseconds> max_commit_delay_;
+  absl::optional<bool> exclude_txn_from_change_streams_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

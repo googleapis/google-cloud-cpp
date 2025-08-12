@@ -33,6 +33,10 @@ CommitOptions::CommitOptions(Options const& opts)
   if (opts.has<MaxCommitDelayOption>()) {
     max_commit_delay_ = opts.get<MaxCommitDelayOption>();
   }
+  if (opts.has<ExcludeTransactionFromChangeStreamsOption>()) {
+    exclude_txn_from_change_streams_ =
+        opts.get<ExcludeTransactionFromChangeStreamsOption>();
+  }
 }
 
 CommitOptions::operator Options() const {
@@ -41,6 +45,10 @@ CommitOptions::operator Options() const {
   if (request_priority_) opts.set<RequestPriorityOption>(*request_priority_);
   if (transaction_tag_) opts.set<TransactionTagOption>(*transaction_tag_);
   if (max_commit_delay_) opts.set<MaxCommitDelayOption>(*max_commit_delay_);
+  if (exclude_txn_from_change_streams_) {
+    opts.set<ExcludeTransactionFromChangeStreamsOption>(
+        *exclude_txn_from_change_streams_);
+  }
   return opts;
 }
 
