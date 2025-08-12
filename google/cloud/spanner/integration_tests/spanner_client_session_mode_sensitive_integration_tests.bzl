@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,6 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-spanner_client_integration_tests = [
-    "backup_extra_integration_test.cc",
-    "backup_integration_test.cc",
-    "client_stress_test.cc",
-    "data_types_integration_test.cc",
-    "database_admin_integration_test.cc",
-    "instance_admin_integration_test.cc",
-    "session_pool_integration_test.cc",
+spanner_client_session_mode_sensitive_integration_tests = [
+    "client_integration_test.cc",
 ]
