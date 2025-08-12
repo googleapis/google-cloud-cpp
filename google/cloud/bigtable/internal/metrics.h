@@ -222,6 +222,32 @@ class ServerLatency : public Metric {
       server_latencies_;
 };
 
+class ApplicationBlockingLatency : public Metric {
+ public:
+  ApplicationBlockingLatency(
+      std::string const& instrumentation_scope,
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::MeterProvider> const& provider);
+  void PostCall(opentelemetry::context::Context const& context,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+  void ElementDelivery(opentelemetry::context::Context const&,
+                       ElementDeliveryParams const&) override;
+  void ElementRequest(opentelemetry::context::Context const&,
+                      ElementRequestParams const&) override;
+
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      application_blocking_latencies_;
+  OperationContext::Clock::time_point element_delivery_time_;
+  absl::optional<LatencyDuration> application_blocking_latency_;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
