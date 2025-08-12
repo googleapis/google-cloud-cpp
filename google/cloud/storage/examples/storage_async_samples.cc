@@ -200,7 +200,7 @@ void OpenObjectSingleRangedRead(google::cloud::storage_experimental::AsyncClient
 
 void OpenObjectMultipleRangedRead(google::cloud::storage_experimental::AsyncClient& client,
                 std::vector<std::string> const& argv) {
-  //! [open-object-mulitple-ranged-read]
+  //! [open-object-multiple-ranged-read]
   namespace gcs_ex = google::cloud::storage_experimental;
   // Helper coroutine, count lines returned by a AsyncReader
   auto count_newlines =
@@ -233,7 +233,7 @@ void OpenObjectMultipleRangedRead(google::cloud::storage_experimental::AsyncClie
     auto c2 = count_newlines(std::move(r2), std::move(t2));
     co_return (co_await std::move(c1)) + (co_await std::move(c2));
   };
-  //! [open-object-mulitple-ranged-read]
+  //! [open-object-multiple-ranged-read]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const count = coro(client, argv.at(0), argv.at(1)).get();
