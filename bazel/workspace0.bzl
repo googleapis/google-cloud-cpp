@@ -26,6 +26,13 @@ def gl_cpp_workspace0(name = None):
     have not been previously loaded, allowing application developers to
     override the version of the dependencies they want to use.
 
+    We have overriden the common names of some dependencies to ones that
+    are compatible with bzlmod. For example: @com_google_protobuf to
+    @protobuf. Due to WORKSPACE limitations, we need to "control" every
+    reference to @com_google_protobuf and other overriden dependencies
+    and add a repo mapping in there.
+    See https://bazel.build/versions/8.3.0/external/overview#workspace-system
+
     Note that some dependencies have their own `*_deps()` function. These
     functions can only be called after load()-ing the right .bzl file. Bazel
     does not permit interleaving load() and function calls in the same function
@@ -84,6 +91,39 @@ def gl_cpp_workspace0(name = None):
             "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
         ],
         strip_prefix = "protoc-gen-validate-1.2.1",
+        integrity = "sha256-5HGDUnVN8Tk7h5K2MTOKqFYvOQ6BYHg+NlRUvBHZYyg=",
+        repo_mapping = {
+            "@com_google_protobuf": "@protobuf",
+        }
+    )
+
+    maybe(
+        http_archive,
+        name = "com_github_cncf_xds",
+        urls = [
+            "https://github.com/cncf/xds/archive/2ac532fd44436293585084f8d94c6bdb17835af0.tar.gz"
+        ],
+        sha256 = "790c4c83b6950bb602fec221f6a529d9f368cdc8852aae7d2592d0d04b015f37",
+        strip_prefix = "xds-2ac532fd44436293585084f8d94c6bdb17835af0",
+        repo_mapping = {
+            "@com_google_protobuf": "@protobuf",
+            "@com_google_googleapis": "@googleapis",
+        }
+    )
+
+    maybe(
+        http_archive,
+        name = "envoy_api",
+        sha256 = "cd8b49614408b43bd45d90e3e98d69e24eea632ff42ac3bfb8bca68bc31e377f",
+        strip_prefix = "data-plane-api-4de3c74cf21a9958c1cf26d8993c55c6e0d28b49",
+        urls = [
+            "https://storage.googleapis.com/grpc-bazel-mirror/github.com/envoyproxy/data-plane-api/archive/4de3c74cf21a9958c1cf26d8993c55c6e0d28b49.tar.gz",
+            "https://github.com/envoyproxy/data-plane-api/archive/4de3c74cf21a9958c1cf26d8993c55c6e0d28b49.tar.gz",
+        ],
+        repo_mapping = {
+            "@com_google_protobuf": "@protobuf",
+            "@com_google_googleapis": "@googleapis",
+        }
     )
 
     # protobuf requires this
@@ -116,6 +156,9 @@ def gl_cpp_workspace0(name = None):
         ],
         sha256 = "b396401fd29e2e679cace77867481d388c807671dc2acc602a0259eeb79b7811",
         strip_prefix = "abseil-cpp-20250127.1",
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+        },
     )
 
     # Load a version of googletest that we know works. This is needed to create
@@ -128,6 +171,9 @@ def gl_cpp_workspace0(name = None):
         ],
         sha256 = "78c676fc63881529bf97bf9d45948d905a66833fbfa5318ea2cd7478cb98f399",
         strip_prefix = "googletest-1.16.0",
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+        },
     )
 
     # Load the googleapis dependency.
@@ -158,6 +204,7 @@ def gl_cpp_workspace0(name = None):
         repo_mapping = {
             "@com_github_grpc_grpc": "@grpc",
             "@com_google_protobuf": "@protobuf",
+            "@com_google_absl": "@abseil-cpp",
         },
     )
 
@@ -172,6 +219,22 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "protobuf-31.1",
         repo_mapping = {
             "@com_google_protobuf": "@protobuf",
+            "@com_google_absl": "@abseil-cpp",
+        },
+    )
+
+   ## Load protobuf.
+    maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
+        ],
+        sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
+        strip_prefix = "protobuf-31.1",
+        repo_mapping = {
+            "@com_google_protobuf": "@protobuf",
+            "@com_google_absl": "@abseil-cpp",
         },
     )
 
@@ -215,6 +278,7 @@ def gl_cpp_workspace0(name = None):
             "@com_google_absl": "@abseil-cpp",
             "@com_github_grpc_grpc": "@grpc",
             "@com_google_protobuf": "@protobuf",
+            "@com_google_googleapis": "@googleapis",
         },
         sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
         strip_prefix = "grpc-1.74.1",
@@ -293,5 +357,6 @@ def gl_cpp_workspace0(name = None):
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",
             "@github_nlohmann_json": "@com_github_nlohmann_json",
+            "@com_google_absl": "@abseil-cpp",
         },
     )
