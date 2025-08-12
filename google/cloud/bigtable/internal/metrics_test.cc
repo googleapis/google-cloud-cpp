@@ -1583,22 +1583,7 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
       .WillOnce([](std::uint64_t value,
                    opentelemetry::common::KeyValueIterable const& attributes,
                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(1));
-        EXPECT_THAT(
-            MakeAttributesMap(attributes),
-            UnorderedElementsAre(
-                Pair("project_id", "my-project-id"),
-                Pair("instance", "my-instance"),
-                Pair("cluster", "<unspecified>"), Pair("table", "my-table"),
-                Pair("zone", "global"), Pair("method", "my-method"),
-                Pair("status", "OK"), Pair("client_name", "my-client-name"),
-                Pair("client_uid", "my-client-uid"),
-                Pair("app_profile", "my-app-profile")));
-      })
-      .WillOnce([](std::uint64_t value,
-                   opentelemetry::common::KeyValueIterable const& attributes,
-                   opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(2));
+        EXPECT_THAT(value, Eq(3));
         EXPECT_THAT(
             MakeAttributesMap(attributes),
             UnorderedElementsAre(
@@ -1660,6 +1645,10 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
   clock->AdvanceTime(std::chrono::microseconds(1234));
   clone->PostCall(otel_context, client_context,
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::microseconds(1234));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 
 TEST(ConnectivityErrorCount, Success) {
@@ -1735,6 +1724,7 @@ TEST(ConnectivityErrorCount, Success) {
 
   clone->PostCall(otel_context, client_context,
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 
 TEST(ConnectivityErrorCount, OkAndMissingServerTiming) {
@@ -1802,6 +1792,7 @@ TEST(ConnectivityErrorCount, OkAndMissingServerTiming) {
   auto clock = std::make_shared<FakeSteadyClock>();
   clone->PostCall(otel_context, client_context,
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 
 TEST(ConnectivityErrorCount, DeadlineExceededAndMissingServerTiming) {
@@ -1871,6 +1862,7 @@ TEST(ConnectivityErrorCount, DeadlineExceededAndMissingServerTiming) {
   clone->PostCall(
       otel_context, client_context,
       {clock->Now(), Status{StatusCode::kDeadlineExceeded, "timeout"}});
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

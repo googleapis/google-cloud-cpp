@@ -381,11 +381,13 @@ void ConnectivityErrorCount::PostCall(
       IsConnectivityError(status, client_context)) {
     ++num_errors_;
   }
-  connectivity_error_count_->Add(
-      num_errors_,
-      IntoLabelMap(resource_labels_, data_labels_,
-                   std::set<std::string>{"streaming"}),
-      context);
+}
+
+void ConnectivityErrorCount::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
+  auto m = IntoLabelMap(resource_labels_, data_labels_,
+                        std::set<std::string>{"streaming"});
+  connectivity_error_count_->Add(num_errors_, std::move(m), context);
 }
 
 std::unique_ptr<Metric> ConnectivityErrorCount::clone(

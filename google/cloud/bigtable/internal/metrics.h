@@ -234,6 +234,8 @@ class ConnectivityErrorCount : public Metric {
   void PostCall(opentelemetry::context::Context const& context,
                 grpc::ClientContext const& client_context,
                 PostCallParams const& p) override;
+  void OnDone(opentelemetry::context::Context const& context,
+              OnDoneParams const&) override;
   std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
                                 DataLabels data_labels) const override;
 
@@ -245,7 +247,6 @@ class ConnectivityErrorCount : public Metric {
       opentelemetry::metrics::Counter<std::uint64_t>>
       connectivity_error_count_;
 };
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
