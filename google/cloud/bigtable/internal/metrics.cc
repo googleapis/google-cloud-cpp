@@ -80,10 +80,7 @@ LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
 bool HasServerTiming(grpc::ClientContext const& client_context) {
   auto const& initial_metadata = client_context.GetServerInitialMetadata();
   auto it = initial_metadata.find("server-timing");
-  if (it == initial_metadata.end()) {
-    return false;
-  }
-  return true;
+  return it != initial_metadata.end();
 }
 
 bool IsConnectivityError(google::cloud::Status const& status,
