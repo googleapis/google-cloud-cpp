@@ -1644,6 +1644,7 @@ TEST(ApplicationBlockingLatency, Success) {
   clone->ElementRequest(otel_context, {clock->Now()});
   clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
 }
+
 TEST(ApplicationBlockingLatency, TwoCalls) {
   auto mock_histogram = std::make_unique<MockHistogram<double>>();
   EXPECT_CALL(
@@ -1733,7 +1734,6 @@ TEST(ApplicationBlockingLatency, TwoCalls) {
   clock->AdvanceTime(std::chrono::milliseconds(5));
   clone->ElementRequest(otel_context, {clock->Now()});
   clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
-
 }
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
