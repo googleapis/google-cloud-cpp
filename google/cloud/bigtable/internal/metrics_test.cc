@@ -1583,7 +1583,7 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
       .WillOnce([](std::uint64_t value,
                    opentelemetry::common::KeyValueIterable const& attributes,
                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(3));
+        EXPECT_THAT(value, Eq(4));
         EXPECT_THAT(
             MakeAttributesMap(attributes),
             UnorderedElementsAre(
@@ -1640,6 +1640,9 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
   SetServerMetadata(client_context, server_metadata);
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto clock = std::make_shared<FakeSteadyClock>();
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::microseconds(1234));
   clone->PostCall(otel_context, client_context,
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});
   clock->AdvanceTime(std::chrono::microseconds(1234));

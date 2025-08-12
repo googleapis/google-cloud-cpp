@@ -367,9 +367,9 @@ ConnectivityErrorCount::ConnectivityErrorCount(
               ->CreateUInt64Counter("connectivity_error_count")
               .release()) {}
 
-void ConnectivityErrorCount::PostCall(
-    opentelemetry::context::Context const& context,
-    grpc::ClientContext const& client_context, PostCallParams const& p) {
+void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const&,
+                                      grpc::ClientContext const& client_context,
+                                      PostCallParams const& p) {
   auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
   if (response_params) {
     resource_labels_.cluster = response_params->cluster_id();

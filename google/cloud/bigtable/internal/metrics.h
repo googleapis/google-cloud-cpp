@@ -231,7 +231,7 @@ class ConnectivityErrorCount : public Metric {
       std::string const& instrumentation_scope,
       opentelemetry::nostd::shared_ptr<
           opentelemetry::metrics::MeterProvider> const& provider);
-  void PostCall(opentelemetry::context::Context const& context,
+  void PostCall(opentelemetry::context::Context const&,
                 grpc::ClientContext const& client_context,
                 PostCallParams const& p) override;
   void OnDone(opentelemetry::context::Context const& context,
