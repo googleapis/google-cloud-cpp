@@ -361,23 +361,29 @@ void ApplicationBlockingLatency::ElementDelivery(
 
 void ApplicationBlockingLatency::ElementRequest(
     opentelemetry::context::Context const&, ElementRequestParams const& p) {
-  application_blocking_latency_ =
+  auto application_blocking_latency =
       std::chrono::duration_cast<LatencyDuration>(p.element_request -
                                                   element_delivery_time_);
+  pending_latencies_.push_back(application_blocking_latency);
 }
 
 void ApplicationBlockingLatency::PostCall(
-    opentelemetry::context::Context const& context,
+    opentelemetry::context::Context const&,
     grpc::ClientContext const& client_context, PostCallParams const&) {
   auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
   if (response_params) {
     resource_labels_.cluster = response_params->cluster_id();
     resource_labels_.zone = response_params->zone_id();
   }
+}
+
+void ApplicationBlockingLatency::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
   auto m = IntoLabelMap(resource_labels_, data_labels_,
                         std::set<std::string>{"streaming", "status"});
-  application_blocking_latencies_->Record(application_blocking_latency_->count(),
-                                          std::move(m), context);
+  for (auto const& latency : pending_latencies_) {
+    application_blocking_latencies_->Record(latency.count(), m, context);
+  }
 }
 
 std::unique_ptr<Metric> ApplicationBlockingLatency::clone(

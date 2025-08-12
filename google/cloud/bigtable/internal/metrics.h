@@ -235,6 +235,8 @@ class ApplicationBlockingLatency : public Metric {
                        ElementDeliveryParams const&) override;
   void ElementRequest(opentelemetry::context::Context const&,
                       ElementRequestParams const&) override;
+  void OnDone(opentelemetry::context::Context const& context,
+              OnDoneParams const&) override;
 
   std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
                                 DataLabels data_labels) const override;
@@ -245,7 +247,7 @@ class ApplicationBlockingLatency : public Metric {
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       application_blocking_latencies_;
   OperationContext::Clock::time_point element_delivery_time_;
-  absl::optional<LatencyDuration> application_blocking_latency_;
+  std::vector<LatencyDuration> pending_latencies_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

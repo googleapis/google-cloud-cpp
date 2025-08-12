@@ -1643,9 +1643,10 @@ TEST(ApplicationBlockingLatency, Success) {
   clock->AdvanceTime(std::chrono::microseconds(1234));
   clone->ElementRequest(otel_context, {clock->Now()});
   clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
+  clone->OnDone(otel_context, {clock->Now(), Status{}});
 }
 
-TEST(ApplicationBlockingLatency, TwoCalls) {
+TEST(ApplicationBlockingLatency, StreamingData) {
   auto mock_histogram = std::make_unique<MockHistogram<double>>();
   EXPECT_CALL(
       *mock_histogram,
@@ -1654,7 +1655,7 @@ TEST(ApplicationBlockingLatency, TwoCalls) {
       .WillOnce([](double value,
                    opentelemetry::common::KeyValueIterable const& attributes,
                    opentelemetry::context::Context const&) {
-        EXPECT_THAT(value, Eq(1.234));
+        EXPECT_THAT(value, Eq(1.0));
         EXPECT_THAT(
             MakeAttributesMap(attributes),
             UnorderedElementsAre(
@@ -1726,14 +1727,14 @@ TEST(ApplicationBlockingLatency, TwoCalls) {
 
   clock->SetTime(std::chrono::steady_clock::now());
   clone->ElementDelivery(otel_context, {clock->Now(), true});
-  clock->AdvanceTime(std::chrono::microseconds(1234));
+  clock->AdvanceTime(std::chrono::milliseconds(1));
   clone->ElementRequest(otel_context, {clock->Now()});
-  clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
-  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clock->AdvanceTime(std::chrono::milliseconds(10));
   clone->ElementDelivery(otel_context, {clock->Now(), true});
   clock->AdvanceTime(std::chrono::milliseconds(5));
   clone->ElementRequest(otel_context, {clock->Now()});
   clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
+  clone->OnDone(otel_context, {clock->Now(), Status{}});
 }
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
