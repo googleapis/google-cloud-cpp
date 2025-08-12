@@ -77,6 +77,18 @@ LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
   return labels;
 }
 
+bool HasServerTiming(grpc::ClientContext const& client_context) {
+  auto const& initial_metadata = client_context.GetServerInitialMetadata();
+  auto it = initial_metadata.find("server-timing");
+  return it != initial_metadata.end();
+}
+
+bool IsConnectivityError(google::cloud::Status const& status,
+                         grpc::ClientContext const& client_context) {
+  return status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
+         !HasServerTiming(client_context);
+}
+
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context) {
@@ -339,6 +351,48 @@ void ServerLatency::PostCall(opentelemetry::context::Context const& context,
 std::unique_ptr<Metric> ServerLatency::clone(ResourceLabels resource_labels,
                                              DataLabels data_labels) const {
   auto m = std::make_unique<ServerLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
+ConnectivityErrorCount::ConnectivityErrorCount(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : connectivity_error_count_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateUInt64Counter("connectivity_error_count")
+              .release()) {}
+
+void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const&,
+                                      grpc::ClientContext const& client_context,
+                                      PostCallParams const& p) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+  auto const& status = p.attempt_status;
+  data_labels_.status = StatusCodeToString(status.code());
+  if (resource_labels_.cluster.empty() || resource_labels_.zone.empty() ||
+      IsConnectivityError(status, client_context)) {
+    ++num_errors_;
+  }
+}
+
+void ConnectivityErrorCount::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
+  auto m = IntoLabelMap(resource_labels_, data_labels_,
+                        std::set<std::string>{"streaming"});
+  connectivity_error_count_->Add(num_errors_, std::move(m), context);
+}
+
+std::unique_ptr<Metric> ConnectivityErrorCount::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
+  auto m = std::make_unique<ConnectivityErrorCount>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);
   return m;

@@ -56,6 +56,9 @@ using LabelMap = std::unordered_map<std::string, std::string>;
 LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
                       std::set<std::string> const& filtered_data_labels = {});
 
+bool HasServerTiming(grpc::ClientContext const& client_context);
+bool IsConnectivityError(google::cloud::Status const& status,
+                         grpc::ClientContext const& client_context);
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);
@@ -250,6 +253,28 @@ class ApplicationBlockingLatency : public Metric {
   std::vector<LatencyDuration> pending_latencies_;
 };
 
+class ConnectivityErrorCount : public Metric {
+ public:
+  ConnectivityErrorCount(
+      std::string const& instrumentation_scope,
+      opentelemetry::nostd::shared_ptr<
+          opentelemetry::metrics::MeterProvider> const& provider);
+  void PostCall(opentelemetry::context::Context const&,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+  void OnDone(opentelemetry::context::Context const& context,
+              OnDoneParams const&) override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  std::uint64_t num_errors_ = 0;
+  opentelemetry::nostd::shared_ptr<
+      opentelemetry::metrics::Counter<std::uint64_t>>
+      connectivity_error_count_;
+};
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
