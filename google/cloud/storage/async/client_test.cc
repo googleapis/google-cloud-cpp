@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/internal/async/connection_logging.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -42,7 +45,10 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
+using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -1395,6 +1401,67 @@ TEST(AsyncClient, ResumeRewrite2) {
   ASSERT_STATUS_OK(rt);
   EXPECT_FALSE(rt->second.valid());
   EXPECT_THAT(rt->first, MatchRewriteResponse());
+}
+
+TEST(AsyncClient, LoggingEnabled) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(Return(Options{}.set<LoggingComponentsOption>({"rpc"})));
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([](AsyncConnection::ReadObjectParams const& p) {
+        EXPECT_THAT(p.options.get<LoggingComponentsOption>(), Contains("rpc"));
+        auto reader = std::make_unique<MockAsyncReaderConnection>();
+        EXPECT_CALL(*reader, Read).WillOnce([] {
+          return make_ready_future(
+              AsyncReaderConnection::ReadResponse{Status{}});
+        });
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncReaderConnection>(std::move(reader))));
+      });
+
+  google::cloud::testing_util::ScopedLog log;
+
+  auto client = AsyncClient(storage_internal::MakeLoggingAsyncConnection(mock));
+  auto rt = client.ReadObject(BucketName("test-bucket"), "test-object").get();
+  ASSERT_STATUS_OK(rt);
+  AsyncReader r;
+  AsyncToken t;
+  std::tie(r, t) = *std::move(rt);
+  EXPECT_TRUE(t.valid());
+
+  auto read_result = r.Read(std::move(t)).get();
+  ASSERT_STATUS_OK(read_result);
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObject")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReaderConnectionLogging::Read")));
+}
+
+TEST(AsyncClient, LoggingDisabled) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*mock, ReadObject).WillOnce([](auto const&) {
+    auto reader = std::make_unique<MockAsyncReaderConnection>();
+    EXPECT_CALL(*reader, Read).WillOnce([] {
+      return make_ready_future(AsyncReaderConnection::ReadResponse{Status{}});
+    });
+    return make_ready_future(make_status_or(
+        std::unique_ptr<AsyncReaderConnection>(std::move(reader))));
+  });
+
+  google::cloud::testing_util::ScopedLog log;
+  auto client = AsyncClient(mock);
+  auto rt = client.ReadObject(BucketName("test-bucket"), "test-object").get();
+  ASSERT_STATUS_OK(rt);
+  AsyncReader r;
+  AsyncToken t;
+  std::tie(r, t) = *std::move(rt);
+  EXPECT_TRUE(t.valid());
+
+  auto read_result = r.Read(std::move(t)).get();
+  ASSERT_STATUS_OK(read_result);
+
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 }  // namespace
