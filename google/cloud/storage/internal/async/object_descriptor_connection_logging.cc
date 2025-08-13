@@ -50,6 +50,11 @@ class ObjectDescriptorConnectionLogging : public ObjectDescriptorConnection {
     return MakeLoggingReaderConnection(options(), std::move(conn));
   }
 
+  void MakeSubsequentStream() override {
+    GCP_LOG(INFO) << "ObjectDescriptorConnection::MakeSubsequentStream()";
+    impl_->MakeSubsequentStream();
+  }
+
  private:
   std::shared_ptr<ObjectDescriptorConnection> child_;
 };
