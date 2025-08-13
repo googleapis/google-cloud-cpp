@@ -444,7 +444,8 @@ class AsyncClient {
    * @param reader The asynchronous reader to consume.
    * @param token The token to start reading.
    */
-  future<StatusOr<ReadPayload>> ReadAll(AsyncReader reader, AsyncToken token);
+  static future<StatusOr<ReadPayload>> ReadAll(AsyncReader reader,
+                                               AsyncToken token);
 
   /*
   [start-appendable-object-upload]
