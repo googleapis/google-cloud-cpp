@@ -483,7 +483,8 @@ TEST(AsyncClient, ReadAllFromReader) {
   auto token = storage_internal::MakeAsyncToken(reader_impl_ptr);
 
   auto client = AsyncClient(mock);
-  auto payload = client.ReadAll(std::move(reader), std::move(token)).get();
+  auto payload =
+      AsyncClient::ReadAll(std::move(reader), std::move(token)).get();
   ASSERT_STATUS_OK(payload);
   EXPECT_THAT(payload->contents(), ElementsAre("test-", "payload"));
 }

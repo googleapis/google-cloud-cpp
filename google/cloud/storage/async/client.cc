@@ -127,7 +127,7 @@ future<StatusOr<ReadPayload>> AsyncClient::ReadAll(
   request.clear_read_limit();
   auto reader_future = ReadObject(std::move(request), std::move(opts));
   return reader_future.then(
-      [this](future<StatusOr<std::pair<AsyncReader, AsyncToken>>> f) {
+      [](future<StatusOr<std::pair<AsyncReader, AsyncToken>>> f) {
         auto r = f.get();
         if (!r) return make_ready_future(StatusOr<ReadPayload>(r.status()));
         return ReadAll(std::move(r->first), std::move(r->second));
