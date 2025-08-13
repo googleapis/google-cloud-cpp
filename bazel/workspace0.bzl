@@ -84,6 +84,7 @@ def gl_cpp_workspace0(name = None):
             "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
         ],
         strip_prefix = "protoc-gen-validate-1.2.1",
+        integrity = "sha256-5HGDUnVN8Tk7h5K2MTOKqFYvOQ6BYHg+NlRUvBHZYyg=",
     )
 
     # protobuf requires this
@@ -162,14 +163,34 @@ def gl_cpp_workspace0(name = None):
     )
 
     # Load protobuf.
+    protobuf_version = "31.1"
+    protobuf_sha = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2"
     maybe(
         http_archive,
         name = "protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v" + protobuf_version + ".tar.gz",
         ],
-        sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
-        strip_prefix = "protobuf-31.1",
+        sha256 = protobuf_sha,
+        strip_prefix = "protobuf-" + protobuf_version,
+        repo_mapping = {
+            "@com_google_protobuf": "@protobuf",
+        },
+    )
+
+    # Load protobuf again with its de-facto name.
+    # Overriding every transitive dependency that references it would end up
+    # with several new dependencies just to override via repo_mapping.
+    # This workaround will have bazel resolve protobuf and com_google_protobuf
+    # to the same repository.
+    maybe(
+        http_archive,
+        name = "com_google_protobuf",
+        urls = [
+            "https://github.com/protocolbuffers/protobuf/archive/v" + protobuf_version + ".tar.gz",
+        ],
+        sha256 = protobuf_sha,
+        strip_prefix = "protobuf-" + protobuf_version,
         repo_mapping = {
             "@com_google_protobuf": "@protobuf",
         },
@@ -221,8 +242,8 @@ def gl_cpp_workspace0(name = None):
         # gRPC patches a file in @com_google_protobuf, but the patch expects a version different
         # from the one in our workspace.
         patches = [
-            "//bazel:grpc.patch"
-        ]
+            "//bazel:grpc.patch",
+        ],
     )
 
     native.bind(
