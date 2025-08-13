@@ -144,7 +144,8 @@ Transaction::Transaction(std::string session_id, std::string transaction_id,
   selector.set_id(std::move(transaction_id));
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       spanner_internal::MakeDissociatedSessionHolder(std::move(session_id)),
-      std::move(selector), route_to_leader, std::move(transaction_tag));
+      std::move(selector), route_to_leader, std::move(transaction_tag),
+      absl::nullopt);
 }
 
 Transaction::~Transaction() = default;

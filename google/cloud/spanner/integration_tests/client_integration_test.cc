@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -49,9 +50,15 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
  protected:
   static void SetUpTestSuite() {
     spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = std::make_unique<Client>(MakeConnection(
-        GetDatabase(),
-        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_GZIP)));
+    auto options =
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_GZIP);
+    auto session_mode =
+        internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_TESTING_SESSION_MODE");
+    if (session_mode.has_value() && *session_mode == "multiplexed") {
+      options.set<spanner::EnableMultiplexedSessionOption>({});
+    }
+    client_ = std::make_unique<Client>(
+        MakeConnection(GetDatabase(), std::move(options)));
   }
 
   void SetUp() override {

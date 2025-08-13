@@ -35,10 +35,6 @@ class StatusOnlyResultSetSource : public ResultSourceInterface {
   absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
-  PrecommitToken() const override {
-    return absl::nullopt;
-  }
 
  private:
   Status status_;
