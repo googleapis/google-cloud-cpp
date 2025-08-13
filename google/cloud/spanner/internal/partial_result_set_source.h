@@ -37,7 +37,7 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PrecommitInterface {
+class PartialResultSourceInterface : public spanner::ResultSourceInterface {
  public:
   /**
    * A precommit token is included if the read-write transaction is on
@@ -50,9 +50,6 @@ class PrecommitInterface {
     return absl::nullopt;
   }
 };
-
-class PartialResultSourceInterface : public spanner::ResultSourceInterface,
-                                     public PrecommitInterface {};
 
 /**
  * This class serves as a bridge between the gRPC `PartialResultSet` streaming
