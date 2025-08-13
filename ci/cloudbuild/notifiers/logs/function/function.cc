@@ -257,7 +257,9 @@ void UpdateLogsIndex(gcs::Client client, nlohmann::json const& contents,
   // We skip any events with these status as such builds do not have a final
   // log, and cannot affect the output of the index.html file.
   static auto const kSkippedStatus = std::unordered_set<std::string>{
-      "STATUS_UNKNOWN", "QUEUED", "WORKING",
+      "STATUS_UNKNOWN",
+      "QUEUED",
+      "WORKING",
       "",  // empty status indicates an invalid message
   };
 

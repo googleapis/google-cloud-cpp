@@ -1,10 +1,6 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: 'type: feature request'
-assignees: ''
----
+______________________________________________________________________
+
+## name: Feature request about: Suggest an idea for this project title: '' labels: 'type: feature request' assignees: ''
 
 **What component of `google-cloud-cpp` is this feature request for?** For
 example, is this related to bigtable (i.e., something in

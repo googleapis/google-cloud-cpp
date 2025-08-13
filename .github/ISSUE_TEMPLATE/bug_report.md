@@ -1,10 +1,6 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: 'priority: p2, type: bug'
-assignees: ''
----
+______________________________________________________________________
+
+## name: Bug report about: Create a report to help us improve title: '' labels: 'priority: p2, type: bug' assignees: ''
 
 **Does this issue affect the google-cloud-cpp project?** If the problem is with
 the Google Cloud service exposed by the `google-cloud-cpp` libraries instead of
