@@ -37,6 +37,8 @@ struct TransactionContext {
   std::string const& tag;
   std::int64_t seqno;
   absl::optional<std::shared_ptr<SpannerStub>> stub;
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token;
 };
 
 template <typename Functor>
@@ -50,26 +52,16 @@ using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
 class TransactionImpl {
  public:
   TransactionImpl(google::spanner::v1::TransactionSelector selector,
-                  bool route_to_leader, std::string tag)
-      : TransactionImpl(/*session=*/{}, std::move(selector), route_to_leader,
-                        std::move(tag)) {}
+                  bool route_to_leader, std::string tag);
 
   TransactionImpl(TransactionImpl const& impl,
                   google::spanner::v1::TransactionSelector selector,
-                  bool route_to_leader, std::string tag)
-      : TransactionImpl(impl.session_, std::move(selector), route_to_leader,
-                        std::move(tag)) {}
+                  bool route_to_leader, std::string tag);
 
-  TransactionImpl(SessionHolder session,
-                  google::spanner::v1::TransactionSelector selector,
-                  bool route_to_leader, std::string tag)
-      : session_(std::move(session)),
-        selector_(std::move(selector)),
-        route_to_leader_(route_to_leader),
-        tag_(std::move(tag)),
-        seqno_(0) {
-    state_ = selector_->has_begin() ? State::kBegin : State::kDone;
-  }
+  TransactionImpl(
+      SessionHolder session, google::spanner::v1::TransactionSelector selector,
+      bool route_to_leader, std::string tag,
+      absl::optional<std::string> multiplexed_session_previous_transaction_id);
 
   ~TransactionImpl();
 
@@ -99,15 +91,20 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt};
+    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt,
+                           absl::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       ctx.stub = stub_;
+      ctx.precommit_token = precommit_token_;
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(session_, selector_, ctx);
+        auto result = f(session_, selector_, ctx);
+        lock.lock();
+        UpdatePrecommitToken(lock, ctx.precommit_token);
+        return result;
       }
       state_ = State::kPending;
     }
@@ -118,8 +115,9 @@ class TransactionImpl {
       auto r = f(session_, selector_, ctx);
       bool done = false;
       {
-        std::lock_guard<std::mutex> lock(mu_);
+        std::unique_lock<std::mutex> lock(mu_);
         stub_ = ctx.stub;
+        UpdatePrecommitToken(lock, ctx.precommit_token);
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
         done = (state_ == State::kDone);
@@ -143,6 +141,11 @@ class TransactionImpl {
   }
 
  private:
+  void UpdatePrecommitToken(
+      std::unique_lock<std::mutex> const&,
+      absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+          token);
+
   enum class State {
     kBegin,    // waiting for a future visitor to assign a transaction ID
     kPending,  // waiting for an active visitor to assign a transaction ID
@@ -158,6 +161,8 @@ class TransactionImpl {
   std::string tag_;
   std::int64_t seqno_;
   absl::optional<std::shared_ptr<SpannerStub>> stub_ = absl::nullopt;
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token_ = absl::nullopt;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

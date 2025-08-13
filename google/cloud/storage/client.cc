@@ -225,39 +225,10 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                                 std::string const& file_name) {
-  auto const* func = __func__;
-  auto msg = [&request, &file_name, func](char const* what) {
-    std::ostringstream os;
-    os << func << "(" << request << ", " << file_name << "): " << what;
-    return std::move(os).str();
-  };
-
   auto stream = ReadObjectImpl(request);
   if (stream.bad()) return stream.status();
-
-  // Open the destination file, and immediate raise an exception on failure.
-  std::ofstream os(file_name, std::ios::binary);
-  if (!os.is_open()) {
-    return google::cloud::internal::InvalidArgumentError(
-        msg("cannot open download destination file - ofstream::open()"),
-        GCP_ERROR_INFO());
-  }
-
-  auto const& current = google::cloud::internal::CurrentOptions();
-  auto const size = current.get<DownloadBufferSizeOption>();
-  std::unique_ptr<char[]> buffer(new char[size]);
-  do {
-    stream.read(buffer.get(), size);
-    os.write(buffer.get(), stream.gcount());
-  } while (os.good() && stream.good());
-  os.close();
-  if (!os.good()) {
-    return google::cloud::internal::UnknownError(
-        msg("cannot close download destination file - ofstream::close()"),
-        GCP_ERROR_INFO());
-  }
-  if (stream.bad()) return stream.status();
-  return Status();
+  return connection_->DownloadStreamToFile(std::move(stream), file_name,
+                                           request);
 }
 
 std::string Client::SigningEmail(SigningAccount const& signing_account) const {

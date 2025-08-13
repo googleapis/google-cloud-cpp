@@ -25,23 +25,31 @@ function (spanner_client_define_integration_tests)
         # cmake-format: sort
         backup_extra_integration_test.cc
         backup_integration_test.cc
-        client_integration_test.cc
         client_stress_test.cc
         data_types_integration_test.cc
         database_admin_integration_test.cc
         instance_admin_integration_test.cc
         session_pool_integration_test.cc)
 
+    set(spanner_client_session_mode_sensitive_integration_tests
+        # cmake-format: sort
+        client_integration_test.cc)
+
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_integration_tests.bzl"
                          "spanner_client_integration_tests" YEAR "2019")
+    export_list_to_bazel(
+        "spanner_client_session_mode_sensitive_integration_tests.bzl"
+        "spanner_client_session_mode_sensitive_integration_tests" YEAR "2025")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(spanner-client-integration-tests)
 
     # Generate a target for each unit test.
-    foreach (fname ${spanner_client_integration_tests})
+    foreach (fname IN
+             LISTS ${spanner_client_integration_tests}
+                   ${spanner_client_session_mode_sensitive_integration_tests})
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
         target_link_libraries(
             ${target}
