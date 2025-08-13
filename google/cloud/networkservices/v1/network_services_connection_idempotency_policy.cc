@@ -60,6 +60,52 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteEndpointPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListWasmPluginVersions(
+    google::cloud::networkservices::v1::
+        ListWasmPluginVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetWasmPluginVersion(
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateWasmPluginVersion(
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteWasmPluginVersion(
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListWasmPlugins(
+    google::cloud::networkservices::v1::ListWasmPluginsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetWasmPlugin(
+    google::cloud::networkservices::v1::GetWasmPluginRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateWasmPlugin(
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateWasmPlugin(
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteWasmPlugin(
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkServicesConnectionIdempotencyPolicy::ListGateways(
     google::cloud::networkservices::v1::ListGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -200,6 +246,11 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateServiceBinding(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateServiceBinding(
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteServiceBinding(
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -228,6 +279,53 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateMesh(
 Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListServiceLbPolicies(
+    google::cloud::networkservices::v1::
+        ListServiceLbPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetServiceLbPolicy(
+    google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateServiceLbPolicy(
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateServiceLbPolicy(
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteServiceLbPolicy(
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetGatewayRouteView(
+    google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetMeshRouteView(
+    google::cloud::networkservices::v1::GetMeshRouteViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListGatewayRouteViews(
+    google::cloud::networkservices::v1::
+        ListGatewayRouteViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListMeshRouteViews(
+    google::cloud::networkservices::v1::ListMeshRouteViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency NetworkServicesConnectionIdempotencyPolicy::ListLocations(

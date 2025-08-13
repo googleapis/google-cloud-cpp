@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_INTERNAL_LICENSES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_INTERNAL_LICENSES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_rest_stub.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_retry_traits.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <memory>
 
 namespace google {
@@ -93,6 +93,18 @@ class LicensesRestConnectionImpl
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
                          TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
+      NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_licenses_v1::LicensesRetryPolicy> retry_policy(

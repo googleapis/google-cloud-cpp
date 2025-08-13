@@ -17,10 +17,10 @@
 // source: google/cloud/aiplatform/v1/genai_tuning_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_stub.h"
+#include "google/cloud/aiplatform/v1/genai_tuning_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/genai_tuning_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

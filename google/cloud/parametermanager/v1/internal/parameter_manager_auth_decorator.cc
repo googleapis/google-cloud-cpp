@@ -17,7 +17,7 @@
 // source: google/cloud/parametermanager/v1/service.proto
 
 #include "google/cloud/parametermanager/v1/internal/parameter_manager_auth_decorator.h"
-#include <google/cloud/parametermanager/v1/service.grpc.pb.h>
+#include "google/cloud/parametermanager/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

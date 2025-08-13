@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <string>
 
@@ -784,7 +784,7 @@ class SiteSearchEngineServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L501}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
-  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
@@ -839,7 +839,7 @@ class SiteSearchEngineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L501}
-  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
@@ -910,7 +910,7 @@ class SiteSearchEngineServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L593}
   /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L519}
-  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
@@ -962,7 +962,7 @@ class SiteSearchEngineServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L593}
   /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L519}
-  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
@@ -1023,7 +1023,7 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L541}
   /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L605}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
-  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
@@ -1055,7 +1055,7 @@ class SiteSearchEngineServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L541}
   /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L605}
-  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L182}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_VALUES_CONNECTION_H
 
 #include "google/cloud/resourcemanager/v3/internal/tag_values_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/tag_values.pb.h"
 #include "google/cloud/resourcemanager/v3/tag_values_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,9 +31,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/resourcemanager/v3/tag_values.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -261,8 +262,18 @@ class TagValuesConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `TagValuesConnection` created by
  * this function.
+ */
+std::shared_ptr<TagValuesConnection> MakeTagValuesConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A factory function to construct an object of type `TagValuesConnection`.
+ *
+ * This overload of `MakeTagValuesConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<TagValuesConnection> MakeTagValuesConnection(
     Options options = {});

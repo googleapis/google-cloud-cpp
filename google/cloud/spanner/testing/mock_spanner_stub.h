@@ -32,6 +32,14 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
                google::spanner::v1::CreateSessionRequest const&),
               (override));
 
+  MOCK_METHOD(future<StatusOr<google::spanner::v1::Session>>,
+              AsyncCreateSession,
+              (google::cloud::CompletionQueue & cq,
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options,
+               google::spanner::v1::CreateSessionRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::spanner::v1::BatchCreateSessionsResponse>,
               BatchCreateSessions,
               (grpc::ClientContext&, Options const&,

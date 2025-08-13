@@ -17,10 +17,10 @@
 // source: google/cloud/networkservices/v1/network_services.proto
 
 #include "google/cloud/networkservices/v1/internal/network_services_stub.h"
+#include "google/cloud/networkservices/v1/network_services.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/networkservices/v1/network_services.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -153,6 +153,224 @@ DefaultNetworkServicesStub::DeleteEndpointPolicy(
         request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteEndpointPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ListWasmPluginVersionsResponse>
+DefaultNetworkServicesStub::ListWasmPluginVersions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListWasmPluginVersionsRequest const&
+        request) {
+  google::cloud::networkservices::v1::ListWasmPluginVersionsResponse response;
+  auto status =
+      grpc_stub_->ListWasmPluginVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+DefaultNetworkServicesStub::GetWasmPluginVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+        request) {
+  google::cloud::networkservices::v1::WasmPluginVersion response;
+  auto status = grpc_stub_->GetWasmPluginVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncCreateWasmPluginVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::
+                 CreateWasmPluginVersionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateWasmPluginVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::CreateWasmPluginVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateWasmPluginVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncDeleteWasmPluginVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::
+                 DeleteWasmPluginVersionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteWasmPluginVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::DeleteWasmPluginVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteWasmPluginVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ListWasmPluginsResponse>
+DefaultNetworkServicesStub::ListWasmPlugins(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListWasmPluginsRequest const& request) {
+  google::cloud::networkservices::v1::ListWasmPluginsResponse response;
+  auto status = grpc_stub_->ListWasmPlugins(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+DefaultNetworkServicesStub::GetWasmPlugin(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetWasmPluginRequest const& request) {
+  google::cloud::networkservices::v1::WasmPlugin response;
+  auto status = grpc_stub_->GetWasmPlugin(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncCreateWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::CreateWasmPluginRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateWasmPlugin(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::CreateWasmPlugin(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWasmPlugin(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncUpdateWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateWasmPlugin(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::UpdateWasmPlugin(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWasmPlugin(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncDeleteWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteWasmPlugin(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::DeleteWasmPlugin(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWasmPlugin(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -805,6 +1023,40 @@ DefaultNetworkServicesStub::CreateServiceBinding(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncUpdateServiceBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateServiceBinding(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::UpdateServiceBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateServiceBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkServicesStub::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -946,6 +1198,183 @@ StatusOr<google::longrunning::Operation> DefaultNetworkServicesStub::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteMesh(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ListServiceLbPoliciesResponse>
+DefaultNetworkServicesStub::ListServiceLbPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListServiceLbPoliciesRequest const&
+        request) {
+  google::cloud::networkservices::v1::ListServiceLbPoliciesResponse response;
+  auto status = grpc_stub_->ListServiceLbPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+DefaultNetworkServicesStub::GetServiceLbPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+        request) {
+  google::cloud::networkservices::v1::ServiceLbPolicy response;
+  auto status = grpc_stub_->GetServiceLbPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncCreateServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::
+                 CreateServiceLbPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateServiceLbPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::CreateServiceLbPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateServiceLbPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncUpdateServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::
+                 UpdateServiceLbPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateServiceLbPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::UpdateServiceLbPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateServiceLbPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncDeleteServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkservices::v1::
+                 DeleteServiceLbPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteServiceLbPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::DeleteServiceLbPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteServiceLbPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+DefaultNetworkServicesStub::GetGatewayRouteView(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+        request) {
+  google::cloud::networkservices::v1::GatewayRouteView response;
+  auto status = grpc_stub_->GetGatewayRouteView(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::MeshRouteView>
+DefaultNetworkServicesStub::GetMeshRouteView(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+        request) {
+  google::cloud::networkservices::v1::MeshRouteView response;
+  auto status = grpc_stub_->GetMeshRouteView(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ListGatewayRouteViewsResponse>
+DefaultNetworkServicesStub::ListGatewayRouteViews(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListGatewayRouteViewsRequest const&
+        request) {
+  google::cloud::networkservices::v1::ListGatewayRouteViewsResponse response;
+  auto status = grpc_stub_->ListGatewayRouteViews(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ListMeshRouteViewsResponse>
+DefaultNetworkServicesStub::ListMeshRouteViews(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListMeshRouteViewsRequest const&
+        request) {
+  google::cloud::networkservices::v1::ListMeshRouteViewsResponse response;
+  auto status = grpc_stub_->ListMeshRouteViews(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

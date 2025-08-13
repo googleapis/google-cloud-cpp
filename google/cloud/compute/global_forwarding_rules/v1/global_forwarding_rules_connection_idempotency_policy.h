@@ -20,9 +20,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_FORWARDING_RULES_V1_GLOBAL_FORWARDING_RULES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_FORWARDING_RULES_V1_GLOBAL_FORWARDING_RULES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.pb.h>
 #include <memory>
 
 namespace google {

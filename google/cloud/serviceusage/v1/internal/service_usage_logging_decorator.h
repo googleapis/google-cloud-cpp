@@ -22,7 +22,7 @@
 #include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

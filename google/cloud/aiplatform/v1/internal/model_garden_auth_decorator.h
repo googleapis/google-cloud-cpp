@@ -22,6 +22,7 @@
 #include "google/cloud/aiplatform/v1/internal/model_garden_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
@@ -42,6 +43,16 @@ class ModelGardenServiceAuth : public ModelGardenServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeploy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> Deploy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -82,6 +93,18 @@ class ModelGardenServiceAuth : public ModelGardenServiceStub {
   StatusOr<google::longrunning::Operation> WaitOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

@@ -19,7 +19,7 @@
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
+#include "google/iam/credentials/v1/iamcredentials.grpc.pb.h"
 #include <memory>
 #include <utility>
 

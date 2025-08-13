@@ -77,6 +77,10 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void HeaderSystemIncludes(std::vector<std::string> const& system_includes);
   void CcSystemIncludes(std::vector<std::string> const& system_includes);
 
+  void HeaderProtobufGenCodeIncludes(
+      std::vector<std::string> const& pb_h_includes);
+  void CcProtobufGenCodeIncludes(std::vector<std::string> const& pb_h_includes);
+
   Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   Status HeaderOpenForwardingNamespaces(
       NamespaceType ns_type = NamespaceType::kNormal,
@@ -263,6 +267,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::map<std::string, VarsDictionary> service_method_vars_;
   std::string namespace_;
   bool define_backwards_compatibility_namespace_alias_ = false;
+  bool pb_h_system_includes_ = false;
   MethodDescriptorList methods_;
   MethodDescriptorList async_methods_;
   Printer header_;

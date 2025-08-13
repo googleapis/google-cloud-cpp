@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_FEATURESTORE_ONLINE_SERVING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_FEATURESTORE_ONLINE_SERVING_CONNECTION_H
 
+#include "google/cloud/aiplatform/v1/featurestore_online_service.pb.h"
 #include "google/cloud/aiplatform/v1/featurestore_online_serving_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/featurestore_online_serving_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/aiplatform/v1/featurestore_online_service.pb.h>
 #include <memory>
 #include <string>
 

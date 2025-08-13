@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -175,6 +175,24 @@ DefaultSpannerStub::BatchWrite(
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::spanner::v1::BatchWriteResponse>>(std::move(context),
                                                 std::move(stream));
+}
+
+future<StatusOr<google::spanner::v1::Session>>
+DefaultSpannerStub::AsyncCreateSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::v1::CreateSessionRequest,
+                                    google::spanner::v1::Session>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::spanner::v1::CreateSessionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateSession(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

@@ -17,9 +17,9 @@
 // source: google/cloud/chronicle/v1/instance.proto
 
 #include "google/cloud/chronicle/v1/internal/instance_stub.h"
+#include "google/cloud/chronicle/v1/instance.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/chronicle/v1/instance.grpc.pb.h>
 #include <memory>
 #include <utility>
 

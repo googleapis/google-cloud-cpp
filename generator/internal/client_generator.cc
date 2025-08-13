@@ -21,7 +21,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include <google/api/client.pb.h>
+#include "google/api/client.pb.h"
 #include <google/protobuf/descriptor.h>
 
 namespace google {
@@ -88,11 +88,12 @@ Status ClientGenerator::GenerateHeader() {
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
-  HeaderSystemIncludes(MethodSignatureWellKnownProtobufTypeIncludes());
+  HeaderProtobufGenCodeIncludes(MethodSignatureWellKnownProtobufTypeIncludes());
+  HeaderProtobufGenCodeIncludes({HasGRPCLongrunningOperation()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
   HeaderSystemIncludes(
-      {HasGRPCLongrunningOperation() ? "google/longrunning/operations.grpc.pb.h"
-                                     : "",
-       HasMessageWithMapField() ? "map" : "", "memory", "string"});
+      {HasMessageWithMapField() ? "map" : "", "memory", "string"});
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;

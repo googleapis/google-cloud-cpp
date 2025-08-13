@@ -22,7 +22,7 @@
 #include "google/cloud/developerconnect/v1/internal/developer_connect_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -153,6 +153,94 @@ class DeveloperConnectMetadata : public DeveloperConnectStub {
   FetchGitRefs(grpc::ClientContext& context, Options const& options,
                google::cloud::developerconnect::v1::FetchGitRefsRequest const&
                    request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
+  ListAccountConnectors(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+  GetAccountConnector(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAccountConnector(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccountConnector(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAccountConnector(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+  FetchAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request) override;
+
+  StatusOr<google::cloud::developerconnect::v1::ListUsersResponse> ListUsers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::ListUsersRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request)
+      override;
+
+  StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSelf(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSelf(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

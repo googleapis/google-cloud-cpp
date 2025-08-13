@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_STORAGE_INSIGHTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_STORAGE_INSIGHTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/storageinsights/v1/storageinsights.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/storageinsights/v1/storageinsights.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -64,6 +64,31 @@ class StorageInsightsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetReportDetail(
       google::cloud::storageinsights::v1::GetReportDetailRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListDatasetConfigs(
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest request);
+
+  virtual google::cloud::Idempotency GetDatasetConfig(
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateDatasetConfig(
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteDatasetConfig(
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency LinkDataset(
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request);
+
+  virtual google::cloud::Idempotency UnlinkDataset(
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

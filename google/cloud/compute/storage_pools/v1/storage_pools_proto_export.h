@@ -26,12 +26,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_007.pb.h>
-#include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_126.pb.h>
-#include <google/cloud/compute/v1/internal/common_141.pb.h>
-#include <google/cloud/compute/v1/internal/common_148.pb.h>
+#include "google/cloud/compute/v1/internal/common_007.pb.h"
+#include "google/cloud/compute/v1/internal/common_016.pb.h"
+#include "google/cloud/compute/v1/internal/common_031.pb.h"
+#include "google/cloud/compute/v1/internal/common_130.pb.h"
+#include "google/cloud/compute/v1/internal/common_145.pb.h"
+#include "google/cloud/compute/v1/internal/common_152.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_PROTO_EXPORT_H

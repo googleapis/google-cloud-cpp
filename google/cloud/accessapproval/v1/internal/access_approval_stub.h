@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_STUB_H
 
+#include "google/cloud/accessapproval/v1/accessapproval.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
 #include <memory>
 #include <utility>
 

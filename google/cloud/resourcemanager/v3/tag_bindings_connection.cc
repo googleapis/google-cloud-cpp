@@ -106,13 +106,13 @@ StatusOr<google::longrunning::Operation> TagBindingsConnection::GetOperation(
 }
 
 std::shared_ptr<TagBindingsConnection> MakeTagBindingsConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  TagBindingsPolicyOptionList>(options,
                                                               __func__);
   options = resourcemanager_v3_internal::TagBindingsDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultTagBindingsStub(
@@ -120,6 +120,11 @@ std::shared_ptr<TagBindingsConnection> MakeTagBindingsConnection(
   return resourcemanager_v3_internal::MakeTagBindingsTracingConnection(
       std::make_shared<resourcemanager_v3_internal::TagBindingsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<TagBindingsConnection> MakeTagBindingsConnection(
+    Options options) {
+  return MakeTagBindingsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

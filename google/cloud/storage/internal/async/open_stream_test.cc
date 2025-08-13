@@ -17,7 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

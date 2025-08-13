@@ -38,11 +38,17 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-endpoint"};
   }
   //! [set-client-endpoint]
+  // This service supports specifying a regional or locational endpoint prefix
+  // when creating the TopicAdminConnection.
+  // For example, to connect to "europe-central2-pubsub.googleapis.com":
+  auto client = google::cloud::pubsub_admin::TopicAdminClient(
+      google::cloud::pubsub_admin::MakeTopicAdminConnection("europe-central2"));
+
   // This configuration is common with Private Google Access:
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::pubsub_admin::TopicAdminClient(
+  auto vpc_client = google::cloud::pubsub_admin::TopicAdminClient(
       google::cloud::pubsub_admin::MakeTopicAdminConnection(options));
   //! [set-client-endpoint]
 }

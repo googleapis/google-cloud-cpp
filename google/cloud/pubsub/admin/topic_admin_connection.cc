@@ -102,11 +102,12 @@ TopicAdminConnection::TestIamPermissions(
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  TopicAdminPolicyOptionList>(options, __func__);
-  options = pubsub_admin_internal::TopicAdminDefaultOptions(std::move(options));
+  options = pubsub_admin_internal::TopicAdminDefaultOptions(location,
+                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = pubsub_admin_internal::CreateDefaultTopicAdminStub(
@@ -114,6 +115,11 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
   return pubsub_admin_internal::MakeTopicAdminTracingConnection(
       std::make_shared<pubsub_admin_internal::TopicAdminConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
+    Options options) {
+  return MakeTopicAdminConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,7 @@
 // source: google/cloud/chronicle/v1/instance.proto
 
 #include "google/cloud/chronicle/v1/internal/instance_auth_decorator.h"
-#include <google/cloud/chronicle/v1/instance.grpc.pb.h>
+#include "google/cloud/chronicle/v1/instance.grpc.pb.h"
 #include <memory>
 #include <utility>
 

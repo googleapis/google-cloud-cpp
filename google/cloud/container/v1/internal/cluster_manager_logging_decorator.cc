@@ -19,7 +19,7 @@
 #include "google/cloud/container/v1/internal/cluster_manager_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
+#include "google/container/v1/cluster_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
@@ -434,6 +434,32 @@ ClusterManagerLogging::CheckAutopilotCompatibility(
              google::container::v1::CheckAutopilotCompatibilityRequest const&
                  request) {
         return child_->CheckAutopilotCompatibility(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerLogging::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::FetchClusterUpgradeInfoRequest const&
+                 request) {
+        return child_->FetchClusterUpgradeInfo(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerLogging::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::FetchNodePoolUpgradeInfoRequest const&
+                 request) {
+        return child_->FetchNodePoolUpgradeInfo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

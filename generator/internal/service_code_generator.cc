@@ -25,8 +25,8 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
-#include <google/api/client.pb.h>
-#include <google/api/routing.pb.h>
+#include "google/api/client.pb.h"
+#include "google/api/routing.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
 #include <unordered_map>
@@ -403,6 +403,24 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
   std::sort(system_includes.begin(), system_includes.end());
   for (auto const& include : system_includes) {
     p.Print(SystemInclude(include));
+  }
+}
+
+void ServiceCodeGenerator::HeaderProtobufGenCodeIncludes(
+    std::vector<std::string> const& pb_h_includes) {
+  if (pb_h_system_includes_) {
+    HeaderSystemIncludes(pb_h_includes);
+  } else {
+    HeaderLocalIncludes(pb_h_includes);
+  }
+}
+
+void ServiceCodeGenerator::CcProtobufGenCodeIncludes(
+    std::vector<std::string> const& pb_h_includes) {
+  if (pb_h_system_includes_) {
+    CcSystemIncludes(pb_h_includes);
+  } else {
+    CcLocalIncludes(pb_h_includes);
   }
 }
 

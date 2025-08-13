@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -91,7 +91,7 @@ class DepServiceClient {
   /// Lists `LbTrafficExtension` resources in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the `LbTrafficExtension`
-  ///  resources are listed, specified in the following format:
+  ///  resources are listed. These values are specified in the following format:
   ///  `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -115,8 +115,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
-  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L383}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
+  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L525}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -154,8 +154,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
-  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L383}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
+  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L525}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -184,8 +184,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L421}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L563}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -214,8 +214,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L421}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L563}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -254,8 +254,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L434}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L576}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -313,8 +313,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L434}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L576}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -360,7 +360,7 @@ class DepServiceClient {
   /// @param lb_traffic_extension  Required. `LbTrafficExtension` resource being updated.
   /// @param update_mask  Optional. Used to specify the fields to be overwritten in the
   ///  `LbTrafficExtension` resource by the update.
-  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  The fields specified in the `update_mask` are relative to the resource, not
   ///  the full request. A field is overwritten if it is in the mask. If the
   ///  user does not specify a mask, then all fields are overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -383,8 +383,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
-  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L472}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
+  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -440,8 +440,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
-  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L472}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L443}
+  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -507,8 +507,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L505}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L645}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -558,8 +558,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L505}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L645}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -603,7 +603,7 @@ class DepServiceClient {
   /// Lists `LbRouteExtension` resources in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the `LbRouteExtension`
-  ///  resources are listed, specified in the following format:
+  ///  resources are listed. These values are specified in the following format:
   ///  `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -627,8 +627,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
-  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L606}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
+  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L758}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -666,8 +666,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
-  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L606}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
+  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L758}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -695,8 +695,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L644}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L796}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
@@ -725,8 +725,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L644}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L796}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
@@ -764,8 +764,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L657}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L809}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -822,8 +822,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L657}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L809}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -869,7 +869,7 @@ class DepServiceClient {
   /// @param lb_route_extension  Required. `LbRouteExtension` resource being updated.
   /// @param update_mask  Optional. Used to specify the fields to be overwritten in the
   ///  `LbRouteExtension` resource by the update.
-  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  The fields specified in the `update_mask` are relative to the resource, not
   ///  the full request. A field is overwritten if it is in the mask. If the
   ///  user does not specify a mask, then all fields are overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -892,8 +892,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
-  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L695}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
+  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L846}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -949,8 +949,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
-  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L695}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L676}
+  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L846}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -1016,8 +1016,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L728}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L878}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1067,8 +1067,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L728}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L878}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1106,6 +1106,515 @@ class DepServiceClient {
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(google::longrunning::Operation const& operation,
                          Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists `AuthzExtension` resources in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the `AuthzExtension`
+  ///  resources are listed. These values are specified in the following format:
+  ///  `projects/{project}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkservices.v1.AuthzExtension], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.ListAuthzExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1010}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+  ListAuthzExtensions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists `AuthzExtension` resources in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.ListAuthzExtensionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkservices.v1.AuthzExtension], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.ListAuthzExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1010}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+  ListAuthzExtensions(
+      google::cloud::networkservices::v1::ListAuthzExtensionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of the specified `AuthzExtension` resource.
+  ///
+  /// @param name  Required. A name of the `AuthzExtension` resource to get. Must be in
+  ///  the format
+  ///  `projects/{project}/locations/{location}/authzExtensions/{authz_extension}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkservices.v1.AuthzExtension])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.GetAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1048}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of the specified `AuthzExtension` resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.GetAuthzExtensionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkservices.v1.AuthzExtension])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.GetAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1048}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(
+      google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new `AuthzExtension` resource in a given project
+  /// and location.
+  ///
+  /// @param parent  Required. The parent resource of the `AuthzExtension` resource. Must
+  ///  be in the format `projects/{project}/locations/{location}`.
+  /// @param authz_extension  Required. `AuthzExtension` resource to be created.
+  /// @param authz_extension_id  Required. User-provided ID of the `AuthzExtension` resource to be
+  ///  created.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AuthzExtension] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.CreateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1061}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(
+      std::string const& parent,
+      google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+      std::string const& authz_extension_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthzExtension
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAuthzExtension(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+      std::string const& authz_extension_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new `AuthzExtension` resource in a given project
+  /// and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.CreateAuthzExtensionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AuthzExtension] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.CreateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1061}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthzExtension
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthzExtension
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of the specified `AuthzExtension`
+  /// resource.
+  ///
+  /// @param authz_extension  Required. `AuthzExtension` resource being updated.
+  /// @param update_mask  Required. Used to specify the fields to be overwritten in the
+  ///  `AuthzExtension` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field is overwritten if it is in the mask. If the
+  ///  user does not specify a mask, then all fields are overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AuthzExtension] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1097}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(
+      google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthzExtension
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::AuthzExtension const& authz_extension,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of the specified `AuthzExtension`
+  /// resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AuthzExtension] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L909}
+  /// [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1097}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthzExtension
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthzExtension
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes the specified `AuthzExtension` resource.
+  ///
+  /// @param name  Required. The name of the `AuthzExtension` resource to delete. Must
+  ///  be in the format
+  ///  `projects/{project}/locations/{location}/authzExtensions/{authz_extension}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1128}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthzExtension
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAuthzExtension(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes the specified `AuthzExtension` resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1128}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthzExtension
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthzExtension
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///

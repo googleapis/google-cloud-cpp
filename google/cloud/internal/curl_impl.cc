@@ -369,6 +369,14 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
+
+#ifndef GOOGLE_CLOUD_CPP_WINDOWS_BAZEL_CI_WORKAROUND
+#if CURL_AT_LEAST_VERSION(7, 19, 4)
+  status = handle_.SetOption(CURLOPT_NOPROXY, "metadata.google.internal");
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+#endif
+#endif
+
   if (interface_) {
     status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));

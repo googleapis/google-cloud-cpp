@@ -17,7 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
-#include <google/protobuf/struct.pb.h>
+#include "google/protobuf/struct.pb.h"
 
 namespace google {
 namespace cloud {

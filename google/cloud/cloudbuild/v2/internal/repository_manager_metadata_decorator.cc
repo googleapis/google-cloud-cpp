@@ -22,7 +22,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
+#include "google/devtools/cloudbuild/v2/repositories.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

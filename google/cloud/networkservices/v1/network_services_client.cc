@@ -211,6 +211,311 @@ NetworkServicesClient::DeleteEndpointPolicy(
   return connection_->DeleteEndpointPolicy(operation);
 }
 
+StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesClient::ListWasmPluginVersions(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListWasmPluginVersionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListWasmPluginVersions(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesClient::ListWasmPluginVersions(
+    google::cloud::networkservices::v1::ListWasmPluginVersionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListWasmPluginVersions(std::move(request));
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesClient::GetWasmPluginVersion(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetWasmPluginVersionRequest request;
+  request.set_name(name);
+  return connection_->GetWasmPluginVersion(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesClient::GetWasmPluginVersion(
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetWasmPluginVersion(request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+NetworkServicesClient::CreateWasmPluginVersion(
+    std::string const& parent,
+    google::cloud::networkservices::v1::WasmPluginVersion const&
+        wasm_plugin_version,
+    std::string const& wasm_plugin_version_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateWasmPluginVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_wasm_plugin_version() = wasm_plugin_version;
+  request.set_wasm_plugin_version_id(wasm_plugin_version_id);
+  return connection_->CreateWasmPluginVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateWasmPluginVersion(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkservices::v1::WasmPluginVersion const&
+        wasm_plugin_version,
+    std::string const& wasm_plugin_version_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateWasmPluginVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_wasm_plugin_version() = wasm_plugin_version;
+  request.set_wasm_plugin_version_id(wasm_plugin_version_id);
+  return connection_->CreateWasmPluginVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+NetworkServicesClient::CreateWasmPluginVersion(
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWasmPluginVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateWasmPluginVersion(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWasmPluginVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+NetworkServicesClient::CreateWasmPluginVersion(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWasmPluginVersion(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteWasmPluginVersion(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteWasmPluginVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteWasmPluginVersion(NoAwaitTag,
+                                               std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteWasmPluginVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteWasmPluginVersion(
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWasmPluginVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteWasmPluginVersion(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWasmPluginVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteWasmPluginVersion(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWasmPluginVersion(operation);
+}
+
+StreamRange<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesClient::ListWasmPlugins(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListWasmPluginsRequest request;
+  request.set_parent(parent);
+  return connection_->ListWasmPlugins(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesClient::ListWasmPlugins(
+    google::cloud::networkservices::v1::ListWasmPluginsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListWasmPlugins(std::move(request));
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesClient::GetWasmPlugin(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetWasmPluginRequest request;
+  request.set_name(name);
+  return connection_->GetWasmPlugin(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesClient::GetWasmPlugin(
+    google::cloud::networkservices::v1::GetWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetWasmPlugin(request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesClient::CreateWasmPlugin(
+    std::string const& parent,
+    google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+    std::string const& wasm_plugin_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateWasmPluginRequest request;
+  request.set_parent(parent);
+  *request.mutable_wasm_plugin() = wasm_plugin;
+  request.set_wasm_plugin_id(wasm_plugin_id);
+  return connection_->CreateWasmPlugin(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateWasmPlugin(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+    std::string const& wasm_plugin_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateWasmPluginRequest request;
+  request.set_parent(parent);
+  *request.mutable_wasm_plugin() = wasm_plugin;
+  request.set_wasm_plugin_id(wasm_plugin_id);
+  return connection_->CreateWasmPlugin(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesClient::CreateWasmPlugin(
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWasmPlugin(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWasmPlugin(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesClient::CreateWasmPlugin(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWasmPlugin(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesClient::UpdateWasmPlugin(
+    google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateWasmPluginRequest request;
+  *request.mutable_wasm_plugin() = wasm_plugin;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateWasmPlugin(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateWasmPluginRequest request;
+  *request.mutable_wasm_plugin() = wasm_plugin;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateWasmPlugin(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesClient::UpdateWasmPlugin(
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWasmPlugin(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWasmPlugin(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+NetworkServicesClient::UpdateWasmPlugin(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWasmPlugin(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteWasmPlugin(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteWasmPluginRequest request;
+  request.set_name(name);
+  return connection_->DeleteWasmPlugin(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteWasmPlugin(NoAwaitTag, std::string const& name,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteWasmPluginRequest request;
+  request.set_name(name);
+  return connection_->DeleteWasmPlugin(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteWasmPlugin(
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWasmPlugin(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteWasmPlugin(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWasmPlugin(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteWasmPlugin(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWasmPlugin(operation);
+}
+
 StreamRange<google::cloud::networkservices::v1::Gateway>
 NetworkServicesClient::ListGateways(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -1112,6 +1417,55 @@ NetworkServicesClient::CreateServiceBinding(
   return connection_->CreateServiceBinding(operation);
 }
 
+future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+NetworkServicesClient::UpdateServiceBinding(
+    google::cloud::networkservices::v1::ServiceBinding const& service_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateServiceBindingRequest request;
+  *request.mutable_service_binding() = service_binding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateServiceBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateServiceBinding(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::ServiceBinding const& service_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateServiceBindingRequest request;
+  *request.mutable_service_binding() = service_binding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateServiceBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+NetworkServicesClient::UpdateServiceBinding(
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateServiceBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateServiceBinding(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateServiceBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+NetworkServicesClient::UpdateServiceBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateServiceBinding(operation);
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteServiceBinding(std::string const& name,
                                             Options opts) {
@@ -1317,6 +1671,259 @@ NetworkServicesClient::DeleteMesh(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMesh(operation);
+}
+
+StreamRange<google::cloud::networkservices::v1::ServiceLbPolicy>
+NetworkServicesClient::ListServiceLbPolicies(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListServiceLbPolicies(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::ServiceLbPolicy>
+NetworkServicesClient::ListServiceLbPolicies(
+    google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListServiceLbPolicies(std::move(request));
+}
+
+StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+NetworkServicesClient::GetServiceLbPolicy(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetServiceLbPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetServiceLbPolicy(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+NetworkServicesClient::GetServiceLbPolicy(
+    google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetServiceLbPolicy(request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+NetworkServicesClient::CreateServiceLbPolicy(
+    std::string const& parent,
+    google::cloud::networkservices::v1::ServiceLbPolicy const&
+        service_lb_policy,
+    std::string const& service_lb_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateServiceLbPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_service_lb_policy() = service_lb_policy;
+  request.set_service_lb_policy_id(service_lb_policy_id);
+  return connection_->CreateServiceLbPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateServiceLbPolicy(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkservices::v1::ServiceLbPolicy const&
+        service_lb_policy,
+    std::string const& service_lb_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateServiceLbPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_service_lb_policy() = service_lb_policy;
+  request.set_service_lb_policy_id(service_lb_policy_id);
+  return connection_->CreateServiceLbPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+NetworkServicesClient::CreateServiceLbPolicy(
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateServiceLbPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateServiceLbPolicy(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateServiceLbPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+NetworkServicesClient::CreateServiceLbPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateServiceLbPolicy(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+NetworkServicesClient::UpdateServiceLbPolicy(
+    google::cloud::networkservices::v1::ServiceLbPolicy const&
+        service_lb_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest request;
+  *request.mutable_service_lb_policy() = service_lb_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateServiceLbPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateServiceLbPolicy(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::ServiceLbPolicy const&
+        service_lb_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest request;
+  *request.mutable_service_lb_policy() = service_lb_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateServiceLbPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+NetworkServicesClient::UpdateServiceLbPolicy(
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateServiceLbPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateServiceLbPolicy(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateServiceLbPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+NetworkServicesClient::UpdateServiceLbPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateServiceLbPolicy(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteServiceLbPolicy(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteServiceLbPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteServiceLbPolicy(NoAwaitTag,
+                                             std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteServiceLbPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteServiceLbPolicy(
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteServiceLbPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteServiceLbPolicy(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteServiceLbPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteServiceLbPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteServiceLbPolicy(operation);
+}
+
+StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+NetworkServicesClient::GetGatewayRouteView(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetGatewayRouteViewRequest request;
+  request.set_name(name);
+  return connection_->GetGatewayRouteView(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+NetworkServicesClient::GetGatewayRouteView(
+    google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGatewayRouteView(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::MeshRouteView>
+NetworkServicesClient::GetMeshRouteView(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetMeshRouteViewRequest request;
+  request.set_name(name);
+  return connection_->GetMeshRouteView(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::MeshRouteView>
+NetworkServicesClient::GetMeshRouteView(
+    google::cloud::networkservices::v1::GetMeshRouteViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMeshRouteView(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::GatewayRouteView>
+NetworkServicesClient::ListGatewayRouteViews(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request;
+  request.set_parent(parent);
+  return connection_->ListGatewayRouteViews(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::GatewayRouteView>
+NetworkServicesClient::ListGatewayRouteViews(
+    google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGatewayRouteViews(std::move(request));
+}
+
+StreamRange<google::cloud::networkservices::v1::MeshRouteView>
+NetworkServicesClient::ListMeshRouteViews(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListMeshRouteViewsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMeshRouteViews(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::MeshRouteView>
+NetworkServicesClient::ListMeshRouteViews(
+    google::cloud::networkservices::v1::ListMeshRouteViewsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMeshRouteViews(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>

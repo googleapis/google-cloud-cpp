@@ -17,7 +17,7 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_auth_decorator.h"
-#include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
+#include "google/api/serviceusage/v1/serviceusage.grpc.pb.h"
 #include <memory>
 #include <utility>
 

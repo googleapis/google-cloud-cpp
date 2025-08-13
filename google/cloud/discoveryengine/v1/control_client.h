@@ -254,8 +254,8 @@ class ControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
-  /// [google.cloud.discoveryengine.v1.Control.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L298}
-  /// [google.cloud.discoveryengine.v1.Control.solution_type]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L316}
+  /// [google.cloud.discoveryengine.v1.Control.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L296}
+  /// [google.cloud.discoveryengine.v1.Control.solution_type]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L314}
   /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L160}
   ///
   // clang-format on

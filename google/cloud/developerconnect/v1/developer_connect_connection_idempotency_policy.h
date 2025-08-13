@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -91,6 +91,42 @@ class DeveloperConnectConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FetchGitRefs(
       google::cloud::developerconnect::v1::FetchGitRefsRequest request);
+
+  virtual google::cloud::Idempotency ListAccountConnectors(
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetAccountConnector(
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateAccountConnector(
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateAccountConnector(
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAccountConnector(
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request);
+
+  virtual google::cloud::Idempotency FetchAccessToken(
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListUsers(
+      google::cloud::developerconnect::v1::ListUsersRequest request);
+
+  virtual google::cloud::Idempotency DeleteUser(
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request);
+
+  virtual google::cloud::Idempotency FetchSelf(
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteSelf(
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

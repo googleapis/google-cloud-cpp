@@ -17,9 +17,9 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_logging_decorator.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -326,6 +326,239 @@ DeveloperConnectLogging::FetchGitRefs(
              google::cloud::developerconnect::v1::FetchGitRefsRequest const&
                  request) {
         return child_->FetchGitRefs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
+DeveloperConnectLogging::ListAccountConnectors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 ListAccountConnectorsRequest const& request) {
+        return child_->ListAccountConnectors(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectLogging::GetAccountConnector(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+              request) {
+        return child_->GetAccountConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectLogging::AsyncCreateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::developerconnect::v1::
+                 CreateAccountConnectorRequest const& request) {
+        return child_->AsyncCreateAccountConnector(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::CreateAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 CreateAccountConnectorRequest const& request) {
+        return child_->CreateAccountConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectLogging::AsyncUpdateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::developerconnect::v1::
+                 UpdateAccountConnectorRequest const& request) {
+        return child_->AsyncUpdateAccountConnector(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::UpdateAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 UpdateAccountConnectorRequest const& request) {
+        return child_->UpdateAccountConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectLogging::AsyncDeleteAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::developerconnect::v1::
+                 DeleteAccountConnectorRequest const& request) {
+        return child_->AsyncDeleteAccountConnector(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::DeleteAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 DeleteAccountConnectorRequest const& request) {
+        return child_->DeleteAccountConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectLogging::FetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+                 request) {
+        return child_->FetchAccessToken(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListUsersResponse>
+DeveloperConnectLogging::ListUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListUsersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::ListUsersRequest const&
+                 request) {
+        return child_->ListUsers(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectLogging::AsyncDeleteUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::developerconnect::v1::DeleteUserRequest const&
+                 request) {
+        return child_->AsyncDeleteUser(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectLogging::DeleteUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::DeleteUserRequest const&
+                 request) {
+        return child_->DeleteUser(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectLogging::FetchSelf(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::FetchSelfRequest const&
+                 request) {
+        return child_->FetchSelf(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectLogging::AsyncDeleteSelf(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::developerconnect::v1::DeleteSelfRequest const&
+                 request) {
+        return child_->AsyncDeleteSelf(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectLogging::DeleteSelf(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::DeleteSelfRequest const&
+                 request) {
+        return child_->DeleteSelf(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

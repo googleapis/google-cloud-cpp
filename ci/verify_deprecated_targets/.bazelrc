@@ -28,10 +28,6 @@ build:macos --host_cxxopt=-std=c++17
 # the project separately.
 build --experimental_convenience_symlinks=ignore
 
-# TODO(#11485) - enable bzlmod once it works
-common --noenable_bzlmod
-common --enable_workspace
-
 # TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
 #     `apple_rules`.
 common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1

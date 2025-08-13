@@ -21,9 +21,9 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/api/servicemanagement/v1/servicemanager.grpc.pb.h"
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

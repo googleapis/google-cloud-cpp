@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_TEMPLATE_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_TEMPLATE_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/dataproc/v1/session_templates.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/session_templates.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

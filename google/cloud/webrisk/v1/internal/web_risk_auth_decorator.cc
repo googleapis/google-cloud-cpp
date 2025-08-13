@@ -17,7 +17,7 @@
 // source: google/cloud/webrisk/v1/webrisk.proto
 
 #include "google/cloud/webrisk/v1/internal/web_risk_auth_decorator.h"
-#include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
+#include "google/cloud/webrisk/v1/webrisk.grpc.pb.h"
 #include <memory>
 #include <utility>
 

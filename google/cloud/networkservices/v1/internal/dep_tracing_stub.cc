@@ -265,6 +265,119 @@ DepServiceTracingStub::DeleteLbRouteExtension(
       child_->DeleteLbRouteExtension(context, options, request));
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
+DepServiceTracingStub::ListAuthzExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "ListAuthzExtensions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListAuthzExtensions(context, options, request));
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceTracingStub::GetAuthzExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "GetAuthzExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetAuthzExtension(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceTracingStub::AsyncCreateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "CreateAuthzExtension");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAuthzExtension(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingStub::CreateAuthzExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "CreateAuthzExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAuthzExtension(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceTracingStub::AsyncUpdateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "UpdateAuthzExtension");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAuthzExtension(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingStub::UpdateAuthzExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "UpdateAuthzExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAuthzExtension(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceTracingStub::AsyncDeleteAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "DeleteAuthzExtension");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteAuthzExtension(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingStub::DeleteAuthzExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "DeleteAuthzExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteAuthzExtension(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DepServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

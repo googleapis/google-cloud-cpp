@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_CONNECTION_H
 
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_retry_traits.h"
+#include "google/cloud/compute/region_disks/v1/region_disks.pb.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_disks/v1/region_disks.pb.h>
 #include <memory>
 
 namespace google {

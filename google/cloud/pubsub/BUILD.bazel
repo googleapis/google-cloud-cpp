@@ -38,9 +38,9 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
+        "@googleapis//google/pubsub/v1:pubsub_cc_grpc",
         # Do not sort: grpc++ must come last
-        "@com_github_grpc_grpc//:grpc++",
+        "@grpc//:grpc++",
     ],
 )
 
@@ -56,7 +56,7 @@ cc_library(
         ":google_cloud_cpp_pubsub",
         "//:common",
         "//:grpc_utils",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 )
 
@@ -90,7 +90,7 @@ cc_library(
     ],
     deps = [
         ":google_cloud_cpp_pubsub",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 )
 
@@ -105,6 +105,6 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@abseil-cpp//absl/strings:str_format",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in pubsub_client_unit_tests]

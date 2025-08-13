@@ -17,12 +17,12 @@
 // source: google/cloud/alloydb/v1/service.proto
 
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_metadata_decorator.h"
+#include "google/cloud/alloydb/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/alloydb/v1/service.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -101,6 +101,66 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::UpdateCluster(
               absl::StrCat("cluster.name=",
                            internal::UrlEncode(request.cluster().name())));
   return child_->UpdateCluster(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncExportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportCluster(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::ExportCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportCluster(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncImportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncImportCluster(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::ImportCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ImportCluster(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUpgradeCluster(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::UpgradeCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpgradeCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

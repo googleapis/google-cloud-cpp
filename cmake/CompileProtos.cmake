@@ -227,7 +227,7 @@ endfunction ()
 # extracts the list of `.proto` files for each proto library we are interested
 # in. These files are extracted as Bazel rule names, for example:
 #
-# @com_google_googleapis//google/bigtable/v2:bigtable.proto
+# @googleapis//google/bigtable/v2:bigtable.proto
 #
 # We use naming conventions to convert these rules files to a path. Using the
 # same example that becomes:
@@ -253,7 +253,7 @@ function (google_cloud_cpp_load_protolist var file)
     string(REGEX REPLACE "\n" ";" contents "${contents}")
     set(protos)
     foreach (line IN LISTS contents)
-        string(REPLACE "@com_google_googleapis//" "" line "${line}")
+        string(REPLACE "@googleapis//" "" line "${line}")
         string(REPLACE ":" "/" line "${line}")
         if ("${line}" STREQUAL "")
             continue()
@@ -273,7 +273,7 @@ endfunction ()
 # extracts the list of dependencies for each proto library we are interested in.
 # These dependencies are extracted as Bazel rule names, for example:
 #
-# @com_google_googleapis//google/api:annotations_proto
+# @googleapis//google/api:annotations_proto
 #
 # We use naming conventions to convert these rules files to a CMake target.
 # Using the same example that becomes:
@@ -310,8 +310,7 @@ function (google_cloud_cpp_load_protodeps var file)
         endif ()
         string(REPLACE ":" "_" line "${line}")
         string(REPLACE "_proto" "_protos" line "${line}")
-        string(REPLACE "@com_google_googleapis//" "google-cloud-cpp::" line
-                       "${line}")
+        string(REPLACE "@googleapis//" "google-cloud-cpp::" line "${line}")
         # Avoid duplicate `google`'s in the target name.
         string(REPLACE "google-cloud-cpp::google/" "google-cloud-cpp::" line
                        "${line}")

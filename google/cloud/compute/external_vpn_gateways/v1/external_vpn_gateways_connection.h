@@ -20,6 +20,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_EXTERNAL_VPN_GATEWAYS_V1_EXTERNAL_VPN_GATEWAYS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_EXTERNAL_VPN_GATEWAYS_V1_EXTERNAL_VPN_GATEWAYS_CONNECTION_H
 
+#include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.pb.h"
 #include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways_connection_idempotency_policy.h"
 #include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -31,7 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.pb.h>
 #include <memory>
 
 namespace google {

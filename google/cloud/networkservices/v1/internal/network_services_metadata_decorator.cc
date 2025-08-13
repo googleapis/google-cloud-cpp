@@ -17,12 +17,12 @@
 // source: google/cloud/networkservices/v1/network_services.proto
 
 #include "google/cloud/networkservices/v1/internal/network_services_metadata_decorator.h"
+#include "google/cloud/networkservices/v1/network_services.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/networkservices/v1/network_services.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -135,6 +135,161 @@ NetworkServicesMetadata::DeleteEndpointPolicy(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEndpointPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListWasmPluginVersionsResponse>
+NetworkServicesMetadata::ListWasmPluginVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListWasmPluginVersionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListWasmPluginVersions(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesMetadata::GetWasmPluginVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetWasmPluginVersion(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncCreateWasmPluginVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateWasmPluginVersion(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateWasmPluginVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWasmPluginVersion(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncDeleteWasmPluginVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteWasmPluginVersion(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteWasmPluginVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWasmPluginVersion(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListWasmPluginsResponse>
+NetworkServicesMetadata::ListWasmPlugins(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListWasmPluginsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListWasmPlugins(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesMetadata::GetWasmPlugin(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetWasmPluginRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetWasmPlugin(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncCreateWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateWasmPlugin(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateWasmPlugin(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWasmPlugin(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncUpdateWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("wasm_plugin.name=",
+                           internal::UrlEncode(request.wasm_plugin().name())));
+  return child_->AsyncUpdateWasmPlugin(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateWasmPlugin(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("wasm_plugin.name=",
+                           internal::UrlEncode(request.wasm_plugin().name())));
+  return child_->UpdateWasmPlugin(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncDeleteWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteWasmPlugin(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteWasmPlugin(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWasmPlugin(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
@@ -593,6 +748,33 @@ NetworkServicesMetadata::CreateServiceBinding(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncUpdateServiceBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("service_binding.name=",
+                   internal::UrlEncode(request.service_binding().name())));
+  return child_->AsyncUpdateServiceBinding(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateServiceBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("service_binding.name=",
+                   internal::UrlEncode(request.service_binding().name())));
+  return child_->UpdateServiceBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -693,6 +875,139 @@ StatusOr<google::longrunning::Operation> NetworkServicesMetadata::DeleteMesh(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMesh(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListServiceLbPoliciesResponse>
+NetworkServicesMetadata::ListServiceLbPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListServiceLbPoliciesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListServiceLbPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+NetworkServicesMetadata::GetServiceLbPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetServiceLbPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncCreateServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateServiceLbPolicy(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateServiceLbPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateServiceLbPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncUpdateServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("service_lb_policy.name=",
+                   internal::UrlEncode(request.service_lb_policy().name())));
+  return child_->AsyncUpdateServiceLbPolicy(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateServiceLbPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("service_lb_policy.name=",
+                   internal::UrlEncode(request.service_lb_policy().name())));
+  return child_->UpdateServiceLbPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncDeleteServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteServiceLbPolicy(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteServiceLbPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteServiceLbPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+NetworkServicesMetadata::GetGatewayRouteView(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetGatewayRouteView(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::MeshRouteView>
+NetworkServicesMetadata::GetMeshRouteView(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMeshRouteView(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListGatewayRouteViewsResponse>
+NetworkServicesMetadata::ListGatewayRouteViews(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListGatewayRouteViewsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGatewayRouteViews(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListMeshRouteViewsResponse>
+NetworkServicesMetadata::ListMeshRouteViews(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListMeshRouteViewsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMeshRouteViews(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

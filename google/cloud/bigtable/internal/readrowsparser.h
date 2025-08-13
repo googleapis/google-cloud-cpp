@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <string>
 #include <vector>
 

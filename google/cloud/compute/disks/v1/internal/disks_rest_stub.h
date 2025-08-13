@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_INTERNAL_DISKS_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_INTERNAL_DISKS_REST_STUB_H
 
+#include "google/cloud/compute/disks/v1/disks.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/disks/v1/disks.pb.h>
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
 
 namespace google {
@@ -71,6 +71,20 @@ class DisksRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncBulkSetLabels(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -303,6 +317,20 @@ class DefaultDisksRestStub : public DisksRestStub {
       Options const& options,
       google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncBulkSetLabels(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncCreateSnapshot(

@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/cx/v3/changelog.proto
 
 #include "google/cloud/dialogflow_cx/internal/changelogs_logging_decorator.h"
+#include "google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

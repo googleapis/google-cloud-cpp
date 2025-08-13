@@ -28,7 +28,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -378,9 +378,8 @@ class AsyncClient {
   incrementally until it is finalized. This means you can start an upload
   and append data to the object later.
 
-  You can finalize an appendable object in the first call itself by providing
-  all the data in the initial upload. You can also explicitly Flush to ensure
-  the data is persisted.
+  You can either finalize the upload once all data is sent or close it to resume
+  later.
 
   The recovery can be done from most transient errors, including an unexpected
   closure of the streaming RPC used for the upload.
@@ -403,7 +402,7 @@ class AsyncClient {
    * @snippet{doc} async/client.h start-appendable-object-upload
    *
    * @param bucket_name the name of the bucket that contains the object.
-   * @param object_name the name of the object to be read.
+   * @param object_name the name of the object to be uploaded.
    * @param opts options controlling the behavior of this RPC, for example
    *     the application may change the retry policy.
    */
@@ -418,7 +417,7 @@ class AsyncClient {
    * @snippet{doc} async/client.h start-appendable-object-upload
    *
    * @param request the request contents, it must include the bucket name and
-   *     object names. Many other fields are optional.
+   *     object name. Many other fields are optional.
    * @param opts options controlling the behavior of this RPC, for example
    *     the application may change the retry policy.
    */

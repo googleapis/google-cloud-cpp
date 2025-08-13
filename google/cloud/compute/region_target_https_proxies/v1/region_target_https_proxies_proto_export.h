@@ -26,10 +26,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_TARGET_HTTPS_PROXIES_V1_REGION_TARGET_HTTPS_PROXIES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_106.pb.h>
-#include <google/cloud/compute/v1/internal/common_133.pb.h>
-#include <google/cloud/compute/v1/internal/common_143.pb.h>
+#include "google/cloud/compute/v1/internal/common_016.pb.h"
+#include "google/cloud/compute/v1/internal/common_109.pb.h"
+#include "google/cloud/compute/v1/internal/common_137.pb.h"
+#include "google/cloud/compute/v1/internal/common_147.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_TARGET_HTTPS_PROXIES_V1_REGION_TARGET_HTTPS_PROXIES_PROTO_EXPORT_H

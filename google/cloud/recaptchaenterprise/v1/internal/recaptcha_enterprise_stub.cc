@@ -17,9 +17,9 @@
 // source: google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto
 
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
+#include "google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h>
 #include <memory>
 #include <utility>
 

@@ -44,12 +44,12 @@ cc_library(
         "@abseil-cpp//absl/numeric:int128",
         "@abseil-cpp//absl/strings",
         "@abseil-cpp//absl/time",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
-        "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc",
-        "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
-        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
+        "@googleapis//google/spanner/admin/database/v1:database_cc_grpc",
+        "@googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
+        "@googleapis//google/spanner/v1:spanner_cc_grpc",
         # Do not sort: grpc++ must come last
-        "@com_github_grpc_grpc//:grpc++",
+        "@grpc//:grpc++",
     ],
 )
 
@@ -87,7 +87,7 @@ cc_library(
         ":google_cloud_cpp_spanner",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -104,10 +104,9 @@ cc_library(
         ":google_cloud_cpp_spanner_mocks",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
         "@abseil-cpp//absl/strings",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -135,10 +134,9 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
         "@abseil-cpp//absl/numeric:int128",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in spanner_client_unit_tests]
 

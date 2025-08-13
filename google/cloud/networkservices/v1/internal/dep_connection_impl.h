@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -154,6 +154,58 @@ class DepServiceConnectionImpl
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+  ListAuthzExtensions(
+      google::cloud::networkservices::v1::ListAuthzExtensionsRequest request)
+      override;
+
+  StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(
+      google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthzExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(

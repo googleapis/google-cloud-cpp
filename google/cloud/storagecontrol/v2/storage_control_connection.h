@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/storage/control/v2/storage_control.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/storage/control/v2/storage_control.pb.h"
 #include <memory>
 
 namespace google {
@@ -234,6 +234,78 @@ class StorageControlConnection {
   virtual StreamRange<google::storage::control::v2::ManagedFolder>
   ListManagedFolders(
       google::storage::control::v2::ListManagedFoldersRequest request);
+
+  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request);
+
+  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request);
+
+  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::storage::control::v2::AnywhereCache>
+  DisableAnywhereCache(
+      google::storage::control::v2::DisableAnywhereCacheRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::AnywhereCache>
+  PauseAnywhereCache(
+      google::storage::control::v2::PauseAnywhereCacheRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::AnywhereCache>
+  ResumeAnywhereCache(
+      google::storage::control::v2::ResumeAnywhereCacheRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::AnywhereCache>
+  GetAnywhereCache(
+      google::storage::control::v2::GetAnywhereCacheRequest const& request);
+
+  virtual StreamRange<google::storage::control::v2::AnywhereCache>
+  ListAnywhereCaches(
+      google::storage::control::v2::ListAnywhereCachesRequest request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetProjectIntelligenceConfig(
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateProjectIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetFolderIntelligenceConfig(
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateFolderIntelligenceConfig(
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request);
 };
 
 /**

@@ -1,0 +1,3 @@
+@googleapis//google/cloud/lustre/v1:instance.proto
+@googleapis//google/cloud/lustre/v1:lustre.proto
+@googleapis//google/cloud/lustre/v1:transfer.proto

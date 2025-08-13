@@ -24,12 +24,12 @@
 #include "google/cloud/compute/region_instances/v1/region_instances_connection.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_options.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
 
 namespace google {

@@ -17,7 +17,7 @@
 // source: google/spanner/v1/spanner.proto
 
 #include "google/cloud/spanner/internal/spanner_auth_decorator.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -147,6 +147,25 @@ SpannerAuth::BatchWrite(std::shared_ptr<grpc::ClientContext> context,
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->BatchWrite(std::move(context), options, request);
+}
+
+future<StatusOr<google::spanner::v1::Session>> SpannerAuth::AsyncCreateSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(StatusOr<google::spanner::v1::Session>(
+              std::move(context).status()));
+        }
+        return child->AsyncCreateSession(cq, *std::move(context),
+                                         std::move(options), request);
+      });
 }
 
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

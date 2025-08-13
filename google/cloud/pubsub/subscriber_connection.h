@@ -29,6 +29,7 @@
 #include "google/cloud/status_or.h"
 #include <functional>
 #include <initializer_list>
+#include <string>
 #include <vector>
 
 namespace google {
@@ -121,6 +122,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  * @par Changing Retry Parameters Example
  * @snippet samples.cc subscriber-retry-settings
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param subscription the Cloud Pub/Sub subscription used by the returned
  *     connection.
  * @param opts The options to use for this call. Expected options are any
@@ -129,6 +131,15 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  *       - `google::cloud::GrpcOptionList`
  *       - `google::cloud::pubsub::PolicyOptionList`
  *       - `google::cloud::pubsub::SubscriberOptionList`
+ */
+std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
+    std::string const& location, Subscription subscription, Options opts = {});
+
+/**
+ * A factory function to construct an object of type `SubscriberConnection`.
+ *
+ * This overload of `MakeSubscriberConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription, Options opts = {});

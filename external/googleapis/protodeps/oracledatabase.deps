@@ -1,0 +1,13 @@
+@googleapis//google/api:annotations_proto
+@googleapis//google/api:client_proto
+@googleapis//google/api:field_behavior_proto
+@googleapis//google/api:field_info_proto
+@googleapis//google/api:http_proto
+@googleapis//google/api:launch_stage_proto
+@googleapis//google/api:resource_proto
+@googleapis//google/longrunning:operations_proto
+@googleapis//google/rpc:status_proto
+@googleapis//google/type:datetime_proto
+@googleapis//google/type:dayofweek_proto
+@googleapis//google/type:month_proto
+@googleapis//google/type:timeofday_proto

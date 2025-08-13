@@ -17,12 +17,12 @@
 // source: google/cloud/aiplatform/v1/model_garden_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_metadata_decorator.h"
+#include "google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -51,6 +51,28 @@ ModelGardenServiceMetadata::GetPublisherModel(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPublisherModel(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ModelGardenServiceMetadata::AsyncDeploy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeployRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("destination=", internal::UrlEncode(request.destination())));
+  return child_->AsyncDeploy(cq, std::move(context), std::move(options),
+                             request);
+}
+
+StatusOr<google::longrunning::Operation> ModelGardenServiceMetadata::Deploy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeployRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("destination=", internal::UrlEncode(request.destination())));
+  return child_->Deploy(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -139,6 +161,29 @@ ModelGardenServiceMetadata::WaitOperation(
     google::longrunning::WaitOperationRequest const& request) {
   SetMetadata(context, options);
   return child_->WaitOperation(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ModelGardenServiceMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+future<Status> ModelGardenServiceMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ModelGardenServiceMetadata::SetMetadata(

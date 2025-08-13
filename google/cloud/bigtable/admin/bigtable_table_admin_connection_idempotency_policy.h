@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -112,6 +112,21 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency CreateSchemaBundle(
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateSchemaBundle(
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request);
+
+  virtual google::cloud::Idempotency GetSchemaBundle(
+      google::bigtable::admin::v2::GetSchemaBundleRequest const& request);
+
+  virtual google::cloud::Idempotency ListSchemaBundles(
+      google::bigtable::admin::v2::ListSchemaBundlesRequest request);
+
+  virtual google::cloud::Idempotency DeleteSchemaBundle(
+      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request);
 };
 
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>

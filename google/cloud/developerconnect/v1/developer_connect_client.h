@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -116,8 +116,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L551}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L832}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
@@ -155,8 +155,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L551}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L832}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
@@ -181,8 +181,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L587}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L868}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
@@ -211,8 +211,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L587}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L868}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
@@ -248,8 +248,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L598}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L879}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -304,8 +304,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L598}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L879}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -374,8 +374,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L638}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L919}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -429,8 +429,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
-  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L638}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L403}
+  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L919}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -494,8 +494,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L680}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
+  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L961}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -545,8 +545,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L680}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
+  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L961}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -619,8 +619,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L803}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
+  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1353}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
@@ -681,8 +681,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L803}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
+  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1353}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
@@ -746,8 +746,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L845}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
+  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1395}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -797,8 +797,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L845}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
+  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1395}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -864,8 +864,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
-  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L882}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1294}
+  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1432}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -903,8 +903,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
-  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L882}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1294}
+  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1432}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -931,8 +931,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L918}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
+  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1468}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1294}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -961,8 +961,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L918}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
+  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1468}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1294}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -990,8 +990,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L929}
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L967}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1479}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1517}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
@@ -1021,8 +1021,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L929}
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L967}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1479}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1517}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
@@ -1050,8 +1050,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L941}
-  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L953}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1491}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1503}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
@@ -1080,8 +1080,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L941}
-  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L953}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1491}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1503}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
@@ -1118,8 +1118,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L981}
-  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1009}
+  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1531}
+  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1559}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
@@ -1159,8 +1159,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L981}
-  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1009}
+  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1531}
+  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1559}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
@@ -1191,8 +1191,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1015}
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1027}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1565}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1577}
   ///
   // clang-format on
   StatusOr<
@@ -1225,8 +1225,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1015}
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1027}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1565}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1577}
   ///
   // clang-format on
   StatusOr<
@@ -1262,7 +1262,7 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1046}
+  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1596}
   ///
   // clang-format on
   StreamRange<std::string> FetchGitRefs(
@@ -1301,12 +1301,931 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1046}
+  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1596}
   ///
   // clang-format on
   StreamRange<std::string> FetchGitRefs(
       google::cloud::developerconnect::v1::FetchGitRefsRequest request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AccountConnectors in a given project and location.
+  ///
+  /// @param parent  Required. Parent value for ListAccountConnectorsRequest
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.developerconnect.v1.AccountConnector], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.ListAccountConnectorsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L998}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+  ListAccountConnectors(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AccountConnectors in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.ListAccountConnectorsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.developerconnect.v1.AccountConnector], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.ListAccountConnectorsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L998}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+  ListAccountConnectors(
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AccountConnector.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.developerconnect.v1.AccountConnector])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.GetAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1034}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+  GetAccountConnector(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AccountConnector.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.GetAccountConnectorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.developerconnect.v1.AccountConnector])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.GetAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1034}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+  GetAccountConnector(
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AccountConnector in a given project and location.
+  ///
+  /// @param parent  Required. Location resource name as the account_connector’s parent.
+  /// @param account_connector  Required. The AccountConnector to create.
+  /// @param account_connector_id  Required. The ID to use for the AccountConnector, which will become the
+  ///  final component of the AccountConnector's resource name. Its format should
+  ///  adhere to https://google.aip.dev/122#resource-id-segments Names must be
+  ///  unique per-project per-location.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.AccountConnector] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.CreateAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1044}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(
+      std::string const& parent,
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      std::string const& account_connector_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAccountConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      std::string const& account_connector_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AccountConnector in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.CreateAccountConnectorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.AccountConnector] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.CreateAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1044}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAccountConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAccountConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AccountConnector.
+  ///
+  /// @param account_connector  Required. The AccountConnector to update.
+  /// @param update_mask  Optional. The list of fields to be updated.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.AccountConnector] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.UpdateAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1086}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAccountConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AccountConnector.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.UpdateAccountConnectorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.AccountConnector] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.AccountConnector]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1641}
+  /// [google.cloud.developerconnect.v1.UpdateAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1086}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAccountConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAccountConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AccountConnector.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.DeleteAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1124}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAccountConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AccountConnector.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.DeleteAccountConnectorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.DeleteAccountConnectorRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1124}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAccountConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAccountConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetches OAuth access token based on end user credentials.
+  ///
+  /// @param account_connector  Required. The resource name of the AccountConnector in the format
+  ///  `projects/*/locations/*/accountConnectors/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.developerconnect.v1.FetchAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.FetchAccessTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1257}
+  /// [google.cloud.developerconnect.v1.FetchAccessTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1269}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+  FetchAccessToken(std::string const& account_connector, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetches OAuth access token based on end user credentials.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.FetchAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.developerconnect.v1.FetchAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.FetchAccessTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1257}
+  /// [google.cloud.developerconnect.v1.FetchAccessTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1269}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+  FetchAccessToken(
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Users in a given project, location, and account_connector.
+  ///
+  /// @param parent  Required. Parent value for ListUsersRequest
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.developerconnect.v1.User], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.ListUsersRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L367}
+  /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Users in a given project, location, and account_connector.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.ListUsersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.developerconnect.v1.User], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.ListUsersRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L367}
+  /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      google::cloud::developerconnect::v1::ListUsersRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single User.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1167}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteUser
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteUser(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single User.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.DeleteUserRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1167}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteUser
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteUser(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteUser
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(google::longrunning::Operation const& operation,
+             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch the User based on the user credentials.
+  ///
+  /// @param name  Required. Name of the AccountConnector resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.developerconnect.v1.User])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.FetchSelfRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1235}
+  /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch the User based on the user credentials.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.FetchSelfRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.developerconnect.v1.User])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.FetchSelfRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1235}
+  /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete the User based on the user credentials.
+  ///
+  /// @param name  Required. Name of the AccountConnector resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.DeleteSelfRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1246}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteSelf
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteSelf(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete the User based on the user credentials.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.developerconnect.v1.DeleteSelfRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.developerconnect.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.developerconnect.v1.DeleteSelfRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1246}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1204}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteSelf
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteSelf(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteSelf
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///

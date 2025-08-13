@@ -98,6 +98,26 @@ class MockCloudControlsPartnerCoreConnection
               (google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
+      CreateCustomer,
+      (google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
+      UpdateCustomer,
+      (google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteCustomer,
+      (google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

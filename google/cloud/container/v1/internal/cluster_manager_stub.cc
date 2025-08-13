@@ -19,7 +19,7 @@
 #include "google/cloud/container/v1/internal/cluster_manager_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
+#include "google/container/v1/cluster_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -432,6 +432,32 @@ DefaultClusterManagerStub::CheckAutopilotCompatibility(
   google::container::v1::CheckAutopilotCompatibilityResponse response;
   auto status =
       grpc_stub_->CheckAutopilotCompatibility(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+DefaultClusterManagerStub::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const&,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  google::container::v1::ClusterUpgradeInfo response;
+  auto status =
+      grpc_stub_->FetchClusterUpgradeInfo(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+DefaultClusterManagerStub::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const&,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  google::container::v1::NodePoolUpgradeInfo response;
+  auto status =
+      grpc_stub_->FetchNodePoolUpgradeInfo(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

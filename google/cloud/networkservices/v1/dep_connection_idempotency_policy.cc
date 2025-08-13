@@ -89,6 +89,31 @@ Idempotency DepServiceConnectionIdempotencyPolicy::DeleteLbRouteExtension(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DepServiceConnectionIdempotencyPolicy::ListAuthzExtensions(
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DepServiceConnectionIdempotencyPolicy::GetAuthzExtension(
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DepServiceConnectionIdempotencyPolicy::CreateAuthzExtension(
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DepServiceConnectionIdempotencyPolicy::UpdateAuthzExtension(
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DepServiceConnectionIdempotencyPolicy::DeleteAuthzExtension(
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DepServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

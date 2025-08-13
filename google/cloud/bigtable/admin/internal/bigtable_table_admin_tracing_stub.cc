@@ -429,6 +429,95 @@ BigtableTableAdminTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminTracingStub::AsyncCreateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CreateSchemaBundle");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateSchemaBundle(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::CreateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CreateSchemaBundle");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateSchemaBundle(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminTracingStub::AsyncUpdateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateSchemaBundle");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateSchemaBundle(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::UpdateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateSchemaBundle");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateSchemaBundle(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminTracingStub::GetSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "GetSchemaBundle");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetSchemaBundle(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+BigtableTableAdminTracingStub::ListSchemaBundles(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "ListSchemaBundles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListSchemaBundles(context, options, request));
+}
+
+Status BigtableTableAdminTracingStub::DeleteSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "DeleteSchemaBundle");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteSchemaBundle(context, options, request));
+}
+
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminTracingStub::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,

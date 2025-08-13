@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CONNECTION_H
 
+#include "google/cloud/compute/disks/v1/disks.pb.h"
 #include "google/cloud/compute/disks/v1/disks_connection_idempotency_policy.h"
 #include "google/cloud/compute/disks/v1/internal/disks_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/disks/v1/disks.pb.h>
 #include <memory>
 
 namespace google {
@@ -212,6 +212,19 @@ class DisksConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   BulkInsert(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkSetLabels(
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkSetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   CreateSnapshot(

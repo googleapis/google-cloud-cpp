@@ -19,6 +19,7 @@
 #include <cinttypes>
 #include <string>
 #include <system_error>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -176,6 +177,9 @@ std::uintmax_t file_size(std::string const& path, std::error_code& ec) noexcept;
 
 /// Append @p path (even if it is an absolute path) to @p directory
 std::string PathAppend(std::string const& directory, std::string const& path);
+
+/// The function is only designed to be used by generator on Linux
+std::vector<std::string> GetFileNames(std::string const& directory_path);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

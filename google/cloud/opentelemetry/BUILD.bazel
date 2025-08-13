@@ -34,8 +34,8 @@ cc_library(
         "//:monitoring",
         "//:trace",
         "//google/cloud:google_cloud_cpp_rest_internal",
-        "@io_opentelemetry_cpp//sdk/src/metrics",
-        "@io_opentelemetry_cpp//sdk/src/trace",
+        "@opentelemetry-cpp//sdk/src/metrics",
+        "@opentelemetry-cpp//sdk/src/trace",
     ],
 )
 

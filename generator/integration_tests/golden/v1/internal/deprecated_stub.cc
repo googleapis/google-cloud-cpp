@@ -19,7 +19,7 @@
 #include "generator/integration_tests/golden/v1/internal/deprecated_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <generator/integration_tests/test_deprecated.grpc.pb.h>
+#include "generator/integration_tests/test_deprecated.grpc.pb.h"
 #include <memory>
 #include <utility>
 

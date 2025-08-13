@@ -22,7 +22,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -157,6 +157,19 @@ SpannerMetadata::BatchWrite(
   SetMetadata(*context, options,
               absl::StrCat("session=", internal::UrlEncode(request.session())));
   return child_->BatchWrite(std::move(context), options, request);
+}
+
+future<StatusOr<google::spanner::v1::Session>>
+SpannerMetadata::AsyncCreateSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->AsyncCreateSession(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>

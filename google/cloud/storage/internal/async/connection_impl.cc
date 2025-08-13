@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/read_all.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
@@ -63,9 +64,9 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline std::unique_ptr<storage::RetryPolicy> retry_policy(
+inline std::unique_ptr<storage_experimental::AsyncRetryPolicy> retry_policy(
     Options const& options) {
-  return options.get<storage::RetryPolicyOption>()->clone();
+  return options.get<storage_experimental::AsyncRetryPolicyOption>()->clone();
 }
 
 inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
@@ -194,13 +195,14 @@ future<
     StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
 AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
-  *initial_request.mutable_read_object_spec() = std::move(p.read_spec);
-  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  *initial_request.mutable_read_object_spec() = p.read_spec;
+  auto current = internal::MakeImmutableOptions(p.options);
   // Get the policy factory and immediately create a policy.
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();
 
-  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto retry = std::shared_ptr<storage_experimental::AsyncRetryPolicy>(
+      retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   auto const* function_name = __func__;
@@ -294,23 +296,23 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
-  return AppendableObjectUploadImpl(std::move(p), AppendMode::kStart);
+  return AppendableObjectUploadImpl(std::move(p));
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
-  return AppendableObjectUploadImpl(std::move(p), AppendMode::kTakeover);
+  return AppendableObjectUploadImpl(std::move(p));
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
-                                                AppendMode mode) {
+AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = std::move(p.request);
   std::int64_t persisted_size = 0;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       CreateHashFunction(*current);
-  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto retry = std::shared_ptr<storage_experimental::AsyncRetryPolicy>(
+      retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   using StreamingRpcTimeout =
@@ -326,9 +328,9 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
-       backoff = std::move(backoff), current, function_name = __func__,
-       mode](google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req), mode](
+       backoff = std::move(backoff), current, function_name = __func__](
+          google::storage::v2::BidiWriteObjectRequest req) {
+        auto call = [stub, request = std::move(req)](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
@@ -342,10 +344,10 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
           auto per_write_timeout = start_timeout;
 
           // Apply the routing header
-          if (mode == AppendMode::kTakeover)
-            ApplyRoutingHeaders(*context, request.append_object_spec());
-          else
+          if (request.has_write_object_spec())
             ApplyRoutingHeaders(*context, request.write_object_spec());
+          else
+            ApplyRoutingHeaders(*context, request.append_object_spec());
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
@@ -358,9 +360,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
             open.reset();
             auto response = f.get();
             if (!response) {
-              EnsureFirstMessageAppendObjectSpec(request);
+              google::rpc::Status grpc_status =
+                  ExtractGrpcStatus(response.status());
+              EnsureFirstMessageAppendObjectSpec(request, grpc_status);
               ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
-                                       ExtractGrpcStatus(response.status()));
+                                       grpc_status);
             }
             return response;
           });

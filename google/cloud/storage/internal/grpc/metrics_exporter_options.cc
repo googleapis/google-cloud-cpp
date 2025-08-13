@@ -20,7 +20,7 @@
 #include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/types/variant.h"
-#include <google/api/monitored_resource.pb.h>
+#include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <algorithm>
 #include <type_traits>

@@ -17,9 +17,9 @@
 // source: google/cloud/gkebackup/v1/gkebackup.proto
 
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_logging_decorator.h"
+#include "google/cloud/gkebackup/v1/gkebackup.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkebackup/v1/gkebackup.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -150,6 +150,155 @@ StatusOr<google::longrunning::Operation> BackupForGKELogging::DeleteBackupPlan(
              google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&
                  request) {
         return child_->DeleteBackupPlan(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupForGKELogging::AsyncCreateBackupChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::gkebackup::v1::CreateBackupChannelRequest const&
+                 request) {
+        return child_->AsyncCreateBackupChannel(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKELogging::CreateBackupChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::CreateBackupChannelRequest const&
+                 request) {
+        return child_->CreateBackupChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListBackupChannelsResponse>
+BackupForGKELogging::ListBackupChannels(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::ListBackupChannelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::ListBackupChannelsRequest const&
+                 request) {
+        return child_->ListBackupChannels(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::BackupChannel>
+BackupForGKELogging::GetBackupChannel(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetBackupChannelRequest const&
+                 request) {
+        return child_->GetBackupChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupForGKELogging::AsyncUpdateBackupChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::gkebackup::v1::UpdateBackupChannelRequest const&
+                 request) {
+        return child_->AsyncUpdateBackupChannel(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKELogging::UpdateBackupChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::UpdateBackupChannelRequest const&
+                 request) {
+        return child_->UpdateBackupChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupForGKELogging::AsyncDeleteBackupChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::gkebackup::v1::DeleteBackupChannelRequest const&
+                 request) {
+        return child_->AsyncDeleteBackupChannel(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKELogging::DeleteBackupChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::DeleteBackupChannelRequest const&
+                 request) {
+        return child_->DeleteBackupChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListBackupPlanBindingsResponse>
+BackupForGKELogging::ListBackupPlanBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const&
+                 request) {
+        return child_->ListBackupPlanBindings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+BackupForGKELogging::GetBackupPlanBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const&
+                 request) {
+        return child_->GetBackupPlanBinding(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -405,6 +554,155 @@ StatusOr<google::longrunning::Operation> BackupForGKELogging::DeleteRestorePlan(
              google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&
                  request) {
         return child_->DeleteRestorePlan(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupForGKELogging::AsyncCreateRestoreChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::gkebackup::v1::CreateRestoreChannelRequest const&
+                 request) {
+        return child_->AsyncCreateRestoreChannel(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKELogging::CreateRestoreChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::CreateRestoreChannelRequest const&
+                 request) {
+        return child_->CreateRestoreChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListRestoreChannelsResponse>
+BackupForGKELogging::ListRestoreChannels(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::ListRestoreChannelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::ListRestoreChannelsRequest const&
+                 request) {
+        return child_->ListRestoreChannels(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::RestoreChannel>
+BackupForGKELogging::GetRestoreChannel(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetRestoreChannelRequest const&
+                 request) {
+        return child_->GetRestoreChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupForGKELogging::AsyncUpdateRestoreChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const&
+                 request) {
+        return child_->AsyncUpdateRestoreChannel(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKELogging::UpdateRestoreChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const&
+                 request) {
+        return child_->UpdateRestoreChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupForGKELogging::AsyncDeleteRestoreChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const&
+                 request) {
+        return child_->AsyncDeleteRestoreChannel(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKELogging::DeleteRestoreChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const&
+                 request) {
+        return child_->DeleteRestoreChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListRestorePlanBindingsResponse>
+BackupForGKELogging::ListRestorePlanBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const&
+                 request) {
+        return child_->ListRestorePlanBindings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+BackupForGKELogging::GetRestorePlanBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const&
+                 request) {
+        return child_->GetRestorePlanBinding(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

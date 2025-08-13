@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -118,8 +118,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L452}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L498}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Cluster> ListClusters(
@@ -157,8 +157,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L452}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L498}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Cluster> ListClusters(
@@ -184,8 +184,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L491}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L537}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::Cluster> GetCluster(
@@ -214,8 +214,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L491}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L537}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::Cluster> GetCluster(
@@ -250,8 +250,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L542}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L588}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
@@ -305,8 +305,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L542}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L588}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
@@ -371,8 +371,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L580}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L626}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
@@ -424,8 +424,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L580}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L626}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
@@ -462,6 +462,393 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
+  /// Exports data from the cluster.
+  /// Imperative only.
+  ///
+  /// @param name  Required. The resource name of the cluster.
+  /// @param gcs_destination  Required. Option to export data to cloud storage.
+  /// @param database  Required. Name of the database where the export command will be executed.
+  ///  Note - Value provided should be the same as expected from
+  ///  `SELECT current_database();` and NOT as a resource reference.
+  /// @param csv_export_options  Options for exporting data in CSV format. Required field to be set for
+  ///  CSV file type.
+  /// @param sql_export_options  Options for exporting data in SQL format. Required field to be set for
+  ///  SQL file type.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.alloydb.v1.ExportClusterResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.alloydb.v1.ExportClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L671}
+  /// [google.cloud.alloydb.v1.ExportClusterResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L743}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(
+      std::string const& name,
+      google::cloud::alloydb::v1::GcsDestination const& gcs_destination,
+      std::string const& database,
+      google::cloud::alloydb::v1::ExportClusterRequest::CsvExportOptions const&
+          csv_export_options,
+      google::cloud::alloydb::v1::ExportClusterRequest::SqlExportOptions const&
+          sql_export_options,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ExportCluster(
+      NoAwaitTag, std::string const& name,
+      google::cloud::alloydb::v1::GcsDestination const& gcs_destination,
+      std::string const& database,
+      google::cloud::alloydb::v1::ExportClusterRequest::CsvExportOptions const&
+          csv_export_options,
+      google::cloud::alloydb::v1::ExportClusterRequest::SqlExportOptions const&
+          sql_export_options,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Exports data from the cluster.
+  /// Imperative only.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.alloydb.v1.ExportClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.alloydb.v1.ExportClusterResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.alloydb.v1.ExportClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L671}
+  /// [google.cloud.alloydb.v1.ExportClusterResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L743}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(google::cloud::alloydb::v1::ExportClusterRequest const& request,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ExportCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(google::longrunning::Operation const& operation,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports data to the cluster.
+  /// Imperative only.
+  ///
+  /// @param name  Required. The resource name of the cluster.
+  /// @param gcs_uri  Required. The path to the file in Google Cloud Storage where the source
+  ///  file for import will be stored. The URI is in the form
+  ///  `gs://bucketName/fileName`.
+  /// @param database  Optional. Name of the database to which the import will be done.
+  ///  For import from SQL file, this is required only if the file does not
+  ///  specify a database.
+  ///  Note - Value provided should be the same as expected from `SELECT
+  ///  current_database();` and NOT as a resource reference.
+  /// @param user  Optional. Database user to be used for importing the data.
+  ///  Note - Value provided should be the same as expected from
+  ///  `SELECT current_user;` and NOT as a resource reference.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.alloydb.v1.ImportClusterResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.alloydb.v1.ImportClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L752}
+  /// [google.cloud.alloydb.v1.ImportClusterResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L816}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(std::string const& name, std::string const& gcs_uri,
+                std::string const& database, std::string const& user,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ImportCluster(
+      NoAwaitTag, std::string const& name, std::string const& gcs_uri,
+      std::string const& database, std::string const& user, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports data to the cluster.
+  /// Imperative only.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.alloydb.v1.ImportClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.alloydb.v1.ImportClusterResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.alloydb.v1.ImportClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L752}
+  /// [google.cloud.alloydb.v1.ImportClusterResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L816}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(google::cloud::alloydb::v1::ImportClusterRequest const& request,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ImportCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(google::longrunning::Operation const& operation,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// Upgrades a single Cluster.
+  /// Imperative only.
+  ///
+  /// @param name  Required. The resource name of the cluster.
+  /// @param version  Required. The version the cluster is going to be upgraded to.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.alloydb.v1.UpgradeClusterResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.alloydb.v1.UpgradeClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L822}
+  /// [google.cloud.alloydb.v1.UpgradeClusterResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L862}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(std::string const& name,
+                 google::cloud::alloydb::v1::DatabaseVersion version,
+                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpgradeCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpgradeCluster(
+      NoAwaitTag, std::string const& name,
+      google::cloud::alloydb::v1::DatabaseVersion version, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Upgrades a single Cluster.
+  /// Imperative only.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.alloydb.v1.UpgradeClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.alloydb.v1.UpgradeClusterResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.alloydb.v1.UpgradeClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L822}
+  /// [google.cloud.alloydb.v1.UpgradeClusterResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L862}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpgradeCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpgradeCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpgradeCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(google::longrunning::Operation const& operation,
+                 Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes a single Cluster.
   ///
   /// @param name  Required. The name of the resource. For the required format, see the
@@ -486,8 +873,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L618}
-  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1567}
+  /// [google.cloud.alloydb.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L979}
+  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1934}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
@@ -537,8 +924,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L618}
-  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1567}
+  /// [google.cloud.alloydb.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L979}
+  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1934}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
@@ -602,8 +989,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.PromoteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L686}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.PromoteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1047}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
@@ -656,8 +1043,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.PromoteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L686}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.PromoteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1047}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
@@ -720,8 +1107,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.SwitchoverClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L656}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.SwitchoverClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1017}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> SwitchoverCluster(
@@ -773,8 +1160,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.SwitchoverClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L656}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.SwitchoverClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1017}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> SwitchoverCluster(
@@ -841,8 +1228,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.RestoreClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L722}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.RestoreClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1084}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
@@ -906,8 +1293,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.CreateSecondaryClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L504}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.CreateSecondaryClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L550}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
@@ -962,8 +1349,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L426}
-  /// [google.cloud.alloydb.v1.CreateSecondaryClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L504}
+  /// [google.cloud.alloydb.v1.Cluster]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L459}
+  /// [google.cloud.alloydb.v1.CreateSecondaryClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L550}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
@@ -1030,8 +1417,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
-  /// [google.cloud.alloydb.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L771}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
+  /// [google.cloud.alloydb.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1133}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
@@ -1069,8 +1456,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
-  /// [google.cloud.alloydb.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L771}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
+  /// [google.cloud.alloydb.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1133}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
@@ -1096,8 +1483,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L812}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1174}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::Instance> GetInstance(
@@ -1126,8 +1513,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L812}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1174}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::Instance> GetInstance(
@@ -1162,8 +1549,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L827}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1189}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
@@ -1217,8 +1604,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L827}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1189}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
@@ -1281,8 +1668,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.CreateSecondaryInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L865}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.CreateSecondaryInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1227}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -1336,8 +1723,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.CreateSecondaryInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L865}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.CreateSecondaryInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1227}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -1413,8 +1800,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.BatchCreateInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L911}
-  /// [google.cloud.alloydb.v1.BatchCreateInstancesResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L940}
+  /// [google.cloud.alloydb.v1.BatchCreateInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1273}
+  /// [google.cloud.alloydb.v1.BatchCreateInstancesResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1302}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -1481,8 +1868,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
-  /// [google.cloud.alloydb.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1030}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
+  /// [google.cloud.alloydb.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1392}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
@@ -1534,8 +1921,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
-  /// [google.cloud.alloydb.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1030}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
+  /// [google.cloud.alloydb.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1392}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
@@ -1596,8 +1983,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1068}
-  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1567}
+  /// [google.cloud.alloydb.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1430}
+  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1934}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -1647,8 +2034,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1068}
-  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1567}
+  /// [google.cloud.alloydb.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1430}
+  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1934}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -1713,8 +2100,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.FailoverInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1105}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.FailoverInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1467}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
@@ -1766,8 +2153,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.FailoverInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1105}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.FailoverInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1467}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
@@ -1830,8 +2217,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.InjectFaultRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1137}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.InjectFaultRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1499}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
@@ -1885,8 +2272,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.InjectFaultRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1137}
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
+  /// [google.cloud.alloydb.v1.InjectFaultRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1499}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
@@ -1947,8 +2334,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
-  /// [google.cloud.alloydb.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1181}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
+  /// [google.cloud.alloydb.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1543}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
@@ -1999,8 +2386,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L719}
-  /// [google.cloud.alloydb.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1181}
+  /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L761}
+  /// [google.cloud.alloydb.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1543}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
@@ -2063,8 +2450,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ExecuteSqlRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1217}
-  /// [google.cloud.alloydb.v1.ExecuteSqlResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1250}
+  /// [google.cloud.alloydb.v1.ExecuteSqlRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1579}
+  /// [google.cloud.alloydb.v1.ExecuteSqlResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1612}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
@@ -2095,8 +2482,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ExecuteSqlRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1217}
-  /// [google.cloud.alloydb.v1.ExecuteSqlResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1250}
+  /// [google.cloud.alloydb.v1.ExecuteSqlRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1579}
+  /// [google.cloud.alloydb.v1.ExecuteSqlResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1612}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
@@ -2130,8 +2517,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1302}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1664}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
@@ -2169,8 +2556,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1302}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1664}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
@@ -2195,8 +2582,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1338}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1700}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::Backup> GetBackup(
@@ -2225,8 +2612,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1338}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1700}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::Backup> GetBackup(
@@ -2260,8 +2647,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1347}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1709}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
@@ -2315,8 +2702,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1347}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1709}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
@@ -2381,8 +2768,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1383}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1745}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
@@ -2434,8 +2821,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1076}
-  /// [google.cloud.alloydb.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1383}
+  /// [google.cloud.alloydb.v1.Backup]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1284}
+  /// [google.cloud.alloydb.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1745}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
@@ -2496,8 +2883,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1420}
-  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1567}
+  /// [google.cloud.alloydb.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1782}
+  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1934}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
@@ -2548,8 +2935,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1420}
-  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1567}
+  /// [google.cloud.alloydb.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1782}
+  /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1934}
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
@@ -2617,8 +3004,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ListSupportedDatabaseFlagsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1454}
-  /// [google.cloud.alloydb.v1.SupportedDatabaseFlag]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1264}
+  /// [google.cloud.alloydb.v1.ListSupportedDatabaseFlagsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1816}
+  /// [google.cloud.alloydb.v1.SupportedDatabaseFlag]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1479}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
@@ -2656,8 +3043,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ListSupportedDatabaseFlagsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1454}
-  /// [google.cloud.alloydb.v1.SupportedDatabaseFlag]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1264}
+  /// [google.cloud.alloydb.v1.ListSupportedDatabaseFlagsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1816}
+  /// [google.cloud.alloydb.v1.SupportedDatabaseFlag]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1479}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
@@ -2688,8 +3075,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.GenerateClientCertificateRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1488}
-  /// [google.cloud.alloydb.v1.GenerateClientCertificateResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1529}
+  /// [google.cloud.alloydb.v1.GenerateClientCertificateRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1855}
+  /// [google.cloud.alloydb.v1.GenerateClientCertificateResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1896}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
@@ -2722,8 +3109,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.GenerateClientCertificateRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1488}
-  /// [google.cloud.alloydb.v1.GenerateClientCertificateResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1529}
+  /// [google.cloud.alloydb.v1.GenerateClientCertificateRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1855}
+  /// [google.cloud.alloydb.v1.GenerateClientCertificateResponse]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1896}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
@@ -2751,8 +3138,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ConnectionInfo]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1045}
-  /// [google.cloud.alloydb.v1.GetConnectionInfoRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1540}
+  /// [google.cloud.alloydb.v1.ConnectionInfo]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1253}
+  /// [google.cloud.alloydb.v1.GetConnectionInfoRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1907}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
@@ -2781,8 +3168,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ConnectionInfo]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1045}
-  /// [google.cloud.alloydb.v1.GetConnectionInfoRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1540}
+  /// [google.cloud.alloydb.v1.ConnectionInfo]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1253}
+  /// [google.cloud.alloydb.v1.GetConnectionInfoRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1907}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
@@ -2816,8 +3203,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ListUsersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1604}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.ListUsersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2030}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::User> ListUsers(
@@ -2855,8 +3242,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.ListUsersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1604}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.ListUsersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2030}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::User> ListUsers(
@@ -2881,8 +3268,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.GetUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1640}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.GetUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2066}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::User> GetUser(std::string const& name,
@@ -2911,8 +3298,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.GetUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1640}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.GetUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2066}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::User> GetUser(
@@ -2939,8 +3326,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.CreateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1650}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.CreateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2076}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::User> CreateUser(
@@ -2970,8 +3357,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.CreateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1650}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.CreateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2076}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::User> CreateUser(
@@ -3001,8 +3388,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.UpdateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1686}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.UpdateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2112}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
@@ -3032,8 +3419,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.UpdateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1686}
-  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1343}
+  /// [google.cloud.alloydb.v1.UpdateUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2112}
+  /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
@@ -3057,7 +3444,7 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1722}
+  /// [google.cloud.alloydb.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2148}
   ///
   // clang-format on
   Status DeleteUser(std::string const& name, Options opts = {});
@@ -3083,7 +3470,7 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1722}
+  /// [google.cloud.alloydb.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2148}
   ///
   // clang-format on
   Status DeleteUser(
@@ -3117,8 +3504,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Database]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1385}
-  /// [google.cloud.alloydb.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1751}
+  /// [google.cloud.alloydb.v1.Database]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1624}
+  /// [google.cloud.alloydb.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2177}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Database> ListDatabases(
@@ -3156,8 +3543,8 @@ class AlloyDBAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.alloydb.v1.Database]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1385}
-  /// [google.cloud.alloydb.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1751}
+  /// [google.cloud.alloydb.v1.Database]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1624}
+  /// [google.cloud.alloydb.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L2177}
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::Database> ListDatabases(

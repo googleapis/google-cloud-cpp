@@ -17,10 +17,10 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/internal/image_annotator_stub.h"
+#include "google/cloud/vision/v1/image_annotator.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -12,11 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    "cc_proto_library",
-)
-load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load("//google/cloud/compute:service_dirs.bzl", "operation_service_dirs", "service_dirs")
 
 package(default_visibility = ["//visibility:private"])
@@ -46,15 +43,15 @@ proto_library(
         "//google/cloud/compute:__pkg__",
     ],
     deps = [
-        "@com_google_googleapis//google/api:annotations_proto",
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_googleapis//google/api:http_proto",
-        "@com_google_googleapis//google/api:resource_proto",
-        "@com_google_googleapis//google/api:routing_proto",
-        "@com_google_googleapis//google/cloud:extended_operations_proto",
-        "@com_google_protobuf//:any_proto",
-        "@com_google_protobuf//:empty_proto",
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:client_proto",
+        "@googleapis//google/api:field_behavior_proto",
+        "@googleapis//google/api:http_proto",
+        "@googleapis//google/api:resource_proto",
+        "@googleapis//google/api:routing_proto",
+        "@googleapis//google/cloud:extended_operations_proto",
+        "@protobuf//:any_proto",
+        "@protobuf//:empty_proto",
     ],
 )
 

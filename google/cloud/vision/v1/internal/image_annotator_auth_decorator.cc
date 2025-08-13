@@ -17,7 +17,7 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/internal/image_annotator_auth_decorator.h"
-#include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
+#include "google/cloud/vision/v1/image_annotator.grpc.pb.h"
 #include <memory>
 #include <utility>
 

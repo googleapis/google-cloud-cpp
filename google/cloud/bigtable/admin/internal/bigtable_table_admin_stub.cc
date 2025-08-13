@@ -19,8 +19,8 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -453,6 +453,103 @@ DefaultBigtableTableAdminStub::TestIamPermissions(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncCreateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::admin::v2::CreateSchemaBundleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::CreateSchemaBundleRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateSchemaBundle(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::CreateSchemaBundle(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSchemaBundle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncUpdateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateSchemaBundle(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::UpdateSchemaBundle(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSchemaBundle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+DefaultBigtableTableAdminStub::GetSchemaBundle(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  google::bigtable::admin::v2::SchemaBundle response;
+  auto status = grpc_stub_->GetSchemaBundle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+DefaultBigtableTableAdminStub::ListSchemaBundles(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) {
+  google::bigtable::admin::v2::ListSchemaBundlesResponse response;
+  auto status = grpc_stub_->ListSchemaBundles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultBigtableTableAdminStub::DeleteSchemaBundle(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSchemaBundle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

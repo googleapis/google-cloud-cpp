@@ -17,10 +17,10 @@
 // source: google/cloud/gkebackup/v1/gkebackup.proto
 
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_stub.h"
+#include "google/cloud/gkebackup/v1/gkebackup.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkebackup/v1/gkebackup.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -142,6 +142,149 @@ DefaultBackupForGKEStub::DeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteBackupPlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupForGKEStub::AsyncCreateBackupChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkebackup::v1::CreateBackupChannelRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateBackupChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::CreateBackupChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackupChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListBackupChannelsResponse>
+DefaultBackupForGKEStub::ListBackupChannels(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::ListBackupChannelsRequest const& request) {
+  google::cloud::gkebackup::v1::ListBackupChannelsResponse response;
+  auto status = grpc_stub_->ListBackupChannels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::BackupChannel>
+DefaultBackupForGKEStub::GetBackupChannel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::GetBackupChannelRequest const& request) {
+  google::cloud::gkebackup::v1::BackupChannel response;
+  auto status = grpc_stub_->GetBackupChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupForGKEStub::AsyncUpdateBackupChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkebackup::v1::UpdateBackupChannelRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBackupChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::UpdateBackupChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackupChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupForGKEStub::AsyncDeleteBackupChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkebackup::v1::DeleteBackupChannelRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteBackupChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::DeleteBackupChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackupChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListBackupPlanBindingsResponse>
+DefaultBackupForGKEStub::ListBackupPlanBindings(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const&
+        request) {
+  google::cloud::gkebackup::v1::ListBackupPlanBindingsResponse response;
+  auto status =
+      grpc_stub_->ListBackupPlanBindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+DefaultBackupForGKEStub::GetBackupPlanBinding(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request) {
+  google::cloud::gkebackup::v1::BackupPlanBinding response;
+  auto status = grpc_stub_->GetBackupPlanBinding(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -394,6 +537,149 @@ DefaultBackupForGKEStub::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteRestorePlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupForGKEStub::AsyncCreateRestoreChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkebackup::v1::CreateRestoreChannelRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateRestoreChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::CreateRestoreChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRestoreChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListRestoreChannelsResponse>
+DefaultBackupForGKEStub::ListRestoreChannels(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::ListRestoreChannelsRequest const& request) {
+  google::cloud::gkebackup::v1::ListRestoreChannelsResponse response;
+  auto status = grpc_stub_->ListRestoreChannels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::RestoreChannel>
+DefaultBackupForGKEStub::GetRestoreChannel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request) {
+  google::cloud::gkebackup::v1::RestoreChannel response;
+  auto status = grpc_stub_->GetRestoreChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupForGKEStub::AsyncUpdateRestoreChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateRestoreChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::UpdateRestoreChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRestoreChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBackupForGKEStub::AsyncDeleteRestoreChannel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteRestoreChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::DeleteRestoreChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRestoreChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::ListRestorePlanBindingsResponse>
+DefaultBackupForGKEStub::ListRestorePlanBindings(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const&
+        request) {
+  google::cloud::gkebackup::v1::ListRestorePlanBindingsResponse response;
+  auto status =
+      grpc_stub_->ListRestorePlanBindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+DefaultBackupForGKEStub::GetRestorePlanBinding(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request) {
+  google::cloud::gkebackup::v1::RestorePlanBinding response;
+  auto status = grpc_stub_->GetRestorePlanBinding(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

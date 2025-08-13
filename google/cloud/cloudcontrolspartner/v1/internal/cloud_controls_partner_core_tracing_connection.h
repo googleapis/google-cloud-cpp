@@ -77,6 +77,18 @@ class CloudControlsPartnerCoreTracingConnection
       google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request)
       override;
 
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) override;
+
+  Status DeleteCustomer(
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) override;
+
  private:
   std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
       child_;

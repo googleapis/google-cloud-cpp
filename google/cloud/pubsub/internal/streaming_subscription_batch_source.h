@@ -26,7 +26,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 #include <chrono>
 #include <cstdint>
 #include <functional>

@@ -4,7 +4,55 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.37.0 - TBD
+## v2.40.0 - TBD
+
+## v2.39.0 - 2025-07
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Link traces between Open and ReadRange traces. ([#15236](https://github.com/googleapis/google-cloud-cpp/pull/15236))
+- feat(storage): Add check for writeHandle before transforming write_object_spec to append_object_spec ([#15224])(https://github.com/googleapis/google-cloud-cpp/pull/15224))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-07-03T11:36:10-07:00](https://github.com/googleapis/googleapis/tree/f9d6fe4a6ad9ed89dfc315f284124d2104377940)
+
+## v2.38.0 - 2025-06
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Dataform API](/google/cloud/dataform/README.md)
+- [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
+- [Memorystore API](/google/cloud/memorystore/README.md)
+- [Oracle Database@Google Cloud API](/google/cloud/oracledatabase/README.md)
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(pubsub): add MakeConnection overloads to support regional and locational endpoints ([#15190](https://github.com/googleapis/google-cloud-cpp/pull/15190))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- samples(storage): add the bucket soft delete related tags ([#15154](https://github.com/googleapis/google-cloud-cpp/pull/15154))
+- samples(storage): add samples for soft delete objects ([#15133](https://github.com/googleapis/google-cloud-cpp/pull/15133))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(resourcemanager): add Connection factory function for regional endpoints ([#15189](https://github.com/googleapis/google-cloud-cpp/pull/15189))
+- samples(storagecontrol): add samples for anywhere cache ([#15134](https://github.com/googleapis/google-cloud-cpp/pull/15134))
+- fix: Bypass proxy for GCE metadata server requests
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-06-04T16:36:46-07:00](https://github.com/googleapis/googleapis/tree/de157ca34fa487ce248eb9130293d630b501e4ad)
+
+## v2.37.0 - 2025-05
+
+**BREAKING CHANGES**
+
+Client library `resourcesettings` is being removed because the service has been turned down.
 
 ### New Libraries
 
@@ -20,9 +68,25 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [iam](/google/cloud/iam/README.md) - add v3 version of the library
 
-**BREAKING CHANGES**
+### [Spanner](/google/cloud/spanner/README.md)
 
-Client library `resourcesettings` is being removed because the service has been turned down.
+- feat(spanner): add spanner::Value support for TypeCode::INTERVAL ([#15094](https://github.com/googleapis/google-cloud-cpp/pull/15094))
+- feat(spanner): add ISO8601 duration support to spanner::Interval ([#15077](https://github.com/googleapis/google-cloud-cpp/pull/15077))
+- fix(spanner): update session bookkeeping for session NotFound ([#15009](https://github.com/googleapis/google-cloud-cpp/pull/15009))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Make absl::cord constructor public in write_payload.h ([#15113](https://github.com/googleapis/google-cloud-cpp/pull/15113))
+- feat(storage): Add bidiread and bidi appendable write to the async client. ([#15078](https://github.com/googleapis/google-cloud-cpp/pull/15078))
+- fix: fix bug with customheadersoption ([#15053](https://github.com/googleapis/google-cloud-cpp/pull/15053))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: add option to allow setting CURLOPT_INTERFACE ([#15044](https://github.com/googleapis/google-cloud-cpp/pull/15044))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-05-02T13:03:05-07:00](https://github.com/googleapis/googleapis/tree/079e5305050859d0e3a8c0768611283ee4863c07)
 
 ## v2.36.0 - 2025-03
 

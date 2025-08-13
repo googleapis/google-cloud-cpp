@@ -38,11 +38,19 @@ void PublisherSetEndpoint(std::vector<std::string> const& argv) {
   //! [publisher-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::Options;
-  [](std::string project_id, std::string topic_id) {
-    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
-    return pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic), Options{}.set<google::cloud::EndpointOption>(
-                              "private.googleapis.com")));
+  [](std::string const& project_id, std::string const& topic_id) {
+    // This service supports specifying a regional or locational endpoint prefix
+    // when creating the SubscriptionAdminConnection.
+    // For example, to connect to "europe-central2-pubsub.googleapis.com":
+    auto pub = pubsub::Publisher(pubsub::MakePublisherConnection(
+        "europe-central2", pubsub::Topic(project_id, topic_id)));
+
+    // This configuration is common with Private Google Access:
+    //     https://cloud.google.com/vpc/docs/private-google-access
+    auto vpc_pub = pubsub::Publisher(pubsub::MakePublisherConnection(
+        pubsub::Topic(project_id, topic_id),
+        Options{}.set<google::cloud::EndpointOption>(
+            "private.googleapis.com")));
   }
   //! [publisher-set-endpoint]
   (argv.at(0), argv.at(1));
@@ -80,12 +88,19 @@ void SubscriberSetEndpoint(std::vector<std::string> const& argv) {
   //! [subscriber-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::Options;
-  [](std::string project_id, std::string subscription_id) {
-    auto subscription =
-        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
-    return pubsub::Subscriber(pubsub::MakeSubscriberConnection(
-        std::move(subscription), Options{}.set<google::cloud::EndpointOption>(
-                                     "private.googleapis.com")));
+  [](std::string const& project_id, std::string const& subscription_id) {
+    // This service supports specifying a regional or locational endpoint prefix
+    // when creating the SubscriptionAdminConnection.
+    // For example, to connect to "europe-central2-pubsub.googleapis.com":
+    auto sub = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        "europe-central2", pubsub::Subscription(project_id, subscription_id)));
+
+    // This configuration is common with Private Google Access:
+    //     https://cloud.google.com/vpc/docs/private-google-access
+    auto vpc_sub = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::Subscription(project_id, subscription_id),
+        Options{}.set<google::cloud::EndpointOption>(
+            "private.googleapis.com")));
   }
   //! [subscriber-set-endpoint]
   (argv.at(0), argv.at(1));
@@ -125,9 +140,18 @@ void BlockingPublisherSetEndpoint(std::vector<std::string> const& argv) {
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::Options;
   []() {
-    return pubsub::BlockingPublisher(pubsub::MakeBlockingPublisherConnection(
-        Options{}.set<google::cloud::EndpointOption>(
-            "private.googleapis.com")));
+    // This service supports specifying a regional or locational endpoint prefix
+    // when creating the SubscriptionAdminConnection.
+    // For example, to connect to "europe-central2-pubsub.googleapis.com":
+    auto pub = pubsub::BlockingPublisher(
+        pubsub::MakeBlockingPublisherConnection("europe-central2"));
+
+    // This configuration is common with Private Google Access:
+    //     https://cloud.google.com/vpc/docs/private-google-access
+    auto vpc_pub =
+        pubsub::BlockingPublisher(pubsub::MakeBlockingPublisherConnection(
+            Options{}.set<google::cloud::EndpointOption>(
+                "private.googleapis.com")));
   }
   //! [blocking-publisher-set-endpoint]
   ();

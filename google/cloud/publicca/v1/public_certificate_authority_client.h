@@ -118,8 +118,8 @@ class PublicCertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.publicca.v1.CreateExternalAccountKeyRequest]: @googleapis_reference_link{google/cloud/security/publicca/v1/service.proto#L58}
-  /// [google.cloud.security.publicca.v1.ExternalAccountKey]: @googleapis_reference_link{google/cloud/security/publicca/v1/resources.proto#L33}
+  /// [google.cloud.security.publicca.v1.CreateExternalAccountKeyRequest]: @googleapis_reference_link{google/cloud/security/publicca/v1/service.proto#L57}
+  /// [google.cloud.security.publicca.v1.ExternalAccountKey]: @googleapis_reference_link{google/cloud/security/publicca/v1/resources.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
@@ -154,8 +154,8 @@ class PublicCertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.publicca.v1.CreateExternalAccountKeyRequest]: @googleapis_reference_link{google/cloud/security/publicca/v1/service.proto#L58}
-  /// [google.cloud.security.publicca.v1.ExternalAccountKey]: @googleapis_reference_link{google/cloud/security/publicca/v1/resources.proto#L33}
+  /// [google.cloud.security.publicca.v1.CreateExternalAccountKeyRequest]: @googleapis_reference_link{google/cloud/security/publicca/v1/service.proto#L57}
+  /// [google.cloud.security.publicca.v1.ExternalAccountKey]: @googleapis_reference_link{google/cloud/security/publicca/v1/resources.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>

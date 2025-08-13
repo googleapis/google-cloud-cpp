@@ -36,7 +36,7 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "//:pubsub",
-        "@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc",
+        "@googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc",
     ],
 )
 
@@ -54,7 +54,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_pubsublite",
-        "@com_google_googletest//:gtest",
+        "@googletest//:gtest",
     ],
 )
 
@@ -86,7 +86,7 @@ cc_library(
             "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
             "//google/cloud/testing_util:google_cloud_cpp_testing_private",
             "@abseil-cpp//absl/memory",
-            "@com_google_googletest//:gtest_main",
+            "@googletest//:gtest_main",
         ],
     )
     for test in pubsublite_unit_tests

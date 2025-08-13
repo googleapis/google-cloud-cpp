@@ -24,7 +24,7 @@
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/internal/url_encode.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
+#include "google/iam/credentials/v1/iamcredentials.grpc.pb.h"
 
 namespace google {
 namespace cloud {

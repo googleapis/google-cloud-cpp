@@ -22,7 +22,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
+#include "google/container/v1/cluster_service.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -340,6 +340,24 @@ ClusterManagerMetadata::CheckAutopilotCompatibility(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CheckAutopilotCompatibility(context, options, request);
+}
+
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerMetadata::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchClusterUpgradeInfo(context, options, request);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerMetadata::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchNodePoolUpgradeInfo(context, options, request);
 }
 
 void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context,

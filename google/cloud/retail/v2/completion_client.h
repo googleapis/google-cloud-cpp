@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -119,7 +119,7 @@ class CompletionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
-  /// [google.cloud.retail.v2.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L169}
+  /// [google.cloud.retail.v2.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L175}
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
@@ -164,8 +164,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.ImportCompletionDataRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L245}
-  /// [google.cloud.retail.v2.ImportCompletionDataResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L389}
+  /// [google.cloud.retail.v2.ImportCompletionDataRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L242}
+  /// [google.cloud.retail.v2.ImportCompletionDataResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L386}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>

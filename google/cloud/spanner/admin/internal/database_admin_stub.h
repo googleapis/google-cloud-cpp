@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

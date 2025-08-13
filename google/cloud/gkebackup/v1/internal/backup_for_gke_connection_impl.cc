@@ -392,6 +392,386 @@ BackupForGKEConnectionImpl::DeleteBackupPlan(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+BackupForGKEConnectionImpl::CreateBackupChannel(
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackupChannel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkebackup::v1::BackupChannel>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkebackup::v1::CreateBackupChannelRequest const&
+              request) {
+        return stub->AsyncCreateBackupChannel(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::BackupChannel>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnectionImpl::CreateBackupChannel(
+    NoAwaitTag,
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::CreateBackupChannelRequest const&
+                 request) {
+        return stub_->CreateBackupChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+BackupForGKEConnectionImpl::CreateBackupChannel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkebackup::v1::BackupChannel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBackupChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkebackup::v1::BackupChannel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::BackupChannel>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::gkebackup::v1::BackupChannel>
+BackupForGKEConnectionImpl::ListBackupChannels(
+    google::cloud::gkebackup::v1::ListBackupChannelsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackupChannels(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gkebackup::v1::BackupChannel>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::gkebackup::v1::ListBackupChannelsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::gkebackup::v1::ListBackupChannelsRequest const&
+                    request) {
+              return stub->ListBackupChannels(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::gkebackup::v1::ListBackupChannelsResponse r) {
+        std::vector<google::cloud::gkebackup::v1::BackupChannel> result(
+            r.backup_channels().size());
+        auto& messages = *r.mutable_backup_channels();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::gkebackup::v1::BackupChannel>
+BackupForGKEConnectionImpl::GetBackupChannel(
+    google::cloud::gkebackup::v1::GetBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackupChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetBackupChannelRequest const&
+                 request) {
+        return stub_->GetBackupChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+BackupForGKEConnectionImpl::UpdateBackupChannel(
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackupChannel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkebackup::v1::BackupChannel>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkebackup::v1::UpdateBackupChannelRequest const&
+              request) {
+        return stub->AsyncUpdateBackupChannel(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::BackupChannel>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnectionImpl::UpdateBackupChannel(
+    NoAwaitTag,
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::UpdateBackupChannelRequest const&
+                 request) {
+        return stub_->UpdateBackupChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+BackupForGKEConnectionImpl::UpdateBackupChannel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkebackup::v1::BackupChannel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBackupChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkebackup::v1::BackupChannel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::BackupChannel>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnectionImpl::DeleteBackupChannel(
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackupChannel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkebackup::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkebackup::v1::DeleteBackupChannelRequest const&
+              request) {
+        return stub->AsyncDeleteBackupChannel(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkebackup::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnectionImpl::DeleteBackupChannel(
+    NoAwaitTag,
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::DeleteBackupChannelRequest const&
+                 request) {
+        return stub_->DeleteBackupChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnectionImpl::DeleteBackupChannel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBackupChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkebackup::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkebackup::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>
+BackupForGKEConnectionImpl::ListBackupPlanBindings(
+    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListBackupPlanBindings(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::gkebackup::v1::
+                       ListBackupPlanBindingsRequest const& request) {
+              return stub->ListBackupPlanBindings(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::gkebackup::v1::ListBackupPlanBindingsResponse r) {
+        std::vector<google::cloud::gkebackup::v1::BackupPlanBinding> result(
+            r.backup_plan_bindings().size());
+        auto& messages = *r.mutable_backup_plan_bindings();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+BackupForGKEConnectionImpl::GetBackupPlanBinding(
+    google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackupPlanBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const&
+                 request) {
+        return stub_->GetBackupPlanBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
@@ -1086,6 +1466,386 @@ BackupForGKEConnectionImpl::DeleteRestorePlan(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
       polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+BackupForGKEConnectionImpl::CreateRestoreChannel(
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRestoreChannel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkebackup::v1::RestoreChannel>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkebackup::v1::CreateRestoreChannelRequest const&
+              request) {
+        return stub->AsyncCreateRestoreChannel(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::RestoreChannel>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnectionImpl::CreateRestoreChannel(
+    NoAwaitTag,
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRestoreChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::CreateRestoreChannelRequest const&
+                 request) {
+        return stub_->CreateRestoreChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+BackupForGKEConnectionImpl::CreateRestoreChannel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateRestoreChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkebackup::v1::RestoreChannel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::RestoreChannel>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::gkebackup::v1::RestoreChannel>
+BackupForGKEConnectionImpl::ListRestoreChannels(
+    google::cloud::gkebackup::v1::ListRestoreChannelsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRestoreChannels(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gkebackup::v1::RestoreChannel>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::gkebackup::v1::ListRestoreChannelsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::gkebackup::v1::ListRestoreChannelsRequest const&
+                    request) {
+              return stub->ListRestoreChannels(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::gkebackup::v1::ListRestoreChannelsResponse r) {
+        std::vector<google::cloud::gkebackup::v1::RestoreChannel> result(
+            r.restore_channels().size());
+        auto& messages = *r.mutable_restore_channels();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::gkebackup::v1::RestoreChannel>
+BackupForGKEConnectionImpl::GetRestoreChannel(
+    google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRestoreChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetRestoreChannelRequest const&
+                 request) {
+        return stub_->GetRestoreChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+BackupForGKEConnectionImpl::UpdateRestoreChannel(
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRestoreChannel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkebackup::v1::RestoreChannel>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const&
+              request) {
+        return stub->AsyncUpdateRestoreChannel(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::RestoreChannel>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnectionImpl::UpdateRestoreChannel(
+    NoAwaitTag,
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRestoreChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const&
+                 request) {
+        return stub_->UpdateRestoreChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+BackupForGKEConnectionImpl::UpdateRestoreChannel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateRestoreChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkebackup::v1::RestoreChannel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkebackup::v1::RestoreChannel>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnectionImpl::DeleteRestoreChannel(
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRestoreChannel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkebackup::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const&
+              request) {
+        return stub->AsyncDeleteRestoreChannel(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkebackup::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnectionImpl::DeleteRestoreChannel(
+    NoAwaitTag,
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRestoreChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const&
+                 request) {
+        return stub_->DeleteRestoreChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnectionImpl::DeleteRestoreChannel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteRestoreChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkebackup::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkebackup::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>
+BackupForGKEConnectionImpl::ListRestorePlanBindings(
+    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListRestorePlanBindings(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::gkebackup::v1::
+                       ListRestorePlanBindingsRequest const& request) {
+              return stub->ListRestorePlanBindings(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::gkebackup::v1::ListRestorePlanBindingsResponse r) {
+        std::vector<google::cloud::gkebackup::v1::RestorePlanBinding> result(
+            r.restore_plan_bindings().size());
+        auto& messages = *r.mutable_restore_plan_bindings();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+BackupForGKEConnectionImpl::GetRestorePlanBinding(
+    google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRestorePlanBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const&
+                 request) {
+        return stub_->GetRestorePlanBinding(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>

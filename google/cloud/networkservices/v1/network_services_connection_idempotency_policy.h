@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/networkservices/v1/network_services.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/networkservices/v1/network_services.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -57,6 +57,40 @@ class NetworkServicesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteEndpointPolicy(
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListWasmPluginVersions(
+      google::cloud::networkservices::v1::ListWasmPluginVersionsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetWasmPluginVersion(
+      google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateWasmPluginVersion(
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteWasmPluginVersion(
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListWasmPlugins(
+      google::cloud::networkservices::v1::ListWasmPluginsRequest request);
+
+  virtual google::cloud::Idempotency GetWasmPlugin(
+      google::cloud::networkservices::v1::GetWasmPluginRequest const& request);
+
+  virtual google::cloud::Idempotency CreateWasmPlugin(
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateWasmPlugin(
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteWasmPlugin(
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
           request);
 
   virtual google::cloud::Idempotency ListGateways(
@@ -151,6 +185,10 @@ class NetworkServicesConnectionIdempotencyPolicy {
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateServiceBinding(
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteServiceBinding(
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
           request);
@@ -169,6 +207,39 @@ class NetworkServicesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteMesh(
       google::cloud::networkservices::v1::DeleteMeshRequest const& request);
+
+  virtual google::cloud::Idempotency ListServiceLbPolicies(
+      google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request);
+
+  virtual google::cloud::Idempotency GetServiceLbPolicy(
+      google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateServiceLbPolicy(
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateServiceLbPolicy(
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteServiceLbPolicy(
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetGatewayRouteView(
+      google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetMeshRouteView(
+      google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListGatewayRouteViews(
+      google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request);
+
+  virtual google::cloud::Idempotency ListMeshRouteViews(
+      google::cloud::networkservices::v1::ListMeshRouteViewsRequest request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

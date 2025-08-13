@@ -22,7 +22,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
 #include <string>
@@ -67,7 +67,7 @@ class WriteObject : public std::enable_shared_from_this<WriteObject> {
       google::storage::v2::BidiWriteObjectResponse>;
 
   using ReturnType = google::storage::v2::BidiWriteObjectResponse;
-  /// Create a coroutine to create an open a bidi streaming write RPC.
+  /// Create a coroutine to create a bidi streaming write RPC.
   WriteObject(std::unique_ptr<StreamingRpc> rpc,
               google::storage::v2::BidiWriteObjectRequest request);
 

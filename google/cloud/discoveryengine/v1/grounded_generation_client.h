@@ -176,8 +176,8 @@ class GroundedGenerationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CheckGroundingRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L446}
-  /// [google.cloud.discoveryengine.v1.CheckGroundingResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L489}
+  /// [google.cloud.discoveryengine.v1.CheckGroundingRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L449}
+  /// [google.cloud.discoveryengine.v1.CheckGroundingResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L492}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>

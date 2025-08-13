@@ -28,7 +28,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -154,7 +154,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.SearchCatalogRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L711}
+  /// [google.cloud.datacatalog.v1.SearchCatalogRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L712}
   /// [google.cloud.datacatalog.v1.SearchCatalogResult]: @googleapis_reference_link{google/cloud/datacatalog/v1/search.proto#L33}
   ///
   // clang-format on
@@ -212,7 +212,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.SearchCatalogRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L711}
+  /// [google.cloud.datacatalog.v1.SearchCatalogRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L712}
   /// [google.cloud.datacatalog.v1.SearchCatalogResult]: @googleapis_reference_link{google/cloud/datacatalog/v1/search.proto#L33}
   ///
   // clang-format on
@@ -277,8 +277,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L846}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
+  /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L847}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -338,8 +338,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L846}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
+  /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L847}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -367,8 +367,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L886}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L887}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -396,8 +396,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L886}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L887}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -430,8 +430,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L886}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L887}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -464,8 +464,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L872}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L873}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -503,8 +503,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L872}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L873}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -542,8 +542,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L872}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L873}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -574,7 +574,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L901}
+  /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L902}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -608,7 +608,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L901}
+  /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L902}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -647,8 +647,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L916}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L917}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -689,8 +689,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L916}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L917}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -737,8 +737,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L951}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
+  /// [google.cloud.datacatalog.v1.CreateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L952}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -781,8 +781,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L951}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
+  /// [google.cloud.datacatalog.v1.CreateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L952}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -815,8 +815,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L976}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L977}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -851,8 +851,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L976}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L977}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -890,8 +890,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L976}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L977}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -926,8 +926,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DataCatalog.CreateEntry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L184}
-  /// [google.cloud.datacatalog.v1.DeleteEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1014}
+  /// [google.cloud.datacatalog.v1.DataCatalog.CreateEntry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L185}
+  /// [google.cloud.datacatalog.v1.DeleteEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1015}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -965,8 +965,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DataCatalog.CreateEntry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L184}
-  /// [google.cloud.datacatalog.v1.DeleteEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1014}
+  /// [google.cloud.datacatalog.v1.DataCatalog.CreateEntry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L185}
+  /// [google.cloud.datacatalog.v1.DeleteEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1015}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -994,8 +994,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1026}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1027}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1027,8 +1027,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1026}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1027}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1063,8 +1063,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.LookupEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1038}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.LookupEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1039}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1107,9 +1107,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L77}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2122}
+  /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L78}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2123}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1154,9 +1154,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L77}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2122}
+  /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L78}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2123}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1193,9 +1193,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.EntryOverview]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1720}
-  /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2263}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.EntryOverview]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1721}
+  /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2264}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1232,9 +1232,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Contacts]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1732}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2278}
+  /// [google.cloud.datacatalog.v1.Contacts]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1733}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2279}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1274,7 +1274,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1786}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1787}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
@@ -1314,7 +1314,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1786}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1787}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
@@ -1343,7 +1343,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1809}
+  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1810}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
@@ -1376,7 +1376,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1809}
+  /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1810}
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
@@ -1414,7 +1414,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1821}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1822}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1460,7 +1460,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1821}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1822}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1502,7 +1502,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1821}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1822}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1535,7 +1535,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1839}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1840}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1569,7 +1569,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1839}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1840}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1611,7 +1611,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1904}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1905}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
   ///
   // clang-format on
@@ -1652,7 +1652,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1904}
+  /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1905}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
   ///
   // clang-format on
@@ -1692,7 +1692,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1931}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1932}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1747,7 +1747,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1931}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1932}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1791,7 +1791,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
-  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1931}
+  /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1932}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1827,7 +1827,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1966}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1967}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
   ///
   // clang-format on
@@ -1866,7 +1866,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1966}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1967}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
   ///
   // clang-format on
@@ -1901,7 +1901,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1982}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1983}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
   ///
   // clang-format on
@@ -1938,7 +1938,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1982}
+  /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1983}
   /// [google.cloud.datacatalog.v1.TagTemplateField]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L211}
   ///
   // clang-format on
@@ -1975,7 +1975,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1999}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2000}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2010,7 +2010,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1999}
+  /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2000}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2057,9 +2057,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1856}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
+  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1857}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
   ///
   // clang-format on
@@ -2104,9 +2104,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1856}
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
+  /// [google.cloud.datacatalog.v1.CreateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1857}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
   ///
   // clang-format on
@@ -2136,7 +2136,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
-  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1877}
+  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1878}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2170,7 +2170,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
-  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1877}
+  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1878}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2204,7 +2204,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
-  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1877}
+  /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1878}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2230,7 +2230,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1892}
+  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1893}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2259,7 +2259,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1892}
+  /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1893}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2302,9 +2302,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1751}
-  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2016}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1752}
+  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2017}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
   /// [google.cloud.datacatalog.v1.Tag.column]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L72}
   ///
@@ -2349,8 +2349,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2016}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.ListTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2017}
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
   /// [google.cloud.datacatalog.v1.Tag.column]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L72}
   ///
@@ -2404,9 +2404,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2050}
-  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest.force_delete_missing]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2070}
-  /// [google.cloud.datacatalog.v1.ReconcileTagsResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2082}
+  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2051}
+  /// [google.cloud.datacatalog.v1.ReconcileTagsRequest.force_delete_missing]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2071}
+  /// [google.cloud.datacatalog.v1.ReconcileTagsResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2083}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
@@ -2472,9 +2472,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2162}
-  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2175}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2163}
+  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2176}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2507,9 +2507,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2162}
-  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2175}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.StarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2163}
+  /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2176}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2538,9 +2538,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2179}
-  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2192}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2180}
+  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2193}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2573,9 +2573,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1108}
-  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2179}
-  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2192}
+  /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1109}
+  /// [google.cloud.datacatalog.v1.UnstarEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2180}
+  /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2193}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -2904,9 +2904,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.ImportEntriesMetadata]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2232}
-  /// [google.cloud.datacatalog.v1.ImportEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2197}
-  /// [google.cloud.datacatalog.v1.ImportEntriesResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2220}
+  /// [google.cloud.datacatalog.v1.ImportEntriesMetadata]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2233}
+  /// [google.cloud.datacatalog.v1.ImportEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2198}
+  /// [google.cloud.datacatalog.v1.ImportEntriesResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2221}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
@@ -2977,8 +2977,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.MigrationConfig]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2446}
-  /// [google.cloud.datacatalog.v1.SetConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2376}
+  /// [google.cloud.datacatalog.v1.MigrationConfig]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2447}
+  /// [google.cloud.datacatalog.v1.SetConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2377}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -3013,8 +3013,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.OrganizationConfig]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2434}
-  /// [google.cloud.datacatalog.v1.RetrieveConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2392}
+  /// [google.cloud.datacatalog.v1.OrganizationConfig]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2435}
+  /// [google.cloud.datacatalog.v1.RetrieveConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2393}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -3051,8 +3051,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datacatalog.v1.MigrationConfig]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2446}
-  /// [google.cloud.datacatalog.v1.RetrieveEffectiveConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2399}
+  /// [google.cloud.datacatalog.v1.MigrationConfig]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2447}
+  /// [google.cloud.datacatalog.v1.RetrieveEffectiveConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2400}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")

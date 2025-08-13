@@ -24,13 +24,13 @@
 #include "google/cloud/compute/disks/v1/disks_options.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_stub.h"
 #include "google/cloud/compute/disks/v1/internal/disks_retry_traits.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
 
 namespace google {
@@ -79,6 +79,18 @@ class DisksRestConnectionImpl : public compute_disks_v1::DisksConnection {
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkSetLabels(
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkSetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(

@@ -53,6 +53,42 @@ class MockModelGardenServiceConnection
       (google::cloud::aiplatform::v1::GetPublisherModelRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Deploy(Matcher<google::cloud::aiplatform::v1::DeployRequest const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>,
+              Deploy,
+              (google::cloud::aiplatform::v1::DeployRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, Deploy(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, Deploy,
+              (NoAwaitTag,
+               google::cloud::aiplatform::v1::DeployRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, Deploy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>,
+              Deploy, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

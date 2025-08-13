@@ -17,9 +17,9 @@
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_logging_decorator.h"
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -145,6 +145,50 @@ CloudControlsPartnerCoreLogging::GetPartner(
              google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
                  request) {
         return child_->GetPartner(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreLogging::CreateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+              request) {
+        return child_->CreateCustomer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreLogging::UpdateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+              request) {
+        return child_->UpdateCustomer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status CloudControlsPartnerCoreLogging::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+              request) {
+        return child_->DeleteCustomer(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

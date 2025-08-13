@@ -17,12 +17,12 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_metadata_decorator.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -252,6 +252,168 @@ DeveloperConnectMetadata::FetchGitRefs(
               absl::StrCat("git_repository_link=",
                            internal::UrlEncode(request.git_repository_link())));
   return child_->FetchGitRefs(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
+DeveloperConnectMetadata::ListAccountConnectors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAccountConnectors(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectMetadata::GetAccountConnector(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAccountConnector(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectMetadata::AsyncCreateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAccountConnector(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectMetadata::CreateAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAccountConnector(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectMetadata::AsyncUpdateAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("account_connector.name=",
+                   internal::UrlEncode(request.account_connector().name())));
+  return child_->AsyncUpdateAccountConnector(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectMetadata::UpdateAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("account_connector.name=",
+                   internal::UrlEncode(request.account_connector().name())));
+  return child_->UpdateAccountConnector(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectMetadata::AsyncDeleteAccountConnector(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAccountConnector(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectMetadata::DeleteAccountConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAccountConnector(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectMetadata::FetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("account_connector=",
+                           internal::UrlEncode(request.account_connector())));
+  return child_->FetchAccessToken(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListUsersResponse>
+DeveloperConnectMetadata::ListUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListUsersRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListUsers(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectMetadata::AsyncDeleteUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteUser(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectMetadata::DeleteUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteUser(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectMetadata::FetchSelf(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchSelf(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectMetadata::AsyncDeleteSelf(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSelf(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectMetadata::DeleteSelf(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSelf(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

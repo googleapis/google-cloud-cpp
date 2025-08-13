@@ -17,6 +17,8 @@
 // source: google/cloud/servicehealth/v1/event_service.proto
 
 #include "google/cloud/servicehealth/v1/internal/service_health_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/servicehealth/v1/event_service.grpc.pb.h"
 #include "google/cloud/servicehealth/v1/internal/service_health_auth_decorator.h"
 #include "google/cloud/servicehealth/v1/internal/service_health_logging_decorator.h"
 #include "google/cloud/servicehealth/v1/internal/service_health_metadata_decorator.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/servicehealth/v1/event_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

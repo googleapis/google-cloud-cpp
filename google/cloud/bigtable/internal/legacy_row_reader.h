@@ -26,7 +26,7 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "absl/types/variant.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <cinttypes>
 #include <string>

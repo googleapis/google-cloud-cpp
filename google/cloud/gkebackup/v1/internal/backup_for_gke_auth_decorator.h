@@ -22,7 +22,7 @@
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
@@ -83,6 +83,65 @@ class BackupForGKEAuth : public BackupForGKEStub {
   StatusOr<google::longrunning::Operation> DeleteBackupPlan(
       grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupChannel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateBackupChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkebackup::v1::ListBackupChannelsResponse>
+  ListBackupChannels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListBackupChannelsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkebackup::v1::BackupChannel> GetBackupChannel(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupChannel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackupChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupChannel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteBackupChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkebackup::v1::ListBackupPlanBindingsResponse>
+  ListBackupPlanBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+  GetBackupPlanBinding(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -184,6 +243,65 @@ class BackupForGKEAuth : public BackupForGKEStub {
   StatusOr<google::longrunning::Operation> DeleteRestorePlan(
       grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateRestoreChannel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateRestoreChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkebackup::v1::ListRestoreChannelsResponse>
+  ListRestoreChannels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListRestoreChannelsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkebackup::v1::RestoreChannel> GetRestoreChannel(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateRestoreChannel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateRestoreChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteRestoreChannel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteRestoreChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkebackup::v1::ListRestorePlanBindingsResponse>
+  ListRestorePlanBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+  GetRestorePlanBinding(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRestore(

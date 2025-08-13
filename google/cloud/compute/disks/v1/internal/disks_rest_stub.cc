@@ -17,12 +17,12 @@
 // source: google/cloud/compute/disks/v1/disks.proto
 
 #include "google/cloud/compute/disks/v1/internal/disks_rest_stub.h"
+#include "google/cloud/compute/disks/v1/disks.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/disks/v1/disks.pb.h>
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
 #include <utility>
 
@@ -186,6 +186,66 @@ DefaultDisksRestStub::BulkInsert(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "disks", "/", "bulkInsert"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultDisksRestStub::AsyncBulkSetLabels(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"resource", request.resource()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.bulk_zone_set_labels_request_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/", "disks", "/",
+                             "bulkSetLabels"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::BulkSetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"resource", request.resource()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.bulk_zone_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", "bulkSetLabels"),
       std::move(query_params));
 }
 

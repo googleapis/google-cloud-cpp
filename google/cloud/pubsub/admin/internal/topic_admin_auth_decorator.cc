@@ -17,7 +17,7 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/admin/internal/topic_admin_auth_decorator.h"
-#include <google/pubsub/v1/pubsub.grpc.pb.h>
+#include "google/pubsub/v1/pubsub.grpc.pb.h"
 #include <memory>
 #include <utility>
 

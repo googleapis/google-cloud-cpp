@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_DATA_CLIENT_H
 
 #include "google/cloud/bigtable/data_client.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <string>
 // TODO(#8800) - delete this class when deprecation is complete
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

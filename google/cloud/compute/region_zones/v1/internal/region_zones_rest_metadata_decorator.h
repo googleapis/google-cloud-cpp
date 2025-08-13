@@ -20,10 +20,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_ZONES_V1_INTERNAL_REGION_ZONES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_stub.h"
+#include "google/cloud/compute/region_zones/v1/region_zones.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_zones/v1/region_zones.pb.h>
 #include <memory>
 #include <string>
 

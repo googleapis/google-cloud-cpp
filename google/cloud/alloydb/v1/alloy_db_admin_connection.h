@@ -21,6 +21,7 @@
 
 #include "google/cloud/alloydb/v1/alloy_db_admin_connection_idempotency_policy.h"
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_retry_traits.h"
+#include "google/cloud/alloydb/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/alloydb/v1/service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -211,6 +211,39 @@ class AlloyDBAdminConnection {
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
       google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpgradeCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteCluster(

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_H
 
 #include "google/cloud/compute/licenses/v1/internal/licenses_retry_traits.h"
+#include "google/cloud/compute/licenses/v1/licenses.pb.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/licenses/v1/licenses.pb.h>
 #include <memory>
 
 namespace google {
@@ -226,6 +226,19 @@ class LicensesConnection {
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
                          TestIamPermissionsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateLicense(
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
+      NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateLicense(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

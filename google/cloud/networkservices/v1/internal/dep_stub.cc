@@ -17,10 +17,10 @@
 // source: google/cloud/networkservices/v1/dep.proto
 
 #include "google/cloud/networkservices/v1/internal/dep_stub.h"
+#include "google/cloud/networkservices/v1/dep.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/networkservices/v1/dep.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -282,6 +282,134 @@ DefaultDepServiceStub::DeleteLbRouteExtension(
   google::longrunning::Operation response;
   auto status =
       grpc_stub_->DeleteLbRouteExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
+DefaultDepServiceStub::ListAuthzExtensions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest const&
+        request) {
+  google::cloud::networkservices::v1::ListAuthzExtensionsResponse response;
+  auto status = grpc_stub_->ListAuthzExtensions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DefaultDepServiceStub::GetAuthzExtension(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+        request) {
+  google::cloud::networkservices::v1::AuthzExtension response;
+  auto status = grpc_stub_->GetAuthzExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDepServiceStub::AsyncCreateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAuthzExtension(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::CreateAuthzExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAuthzExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDepServiceStub::AsyncUpdateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAuthzExtension(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::UpdateAuthzExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAuthzExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDepServiceStub::AsyncDeleteAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAuthzExtension(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::DeleteAuthzExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAuthzExtension(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -562,6 +562,36 @@ ClusterManagerConnectionImpl::CheckAutopilotCompatibility(
       *current, request, __func__);
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerConnectionImpl::FetchClusterUpgradeInfo(
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchClusterUpgradeInfo(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::FetchClusterUpgradeInfoRequest const&
+                 request) {
+        return stub_->FetchClusterUpgradeInfo(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerConnectionImpl::FetchNodePoolUpgradeInfo(
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchNodePoolUpgradeInfo(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::FetchNodePoolUpgradeInfoRequest const&
+                 request) {
+        return stub_->FetchNodePoolUpgradeInfo(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

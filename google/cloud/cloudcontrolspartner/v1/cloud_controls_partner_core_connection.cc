@@ -94,6 +94,23 @@ CloudControlsPartnerCoreConnection::GetPartner(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreConnection::CreateCustomer(
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreConnection::UpdateCustomer(
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status CloudControlsPartnerCoreConnection::DeleteCustomer(
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CloudControlsPartnerCoreConnection>
 MakeCloudControlsPartnerCoreConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

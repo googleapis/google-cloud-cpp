@@ -17,7 +17,7 @@
 // source: google/cloud/metastore/v1/metastore.proto
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_auth_decorator.h"
-#include <google/cloud/metastore/v1/metastore.grpc.pb.h>
+#include "google/cloud/metastore/v1/metastore.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -21,13 +21,17 @@
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_retry_traits.h"
 #include "google/cloud/aiplatform/v1/model_garden_connection_idempotency_policy.h"
+#include "google/cloud/aiplatform/v1/model_garden_service.pb.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/aiplatform/v1/model_garden_service.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <string>
 
@@ -189,6 +193,15 @@ class ModelGardenServiceConnection {
   virtual StatusOr<google::cloud::aiplatform::v1::PublisherModel>
   GetPublisherModel(
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+  Deploy(google::cloud::aiplatform::v1::DeployRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> Deploy(
+      NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+  Deploy(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

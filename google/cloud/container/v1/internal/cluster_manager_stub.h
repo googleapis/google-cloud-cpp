@@ -22,7 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
+#include "google/container/v1/cluster_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -174,6 +174,17 @@ class ClusterManagerStub {
   CheckAutopilotCompatibility(
       grpc::ClientContext& context, Options const& options,
       google::container::v1::CheckAutopilotCompatibilityRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::container::v1::ClusterUpgradeInfo>
+  FetchClusterUpgradeInfo(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request) = 0;
+
+  virtual StatusOr<google::container::v1::NodePoolUpgradeInfo>
+  FetchNodePoolUpgradeInfo(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const&
           request) = 0;
 };
 
@@ -328,6 +339,16 @@ class DefaultClusterManagerStub : public ClusterManagerStub {
   CheckAutopilotCompatibility(
       grpc::ClientContext& context, Options const& options,
       google::container::v1::CheckAutopilotCompatibilityRequest const& request)
+      override;
+
+  StatusOr<google::container::v1::ClusterUpgradeInfo> FetchClusterUpgradeInfo(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request)
+      override;
+
+  StatusOr<google::container::v1::NodePoolUpgradeInfo> FetchNodePoolUpgradeInfo(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
       override;
 
  private:

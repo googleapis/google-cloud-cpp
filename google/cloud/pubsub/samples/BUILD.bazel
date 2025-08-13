@@ -14,6 +14,8 @@
 
 """Examples for the Cloud Pub/Sub C++ client library."""
 
+load("@protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_samples")
 load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 load(":pubsub_samples_common.bzl", "pubsub_samples_common_hdrs", "pubsub_samples_common_srcs")
@@ -45,7 +47,7 @@ cc_library(
         "//:common",
         "//:pubsub",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in pubsub_samples_unit_tests]
 
@@ -88,6 +90,6 @@ cc_proto_library(
         "//:pubsub",
         "//:pubsub_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in pubsub_client_unit_samples]

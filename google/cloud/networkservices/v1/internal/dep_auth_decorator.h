@@ -22,7 +22,7 @@
 #include "google/cloud/networkservices/v1/internal/dep_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
@@ -136,6 +136,54 @@ class DepServiceAuth : public DepServiceStub {
   StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
       grpc::ClientContext& context, Options options,
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
+  ListAuthzExtensions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListAuthzExtensionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAuthzExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAuthzExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthzExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
           request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

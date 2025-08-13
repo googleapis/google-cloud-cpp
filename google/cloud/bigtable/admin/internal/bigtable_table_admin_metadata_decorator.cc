@@ -22,7 +22,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -355,6 +355,78 @@ BigtableTableAdminMetadata::TestIamPermissions(
       context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncCreateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateSchemaBundle(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::CreateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSchemaBundle(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncUpdateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("schema_bundle.name=",
+                   internal::UrlEncode(request.schema_bundle().name())));
+  return child_->AsyncUpdateSchemaBundle(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::UpdateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("schema_bundle.name=",
+                   internal::UrlEncode(request.schema_bundle().name())));
+  return child_->UpdateSchemaBundle(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminMetadata::GetSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSchemaBundle(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+BigtableTableAdminMetadata::ListSchemaBundles(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListSchemaBundles(context, options, request);
+}
+
+Status BigtableTableAdminMetadata::DeleteSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSchemaBundle(context, options, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

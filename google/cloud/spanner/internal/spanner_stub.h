@@ -25,7 +25,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -97,6 +97,12 @@ class SpannerStub {
   BatchWrite(std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) = 0;
+
+  virtual future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::v1::CreateSessionRequest const& request) = 0;
 
   virtual future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
@@ -181,6 +187,12 @@ class DefaultSpannerStub : public SpannerStub {
   BatchWrite(std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) override;
+
+  future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::v1::CreateSessionRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(

@@ -17,8 +17,8 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <google/rpc/status.pb.h>
-#include <google/storage/v2/storage.pb.h>
+#include "google/rpc/status.pb.h"
+#include "google/storage/v2/storage.pb.h"
 
 namespace google {
 namespace cloud {
@@ -26,7 +26,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnsureFirstMessageAppendObjectSpec(
-    google::storage::v2::BidiWriteObjectRequest& request);
+    google::storage::v2::BidiWriteObjectRequest& request,
+    google::rpc::Status const& rpc_status);
 
 google::rpc::Status ExtractGrpcStatus(Status const& status);
 

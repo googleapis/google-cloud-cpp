@@ -19,7 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/notification_channel_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/monitoring/v3/notification_service.grpc.pb.h>
+#include "google/monitoring/v3/notification_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

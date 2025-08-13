@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_INTERNAL_LICENSES_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_INTERNAL_LICENSES_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_rest_stub.h"
+#include "google/cloud/compute/licenses/v1/licenses.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/licenses/v1/licenses.pb.h>
 #include <memory>
 #include <string>
 
@@ -96,6 +96,20 @@ class LicensesRestMetadata : public LicensesRestStub {
                      Options const& options,
                      google::cloud::cpp::compute::licenses::v1::
                          TestIamPermissionsRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateLicense(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
