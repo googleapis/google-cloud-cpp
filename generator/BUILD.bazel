@@ -39,7 +39,6 @@ cc_library(
         "@abseil-cpp//absl/strings:str_format",
         "@com_github_jbeder_yaml_cpp//:yaml-cpp",
         "@nlohmann_json//:json",
-        #        "@googleapis//:googleapis_system_includes",
         "@googleapis//google/api:client_cc_proto",
         "@googleapis//google/api:field_info_cc_proto",
         "@googleapis//google/api:routing_cc_proto",
