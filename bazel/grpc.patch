@@ -1,31 +1,46 @@
 diff --git a/bazel/grpc_deps.bzl b/bazel/grpc_deps.bzl
-index 6752260f16..6108187095 100644
+index 6752260f16..3cff411d37 100644
 --- bazel/grpc_deps.bzl
 +++ bazel/grpc_deps.bzl
-@@ -55,26 +55,6 @@ def grpc_deps():
+@@ -269,20 +269,6 @@ def grpc_deps():
              ],
          )
  
--    if "com_google_protobuf" not in native.existing_rules():
+-    if "io_bazel_rules_go" not in native.existing_rules():
 -        http_archive(
--            name = "com_google_protobuf",
--            sha256 = "d0e3a75876a81e1536028bb9cf9181382b198da4cc6fa6aef86879ef629ac807",
--            strip_prefix = "protobuf-74211c0dfc2777318ab53c2cd2c317a2ef9012de",
+-            name = "io_bazel_rules_go",
+-            sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
 -            urls = [
--                # https://github.com/protocolbuffers/protobuf/commits/v31.1
--                "https://storage.googleapis.com/grpc-bazel-mirror/github.com/protocolbuffers/protobuf/archive/74211c0dfc2777318ab53c2cd2c317a2ef9012de.tar.gz",
--                "https://github.com/protocolbuffers/protobuf/archive/74211c0dfc2777318ab53c2cd2c317a2ef9012de.tar.gz",
+-                "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+-                "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
 -            ],
 -            patches = [
--                "@com_github_grpc_grpc//third_party:protobuf.patch",
+-                "@com_github_grpc_grpc//bazel:rules_go.patch",
 -            ],
 -            patch_args = ["-p1"],
--            repo_mapping = {
--                "@abseil-cpp": "@com_google_absl",
--                "@googletest": "@com_google_googletest",
--            },
 -        )
 -
-     if "com_google_googletest" not in native.existing_rules():
+     if "build_bazel_rules_apple" not in native.existing_rules():
          http_archive(
-             name = "com_google_googletest",
+             name = "build_bazel_rules_apple",
+diff --git a/bazel/grpc_extra_deps.bzl b/bazel/grpc_extra_deps.bzl
+index 4a8e18ce17..e296cd1a77 100644
+--- bazel/grpc_extra_deps.bzl
++++ bazel/grpc_extra_deps.bzl
+@@ -23,7 +23,6 @@ load("@com_google_googletest//:googletest_deps.bzl", "googletest_deps")
+ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+ load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
+ load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+ load("@rules_java//java:rules_java_deps.bzl", "rules_java_dependencies")
+ load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies")
+ load("@rules_python//python:repositories.bzl", "py_repositories")
+@@ -64,8 +63,6 @@ def grpc_extra_deps(ignore_version_differences = False):
+ 
+     api_dependencies()
+ 
+-    go_rules_dependencies()
+-    go_register_toolchains(version = "1.22.5")
+     gazelle_dependencies()
+ 
+     # Pull-in the go 3rd party dependencies for protoc_gen_validate, which is

@@ -158,46 +158,19 @@ def gl_cpp_workspace0(name = None):
         # patch_args = ["-p1", "-l", "-n"],
         repo_mapping = {
             "@com_github_grpc_grpc": "@grpc",
-            "@com_google_protobuf": "@protobuf",
         },
     )
 
     # Load protobuf.
-    protobuf_version = "31.1"
-    protobuf_sha = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2"
-    maybe(
-        http_archive,
-        name = "protobuf",
-        urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v" + protobuf_version + ".tar.gz",
-        ],
-        sha256 = protobuf_sha,
-        strip_prefix = "protobuf-" + protobuf_version,
-        repo_mapping = {
-            "@com_google_protobuf": "@protobuf",
-        },
-    )
-
-    # Load protobuf again with its de-facto name.
-    # Overriding every transitive dependency that references it would end up
-    # with several new dependencies just to override via repo_mapping.
-    # This workaround will have bazel resolve protobuf and com_google_protobuf
-    # to the same repository.
     maybe(
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v" + protobuf_version + ".tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
         ],
-        sha256 = protobuf_sha,
-        strip_prefix = "protobuf-" + protobuf_version,
-        repo_mapping = {
-            "@com_google_protobuf": "@protobuf",
-        },
+        sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
+        strip_prefix = "protobuf-31.1",
     )
-
-    #native.bind(name = 'cc_toolchain', actual = '@protobuf//:cc_toolchain')
-    #register_toolchains("@protobuf//:cc_toolchain")
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
     # 2023-02-01 the version loaded by gRPC-1.51 does not compile with Clang-15.
@@ -214,17 +187,6 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "boringssl-82a53d8c902f940eb1310f76a0b96c40c67f632f",
     )
 
-    # We manually bring this gRPC dependency and avoid a transitive rule where
-    # grpc applies a patch we don't have
-    http_archive(
-        name = "io_bazel_rules_go",
-        sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
-        urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
-        ],
-    )
-
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
         http_archive,
@@ -235,7 +197,6 @@ def gl_cpp_workspace0(name = None):
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
             "@com_github_grpc_grpc": "@grpc",
-            "@com_google_protobuf": "@protobuf",
         },
         sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
         strip_prefix = "grpc-1.74.1",
@@ -248,10 +209,10 @@ def gl_cpp_workspace0(name = None):
 
     native.bind(
         name = "protocol_compiler",
-        actual = "@protobuf//:protoc",
+        actual = "@com_google_protobuf//:protoc",
     )
 
-    # We use the cc_proto_library() rule from @protobuf, which
+    # We use the cc_proto_library() rule from @com_google_protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
