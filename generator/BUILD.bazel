@@ -38,13 +38,13 @@ cc_library(
         "@abseil-cpp//absl/strings",
         "@abseil-cpp//absl/strings:str_format",
         "@com_github_jbeder_yaml_cpp//:yaml-cpp",
-        "@nlohmann_json//:json",
+        "@com_google_protobuf//:protoc_lib",
         "@googleapis//google/api:client_cc_proto",
         "@googleapis//google/api:field_info_cc_proto",
         "@googleapis//google/api:routing_cc_proto",
         "@googleapis//google/cloud:extended_operations_cc_proto",
         "@googleapis//google/longrunning:longrunning_cc_proto",
-        "@com_google_protobuf//:protoc_lib",
+        "@nlohmann_json//:json",
     ],
 )
 

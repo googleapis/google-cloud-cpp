@@ -22,13 +22,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "monitoring.googleapis.com")
   used by `MakeGroupServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_METRICS_SCOPES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "monitoring.googleapis.com")
-  used by `MakeMetricsScopesConnection()`.
-
 - `GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "monitoring.googleapis.com")
   used by `MakeMetricServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_METRICS_SCOPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeMetricsScopesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "monitoring.googleapis.com")

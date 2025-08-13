@@ -493,7 +493,8 @@ TEST(ExternalAccountTokenSource, NonMetadataUrl) {
 
 TEST(ExternalAccountTokenSource, MissingRegionalCredentialVerificationUrl) {
   auto const creds = nlohmann::json{
-      {"environment_id", "aws1"}, {"region_url", "test-region-url"},
+      {"environment_id", "aws1"},
+      {"region_url", "test-region-url"},
       // {"regional_cred_verification_url", "test-verification-url"},
   };
   auto const info =

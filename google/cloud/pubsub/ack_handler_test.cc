@@ -27,7 +27,9 @@ using ::testing::Return;
 TEST(AckHandlerTest, AutoNack) {
   auto mock = std::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, nack()).Times(1);
-  { AckHandler handler(std::move(mock)); }
+  {
+    AckHandler handler(std::move(mock));
+  }
 }
 
 TEST(AckHandlerTest, AutoNackMove) {

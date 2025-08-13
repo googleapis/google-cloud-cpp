@@ -32,7 +32,9 @@ TEST(AckHandlerTest, AutoNack) {
   auto mock = std::make_unique<MockExactlyOnceAckHandler>();
   EXPECT_CALL(*mock, nack())
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  { ExactlyOnceAckHandler handler(std::move(mock)); }
+  {
+    ExactlyOnceAckHandler handler(std::move(mock));
+  }
 }
 
 TEST(AckHandlerTest, AutoNackMove) {

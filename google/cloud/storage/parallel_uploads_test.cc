@@ -890,7 +890,9 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
 
   ASSERT_STATUS_OK((*uploaders)[0].Upload());
   ASSERT_STATUS_OK((*uploaders)[2].Upload());
-  { auto to_destroy = std::move((*uploaders)[1]); }
+  {
+    auto to_destroy = std::move((*uploaders)[1]);
+  }
 
   auto res = (*uploaders)[0].WaitForCompletion().get();
   EXPECT_THAT(res, StatusIs(StatusCode::kCancelled));
@@ -1044,9 +1046,9 @@ TEST(ParallelUploadPersistentState, NoGeneration) {
 }
 
 TEST(ParallelUploadPersistentState, GenerationNotAString) {
-  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
-      {"destination", "dest"},
-      {"expected_generation", "blah"}}.dump());
+  auto res = ParallelUploadPersistentState::FromString(
+      nlohmann::json{{"destination", "dest"}, {"expected_generation", "blah"}}
+          .dump());
   EXPECT_THAT(res,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("'expected_generation' is not a number")));
@@ -1054,25 +1056,24 @@ TEST(ParallelUploadPersistentState, GenerationNotAString) {
 
 TEST(ParallelUploadPersistentState, CustomDataNotAString) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
-      {"destination", "dest"},
-      {"expected_generation", 1},
-      {"custom_data", 123}}.dump());
+      {"destination", "dest"}, {"expected_generation", 1}, {"custom_data", 123}}
+                                                           .dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
                             HasSubstr("'custom_data' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, NoStreams) {
-  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
-      {"destination", "dest"}, {"expected_generation", 1}}.dump());
+  auto res = ParallelUploadPersistentState::FromString(
+      nlohmann::json{{"destination", "dest"}, {"expected_generation", 1}}
+          .dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
                             HasSubstr("doesn't contain 'streams'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamsNotArray) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
-      {"destination", "dest"},
-      {"expected_generation", 1},
-      {"streams", 5}}.dump());
+      {"destination", "dest"}, {"expected_generation", 1}, {"streams", 5}}
+                                                           .dump());
   EXPECT_THAT(res,
               StatusIs(StatusCode::kInternal, HasSubstr("is not an array")));
 }

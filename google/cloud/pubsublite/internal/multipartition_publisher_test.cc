@@ -82,8 +82,8 @@ future<StatusOr<TopicPartitions>> ReadyTopicPartitionsFuture(
 class MultipartitionPublisherNoneInitializedTest : public ::testing::Test {
  protected:
   MultipartitionPublisherNoneInitializedTest()
-      : admin_connection_{std::make_shared<
-            StrictMock<MockAdminServiceConnection>>()},
+      : admin_connection_{
+            std::make_shared<StrictMock<MockAdminServiceConnection>>()},
         alarm_token_{*(new StrictMock<MockAlarmRegistryCancelToken>())},
         routing_policy_{*(new StrictMock<MockRoutingPolicy>())} {
     EXPECT_CALL(*admin_connection_, options).WillRepeatedly(Return(Options{}));
@@ -220,8 +220,8 @@ class MultipartitionPublisherTest
     : public MultipartitionPublisherNoneInitializedTest {
  protected:
   MultipartitionPublisherTest()
-      : partition_publisher_0_{std::make_shared<
-            StrictMock<MockPublisher<Cursor>>>()},
+      : partition_publisher_0_{
+            std::make_shared<StrictMock<MockPublisher<Cursor>>>()},
         partition_publisher_1_{
             std::make_shared<StrictMock<MockPublisher<Cursor>>>()} {}
 

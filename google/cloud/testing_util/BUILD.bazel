@@ -110,8 +110,8 @@ cc_library(
     deps = [
         ":google_cloud_cpp_testing_grpc",
         "//:common",
-        "@googletest//:gtest_main",
         "@com_google_protobuf",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_testing_grpc_unit_tests]
 

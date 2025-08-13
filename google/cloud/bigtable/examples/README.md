@@ -72,11 +72,12 @@ sample code can be found [here][doxygen-instance-admin].
 
 ### Running Instance Admin Samples
 
-| Target                               | Description                                                                 |
-| ------------------------------------ | --------------------------------------------------------------------------- |
-| `./bigtable_hello_instance_admin`    | Demonstration of basic operations                                           |
-| `./bigtable_hello_app_profile`       | Demonstration of basic operations using [App Profile][cbt-doc-app-profiles] |
-| `./bigtable_instance_admin_snippets` | Collection of individual operations                                         |
+| Target | Description | | ------------------------------------ |
+--------------------------------------------------------------------------- | |
+`./bigtable_hello_instance_admin` | Demonstration of basic operations | |
+`./bigtable_hello_app_profile` | Demonstration of basic operations using
+[App Profile][cbt-doc-app-profiles] | | `./bigtable_instance_admin_snippets` |
+Collection of individual operations |
 
 Run the above targets with the `--help` flag to display the available commands
 and their usage. Here is an example of one such command which will create an
@@ -96,11 +97,12 @@ code can be found [here][doxygen-table-admin].
 
 ### Running Table Admin Samples
 
-| Target                                   | Description                                        |
-| ---------------------------------------- | -------------------------------------------------- |
-| `./bigtable_hello_table_admin`           | Demonstration of basic operations                  |
-| `./table_admin_snippets`                 | Collection of individual operations                |
-| `./bigtable_table_admin_backup_snippets` | Collection of [Backup][cbt-doc-backups] operations |
+| Target | Description | | ---------------------------------------- |
+-------------------------------------------------- | |
+`./bigtable_hello_table_admin` | Demonstration of basic operations | |
+`./table_admin_snippets` | Collection of individual operations | |
+`./bigtable_table_admin_backup_snippets` | Collection of
+[Backup][cbt-doc-backups] operations |
 
 Run the above targets with the `--help` flag to display the available commands
 and their usage. Here is an example of one such command which will create a
@@ -112,12 +114,12 @@ $ ./table_admin_snippets create-table <project-id> <instance-id> <table-id>
 
 ## Reading and Writing Data Operations
 
-| Target                   | Description                                               |
-| ------------------------ | --------------------------------------------------------- |
-| `./read_snippets`        | Collection of synchronous read operations                 |
-| `./data_snippets`        | Collection of other synchronous table operations          |
-| `./data_async_snippets`  | Collection of asynchronous table operations               |
-| `./data_filter_snippets` | Collection of operations using [Filters][cbt-doc-filters] |
+| Target | Description | | ------------------------ |
+--------------------------------------------------------- | | `./read_snippets`
+| Collection of synchronous read operations | | `./data_snippets` | Collection
+of other synchronous table operations | | `./data_async_snippets` | Collection
+of asynchronous table operations | | `./data_filter_snippets` | Collection of
+operations using [Filters][cbt-doc-filters] |
 
 The above samples demonstrate individual data operations. Running the targets
 with the `--help` flag will display the available commands and their usage. Here
@@ -134,10 +136,10 @@ The following samples demonstrate use of
 [Access Control][cbt-doc-access-control] for Bigtable. More details on the
 samples can be found [here][doxygen-grpc].
 
-| Target                              | Description                            |
-| ----------------------------------- | -------------------------------------- |
-| `./table_admin_iam_policy_snippets` | Examples to interact with IAM policies |
-| `./bigtable_grpc_credentials`       | Examples of other types of credentials |
+| Target | Description | | ----------------------------------- |
+-------------------------------------- | | `./table_admin_iam_policy_snippets` |
+Examples to interact with IAM policies | | `./bigtable_grpc_credentials` |
+Examples of other types of credentials |
 
 Running the targets with the `--help` flag will display the available commands
 and their usage. Here is an example of one such command which will output the
