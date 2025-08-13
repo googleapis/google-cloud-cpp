@@ -427,6 +427,25 @@ class AsyncClient {
   future<StatusOr<ReadPayload>> ReadAll(
       google::storage::v2::ReadObjectRequest request, Options opts = {});
 
+  /**
+   * Reads the full contents of an object from an `AsyncReader`.
+   *
+   * This function consumes the reader and token to read all the data from the
+   * underlying stream and accumulates it in memory.
+   *
+   * Be aware that this will accumulate all the bytes in memory. For large
+   * objects, this function may fail with `StatusCode::kResourceExhausted` if
+   * the system runs out of memory.
+   *
+   * @par Idempotency
+   * This operation will automatically resume the download if it is
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param reader The asynchronous reader to consume.
+   * @param token The token to start reading.
+   */
+  future<StatusOr<ReadPayload>> ReadAll(AsyncReader reader, AsyncToken token);
+
   /*
   [start-appendable-object-upload]
   Initiates a [resumable upload][resumable-link] for an appendable object.

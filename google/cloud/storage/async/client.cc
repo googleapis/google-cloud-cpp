@@ -125,8 +125,18 @@ future<StatusOr<ReadPayload>> AsyncClient::ReadAll(
     google::storage::v2::ReadObjectRequest request, Options opts) {
   request.clear_read_offset();
   request.clear_read_limit();
-  return storage_experimental::ReadAll(
-      ReadObject(std::move(request), std::move(opts)));
+  auto reader_future = ReadObject(std::move(request), std::move(opts));
+  return reader_future.then(
+      [this](future<StatusOr<std::pair<AsyncReader, AsyncToken>>> f) {
+        auto r = f.get();
+        if (!r) return make_ready_future(StatusOr<ReadPayload>(r.status()));
+        return ReadAll(std::move(r->first), std::move(r->second));
+      });
+}
+
+future<StatusOr<ReadPayload>> AsyncClient::ReadAll(AsyncReader reader,
+                                                   AsyncToken token) {
+  return storage_experimental::ReadAll(std::move(reader), std::move(token));
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>

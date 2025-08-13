@@ -53,6 +53,21 @@ struct TestOption {
   using Type = std::string;
 };
 
+auto MakeTestReaderConnection(std::vector<std::string> chunks) {
+  auto reader_impl = std::make_unique<MockAsyncReaderConnection>();
+  ::testing::InSequence seq;
+  for (auto& chunk : chunks) {
+    EXPECT_CALL(*reader_impl, Read).WillOnce([c = std::move(chunk)] {
+      return make_ready_future(
+          AsyncReaderConnection::ReadResponse{ReadPayload(std::move(c))});
+    });
+  }
+  EXPECT_CALL(*reader_impl, Read).WillOnce([] {
+    return make_ready_future(AsyncReaderConnection::ReadResponse{Status{}});
+  });
+  return reader_impl;
+}
+
 auto TestProtoObject() {
   google::storage::v2::Object result;
   result.set_bucket("projects/_/buckets/test-bucket");
@@ -397,22 +412,9 @@ TEST(AsyncClient, ReadAll1) {
         auto expected = google::storage::v2::ReadObjectRequest{};
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(p.request, IsProtoEqual(expected));
-        auto reader = std::make_unique<MockAsyncReaderConnection>();
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([]() {
-              return make_ready_future(
-                  AsyncReaderConnection::ReadResponse{ReadPayload("test-")});
-            })
-            .WillOnce([]() {
-              return make_ready_future(
-                  AsyncReaderConnection::ReadResponse{ReadPayload("payload")});
-            })
-            .WillOnce([]() {
-              return make_ready_future(
-                  AsyncReaderConnection::ReadResponse{Status{}});
-            });
-        return make_ready_future(make_status_or(
-            std::unique_ptr<AsyncReaderConnection>(std::move(reader))));
+        return make_ready_future(
+            make_status_or(std::unique_ptr<AsyncReaderConnection>(
+                MakeTestReaderConnection({"test-", "payload"}))));
       });
 
   auto client = AsyncClient(mock);
@@ -451,19 +453,9 @@ TEST(AsyncClient, ReadAll2) {
         auto expected = google::storage::v2::ReadObjectRequest{};
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(p.request, IsProtoEqual(expected));
-
-        auto reader = std::make_unique<MockAsyncReaderConnection>();
-        EXPECT_CALL(*reader, Read)
-            .WillOnce([] {
-              return make_ready_future(
-                  AsyncReaderConnection::ReadResponse(ReadPayload("payload")));
-            })
-            .WillOnce([] {
-              return make_ready_future(
-                  AsyncReaderConnection::ReadResponse(Status{}));
-            });
-        return make_ready_future(make_status_or(
-            std::unique_ptr<AsyncReaderConnection>(std::move(reader))));
+        return make_ready_future(
+            make_status_or(std::unique_ptr<AsyncReaderConnection>(
+                MakeTestReaderConnection({"payload"}))));
       });
 
   auto client = AsyncClient(mock);
@@ -477,6 +469,23 @@ TEST(AsyncClient, ReadAll2) {
           .get();
   ASSERT_STATUS_OK(payload);
   EXPECT_THAT(payload->contents(), ElementsAre("payload"));
+}
+
+TEST(AsyncClient, ReadAllFromReader) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  auto reader_impl = MakeTestReaderConnection({"test-", "payload"});
+  auto* reader_impl_ptr = reader_impl.get();
+  auto reader = AsyncReader(std::move(reader_impl));
+  auto token = storage_internal::MakeAsyncToken(reader_impl_ptr);
+
+  auto client = AsyncClient(mock);
+  auto payload = client.ReadAll(std::move(reader), std::move(token)).get();
+  ASSERT_STATUS_OK(payload);
+  EXPECT_THAT(payload->contents(), ElementsAre("test-", "payload"));
 }
 
 TEST(AsyncClient, StartAppendableObjectUpload1) {
