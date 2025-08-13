@@ -52,7 +52,7 @@ class ObjectDescriptorConnectionLogging : public ObjectDescriptorConnection {
 
   void MakeSubsequentStream() override {
     GCP_LOG(INFO) << "ObjectDescriptorConnection::MakeSubsequentStream()";
-    impl_->MakeSubsequentStream();
+    child_->MakeSubsequentStream();
   }
 
  private:
