@@ -63,8 +63,8 @@ cc_library(
     ] + select({
         ":metrics_enabled": [
             "//:opentelemetry",
-            "@io_opentelemetry_cpp//api",
-            "@io_opentelemetry_cpp//sdk/src/metrics",
+            "@opentelemetry-cpp//api",
+            "@opentelemetry-cpp//sdk/src/metrics",
         ],
         "//conditions:default": [],
     }),

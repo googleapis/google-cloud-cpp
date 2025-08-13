@@ -53,6 +53,6 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.74.1")
-bazel_dep(name = "googleapis", version = "0.0.0-20250703-f9d6fe4a")
+bazel_dep(name = "googleapis", version = "0.0.0-20250730-f6801ce4")
 bazel_dep(name = "googleapis-cc", version = "1.0.0")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.0.0")
