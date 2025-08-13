@@ -24,7 +24,10 @@ bazel_dep(name = "platforms", version = "0.0.11")
 bazel_dep(name = "bazel_skylib", version = "1.8.1")
 bazel_dep(name = "rules_cc", version = "0.1.4")
 bazel_dep(name = "abseil-cpp", version = "20250127.1")
-bazel_dep(name = "protobuf", version = "31.1")
+# For backwards compatibility with WORKSPACE. The name "com_google_protobuf" is
+# internally used by bazel_tools a native repository we cannot override and
+# that references com_google_protobuf.
+bazel_dep(name = "protobuf", version = "31.1", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")

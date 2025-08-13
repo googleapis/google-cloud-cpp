@@ -13,8 +13,8 @@
 # limitations under the License.
 
 load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
-load("@protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
-load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 
 package(default_visibility = ["//visibility:private"])
 
@@ -29,7 +29,7 @@ proto_library(
         "@googleapis//google/api:client_proto",
         "@googleapis//google/bigtable/v2:bigtable_proto",
         "@googleapis//google/rpc:status_proto",
-        "@protobuf//:duration_proto",
+        "@com_google_protobuf//:duration_proto",
     ],
 )
 

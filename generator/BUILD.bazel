@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 load("//third_party/protobuf/bazel:cc_proto_library.bzl", "cc_proto_library")
 load(":google_cloud_cpp_generator.bzl", "google_cloud_cpp_generator_hdrs", "google_cloud_cpp_generator_srcs")
 load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_testing_hdrs", "google_cloud_cpp_generator_testing_srcs")
@@ -44,7 +44,7 @@ cc_library(
         "@googleapis//google/api:routing_cc_proto",
         "@googleapis//google/cloud:extended_operations_cc_proto",
         "@googleapis//google/longrunning:longrunning_cc_proto",
-        "@protobuf//:protoc_lib",
+        "@com_google_protobuf//:protoc_lib",
     ],
 )
 
