@@ -131,6 +131,9 @@
 ./include/google/cloud/bigquery/datapolicies/v1
 ./include/google/cloud/bigquery/datapolicies/v1/internal
 ./include/google/cloud/bigquery/datapolicies/v1/mocks
+./include/google/cloud/bigquery/datapolicies/v2
+./include/google/cloud/bigquery/datapolicies/v2/internal
+./include/google/cloud/bigquery/datapolicies/v2/mocks
 ./include/google/cloud/bigquery/datatransfer
 ./include/google/cloud/bigquery/datatransfer/v1
 ./include/google/cloud/bigquery/datatransfer/v1/internal
@@ -857,6 +860,10 @@
 ./include/google/cloud/language/v2
 ./include/google/cloud/language/v2/internal
 ./include/google/cloud/language/v2/mocks
+./include/google/cloud/licensemanager
+./include/google/cloud/licensemanager/v1
+./include/google/cloud/licensemanager/v1/internal
+./include/google/cloud/licensemanager/v1/mocks
 ./include/google/cloud/logging
 ./include/google/cloud/logging/mocks
 ./include/google/cloud/logging/v2
@@ -872,6 +879,10 @@
 ./include/google/cloud/managedidentities/v1/internal
 ./include/google/cloud/managedidentities/v1/mocks
 ./include/google/cloud/managedkafka
+./include/google/cloud/managedkafka/schemaregistry
+./include/google/cloud/managedkafka/schemaregistry/v1
+./include/google/cloud/managedkafka/schemaregistry/v1/internal
+./include/google/cloud/managedkafka/schemaregistry/v1/mocks
 ./include/google/cloud/managedkafka/v1
 ./include/google/cloud/managedkafka/v1/internal
 ./include/google/cloud/managedkafka/v1/mocks
@@ -1462,6 +1473,8 @@
 ./lib64/cmake/google_cloud_cpp_kms_mocks
 ./lib64/cmake/google_cloud_cpp_language
 ./lib64/cmake/google_cloud_cpp_language_mocks
+./lib64/cmake/google_cloud_cpp_licensemanager
+./lib64/cmake/google_cloud_cpp_licensemanager_mocks
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_logging_mocks
 ./lib64/cmake/google_cloud_cpp_lustre

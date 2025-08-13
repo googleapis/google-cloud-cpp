@@ -27,7 +27,8 @@ source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/cloudbuild/builds/lib/vcpkg.sh
 source module ci/lib/io.sh
 
-mapfile -t feature_list < <(features::always_build | grep -v "experimental-bigquery")
+# TODO(#14944): add bigtable back when we are able to update vcpkg version.
+mapfile -t feature_list < <(features::always_build | grep -v "experimental-bigquery" | grep -v "bigtable")
 ENABLED_FEATURES="$(printf ",%s" "${feature_list[@]}")"
 ENABLED_FEATURES="${ENABLED_FEATURES:1}"
 readonly ENABLED_FEATURES

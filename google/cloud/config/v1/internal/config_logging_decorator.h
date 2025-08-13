@@ -191,6 +191,27 @@ class ConfigLogging : public ConfigStub {
       google::cloud::config::v1::GetTerraformVersionRequest const& request)
       override;
 
+  StatusOr<google::cloud::config::v1::ListResourceChangesResponse>
+  ListResourceChanges(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::ListResourceChangesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::config::v1::ResourceChange> GetResourceChange(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetResourceChangeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::config::v1::ListResourceDriftsResponse>
+  ListResourceDrifts(grpc::ClientContext& context, Options const& options,
+                     google::cloud::config::v1::ListResourceDriftsRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::config::v1::ResourceDrift> GetResourceDrift(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetResourceDriftRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

@@ -29,6 +29,7 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
+        exclude-from-full-trick: [ true ]
         msvc: [ msvc-2022 ]
         # - dbg creates very large debugging files and GHA has limited storage.
         # - fastbuild also takes too much storage.

@@ -94,7 +94,7 @@ SessionPool::SessionPool(spanner::Database db,
 
 void SessionPool::Initialize() {
   internal::OptionsSpan span(opts_);
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
     std::unique_lock<std::mutex> lk(mu_);
     CreateMultiplexedSession(lk);
     ScheduleMultiplexedBackgroundWork(multiplexed_session_background_interval_);
@@ -120,7 +120,7 @@ SessionPool::~SessionPool() {
   // they must not have successfully finished a call to `lock()` on the
   // `weak_ptr` to `this` they hold. Any in-progress or subsequent `lock()`
   // will now return `nullptr`, in which case no work is done.
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
     current_multiplexed_timer_.cancel();
   } else {
     current_timer_.cancel();
@@ -437,13 +437,20 @@ Status SessionPool::CreateSessions(
   return return_status;
 }
 
-StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
-  return Allocate(std::unique_lock<std::mutex>(mu_), dissociate_from_pool);
+StatusOr<SessionHolder> SessionPool::Allocate(Session::Mode mode) {
+  return Allocate(std::unique_lock<std::mutex>(mu_), mode);
 }
 
-StatusOr<SessionHolder> SessionPool::Multiplexed() {
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+StatusOr<SessionHolder> SessionPool::Multiplexed(Session::Mode mode) {
+  if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
     std::unique_lock<std::mutex> lk(mu_);
+    if (mode == Session::Mode::kDisassociated && multiplexed_session_.ok()) {
+      // For disassociated sessions, only used in partitioned operations, we do
+      // NOT want to maintain transaction to channel affinity. Instead, we want
+      // to "best effort" round-robin over the stubs.
+      return MakeDissociatedSessionHolder(
+          (*multiplexed_session_)->session_name());
+    }
     return multiplexed_session_;
   }
   return internal::FailedPreconditionError(
@@ -451,13 +458,25 @@ StatusOr<SessionHolder> SessionPool::Multiplexed() {
 }
 
 std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
-  auto const& channel = session.channel();
-  if (channel) return channel->stub;
+  if (!session.is_disassociated() && !session.is_multiplexed()) {
+    auto const& channel = session.channel();
+    if (channel) return channel->stub;
+  }
 
   // Multiplexed sessions, or sessions that were created for partitioned
   // Reads/Queries, do not have their own channel/stub, so return a stub
   // to use by round-robining between the channels.
   return GetStub(std::unique_lock<std::mutex>(mu_));
+}
+
+// In order to maintain transaction/channel affinity, we leverage the
+// TransactionContext to make sure we use the same stub for the life of the
+// transaction.
+std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session,
+                                                  TransactionContext& context) {
+  if (context.stub.has_value()) return *(context.stub);
+  context.stub = GetStub(session);
+  return *context.stub;
 }
 
 int SessionPool::total_sessions() const {
@@ -475,7 +494,7 @@ void SessionPool::DecrementSessionCount(std::unique_lock<std::mutex> const&,
 }
 
 StatusOr<SessionHolder> SessionPool::Allocate(std::unique_lock<std::mutex> lk,
-                                              bool dissociate_from_pool) {
+                                              Session::Mode mode) {
   // We choose to ignore the internal::CurrentOptions() here as it is
   // non-deterministic when RPCs to create sessions are actually made.
   // It is clearer if we just stick with the construction-time Options.
@@ -485,10 +504,10 @@ StatusOr<SessionHolder> SessionPool::Allocate(std::unique_lock<std::mutex> lk,
       // return the most recently used session.
       auto session = std::move(sessions_.back());
       sessions_.pop_back();
-      if (dissociate_from_pool) {
+      if (mode == Session::Mode::kDisassociated) {
         DecrementSessionCount(lk, *session);
       }
-      return {MakeSessionHolder(std::move(session), dissociate_from_pool)};
+      return {MakeSessionHolder(std::move(session), mode)};
     }
 
     // If the pool is at its max size, fail or wait until someone returns a
@@ -601,8 +620,8 @@ void SessionPool::CreateSessionsAsync(
 }
 
 SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
-                                             bool dissociate_from_pool) {
-  if (dissociate_from_pool) {
+                                             Session::Mode mode) {
+  if (mode == Session::Mode::kDisassociated) {
     // Uses the default deleter; the `Session` is not returned to the pool.
     return {std::move(session)};
   }

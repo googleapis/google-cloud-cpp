@@ -445,6 +445,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/bigquery/datapolicies/v2/datapolicy.proto"
+  product_path: "google/cloud/bigquery/datapolicies/v2"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
   product_path: "google/cloud/bigquery/datatransfer/v1"
   forwarding_product_path: "google/cloud/bigquery"
@@ -2811,6 +2818,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# License Manager
+service {
+  service_proto_path: "google/cloud/licensemanager/v1/licensemanager.proto"
+  product_path: "google/cloud/licensemanager/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"
@@ -2859,6 +2874,14 @@ service {
   service_proto_path: "google/cloud/managedkafka/v1/managed_kafka.proto"
   product_path: "google/cloud/managedkafka/v1"
   initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Managed Kafka schemaregistry
+service {
+  service_proto_path: "google/cloud/managedkafka/schemaregistry/v1/schema_registry.proto"
+  product_path: "google/cloud/managedkafka/schemaregistry/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -3640,6 +3663,7 @@ service {
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   omit_repo_metadata: true
+  omitted_rpcs: ["InternalUpdateGraphOperation"]
 }
 
 service {

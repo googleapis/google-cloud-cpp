@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 
+#include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include "google/api/metric.pb.h"
@@ -34,6 +35,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 //
 // See: https://cloud.google.com/monitoring/quotas
 auto constexpr kMaxTimeSeriesPerRequest = 200;
+
+google::api::Metric ToMetric(
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::PointAttributes const& attributes,
+    opentelemetry::sdk::resource::Resource const* resource,
+    std::function<std::string(std::string)> const& metrics_name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn);
 
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
@@ -79,6 +87,19 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter);
 
+// Supplying the resource_fn and resource_filter_fn results in the returned
+// vector of TimeSeries protos with their resource field already populated
+// based on the values in the ResourceMetrics.
+std::unordered_map<std::string, std::vector<google::monitoring::v3::TimeSeries>>
+ToTimeSeriesWithResources(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::function<std::string(std::string)> const& metrics_name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn,
+    MonitoredResourceFromDataFn const& resource_fn);
+
+bool IsEmptyTimeSeries(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data);
+
 /**
  * Convert from OpenTelemetry metrics to Cloud Monitoring protos.
  *
@@ -89,6 +110,10 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
  */
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     std::string const& project, google::api::MonitoredResource const& mr_proto,
+    std::vector<google::monitoring::v3::TimeSeries> tss);
+
+std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
+    std::string const& project,
     std::vector<google::monitoring::v3::TimeSeries> tss);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

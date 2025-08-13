@@ -138,6 +138,30 @@ SecureSourceManagerConnection::CreateRepository(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerConnection::UpdateRepository(
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Repository>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdateRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerConnection::UpdateRepository(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Repository>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnection::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&) {
@@ -156,6 +180,92 @@ SecureSourceManagerConnection::DeleteRepository(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnection::DeleteRepository(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerConnection::ListHooks(
+    google::cloud::securesourcemanager::v1::
+        ListHooksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::Hook>>();
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerConnection::GetHook(
+    google::cloud::securesourcemanager::v1::GetHookRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnection::CreateHook(
+    google::cloud::securesourcemanager::v1::CreateHookRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Hook>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CreateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnection::CreateHook(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Hook>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnection::UpdateHook(
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Hook>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerConnection::UpdateHook(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Hook>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteHook(
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::DeleteHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteHook(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
@@ -260,6 +370,559 @@ SecureSourceManagerConnection::DeleteBranchRule(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnection::DeleteBranchRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::CreatePullRequest(
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CreatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::CreatePullRequest(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerConnection::GetPullRequest(
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerConnection::ListPullRequests(
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::PullRequest>>();
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::UpdatePullRequest(
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::UpdatePullRequest(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::MergePullRequest(
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::MergePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::MergePullRequest(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::OpenPullRequest(
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::OpenPullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::OpenPullRequest(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::ClosePullRequest(
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::ClosePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerConnection::ClosePullRequest(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+SecureSourceManagerConnection::ListPullRequestFileDiffs(
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestFileDiffsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::FileDiff>>();
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>
+SecureSourceManagerConnection::FetchTree(
+    google::cloud::securesourcemanager::v1::
+        FetchTreeRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>>();
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerConnection::FetchBlob(
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::CreateIssue(
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CreateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::CreateIssue(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerConnection::GetIssue(
+    google::cloud::securesourcemanager::v1::GetIssueRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerConnection::ListIssues(
+    google::cloud::securesourcemanager::v1::
+        ListIssuesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::Issue>>();
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::UpdateIssue(
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::UpdateIssue(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteIssue(
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::DeleteIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteIssue(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::OpenIssue(
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::OpenIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::OpenIssue(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::CloseIssue(
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CloseIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerConnection::CloseIssue(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::Issue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerConnection::GetPullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        GetPullRequestCommentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerConnection::ListPullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestCommentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::securesourcemanager::v1::PullRequestComment>>();
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnection::CreatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CreatePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    CreatePullRequestCommentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnection::CreatePullRequestComment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnection::UpdatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdatePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    UpdatePullRequestCommentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerConnection::UpdatePullRequestComment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeletePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::DeletePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    DeletePullRequestCommentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeletePullRequestComment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerConnection::BatchCreatePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::
+                   BatchCreatePullRequestCommentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::BatchCreatePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerConnection::BatchCreatePullRequestComments(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::
+                   BatchCreatePullRequestCommentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerConnection::ResolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::
+                   ResolvePullRequestCommentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::ResolvePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    ResolvePullRequestCommentsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerConnection::ResolvePullRequestComments(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::
+                   ResolvePullRequestCommentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerConnection::UnresolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::
+                   UnresolvePullRequestCommentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UnresolvePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerConnection::UnresolvePullRequestComments(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::
+                   UnresolvePullRequestCommentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnection::CreateIssueComment(
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CreateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnection::CreateIssueComment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerConnection::GetIssueComment(
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerConnection::ListIssueComments(
+    google::cloud::securesourcemanager::v1::
+        ListIssueCommentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::IssueComment>>();
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnection::UpdateIssueComment(
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerConnection::UpdateIssueComment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteIssueComment(
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::DeleteIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteIssueComment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(

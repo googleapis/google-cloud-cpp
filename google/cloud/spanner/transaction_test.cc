@@ -126,6 +126,43 @@ TEST(Transaction, SessionAffinity) {
         EXPECT_EQ(a_session, session);  // session affinity
         EXPECT_TRUE(s->has_begin());    // but a new transaction
         EXPECT_EQ(ctx.tag, "app=cart,env=dev");
+        EXPECT_THAT(s->begin()
+                        .read_write()
+                        .multiplexed_session_previous_transaction_id(),
+                    IsEmpty());
+        return 0;
+      });
+}
+
+TEST(Transaction, MultiplexedPreviousTransactionId) {
+  std::string aborted_txn_id = "aborted-txn-id";
+  auto mux_session = spanner_internal::MakeMultiplexedSessionHolder(
+      "multiplexed", std::make_shared<spanner_internal::Session::Clock>());
+  auto opts = Transaction::ReadWriteOptions().WithTag("app=cart,env=dev");
+  Transaction aborted_txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      aborted_txn, [&](spanner_internal::SessionHolder& session,
+                       StatusOr<google::spanner::v1::TransactionSelector>& s,
+                       spanner_internal::TransactionContext const& ctx) {
+        EXPECT_FALSE(session);
+        EXPECT_TRUE(s->has_begin());
+        session = mux_session;
+        s->set_id(aborted_txn_id);
+        EXPECT_EQ(ctx.tag, "app=cart,env=dev");
+        return 0;
+      });
+  Transaction retry_txn = MakeReadWriteTransaction(aborted_txn, opts);
+  spanner_internal::Visit(
+      retry_txn, [&](spanner_internal::SessionHolder& session,
+                     StatusOr<google::spanner::v1::TransactionSelector>& s,
+                     spanner_internal::TransactionContext const& ctx) {
+        EXPECT_EQ(mux_session, session);
+        EXPECT_TRUE(s->has_begin());
+        EXPECT_EQ(s->begin()
+                      .read_write()
+                      .multiplexed_session_previous_transaction_id(),
+                  aborted_txn_id);
+        EXPECT_EQ(ctx.tag, "app=cart,env=dev");
         return 0;
       });
 }

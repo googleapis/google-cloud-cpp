@@ -211,6 +211,35 @@ MATCHER_P(HasReplicaType, type, "has replica type") {
   return arg.type() == type;
 }
 
+MATCHER_P(HasOrderBy, order_by, "has order_by") {
+  return arg.order_by() == order_by;
+}
+
+MATCHER_P(HasLockHint, lock_hint, "has lock_hint") {
+  return arg.lock_hint() == lock_hint;
+}
+
+MATCHER_P2(PrecommitTokenIs, token, seq_num, "Precommit Token is") {
+  return arg.has_precommit_token() &&
+         arg.precommit_token().precommit_token() == token &&
+         arg.precommit_token().seq_num() == seq_num;
+}
+
+MATCHER(IsMultiplexed, "is a multiplexed CreateSessionRequest") {
+  return arg.session().multiplexed();
+}
+
+google::spanner::v1::Session MakeMultiplexedSession(std::string name,
+                                                    std::string role = "") {
+  google::spanner::v1::Session session;
+  session.set_name(std::move(name));
+  //  *session.mutable_create_time() = Now();
+  //  *session.mutable_approximate_last_use_time() = Now();
+  if (!role.empty()) session.set_creator_role(std::move(role));
+  session.set_multiplexed(true);
+  return session;
+}
+
 // Ideally this would be a matcher, but matcher args are `const` and `RowStream`
 // only has non-const methods.
 bool ContainsNoRows(spanner::RowStream& rows) {
@@ -247,6 +276,15 @@ google::spanner::v1::Transaction MakeTestTransaction(
   return txn;
 }
 
+google::spanner::v1::Transaction MakeTestTransaction(
+    google::spanner::v1::MultiplexedSessionPrecommitToken const& token,
+    std::string id = "1234567890") {
+  google::spanner::v1::Transaction txn;
+  txn.set_id(std::move(id));
+  *txn.mutable_precommit_token() = token;
+  return txn;
+}
+
 // Create a `BatchCreateSessionsResponse` with the given `sessions`.
 google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
     std::vector<std::string> sessions) {
@@ -261,13 +299,18 @@ google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
 // `commit_stats`.
 google::spanner::v1::CommitResponse MakeCommitResponse(
     spanner::Timestamp commit_timestamp,
-    absl::optional<spanner::CommitStats> commit_stats = absl::nullopt) {
+    absl::optional<spanner::CommitStats> commit_stats = absl::nullopt,
+    absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+        precommit_token = absl::nullopt) {
   google::spanner::v1::CommitResponse response;
   *response.mutable_commit_timestamp() =
       commit_timestamp.get<protobuf::Timestamp>().value();
   if (commit_stats.has_value()) {
     auto* proto_stats = response.mutable_commit_stats();
     proto_stats->set_mutation_count(commit_stats->mutation_count);
+  }
+  if (precommit_token.has_value()) {
+    *response.mutable_precommit_token() = *precommit_token;
   }
   return response;
 }
@@ -2083,6 +2126,71 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
       txn, HasSessionAndTransaction("session-name", "1234567890", true, "tag"));
 }
 
+TEST(ConnectionImplTest, MultiplexedExecuteBatchDmlSuccess) {
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+  auto constexpr kText = R"pb(
+    result_sets: {
+      metadata: { transaction: { id: "1234567890" } }
+      stats: { row_count_exact: 0 }
+    }
+    result_sets: { stats: { row_count_exact: 1 } }
+    result_sets: { stats: { row_count_exact: 2 } }
+    precommit_token: { precommit_token: "test-precommit-token-1" seq_num: 1 }
+  )pb";
+  google::spanner::v1::ExecuteBatchDmlResponse response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
+  EXPECT_CALL(
+      *mock,
+      ExecuteBatchDml(
+          _, _,
+          HasPriority(google::spanner::v1::RequestOptions::PRIORITY_MEDIUM)))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(response));
+
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request)
+                    -> StatusOr<google::spanner::v1::CommitResponse> {
+        google::spanner::v1::CommitResponse response;
+        EXPECT_THAT(request.precommit_token().precommit_token(),
+                    Eq("test-precommit-token-1"));
+        EXPECT_THAT(request.precommit_token().seq_num(), Eq(1));
+        return response;
+      });
+
+  auto request = {
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
+  };
+
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
+  auto conn = MakeConnectionImpl(db, mock, options);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto txn = spanner::MakeReadWriteTransaction(
+      spanner::Transaction::ReadWriteOptions().WithTag("tag"));
+  auto result =
+      conn->ExecuteBatchDml({txn, request,
+                             Options{}.set<spanner::RequestPriorityOption>(
+                                 spanner::RequestPriority::kMedium)});
+  ASSERT_STATUS_OK(result);
+  EXPECT_STATUS_OK(result->status);
+  EXPECT_EQ(result->stats.size(), request.size());
+  ASSERT_EQ(result->stats.size(), 3);
+  EXPECT_EQ(result->stats[0].row_count, 0);
+  EXPECT_EQ(result->stats[1].row_count, 1);
+  EXPECT_EQ(result->stats[2].row_count, 2);
+  EXPECT_THAT(
+      txn, HasSessionAndTransaction("multiplexed", "1234567890", true, "tag"));
+
+  EXPECT_THAT(conn->Commit({txn, {}}), IsOk());
+}
+
 TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
@@ -2766,6 +2874,7 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
              google::spanner::v1::BeginTransactionRequest const& request) {
             EXPECT_TRUE(request.options().has_read_write());
             EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            EXPECT_FALSE(request.has_mutation_key());
             return MakeTestTransaction();
           });
   EXPECT_CALL(*mock, Commit(_, _,
@@ -2787,6 +2896,307 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, MutationCommitSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  spanner::Mutations mutations;
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-1"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-2"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-3"}));
+
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [&](grpc::ClientContext&, Options const&,
+              google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            EXPECT_TRUE(request.has_mutation_key());
+            return MakeTestTransaction(token);
+          });
+
+  auto const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce([commit_timestamp](
+                    grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(3, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
+        return MakeCommitResponse(
+            commit_timestamp, spanner::CommitStats{request.mutations_size()});
+      });
+
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
+  auto conn = MakeConnectionImpl(db, mock, options);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
+                              spanner::CommitOptions{}.set_return_stats(true)});
+  ASSERT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(3, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, MutationCommitRetryOnceSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  spanner::Mutations mutations;
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-1"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-2"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-3"}));
+
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [&](grpc::ClientContext&, Options const&,
+              google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            EXPECT_TRUE(request.has_mutation_key());
+            return MakeTestTransaction(token);
+          });
+
+  auto const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  google::spanner::v1::MultiplexedSessionPrecommitToken retry_token;
+  retry_token.set_precommit_token("retry-precommit-token");
+  retry_token.set_seq_num(1);
+
+  std::int64_t original_mutations_size = mutations.size();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(3, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
+        return MakeCommitResponse(commit_timestamp,
+                                  spanner::CommitStats{original_mutations_size},
+                                  retry_token);
+      })
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token", 1));
+        return MakeCommitResponse(
+            commit_timestamp, spanner::CommitStats{original_mutations_size});
+      });
+
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
+  auto conn = MakeConnectionImpl(db, mock, options);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
+                              spanner::CommitOptions{}.set_return_stats(true)});
+  ASSERT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(3, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, MutationCommitRetryMoreThanOnceSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  spanner::Mutations mutations;
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-1"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-2"}));
+  mutations.push_back(
+      spanner::MakeInsertMutation("table-name", {}, std::string{"mut-3"}));
+
+  google::spanner::v1::MultiplexedSessionPrecommitToken token;
+  token.set_precommit_token("test-precommit-token");
+  token.set_seq_num(1);
+
+  EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [&](grpc::ClientContext&, Options const&,
+              google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            EXPECT_TRUE(request.has_mutation_key());
+            return MakeTestTransaction(token);
+          });
+
+  auto const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  google::spanner::v1::MultiplexedSessionPrecommitToken retry_token_1;
+  retry_token_1.set_precommit_token("retry-precommit-token-1");
+  retry_token_1.set_seq_num(1);
+  google::spanner::v1::MultiplexedSessionPrecommitToken retry_token_2;
+  retry_token_2.set_precommit_token("retry-precommit-token-2");
+  retry_token_2.set_seq_num(2);
+
+  std::int64_t original_mutations_size = mutations.size();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(3, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("test-precommit-token", 1));
+        return MakeCommitResponse(commit_timestamp,
+                                  spanner::CommitStats{original_mutations_size},
+                                  retry_token_1);
+      })
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token-1", 1));
+        return MakeCommitResponse(commit_timestamp,
+                                  spanner::CommitStats{original_mutations_size},
+                                  retry_token_2);
+      })
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("multiplexed", request.session());
+        EXPECT_FALSE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_TRUE(request.return_commit_stats());
+        EXPECT_THAT(request, PrecommitTokenIs("retry-precommit-token-2", 2));
+        return MakeCommitResponse(
+            commit_timestamp, spanner::CommitStats{original_mutations_size});
+      });
+
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
+  auto conn = MakeConnectionImpl(db, mock, options);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), mutations,
+                              spanner::CommitOptions{}.set_return_stats(true)});
+  ASSERT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(3, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, MultiplexedPrecommitUpdated) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  {
+    InSequence seq;
+    EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
+        .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+
+    auto constexpr kText = R"pb(
+      metadata: { transaction: { id: "1234567890" } }
+      stats: {
+        row_count_exact: 42
+        query_plan { plan_nodes: { index: 42 } }
+        query_stats {
+          fields {
+            key: "elapsed_time"
+            value { string_value: "42 secs" }
+          }
+        }
+      }
+      precommit_token: { precommit_token: "test-precommit-token-1" seq_num: 1 }
+    )pb";
+    google::spanner::v1::ResultSet sql_response;
+    ASSERT_TRUE(TextFormat::ParseFromString(kText, &sql_response));
+
+    EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(sql_response));
+
+    std::string response = {
+        R"pb(
+          metadata: {
+            row_type: {
+              fields: {
+                name: "UserId",
+                type: { code: INT64 }
+              }
+              fields: {
+                name: "UserName",
+                type: { code: STRING }
+              }
+            }
+          }
+          values: { string_value: "12" }
+          values: { string_value: "Steve" }
+          precommit_token: {
+            precommit_token: "test-precommit-token-4"
+            seq_num: 4
+          }
+        )pb"};
+
+    google::spanner::v1::PartialResultSet result_set;
+    EXPECT_CALL(*mock, StreamingRead)
+        .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({response}))));
+
+    google::spanner::v1::ResultSet sql_response2 = sql_response;
+    sql_response2.mutable_precommit_token()->set_precommit_token(
+        "test-precommit-token-3");
+    sql_response2.mutable_precommit_token()->set_seq_num(3);
+
+    EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(sql_response2));
+
+    EXPECT_CALL(*mock, Commit)
+        .WillOnce([&](grpc::ClientContext&, Options const&,
+                      google::spanner::v1::CommitRequest const& request)
+                      -> StatusOr<google::spanner::v1::CommitResponse> {
+          google::spanner::v1::CommitResponse response;
+          EXPECT_THAT(request.precommit_token().precommit_token(),
+                      Eq("test-precommit-token-4"));
+          EXPECT_THAT(request.precommit_token().seq_num(), Eq(4));
+          return response;
+        });
+  }
+
+  auto options = Options{}.set<spanner::EnableMultiplexedSessionOption>({});
+  auto conn = MakeConnectionImpl(db, mock, options);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::Transaction txn =
+      MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
+  EXPECT_THAT(conn->ExecuteDml({txn, spanner::SqlStatement("SOME STATEMENT")}),
+              IsOk());
+  auto rows = conn->Read({txn, "table", spanner::KeySet::All(), {"column1"}});
+  for (auto& r : rows) EXPECT_THAT(r, IsOk());
+  EXPECT_THAT(
+      conn->ExecuteDml({txn, spanner::SqlStatement("ANOTHER STATEMENT")}),
+      IsOk());
+  EXPECT_THAT(conn->Commit({txn, {}}), IsOk());
 }
 
 TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreams) {
@@ -4089,6 +4499,165 @@ TEST(ConnectionImplTest, RollbackSessionNotFound) {
   auto const& status = conn->Rollback({txn});
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
+}
+
+TEST(ConnectionImplTest, ReadRequestOrderByParameterUnspecified) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock,
+              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  Sequence s;
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, _,
+          AllOf(HasSession("test-session-name"),
+                HasOrderBy(
+                    google::spanner::v1::ReadRequest::ORDER_BY_UNSPECIFIED))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(MakeReader<google::spanner::v1::PartialResultSet>(
+          {R"pb(metadata: { transaction: { id: "txn1" } })pb"}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
+  // Scenario 1: No explicit OrderBy (should map to UNSPECIFIED)
+  spanner::ReadOptions read_options;
+  spanner::Transaction txn1 =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows1 = conn->Read(
+      {txn1, "table", spanner::KeySet::All(), {"col"}, read_options});
+  for (auto const& row : rows1) {
+    (void)row;
+  }
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("test-session-name", "txn1", false, ""));
+}
+
+TEST(ConnectionImplTest, ReadRequestOrderByParameterNoOrder) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock,
+              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  Sequence s;
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, _,
+          AllOf(
+              HasSession("test-session-name"),
+              HasOrderBy(google::spanner::v1::ReadRequest::ORDER_BY_NO_ORDER))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(MakeReader<google::spanner::v1::PartialResultSet>(
+          {R"pb(metadata: { transaction: { id: "txn1" } })pb"}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::ReadOptions read_options;
+  spanner::Transaction txn1 =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto read_params =
+      spanner::Connection::ReadParams{txn1,
+                                      "table",
+                                      spanner::KeySet::All(),
+                                      {"col"},
+                                      read_options,
+                                      absl::nullopt,
+                                      false,
+                                      spanner::DirectedReadOption::Type{},
+                                      spanner::OrderBy::kOrderByNoOrder};
+  auto rows1 = conn->Read(read_params);
+  for (auto const& row : rows1) {
+    (void)row;
+  }
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("test-session-name", "txn1", false, ""));
+}
+
+TEST(ConnectionImplTest, ReadRequestLockHintParameterUnspecified) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock,
+              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  Sequence s;
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, _,
+          AllOf(HasSession("test-session-name"),
+                HasLockHint(
+                    google::spanner::v1::ReadRequest::LOCK_HINT_UNSPECIFIED))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(MakeReader<google::spanner::v1::PartialResultSet>(
+          {R"pb(metadata: { transaction: { id: "txn1" } })pb"}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
+  // Scenario 1: No explicit OrderBy (should map to UNSPECIFIED)
+  spanner::ReadOptions read_options;
+  spanner::Transaction txn1 =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows1 = conn->Read(
+      {txn1, "table", spanner::KeySet::All(), {"col"}, read_options});
+  for (auto const& row : rows1) {
+    (void)row;
+  }
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("test-session-name", "txn1", false, ""));
+}
+
+TEST(ConnectionImplTest, ReadRequestLockHintShared) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock,
+              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  Sequence s;
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, _,
+          AllOf(
+              HasSession("test-session-name"),
+              HasLockHint(google::spanner::v1::ReadRequest::LOCK_HINT_SHARED))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(MakeReader<google::spanner::v1::PartialResultSet>(
+          {R"pb(metadata: { transaction: { id: "txn1" } })pb"}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  spanner::ReadOptions read_options;
+  spanner::Transaction txn1 =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto read_params =
+      spanner::Connection::ReadParams{txn1,
+                                      "table",
+                                      spanner::KeySet::All(),
+                                      {"col"},
+                                      read_options,
+                                      absl::nullopt,
+                                      false,
+                                      spanner::DirectedReadOption::Type{},
+                                      spanner::OrderBy::kOrderByUnspecified,
+                                      spanner::LockHint::kLockHintShared};
+  auto rows1 = conn->Read(read_params);
+  for (auto const& row : rows1) {
+    (void)row;
+  }
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("test-session-name", "txn1", false, ""));
 }
 
 TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {

@@ -68,7 +68,7 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
           .clone());
 }
 
-StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>
+StatusOr<std::unique_ptr<PartialResultSourceInterface>>
 CreatePartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
                              Options opts = {}) {
   internal::OptionsSpan span(

@@ -455,6 +455,7 @@ if (BUILD_TESTING)
         internal/connection_impl_bucket_acl_test.cc
         internal/connection_impl_bucket_test.cc
         internal/connection_impl_default_object_acl_test.cc
+        internal/connection_impl_file_upload_test.cc
         internal/connection_impl_notifications_test.cc
         internal/connection_impl_object_acl_test.cc
         internal/connection_impl_object_copy_test.cc
@@ -492,6 +493,7 @@ if (BUILD_TESTING)
         internal/service_account_requests_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
+        internal/storage_connection_test.cc
         internal/tracing_connection_test.cc
         internal/tracing_object_read_source_test.cc
         internal/tuple_filter_test.cc
