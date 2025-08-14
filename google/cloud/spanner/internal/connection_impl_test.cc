@@ -3253,27 +3253,23 @@ TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreamsExplicitTxn) {
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
-  EXPECT_CALL(*mock,
-              AsyncDeleteSession(_, _, _, HasSessionName("test-session-name")))
-      .WillOnce(Return(make_ready_future(Status{})));
 
+  // Transaction is created before the usual Connection and Client creation.
+  // This is the crux of reproducing this issue.
+  auto txn = spanner::Transaction(spanner::Transaction::ReadWriteOptions{});
+
+  // Connection and OptionsSpan creation mimics what occurs prior to calling
+  // ConnectionImpl::Commit in Client::Commit(Transaction, Mutations, Options).
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(
       MakeLimitedTimeOptions()
           .set<spanner::ExcludeTransactionFromChangeStreamsOption>(true));
-
-  // Introduce additional scope here to ensure that when txn is destroyed
-  // the session_pool contained by the Connection is still present, such that,
-  // the session associated with the transaction can be returned to the pool.
-  {
-    auto txn = spanner::Transaction(spanner::Transaction::ReadWriteOptions{});
-    auto commit = conn->Commit({txn, {}});
-    EXPECT_THAT(
-        commit,
-        IsOkAndHolds(Field(
-            &spanner::CommitResult::commit_timestamp,
-            Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)).value()))));
-  }
+  auto commit = conn->Commit({txn, {}});
+  EXPECT_THAT(
+      commit,
+      IsOkAndHolds(Field(
+          &spanner::CommitResult::commit_timestamp,
+          Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)).value()))));
 }
 
 TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
