@@ -108,6 +108,19 @@ TEST(ObjectDescriptorConnectionLogging, Metadata) {
   EXPECT_THAT(log_lines, Not(Contains(HasSubstr("metadata"))));
 }
 
+TEST(ObjectDescriptorConnectionLogging, MakeSubsequentStream) {
+  ScopedLog log;
+
+  auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  EXPECT_CALL(*mock, MakeSubsequentStream).WillOnce([] { return; });
+
+  auto actual = MakeLoggingObjectDescriptorConnection(mock, LoggingEnabled());
+  (void)actual->MakeSubsequentStream();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("MakeSubsequentStream"))));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

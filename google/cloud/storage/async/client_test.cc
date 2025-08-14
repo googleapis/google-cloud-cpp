@@ -1425,9 +1425,11 @@ TEST(AsyncClient, LoggingEnabled) {
   auto rt = client.ReadObject(BucketName("test-bucket"), "test-object").get();
   ASSERT_STATUS_OK(rt);
   AsyncReader r;
+  EXPECT_THAT(r.GetRequestMetadata().headers, IsEmpty());
   AsyncToken t;
+  EXPECT_FALSE(t.valid());
   std::tie(r, t) = *std::move(rt);
-  EXPECT_TRUE(t.valid());
+  ASSERT_TRUE(t.valid());
 
   auto read_result = r.Read(std::move(t)).get();
   ASSERT_STATUS_OK(read_result);
@@ -1454,9 +1456,11 @@ TEST(AsyncClient, LoggingDisabled) {
   auto rt = client.ReadObject(BucketName("test-bucket"), "test-object").get();
   ASSERT_STATUS_OK(rt);
   AsyncReader r;
+  EXPECT_THAT(r.GetRequestMetadata().headers, IsEmpty());
   AsyncToken t;
+  EXPECT_FALSE(t.valid());
   std::tie(r, t) = *std::move(rt);
-  EXPECT_TRUE(t.valid());
+  ASSERT_TRUE(t.valid());
 
   auto read_result = r.Read(std::move(t)).get();
   ASSERT_STATUS_OK(read_result);
