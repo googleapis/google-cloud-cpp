@@ -41,6 +41,7 @@ using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 using ::testing::Optional;
@@ -471,18 +472,37 @@ TEST(AsyncClient, ReadAll2) {
   EXPECT_THAT(payload->contents(), ElementsAre("payload"));
 }
 
-TEST(AsyncClient, ReadAllFromReader) {
+TEST(AsyncClient, ReadAllRequestFailure) {
+  auto constexpr kRequestText = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
-  EXPECT_CALL(*mock, options)
-      .WillRepeatedly(
-          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
 
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([&](AsyncConnection::ReadObjectParams const& p) {
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(
+            StatusOr<std::unique_ptr<AsyncReaderConnection>>(
+                Status(StatusCode::kPermissionDenied, "uh-oh")));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::ReadObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto payload = client.ReadAll(std::move(request)).get();
+  EXPECT_THAT(payload, StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
+}
+
+TEST(AsyncClient, ReadAllFromReader) {
   auto reader_impl = MakeTestReaderConnection({"test-", "payload"});
   auto* reader_impl_ptr = reader_impl.get();
   auto reader = AsyncReader(std::move(reader_impl));
   auto token = storage_internal::MakeAsyncToken(reader_impl_ptr);
 
-  auto client = AsyncClient(mock);
   auto payload =
       AsyncClient::ReadAll(std::move(reader), std::move(token)).get();
   ASSERT_STATUS_OK(payload);
