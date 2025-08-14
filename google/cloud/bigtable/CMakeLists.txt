@@ -47,6 +47,8 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
+find_package(opentelemetry-cpp CONFIG)
+
 # the client library
 add_library(
     google_cloud_cpp_bigtable # cmake-format: sort
@@ -193,16 +195,20 @@ add_library(
     internal/legacy_row_reader.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
+    internal/metrics.cc
+    internal/metrics.h
     internal/mutate_rows_limiter.cc
     internal/mutate_rows_limiter.h
+    internal/operation_context.cc
+    internal/operation_context.h
+    internal/operation_context_factory.cc
+    internal/operation_context_factory.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/rate_limiter.cc
     internal/rate_limiter.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
-    internal/retry_context.cc
-    internal/retry_context.h
     internal/retry_traits.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
@@ -259,6 +265,14 @@ target_link_libraries(
            gRPC::grpc++
            gRPC::grpc
            protobuf::libprotobuf)
+if (opentelemetry-cpp_FOUND)
+    target_compile_definitions(
+        google_cloud_cpp_bigtable
+        PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
+    target_link_libraries(google_cloud_cpp_bigtable
+                          PUBLIC google-cloud-cpp::opentelemetry)
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable)
 target_include_directories(
     google_cloud_cpp_bigtable
@@ -303,7 +317,8 @@ google_cloud_cpp_add_pkgconfig(
     "Provides C++ APIs to access Google Cloud Bigtable."
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
-    "google_cloud_cpp_bigtable_protos")
+    "google_cloud_cpp_bigtable_protos"
+    ${EXTRA_MODULES})
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -439,10 +454,12 @@ if (BUILD_TESTING)
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
+        internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
+        internal/operation_context_factory_test.cc
+        internal/operation_context_test.cc
         internal/prefix_range_end_test.cc
         internal/rate_limiter_test.cc
-        internal/retry_context_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         legacy_table_test.cc
@@ -499,6 +516,10 @@ if (BUILD_TESTING)
                     gRPC::grpc++
                     gRPC::grpc
                     protobuf::libprotobuf)
+        if (opentelemetry-cpp_FOUND)
+            target_compile_definitions(
+                ${target} PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
+        endif ()
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()

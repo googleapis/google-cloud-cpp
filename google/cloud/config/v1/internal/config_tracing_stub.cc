@@ -401,6 +401,54 @@ ConfigTracingStub::GetTerraformVersion(
       context, *span, child_->GetTerraformVersion(context, options, request));
 }
 
+StatusOr<google::cloud::config::v1::ListResourceChangesResponse>
+ConfigTracingStub::ListResourceChanges(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceChangesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ListResourceChanges");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListResourceChanges(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigTracingStub::GetResourceChange(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "GetResourceChange");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetResourceChange(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::ListResourceDriftsResponse>
+ConfigTracingStub::ListResourceDrifts(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceDriftsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ListResourceDrifts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListResourceDrifts(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigTracingStub::GetResourceDrift(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "GetResourceDrift");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetResourceDrift(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

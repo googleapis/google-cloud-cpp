@@ -113,6 +113,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "ids"
     "kms"
     "language"
+    "licensemanager"
     "logging"
     "lustre"
     "managedidentities"
@@ -299,6 +300,7 @@ export_libraries_bzl()
 #   other feature, or even if no features are enabled.
 # ~~~
 macro (google_cloud_cpp_enable_deps)
+    find_package(opentelemetry-cpp CONFIG)
     if (__ga_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE
@@ -336,6 +338,11 @@ macro (google_cloud_cpp_enable_deps)
 
     if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
+    endif ()
+    if (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        if (opentelemetry-cpp_FOUND)
+            list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 opentelemetry)
+        endif ()
     endif ()
     if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)

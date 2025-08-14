@@ -31,6 +31,7 @@ extend-exclude = [
     "google/cloud/networkconnectivity/v1/policy_based_routing_client.h",
     "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h",
     "google/cloud/resourcemanager/v3/projects_client.h",
+    "google/cloud/securesourcemanager/v1/secure_source_manager_client.h",
     # The tool complains about `FIELDs` :shrug:
     "/google/cloud/aiplatform/v1/featurestore_client.h",
     # Files with binary blobs in base64 format. These are usually invalidated

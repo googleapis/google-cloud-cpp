@@ -363,6 +363,41 @@ ConfigAuth::GetTerraformVersion(
   return child_->GetTerraformVersion(context, options, request);
 }
 
+StatusOr<google::cloud::config::v1::ListResourceChangesResponse>
+ConfigAuth::ListResourceChanges(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceChangesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListResourceChanges(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigAuth::GetResourceChange(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetResourceChange(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ListResourceDriftsResponse>
+ConfigAuth::ListResourceDrifts(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceDriftsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListResourceDrifts(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift> ConfigAuth::GetResourceDrift(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetResourceDrift(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

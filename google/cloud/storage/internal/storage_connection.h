@@ -31,6 +31,7 @@
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
@@ -38,6 +39,7 @@
 #include "google/cloud/status_or.h"
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -45,6 +47,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+class ParallelUploadFileShard;
 class ObjectReadStreambuf;
 
 /**
@@ -110,6 +113,20 @@ class StorageConnection {
       DeleteResumableUploadRequest const& request) = 0;
   virtual StatusOr<QueryResumableUploadResponse> UploadChunk(
       UploadChunkRequest const& request) = 0;
+  virtual StatusOr<std::unique_ptr<std::string>> UploadFileSimple(
+      std::string const&, std::size_t, InsertObjectMediaRequest&) {
+    return Status(StatusCode::kUnimplemented, "unimplemented");
+  }
+  virtual StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
+      std::string const&, ResumableUploadRequest&) {
+    return Status(StatusCode::kUnimplemented, "unimplemented");
+  }
+  virtual Status DownloadStreamToFile(ObjectReadStream&&, std::string const&,
+                                      ReadObjectRangeRequest const&) {
+    return Status(StatusCode::kUnimplemented, "unimplemented");
+  }
+  virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
+      std::vector<std::thread>, std::vector<ParallelUploadFileShard>, bool);
   ///@}
 
   ///@{
