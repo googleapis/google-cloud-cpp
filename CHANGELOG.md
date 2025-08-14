@@ -4,6 +4,8 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
+## v2.42.0 - TBD
+
 ## v2.41.0 - 2025-08-14
 
 ### [Bigtable](/google/cloud/bigtable/README.md)
