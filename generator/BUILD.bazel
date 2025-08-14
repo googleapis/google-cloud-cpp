@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 load(":google_cloud_cpp_generator.bzl", "google_cloud_cpp_generator_hdrs", "google_cloud_cpp_generator_srcs")
 load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_testing_hdrs", "google_cloud_cpp_generator_testing_srcs")
 load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_unit_tests")
