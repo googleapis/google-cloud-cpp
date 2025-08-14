@@ -3233,6 +3233,45 @@ TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreams) {
           Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)).value()))));
 }
 
+// Reproduces issue b/346858290 where `exclude_txn_from_change_streams` is not
+// propagated from the OptionsSpan to the BeginTransaction request.
+TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreamsExplicitTxn) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_TRUE(request.options().exclude_txn_from_change_streams());
+            return MakeTestTransaction();
+          });
+  EXPECT_CALL(*mock, Commit(_, _, HasSession("test-session-name")))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value())));
+
+  // Transaction is created before the usual Connection and Client creation.
+  // This is the crux of reproducing this issue.
+  auto txn = spanner::Transaction(spanner::Transaction::ReadWriteOptions{});
+
+  // Connection and OptionsSpan creation mimics what occurs prior to calling
+  // ConnectionImpl::Commit in Client::Commit(Transaction, Mutations, Options).
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(
+      MakeLimitedTimeOptions()
+          .set<spanner::ExcludeTransactionFromChangeStreamsOption>(true));
+  auto commit = conn->Commit({txn, {}});
+  EXPECT_THAT(
+      commit,
+      IsOkAndHolds(Field(
+          &spanner::CommitResult::commit_timestamp,
+          Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)).value()))));
+}
+
 TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
