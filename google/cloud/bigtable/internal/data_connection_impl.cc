@@ -411,7 +411,6 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   request.set_app_profile_id(app_profile_id(*current));
   request.set_table_name(table_name);
 
-  Status status;
   std::vector<bigtable::RowKeySample> samples;
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
@@ -423,30 +422,25 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     operation_context->PreCall(*context);
     auto stream = stub_->SampleRowKeys(context, Options{}, request);
 
-    struct UnpackVariant {
-      Status& status;
-      std::vector<bigtable::RowKeySample>& samples;
-      bool operator()(Status s) {
-        status = std::move(s);
-        return false;
+    absl::optional<Status> status;
+    while (true) {
+      google::bigtable::v2::SampleRowKeysResponse r;
+      status = stream->Read(&r);
+      if (status.has_value()) {
+        break;
       }
-      bool operator()(google::bigtable::v2::SampleRowKeysResponse r) {
-        bigtable::RowKeySample row_sample;
-        row_sample.offset_bytes = r.offset_bytes();
-        row_sample.row_key = std::move(*r.mutable_row_key());
-        samples.emplace_back(std::move(row_sample));
-        return true;
-      }
-    };
-    while (absl::visit(UnpackVariant{status, samples}, stream->Read())) {
+      bigtable::RowKeySample row_sample;
+      row_sample.offset_bytes = r.offset_bytes();
+      row_sample.row_key = std::move(*r.mutable_row_key());
+      samples.emplace_back(std::move(row_sample));
     }
-    operation_context->PostCall(*context, status);
-    if (status.ok()) break;
+    operation_context->PostCall(*context, *status);
+    if (status->ok()) break;
     // We wait to allocate the policies until they are needed as a
     // micro-optimization.
     if (!retry) retry = retry_policy(*current);
     if (!backoff) backoff = backoff_policy(*current);
-    auto delay = internal::Backoff(status, "SampleRows", *retry, *backoff,
+    auto delay = internal::Backoff(*status, "SampleRows", *retry, *backoff,
                                    Idempotency::kIdempotent,
                                    enable_server_retries(*current));
     if (!delay) {

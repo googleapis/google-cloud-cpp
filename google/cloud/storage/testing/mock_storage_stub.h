@@ -214,8 +214,8 @@ class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
                                   google::storage::v2::ReadObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, google::storage::v2::ReadObjectResponse>),
-              Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read,
+              (google::storage::v2::ReadObjectResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };

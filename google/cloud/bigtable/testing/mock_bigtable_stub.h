@@ -124,9 +124,8 @@ class MockMutateRowsStream : public google::cloud::internal::StreamingReadRpc<
                                  google::bigtable::v2::MutateRowsResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  using MutateRowsResultType =
-      absl::variant<Status, google::bigtable::v2::MutateRowsResponse>;
-  MOCK_METHOD(MutateRowsResultType, Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read,
+              (google::bigtable::v2::MutateRowsResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
@@ -135,9 +134,8 @@ class MockReadRowsStream : public google::cloud::internal::StreamingReadRpc<
                                google::bigtable::v2::ReadRowsResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  using ReadRowsResultType =
-      absl::variant<Status, google::bigtable::v2::ReadRowsResponse>;
-  MOCK_METHOD(ReadRowsResultType, Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read,
+              (google::bigtable::v2::ReadRowsResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
@@ -147,9 +145,8 @@ class MockSampleRowKeysStream
           google::bigtable::v2::SampleRowKeysResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  using SampleRowKeysResultType =
-      absl::variant<Status, google::bigtable::v2::SampleRowKeysResponse>;
-  MOCK_METHOD(SampleRowKeysResultType, Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read,
+              (google::bigtable::v2::SampleRowKeysResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };

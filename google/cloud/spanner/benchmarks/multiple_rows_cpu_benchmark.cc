@@ -594,17 +594,15 @@ class ReadExperiment : public BasicExperiment<Traits> {
       auto stream = stub->StreamingRead(std::make_shared<grpc::ClientContext>(),
                                         google::cloud::Options{}, request);
       for (;;) {
-        auto read = stream->Read();
-        if (absl::holds_alternative<Status>(read)) {
-          auto status = absl::get<Status>(std::move(read));
+        google::spanner::v1::PartialResultSet result;
+        auto status = stream->Read(&result);
+        if (status.has_value()) {
           auto const usage = timer.Sample();
           samples.push_back(RowCpuSample{channel_count, thread_count, true,
                                          row_count, usage.elapsed_time,
-                                         usage.cpu_time, std::move(status)});
+                                         usage.cpu_time, *std::move(status)});
           break;
         }
-        auto result =
-            absl::get<google::spanner::v1::PartialResultSet>(std::move(read));
         if (result.chunked_value()) {
           // We do not handle chunked values in the benchmark.
           continue;
@@ -745,17 +743,15 @@ class SelectExperiment : public BasicExperiment<Traits> {
           stub->ExecuteStreamingSql(std::make_shared<grpc::ClientContext>(),
                                     google::cloud::Options{}, request);
       for (;;) {
-        auto read = stream->Read();
-        if (absl::holds_alternative<Status>(read)) {
-          auto status = absl::get<Status>(std::move(read));
+        google::spanner::v1::PartialResultSet result;
+        auto status = stream->Read(&result);
+        if (status.has_value()) {
           auto const usage = timer.Sample();
           samples.push_back(RowCpuSample{channel_count, thread_count, true,
                                          row_count, usage.elapsed_time,
-                                         usage.cpu_time, std::move(status)});
+                                         usage.cpu_time, *std::move(status)});
           break;
         }
-        auto result =
-            absl::get<google::spanner::v1::PartialResultSet>(std::move(read));
         if (result.chunked_value()) {
           // We do not handle chunked values in the benchmark.
           continue;
