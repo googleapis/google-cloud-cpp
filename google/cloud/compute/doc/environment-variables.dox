@@ -42,13 +42,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeExternalVpnGatewaysConnection()`.
 
-- `GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeFirewallPoliciesConnection()`.
-
 - `GOOGLE_CLOUD_CPP_FIREWALLS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeFirewallsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeFirewallPoliciesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_FORWARDING_RULES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -82,37 +82,37 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeHealthChecksConnection()`.
 
-- `GOOGLE_CLOUD_CPP_HTTP_HEALTH_CHECKS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeHttpHealthChecksConnection()`.
-
 - `GOOGLE_CLOUD_CPP_HTTPS_HEALTH_CHECKS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeHttpsHealthChecksConnection()`.
 
-- `GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_HTTP_HEALTH_CHECKS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeImageFamilyViewsConnection()`.
+  used by `MakeHttpHealthChecksConnection()`.
 
 - `GOOGLE_CLOUD_CPP_IMAGES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeImagesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeInstanceGroupManagerResizeRequestsConnection()`.
+  used by `MakeImageFamilyViewsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_INSTANCE_GROUP_MANAGERS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeInstanceGroupManagersConnection()`.
+  used by `MakeInstancesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INSTANCE_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstanceGroupsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_INSTANCE_GROUP_MANAGERS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeInstancesConnection()`.
+  used by `MakeInstanceGroupManagersConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstanceGroupManagerResizeRequestsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INSTANCE_SETTINGS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -126,13 +126,17 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstantSnapshotsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENT_GROUPS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeInterconnectAttachmentGroupsConnection()`.
+  used by `MakeInterconnectsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectAttachmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectAttachmentGroupsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -146,17 +150,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectRemoteLocationsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_LICENSES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeInterconnectsConnection()`.
+  used by `MakeLicensesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_LICENSE_CODES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeLicenseCodesConnection()`.
-
-- `GOOGLE_CLOUD_CPP_LICENSES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeLicensesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_MACHINE_IMAGES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -165,6 +165,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_MACHINE_TYPES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeMachineTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworksConnection()`.
 
 - `GOOGLE_CLOUD_CPP_NETWORK_ATTACHMENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -185,10 +189,6 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_NETWORK_PROFILES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeNetworkProfilesConnection()`.
-
-- `GOOGLE_CLOUD_CPP_NETWORKS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeNetworksConnection()`.
 
 - `GOOGLE_CLOUD_CPP_NODE_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -218,6 +218,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakePublicDelegatedPrefixesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_REGIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_REGION_AUTOSCALERS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionAutoscalersConnection()`.
@@ -246,17 +250,17 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionHealthCheckServicesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_REGION_INSTANCE_GROUP_MANAGERS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_REGION_INSTANCES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeRegionInstanceGroupManagersConnection()`.
+  used by `MakeRegionInstancesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_REGION_INSTANCE_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionInstanceGroupsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_REGION_INSTANCES_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_REGION_INSTANCE_GROUP_MANAGERS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeRegionInstancesConnection()`.
+  used by `MakeRegionInstanceGroupManagersConnection()`.
 
 - `GOOGLE_CLOUD_CPP_REGION_INSTANCE_TEMPLATES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -286,10 +290,6 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionSecurityPoliciesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_REGIONS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeRegionsConnection()`.
-
 - `GOOGLE_CLOUD_CPP_REGION_SSL_CERTIFICATES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionSslCertificatesConnection()`.
@@ -298,13 +298,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionSslPoliciesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_REGION_TARGET_HTTP_PROXIES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeRegionTargetHttpProxiesConnection()`.
-
 - `GOOGLE_CLOUD_CPP_REGION_TARGET_HTTPS_PROXIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionTargetHttpsProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_TARGET_HTTP_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionTargetHttpProxiesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_REGION_TARGET_TCP_PROXIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -318,13 +318,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionZonesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeReservationBlocksConnection()`.
-
 - `GOOGLE_CLOUD_CPP_RESERVATIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeReservationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeReservationBlocksConnection()`.
 
 - `GOOGLE_CLOUD_CPP_RESERVATION_SUB_BLOCKS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -382,13 +382,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeTargetGrpcProxiesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_TARGET_HTTP_PROXIES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeTargetHttpProxiesConnection()`.
-
 - `GOOGLE_CLOUD_CPP_TARGET_HTTPS_PROXIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeTargetHttpsProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_HTTP_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetHttpProxiesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_TARGET_INSTANCES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -422,13 +422,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeVpnTunnelsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeZoneOperationsConnection()`.
-
 - `GOOGLE_CLOUD_CPP_ZONES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeZonesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeZoneOperationsConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 

@@ -114,7 +114,7 @@ quickstart guides also cover this use-case.
 `google-cloud-cpp` directly depends on the following libraries:
 
 | Library | Minimum version | Description | | ---------------------------------
-| ----------------: | ----------------------------------------------------------
+| \----------------: | ----------------------------------------------------------
 | | [Abseil][abseil-gh] | 20200923, Patch 3 | Abseil C++ common library [^1] | |
 [gRPC][grpc-gh] | 1.35.x | An RPC library and framework [^2] | |
 [libcurl][libcurl-gh] | 7.47.0 | HTTP client library [^3] | |
@@ -128,7 +128,7 @@ gRPC [^5] [^6] |
 libraries:
 
 | Library | Minimum version | Description | | ---------------------------------
-| --------------- | ------------------------------ | |
+| \--------------- | ------------------------------ | |
 [OpenTelemetry][opentelemetry-gh] | 1.9.1 | An observability framework[^7] |
 
 Note that these libraries may also depend on other libraries. The following

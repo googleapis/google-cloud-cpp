@@ -73,7 +73,7 @@ sample code can be found [here][doxygen-instance-admin].
 ### Running Instance Admin Samples
 
 | Target | Description | | ------------------------------------ |
---------------------------------------------------------------------------- | |
+\--------------------------------------------------------------------------- | |
 `./bigtable_hello_instance_admin` | Demonstration of basic operations | |
 `./bigtable_hello_app_profile` | Demonstration of basic operations using
 [App Profile][cbt-doc-app-profiles] | | `./bigtable_instance_admin_snippets` |
@@ -98,7 +98,7 @@ code can be found [here][doxygen-table-admin].
 ### Running Table Admin Samples
 
 | Target | Description | | ---------------------------------------- |
--------------------------------------------------- | |
+\-------------------------------------------------- | |
 `./bigtable_hello_table_admin` | Demonstration of basic operations | |
 `./table_admin_snippets` | Collection of individual operations | |
 `./bigtable_table_admin_backup_snippets` | Collection of

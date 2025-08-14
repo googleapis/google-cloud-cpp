@@ -38,13 +38,13 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlIamPoliciesServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
-  used by `MakeSqlInstanceNamesServiceConnection()`.
-
 - `GOOGLE_CLOUD_CPP_SQL_INSTANCES_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlInstancesServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlInstanceNamesServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SQL_OPERATIONS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
