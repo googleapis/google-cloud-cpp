@@ -4,7 +4,24 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.41.0 - TBD
+## v2.41.0 - 2025-08-14
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- The `Bigtable::DataConnection` class has been instrumented to collect [Client Side Metrics](https://cloud.google.com/bigtable/docs/client-side-metrics),
+free of charge. These metrics will be collected by
+default if both the [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-cpp)
+and [Google Cloud Monitoring](google/cloud/monitoring/README.md) dependencies are
+available. Users can opt-out by setting the `bigtable::EnableMetricsOption` to `false`.
+
+- The following metrics are available in Bigtable:
+  - AttemptLatency
+  - OperationLatency
+  - RetryCount
+  - FirstResponseLatency
+  - ServerLatency
+  - ApplicationBlockingLatency
+  - ConnectivityErrorCount
 
 ### [Spanner](/google/cloud/spanner/README.md)
 
@@ -13,6 +30,10 @@ support is now available. To enable Multiplexed sessions, add the
 `spanner::EnableMultiplexedSessionOption` to `Options` when calling
 `spanner::MakeConnection`. This enables Multiplexed sessions on all operations
 read-only, read-write, and partitioned.
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-07-30T06:44:36-07:00](https://github.com/googleapis/googleapis/tree/f6801ce4e1df0541abb8d1e996cb36363c41fb8d)
 
 ## v2.40.0 - 2025-08
 
