@@ -28,10 +28,15 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 io::log_h2 "Update or install dependencies"
-brew list --versions openssl || ci/retry-command.sh 3 120 brew install openssl
-brew list --versions ccache || ci/retry-command.sh 3 120 brew install ccache
-brew list --versions cmake || ci/retry-command.sh 3 120 brew install cmake
-brew list --versions ninja || ci/retry-command.sh 3 120 brew install ninja
+# Install bash and ninja
+brew install bash ninja
+
+# Install a specific version of CMake to match our GHA builds
+(
+  cd "${HOME}"
+  curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
+  brew install cmake.rb
+)
 
 io::log_h2 "Using CMake version"
 cmake --version

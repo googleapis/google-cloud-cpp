@@ -43,7 +43,9 @@ if ($missing.count -ge 1) {
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" ""
 $binary_dir="cmake-out/${BuildName}"
-Build-Vcpkg-Packages $vcpkg_root @("benchmark", "crc32c", "curl", "grpc", "gtest", "nlohmann-json", "openssl", "protobuf")
+# Install all dependencies from the vcpkg.json manifest file.
+# This mirrors the behavior of our GHA builds.
+& "${vcpkg_root}/vcpkg.exe" install --triplet "${env:VCPKG_TRIPLET}"
 
 $cmake_args=@(
     "-G$env:GENERATOR",
