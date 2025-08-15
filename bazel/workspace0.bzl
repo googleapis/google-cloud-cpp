@@ -84,6 +84,7 @@ def gl_cpp_workspace0(name = None):
             "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
         ],
         strip_prefix = "protoc-gen-validate-1.2.1",
+        integrity = "sha256-5HGDUnVN8Tk7h5K2MTOKqFYvOQ6BYHg+NlRUvBHZYyg=",
     )
 
     # protobuf requires this
@@ -122,7 +123,7 @@ def gl_cpp_workspace0(name = None):
     # //:.*mocks targets, which are public.
     maybe(
         http_archive,
-        name = "com_google_googletest",
+        name = "googletest",
         urls = [
             "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
         ],
@@ -141,16 +142,31 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "googleapis-f6801ce4e1df0541abb8d1e996cb36363c41fb8d",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
-        #   patches = ["googleapis.patch"]
-        # NOTE: This should only be used while developing with a new
-        # protobuf message. No changes to `patches` should ever be
-        # committed to the main branch.
+        patches = [
+
+            # NOTE: This should only be used while developing with a new
+            # protobuf message. No changes to `patches` should ever be
+            # committed to the main branch.
+            #"googleapis.patch",
+
+            # Mirrors the patch from the current bazel module
+            "//bazel:remove_upb_c_rules.patch",
+        ],
         patch_tool = "patch",
-        patch_args = ["-p1", "-l", "-n"],
-        patches = [],
+
+        # Use the following args when developing with a new proto message
+        # patch_args = ["-p1", "-l", "-n"],
+        repo_mapping = {
+            "@com_github_grpc_grpc": "@grpc",
+        },
     )
 
     # Load protobuf.
+    # The name "com_google_protobuf" is internally used by @bazel_tools,
+    # a native repository we cannot override.
+    # We will revert this to @protobuf once @bazel_tools is deprecated
+    # and libraries have strayed away from it.
+    # See https://github.com/googleapis/google-cloud-cpp/issues/15393
     maybe(
         http_archive,
         name = "com_google_protobuf",
@@ -176,30 +192,48 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "boringssl-82a53d8c902f940eb1310f76a0b96c40c67f632f",
     )
 
+    # This is a transitive dependency of grpc
+    maybe(
+        http_archive,
+        name = "io_bazel_rules_go",
+        sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+        ],
+        patch_args = ["-p1"],
+    )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
         http_archive,
-        name = "com_github_grpc_grpc",
+        name = "grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.74.1.tar.gz",
         ],
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
+            "@com_github_grpc_grpc": "@grpc",
         },
-        sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
-        strip_prefix = "grpc-1.71.0",
+        sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
+        strip_prefix = "grpc-1.74.1",
+    )
+
+    native.bind(
+        name = "protocol_compiler",
+        actual = "@com_google_protobuf//:protoc",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
-        actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+        actual = "@grpc//src/compiler:grpc_cpp_plugin",
     )
 
     native.bind(
         name = "grpc_lib",
-        actual = "@com_github_grpc_grpc//:grpc++",
+        actual = "@grpc//:grpc++",
     )
 
     # We need libcurl for the Google Cloud Storage client.
@@ -217,7 +251,7 @@ def gl_cpp_workspace0(name = None):
     # We need the nlohmann_json library
     maybe(
         http_archive,
-        name = "com_github_nlohmann_json",
+        name = "nlohmann_json",
         urls = [
             "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
@@ -228,7 +262,7 @@ def gl_cpp_workspace0(name = None):
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
     maybe(
         http_archive,
-        name = "com_github_google_crc32c",
+        name = "crc32c",
         urls = [
             "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
         ],
@@ -243,7 +277,7 @@ def gl_cpp_workspace0(name = None):
     # Open Telemetry
     maybe(
         http_archive,
-        name = "io_opentelemetry_cpp",
+        name = "opentelemetry-cpp",
         urls = [
             "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz",
         ],

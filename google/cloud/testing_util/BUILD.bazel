@@ -88,7 +88,7 @@ cc_library(
         "@googleapis//google/api:annotations_cc_proto",
         "@googleapis//google/api:routing_cc_proto",
         "@googletest//:gtest_main",
-        "@protobuf",
+        "@com_google_protobuf//:protobuf",
     ],
 )
 
@@ -110,8 +110,8 @@ cc_library(
     deps = [
         ":google_cloud_cpp_testing_grpc",
         "//:common",
+        "@com_google_protobuf//:protobuf",
         "@googletest//:gtest_main",
-        "@protobuf",
     ],
 ) for test in google_cloud_cpp_testing_grpc_unit_tests]
 
