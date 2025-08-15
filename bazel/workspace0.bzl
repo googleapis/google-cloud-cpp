@@ -162,6 +162,11 @@ def gl_cpp_workspace0(name = None):
     )
 
     # Load protobuf.
+    # The name "com_google_protobuf" is internally used by @bazel_tools,
+    # a native repository we cannot override.
+    # We will revert this to @protobuf once @bazel_tools is deprecated
+    # and libraries have strayed away from it.
+    # See https://github.com/googleapis/google-cloud-cpp/issues/15393
     maybe(
         http_archive,
         name = "com_google_protobuf",
