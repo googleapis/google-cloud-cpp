@@ -151,11 +151,11 @@ mocks), they are part of the public API.
 
 Typically there are three concrete versions of the `*Connection` interface:
 
-| Name | Description | | ----------------- |
-------------------------------------------------------------- | | `*Impl` | An
-implementation using the `*Stub` layer | | `*Tracing` | Instrument each retry
-loop with an [OpenTelemetry] trace span | | `Mock*Connection` | An
-implementation using `googlemock` |
+| Name              | Description                                                   |
+| ----------------- | ------------------------------------------------------------- |
+| `*Impl`           | An implementation using the `*Stub` layer                     |
+| `*Tracing`        | Instrument each retry loop with an [OpenTelemetry] trace span |
+| `Mock*Connection` | An implementation using `googlemock`                          |
 
 Only `Mock*Connection` is part of the public API. It is used by application
 developers that want to test their code using a mocked behavior for the
@@ -165,9 +165,9 @@ In some cases you may find a fourth implementation, used to implement clients
 over [HTTP and gRPC Transcoding][aip/127]. This class is also not part of the
 public API.
 
-| Name | Description | | ------------ |
----------------------------------------------- | | `*Rest*Impl` | An
-implementation using the `*Rest*Stub` layer |
+| Name         | Description                                    |
+| ------------ | ---------------------------------------------- |
+| `*Rest*Impl` | An implementation using the `*Rest*Stub` layer |
 
 ## The `*Stub` classes
 
@@ -188,12 +188,12 @@ The `*Stub` classes are typically organized as a (small) stack of
 [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern), which simplifies
 their testing.
 
-| Layer | Description | | ------------- |
---------------------------------------------------------------- | | `*Logging` |
-Optional `*Stub` decorator that logs each request and response | | `*Metadata` |
-Injects resource metadata headers for routing | | `*RoundRobin` | Round-robins
-over several `*Stub`s, not all libraries have them | | `*Tracing` | Instrument
-each RPC with an [OpenTelemetry] trace span |
+| Layer         | Description                                                     |
+| ------------- | --------------------------------------------------------------- |
+| `*Logging`    | Optional `*Stub` decorator that logs each request and response  |
+| `*Metadata`   | Injects resource metadata headers for routing                   |
+| `*RoundRobin` | Round-robins over several `*Stub`s, not all libraries have them |
+| `*Tracing`    | Instrument each RPC with an [OpenTelemetry] trace span          |
 
 For services where we have enabled REST support, there is a parallel set of
 `*Rest*Stub` classes. These implement the same functionality, but make calls

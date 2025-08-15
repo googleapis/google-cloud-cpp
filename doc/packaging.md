@@ -113,23 +113,22 @@ quickstart guides also cover this use-case.
 
 `google-cloud-cpp` directly depends on the following libraries:
 
-| Library | Minimum version | Description | | ---------------------------------
-| \----------------: | ----------------------------------------------------------
-| | [Abseil][abseil-gh] | 20200923, Patch 3 | Abseil C++ common library [^1] | |
-[gRPC][grpc-gh] | 1.35.x | An RPC library and framework [^2] | |
-[libcurl][libcurl-gh] | 7.47.0 | HTTP client library [^3] | |
-[crc32c][crc32c-gh] | 1.0.6 | Hardware-accelerated CRC32C implementation [^4] |
-| [OpenSSL][openssl-gh] | 1.0.2 | Crypto functions for [^3] | |
-[nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ [^3] | |
-[protobuf][protobuf-gh] | 3.15.8 | Protobuf is needed for any library based on
-gRPC [^5] [^6] |
+| Library                           |   Minimum version | Description                                                |
+| --------------------------------- | ----------------: | ---------------------------------------------------------- |
+| [Abseil][abseil-gh]               | 20200923, Patch 3 | Abseil C++ common library [^1]                             |
+| [gRPC][grpc-gh]                   |            1.35.x | An RPC library and framework [^2]                          |
+| [libcurl][libcurl-gh]             |            7.47.0 | HTTP client library [^3]                                   |
+| [crc32c][crc32c-gh]               |             1.0.6 | Hardware-accelerated CRC32C implementation [^4]            |
+| [OpenSSL][openssl-gh]             |             1.0.2 | Crypto functions for [^3]                                  |
+| [nlohmann/json][nlohmann-json-gh] |             3.4.0 | JSON for Modern C++ [^3]                                   |
+| [protobuf][protobuf-gh]           |            3.15.8 | Protobuf is needed for any library based on gRPC [^5] [^6] |
 
 `google-cloud-cpp` also has an **optional** dependency on the following
 libraries:
 
-| Library | Minimum version | Description | | ---------------------------------
-| \--------------- | ------------------------------ | |
-[OpenTelemetry][opentelemetry-gh] | 1.9.1 | An observability framework[^7] |
+| Library                           | Minimum version | Description                    |
+| --------------------------------- | --------------- | ------------------------------ |
+| [OpenTelemetry][opentelemetry-gh] | 1.9.1           | An observability framework[^7] |
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
@@ -617,7 +616,7 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -809,7 +808,7 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1144,7 +1143,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1328,7 +1327,7 @@ install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1492,24 +1491,24 @@ cmake --build cmake-out --target install
 
 </details>
 
-\[^1\]: Requires >= `20210324.2` for `pkg-config` files to work correctly.
+[^1]: Requires >= `20210324.2` for `pkg-config` files to work correctly.
 
-\[^2\]: Some libraries, including the Google Cloud Storage client, can be
-compiled without gRPC support.
+[^2]: Some libraries, including the Google Cloud Storage client, can be compiled
+    without gRPC support.
 
-\[^3\]: Only some libraries (Compute, SQL Admin, and Google Cloud Storage)
-require this dependency.
+[^3]: Only some libraries (Compute, SQL Admin, and Google Cloud Storage) require
+    this dependency.
 
-\[^4\]: Only the Google Cloud Storage client library requires this dependency.
+[^4]: Only the Google Cloud Storage client library requires this dependency.
 
-\[^5\]: The Google Cloud Storage client does not require Protobuf.
+[^5]: The Google Cloud Storage client does not require Protobuf.
 
-\[^6\]: On some platforms, some libraries may need a newer version of Protobuf
-to workaround conflicts between system pre-processor macros and symbols used in
-the Protobuf-generated code.
+[^6]: On some platforms, some libraries may need a newer version of Protobuf to
+    workaround conflicts between system pre-processor macros and symbols used in
+    the Protobuf-generated code.
 
-\[^7\]: See the [OpenTelemetry quickstart][otel-qs] for detailed instructions on
-how to enable and build this optional dependency.
+[^7]: See the [OpenTelemetry quickstart][otel-qs] for detailed instructions on how
+    to enable and build this optional dependency.
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [abseil/abseil-cpp#696]: https://github.com/abseil/abseil-cpp/issues/696

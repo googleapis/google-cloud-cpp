@@ -69,7 +69,7 @@ The most common configuration is to use *Application Default Credentials*, see
    from the [cmake.org](https://cmake.org/download/).
 
 1. Install the dependencies with your favorite tools. As an example, if you use
-   [vcpkg](https://github.com/Microsoft/vcpkg.git)\[^1\]:
+   [vcpkg](https://github.com/Microsoft/vcpkg.git)[^1]:
 
    ```bash
    cd $HOME/vcpkg
@@ -106,8 +106,8 @@ use it via:
 bazel --output_user_root=c:\b build ...
 ```
 
-\[^1\]: Sometimes package managers, such as vcpkg, are behind the latest release
-of `google-cloud-cpp` and may not have the latest features available.
+[^1]: Sometimes package managers, such as vcpkg, are behind the latest release of
+    `google-cloud-cpp` and may not have the latest features available.
 
 [authentication methods at google]: https://cloud.google.com/docs/authentication
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries "Authenticate for using client libraries"
