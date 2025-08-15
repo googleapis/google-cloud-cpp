@@ -14,7 +14,7 @@
 
 # Helper functions to configure Bazel
 
-$Env:USE_BAZEL_VERSION="6.2.1"
+$Env:USE_BAZEL_VERSION="7.6.1"
 
 # Create output directory for Bazel. Bazel creates really long paths,
 # sometimes exceeding the Windows limits. Using a short name for the
