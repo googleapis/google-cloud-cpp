@@ -84,7 +84,7 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib/pkgconfig
 # Note that this is a header-only library, and often installed manually.
 # This leaves your environment without support for CMake pkg-config.
 WORKDIR /var/tmp/build/json
-RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.12.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \

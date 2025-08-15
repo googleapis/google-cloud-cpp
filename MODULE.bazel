@@ -31,7 +31,7 @@ bazel_dep(name = "abseil-cpp", version = "20250127.1")
 # See https://github.com/googleapis/google-cloud-cpp/issues/15393
 bazel_dep(name = "protobuf", version = "31.1", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
-bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "nlohmann_json", version = "3.12.0")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")
 bazel_dep(name = "crc32c", version = "1.1.0")
 bazel_dep(name = "opentelemetry-cpp", version = "1.19.0")
