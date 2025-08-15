@@ -31,6 +31,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/options.h"
+#include <google/protobuf/repeated_ptr_field.h>
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
@@ -367,7 +368,8 @@ absl::variant<Status, spanner::BatchedCommitResult> FromProto(
 }
 
 template <typename T>
-absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
+absl::optional<T> GetRandomElement(
+    google::protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
   std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
