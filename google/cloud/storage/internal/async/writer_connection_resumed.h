@@ -42,6 +42,7 @@ MakeWriterConnectionResumed(
     std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
+    google::storage::v2::BidiWriteObjectResponse first_response,
     Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
