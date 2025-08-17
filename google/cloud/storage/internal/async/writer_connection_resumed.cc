@@ -332,6 +332,7 @@ class AsyncWriterConnectionResumedState
     auto& append_object_spec = *request.mutable_append_object_spec();
     append_object_spec.set_bucket(spec.resource().bucket());
     append_object_spec.set_object(spec.resource().name());
+    append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
 
     // Capture the finalization state *before* starting the async resume.
