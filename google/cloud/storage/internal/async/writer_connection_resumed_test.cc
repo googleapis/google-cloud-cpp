@@ -65,6 +65,7 @@ TEST(WriteConnectionResumed, FinalizeEmpty) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
 
   EXPECT_CALL(*mock, UploadId).WillOnce(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState)
@@ -81,7 +82,7 @@ TEST(WriteConnectionResumed, FinalizeEmpty) {
 
   auto connection =
       MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
-                                  initial_request, nullptr, Options{});
+                                  initial_request, nullptr, first_response, Options{});
   EXPECT_EQ(connection->UploadId(), "test-upload-id");
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
@@ -95,6 +96,7 @@ TEST(WriteConnectionResumed, FinalizeEmpty) {
 TEST(WriteConnectionResumed, FinalizedOnConstruction) {
   AsyncSequencer<bool> sequencer;
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(TestObject()));
@@ -105,7 +107,7 @@ TEST(WriteConnectionResumed, FinalizedOnConstruction) {
 
   auto connection =
       MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
-                                  initial_request, nullptr, Options{});
+                                  initial_request, nullptr, first_response, Options{});
   EXPECT_EQ(connection->UploadId(), "test-upload-id");
   EXPECT_THAT(
       connection->PersistedState(),
@@ -119,6 +121,7 @@ TEST(WriteConnectionResumed, FinalizedOnConstruction) {
 TEST(WriteConnectionResumed, Cancel) {
   AsyncSequencer<bool> sequencer;
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState)
@@ -134,7 +137,7 @@ TEST(WriteConnectionResumed, Cancel) {
 
   auto connection =
       MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
-                                  initial_request, nullptr, Options{});
+                                  initial_request, nullptr, first_response, Options{});
 
   auto write = connection->Write(TestPayload(64 * 1024));
   ASSERT_FALSE(write.is_ready());
@@ -152,6 +155,7 @@ TEST(WriteConnectionResumed, Cancel) {
 TEST(WriterConnectionResumed, FlushEmpty) {
   AsyncSequencer<bool> sequencer;
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, PersistedState)
@@ -176,7 +180,7 @@ TEST(WriterConnectionResumed, FlushEmpty) {
 
   auto connection =
       MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
-                                  initial_request, nullptr, Options{});
+                                  initial_request, nullptr, first_response, Options{});
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
   auto flush = connection->Flush({});
@@ -195,6 +199,7 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
   auto const payload = TestPayload(1024);
 
   EXPECT_CALL(*mock, PersistedState)
@@ -219,7 +224,7 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
 
   auto connection =
       MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
-                                  initial_request, nullptr, Options{});
+                                  initial_request, nullptr, first_response, Options{});
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
   auto write = connection->Write(payload);
