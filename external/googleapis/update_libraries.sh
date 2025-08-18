@@ -105,6 +105,7 @@ declare -A -r LIBRARIES=(
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
   ["confidentialcomputing"]="@com_google_googleapis//google/cloud/confidentialcomputing/v1:confidentialcomputing_cc_grpc"
   ["config"]="@com_google_googleapis//google/cloud/config/v1:config_cc_grpc"
+  ["configdelivery"]="@com_google_googleapis//google/cloud/configdelivery/v1:configdelivery_cc_grpc"
   ["connectors"]="@com_google_googleapis//google/cloud/connectors/v1:connectors_cc_grpc"
   ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
