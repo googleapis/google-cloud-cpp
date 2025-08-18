@@ -431,7 +431,7 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
             -> StatusOr<
-              std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+                std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
