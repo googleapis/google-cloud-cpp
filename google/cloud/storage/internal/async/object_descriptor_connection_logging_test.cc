@@ -115,7 +115,7 @@ TEST(ObjectDescriptorConnectionLogging, MakeSubsequentStream) {
   EXPECT_CALL(*mock, MakeSubsequentStream).WillOnce([] { return; });
 
   auto actual = MakeLoggingObjectDescriptorConnection(mock, LoggingEnabled());
-  (void)actual->MakeSubsequentStream();
+  actual->MakeSubsequentStream();
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Not(Contains(HasSubstr("MakeSubsequentStream"))));
