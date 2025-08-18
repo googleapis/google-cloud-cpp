@@ -1425,14 +1425,19 @@ TEST(AsyncClient, LoggingEnabled) {
   auto rt = client.ReadObject(BucketName("test-bucket"), "test-object").get();
   ASSERT_STATUS_OK(rt);
   AsyncReader r;
-  EXPECT_THAT(r.GetRequestMetadata().headers, IsEmpty());
   AsyncToken t;
-  EXPECT_FALSE(t.valid());
   std::tie(r, t) = *std::move(rt);
   ASSERT_TRUE(t.valid());
 
-  auto read_result = r.Read(std::move(t)).get();
-  ASSERT_STATUS_OK(read_result);
+  auto pt = r.Read(std::move(t)).get();
+  AsyncReaderConnection::ReadResponse p;
+  AsyncToken t2;
+  ASSERT_STATUS_OK(pt);
+  std::tie(p, t2) = *std::move(pt);
+  EXPECT_FALSE(t2.valid());
+  EXPECT_THAT(
+      p, VariantWith<ReadPayload>(ResultOf(
+             "empty response", [](auto const& p) { return p.size(); }, 0)));
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObject")));
@@ -1456,14 +1461,19 @@ TEST(AsyncClient, LoggingDisabled) {
   auto rt = client.ReadObject(BucketName("test-bucket"), "test-object").get();
   ASSERT_STATUS_OK(rt);
   AsyncReader r;
-  EXPECT_THAT(r.GetRequestMetadata().headers, IsEmpty());
   AsyncToken t;
-  EXPECT_FALSE(t.valid());
   std::tie(r, t) = *std::move(rt);
   ASSERT_TRUE(t.valid());
 
-  auto read_result = r.Read(std::move(t)).get();
-  ASSERT_STATUS_OK(read_result);
+  auto pt = r.Read(std::move(t)).get();
+  AsyncReaderConnection::ReadResponse p;
+  AsyncToken t2;
+  ASSERT_STATUS_OK(pt);
+  std::tie(p, t2) = *std::move(pt);
+  EXPECT_FALSE(t2.valid());
+  EXPECT_THAT(
+      p, VariantWith<ReadPayload>(ResultOf(
+             "empty response", [](auto const& p) { return p.size(); }, 0)));
 
   EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }

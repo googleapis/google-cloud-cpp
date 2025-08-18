@@ -36,6 +36,8 @@ using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Return;
 
 Options LoggingEnabled() {
   return Options{}.set<LoggingComponentsOption>({"rpc"});
@@ -108,6 +110,23 @@ TEST(ReaderConnectionLogging, Cancel) {
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(HasSubstr("ReaderConnectionLogging::Cancel()")));
+}
+
+TEST(ReaderConnectionLogging, GetRequestMetadata) {
+  ScopedLog log;
+
+  auto mock = std::make_unique<MockAsyncReaderConnection>();
+  RpcMetadata expected{{{"test-header", "test-value"}}, {}};
+  EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(expected));
+
+  auto actual = MakeLoggingReaderConnection(LoggingEnabled(), std::move(mock));
+  auto metadata = actual->GetRequestMetadata();
+
+  EXPECT_EQ(metadata.headers, expected.headers);
+  EXPECT_EQ(metadata.trailers, expected.trailers);
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, IsEmpty());
 }
 
 }  // namespace

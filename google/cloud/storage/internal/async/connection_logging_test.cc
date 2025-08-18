@@ -171,6 +171,26 @@ TEST(ConnectionLogging, ReadObjectRangeNotReady) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObjectRange succeeded")));
 }
 
+TEST(ConnectionLogging, ReadObjectRangeNotReadyWithError) {
+  ScopedLog log;
+  promise<StatusOr<storage_experimental::ReadPayload>> p;
+
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, ReadObjectRange).WillOnce(Return(p.get_future()));
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(LoggingEnabled()));
+
+  auto conn = MakeLoggingAsyncConnection(mock);
+  auto fut = conn->ReadObjectRange({});
+  EXPECT_FALSE(fut.is_ready());
+  p.set_value(PermanentError());
+  (void)fut.get();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("ReadObjectRange(bucket=, object=)")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadObjectRange failed")));
+}
+
 TEST(ConnectionLogging, StartAppendableObjectUpload) {
   ScopedLog log;
   auto mock = std::make_shared<MockAsyncConnection>();
