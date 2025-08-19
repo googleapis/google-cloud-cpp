@@ -1,7 +1,7 @@
 # Kokoro Configuration and Build scripts.
 
-This directory contains the build scripts and configuration files
-for Kokoro, Google's internal CI system for open source projects.
+This directory contains the build scripts and configuration files for Kokoro,
+Google's internal CI system for open source projects.
 
 We use Kokoro because:
 
@@ -29,5 +29,5 @@ In brief, the Kokoro configuration is split in two:
      are actually *used* by that build.
 
 Somewhat unique to Kokoro one must define a separate *INTEGRATION* vs.
-*PRESUBMIT* thus the duplication of configuration files for essentially the
-same settings.
+*PRESUBMIT* thus the duplication of configuration files for essentially the same
+settings.
