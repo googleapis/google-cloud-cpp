@@ -32,119 +32,138 @@ ConfigDeliveryTracingStub::ConfigDeliveryTracingStub(
     std::shared_ptr<ConfigDeliveryStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::configdelivery::v1::ListResourceBundlesResponse> ConfigDeliveryTracingStub::ListResourceBundles(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::configdelivery::v1::ListResourceBundlesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListResourceBundles");
+StatusOr<google::cloud::configdelivery::v1::ListResourceBundlesResponse>
+ConfigDeliveryTracingStub::ListResourceBundles(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::configdelivery::v1::ListResourceBundlesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListResourceBundles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListResourceBundles(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListResourceBundles(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::ResourceBundle> ConfigDeliveryTracingStub::GetResourceBundle(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::configdelivery::v1::GetResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetResourceBundle");
+StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
+ConfigDeliveryTracingStub::GetResourceBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetResourceBundle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetResourceBundle(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetResourceBundle(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncCreateResourceBundle(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateResourceBundle");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateResourceBundle");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateResourceBundle(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateResourceBundle(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::CreateResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateResourceBundle");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateResourceBundle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateResourceBundle(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateResourceBundle(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncUpdateResourceBundle(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateResourceBundle");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateResourceBundle");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateResourceBundle(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateResourceBundle(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::UpdateResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateResourceBundle");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateResourceBundle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateResourceBundle(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateResourceBundle(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncDeleteResourceBundle(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteResourceBundle");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteResourceBundle");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteResourceBundle(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteResourceBundle(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::DeleteResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteResourceBundle");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteResourceBundle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteResourceBundle(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteResourceBundle(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse> ConfigDeliveryTracingStub::ListFleetPackages(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::configdelivery::v1::ListFleetPackagesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListFleetPackages");
+StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse>
+ConfigDeliveryTracingStub::ListFleetPackages(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::configdelivery::v1::ListFleetPackagesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListFleetPackages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListFleetPackages(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListFleetPackages(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::FleetPackage> ConfigDeliveryTracingStub::GetFleetPackage(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::FleetPackage>
+ConfigDeliveryTracingStub::GetFleetPackage(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetFleetPackage");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetFleetPackage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -153,95 +172,109 @@ StatusOr<google::cloud::configdelivery::v1::FleetPackage> ConfigDeliveryTracingS
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncCreateFleetPackage(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateFleetPackage");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateFleetPackage");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateFleetPackage(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateFleetPackage(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::CreateFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateFleetPackage");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateFleetPackage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateFleetPackage(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateFleetPackage(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncUpdateFleetPackage(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateFleetPackage");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateFleetPackage");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateFleetPackage(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateFleetPackage(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::UpdateFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateFleetPackage");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateFleetPackage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateFleetPackage(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateFleetPackage(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncDeleteFleetPackage(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteFleetPackage");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteFleetPackage");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteFleetPackage(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteFleetPackage(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::DeleteFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteFleetPackage");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteFleetPackage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteFleetPackage(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteFleetPackage(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse> ConfigDeliveryTracingStub::ListReleases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse>
+ConfigDeliveryTracingStub::ListReleases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::ListReleasesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListReleases");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListReleases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListReleases(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::Release> ConfigDeliveryTracingStub::GetRelease(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::Release>
+ConfigDeliveryTracingStub::GetRelease(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetRelease");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetRelease");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -250,11 +283,12 @@ StatusOr<google::cloud::configdelivery::v1::Release> ConfigDeliveryTracingStub::
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncCreateRelease(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateRelease");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateRelease");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateRelease(cq, context, std::move(options), request);
@@ -263,10 +297,10 @@ ConfigDeliveryTracingStub::AsyncCreateRelease(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::CreateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateRelease");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateRelease");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -275,11 +309,12 @@ ConfigDeliveryTracingStub::CreateRelease(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncUpdateRelease(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateRelease");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateRelease");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateRelease(cq, context, std::move(options), request);
@@ -288,10 +323,10 @@ ConfigDeliveryTracingStub::AsyncUpdateRelease(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::UpdateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateRelease");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateRelease");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -300,11 +335,12 @@ ConfigDeliveryTracingStub::UpdateRelease(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncDeleteRelease(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteRelease");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteRelease");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRelease(cq, context, std::move(options), request);
@@ -313,32 +349,34 @@ ConfigDeliveryTracingStub::AsyncDeleteRelease(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::DeleteRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteRelease");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteRelease");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRelease(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse> ConfigDeliveryTracingStub::ListVariants(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse>
+ConfigDeliveryTracingStub::ListVariants(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::ListVariantsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListVariants");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListVariants");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVariants(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::Variant> ConfigDeliveryTracingStub::GetVariant(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::Variant>
+ConfigDeliveryTracingStub::GetVariant(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetVariant");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetVariant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -347,11 +385,12 @@ StatusOr<google::cloud::configdelivery::v1::Variant> ConfigDeliveryTracingStub::
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncCreateVariant(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateVariant");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateVariant");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateVariant(cq, context, std::move(options), request);
@@ -360,10 +399,10 @@ ConfigDeliveryTracingStub::AsyncCreateVariant(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::CreateVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CreateVariant");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CreateVariant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -372,11 +411,12 @@ ConfigDeliveryTracingStub::CreateVariant(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncUpdateVariant(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateVariant");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateVariant");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateVariant(cq, context, std::move(options), request);
@@ -385,10 +425,10 @@ ConfigDeliveryTracingStub::AsyncUpdateVariant(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::UpdateVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "UpdateVariant");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "UpdateVariant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -397,11 +437,12 @@ ConfigDeliveryTracingStub::UpdateVariant(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncDeleteVariant(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteVariant");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteVariant");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteVariant(cq, context, std::move(options), request);
@@ -410,32 +451,34 @@ ConfigDeliveryTracingStub::AsyncDeleteVariant(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::DeleteVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteVariant");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteVariant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteVariant(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse> ConfigDeliveryTracingStub::ListRollouts(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse>
+ConfigDeliveryTracingStub::ListRollouts(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::ListRolloutsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListRollouts");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListRollouts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRollouts(context, options, request));
 }
 
-StatusOr<google::cloud::configdelivery::v1::Rollout> ConfigDeliveryTracingStub::GetRollout(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::configdelivery::v1::Rollout>
+ConfigDeliveryTracingStub::GetRollout(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetRollout");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetRollout");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -444,23 +487,25 @@ StatusOr<google::cloud::configdelivery::v1::Rollout> ConfigDeliveryTracingStub::
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncSuspendRollout(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "SuspendRollout");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "SuspendRollout");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncSuspendRollout(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncSuspendRollout(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::SuspendRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "SuspendRollout");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "SuspendRollout");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -469,11 +514,12 @@ ConfigDeliveryTracingStub::SuspendRollout(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncResumeRollout(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ResumeRollout");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ResumeRollout");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncResumeRollout(cq, context, std::move(options), request);
@@ -482,10 +528,10 @@ ConfigDeliveryTracingStub::AsyncResumeRollout(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::ResumeRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ResumeRollout");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ResumeRollout");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -494,11 +540,12 @@ ConfigDeliveryTracingStub::ResumeRollout(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigDeliveryTracingStub::AsyncAbortRollout(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "AbortRollout");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "AbortRollout");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncAbortRollout(cq, context, std::move(options), request);
@@ -507,54 +554,58 @@ ConfigDeliveryTracingStub::AsyncAbortRollout(
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingStub::AbortRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "AbortRollout");
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "AbortRollout");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AbortRollout(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ConfigDeliveryTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ConfigDeliveryTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> ConfigDeliveryTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+ConfigDeliveryTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ConfigDeliveryTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ConfigDeliveryTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> ConfigDeliveryTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ConfigDeliveryTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -562,10 +613,10 @@ StatusOr<google::longrunning::Operation> ConfigDeliveryTracingStub::GetOperation
 }
 
 Status ConfigDeliveryTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -573,10 +624,10 @@ Status ConfigDeliveryTracingStub::DeleteOperation(
 }
 
 Status ConfigDeliveryTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.configdelivery.v1.ConfigDelivery", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.configdelivery.v1.ConfigDelivery", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -593,8 +644,7 @@ ConfigDeliveryTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -607,8 +657,8 @@ future<Status> ConfigDeliveryTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

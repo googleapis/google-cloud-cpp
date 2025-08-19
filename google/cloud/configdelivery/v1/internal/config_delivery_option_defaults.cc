@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ConfigDeliveryDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONFIG_DELIVERY_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CONFIG_DELIVERY_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CONFIG_DELIVERY_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONFIG_DELIVERY_AUTHORITY",
       "configdelivery.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<configdelivery_v1::ConfigDeliveryRetryPolicyOption>()) {
     options.set<configdelivery_v1::ConfigDeliveryRetryPolicyOption>(
         configdelivery_v1::ConfigDeliveryLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<configdelivery_v1::ConfigDeliveryBackoffPolicyOption>()) {
     options.set<configdelivery_v1::ConfigDeliveryBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<configdelivery_v1::ConfigDeliveryPollingPolicyOption>()) {
     options.set<configdelivery_v1::ConfigDeliveryPollingPolicyOption>(
         GenericPollingPolicy<
             configdelivery_v1::ConfigDeliveryRetryPolicyOption::Type,
             configdelivery_v1::ConfigDeliveryBackoffPolicyOption::Type>(
-            options.get<configdelivery_v1::ConfigDeliveryRetryPolicyOption>()->clone(),
+            options.get<configdelivery_v1::ConfigDeliveryRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<configdelivery_v1::ConfigDeliveryConnectionIdempotencyPolicyOption>()) {
-    options.set<configdelivery_v1::ConfigDeliveryConnectionIdempotencyPolicyOption>(
-        configdelivery_v1::MakeDefaultConfigDeliveryConnectionIdempotencyPolicy());
+  if (!options.has<configdelivery_v1::
+                       ConfigDeliveryConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        configdelivery_v1::ConfigDeliveryConnectionIdempotencyPolicyOption>(
+        configdelivery_v1::
+            MakeDefaultConfigDeliveryConnectionIdempotencyPolicy());
   }
 
   return options;

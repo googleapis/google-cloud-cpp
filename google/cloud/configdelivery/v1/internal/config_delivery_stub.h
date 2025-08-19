@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/configdelivery/v1/config_delivery.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/configdelivery/v1/config_delivery.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,255 +39,273 @@ class ConfigDeliveryStub {
  public:
   virtual ~ConfigDeliveryStub() = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::ListResourceBundlesResponse> ListResourceBundles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListResourceBundlesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::configdelivery::v1::ListResourceBundlesResponse>
+  ListResourceBundles(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::ListResourceBundlesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::ResourceBundle> GetResourceBundle(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetResourceBundleRequest const& request) = 0;
+  virtual StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
+  GetResourceBundle(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateResourceBundle(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateResourceBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) = 0;
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateResourceBundle(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateResourceBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) = 0;
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteResourceBundle(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteResourceBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) = 0;
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse> ListFleetPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListFleetPackagesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse>
+  ListFleetPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::ListFleetPackagesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::FleetPackage> GetFleetPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) = 0;
+  virtual StatusOr<google::cloud::configdelivery::v1::FleetPackage>
+  GetFleetPackage(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetFleetPackageRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFleetPackage(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateFleetPackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) = 0;
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateFleetPackage(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateFleetPackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) = 0;
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFleetPackage(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteFleetPackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) = 0;
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse> ListReleases(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListReleasesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse>
+  ListReleases(grpc::ClientContext& context, Options const& options,
+               google::cloud::configdelivery::v1::ListReleasesRequest const&
+                   request) = 0;
 
   virtual StatusOr<google::cloud::configdelivery::v1::Release> GetRelease(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::configdelivery::v1::GetReleaseRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRelease(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) = 0;
+      google::cloud::configdelivery::v1::CreateReleaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateReleaseRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRelease(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) = 0;
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRelease(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) = 0;
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse> ListVariants(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListVariantsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse>
+  ListVariants(grpc::ClientContext& context, Options const& options,
+               google::cloud::configdelivery::v1::ListVariantsRequest const&
+                   request) = 0;
 
   virtual StatusOr<google::cloud::configdelivery::v1::Variant> GetVariant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::configdelivery::v1::GetVariantRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateVariant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) = 0;
+      google::cloud::configdelivery::v1::CreateVariantRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateVariantRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateVariant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) = 0;
+      google::cloud::configdelivery::v1::UpdateVariantRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateVariantRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteVariant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) = 0;
+      google::cloud::configdelivery::v1::DeleteVariantRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteVariantRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse> ListRollouts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListRolloutsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse>
+  ListRollouts(grpc::ClientContext& context, Options const& options,
+               google::cloud::configdelivery::v1::ListRolloutsRequest const&
+                   request) = 0;
 
   virtual StatusOr<google::cloud::configdelivery::v1::Rollout> GetRollout(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::configdelivery::v1::GetRolloutRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncSuspendRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) = 0;
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> SuspendRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncResumeRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) = 0;
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ResumeRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncAbortRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) = 0;
+      google::cloud::configdelivery::v1::AbortRolloutRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AbortRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::AbortRolloutRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -300,256 +318,271 @@ class ConfigDeliveryStub {
 class DefaultConfigDeliveryStub : public ConfigDeliveryStub {
  public:
   DefaultConfigDeliveryStub(
-      std::unique_ptr<google::cloud::configdelivery::v1::ConfigDelivery::StubInterface> grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::configdelivery::v1::ConfigDelivery::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::configdelivery::v1::ListResourceBundlesResponse> ListResourceBundles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListResourceBundlesRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::ListResourceBundlesResponse>
+  ListResourceBundles(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::ListResourceBundlesRequest const&
+          request) override;
 
   StatusOr<google::cloud::configdelivery::v1::ResourceBundle> GetResourceBundle(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetResourceBundleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateResourceBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) override;
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateResourceBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) override;
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteResourceBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) override;
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteResourceBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse> ListFleetPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListFleetPackagesRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse>
+  ListFleetPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::ListFleetPackagesRequest const&
+          request) override;
 
   StatusOr<google::cloud::configdelivery::v1::FleetPackage> GetFleetPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFleetPackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) override;
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFleetPackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) override;
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFleetPackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) override;
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFleetPackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request) override;
 
-  StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse> ListReleases(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListReleasesRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse>
+  ListReleases(grpc::ClientContext& context, Options const& options,
+               google::cloud::configdelivery::v1::ListReleasesRequest const&
+                   request) override;
 
   StatusOr<google::cloud::configdelivery::v1::Release> GetRelease(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetReleaseRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetReleaseRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRelease(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) override;
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRelease(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) override;
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRelease(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) override;
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request)
+      override;
 
-  StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse> ListVariants(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListVariantsRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse>
+  ListVariants(grpc::ClientContext& context, Options const& options,
+               google::cloud::configdelivery::v1::ListVariantsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::configdelivery::v1::Variant> GetVariant(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetVariantRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetVariantRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVariant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) override;
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVariant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) override;
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteVariant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) override;
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteVariant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request)
+      override;
 
-  StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse> ListRollouts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::ListRolloutsRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse>
+  ListRollouts(grpc::ClientContext& context, Options const& options,
+               google::cloud::configdelivery::v1::ListRolloutsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::configdelivery::v1::Rollout> GetRollout(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::configdelivery::v1::GetRolloutRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::configdelivery::v1::GetRolloutRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSuspendRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) override;
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> SuspendRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResumeRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) override;
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ResumeRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAbortRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) override;
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AbortRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -565,9 +598,13 @@ class DefaultConfigDeliveryStub : public ConfigDeliveryStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::configdelivery::v1::ConfigDelivery::StubInterface> grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::cloud::configdelivery::v1::ConfigDelivery::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

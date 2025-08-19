@@ -46,19 +46,21 @@ ConfigDeliveryMetadata::ConfigDeliveryMetadata(
 
 StatusOr<google::cloud::configdelivery::v1::ListResourceBundlesResponse>
 ConfigDeliveryMetadata::ListResourceBundles(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::configdelivery::v1::ListResourceBundlesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::configdelivery::v1::ListResourceBundlesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListResourceBundles(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
 ConfigDeliveryMetadata::GetResourceBundle(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::configdelivery::v1::GetResourceBundleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetResourceBundle(context, options, request);
 }
 
@@ -67,18 +69,21 @@ ConfigDeliveryMetadata::AsyncCreateResourceBundle(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateResourceBundle(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateResourceBundle(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryMetadata::CreateResourceBundle(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateResourceBundle(context, options, request);
 }
 
@@ -87,18 +92,25 @@ ConfigDeliveryMetadata::AsyncUpdateResourceBundle(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("resource_bundle.name=", internal::UrlEncode(request.resource_bundle().name())));
-  return child_->AsyncUpdateResourceBundle(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("resource_bundle.name=",
+                   internal::UrlEncode(request.resource_bundle().name())));
+  return child_->AsyncUpdateResourceBundle(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryMetadata::UpdateResourceBundle(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource_bundle.name=", internal::UrlEncode(request.resource_bundle().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource_bundle.name=",
+                   internal::UrlEncode(request.resource_bundle().name())));
   return child_->UpdateResourceBundle(context, options, request);
 }
 
@@ -107,36 +119,40 @@ ConfigDeliveryMetadata::AsyncDeleteResourceBundle(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteResourceBundle(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteResourceBundle(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryMetadata::DeleteResourceBundle(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteResourceBundle(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::ListFleetPackagesResponse>
 ConfigDeliveryMetadata::ListFleetPackages(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::configdelivery::v1::ListFleetPackagesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::configdelivery::v1::ListFleetPackagesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFleetPackages(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::FleetPackage>
 ConfigDeliveryMetadata::GetFleetPackage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFleetPackage(context, options, request);
 }
 
@@ -145,18 +161,21 @@ ConfigDeliveryMetadata::AsyncCreateFleetPackage(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateFleetPackage(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateFleetPackage(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryMetadata::CreateFleetPackage(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFleetPackage(context, options, request);
 }
 
@@ -165,18 +184,25 @@ ConfigDeliveryMetadata::AsyncUpdateFleetPackage(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("fleet_package.name=", internal::UrlEncode(request.fleet_package().name())));
-  return child_->AsyncUpdateFleetPackage(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("fleet_package.name=",
+                   internal::UrlEncode(request.fleet_package().name())));
+  return child_->AsyncUpdateFleetPackage(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryMetadata::UpdateFleetPackage(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("fleet_package.name=", internal::UrlEncode(request.fleet_package().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("fleet_package.name=",
+                   internal::UrlEncode(request.fleet_package().name())));
   return child_->UpdateFleetPackage(context, options, request);
 }
 
@@ -185,36 +211,39 @@ ConfigDeliveryMetadata::AsyncDeleteFleetPackage(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFleetPackage(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFleetPackage(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryMetadata::DeleteFleetPackage(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFleetPackage(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::ListReleasesResponse>
 ConfigDeliveryMetadata::ListReleases(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::ListReleasesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReleases(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::Release>
 ConfigDeliveryMetadata::GetRelease(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetReleaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRelease(context, options, request);
 }
 
@@ -224,17 +253,17 @@ ConfigDeliveryMetadata::AsyncCreateRelease(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRelease(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRelease(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::CreateRelease(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::CreateRelease(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRelease(context, options, request);
 }
 
@@ -244,17 +273,19 @@ ConfigDeliveryMetadata::AsyncUpdateRelease(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("release.name=", internal::UrlEncode(request.release().name())));
-  return child_->AsyncUpdateRelease(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("release.name=",
+                           internal::UrlEncode(request.release().name())));
+  return child_->AsyncUpdateRelease(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::UpdateRelease(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::UpdateRelease(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("release.name=", internal::UrlEncode(request.release().name())));
+  SetMetadata(context, options,
+              absl::StrCat("release.name=",
+                           internal::UrlEncode(request.release().name())));
   return child_->UpdateRelease(context, options, request);
 }
 
@@ -264,35 +295,35 @@ ConfigDeliveryMetadata::AsyncDeleteRelease(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRelease(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRelease(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::DeleteRelease(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::DeleteRelease(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRelease(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::ListVariantsResponse>
 ConfigDeliveryMetadata::ListVariants(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::ListVariantsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVariants(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::Variant>
 ConfigDeliveryMetadata::GetVariant(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetVariantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVariant(context, options, request);
 }
 
@@ -302,17 +333,17 @@ ConfigDeliveryMetadata::AsyncCreateVariant(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateVariant(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateVariant(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::CreateVariant(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::CreateVariant(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateVariant(context, options, request);
 }
 
@@ -322,17 +353,19 @@ ConfigDeliveryMetadata::AsyncUpdateVariant(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("variant.name=", internal::UrlEncode(request.variant().name())));
-  return child_->AsyncUpdateVariant(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("variant.name=",
+                           internal::UrlEncode(request.variant().name())));
+  return child_->AsyncUpdateVariant(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::UpdateVariant(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::UpdateVariant(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("variant.name=", internal::UrlEncode(request.variant().name())));
+  SetMetadata(context, options,
+              absl::StrCat("variant.name=",
+                           internal::UrlEncode(request.variant().name())));
   return child_->UpdateVariant(context, options, request);
 }
 
@@ -342,35 +375,35 @@ ConfigDeliveryMetadata::AsyncDeleteVariant(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVariant(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteVariant(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::DeleteVariant(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::DeleteVariant(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteVariant(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::ListRolloutsResponse>
 ConfigDeliveryMetadata::ListRollouts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::ListRolloutsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRollouts(context, options, request);
 }
 
 StatusOr<google::cloud::configdelivery::v1::Rollout>
 ConfigDeliveryMetadata::GetRollout(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::configdelivery::v1::GetRolloutRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRollout(context, options, request);
 }
 
@@ -380,17 +413,17 @@ ConfigDeliveryMetadata::AsyncSuspendRollout(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncSuspendRollout(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncSuspendRollout(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::SuspendRollout(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::SuspendRollout(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SuspendRollout(context, options, request);
 }
 
@@ -400,17 +433,17 @@ ConfigDeliveryMetadata::AsyncResumeRollout(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncResumeRollout(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncResumeRollout(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::ResumeRollout(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::ResumeRollout(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeRollout(context, options, request);
 }
 
@@ -420,71 +453,67 @@ ConfigDeliveryMetadata::AsyncAbortRollout(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncAbortRollout(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncAbortRollout(cq, std::move(context), std::move(options),
+                                   request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::AbortRollout(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::AbortRollout(
+    grpc::ClientContext& context, Options options,
     google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AbortRollout(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigDeliveryMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-ConfigDeliveryMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> ConfigDeliveryMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ConfigDeliveryMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ConfigDeliveryMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-ConfigDeliveryMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConfigDeliveryMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-ConfigDeliveryMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConfigDeliveryMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -496,8 +525,8 @@ ConfigDeliveryMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ConfigDeliveryMetadata::AsyncCancelOperation(
@@ -507,21 +536,21 @@ future<Status> ConfigDeliveryMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ConfigDeliveryMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ConfigDeliveryMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConfigDeliveryClient {
  public:
-  explicit ConfigDeliveryClient(std::shared_ptr<ConfigDeliveryConnection> connection, Options opts = {});
+  explicit ConfigDeliveryClient(
+      std::shared_ptr<ConfigDeliveryConnection> connection, Options opts = {});
   ~ConfigDeliveryClient();
 
   ///@{
@@ -78,10 +79,12 @@ class ConfigDeliveryClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConfigDeliveryClient const& a, ConfigDeliveryClient const& b) {
+  friend bool operator==(ConfigDeliveryClient const& a,
+                         ConfigDeliveryClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConfigDeliveryClient const& a, ConfigDeliveryClient const& b) {
+  friend bool operator!=(ConfigDeliveryClient const& a,
+                         ConfigDeliveryClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -157,7 +160,9 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   StreamRange<google::cloud::configdelivery::v1::ResourceBundle>
-  ListResourceBundles(google::cloud::configdelivery::v1::ListResourceBundlesRequest request, Options opts = {});
+  ListResourceBundles(
+      google::cloud::configdelivery::v1::ListResourceBundlesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +186,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.ResourceBundle]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L360}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
-  GetResourceBundle(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::ResourceBundle> GetResourceBundle(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +216,10 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.ResourceBundle]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L360}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
-  GetResourceBundle(google::cloud::configdelivery::v1::GetResourceBundleRequest const& request, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::ResourceBundle> GetResourceBundle(
+      google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -248,7 +255,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  CreateResourceBundle(std::string const& parent, google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle, std::string const& resource_bundle_id, Options opts = {});
+  CreateResourceBundle(
+      std::string const& parent,
+      google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle,
+      std::string const& resource_bundle_id, Options opts = {});
 
   // clang-format off
   ///
@@ -261,8 +271,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateResourceBundle(NoAwaitTag, std::string const& parent, google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle, std::string const& resource_bundle_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateResourceBundle(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle,
+      std::string const& resource_bundle_id, Options opts = {});
 
   // clang-format off
   ///
@@ -299,7 +311,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  CreateResourceBundle(google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request, Options opts = {});
+  CreateResourceBundle(
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -312,8 +327,11 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -325,7 +343,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  CreateResourceBundle(google::longrunning::Operation const& operation, Options opts = {});
+  CreateResourceBundle(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -362,7 +381,9 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  UpdateResourceBundle(google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateResourceBundle(
+      google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +396,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::ResourceBundle const& resource_bundle,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -413,7 +436,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  UpdateResourceBundle(google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request, Options opts = {});
+  UpdateResourceBundle(
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -426,8 +452,11 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -439,7 +468,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  UpdateResourceBundle(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateResourceBundle(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -484,8 +514,8 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteResourceBundle(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteResourceBundle(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -522,7 +552,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteResourceBundle(google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request, Options opts = {});
+  DeleteResourceBundle(
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +568,11 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -548,7 +584,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteResourceBundle(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteResourceBundle(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -621,7 +658,9 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   StreamRange<google::cloud::configdelivery::v1::FleetPackage>
-  ListFleetPackages(google::cloud::configdelivery::v1::ListFleetPackagesRequest request, Options opts = {});
+  ListFleetPackages(
+      google::cloud::configdelivery::v1::ListFleetPackagesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -645,8 +684,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.GetFleetPackageRequest]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1036}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::FleetPackage>
-  GetFleetPackage(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::FleetPackage> GetFleetPackage(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -675,8 +714,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.GetFleetPackageRequest]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1036}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::FleetPackage>
-  GetFleetPackage(google::cloud::configdelivery::v1::GetFleetPackageRequest const& request, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::FleetPackage> GetFleetPackage(
+      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -712,7 +752,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  CreateFleetPackage(std::string const& parent, google::cloud::configdelivery::v1::FleetPackage const& fleet_package, std::string const& fleet_package_id, Options opts = {});
+  CreateFleetPackage(
+      std::string const& parent,
+      google::cloud::configdelivery::v1::FleetPackage const& fleet_package,
+      std::string const& fleet_package_id, Options opts = {});
 
   // clang-format off
   ///
@@ -725,8 +768,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateFleetPackage(NoAwaitTag, std::string const& parent, google::cloud::configdelivery::v1::FleetPackage const& fleet_package, std::string const& fleet_package_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateFleetPackage(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::configdelivery::v1::FleetPackage const& fleet_package,
+      std::string const& fleet_package_id, Options opts = {});
 
   // clang-format off
   ///
@@ -763,7 +808,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  CreateFleetPackage(google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request, Options opts = {});
+  CreateFleetPackage(
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -776,8 +824,11 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -789,7 +840,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  CreateFleetPackage(google::longrunning::Operation const& operation, Options opts = {});
+  CreateFleetPackage(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -826,7 +878,9 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  UpdateFleetPackage(google::cloud::configdelivery::v1::FleetPackage const& fleet_package, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFleetPackage(
+      google::cloud::configdelivery::v1::FleetPackage const& fleet_package,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -839,8 +893,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::FleetPackage const& fleet_package, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::FleetPackage const& fleet_package,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -877,7 +933,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  UpdateFleetPackage(google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request, Options opts = {});
+  UpdateFleetPackage(
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -890,8 +949,11 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -903,7 +965,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  UpdateFleetPackage(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateFleetPackage(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -948,8 +1011,8 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteFleetPackage(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteFleetPackage(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -986,7 +1049,10 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteFleetPackage(google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request, Options opts = {});
+  DeleteFleetPackage(
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -999,8 +1065,11 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1012,7 +1081,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteFleetPackage(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteFleetPackage(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1045,8 +1115,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Release]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1185}
   ///
   // clang-format on
-  StreamRange<google::cloud::configdelivery::v1::Release>
-  ListReleases(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::configdelivery::v1::Release> ListReleases(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1084,8 +1154,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Release]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1185}
   ///
   // clang-format on
-  StreamRange<google::cloud::configdelivery::v1::Release>
-  ListReleases(google::cloud::configdelivery::v1::ListReleasesRequest request, Options opts = {});
+  StreamRange<google::cloud::configdelivery::v1::Release> ListReleases(
+      google::cloud::configdelivery::v1::ListReleasesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1109,8 +1180,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Release]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1185}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::Release>
-  GetRelease(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::Release> GetRelease(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1139,8 +1210,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Release]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1185}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::Release>
-  GetRelease(google::cloud::configdelivery::v1::GetReleaseRequest const& request, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::Release> GetRelease(
+      google::cloud::configdelivery::v1::GetReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1175,8 +1247,10 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Release]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1185}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease(std::string const& parent, google::cloud::configdelivery::v1::Release const& release, std::string const& release_id, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> CreateRelease(
+      std::string const& parent,
+      google::cloud::configdelivery::v1::Release const& release,
+      std::string const& release_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1189,8 +1263,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRelease(NoAwaitTag, std::string const& parent, google::cloud::configdelivery::v1::Release const& release, std::string const& release_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRelease(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::configdelivery::v1::Release const& release,
+      std::string const& release_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1226,8 +1302,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Release]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1185}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease(google::cloud::configdelivery::v1::CreateReleaseRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> CreateRelease(
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1240,8 +1317,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRelease(NoAwaitTag, google::cloud::configdelivery::v1::CreateReleaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1252,8 +1331,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> CreateRelease(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1289,8 +1368,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.UpdateReleaseRequest]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1513}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease(google::cloud::configdelivery::v1::Release const& release, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> UpdateRelease(
+      google::cloud::configdelivery::v1::Release const& release,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1303,8 +1383,9 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRelease(NoAwaitTag, google::cloud::configdelivery::v1::Release const& release, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRelease(
+      NoAwaitTag, google::cloud::configdelivery::v1::Release const& release,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1340,8 +1421,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.UpdateReleaseRequest]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1513}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease(google::cloud::configdelivery::v1::UpdateReleaseRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> UpdateRelease(
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1354,8 +1436,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRelease(NoAwaitTag, google::cloud::configdelivery::v1::UpdateReleaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1366,8 +1450,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> UpdateRelease(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1412,8 +1496,8 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRelease(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRelease(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1450,7 +1534,9 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteRelease(google::cloud::configdelivery::v1::DeleteReleaseRequest const& request, Options opts = {});
+  DeleteRelease(
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1463,8 +1549,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRelease(NoAwaitTag, google::cloud::configdelivery::v1::DeleteReleaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1476,7 +1564,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteRelease(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteRelease(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1509,8 +1598,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  StreamRange<google::cloud::configdelivery::v1::Variant>
-  ListVariants(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::configdelivery::v1::Variant> ListVariants(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1548,8 +1637,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  StreamRange<google::cloud::configdelivery::v1::Variant>
-  ListVariants(google::cloud::configdelivery::v1::ListVariantsRequest request, Options opts = {});
+  StreamRange<google::cloud::configdelivery::v1::Variant> ListVariants(
+      google::cloud::configdelivery::v1::ListVariantsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1573,8 +1663,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::Variant>
-  GetVariant(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::Variant> GetVariant(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1603,8 +1693,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::Variant>
-  GetVariant(google::cloud::configdelivery::v1::GetVariantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::Variant> GetVariant(
+      google::cloud::configdelivery::v1::GetVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1638,8 +1729,10 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant(std::string const& parent, google::cloud::configdelivery::v1::Variant const& variant, std::string const& variant_id, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> CreateVariant(
+      std::string const& parent,
+      google::cloud::configdelivery::v1::Variant const& variant,
+      std::string const& variant_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1652,8 +1745,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateVariant(NoAwaitTag, std::string const& parent, google::cloud::configdelivery::v1::Variant const& variant, std::string const& variant_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateVariant(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::configdelivery::v1::Variant const& variant,
+      std::string const& variant_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1690,8 +1785,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant(google::cloud::configdelivery::v1::CreateVariantRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> CreateVariant(
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1704,8 +1800,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateVariant(NoAwaitTag, google::cloud::configdelivery::v1::CreateVariantRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1716,8 +1814,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> CreateVariant(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1753,8 +1851,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant(google::cloud::configdelivery::v1::Variant const& variant, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> UpdateVariant(
+      google::cloud::configdelivery::v1::Variant const& variant,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1767,8 +1866,9 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateVariant(NoAwaitTag, google::cloud::configdelivery::v1::Variant const& variant, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateVariant(
+      NoAwaitTag, google::cloud::configdelivery::v1::Variant const& variant,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1804,8 +1904,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Variant]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1238}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant(google::cloud::configdelivery::v1::UpdateVariantRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> UpdateVariant(
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1818,8 +1919,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateVariant(NoAwaitTag, google::cloud::configdelivery::v1::UpdateVariantRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1830,8 +1933,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> UpdateVariant(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1876,8 +1979,8 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteVariant(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteVariant(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1914,7 +2017,9 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteVariant(google::cloud::configdelivery::v1::DeleteVariantRequest const& request, Options opts = {});
+  DeleteVariant(
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1927,8 +2032,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteVariant(NoAwaitTag, google::cloud::configdelivery::v1::DeleteVariantRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1940,7 +2047,8 @@ class ConfigDeliveryClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteVariant(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteVariant(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1973,8 +2081,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  StreamRange<google::cloud::configdelivery::v1::Rollout>
-  ListRollouts(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::configdelivery::v1::Rollout> ListRollouts(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2012,8 +2120,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  StreamRange<google::cloud::configdelivery::v1::Rollout>
-  ListRollouts(google::cloud::configdelivery::v1::ListRolloutsRequest request, Options opts = {});
+  StreamRange<google::cloud::configdelivery::v1::Rollout> ListRollouts(
+      google::cloud::configdelivery::v1::ListRolloutsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2037,8 +2146,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::Rollout>
-  GetRollout(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::Rollout> GetRollout(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2067,8 +2176,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  StatusOr<google::cloud::configdelivery::v1::Rollout>
-  GetRollout(google::cloud::configdelivery::v1::GetRolloutRequest const& request, Options opts = {});
+  StatusOr<google::cloud::configdelivery::v1::Rollout> GetRollout(
+      google::cloud::configdelivery::v1::GetRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2099,8 +2209,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.SuspendRolloutRequest]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1717}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> SuspendRollout(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2113,8 +2223,8 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SuspendRollout(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> SuspendRollout(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2150,8 +2260,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.SuspendRolloutRequest]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1717}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout(google::cloud::configdelivery::v1::SuspendRolloutRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> SuspendRollout(
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2164,8 +2275,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SuspendRollout(NoAwaitTag, google::cloud::configdelivery::v1::SuspendRolloutRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> SuspendRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2176,8 +2289,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> SuspendRollout(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2208,8 +2321,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> ResumeRollout(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2222,8 +2335,8 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ResumeRollout(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> ResumeRollout(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2259,8 +2372,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout(google::cloud::configdelivery::v1::ResumeRolloutRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> ResumeRollout(
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2273,8 +2387,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ResumeRollout(NoAwaitTag, google::cloud::configdelivery::v1::ResumeRolloutRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ResumeRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2285,8 +2401,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> ResumeRollout(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2317,8 +2433,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> AbortRollout(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2331,8 +2447,9 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AbortRollout(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> AbortRollout(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2368,8 +2485,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.configdelivery.v1.Rollout]: @googleapis_reference_link{google/cloud/configdelivery/v1/config_delivery.proto#L1681}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout(google::cloud::configdelivery::v1::AbortRolloutRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> AbortRollout(
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2382,8 +2500,10 @@ class ConfigDeliveryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AbortRollout(NoAwaitTag, google::cloud::configdelivery::v1::AbortRolloutRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> AbortRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2394,8 +2514,8 @@ class ConfigDeliveryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> AbortRollout(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2433,8 +2553,8 @@ class ConfigDeliveryClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2463,8 +2583,9 @@ class ConfigDeliveryClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2499,8 +2620,8 @@ class ConfigDeliveryClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2539,8 +2660,8 @@ class ConfigDeliveryClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2566,8 +2687,8 @@ class ConfigDeliveryClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2598,8 +2719,9 @@ class ConfigDeliveryClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2623,8 +2745,7 @@ class ConfigDeliveryClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2653,8 +2774,9 @@ class ConfigDeliveryClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2688,8 +2810,7 @@ class ConfigDeliveryClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2728,8 +2849,9 @@ class ConfigDeliveryClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConfigDeliveryConnection> connection_;

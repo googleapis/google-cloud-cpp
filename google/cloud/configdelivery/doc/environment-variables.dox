@@ -9,6 +9,11 @@ environment variables are convenient when troubleshooting problems.
 @section configdelivery-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_CONFIG_DELIVERY_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "configdelivery.googleapis.com")
+  used by `MakeConfigDeliveryConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

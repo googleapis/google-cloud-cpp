@@ -135,6 +135,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "compute_zones",
     "confidentialcomputing",
     "config",
+    "configdelivery",
     "connectors",
     "contactcenterinsights",
     "container",

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIGDELIVERY_V1_CONFIG_DELIVERY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIGDELIVERY_V1_CONFIG_DELIVERY_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/configdelivery/v1/config_delivery_connection_idempotency_policy.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class ConfigDeliveryRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConfigDeliveryLimitedErrorCountRetryPolicy : public ConfigDeliveryRetryPolicy {
+class ConfigDeliveryLimitedErrorCountRetryPolicy
+    : public ConfigDeliveryRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ConfigDeliveryLimitedErrorCountRetryPolicy : public ConfigDeliveryRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ConfigDeliveryLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ConfigDeliveryLimitedErrorCountRetryPolicy(
       ConfigDeliveryLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConfigDeliveryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfigDeliveryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConfigDeliveryLimitedErrorCountRetryPolicy(
       ConfigDeliveryLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConfigDeliveryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfigDeliveryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ConfigDeliveryLimitedErrorCountRetryPolicy : public ConfigDeliveryRetryPol
   using BaseType = ConfigDeliveryRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<configdelivery_v1_internal::ConfigDeliveryRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      configdelivery_v1_internal::ConfigDeliveryRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ConfigDeliveryLimitedTimeRetryPolicy : public ConfigDeliveryRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ConfigDeliveryLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ConfigDeliveryLimitedTimeRetryPolicy(ConfigDeliveryLimitedTimeRetryPolicy&& rhs) noexcept
-    : ConfigDeliveryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConfigDeliveryLimitedTimeRetryPolicy(ConfigDeliveryLimitedTimeRetryPolicy const& rhs) noexcept
-    : ConfigDeliveryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfigDeliveryLimitedTimeRetryPolicy(
+      ConfigDeliveryLimitedTimeRetryPolicy&& rhs) noexcept
+      : ConfigDeliveryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfigDeliveryLimitedTimeRetryPolicy(
+      ConfigDeliveryLimitedTimeRetryPolicy const& rhs) noexcept
+      : ConfigDeliveryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ConfigDeliveryLimitedTimeRetryPolicy : public ConfigDeliveryRetryPolicy {
   using BaseType = ConfigDeliveryRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<configdelivery_v1_internal::ConfigDeliveryRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      configdelivery_v1_internal::ConfigDeliveryRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,187 +187,234 @@ class ConfigDeliveryConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::configdelivery::v1::ResourceBundle>
-  ListResourceBundles(google::cloud::configdelivery::v1::ListResourceBundlesRequest request);
+  ListResourceBundles(
+      google::cloud::configdelivery::v1::ListResourceBundlesRequest request);
 
   virtual StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
-  GetResourceBundle(google::cloud::configdelivery::v1::GetResourceBundleRequest const& request);
+  GetResourceBundle(
+      google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  CreateResourceBundle(google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request);
+  CreateResourceBundle(
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  CreateResourceBundle( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  UpdateResourceBundle(google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  UpdateResourceBundle( google::longrunning::Operation const& operation);
+  CreateResourceBundle(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
+  UpdateResourceBundle(
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
+  UpdateResourceBundle(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteResourceBundle(google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request);
+  DeleteResourceBundle(
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteResourceBundle(NoAwaitTag, google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteResourceBundle( google::longrunning::Operation const& operation);
+  DeleteResourceBundle(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::configdelivery::v1::FleetPackage>
-  ListFleetPackages(google::cloud::configdelivery::v1::ListFleetPackagesRequest request);
+  ListFleetPackages(
+      google::cloud::configdelivery::v1::ListFleetPackagesRequest request);
 
   virtual StatusOr<google::cloud::configdelivery::v1::FleetPackage>
-  GetFleetPackage(google::cloud::configdelivery::v1::GetFleetPackageRequest const& request);
+  GetFleetPackage(
+      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  CreateFleetPackage(google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request);
+  CreateFleetPackage(
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  CreateFleetPackage( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  UpdateFleetPackage(google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  UpdateFleetPackage( google::longrunning::Operation const& operation);
+  CreateFleetPackage(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
+  UpdateFleetPackage(
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
+  UpdateFleetPackage(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteFleetPackage(google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request);
+  DeleteFleetPackage(
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteFleetPackage(NoAwaitTag, google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteFleetPackage( google::longrunning::Operation const& operation);
+  DeleteFleetPackage(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::configdelivery::v1::Release>
-  ListReleases(google::cloud::configdelivery::v1::ListReleasesRequest request);
+  virtual StreamRange<google::cloud::configdelivery::v1::Release> ListReleases(
+      google::cloud::configdelivery::v1::ListReleasesRequest request);
 
-  virtual StatusOr<google::cloud::configdelivery::v1::Release>
-  GetRelease(google::cloud::configdelivery::v1::GetReleaseRequest const& request);
+  virtual StatusOr<google::cloud::configdelivery::v1::Release> GetRelease(
+      google::cloud::configdelivery::v1::GetReleaseRequest const& request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease(google::cloud::configdelivery::v1::CreateReleaseRequest const& request);
+  CreateRelease(
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateRelease(NoAwaitTag, google::cloud::configdelivery::v1::CreateReleaseRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease(google::cloud::configdelivery::v1::UpdateReleaseRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateRelease(NoAwaitTag, google::cloud::configdelivery::v1::UpdateReleaseRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease( google::longrunning::Operation const& operation);
+  CreateRelease(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Release>>
+  UpdateRelease(
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Release>>
+  UpdateRelease(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteRelease(google::cloud::configdelivery::v1::DeleteReleaseRequest const& request);
+  DeleteRelease(
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRelease(NoAwaitTag, google::cloud::configdelivery::v1::DeleteReleaseRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteRelease( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::configdelivery::v1::Variant>
-  ListVariants(google::cloud::configdelivery::v1::ListVariantsRequest request);
-
-  virtual StatusOr<google::cloud::configdelivery::v1::Variant>
-  GetVariant(google::cloud::configdelivery::v1::GetVariantRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant(google::cloud::configdelivery::v1::CreateVariantRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateVariant(NoAwaitTag, google::cloud::configdelivery::v1::CreateVariantRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant(google::cloud::configdelivery::v1::UpdateVariantRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateVariant(NoAwaitTag, google::cloud::configdelivery::v1::UpdateVariantRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> DeleteRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteVariant(google::cloud::configdelivery::v1::DeleteVariantRequest const& request);
+  DeleteRelease(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteVariant(NoAwaitTag, google::cloud::configdelivery::v1::DeleteVariantRequest const& request);
+  virtual StreamRange<google::cloud::configdelivery::v1::Variant> ListVariants(
+      google::cloud::configdelivery::v1::ListVariantsRequest request);
+
+  virtual StatusOr<google::cloud::configdelivery::v1::Variant> GetVariant(
+      google::cloud::configdelivery::v1::GetVariantRequest const& request);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
+  CreateVariant(
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
+  CreateVariant(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
+  UpdateVariant(
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request);
+
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Variant>>
+  UpdateVariant(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteVariant( google::longrunning::Operation const& operation);
+  DeleteVariant(
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request);
 
-  virtual StreamRange<google::cloud::configdelivery::v1::Rollout>
-  ListRollouts(google::cloud::configdelivery::v1::ListRolloutsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request);
 
-  virtual StatusOr<google::cloud::configdelivery::v1::Rollout>
-  GetRollout(google::cloud::configdelivery::v1::GetRolloutRequest const& request);
+  virtual future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
+  DeleteVariant(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout(google::cloud::configdelivery::v1::SuspendRolloutRequest const& request);
+  virtual StreamRange<google::cloud::configdelivery::v1::Rollout> ListRollouts(
+      google::cloud::configdelivery::v1::ListRolloutsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  SuspendRollout(NoAwaitTag, google::cloud::configdelivery::v1::SuspendRolloutRequest const& request);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout(google::cloud::configdelivery::v1::ResumeRolloutRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ResumeRollout(NoAwaitTag, google::cloud::configdelivery::v1::ResumeRolloutRequest const& request);
+  virtual StatusOr<google::cloud::configdelivery::v1::Rollout> GetRollout(
+      google::cloud::configdelivery::v1::GetRolloutRequest const& request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout( google::longrunning::Operation const& operation);
+  SuspendRollout(
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SuspendRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout(google::cloud::configdelivery::v1::AbortRolloutRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  AbortRollout(NoAwaitTag, google::cloud::configdelivery::v1::AbortRolloutRequest const& request);
+  SuspendRollout(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout( google::longrunning::Operation const& operation);
+  ResumeRollout(
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> ResumeRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
+  ResumeRollout(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
+  AbortRollout(
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> AbortRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
+  AbortRollout(google::longrunning::Operation const& operation);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

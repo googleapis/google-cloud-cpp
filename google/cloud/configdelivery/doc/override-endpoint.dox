@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `configdelivery_v1::ConfigDeliveryClient`:
+
+@snippet config_delivery_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page configdelivery_v1::ConfigDeliveryClient-endpoint-snippet Override configdelivery_v1::ConfigDeliveryClient Endpoint Configuration
+
+@snippet google/cloud/configdelivery/v1/samples/config_delivery_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

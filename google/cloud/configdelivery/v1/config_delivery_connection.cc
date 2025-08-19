@@ -17,13 +17,13 @@
 // source: google/cloud/configdelivery/v1/config_delivery.proto
 
 #include "google/cloud/configdelivery/v1/config_delivery_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/configdelivery/v1/config_delivery_options.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_connection_impl.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_option_defaults.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_stub_factory.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConfigDeliveryConnection::~ConfigDeliveryConnection() = default;
 
-StreamRange<google::cloud::configdelivery::v1::ResourceBundle> ConfigDeliveryConnection::ListResourceBundles(
-    google::cloud::configdelivery::v1::ListResourceBundlesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::configdelivery::v1::ResourceBundle>
+ConfigDeliveryConnection::ListResourceBundles(
+    google::cloud::configdelivery::v1::
+        ListResourceBundlesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::configdelivery::v1::ResourceBundle>>();
 }
@@ -54,8 +56,8 @@ future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
 ConfigDeliveryConnection::CreateResourceBundle(
     google::cloud::configdelivery::v1::CreateResourceBundleRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -63,23 +65,23 @@ ConfigDeliveryConnection::CreateResourceBundle(
     NoAwaitTag,
     google::cloud::configdelivery::v1::CreateResourceBundleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
 ConfigDeliveryConnection::CreateResourceBundle(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
 ConfigDeliveryConnection::UpdateResourceBundle(
     google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -87,23 +89,23 @@ ConfigDeliveryConnection::UpdateResourceBundle(
     NoAwaitTag,
     google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
 ConfigDeliveryConnection::UpdateResourceBundle(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
 ConfigDeliveryConnection::DeleteResourceBundle(
     google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,19 +113,21 @@ ConfigDeliveryConnection::DeleteResourceBundle(
     NoAwaitTag,
     google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
 ConfigDeliveryConnection::DeleteResourceBundle(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::configdelivery::v1::FleetPackage> ConfigDeliveryConnection::ListFleetPackages(
-    google::cloud::configdelivery::v1::ListFleetPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::configdelivery::v1::FleetPackage>
+ConfigDeliveryConnection::ListFleetPackages(
+    google::cloud::configdelivery::v1::
+        ListFleetPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::configdelivery::v1::FleetPackage>>();
 }
@@ -138,8 +142,8 @@ future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
 ConfigDeliveryConnection::CreateFleetPackage(
     google::cloud::configdelivery::v1::CreateFleetPackageRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -147,23 +151,23 @@ ConfigDeliveryConnection::CreateFleetPackage(
     NoAwaitTag,
     google::cloud::configdelivery::v1::CreateFleetPackageRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
 ConfigDeliveryConnection::CreateFleetPackage(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
 ConfigDeliveryConnection::UpdateFleetPackage(
     google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -171,23 +175,23 @@ ConfigDeliveryConnection::UpdateFleetPackage(
     NoAwaitTag,
     google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
 ConfigDeliveryConnection::UpdateFleetPackage(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::FleetPackage>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
 ConfigDeliveryConnection::DeleteFleetPackage(
     google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -195,19 +199,21 @@ ConfigDeliveryConnection::DeleteFleetPackage(
     NoAwaitTag,
     google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
 ConfigDeliveryConnection::DeleteFleetPackage(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::configdelivery::v1::Release> ConfigDeliveryConnection::ListReleases(
-    google::cloud::configdelivery::v1::ListReleasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::configdelivery::v1::Release>
+ConfigDeliveryConnection::ListReleases(
+    google::cloud::configdelivery::v1::
+        ListReleasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::configdelivery::v1::Release>>();
 }
@@ -222,8 +228,8 @@ future<StatusOr<google::cloud::configdelivery::v1::Release>>
 ConfigDeliveryConnection::CreateRelease(
     google::cloud::configdelivery::v1::CreateReleaseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Release>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Release>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -231,23 +237,22 @@ ConfigDeliveryConnection::CreateRelease(
     NoAwaitTag,
     google::cloud::configdelivery::v1::CreateReleaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
-ConfigDeliveryConnection::CreateRelease(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::CreateRelease(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Release>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Release>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
 ConfigDeliveryConnection::UpdateRelease(
     google::cloud::configdelivery::v1::UpdateReleaseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Release>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Release>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -255,23 +260,22 @@ ConfigDeliveryConnection::UpdateRelease(
     NoAwaitTag,
     google::cloud::configdelivery::v1::UpdateReleaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
-ConfigDeliveryConnection::UpdateRelease(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::UpdateRelease(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Release>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Release>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
 ConfigDeliveryConnection::DeleteRelease(
     google::cloud::configdelivery::v1::DeleteReleaseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -279,19 +283,20 @@ ConfigDeliveryConnection::DeleteRelease(
     NoAwaitTag,
     google::cloud::configdelivery::v1::DeleteReleaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-ConfigDeliveryConnection::DeleteRelease(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::DeleteRelease(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::configdelivery::v1::Variant> ConfigDeliveryConnection::ListVariants(
-    google::cloud::configdelivery::v1::ListVariantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::configdelivery::v1::Variant>
+ConfigDeliveryConnection::ListVariants(
+    google::cloud::configdelivery::v1::
+        ListVariantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::configdelivery::v1::Variant>>();
 }
@@ -306,8 +311,8 @@ future<StatusOr<google::cloud::configdelivery::v1::Variant>>
 ConfigDeliveryConnection::CreateVariant(
     google::cloud::configdelivery::v1::CreateVariantRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Variant>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Variant>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -315,23 +320,22 @@ ConfigDeliveryConnection::CreateVariant(
     NoAwaitTag,
     google::cloud::configdelivery::v1::CreateVariantRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-ConfigDeliveryConnection::CreateVariant(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::CreateVariant(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Variant>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Variant>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
 ConfigDeliveryConnection::UpdateVariant(
     google::cloud::configdelivery::v1::UpdateVariantRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Variant>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Variant>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -339,23 +343,22 @@ ConfigDeliveryConnection::UpdateVariant(
     NoAwaitTag,
     google::cloud::configdelivery::v1::UpdateVariantRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-ConfigDeliveryConnection::UpdateVariant(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::UpdateVariant(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Variant>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Variant>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
 ConfigDeliveryConnection::DeleteVariant(
     google::cloud::configdelivery::v1::DeleteVariantRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -363,19 +366,20 @@ ConfigDeliveryConnection::DeleteVariant(
     NoAwaitTag,
     google::cloud::configdelivery::v1::DeleteVariantRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-ConfigDeliveryConnection::DeleteVariant(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::DeleteVariant(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::configdelivery::v1::Rollout> ConfigDeliveryConnection::ListRollouts(
-    google::cloud::configdelivery::v1::ListRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::configdelivery::v1::Rollout>
+ConfigDeliveryConnection::ListRollouts(
+    google::cloud::configdelivery::v1::
+        ListRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::configdelivery::v1::Rollout>>();
 }
@@ -390,8 +394,8 @@ future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
 ConfigDeliveryConnection::SuspendRollout(
     google::cloud::configdelivery::v1::SuspendRolloutRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Rollout>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Rollout>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -399,23 +403,23 @@ ConfigDeliveryConnection::SuspendRollout(
     NoAwaitTag,
     google::cloud::configdelivery::v1::SuspendRolloutRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
 ConfigDeliveryConnection::SuspendRollout(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Rollout>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Rollout>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
 ConfigDeliveryConnection::ResumeRollout(
     google::cloud::configdelivery::v1::ResumeRolloutRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Rollout>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Rollout>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -423,43 +427,41 @@ ConfigDeliveryConnection::ResumeRollout(
     NoAwaitTag,
     google::cloud::configdelivery::v1::ResumeRolloutRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-ConfigDeliveryConnection::ResumeRollout(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::ResumeRollout(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Rollout>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Rollout>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
 ConfigDeliveryConnection::AbortRollout(
     google::cloud::configdelivery::v1::AbortRolloutRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Rollout>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Rollout>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryConnection::AbortRollout(
-    NoAwaitTag,
-    google::cloud::configdelivery::v1::AbortRolloutRequest const&) {
+StatusOr<google::longrunning::Operation> ConfigDeliveryConnection::AbortRollout(
+    NoAwaitTag, google::cloud::configdelivery::v1::AbortRolloutRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-ConfigDeliveryConnection::AbortRollout(
-    google::longrunning::Operation const&) {
+ConfigDeliveryConnection::AbortRollout(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::configdelivery::v1::Rollout>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::configdelivery::v1::Rollout>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> ConfigDeliveryConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ConfigDeliveryConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -470,26 +472,25 @@ ConfigDeliveryConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ConfigDeliveryConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ConfigDeliveryConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigDeliveryConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ConfigDeliveryConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConfigDeliveryConnection::DeleteOperation(
+Status ConfigDeliveryConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConfigDeliveryConnection::CancelOperation(
+Status ConfigDeliveryConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -497,17 +498,19 @@ ConfigDeliveryConnection::CancelOperation(
 std::shared_ptr<ConfigDeliveryConnection> MakeConfigDeliveryConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConfigDeliveryPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ConfigDeliveryPolicyOptionList>(options,
+                                                                 __func__);
   options = configdelivery_v1_internal::ConfigDeliveryDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = configdelivery_v1_internal::CreateDefaultConfigDeliveryStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return configdelivery_v1_internal::MakeConfigDeliveryTracingConnection(
-      std::make_shared<configdelivery_v1_internal::ConfigDeliveryConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          configdelivery_v1_internal::ConfigDeliveryConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

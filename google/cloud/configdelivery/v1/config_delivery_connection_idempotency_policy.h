@@ -36,104 +36,112 @@ class ConfigDeliveryConnectionIdempotencyPolicy {
   virtual ~ConfigDeliveryConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConfigDeliveryConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ConfigDeliveryConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListResourceBundles(google::cloud::configdelivery::v1::ListResourceBundlesRequest request);
+  virtual google::cloud::Idempotency ListResourceBundles(
+      google::cloud::configdelivery::v1::ListResourceBundlesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetResourceBundle(google::cloud::configdelivery::v1::GetResourceBundleRequest const& request);
+  virtual google::cloud::Idempotency GetResourceBundle(
+      google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateResourceBundle(google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request);
+  virtual google::cloud::Idempotency CreateResourceBundle(
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateResourceBundle(google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request);
+  virtual google::cloud::Idempotency UpdateResourceBundle(
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteResourceBundle(google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request);
+  virtual google::cloud::Idempotency DeleteResourceBundle(
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListFleetPackages(google::cloud::configdelivery::v1::ListFleetPackagesRequest request);
+  virtual google::cloud::Idempotency ListFleetPackages(
+      google::cloud::configdelivery::v1::ListFleetPackagesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetFleetPackage(google::cloud::configdelivery::v1::GetFleetPackageRequest const& request);
+  virtual google::cloud::Idempotency GetFleetPackage(
+      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateFleetPackage(google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request);
+  virtual google::cloud::Idempotency CreateFleetPackage(
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateFleetPackage(google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request);
+  virtual google::cloud::Idempotency UpdateFleetPackage(
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteFleetPackage(google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request);
+  virtual google::cloud::Idempotency DeleteFleetPackage(
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListReleases(google::cloud::configdelivery::v1::ListReleasesRequest request);
+  virtual google::cloud::Idempotency ListReleases(
+      google::cloud::configdelivery::v1::ListReleasesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRelease(google::cloud::configdelivery::v1::GetReleaseRequest const& request);
+  virtual google::cloud::Idempotency GetRelease(
+      google::cloud::configdelivery::v1::GetReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateRelease(google::cloud::configdelivery::v1::CreateReleaseRequest const& request);
+  virtual google::cloud::Idempotency CreateRelease(
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateRelease(google::cloud::configdelivery::v1::UpdateReleaseRequest const& request);
+  virtual google::cloud::Idempotency UpdateRelease(
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteRelease(google::cloud::configdelivery::v1::DeleteReleaseRequest const& request);
+  virtual google::cloud::Idempotency DeleteRelease(
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListVariants(google::cloud::configdelivery::v1::ListVariantsRequest request);
+  virtual google::cloud::Idempotency ListVariants(
+      google::cloud::configdelivery::v1::ListVariantsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetVariant(google::cloud::configdelivery::v1::GetVariantRequest const& request);
+  virtual google::cloud::Idempotency GetVariant(
+      google::cloud::configdelivery::v1::GetVariantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateVariant(google::cloud::configdelivery::v1::CreateVariantRequest const& request);
+  virtual google::cloud::Idempotency CreateVariant(
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateVariant(google::cloud::configdelivery::v1::UpdateVariantRequest const& request);
+  virtual google::cloud::Idempotency UpdateVariant(
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteVariant(google::cloud::configdelivery::v1::DeleteVariantRequest const& request);
+  virtual google::cloud::Idempotency DeleteVariant(
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRollouts(google::cloud::configdelivery::v1::ListRolloutsRequest request);
+  virtual google::cloud::Idempotency ListRollouts(
+      google::cloud::configdelivery::v1::ListRolloutsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRollout(google::cloud::configdelivery::v1::GetRolloutRequest const& request);
+  virtual google::cloud::Idempotency GetRollout(
+      google::cloud::configdelivery::v1::GetRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SuspendRollout(google::cloud::configdelivery::v1::SuspendRolloutRequest const& request);
+  virtual google::cloud::Idempotency SuspendRollout(
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ResumeRollout(google::cloud::configdelivery::v1::ResumeRolloutRequest const& request);
+  virtual google::cloud::Idempotency ResumeRollout(
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AbortRollout(google::cloud::configdelivery::v1::AbortRolloutRequest const& request);
+  virtual google::cloud::Idempotency AbortRollout(
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConfigDeliveryConnectionIdempotencyPolicy>
-    MakeDefaultConfigDeliveryConnectionIdempotencyPolicy();
+MakeDefaultConfigDeliveryConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace configdelivery_v1

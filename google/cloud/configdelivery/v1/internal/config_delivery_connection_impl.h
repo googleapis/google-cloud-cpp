@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIGDELIVERY_V1_INTERNAL_CONFIG_DELIVERY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIGDELIVERY_V1_INTERNAL_CONFIG_DELIVERY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/configdelivery/v1/config_delivery_connection.h"
 #include "google/cloud/configdelivery/v1/config_delivery_connection_idempotency_policy.h"
 #include "google/cloud/configdelivery/v1/config_delivery_options.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_retry_traits.h"
 #include "google/cloud/configdelivery/v1/internal/config_delivery_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,224 +46,256 @@ class ConfigDeliveryConnectionImpl
   ~ConfigDeliveryConnectionImpl() override = default;
 
   ConfigDeliveryConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<configdelivery_v1_internal::ConfigDeliveryStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<configdelivery_v1_internal::ConfigDeliveryStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::configdelivery::v1::ResourceBundle>
-  ListResourceBundles(google::cloud::configdelivery::v1::ListResourceBundlesRequest request) override;
+  ListResourceBundles(
+      google::cloud::configdelivery::v1::ListResourceBundlesRequest request)
+      override;
 
-  StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
-  GetResourceBundle(google::cloud::configdelivery::v1::GetResourceBundleRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::ResourceBundle> GetResourceBundle(
+      google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  CreateResourceBundle(google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) override;
+  CreateResourceBundle(
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateResourceBundle(NoAwaitTag,
-      google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
   CreateResourceBundle(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-  UpdateResourceBundle(google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) override;
+  UpdateResourceBundle(
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateResourceBundle(NoAwaitTag,
-      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
   UpdateResourceBundle(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteResourceBundle(google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) override;
+  DeleteResourceBundle(
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteResourceBundle(NoAwaitTag,
-      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteResourceBundle(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
   DeleteResourceBundle(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::configdelivery::v1::FleetPackage>
-  ListFleetPackages(google::cloud::configdelivery::v1::ListFleetPackagesRequest request) override;
+  ListFleetPackages(google::cloud::configdelivery::v1::ListFleetPackagesRequest
+                        request) override;
 
-  StatusOr<google::cloud::configdelivery::v1::FleetPackage>
-  GetFleetPackage(google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  CreateFleetPackage(google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateFleetPackage(NoAwaitTag,
-      google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) override;
+  StatusOr<google::cloud::configdelivery::v1::FleetPackage> GetFleetPackage(
+      google::cloud::configdelivery::v1::GetFleetPackageRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
   CreateFleetPackage(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-  UpdateFleetPackage(google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateFleetPackage(NoAwaitTag,
-      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) override;
+  CreateFleetPackage(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
   UpdateFleetPackage(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteFleetPackage(google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteFleetPackage(NoAwaitTag,
-      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) override;
+  future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
+  UpdateFleetPackage(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
   DeleteFleetPackage(
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteFleetPackage(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
+  DeleteFleetPackage(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::configdelivery::v1::Release> ListReleases(
+      google::cloud::configdelivery::v1::ListReleasesRequest request) override;
+
+  StatusOr<google::cloud::configdelivery::v1::Release> GetRelease(
+      google::cloud::configdelivery::v1::GetReleaseRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> CreateRelease(
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateReleaseRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> CreateRelease(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::configdelivery::v1::Release>
-  ListReleases(google::cloud::configdelivery::v1::ListReleasesRequest request) override;
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> UpdateRelease(
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request)
+      override;
 
-  StatusOr<google::cloud::configdelivery::v1::Release>
-  GetRelease(google::cloud::configdelivery::v1::GetReleaseRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease(google::cloud::configdelivery::v1::CreateReleaseRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateRelease(NoAwaitTag,
-      google::cloud::configdelivery::v1::CreateReleaseRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  CreateRelease(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease(google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateRelease(NoAwaitTag,
-      google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Release>>
-  UpdateRelease(
+  future<StatusOr<google::cloud::configdelivery::v1::Release>> UpdateRelease(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteRelease(google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) override;
+  DeleteRelease(google::cloud::configdelivery::v1::DeleteReleaseRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteRelease(NoAwaitTag,
-      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteRelease(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::configdelivery::v1::Variant>
-  ListVariants(google::cloud::configdelivery::v1::ListVariantsRequest request) override;
-
-  StatusOr<google::cloud::configdelivery::v1::Variant>
-  GetVariant(google::cloud::configdelivery::v1::GetVariantRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant(google::cloud::configdelivery::v1::CreateVariantRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateVariant(NoAwaitTag,
-      google::cloud::configdelivery::v1::CreateVariantRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  CreateVariant(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant(google::cloud::configdelivery::v1::UpdateVariantRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateVariant(NoAwaitTag,
-      google::cloud::configdelivery::v1::UpdateVariantRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-  UpdateVariant(
-      google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation> DeleteRelease(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteReleaseRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteVariant(google::cloud::configdelivery::v1::DeleteVariantRequest const& request) override;
+  DeleteRelease(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteVariant(NoAwaitTag,
-      google::cloud::configdelivery::v1::DeleteVariantRequest const& request) override;
+  StreamRange<google::cloud::configdelivery::v1::Variant> ListVariants(
+      google::cloud::configdelivery::v1::ListVariantsRequest request) override;
+
+  StatusOr<google::cloud::configdelivery::v1::Variant> GetVariant(
+      google::cloud::configdelivery::v1::GetVariantRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> CreateVariant(
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::CreateVariantRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> CreateVariant(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> UpdateVariant(
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::UpdateVariantRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Variant>> UpdateVariant(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-  DeleteVariant(
+  DeleteVariant(google::cloud::configdelivery::v1::DeleteVariantRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteVariant(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::DeleteVariantRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
+  DeleteVariant(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::configdelivery::v1::Rollout> ListRollouts(
+      google::cloud::configdelivery::v1::ListRolloutsRequest request) override;
+
+  StatusOr<google::cloud::configdelivery::v1::Rollout> GetRollout(
+      google::cloud::configdelivery::v1::GetRolloutRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> SuspendRollout(
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SuspendRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> SuspendRollout(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::configdelivery::v1::Rollout>
-  ListRollouts(google::cloud::configdelivery::v1::ListRolloutsRequest request) override;
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> ResumeRollout(
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request)
+      override;
 
-  StatusOr<google::cloud::configdelivery::v1::Rollout>
-  GetRollout(google::cloud::configdelivery::v1::GetRolloutRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ResumeRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout(google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  SuspendRollout(NoAwaitTag,
-      google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) override;
-
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  SuspendRollout(
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> ResumeRollout(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout(google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) override;
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> AbortRollout(
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ResumeRollout(NoAwaitTag,
-      google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) override;
+  StatusOr<google::longrunning::Operation> AbortRollout(
+      NoAwaitTag,
+      google::cloud::configdelivery::v1::AbortRolloutRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  ResumeRollout(
+  future<StatusOr<google::cloud::configdelivery::v1::Rollout>> AbortRollout(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout(google::cloud::configdelivery::v1::AbortRolloutRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  AbortRollout(NoAwaitTag,
-      google::cloud::configdelivery::v1::AbortRolloutRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-  AbortRollout(
-      google::longrunning::Operation const& operation) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
-
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

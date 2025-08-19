@@ -34,37 +34,48 @@ ConfigDeliveryTracingConnection::ConfigDeliveryTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::configdelivery::v1::ResourceBundle>
-ConfigDeliveryTracingConnection::ListResourceBundles(google::cloud::configdelivery::v1::ListResourceBundlesRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListResourceBundles");
+ConfigDeliveryTracingConnection::ListResourceBundles(
+    google::cloud::configdelivery::v1::ListResourceBundlesRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListResourceBundles");
   internal::OTelScope scope(span);
   auto sr = child_->ListResourceBundles(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::configdelivery::v1::ResourceBundle>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::configdelivery::v1::ResourceBundle>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::configdelivery::v1::ResourceBundle>
-ConfigDeliveryTracingConnection::GetResourceBundle(google::cloud::configdelivery::v1::GetResourceBundleRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetResourceBundle");
+ConfigDeliveryTracingConnection::GetResourceBundle(
+    google::cloud::configdelivery::v1::GetResourceBundleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetResourceBundle");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetResourceBundle(request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-ConfigDeliveryTracingConnection::CreateResourceBundle(google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) {
+ConfigDeliveryTracingConnection::CreateResourceBundle(
+    google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateResourceBundle");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateResourceBundle(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateResourceBundle(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::CreateResourceBundle(
-    NoAwaitTag, google::cloud::configdelivery::v1::CreateResourceBundleRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::CreateResourceBundleRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateResourceBundle");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateResourceBundle(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateResourceBundle(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
@@ -74,25 +85,30 @@ ConfigDeliveryTracingConnection::CreateResourceBundle(
       "configdelivery_v1::ConfigDeliveryConnection::CreateResourceBundle");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateResourceBundle(operation));
+                           child_->CreateResourceBundle(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
-ConfigDeliveryTracingConnection::UpdateResourceBundle(google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) {
+ConfigDeliveryTracingConnection::UpdateResourceBundle(
+    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateResourceBundle");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateResourceBundle(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateResourceBundle(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::UpdateResourceBundle(
-    NoAwaitTag, google::cloud::configdelivery::v1::UpdateResourceBundleRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::UpdateResourceBundleRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateResourceBundle");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateResourceBundle(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateResourceBundle(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::ResourceBundle>>
@@ -102,25 +118,30 @@ ConfigDeliveryTracingConnection::UpdateResourceBundle(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateResourceBundle");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateResourceBundle(operation));
+                           child_->UpdateResourceBundle(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-ConfigDeliveryTracingConnection::DeleteResourceBundle(google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) {
+ConfigDeliveryTracingConnection::DeleteResourceBundle(
+    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteResourceBundle");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteResourceBundle(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteResourceBundle(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::DeleteResourceBundle(
-    NoAwaitTag, google::cloud::configdelivery::v1::DeleteResourceBundleRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::DeleteResourceBundleRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteResourceBundle");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteResourceBundle(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteResourceBundle(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
@@ -130,41 +151,51 @@ ConfigDeliveryTracingConnection::DeleteResourceBundle(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteResourceBundle");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteResourceBundle(operation));
+                           child_->DeleteResourceBundle(operation));
 }
 
 StreamRange<google::cloud::configdelivery::v1::FleetPackage>
-ConfigDeliveryTracingConnection::ListFleetPackages(google::cloud::configdelivery::v1::ListFleetPackagesRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListFleetPackages");
+ConfigDeliveryTracingConnection::ListFleetPackages(
+    google::cloud::configdelivery::v1::ListFleetPackagesRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListFleetPackages");
   internal::OTelScope scope(span);
   auto sr = child_->ListFleetPackages(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::configdelivery::v1::FleetPackage>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::configdelivery::v1::FleetPackage>(std::move(span),
+                                                       std::move(sr));
 }
 
 StatusOr<google::cloud::configdelivery::v1::FleetPackage>
-ConfigDeliveryTracingConnection::GetFleetPackage(google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetFleetPackage");
+ConfigDeliveryTracingConnection::GetFleetPackage(
+    google::cloud::configdelivery::v1::GetFleetPackageRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetFleetPackage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFleetPackage(request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-ConfigDeliveryTracingConnection::CreateFleetPackage(google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) {
+ConfigDeliveryTracingConnection::CreateFleetPackage(
+    google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateFleetPackage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateFleetPackage(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateFleetPackage(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::CreateFleetPackage(
-    NoAwaitTag, google::cloud::configdelivery::v1::CreateFleetPackageRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::CreateFleetPackageRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateFleetPackage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateFleetPackage(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateFleetPackage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
@@ -174,25 +205,30 @@ ConfigDeliveryTracingConnection::CreateFleetPackage(
       "configdelivery_v1::ConfigDeliveryConnection::CreateFleetPackage");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateFleetPackage(operation));
+                           child_->CreateFleetPackage(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
-ConfigDeliveryTracingConnection::UpdateFleetPackage(google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) {
+ConfigDeliveryTracingConnection::UpdateFleetPackage(
+    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateFleetPackage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateFleetPackage(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateFleetPackage(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::UpdateFleetPackage(
-    NoAwaitTag, google::cloud::configdelivery::v1::UpdateFleetPackageRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::UpdateFleetPackageRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateFleetPackage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateFleetPackage(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateFleetPackage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::FleetPackage>>
@@ -202,25 +238,30 @@ ConfigDeliveryTracingConnection::UpdateFleetPackage(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateFleetPackage");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateFleetPackage(operation));
+                           child_->UpdateFleetPackage(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-ConfigDeliveryTracingConnection::DeleteFleetPackage(google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) {
+ConfigDeliveryTracingConnection::DeleteFleetPackage(
+    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteFleetPackage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteFleetPackage(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFleetPackage(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::DeleteFleetPackage(
-    NoAwaitTag, google::cloud::configdelivery::v1::DeleteFleetPackageRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::DeleteFleetPackageRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteFleetPackage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteFleetPackage(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteFleetPackage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
@@ -230,27 +271,33 @@ ConfigDeliveryTracingConnection::DeleteFleetPackage(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteFleetPackage");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteFleetPackage(operation));
+                           child_->DeleteFleetPackage(operation));
 }
 
 StreamRange<google::cloud::configdelivery::v1::Release>
-ConfigDeliveryTracingConnection::ListReleases(google::cloud::configdelivery::v1::ListReleasesRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListReleases");
+ConfigDeliveryTracingConnection::ListReleases(
+    google::cloud::configdelivery::v1::ListReleasesRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListReleases");
   internal::OTelScope scope(span);
   auto sr = child_->ListReleases(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::configdelivery::v1::Release>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::configdelivery::v1::Release>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::configdelivery::v1::Release>
-ConfigDeliveryTracingConnection::GetRelease(google::cloud::configdelivery::v1::GetReleaseRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetRelease");
+ConfigDeliveryTracingConnection::GetRelease(
+    google::cloud::configdelivery::v1::GetReleaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetRelease");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRelease(request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
-ConfigDeliveryTracingConnection::CreateRelease(google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
+ConfigDeliveryTracingConnection::CreateRelease(
+    google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateRelease");
   internal::OTelScope scope(span);
@@ -259,12 +306,12 @@ ConfigDeliveryTracingConnection::CreateRelease(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::CreateRelease(
-    NoAwaitTag, google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::CreateReleaseRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateRelease");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateRelease(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateRelease(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
@@ -273,12 +320,12 @@ ConfigDeliveryTracingConnection::CreateRelease(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateRelease");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateRelease(operation));
+  return internal::EndSpan(std::move(span), child_->CreateRelease(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
-ConfigDeliveryTracingConnection::UpdateRelease(google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
+ConfigDeliveryTracingConnection::UpdateRelease(
+    google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateRelease");
   internal::OTelScope scope(span);
@@ -287,12 +334,12 @@ ConfigDeliveryTracingConnection::UpdateRelease(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::UpdateRelease(
-    NoAwaitTag, google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::UpdateReleaseRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateRelease");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateRelease(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateRelease(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Release>>
@@ -301,12 +348,12 @@ ConfigDeliveryTracingConnection::UpdateRelease(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateRelease");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateRelease(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateRelease(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-ConfigDeliveryTracingConnection::DeleteRelease(google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
+ConfigDeliveryTracingConnection::DeleteRelease(
+    google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteRelease");
   internal::OTelScope scope(span);
@@ -315,12 +362,12 @@ ConfigDeliveryTracingConnection::DeleteRelease(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::DeleteRelease(
-    NoAwaitTag, google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::DeleteReleaseRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteRelease");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteRelease(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteRelease(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
@@ -329,28 +376,33 @@ ConfigDeliveryTracingConnection::DeleteRelease(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteRelease");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteRelease(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteRelease(operation));
 }
 
 StreamRange<google::cloud::configdelivery::v1::Variant>
-ConfigDeliveryTracingConnection::ListVariants(google::cloud::configdelivery::v1::ListVariantsRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListVariants");
+ConfigDeliveryTracingConnection::ListVariants(
+    google::cloud::configdelivery::v1::ListVariantsRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListVariants");
   internal::OTelScope scope(span);
   auto sr = child_->ListVariants(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::configdelivery::v1::Variant>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::configdelivery::v1::Variant>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::configdelivery::v1::Variant>
-ConfigDeliveryTracingConnection::GetVariant(google::cloud::configdelivery::v1::GetVariantRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetVariant");
+ConfigDeliveryTracingConnection::GetVariant(
+    google::cloud::configdelivery::v1::GetVariantRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetVariant");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetVariant(request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-ConfigDeliveryTracingConnection::CreateVariant(google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
+ConfigDeliveryTracingConnection::CreateVariant(
+    google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateVariant");
   internal::OTelScope scope(span);
@@ -359,12 +411,12 @@ ConfigDeliveryTracingConnection::CreateVariant(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::CreateVariant(
-    NoAwaitTag, google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::CreateVariantRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateVariant");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateVariant(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateVariant(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
@@ -373,12 +425,12 @@ ConfigDeliveryTracingConnection::CreateVariant(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::CreateVariant");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateVariant(operation));
+  return internal::EndSpan(std::move(span), child_->CreateVariant(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
-ConfigDeliveryTracingConnection::UpdateVariant(google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
+ConfigDeliveryTracingConnection::UpdateVariant(
+    google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateVariant");
   internal::OTelScope scope(span);
@@ -387,12 +439,12 @@ ConfigDeliveryTracingConnection::UpdateVariant(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::UpdateVariant(
-    NoAwaitTag, google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::UpdateVariantRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateVariant");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateVariant(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateVariant(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Variant>>
@@ -401,12 +453,12 @@ ConfigDeliveryTracingConnection::UpdateVariant(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::UpdateVariant");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateVariant(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateVariant(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
-ConfigDeliveryTracingConnection::DeleteVariant(google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
+ConfigDeliveryTracingConnection::DeleteVariant(
+    google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteVariant");
   internal::OTelScope scope(span);
@@ -415,12 +467,12 @@ ConfigDeliveryTracingConnection::DeleteVariant(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::DeleteVariant(
-    NoAwaitTag, google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::DeleteVariantRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteVariant");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteVariant(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteVariant(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::OperationMetadata>>
@@ -429,28 +481,33 @@ ConfigDeliveryTracingConnection::DeleteVariant(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::DeleteVariant");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteVariant(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteVariant(operation));
 }
 
 StreamRange<google::cloud::configdelivery::v1::Rollout>
-ConfigDeliveryTracingConnection::ListRollouts(google::cloud::configdelivery::v1::ListRolloutsRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListRollouts");
+ConfigDeliveryTracingConnection::ListRollouts(
+    google::cloud::configdelivery::v1::ListRolloutsRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListRollouts");
   internal::OTelScope scope(span);
   auto sr = child_->ListRollouts(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::configdelivery::v1::Rollout>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::configdelivery::v1::Rollout>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::configdelivery::v1::Rollout>
-ConfigDeliveryTracingConnection::GetRollout(google::cloud::configdelivery::v1::GetRolloutRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetRollout");
+ConfigDeliveryTracingConnection::GetRollout(
+    google::cloud::configdelivery::v1::GetRolloutRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetRollout");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRollout(request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-ConfigDeliveryTracingConnection::SuspendRollout(google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
+ConfigDeliveryTracingConnection::SuspendRollout(
+    google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::SuspendRollout");
   internal::OTelScope scope(span);
@@ -459,12 +516,13 @@ ConfigDeliveryTracingConnection::SuspendRollout(google::cloud::configdelivery::v
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::SuspendRollout(
-    NoAwaitTag, google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::SuspendRolloutRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::SuspendRollout");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SuspendRollout(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->SuspendRollout(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
@@ -473,12 +531,12 @@ ConfigDeliveryTracingConnection::SuspendRollout(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::SuspendRollout");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->SuspendRollout(operation));
+  return internal::EndSpan(std::move(span), child_->SuspendRollout(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-ConfigDeliveryTracingConnection::ResumeRollout(google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
+ConfigDeliveryTracingConnection::ResumeRollout(
+    google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::ResumeRollout");
   internal::OTelScope scope(span);
@@ -487,12 +545,12 @@ ConfigDeliveryTracingConnection::ResumeRollout(google::cloud::configdelivery::v1
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::ResumeRollout(
-    NoAwaitTag, google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::ResumeRolloutRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::ResumeRollout");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ResumeRollout(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ResumeRollout(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
@@ -501,12 +559,12 @@ ConfigDeliveryTracingConnection::ResumeRollout(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::ResumeRollout");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->ResumeRollout(operation));
+  return internal::EndSpan(std::move(span), child_->ResumeRollout(operation));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
-ConfigDeliveryTracingConnection::AbortRollout(google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
+ConfigDeliveryTracingConnection::AbortRollout(
+    google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::AbortRollout");
   internal::OTelScope scope(span);
@@ -515,12 +573,12 @@ ConfigDeliveryTracingConnection::AbortRollout(google::cloud::configdelivery::v1:
 
 StatusOr<google::longrunning::Operation>
 ConfigDeliveryTracingConnection::AbortRollout(
-    NoAwaitTag, google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
+    NoAwaitTag,
+    google::cloud::configdelivery::v1::AbortRolloutRequest const& request) {
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::AbortRollout");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AbortRollout(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AbortRollout(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::configdelivery::v1::Rollout>>
@@ -529,52 +587,61 @@ ConfigDeliveryTracingConnection::AbortRollout(
   auto span = internal::MakeSpan(
       "configdelivery_v1::ConfigDeliveryConnection::AbortRollout");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->AbortRollout(operation));
+  return internal::EndSpan(std::move(span), child_->AbortRollout(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-ConfigDeliveryTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListLocations");
+ConfigDeliveryTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ConfigDeliveryTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetLocation");
+ConfigDeliveryTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ConfigDeliveryTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::ListOperations");
+ConfigDeliveryTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ConfigDeliveryTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::GetOperation");
+ConfigDeliveryTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ConfigDeliveryTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::DeleteOperation");
+Status ConfigDeliveryTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ConfigDeliveryTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("configdelivery_v1::ConfigDeliveryConnection::CancelOperation");
+Status ConfigDeliveryTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "configdelivery_v1::ConfigDeliveryConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
