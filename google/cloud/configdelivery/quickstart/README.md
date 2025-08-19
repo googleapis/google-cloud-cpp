@@ -1,9 +1,9 @@
 # HOWTO: using the Config Delivery API C++ client in your project
 
-This directory contains small examples showing how to use the Config Delivery API C++
-client library in your own project. These instructions assume that you have
-some experience as a C++ developer and that you have a working C++ toolchain
-(compiler, linker, etc.) installed on your platform.
+This directory contains small examples showing how to use the Config Delivery
+API C++ client library in your own project. These instructions assume that you
+have some experience as a C++ developer and that you have a working C++
+toolchain (compiler, linker, etc.) installed on your platform.
 
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
@@ -14,14 +14,12 @@ some experience as a C++ developer and that you have a working C++ toolchain
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
-- Developers wanting to compile the library just to run some examples or
-  tests should consult the
+- Developers wanting to compile the library just to run some examples or tests
+  should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
   [set up a development workstation][howto-setup-dev-workstation].
-
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ## Before you begin
 
@@ -30,9 +28,9 @@ To run the quickstart examples you will need a working Google Cloud Platform
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Config Delivery API requires that
-your application authenticates with the service before accessing any data. If
-you are not familiar with GCP authentication please take this opportunity to
+Like most Google Cloud Platform (GCP) services, Config Delivery API requires
+that your application authenticates with the service before accessing any data.
+If you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication methods at Google][authentication-quickstart].
 
 ## Using with Bazel
@@ -112,8 +110,8 @@ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ### Windows
 
 Bazel tends to create very long file names and paths. You may need to use a
-short directory to store the build output, such as `c:\b`, and instruct Bazel
-to use it via:
+short directory to store the build output, such as `c:\b`, and instruct Bazel to
+use it via:
 
 ```shell
 bazel --output_user_root=c:\b build ...
@@ -129,9 +127,9 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries "Authenticate for using client libraries"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
-[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
+[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
-[cmake-download-link]: https://cmake.org/download/
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries 'Authenticate for using client libraries'
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
