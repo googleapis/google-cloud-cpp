@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) try {
   auto client = configdelivery::ConfigDeliveryClient(
       configdelivery::MakeConfigDeliveryConnection());
 
-  for (auto r : client.ListVariants(location.FullName())) {
+  for (auto r : client.ListFleetPackages(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
