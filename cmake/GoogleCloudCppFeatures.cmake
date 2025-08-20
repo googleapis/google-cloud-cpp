@@ -75,6 +75,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "compute"
     "confidentialcomputing"
     "config"
+    "configdelivery"
     "connectors"
     "contactcenterinsights"
     "container"
