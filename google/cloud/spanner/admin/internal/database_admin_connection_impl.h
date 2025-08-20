@@ -214,12 +214,6 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::ListBackupSchedulesRequest request)
       override;
 
-  StatusOr<google::spanner::admin::database::v1::
-               InternalUpdateGraphOperationResponse>
-  InternalUpdateGraphOperation(
-      google::spanner::admin::database::v1::
-          InternalUpdateGraphOperationRequest const& request) override;
-
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 

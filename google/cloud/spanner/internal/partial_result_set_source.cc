@@ -56,7 +56,7 @@ void ExtractSubrangeAndAppend(Values& src, int start, Values& dst) {
 
 }  // namespace
 
-StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>
+StatusOr<std::unique_ptr<PartialResultSourceInterface>>
 PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
   std::unique_ptr<PartialResultSetSource> source(
       new PartialResultSetSource(std::move(reader)));
@@ -165,6 +165,9 @@ Status PartialResultSetSource::ReadFromStream() {
       GCP_LOG(WARNING) << "PartialResultSetSource: Additional stats";
     }
     stats_ = std::move(*result_set->result.mutable_stats());
+  }
+  if (result_set->result.has_precommit_token()) {
+    precommit_token_ = std::move(*result_set->result.mutable_precommit_token());
   }
 
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it

@@ -37,15 +37,29 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class PartialResultSourceInterface : public spanner::ResultSourceInterface {
+ public:
+  /**
+   * A precommit token is included if the read-write transaction is on
+   * a multiplexed session. The precommit token with the highest sequence
+   * number from this transaction attempt is added to the Commit request for
+   * this transaction by the library.
+   */
+  virtual absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const {
+    return absl::nullopt;
+  }
+};
+
 /**
  * This class serves as a bridge between the gRPC `PartialResultSet` streaming
  * reader and the spanner `ResultSet`, and is used to iterate over the rows
  * returned from a read operation.
  */
-class PartialResultSetSource : public spanner::ResultSourceInterface {
+class PartialResultSetSource : public PartialResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
-  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
       std::unique_ptr<PartialResultSetReader> reader);
 
   ~PartialResultSetSource() override;
@@ -58,6 +72,11 @@ class PartialResultSetSource : public spanner::ResultSourceInterface {
 
   absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return stats_;
+  }
+
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const override {
+    return precommit_token_;
   }
 
  private:
@@ -77,6 +96,11 @@ class PartialResultSetSource : public spanner::ResultSourceInterface {
   // The `PartialResultSet.stats` received in the last response, corresponding
   // to the `QueryMode` implied by the particular streaming read/query type.
   absl::optional<google::spanner::v1::ResultSetStats> stats_;
+
+  // Each PartialResultSet proto message can contain a token when using a
+  // multiplexed session.
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token_ = absl::nullopt;
 
   // `Row`s ready to be returned by `NextRow()`.
   std::deque<spanner::Row> rows_;
