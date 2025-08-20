@@ -31,6 +31,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             $<TARGET_FILE:configdelivery_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
     )
-    set_tests_properties(configdelivery_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        configdelivery_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error.*gcloud-cpp.retry.function=ListWorkloads")
 endif ()
