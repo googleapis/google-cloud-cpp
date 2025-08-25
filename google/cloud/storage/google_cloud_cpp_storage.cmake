@@ -273,9 +273,11 @@ target_link_libraries(
            google-cloud-cpp::common
            google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
-           Crc32c::crc32c
            CURL::libcurl
            Threads::Threads)
+if (NEED_CRC32C)
+    target_link_libraries(google_cloud_cpp_storage PUBLIC Crc32c::crc32c)
+endif()
 if (WIN32)
     target_compile_definitions(google_cloud_cpp_storage
                                PRIVATE WIN32_LEAN_AND_MEAN)
@@ -333,6 +335,11 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_storage
                                  include/google/cloud/storage)
 
+set(PKGCONFIG_LIBS)
+if (NEED_CRC32C)
+    list(APPEND PKGCONFIG_LIBS crc32c)
+endif()
+
 google_cloud_cpp_add_pkgconfig(
     "storage"
     "The Google Cloud Storage C++ Client Library"
@@ -348,7 +355,7 @@ google_cloud_cpp_add_pkgconfig(
     NON_WIN32_REQUIRES
     openssl
     LIBS
-    crc32c
+    ${PKGCONFIG_LIBS}
     WIN32_LIBS
     ws2_32
     bcrypt)
