@@ -160,6 +160,7 @@ void OpenObjectSingleRangedRead(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
   //! [open-object-single-ranged-read]
+  // [START storage_read_appendable_object_single_range]
   namespace gcs_ex = google::cloud::storage_experimental;
 
   // Helper coroutine to count newlines returned by an AsyncReader.
@@ -192,6 +193,7 @@ void OpenObjectSingleRangedRead(
     co_return co_await count_newlines(std::move(reader), std::move(token));
   };
   //! [open-object-single-ranged-read]
+  // [END storage_read_appendable_object_single_range]
 
   // The example is easier to test if we call the coroutine and block
   // until it completes.
@@ -203,6 +205,7 @@ void OpenObjectMultipleRangedRead(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
   //! [open-object-multiple-ranged-read]
+  // [START storage_read_appendable_object_multiple_ranges]
   namespace gcs_ex = google::cloud::storage_experimental;
   // Helper coroutine, count lines returned by a AsyncReader
   auto count_newlines =
@@ -236,6 +239,7 @@ void OpenObjectMultipleRangedRead(
     co_return (co_await std::move(c1)) + (co_await std::move(c2));
   };
   //! [open-object-multiple-ranged-read]
+  // [END storage_read_appendable_object_mulitple_ranges]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const count = coro(client, argv.at(0), argv.at(1)).get();
@@ -246,6 +250,7 @@ void OpenObjectReadFullObject(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
   //! [open-object-read-full-object]
+  // [START storage_read_appendable_object_full]
   namespace gcs_ex = google::cloud::storage_experimental;
 
   // Helper coroutine to count newlines returned by an AsyncReader.
@@ -278,6 +283,7 @@ void OpenObjectReadFullObject(
     co_return co_await count_newlines(std::move(reader), std::move(token));
   };
   //! [open-object-read-full-object]
+  // [END storage_read_appendable_object_full]
 
   // The example is easier to test if we call the coroutine and block
   // until it completes.
@@ -627,6 +633,7 @@ void StartAppendableObjectUpload(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
   //! [start-appendable-object-upload]
+  // [START storage_start_appendable_object_upload]
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
@@ -645,6 +652,7 @@ void StartAppendableObjectUpload(
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
   //! [start-appendable-object-upload]
+  // [END storage_start_appendable_object_upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes..
   auto const object = coro(client, argv.at(0), argv.at(1)).get();
@@ -655,6 +663,7 @@ void ResumeAppendableObjectUpload(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
   //! [resume-appendable-object-upload]
+  // [START storage_resume_appendable_object_upload]
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
@@ -706,6 +715,7 @@ void ResumeAppendableObjectUpload(
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
   //! [resume-appendable-object-upload]
+  // [END storage_resume_appendable_object_upload]
 
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
