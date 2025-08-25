@@ -277,7 +277,7 @@ TEST(WriteConnectionResumed, ResumeUsesGenerationFromFirstResponse) {
   google::storage::v2::BidiWriteObjectRequest captured_request;
   EXPECT_CALL(mock_factory, Call(_))
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest request) {
-        captured_request = request;
+        captured_request = std::move(request);
         return sequencer.PushBack("Factory").then([](auto) {
           return StatusOr<WriteObject::WriteResult>(
               internal::AbortedError("stop test", GCP_ERROR_INFO()));
