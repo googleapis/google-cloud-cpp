@@ -16,6 +16,11 @@
 
 set -euo pipefail
 
+# New debug output to confirm which script is running
+echo "================================================================"
+echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
+echo "================================================================"
+
 # TEMPORARY WORKAROUND for outdated homebrew in Kokoro images.
 brew update-reset
 
