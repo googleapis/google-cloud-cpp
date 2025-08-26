@@ -11,6 +11,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Cloud Security Compliance](/google/cloud/cloudsecuritycompliance/README.md)
 - [Config Delivery API](/google/cloud/configdelivery/README.md)
 
 ## v2.41.0 - 2025-08-14

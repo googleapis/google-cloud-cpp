@@ -4,8 +4,6 @@
 
 An idiomatic C++ client library for the [Cloud Security Compliance API][cloud-service-docs].
 
-
-
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
