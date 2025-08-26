@@ -21,7 +21,15 @@ echo "================================================================"
 echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
 echo "================================================================"
 
-# TEMPORARY WORKAROUND for outdated homebrew in Kokoro images.
+# TEMPORARY WORKAROUND for corrupted homebrew taps in Kokoro images.
+echo "==> Attempting to fix corrupted Homebrew taps"
+brew untap homebrew/cask &>/dev/null || true
+brew untap homebrew/cask-versions &>/dev/null || true
+brew tap homebrew/cask
+brew tap homebrew/cask-versions
+
+# Now, attempt to update Homebrew again.
+echo "==> Updating Homebrew"
 brew update-reset
 
 source "$(dirname "$0")/../../lib/init.sh"
