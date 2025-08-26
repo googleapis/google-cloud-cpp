@@ -28,6 +28,7 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 io::log_h2 "Update or install dependencies"
+brew update-reset
 # Install bash and ninja
 brew install bash ninja
 
