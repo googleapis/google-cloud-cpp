@@ -1,0 +1,53 @@
+/*!
+
+@mainpage Cloud Security Compliance API C++ Client Library
+
+An idiomatic C++ client library for the [Cloud Security Compliance API][cloud-service-docs].
+
+
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/cloudsecuritycompliance/quickstart/` directory,
+which should give you a taste of the Cloud Security Compliance API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c cloudsecuritycompliance_v1::ConfigClient](@ref google::cloud::cloudsecuritycompliance_v1::ConfigClient)
+- [\c cloudsecuritycompliance_v1::DeploymentClient](@ref google::cloud::cloudsecuritycompliance_v1::DeploymentClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref cloudsecuritycompliance-override-endpoint - describes how to override the default
+  endpoint.
+- @ref cloudsecuritycompliance-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref cloudsecuritycompliance-override-retry - describes how to change the default retry
+  policies.
+- @ref cloudsecuritycompliance-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/security-command-center/docs/compliance-manager-overview
+
+*/

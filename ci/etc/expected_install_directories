@@ -207,6 +207,10 @@
 ./include/google/cloud/cloudquotas/v1
 ./include/google/cloud/cloudquotas/v1/internal
 ./include/google/cloud/cloudquotas/v1/mocks
+./include/google/cloud/cloudsecuritycompliance
+./include/google/cloud/cloudsecuritycompliance/v1
+./include/google/cloud/cloudsecuritycompliance/v1/internal
+./include/google/cloud/cloudsecuritycompliance/v1/mocks
 ./include/google/cloud/commerce
 ./include/google/cloud/commerce/consumer
 ./include/google/cloud/commerce/consumer/procurement
@@ -1392,6 +1396,8 @@
 ./lib64/cmake/google_cloud_cpp_cloudcontrolspartner_mocks
 ./lib64/cmake/google_cloud_cpp_cloudquotas
 ./lib64/cmake/google_cloud_cpp_cloudquotas_mocks
+./lib64/cmake/google_cloud_cpp_cloudsecuritycompliance
+./lib64/cmake/google_cloud_cpp_cloudsecuritycompliance_mocks
 ./lib64/cmake/google_cloud_cpp_commerce
 ./lib64/cmake/google_cloud_cpp_commerce_mocks
 ./lib64/cmake/google_cloud_cpp_composer
