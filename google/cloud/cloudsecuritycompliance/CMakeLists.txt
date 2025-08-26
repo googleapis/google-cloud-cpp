@@ -30,8 +30,14 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:cloudsecuritycompliance_quickstart>
-            GOOGLE_CLOUD_PROJECT GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
-    set_tests_properties(cloudsecuritycompliance_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+            GOOGLE_CLOUD_CPP_TEST_ORGANIZATION GOOGLE_CLOUD_CPP_TEST_REGION)
+    set_tests_properties(
+        cloudsecuritycompliance_quickstart
+        PROPERTIES
+            LABELS
+            "integration-test;quickstart"
+            ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT}
+            PASS_REGULAR_EXPRESSION
+            "Permanent error.*gcloud-cpp.retry.function=ListFrameworks")
 endif ()

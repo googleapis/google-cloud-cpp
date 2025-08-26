@@ -16,24 +16,25 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/cloudsecuritycompliance/v1/ EDIT HERE _client.h"
+#include "google/cloud/cloudsecuritycompliance/v1/config_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+    std::cerr << "Usage: " << argv[0] << " organization-id location-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const parent =
+      std::string("organizations/") + argv[1] + "/locations/" + argv[2];
 
   namespace cloudsecuritycompliance =
       ::google::cloud::cloudsecuritycompliance_v1;
-  auto client = cloudsecuritycompliance::ServiceClient(
-      cloudsecuritycompliance::MakeServiceConnection());  // EDIT HERE
+  auto client = cloudsecuritycompliance::ConfigClient(
+      cloudsecuritycompliance::MakeConfigConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListFrameworks(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
