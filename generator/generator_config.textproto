@@ -775,6 +775,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Cloud Security Compliance
+service {
+  service_proto_path: "google/cloud/cloudsecuritycompliance/v1/cloudsecuritycompliance.proto"
+  product_path: "google/cloud/cloudsecuritycompliance/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Composer
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"
