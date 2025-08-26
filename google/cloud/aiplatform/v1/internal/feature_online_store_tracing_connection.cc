@@ -55,6 +55,13 @@ FeatureOnlineStoreServiceTracingConnection::SearchNearestEntities(
   return internal::EndSpan(*span, child_->SearchNearestEntities(request));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceTracingConnection::AsyncFeatureViewDirectWrite() {
+  return child_->AsyncFeatureViewDirectWrite();
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

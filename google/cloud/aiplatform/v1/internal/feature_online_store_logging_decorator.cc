@@ -17,6 +17,7 @@
 // source: google/cloud/aiplatform/v1/feature_online_store_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
@@ -32,8 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FeatureOnlineStoreServiceLogging::FeatureOnlineStoreServiceLogging(
     std::shared_ptr<FeatureOnlineStoreServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
 FeatureOnlineStoreServiceLogging::FetchFeatureValues(
@@ -60,6 +63,29 @@ FeatureOnlineStoreServiceLogging::SearchNearestEntities(
         return child_->SearchNearestEntities(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceLogging::AsyncFeatureViewDirectWrite(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+          google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncFeatureViewDirectWrite(cq, std::move(context),
+                                                    std::move(options));
+  if (stream_logging_) {
+    stream = std::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

@@ -51,6 +51,17 @@ FeatureOnlineStoreServiceConnection::SearchNearestEntities(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceConnection::AsyncFeatureViewDirectWrite() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+          google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceConnection::ListLocations(
     google::cloud::location::
