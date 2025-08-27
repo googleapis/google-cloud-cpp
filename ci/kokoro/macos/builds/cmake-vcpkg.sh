@@ -64,7 +64,7 @@ io::log_h2 "DEBUG: Before brew install for cmake"
 (
   cd "${HOME}"
   curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-  brew install cmake.rb
+  brew install --build-from-source ./cmake.rb
 )
 io::log_h2 "DEBUG: After brew install for cmake"
 
