@@ -40,11 +40,7 @@ brew install bash ninja
 io::log_h2 "DEBUG: After brew install bash ninja"
 
 # Install a specific version of CMake to match our GHA builds
-(
-  cd "${HOME}"
-  curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-  brew install cmake.rb
-)
+brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/c/cmake.rb
 
 io::log_h2 "Using CMake version"
 cmake --version
