@@ -1,10 +1,10 @@
 name: "CodeQL"
 
-on:
-  # Run the analysis once every 24 hours. The actual time does not matter
-  # that much, start with a time that allows for easier troubleshooting.
-  schedule:
-    - cron: '00 22 * * *'
+# on:
+#   # Run the analysis once every 24 hours. The actual time does not matter
+#   # that much, start with a time that allows for easier troubleshooting.
+#   schedule:
+#     - cron: '00 22 * * *' 
 
 jobs:
   analyze:

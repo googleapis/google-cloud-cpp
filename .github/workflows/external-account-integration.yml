@@ -1,12 +1,12 @@
 name: "External Account Integration"
 
-on:
-  workflow_call:
-    inputs:
-      checkout-ref:
-        required: true
-        description: "The ref we want to compile"
-        type: string
+# on:
+#   workflow_call:
+#     inputs:
+#       checkout-ref:
+#         required: true
+#         description: "The ref we want to compile"
+#         type: string
 
 permissions:
   contents: read

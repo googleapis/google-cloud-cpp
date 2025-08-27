@@ -1,20 +1,20 @@
 name: Windows-Builds
 
-on:
-  workflow_call:
-    inputs:
-      checkout-ref:
-        required: true
-        description: "The ref we want to compile"
-        type: string
-      bazel-cache-mode:
-        required: true
-        description: "READ_WRITE or READ_ONLY"
-        type: string
-      execute-integration-tests:
-        required: true
-        description: "Integration tests require credentials."
-        type: boolean
+# on:
+#   workflow_call:
+#     inputs:
+#       checkout-ref:
+#         required: true
+#         description: "The ref we want to compile"
+#         type: string
+#       bazel-cache-mode:
+#         required: true
+#         description: "READ_WRITE or READ_ONLY"
+#         type: string
+#       execute-integration-tests:
+#         required: true
+#         description: "Integration tests require credentials."
+#         type: boolean
 
 permissions:
   contents: read

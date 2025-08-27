@@ -2,25 +2,25 @@ name: "gha: macOS & Windows"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
-on:
-  # Start these builds on pushes (think "after the merge") too. Normally there
-  # are no `ci-gha**` branches in our repository. The contributors to the repo
-  # can create such branches when testing or troubleshooting builds. In such
-  # branches we can disable builds (to speed up the testing) or add new ones,
-  # without impacting the rest of the team.
-  push:
-    branches: [ 'v[2-9]**', 'ci-gha**', 'prepare-for-v3.0.0' ]
-  # Start the build in the context of the target branch. This is considered
-  # "safe", as the workflow files are already committed. These types of builds
-  # have access to the secrets in the build, which we need to use the remote
-  # caches (Bazel and sccache).
-  pull_request_target:
-    types:
-    - opened
-    - synchronize
-    - reopened
-  schedule:
-    - cron: '0 5 * * 1,2,3,4,5'
+# on:
+#   # Start these builds on pushes (think "after the merge") too. Normally there
+#   # are no `ci-gha**` branches in our repository. The contributors to the repo
+#   # can create such branches when testing or troubleshooting builds. In such
+#   # branches we can disable builds (to speed up the testing) or add new ones,
+#   # without impacting the rest of the team.
+#   push:
+#     branches: [ 'v[2-9]**', 'ci-gha**', 'prepare-for-v3.0.0' ]
+#   # Start the build in the context of the target branch. This is considered
+#   # "safe", as the workflow files are already committed. These types of builds
+#   # have access to the secrets in the build, which we need to use the remote
+#   # caches (Bazel and sccache).
+#   pull_request_target:
+#     types:
+#     - opened
+#     - synchronize
+#     - reopened
+#   schedule:
+#     - cron: '0 5 * * 1,2,3,4,5'
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
 # PR or branch. That reduces billing, but it creates more noise about cancelled
