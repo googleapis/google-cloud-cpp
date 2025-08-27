@@ -61,7 +61,11 @@ io::log_h2 "DEBUG: Brew doctor before update"
 
 # Install v3.28.1 CMake
 io::log_h2 "DEBUG: Before brew install for cmake"
-brew install --build-from-source https://raw.githubusercontent.com/Homebrew/homebrew-core/4c210b9063c89a89abd9a6db5bae1b5f4e8fdb7d/Formula/c/cmake.rb
+(
+  cd "${HOME}"
+  curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
+  brew install cmake.rb
+)
 io::log_h2 "DEBUG: After brew install for cmake"
 
 io::log_h2 "Using CMake version"
