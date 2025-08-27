@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -158,6 +159,15 @@ TEST(StorageConnectionTest, UploadFileResumableUnimplemented) {
   TestStorageConnection connection;
   ResumableUploadRequest request;
   auto response = connection.UploadFileResumable("test-file.txt", request);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
+}
+
+TEST(StorageConnectionTest, DownloadStreamToFileUnimplemented) {
+  TestStorageConnection connection;
+  ObjectReadStream stream;
+  ReadObjectRangeRequest request;
+  auto response = connection.DownloadStreamToFile(std::move(stream),
+                                                  "test-file.txt", request);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnimplemented));
 }
 

@@ -46,6 +46,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:content.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:context.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:custom_job.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:data_foundry_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:data_item.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:data_labeling_job.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:dataset.proto
@@ -55,6 +56,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:deployed_model_ref.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:deployment_resource_pool.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:deployment_resource_pool_service.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:deployment_stage.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:encryption_spec.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:endpoint.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:endpoint_service.proto

@@ -24,6 +24,7 @@
 #include "google/cloud/aiplatform/v1/feature_online_store_options.h"
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_retry_traits.h"
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_stub.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -59,6 +60,11 @@ class FeatureOnlineStoreServiceConnectionImpl
   SearchNearestEntities(
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
           request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+  AsyncFeatureViewDirectWrite() override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

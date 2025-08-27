@@ -65,6 +65,18 @@ FeatureOnlineStoreServiceMetadata::SearchNearestEntities(
   return child_->SearchNearestEntities(context, options, request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceMetadata::AsyncFeatureViewDirectWrite(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncFeatureViewDirectWrite(cq, std::move(context),
+                                             std::move(options));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureOnlineStoreServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

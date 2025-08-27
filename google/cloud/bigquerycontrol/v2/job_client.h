@@ -318,7 +318,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L496}
-  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L691}
+  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L699}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(

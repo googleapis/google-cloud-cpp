@@ -17,6 +17,7 @@
 // source: google/cloud/aiplatform/v1/feature_online_store_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include <memory>
 #include <utility>
@@ -57,6 +58,25 @@ FeatureOnlineStoreServiceTracingStub::SearchNearestEntities(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->SearchNearestEntities(context, options, request));
+}
+
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceTracingStub::AsyncFeatureViewDirectWrite(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "FeatureViewDirectWrite");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream =
+      child_->AsyncFeatureViewDirectWrite(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
