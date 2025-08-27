@@ -22,29 +22,29 @@ echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
 echo "================================================================"
 
 # ===== START HOMEBREW FIXES =====
-io::log_h2 "Attempting to fix Homebrew environment"
+echo "== Attempting to fix Homebrew environment"
 
 # Check initial state
-io::log_h2 "DEBUG: Brew version before any fixes"
+echo "== DEBUG: Brew version before any fixes"
 brew --version || echo "brew version failed"
-io::log_h2 "DEBUG: Brew doctor before any fixes"
+echo "== DEBUG: Brew doctor before any fixes"
 brew doctor || echo "brew doctor failed"
 
 # Fix the git origin for Homebrew itself
-io::log_h2 "DEBUG: Setting Homebrew git origin"
+echo "== DEBUG: Setting Homebrew git origin"
 git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin, continuing..."
 
 # Forcefully reset Homebrew to clean up any corruption
-io::log_h2 "DEBUG: Running brew update-reset"
+echo "== DEBUG: Running brew update-reset"
 brew update-reset
 
 # Check state after reset
-io::log_h2 "DEBUG: Brew version after update-reset"
+echo "== DEBUG: Brew version after update-reset"
 brew --version || echo "brew version failed"
-io::log_h2 "DEBUG: Brew doctor after update-reset"
+echo "== DEBUG: Brew doctor after update-reset"
 brew doctor || echo "brew doctor failed"
 
-io::log_h2 "DEBUG: Homebrew environment fixes complete"
+echo "== DEBUG: Homebrew environment fixes complete"
 # ===== END HOMEBREW FIXES =====
 
 source "$(dirname "$0")/../../lib/init.sh"
