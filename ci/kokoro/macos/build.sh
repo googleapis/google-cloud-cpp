@@ -54,7 +54,7 @@ brew update-reset
 echo "DEBUG: Brew version after fixes"
 brew --version || echo "brew version failed"
 echo "DEBUG: Brew doctor after fixes"
-#brew doctor || echo "brew doctor failed"
+brew doctor || echo "brew doctor failed"
 
 echo "DEBUG: Homebrew environment fixes complete"
 # ===== END HOMEBREW FIXES =====
