@@ -34,15 +34,6 @@ brew --version
 io::log_h2 "DEBUG: Brew doctor before update"
 brew doctor
 
-# TEMPORARY WORKAROUND for outdated homebrew in Kokoro images.
-echo "==> Forcefully resetting Homebrew"
-brew update-reset
-
-io::log_h2 "DEBUG: Brew version after update-reset"
-brew --version
-io::log_h2 "DEBUG: Brew doctor after update-reset"
-brew doctor
-
 # Install bash and ninja
 io::log_h2 "DEBUG: Before brew install bash ninja"
 brew install bash ninja

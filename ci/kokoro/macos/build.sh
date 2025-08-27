@@ -21,15 +21,31 @@ echo "================================================================"
 echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
 echo "================================================================"
 
-# TEMPORARY WORKAROUND for corrupted homebrew taps in Kokoro images.
-echo "==> Cleaning up Homebrew taps"
-brew untap homebrew/cask --force || true
-brew untap homebrew/cask-versions --force || true
-brew untap homebrew/core --force || true
+# ===== START HOMEBREW FIXES =====
+io::log_h2 "Attempting to fix Homebrew environment"
 
-# Perform a fresh update
-echo "==> Updating Homebrew"
-brew update -v
+# Check initial state
+io::log_h2 "DEBUG: Brew version before any fixes"
+brew --version || echo "brew version failed"
+io::log_h2 "DEBUG: Brew doctor before any fixes"
+brew doctor || echo "brew doctor failed"
+
+# Fix the git origin for Homebrew itself
+io::log_h2 "DEBUG: Setting Homebrew git origin"
+git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin, continuing..."
+
+# Forcefully reset Homebrew to clean up any corruption
+io::log_h2 "DEBUG: Running brew update-reset"
+brew update-reset
+
+# Check state after reset
+io::log_h2 "DEBUG: Brew version after update-reset"
+brew --version || echo "brew version failed"
+io::log_h2 "DEBUG: Brew doctor after update-reset"
+brew doctor || echo "brew doctor failed"
+
+io::log_h2 "DEBUG: Homebrew environment fixes complete"
+# ===== END HOMEBREW FIXES =====
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
