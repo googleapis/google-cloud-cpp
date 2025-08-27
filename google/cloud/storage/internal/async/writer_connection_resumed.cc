@@ -78,14 +78,10 @@ class AsyncWriterConnectionResumedState
     options_ = internal::MakeImmutableOptions(options);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      SetFinalized(std::unique_lock<std::mutex>(mu_),
-                   absl::get<google::storage::v2::Object>(std::move(state)));
-      cancelled_ = true;
-      resume_status_ = internal::CancelledError("upload already finalized",
-                                                GCP_ERROR_INFO());
-      return;
+      buffer_offset_ = absl::get<google::storage::v2::Object>(state).size();
+    } else {
+      buffer_offset_ = absl::get<std::int64_t>(state);
     }
-    buffer_offset_ = absl::get<std::int64_t>(state);
   }
 
   void Cancel() {
@@ -641,7 +637,7 @@ class AsyncWriterConnectionResumed
       std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      google::storage::v2::BidiWriteObjectResponse const& first_response,
+      google::storage::v2::BidiWriteObjectResponse first_response,
       Options const& options)
       : state_(std::make_shared<AsyncWriterConnectionResumedState>(
             std::move(factory), std::move(impl), std::move(initial_request),
@@ -689,7 +685,7 @@ MakeWriterConnectionResumed(
     std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    google::storage::v2::BidiWriteObjectResponse const& first_response,
+    google::storage::v2::BidiWriteObjectResponse first_response,
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionResumed>(
       std::move(factory), std::move(impl), std::move(initial_request),
