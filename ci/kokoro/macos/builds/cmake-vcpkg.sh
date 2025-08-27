@@ -28,9 +28,25 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 io::log_h2 "Update or install dependencies"
+
+io::log_h2 "DEBUG: Brew version before update"
+brew --version
+io::log_h2 "DEBUG: Brew doctor before update"
+brew doctor
+
+# TEMPORARY WORKAROUND for outdated homebrew in Kokoro images.
+echo "==> Forcefully resetting Homebrew"
 brew update-reset
+
+io::log_h2 "DEBUG: Brew version after update-reset"
+brew --version
+io::log_h2 "DEBUG: Brew doctor after update-reset"
+brew doctor
+
 # Install bash and ninja
+io::log_h2 "DEBUG: Before brew install bash ninja"
 brew install bash ninja
+io::log_h2 "DEBUG: After brew install bash ninja"
 
 # Install a specific version of CMake to match our GHA builds
 (
