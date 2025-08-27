@@ -22,29 +22,41 @@ echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
 echo "================================================================"
 
 # ===== START HOMEBREW FIXES =====
-echo "== Attempting to fix Homebrew environment"
+echo "Attempting to fix Homebrew environment"
 
 # Check initial state
-echo "== DEBUG: Brew version before any fixes"
+echo "DEBUG: Brew version before any fixes"
 brew --version || echo "brew version failed"
-echo "== DEBUG: Brew doctor before any fixes"
+echo "DEBUG: Brew doctor before any fixes"
 brew doctor || echo "brew doctor failed"
 
-# Fix the git origin for Homebrew itself
-echo "== DEBUG: Setting Homebrew git origin"
-git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin, continuing..."
+# 1. Fix Git Origins as suggested by brew doctor
+echo "DEBUG: Setting Homebrew git origins"
+git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin"
+git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core || echo "Failed to set homebrew-core origin"
 
-# Forcefully reset Homebrew to clean up any corruption
-echo "== DEBUG: Running brew update-reset"
+# 2. Untap unnecessary taps as suggested by brew doctor
+echo "DEBUG: Untapping unnecessary taps"
+brew untap homebrew/cask --force || echo "Failed to untap homebrew/cask"
+brew untap homebrew/core --force || echo "Failed to untap homebrew/core"
+# Also untap cask-versions just in case
+brew untap homebrew/cask-versions --force || echo "Failed to untap homebrew/cask-versions"
+
+# 3. Clean up broken symlinks
+echo "DEBUG: Cleaning up Homebrew"
+brew cleanup -f || echo "brew cleanup failed"
+
+# 4. Forcefully reset Homebrew
+echo "DEBUG: Running brew update-reset"
 brew update-reset
 
-# Check state after reset
-echo "== DEBUG: Brew version after update-reset"
+# Check state after fixes
+echo "DEBUG: Brew version after fixes"
 brew --version || echo "brew version failed"
-echo "== DEBUG: Brew doctor after update-reset"
+echo "DEBUG: Brew doctor after fixes"
 brew doctor || echo "brew doctor failed"
 
-echo "== DEBUG: Homebrew environment fixes complete"
+echo "DEBUG: Homebrew environment fixes complete"
 # ===== END HOMEBREW FIXES =====
 
 source "$(dirname "$0")/../../lib/init.sh"
@@ -102,7 +114,7 @@ printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
 printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 
-io::log_h2 "Brew packages"
+echo "Brew packages"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions --formula
