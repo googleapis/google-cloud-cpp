@@ -44,7 +44,7 @@ brew untap homebrew/cask-versions --force || echo "Failed to untap homebrew/cask
 
 # 3. Clean up broken symlinks
 echo "DEBUG: Cleaning up Homebrew"
-brew cleanup -f || echo "brew cleanup failed"
+brew cleanup -s || echo "brew cleanup failed"
 
 # 4. Forcefully reset Homebrew
 echo "DEBUG: Running brew update-reset"
