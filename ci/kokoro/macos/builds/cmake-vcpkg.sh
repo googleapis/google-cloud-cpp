@@ -32,7 +32,7 @@ io::log_h2 "Update or install dependencies"
 io::log_h2 "DEBUG: Brew version before update"
 brew --version
 io::log_h2 "DEBUG: Brew doctor before update"
-brew doctor
+# brew doctor
 
 # Install bash and ninja
 io::log_h2 "DEBUG: Before brew install bash ninja"
