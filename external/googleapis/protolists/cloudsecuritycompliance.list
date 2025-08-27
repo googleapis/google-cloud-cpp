@@ -1,0 +1,3 @@
+@com_google_googleapis//google/cloud/cloudsecuritycompliance/v1:common.proto
+@com_google_googleapis//google/cloud/cloudsecuritycompliance/v1:config.proto
+@com_google_googleapis//google/cloud/cloudsecuritycompliance/v1:deployment.proto
