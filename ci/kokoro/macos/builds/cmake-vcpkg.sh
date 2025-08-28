@@ -75,6 +75,7 @@ io::log_h2 "DEBUG: Before brew install for cmake"
   git commit -m "Add CMake formula"
 
   brew tap user/homebrew-tap "${HOME}/user/homebrew-tap"
+  brew uninstall cmake
   brew install --build-from-source user/homebrew-tap/cmake
 )
 io::log_h2 "DEBUG: After brew install for cmake"
