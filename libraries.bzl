@@ -54,6 +54,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "cloudbuild",
     "cloudcontrolspartner",
     "cloudquotas",
+    "cloudsecuritycompliance",
     "commerce",
     "composer",
     "compute_accelerator_types",
