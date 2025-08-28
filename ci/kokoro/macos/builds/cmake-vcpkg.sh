@@ -59,12 +59,23 @@ brew --version
 io::log_h2 "DEBUG: Brew doctor before update"
 # brew doctor
 
-# Install v3.28.1 CMake
+# Install v3.27.2 CMake
 io::log_h2 "DEBUG: Before brew install for cmake"
 (
   cd "${HOME}"
+  mkdir homebrew-local-tap
+  cd homebrew-local-tap
+  git init
+  mkdir Formula
+
   curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-  brew install --build-from-source ./cmake.rb
+  mv cmake.rb ./Formula/
+
+  git add .
+  git commit -m "Add CMake formula"
+
+  brew tap homebrew-local-tap "${HOME}/homebrew-local-tap"
+  brew install --build-from-source homebrew-local-tap/cmake
 )
 io::log_h2 "DEBUG: After brew install for cmake"
 
