@@ -93,10 +93,17 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
           ReceiveTaskNotificationRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       AgentEndpointServiceReceiveTaskNotificationStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<google::cloud::osconfig::agentendpoint::v1::
-                                 ReceiveTaskNotificationResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<google::cloud::osconfig::agentendpoint::v1::
+                                       ReceiveTaskNotificationResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<Status, google::cloud::osconfig::agentendpoint::v1::
+                                       ReceiveTaskNotificationResponse> {
+        google::cloud::osconfig::agentendpoint::v1::
+            ReceiveTaskNotificationResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>

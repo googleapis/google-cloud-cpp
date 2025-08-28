@@ -43,10 +43,10 @@ using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Not;
+using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
-using ::testing::VariantWith;
 
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
@@ -299,7 +299,8 @@ TEST_F(MetadataDecoratorTest, StreamingRead) {
   GoldenKitchenSinkMetadata stub(mock_, {});
   auto response = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
                                      Options{}, Request{});
-  EXPECT_THAT(response->Read(), VariantWith<Status>(Not(IsOk())));
+  Response r;
+  EXPECT_THAT(response->Read(&r), Optional(Not(IsOk())));
 }
 
 TEST_F(MetadataDecoratorTest, StreamingWrite) {

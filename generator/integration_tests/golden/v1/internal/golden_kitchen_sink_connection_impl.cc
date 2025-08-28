@@ -182,8 +182,16 @@ GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1
       internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::Response, google::test::admin::database::v1::Request>(
           retry_policy(*current), backoff_policy(*current), factory,
           GoldenKitchenSinkStreamingReadStreamingUpdater, request);
-  return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::Response>(
-      [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<google::test::admin::database::v1::Response>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status,
+              google::test::admin::database::v1::Response> {
+        google::test::admin::database::v1::Response response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
