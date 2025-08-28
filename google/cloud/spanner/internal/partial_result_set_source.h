@@ -23,6 +23,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <google/protobuf/arena.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/struct.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
@@ -85,6 +86,9 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   Status ReadFromStream();
 
+  // Arena for the values_ field.
+  google::protobuf::Arena arena_;
+
   Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
 
@@ -102,18 +106,23 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
       precommit_token_ = absl::nullopt;
 
-  // `Row`s ready to be returned by `NextRow()`.
-  std::deque<spanner::Row> rows_;
+  // Number of rows returned to the client.
+  int rows_returned_ = 0;
+
+  // Number of rows that can be created from `values_` in NextRow(). Note there
+  // may be more data in values_ but it's not ready to be returned to the
+  // client.
+  int usable_rows_ = 0;
+
+  // Values that can be assembled into `Row`s ready to be returned by
+  // `NextRow()`.
+  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>> values_;
 
   // When engaged, the token we can use to resume the stream immediately after
   // any data in (or previously in) `rows_`. When disengaged, we have already
   // delivered data that would be replayed, so resumption is disabled until we
   // see a new token.
   absl::optional<std::string> resume_token_ = "";
-
-  // `Value`s that could be combined into `rows_` when we have enough to fill
-  // an entire row, plus a token that would resume the stream after such rows.
-  google::protobuf::RepeatedPtrField<google::protobuf::Value> values_;
 
   // Should the space used by `values_` get larger than this limit, we will
   // move complete rows into `rows_` and disable resumption until we see a
