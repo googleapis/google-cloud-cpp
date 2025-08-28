@@ -36,8 +36,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * caller should discard any pending state not covered by the token, as that
  * data will be replayed.
  */
-struct PartialResultSet {
-  google::spanner::v1::PartialResultSet result;
+struct UnownedPartialResultSet {
+  static UnownedPartialResultSet FromPartialResultSet(
+      google::spanner::v1::PartialResultSet& result) {
+    return UnownedPartialResultSet{result, false};
+  }
+
+  google::spanner::v1::PartialResultSet& result;
   bool resumption;
 };
 
@@ -54,8 +59,8 @@ class PartialResultSetReader {
  public:
   virtual ~PartialResultSetReader() = default;
   virtual void TryCancel() = 0;
-  virtual absl::optional<PartialResultSet> Read(
-      absl::optional<std::string> const& resume_token) = 0;
+  virtual bool Read(absl::optional<std::string> const& resume_token,
+                    UnownedPartialResultSet& result) = 0;
   virtual Status Finish() = 0;
 };
 

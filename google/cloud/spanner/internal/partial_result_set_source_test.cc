@@ -39,6 +39,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::Return;
 using ::testing::UnitTest;
 
 std::string CurrentTestName() {
@@ -81,13 +82,6 @@ std::function<T()> ResultMock(T const& result) {
   };
 }
 
-absl::optional<PartialResultSet> ReadResult(
-    google::spanner::v1::PartialResultSet response) {
-  return PartialResultSet{std::move(response), false};
-}
-
-absl::optional<PartialResultSet> ReadResult() { return {}; }
-
 MATCHER_P(IsValidAndEquals, expected,
           "Verifies that a StatusOr<Row> contains the given Row") {
   return arg && *arg == expected;
@@ -96,7 +90,11 @@ MATCHER_P(IsValidAndEquals, expected,
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([](absl::optional<std::string> const&,
+                   spanner_internal::UnownedPartialResultSet& result) {
+        return false;
+      });
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
@@ -126,9 +124,13 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response)))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kCancelled, "cancelled")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
@@ -148,7 +150,12 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
   google::spanner::v1::PartialResultSet response;
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(ResultMock(ReadResult(response)));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      });
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
@@ -171,9 +178,13 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response)))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -196,9 +207,13 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response)))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -252,9 +267,13 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response)))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -377,13 +396,38 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
   // `ReadFromStream()`.
   for (std::size_t buffer_size : {0, 153, 161, 321, 385, 448}) {
     auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-    EXPECT_CALL(*grpc_reader, Read(_))
-        .WillOnce(ResultMock(ReadResult(response[0])))
-        .WillOnce(ResultMock(ReadResult(response[1])))
-        .WillOnce(ResultMock(ReadResult(response[2])))
-        .WillOnce(ResultMock(ReadResult(response[3])))
-        .WillOnce(ResultMock(ReadResult(response[4])))
-        .WillOnce(ResultMock(ReadResult()));
+    EXPECT_CALL(*grpc_reader, Read(_, _))
+        .WillOnce(
+            [&response](absl::optional<std::string> const&,
+                        spanner_internal::UnownedPartialResultSet& result) {
+              result.result = response[0];
+              return true;
+            })
+        .WillOnce(
+            [&response](absl::optional<std::string> const&,
+                        spanner_internal::UnownedPartialResultSet& result) {
+              result.result = response[1];
+              return true;
+            })
+        .WillOnce(
+            [&response](absl::optional<std::string> const&,
+                        spanner_internal::UnownedPartialResultSet& result) {
+              result.result = response[2];
+              return true;
+            })
+        .WillOnce(
+            [&response](absl::optional<std::string> const&,
+                        spanner_internal::UnownedPartialResultSet& result) {
+              result.result = response[3];
+              return true;
+            })
+        .WillOnce(
+            [&response](absl::optional<std::string> const&,
+                        spanner_internal::UnownedPartialResultSet& result) {
+              result.result = response[4];
+              return true;
+            })
+        .WillOnce(Return(false));
     EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
     EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -444,11 +488,23 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult(response[2])))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[2];
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -508,13 +564,33 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult(response[2])))
-      .WillOnce(ResultMock(ReadResult(response[3])))
-      .WillOnce(ResultMock(ReadResult(response[4])))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[2];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[3];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[4];
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -562,10 +638,18 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -605,10 +689,18 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -650,10 +742,18 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -699,10 +799,22 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult(response[2])));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[2];
+        return true;
+      });
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
@@ -771,13 +883,33 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
   }
 
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(ResultMock(ReadResult(response[0])))
-      .WillOnce(ResultMock(ReadResult(response[1])))
-      .WillOnce(ResultMock(ReadResult(response[2])))
-      .WillOnce(ResultMock(ReadResult(response[3])))
-      .WillOnce(ResultMock(ReadResult(response[4])))
-      .WillOnce(ResultMock(ReadResult()));
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[0];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[1];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[2];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[3];
+        return true;
+      })
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            spanner_internal::UnownedPartialResultSet& result) {
+        result.result = response[4];
+        return true;
+      })
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
