@@ -21,6 +21,31 @@ source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 source module ci/kokoro/lib/vcpkg.sh
 
+# ===== START HOMEBREW FIXES =====
+echo "== Attempting to fix Homebrew environment IN cmake-vcpkg.sh"
+
+# 1. Fix Git Origins as suggested by brew doctor
+echo "== DEBUG: Setting Homebrew git origins"
+git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin"
+git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core || echo "Failed to set homebrew-core origin"
+
+# 2. Untap unnecessary taps as suggested by brew doctor
+echo "== DEBUG: Untapping unnecessary taps"
+brew untap homebrew/cask --force || echo "Failed to untap homebrew/cask"
+brew untap homebrew/core --force || echo "Failed to untap homebrew/core"
+brew untap homebrew/cask-versions --force || echo "Failed to untap homebrew/cask-versions"
+
+# 3. Clean up broken symlinks and scrub the cache
+echo "== DEBUG: Cleaning up Homebrew"
+brew cleanup -s || echo "brew cleanup failed"
+
+# 4. Forcefully reset Homebrew
+echo "== DEBUG: Running brew update-reset"
+brew update-reset
+
+echo "== DEBUG: Homebrew environment fixes complete IN cmake-vcpkg.sh"
+# ===== END HOMEBREW FIXES =====
+
 readonly SOURCE_DIR="."
 readonly BINARY_DIR="cmake-out/macos-vcpkg"
 
@@ -28,18 +53,24 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 io::log_h2 "Update or install dependencies"
-# Install bash and ninja
-brew install bash ninja
 
-# Install a specific version of CMake to match our GHA builds
-(
-  cd "${HOME}"
-  curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-  brew install cmake.rb
-)
+io::log_h2 "DEBUG: Brew version before update"
+brew --version
+io::log_h2 "DEBUG: Brew doctor before update"
+# brew doctor
+
+# Install v3.28.1 CMake
+io::log_h2 "DEBUG: Before brew install for cmake"
+brew install --build-from-source https://raw.githubusercontent.com/Homebrew/homebrew-core/4c210b9063c89a89abd9a6db5bae1b5f4e8fdb7d/Formula/c/cmake.rb
+io::log_h2 "DEBUG: After brew install for cmake"
 
 io::log_h2 "Using CMake version"
 cmake --version
+
+# Install bash and ninja
+io::log_h2 "DEBUG: Before brew install bash ninja"
+brew install bash ninja
+io::log_h2 "DEBUG: After brew install bash ninja"
 
 # Fetch vcpkg at the specified hash, download to the tmpfs directory when
 # running on Kokoro.
