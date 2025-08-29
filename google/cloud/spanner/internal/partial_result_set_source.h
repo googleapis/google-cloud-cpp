@@ -118,6 +118,19 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   // `NextRow()`.
   absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>> values_;
 
+  // `space_used` is the sum of the SpaceUsedLong() by the values at indexes [0,
+  // index) in `values_`.
+  struct PrecomputedSpaceUsed {
+    void Clear() {
+      space_used = 0;
+      index = 0;
+    }
+
+    std::size_t space_used = 0;
+    int index = 0;
+  };
+  PrecomputedSpaceUsed values_space_;
+
   // When engaged, the token we can use to resume the stream immediately after
   // any data in (or previously in) `rows_`. When disengaged, we have already
   // delivered data that would be replayed, so resumption is disabled until we

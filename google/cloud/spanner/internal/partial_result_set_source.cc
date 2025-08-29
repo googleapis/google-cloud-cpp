@@ -126,6 +126,7 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
                               tmp.data());
     }
     values_.reset();
+    values_space_.Clear();
     arena_.Reset();
     values_.emplace(&arena_);
     for (auto* elem : tmp) {
@@ -218,6 +219,7 @@ Status PartialResultSetSource::ReadFromStream() {
     }
     values_back_incomplete_ = false;
     values_->Clear();
+    values_space_.Clear();
   }
 
   // If the final value in the previous `PartialResultSet` was incomplete,
@@ -247,11 +249,17 @@ Status PartialResultSetSource::ReadFromStream() {
 
   // If we didn't receive a resume token, and have not exceeded our buffer
   // limit, then we choose to `Read()` again so as to maintain resumability.
-  if (result_set.result.resume_token().empty()) {
-    if (values_->SpaceUsedExcludingSelfLong() < values_space_limit_) {
+  if (result_set.result.resume_token().empty() && values_space_limit_ > 0) {
+    for (auto it = values_->begin() + values_space_.index; it != values_->end();
+         ++it) {
+      values_space_.space_used += it->SpaceUsedLong();
+    }
+    values_space_.index = values_->size();
+    if (values_space_.space_used < values_space_limit_) {
       return {};  // OK
     }
   }
+
 
   // If we did receive a resume token then everything should be deliverable,
   // and we'll be able to resume the stream at this point after a breakage.
