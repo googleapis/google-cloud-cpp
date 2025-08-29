@@ -119,7 +119,8 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     // There may be complete or partial rows in values_ that haven't been
     // returned to the clients yet. Let's copy it over before we reset
     // the arena.
-    int partial_size = values_->size() - rows_returned_ * columns_->size();
+    int partial_size =
+        static_cast<int>(values_->size() - rows_returned_ * columns_->size());
     absl::FixedArray<google::protobuf::Value*> tmp(partial_size);
     if (!tmp.empty()) {
       values_->ExtractSubrange(values_->size() - partial_size, partial_size,

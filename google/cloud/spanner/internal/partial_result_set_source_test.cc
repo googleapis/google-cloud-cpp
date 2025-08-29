@@ -91,10 +91,9 @@ MATCHER_P(IsValidAndEquals, expected,
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([](absl::optional<std::string> const&,
-                   spanner_internal::UnownedPartialResultSet& result) {
-        return false;
-      });
+      .WillOnce(
+          [](absl::optional<std::string> const&,
+             spanner_internal::UnownedPartialResultSet&) { return false; });
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);

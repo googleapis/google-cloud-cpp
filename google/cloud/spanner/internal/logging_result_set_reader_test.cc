@@ -50,7 +50,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
 TEST_F(LoggingResultSetReaderTest, Read) {
   auto mock = std::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Read(_, _))
-      .WillOnce([](absl::optional<std::string> const& resume_token,
+      .WillOnce([](absl::optional<std::string> const&,
                    UnownedPartialResultSet& result) {
         result.resumption = false;
         result.result.set_resume_token("test-token");
