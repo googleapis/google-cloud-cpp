@@ -16,6 +16,21 @@
 
 set -euo pipefail
 
+# New debug output to confirm which script is running
+echo "================================================================"
+echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
+echo "================================================================"
+
+# TEMPORARY WORKAROUND for corrupted homebrew taps in Kokoro images.
+echo "==> Cleaning up Homebrew taps"
+brew untap homebrew/cask --force || true
+brew untap homebrew/cask-versions --force || true
+brew untap homebrew/core --force || true
+
+# Perform a fresh update
+echo "==> Updating Homebrew"
+brew update -v
+
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
