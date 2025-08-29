@@ -16,6 +16,37 @@
 
 set -euo pipefail
 
+# New debug output to confirm which script is running
+echo "================================================================"
+echo "== EXECUTING SCRIPT FROM 'preview-kokoro-fix' BRANCH =="
+echo "================================================================"
+
+# ===== START HOMEBREW FIXES =====
+echo "== Attempting to fix Homebrew environment"
+
+# Check initial state
+echo "== DEBUG: Brew version before any fixes"
+brew --version || echo "brew version failed"
+echo "== DEBUG: Brew doctor before any fixes"
+brew doctor || echo "brew doctor failed"
+
+# Fix the git origin for Homebrew itself
+echo "== DEBUG: Setting Homebrew git origin"
+git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin, continuing..."
+
+# Forcefully reset Homebrew to clean up any corruption
+echo "== DEBUG: Running brew update-reset"
+brew update-reset
+
+# Check state after reset
+echo "== DEBUG: Brew version after update-reset"
+brew --version || echo "brew version failed"
+echo "== DEBUG: Brew doctor after update-reset"
+brew doctor || echo "brew doctor failed"
+
+echo "== DEBUG: Homebrew environment fixes complete"
+# ===== END HOMEBREW FIXES =====
+
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
