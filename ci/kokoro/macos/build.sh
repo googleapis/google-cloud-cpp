@@ -16,6 +16,9 @@
 
 set -euo pipefail
 
+# TEMPORARY WORKAROUND for outdated homebrew in Kokoro images.
+brew update-reset
+
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
