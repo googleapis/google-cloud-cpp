@@ -112,6 +112,8 @@ class TracingConnection : public storage::internal::StorageConnection {
       std::vector<std::thread> threads,
       std::vector<storage::internal::ParallelUploadFileShard> shards,
       bool ignore_cleanup_failures) override;
+  StatusOr<storage::internal::ObjectWriteStreamParams> SetupObjectWriteStream(
+      storage::internal::ResumableUploadRequest const& request) override;
 
   StatusOr<storage::internal::ListBucketAclResponse> ListBucketAcl(
       storage::internal::ListBucketAclRequest const& request) override;
