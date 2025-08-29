@@ -1,28 +1,28 @@
 name: Windows-Builds
 
-on:
-  workflow_call:
-    inputs:
-      checkout-ref:
-        required: true
-        description: "The ref we want to compile"
-        type: string
-      full-matrix:
-        required: true
-        description: "Build the full matrix"
-        type: boolean
-      sccache-mode:
-        required: true
-        description: "READ_WRITE or DISABLED"
-        type: string
-      vcpkg-cache-mode:
-        required: true
-        description: "read or readwrite"
-        type: string
-      execute-integration-tests:
-        required: true
-        description: "Integration tests require credentials."
-        type: boolean
+# on:
+#   workflow_call:
+#     inputs:
+#       checkout-ref:
+#         required: true
+#         description: "The ref we want to compile"
+#         type: string
+#       full-matrix:
+#         required: true
+#         description: "Build the full matrix"
+#         type: boolean
+#       sccache-mode:
+#         required: true
+#         description: "READ_WRITE or DISABLED"
+#         type: string
+#       vcpkg-cache-mode:
+#         required: true
+#         description: "read or readwrite"
+#         type: string
+#       execute-integration-tests:
+#         required: true
+#         description: "Integration tests require credentials."
+#         type: boolean
 
 permissions:
   contents: read
