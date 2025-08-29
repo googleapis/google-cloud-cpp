@@ -34,20 +34,29 @@ brew install bash ninja
 # Install a specific version of CMake to match our GHA builds
 (
   cd "${HOME}"
+  # Create a temporary local tap
   mkdir -p user/homebrew-tap/Formula
   cd user/homebrew-tap
-
   git init
 
+  # Download the Homebrew formula for CMake==3.27.2
   curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
   mv cmake.rb ./Formula/
 
   git add .
   git commit -m "Add CMake formula"
 
+  # Tap the local repository
   brew tap user/homebrew-tap "${HOME}/user/homebrew-tap"
+
+  # Uninstall existing CMake and install CMake from the local tap
   brew uninstall cmake
   brew install --build-from-source user/homebrew-tap/cmake
+
+  # Clean up the tap
+  brew untap user/homebrew-tap
+  cd "${HOME}"
+  rm -rf user
 )
 
 io::log_h2 "Using CMake version"
