@@ -60,13 +60,13 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    google::storage::v2::Object metadata)
+    google::storage::v2::Object metadata, bool first_request)
     : AsyncWriterConnectionImpl(std::move(options), std::move(request),
                                 std::move(impl), std::move(hash_function),
-                                PersistedStateType(std::move(metadata)),
-                                /*offset=*/0) {}
+                                PersistedStateType(metadata),
+                                /*offset=*/metadata.size(), std::move(first_request)) {}
 
-AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
+AsyncWriterConnectionImpl::AsyncWriterConnectionImpl( 
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
