@@ -16,6 +16,15 @@
 
 set -euo pipefail
 
+# Homebrew cleanup
+git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew || echo "Failed to set Homebrew origin"
+git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core || echo "Failed to set homebrew-core origin"
+brew untap homebrew/cask --force || echo "Failed to untap homebrew/cask"
+brew untap homebrew/core --force || echo "Failed to untap homebrew/core"
+brew untap homebrew/cask-versions --force || echo "Failed to untap homebrew/cask-versions"
+brew cleanup -s || echo "brew cleanup failed"
+brew update-reset
+
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
