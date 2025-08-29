@@ -84,9 +84,9 @@ PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
-      values_(
-          absl::make_optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
-              &arena_)) {
+      values_(absl::make_optional<
+              google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
+          &arena_)) {
   if (options_.has<spanner::StreamingResumabilityBufferSizeOption>()) {
     values_space_limit_ =
         options_.get<spanner::StreamingResumabilityBufferSizeOption>();
@@ -116,14 +116,14 @@ PartialResultSetSource::~PartialResultSetSource() {
 
 StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
   if (usable_rows_ == 0 && rows_returned_ > 0) {
-    // There may be complete or partial rows in values_ that haven't been 
+    // There may be complete or partial rows in values_ that haven't been
     // returned to the clients yet. Let's copy it over before we reset
     // the arena.
     int partial_size = values_->size() - rows_returned_ * columns_->size();
     absl::FixedArray<google::protobuf::Value*> tmp(partial_size);
     if (!tmp.empty()) {
       values_->ExtractSubrange(values_->size() - partial_size, partial_size,
-                              tmp.data());
+                               tmp.data());
     }
     values_.reset();
     values_space_.Clear();
@@ -155,22 +155,23 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
 
 Status PartialResultSetSource::ReadFromStream() {
   if (state_ == kFinished || usable_rows_ != 0 || rows_returned_ != 0) {
-     return internal::InternalError("PartialResultSetSource state error",
-                                    GCP_ERROR_INFO());
-   }
+    return internal::InternalError("PartialResultSetSource state error",
+                                   GCP_ERROR_INFO());
+  }
   auto* raw_result_set =
-      google::protobuf::Arena::Create<google::spanner::v1::PartialResultSet>(&arena_);
+      google::protobuf::Arena::Create<google::spanner::v1::PartialResultSet>(
+          &arena_);
   auto result_set =
       UnownedPartialResultSet::FromPartialResultSet(*raw_result_set);
-   if (state_ == kReading) {
-     if (!reader_->Read(resume_token_, result_set)) state_ = kEndOfStream;
-   }
-   if (state_ == kEndOfStream) {
-     // If we have no buffered data, we're done.
+  if (state_ == kReading) {
+    if (!reader_->Read(resume_token_, result_set)) state_ = kEndOfStream;
+  }
+  if (state_ == kEndOfStream) {
+    // If we have no buffered data, we're done.
     if (values_->empty()) {
-       state_ = kFinished;
-       return reader_->Finish();
-     }
+      state_ = kFinished;
+      return reader_->Finish();
+    }
     // Otherwise, proceed with a `PartialResultSet` using a fake resume
     // token to flush the buffer. The service does not appear to yield
     // a resume token in its final response, despite it completing a row.
@@ -202,7 +203,6 @@ Status PartialResultSetSource::ReadFromStream() {
   if (result_set.result.has_precommit_token()) {
     precommit_token_ = std::move(*result_set.result.mutable_precommit_token());
   }
-
 
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
   // used the token to resume an interrupted stream), then we must discard
@@ -259,7 +259,6 @@ Status PartialResultSetSource::ReadFromStream() {
       return {};  // OK
     }
   }
-
 
   // If we did receive a resume token then everything should be deliverable,
   // and we'll be able to resume the stream at this point after a breakage.

@@ -116,7 +116,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   // Values that can be assembled into `Row`s ready to be returned by
   // `NextRow()`.
-  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>> values_;
+  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>>
+      values_;
 
   // `space_used` is the sum of the SpaceUsedLong() by the values at indexes [0,
   // index) in `values_`.

@@ -50,7 +50,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
 TEST_F(LoggingResultSetReaderTest, Read) {
   auto mock = std::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Read(_, _))
-      .WillOnce([](const absl::optional<std::string>& resume_token,
+      .WillOnce([](absl::optional<std::string> const& resume_token,
                    UnownedPartialResultSet& result) {
         result.resumption = false;
         result.result.set_resume_token("test-token");
@@ -59,8 +59,8 @@ TEST_F(LoggingResultSetReaderTest, Read) {
       .WillOnce([] { return false; });
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   google::spanner::v1::PartialResultSet partial_result_set;
-  auto result = UnownedPartialResultSet::FromPartialResultSet(
-      partial_result_set);
+  auto result =
+      UnownedPartialResultSet::FromPartialResultSet(partial_result_set);
   ASSERT_TRUE(reader.Read("", result));
   EXPECT_EQ("test-token", result.result.resume_token());
 
@@ -74,7 +74,8 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, AllOf(Contains(StartsWith("Read()"))));
   EXPECT_THAT(log_lines, Contains(HasSubstr("resume_token=\"test-token\"")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("(failed)")));}
+  EXPECT_THAT(log_lines, Contains(HasSubstr("(failed)")));
+}
 
 TEST_F(LoggingResultSetReaderTest, Finish) {
   Status const expected_status = Status(StatusCode::kOutOfRange, "weird");
