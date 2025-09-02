@@ -142,7 +142,7 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     auto status = ReadFromStream();
     if (!status.ok()) return status;
   }
-  auto value_it = values_->cbegin() + rows_returned_ * columns_->size();
+  auto value_it = values_->begin() + rows_returned_ * columns_->size();
   ++rows_returned_;
   --usable_rows_;
   std::vector<spanner::Value> values;
