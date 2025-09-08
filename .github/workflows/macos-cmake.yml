@@ -280,13 +280,9 @@ jobs:
         # Tap the local repository
         brew tap user/homebrew-tap "${{runner.temp}}/user/homebrew-tap"
 
-        # Install CMake from the local tap
+        # Uninstall existing CMake and install CMake from the local tap
+        brew uninstall cmake
         brew install --build-from-source user/homebrew-tap/cmake
-
-        # Clean up the tap
-        brew untap user/homebrew-tap
-        cd "${{runner.temp}}"
-        rm -rf user
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
