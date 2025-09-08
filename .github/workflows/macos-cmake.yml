@@ -271,7 +271,7 @@ jobs:
         git init
 
         # Download the Homebrew formula for CMake==3.27.2
-        curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/c/cmake.rb
+        curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
         mv cmake.rb ./Formula/
 
         git add .
