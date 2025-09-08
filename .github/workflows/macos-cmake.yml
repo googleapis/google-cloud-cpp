@@ -280,7 +280,8 @@ jobs:
         # Tap the local repository
         brew tap user/homebrew-tap "${{runner.temp}}/user/homebrew-tap"
 
-        # Install CMake from the local tap
+        # Uninstall existing CMake and install CMake from the local tap
+        brew uninstall cmake
         brew install --build-from-source user/homebrew-tap/cmake
 
         # Clean up the tap
