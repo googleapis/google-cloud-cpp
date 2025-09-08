@@ -263,9 +263,30 @@ jobs:
       run: |
         # Remove the older CMake version
         brew unlink cmake
+
+        # Create a temporary local tap
+        cd "${{runner.temp}}"
+        mkdir -p user/homebrew-tap/Formula
+        cd user/homebrew-tap
+        git init
+
         # Download the Homebrew formula for CMake==3.27.2
         curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-        brew install cmake.rb
+        mv cmake.rb ./Formula/
+
+        git add .
+        git commit -m "Add CMake formula"
+
+        # Tap the local repository
+        brew tap user/homebrew-tap "${{runner.temp}}/user/homebrew-tap"
+
+        # Install CMake from the local tap
+        brew install --build-from-source user/homebrew-tap/cmake
+
+        # Clean up the tap
+        brew untap user/homebrew-tap
+        cd "${{runner.temp}}"
+        rm -rf user
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
