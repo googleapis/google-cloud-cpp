@@ -44,5 +44,12 @@
       "$description": "Only used for the docfx feature.",
       "name": "yaml-cpp"
     }
+  ],
+  "builtin-baseline": "5ed70064390f11112c34b91a6382bba0fdc1706d",
+  "overrides": [
+    {
+      "name": "opentelemetry-cpp",
+      "version": "1.20.0"
+    }
   ]
 }
