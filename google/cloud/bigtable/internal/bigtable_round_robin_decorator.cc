@@ -159,6 +159,16 @@ BigtableRoundRobin::AsyncReadModifyWriteRow(
                                           std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+BigtableRoundRobin::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return Child()->AsyncPrepareQuery(cq, std::move(context), std::move(options),
+                                    request);
+}
+
 std::shared_ptr<BigtableStub> BigtableRoundRobin::Child() {
   std::unique_lock<std::mutex> lk(mu_);
   auto const current = current_;

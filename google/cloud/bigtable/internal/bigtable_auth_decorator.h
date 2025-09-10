@@ -124,6 +124,13 @@ class BigtableAuth : public BigtableStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
+  future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+  AsyncPrepareQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PrepareQueryRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<BigtableStub> child_;
