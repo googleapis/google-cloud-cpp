@@ -55,7 +55,7 @@ enum class StreamMode { kScalar, kAggregate };
 
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::protobuf::Value const& v,
-                           google::bigtable::v2::Type const& t, StreamMode) {
+                           google::bigtable::v2::Type const&, StreamMode) {
   if (v.kind_case() == google::protobuf::Value::kNullValue) {
     return os << "NULL";
   }
