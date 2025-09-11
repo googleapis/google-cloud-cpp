@@ -51,6 +51,11 @@ class FeatureOnlineStoreServiceTracingConnection
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
           request) override;
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+  AsyncFeatureViewDirectWrite() override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

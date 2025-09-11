@@ -775,7 +775,7 @@ class PrivilegedAccessManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
-  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1045}
+  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1057}
   ///
   // clang-format on
   StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> ListGrants(
@@ -814,7 +814,7 @@ class PrivilegedAccessManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
-  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1045}
+  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1057}
   ///
   // clang-format on
   StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> ListGrants(
@@ -855,7 +855,7 @@ class PrivilegedAccessManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
-  /// [google.cloud.privilegedaccessmanager.v1.SearchGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1081}
+  /// [google.cloud.privilegedaccessmanager.v1.SearchGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1093}
   ///
   // clang-format on
   StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> SearchGrants(
@@ -880,7 +880,7 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1132}
+  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1144}
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
@@ -910,7 +910,7 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1132}
+  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1144}
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
@@ -940,7 +940,7 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1189}
+  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1201}
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
@@ -973,7 +973,7 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1189}
+  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1201}
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
@@ -1007,7 +1007,7 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.ApproveGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1143}
+  /// [google.cloud.privilegedaccessmanager.v1.ApproveGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1155}
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
@@ -1041,7 +1041,7 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.DenyGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1159}
+  /// [google.cloud.privilegedaccessmanager.v1.DenyGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1171}
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
@@ -1082,7 +1082,7 @@ class PrivilegedAccessManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
-  /// [google.cloud.privilegedaccessmanager.v1.RevokeGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1175}
+  /// [google.cloud.privilegedaccessmanager.v1.RevokeGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>

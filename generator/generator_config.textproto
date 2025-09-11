@@ -579,7 +579,8 @@ service {
     "MutateRows",
     "ReadModifyWriteRow",
     "ReadRows",
-    "SampleRowKeys"
+    "SampleRowKeys",
+    "PrepareQuery"
   ]
   omit_repo_metadata: true
 }
@@ -772,6 +773,21 @@ service {
   service_proto_path: "google/api/cloudquotas/v1/cloudquotas.proto"
   product_path: "google/cloud/cloudquotas/v1"
   initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Cloud Security Compliance
+service {
+  service_proto_path: "google/cloud/cloudsecuritycompliance/v1/config.proto"
+  product_path: "google/cloud/cloudsecuritycompliance/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/cloudsecuritycompliance/v1/deployment.proto"
+  product_path: "google/cloud/cloudsecuritycompliance/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 

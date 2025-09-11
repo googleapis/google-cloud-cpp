@@ -125,6 +125,13 @@ class BigtableStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) = 0;
+
+  virtual future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+  AsyncPrepareQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PrepareQueryRequest const& request) = 0;
 };
 
 class DefaultBigtableStub : public BigtableStub {
@@ -218,6 +225,13 @@ class DefaultBigtableStub : public BigtableStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
+
+  future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+  AsyncPrepareQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PrepareQueryRequest const& request) override;
 
  private:
   std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> grpc_stub_;

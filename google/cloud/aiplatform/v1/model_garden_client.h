@@ -179,7 +179,7 @@ class ModelGardenServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeployRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L110}
-  /// [google.cloud.aiplatform.v1.DeployResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L210}
+  /// [google.cloud.aiplatform.v1.DeployResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(

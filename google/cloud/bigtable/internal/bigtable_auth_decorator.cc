@@ -242,6 +242,27 @@ BigtableAuth::AsyncReadModifyWriteRow(
       });
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+BigtableAuth::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+                  std::move(context).status()));
+        }
+        return child->AsyncPrepareQuery(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

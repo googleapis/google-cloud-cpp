@@ -108,10 +108,17 @@ FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
       retry_policy(*current), backoff_policy(*current), factory,
       FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater,
       request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status,
+              google::cloud::aiplatform::v1::ReadFeatureValuesResponse> {
+        google::cloud::aiplatform::v1::ReadFeatureValuesResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>

@@ -100,6 +100,7 @@ declare -A -r LIBRARIES=(
   )"
   ["cloudcontrolspartner"]="@com_google_googleapis//google/cloud/cloudcontrolspartner/v1:cloudcontrolspartner_cc_grpc"
   ["cloudquotas"]="@com_google_googleapis//google/api/cloudquotas/v1:cloudquotas_cc_grpc"
+  ["cloudsecuritycompliance"]="@com_google_googleapis//google/cloud/cloudsecuritycompliance/v1:cloudsecuritycompliance_cc_grpc"
   ["commerce"]="@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"

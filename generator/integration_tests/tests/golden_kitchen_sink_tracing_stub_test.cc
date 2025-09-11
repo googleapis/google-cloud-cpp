@@ -50,7 +50,7 @@ using ::google::test::admin::database::v1::Response;
 using ::testing::_;
 using ::testing::IsEmpty;
 using ::testing::Not;
-using ::testing::VariantWith;
+using ::testing::Optional;
 
 auto constexpr kErrorCode = "ABORTED";
 
@@ -189,8 +189,9 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.StreamingRead(
       std::make_shared<grpc::ClientContext>(), Options{}, Request{});
-  auto v = stream->Read();
-  EXPECT_THAT(v, VariantWith<Status>(StatusIs(StatusCode::kAborted)));
+  Response response;
+  EXPECT_THAT(stream->Read(&response),
+              Optional(StatusIs(StatusCode::kAborted)));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

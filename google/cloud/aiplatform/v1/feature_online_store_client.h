@@ -110,8 +110,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L96}
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L118}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L109}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
@@ -143,8 +143,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L96}
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L118}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L109}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
@@ -177,8 +177,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L285}
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L328}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L298}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L341}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
@@ -186,6 +186,38 @@ class FeatureOnlineStoreServiceClient {
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
           request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Bidirectional streaming RPC to directly write to feature values in a
+  /// feature view. Requests may not have a one-to-one mapping to responses and
+  /// responses may be returned out-of-order to reduce latency.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.aiplatform.v1.FeatureViewDirectWriteRequest]) and response messages
+  ///     ([google.cloud.aiplatform.v1.FeatureViewDirectWriteResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.FeatureViewDirectWriteRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L348}
+  /// [google.cloud.aiplatform.v1.FeatureViewDirectWriteResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L384}
+  ///
+  // clang-format on
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+  AsyncFeatureViewDirectWrite(Options opts = {});
 
   // clang-format off
   ///
