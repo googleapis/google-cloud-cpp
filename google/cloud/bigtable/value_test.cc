@@ -142,12 +142,6 @@ void SetProtoKind(Value& v, char const* x) {
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
-void SetProtoKind(Value& v, bool x) {
-  auto p = bigtable_internal::ToProto(v);
-  p.second.set_bool_value(x);
-  v = bigtable_internal::FromProto(p.first, p.second);
-}
-
 void ClearProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.second.clear_kind();

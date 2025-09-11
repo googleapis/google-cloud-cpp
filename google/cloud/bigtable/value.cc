@@ -36,16 +36,17 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   return false;
 }
 
+// TODO: uncomment this when implementing `string`
 // A helper to escape all double quotes in the given string `s`. For example,
 // if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
 // wrap `s` itself in double quotes.
-std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
-  for (auto const& c : s) {
-    if (c == '"') os << "\\";
-    os << c;
-  }
-  return os;
-}
+// std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
+//   for (auto const& c : s) {
+//     if (c == '"') os << "\\";
+//     os << c;
+//   }
+//   return os;
+// }
 
 // An enum to tell StreamHelper() whether a value is being printed as a scalar
 // or as part of an aggregate type (i.e., a vector or tuple). Some types may
@@ -54,13 +55,12 @@ enum class StreamMode { kScalar, kAggregate };
 
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::protobuf::Value const& v,
-                           google::bigtable::v2::Type const& t,
-                           StreamMode mode) {
+                           google::bigtable::v2::Type const& t, StreamMode) {
   if (v.kind_case() == google::protobuf::Value::kNullValue) {
     return os << "NULL";
   }
 
-  if (t.has_bool_type()) {
+  if (v.kind_case() == google::protobuf::Value::kBoolValue) {
     return os << v.bool_value();
   }
   // TODO: include type name
