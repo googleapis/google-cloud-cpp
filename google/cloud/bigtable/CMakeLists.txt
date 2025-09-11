@@ -215,7 +215,6 @@ add_library(
     internal/rpc_policy_parameters.inc
     internal/traced_row_reader.cc
     internal/traced_row_reader.h
-    internal/tuple_utils.cc
     internal/tuple_utils.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
