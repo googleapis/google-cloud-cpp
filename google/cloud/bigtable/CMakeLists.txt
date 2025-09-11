@@ -251,6 +251,8 @@ add_library(
     table_config.h
     table_resource.cc
     table_resource.h
+    value.cc
+    value.h
     version.cc
     version.h
     version_info.h
@@ -488,6 +490,7 @@ if (BUILD_TESTING)
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
+        value_test.cc
         wait_for_consistency_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
