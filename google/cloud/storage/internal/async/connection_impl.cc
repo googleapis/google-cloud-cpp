@@ -390,7 +390,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
             false);
         return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
                                            std::move(request), std::move(hash),
-                                           *current);
+                                           rpc->first_response, *current);
       });
 }
 
