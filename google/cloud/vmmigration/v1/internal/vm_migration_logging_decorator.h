@@ -89,6 +89,12 @@ class VmMigrationLogging : public VmMigrationStub {
                  google::cloud::vmmigration::v1::FetchInventoryRequest const&
                      request) override;
 
+  StatusOr<google::cloud::vmmigration::v1::FetchStorageInventoryResponse>
+  FetchStorageInventory(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+          request) override;
+
   StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
   ListUtilizationReports(
       grpc::ClientContext& context, Options const& options,
@@ -268,6 +274,18 @@ class VmMigrationLogging : public VmMigrationStub {
   StatusOr<google::longrunning::Operation> FinalizeMigration(
       grpc::ClientContext& context, Options options,
       google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExtendMigration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExtendMigration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCloneJob(
@@ -465,6 +483,136 @@ class VmMigrationLogging : public VmMigrationStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
       override;
+
+  StatusOr<google::cloud::vmmigration::v1::ListImageImportsResponse>
+  ListImageImports(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::ListImageImportsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::vmmigration::v1::ImageImport> GetImageImport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::GetImageImportRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateImageImport(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateImageImport(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteImageImport(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteImageImport(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request)
+      override;
+
+  StatusOr<google::cloud::vmmigration::v1::ListImageImportJobsResponse>
+  ListImageImportJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::ListImageImportJobsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::vmmigration::v1::ImageImportJob> GetImageImportJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::GetImageImportJobRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCancelImageImportJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CancelImageImportJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDiskMigrationJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDiskMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse>
+  ListDiskMigrationJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+  GetDiskMigrationJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDiskMigrationJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDiskMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDiskMigrationJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDiskMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRunDiskMigrationJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RunDiskMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCancelDiskMigrationJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CancelDiskMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

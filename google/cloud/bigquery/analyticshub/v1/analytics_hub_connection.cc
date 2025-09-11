@@ -243,6 +243,54 @@ AnalyticsHubServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnection::CreateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        CreateQueryTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnection::GetQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnection::ListQueryTemplates(
+    google::cloud::bigquery::analyticshub::v1::
+        ListQueryTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>>();
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnection::UpdateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        UpdateQueryTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status AnalyticsHubServiceConnection::DeleteQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteQueryTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnection::SubmitQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        SubmitQueryTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnection::ApproveQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AnalyticsHubServiceConnection>
 MakeAnalyticsHubServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

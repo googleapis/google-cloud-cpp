@@ -226,6 +226,10 @@ class VmMigrationConnection {
   FetchInventory(
       google::cloud::vmmigration::v1::FetchInventoryRequest const& request);
 
+  virtual StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+  FetchStorageInventory(
+      google::cloud::vmmigration::v1::FetchStorageInventoryRequest request);
+
   virtual StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
   ListUtilizationReports(
       google::cloud::vmmigration::v1::ListUtilizationReportsRequest request);
@@ -400,6 +404,19 @@ class VmMigrationConnection {
   virtual future<
       StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
   FinalizeMigration(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+  ExtendMigration(
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExtendMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+  ExtendMigration(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
   CreateCloneJob(
@@ -582,6 +599,136 @@ class VmMigrationConnection {
   GetReplicationCycle(
       google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
           request);
+
+  virtual StreamRange<google::cloud::vmmigration::v1::ImageImport>
+  ListImageImports(
+      google::cloud::vmmigration::v1::ListImageImportsRequest request);
+
+  virtual StatusOr<google::cloud::vmmigration::v1::ImageImport> GetImageImport(
+      google::cloud::vmmigration::v1::GetImageImportRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateImageImport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteImageImport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+  ListImageImportJobs(
+      google::cloud::vmmigration::v1::ListImageImportJobsRequest request);
+
+  virtual StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+  GetImageImportJob(
+      google::cloud::vmmigration::v1::GetImageImportJobRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CancelImageImportJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+  ListDiskMigrationJobs(
+      google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request);
+
+  virtual StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+  GetDiskMigrationJob(
+      google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> RunDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+  CancelDiskMigrationJob(
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CancelDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+  CancelDiskMigrationJob(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

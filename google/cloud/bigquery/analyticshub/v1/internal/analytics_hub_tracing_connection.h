@@ -161,6 +161,36 @@ class AnalyticsHubServiceTracingConnection
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  CreateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          CreateQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  GetQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+          request) override;
+
+  StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ListQueryTemplates(
+      google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+          request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  UpdateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          UpdateQueryTemplateRequest const& request) override;
+
+  Status DeleteQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  SubmitQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          SubmitQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ApproveQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                           ApproveQueryTemplateRequest const& request) override;
+
  private:
   std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection>
       child_;

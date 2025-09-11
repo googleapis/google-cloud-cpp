@@ -56,6 +56,37 @@ DefaultConfidentialComputingStub::VerifyAttestation(
   return response;
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+DefaultConfidentialComputingStub::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse
+      response;
+  auto status =
+      grpc_stub_->VerifyConfidentialSpace(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+DefaultConfidentialComputingStub::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse
+      response;
+  auto status = grpc_stub_->VerifyConfidentialGke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConfidentialComputingStub::ListLocations(
     grpc::ClientContext& context, Options const&,

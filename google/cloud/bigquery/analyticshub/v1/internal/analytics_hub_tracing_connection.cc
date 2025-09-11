@@ -356,6 +356,85 @@ AnalyticsHubServiceTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingConnection::CreateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "CreateQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateQueryTemplate(request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingConnection::GetQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "GetQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetQueryTemplate(request));
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingConnection::ListQueryTemplates(
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListQueryTemplates");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListQueryTemplates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::QueryTemplate>(std::move(span),
+                                                                std::move(sr));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingConnection::UpdateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "UpdateQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateQueryTemplate(request));
+}
+
+Status AnalyticsHubServiceTracingConnection::DeleteQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteQueryTemplate(request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingConnection::SubmitQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubmitQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SubmitQueryTemplate(request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingConnection::ApproveQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ApproveQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ApproveQueryTemplate(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection>

@@ -178,6 +178,12 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>),
+      FetchStorageInventory,
+      (google::cloud::vmmigration::v1::FetchStorageInventoryRequest request),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::vmmigration::v1::UtilizationReport>),
       ListUtilizationReports,
       (google::cloud::vmmigration::v1::ListUtilizationReportsRequest request),
@@ -713,6 +719,46 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// ExtendMigration(Matcher<google::cloud::vmmigration::v1::ExtendMigrationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>,
+      ExtendMigration,
+      (google::cloud::vmmigration::v1::ExtendMigrationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExtendMigration(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExtendMigration,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::ExtendMigrationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExtendMigration(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>,
+      ExtendMigration, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// CreateCloneJob(Matcher<google::cloud::vmmigration::v1::CreateCloneJobRequest
   /// const&>(_)))
   /// @endcode
@@ -1238,6 +1284,374 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
                    request),
               (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::vmmigration::v1::ImageImport>),
+              ListImageImports,
+              (google::cloud::vmmigration::v1::ListImageImportsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::vmmigration::v1::ImageImport>, GetImageImport,
+      (google::cloud::vmmigration::v1::GetImageImportRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateImageImport(Matcher<google::cloud::vmmigration::v1::CreateImageImportRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>,
+      CreateImageImport,
+      (google::cloud::vmmigration::v1::CreateImageImportRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateImageImport(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateImageImport,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::CreateImageImportRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateImageImport(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>,
+              CreateImageImport,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteImageImport(Matcher<google::cloud::vmmigration::v1::DeleteImageImportRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      DeleteImageImport,
+      (google::cloud::vmmigration::v1::DeleteImageImportRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteImageImport(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteImageImport,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::DeleteImageImportRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteImageImport(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      DeleteImageImport, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::vmmigration::v1::ImageImportJob>),
+      ListImageImportJobs,
+      (google::cloud::vmmigration::v1::ListImageImportJobsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::vmmigration::v1::ImageImportJob>,
+      GetImageImportJob,
+      (google::cloud::vmmigration::v1::GetImageImportJobRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelImageImportJob(Matcher<google::cloud::vmmigration::v1::CancelImageImportJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::vmmigration::v1::CancelImageImportJobResponse>>,
+      CancelImageImportJob,
+      (google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CancelImageImportJob(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CancelImageImportJob,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelImageImportJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::vmmigration::v1::CancelImageImportJobResponse>>,
+      CancelImageImportJob, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDiskMigrationJob(Matcher<google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>,
+      CreateDiskMigrationJob,
+      (google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDiskMigrationJob(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDiskMigrationJob,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDiskMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>,
+      CreateDiskMigrationJob, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>),
+      ListDiskMigrationJobs,
+      (google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>,
+              GetDiskMigrationJob,
+              (google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDiskMigrationJob(Matcher<google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>,
+      UpdateDiskMigrationJob,
+      (google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDiskMigrationJob(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDiskMigrationJob,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDiskMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>,
+      UpdateDiskMigrationJob, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDiskMigrationJob(Matcher<google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      DeleteDiskMigrationJob,
+      (google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDiskMigrationJob(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDiskMigrationJob,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDiskMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      DeleteDiskMigrationJob, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunDiskMigrationJob(Matcher<google::cloud::vmmigration::v1::RunDiskMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>,
+              RunDiskMigrationJob,
+              (google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunDiskMigrationJob(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunDiskMigrationJob,
+              (NoAwaitTag,
+               google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunDiskMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>,
+              RunDiskMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelDiskMigrationJob(Matcher<google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>,
+      CancelDiskMigrationJob,
+      (google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CancelDiskMigrationJob(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CancelDiskMigrationJob,
+      (NoAwaitTag,
+       google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelDiskMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>,
+      CancelDiskMigrationJob, (google::longrunning::Operation const& operation),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),

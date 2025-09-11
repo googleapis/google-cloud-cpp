@@ -141,6 +141,16 @@ VmMigrationAuth::FetchInventory(
   return child_->FetchInventory(context, options, request);
 }
 
+StatusOr<google::cloud::vmmigration::v1::FetchStorageInventoryResponse>
+VmMigrationAuth::FetchStorageInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchStorageInventory(context, options, request);
+}
+
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 VmMigrationAuth::ListUtilizationReports(
     grpc::ClientContext& context, Options const& options,
@@ -545,6 +555,34 @@ StatusOr<google::longrunning::Operation> VmMigrationAuth::FinalizeMigration(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FinalizeMigration(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncExtendMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncExtendMigration(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationAuth::ExtendMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExtendMigration(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -972,6 +1010,299 @@ VmMigrationAuth::GetReplicationCycle(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReplicationCycle(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportsResponse>
+VmMigrationAuth::ListImageImports(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListImageImports(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationAuth::GetImageImport(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetImageImport(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncCreateImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateImageImport(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationAuth::CreateImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateImageImport(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncDeleteImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteImageImport(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationAuth::DeleteImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteImageImport(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportJobsResponse>
+VmMigrationAuth::ListImageImportJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListImageImportJobs(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationAuth::GetImageImportJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetImageImportJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncCancelImageImportJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCancelImageImportJob(cq, *std::move(context),
+                                                std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationAuth::CancelImageImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelImageImportJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncCreateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateDiskMigrationJob(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationAuth::CreateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDiskMigrationJob(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse>
+VmMigrationAuth::ListDiskMigrationJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDiskMigrationJobs(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationAuth::GetDiskMigrationJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncUpdateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateDiskMigrationJob(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationAuth::UpdateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncDeleteDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteDiskMigrationJob(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationAuth::DeleteDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncRunDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRunDiskMigrationJob(cq, *std::move(context),
+                                               std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationAuth::RunDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationAuth::AsyncCancelDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCancelDiskMigrationJob(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationAuth::CancelDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelDiskMigrationJob(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
