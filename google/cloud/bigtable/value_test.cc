@@ -61,7 +61,6 @@ void TestBasicSemantics(T init) {
 
   // Ensures that the protos for a NULL T have the same "type" as a non-null T.
   auto const null_protos = bigtable_internal::ToProto(null);
-  // TODO: enable Proto equality
   EXPECT_THAT(null_protos.first, IsProtoEqual(protos.first));
   EXPECT_EQ(null_protos.second.null_value(),
             google::protobuf::NullValue::NULL_VALUE);
@@ -77,7 +76,7 @@ TEST(Value, BasicSemantics) {
   for (auto x : {false, true}) {
     SCOPED_TRACE("Testing: bool " + std::to_string(x));
     TestBasicSemantics(x);
-    // TODO: enable vector support
+    // uncomment after enabling vector support
     // TestBasicSemantics(std::vector<bool>(5, x));
     // std::vector<absl::optional<bool>> v(5, x);
     // v.resize(10);
@@ -97,7 +96,6 @@ TEST(Value, Equality) {
     // Compares tc.first to tc2.second, which ensures that different "kinds" of
     // value are never equal.
     for (auto const& tc2 : test_cases) {
-      // TODO: since we only support bool, this is a no-op for now
       EXPECT_NE(tc.first, tc2.second);
     }
   }

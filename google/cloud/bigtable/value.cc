@@ -36,7 +36,7 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   return false;
 }
 
-// TODO: uncomment this when implementing `string`
+// uncomment this when implementing `string`
 // A helper to escape all double quotes in the given string `s`. For example,
 // if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
 // wrap `s` itself in double quotes.
@@ -63,7 +63,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   if (v.kind_case() == google::protobuf::Value::kBoolValue) {
     return os << v.bool_value();
   }
-  // TODO: include type name
+  // this should include type name
   return os << "Error: unknown value type code ";
 }
 }  // namespace
