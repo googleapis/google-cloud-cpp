@@ -50,6 +50,22 @@ ConfidentialComputingConnection::VerifyAttestation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingConnection::VerifyConfidentialSpace(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingConnection::VerifyConfidentialGke(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 ConfidentialComputingConnection::ListLocations(
     google::cloud::location::

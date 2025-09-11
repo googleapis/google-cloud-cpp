@@ -46,6 +46,14 @@ class ConfidentialComputingConnectionIdempotencyPolicy {
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request);
 
+  virtual google::cloud::Idempotency VerifyConfidentialSpace(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request);
+
+  virtual google::cloud::Idempotency VerifyConfidentialGke(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialGkeRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

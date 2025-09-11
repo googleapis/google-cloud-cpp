@@ -60,6 +60,18 @@ class ConfidentialComputingConnectionImpl
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request) override;
+
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialGkeRequest const& request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

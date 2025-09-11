@@ -110,8 +110,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L94}
-  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L121}
+  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L139}
+  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L166}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
@@ -142,8 +142,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L94}
-  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L121}
+  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L139}
+  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L166}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
@@ -153,7 +153,8 @@ class ConfidentialComputingClient {
 
   // clang-format off
   ///
-  /// Verifies the provided attestation info, returning a signed OIDC token.
+  /// Verifies the provided attestation info, returning a signed attestation
+  /// token.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -174,8 +175,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L138}
-  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L218}
+  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L183}
+  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L263}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
@@ -183,6 +184,74 @@ class ConfidentialComputingClient {
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Verifies whether the provided attestation info is valid, returning a signed
+  /// attestation token if so.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L411}
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L493}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(google::cloud::confidentialcomputing::v1::
+                              VerifyConfidentialSpaceRequest const& request,
+                          Options opts = {});
+
+  // clang-format off
+  ///
+  /// Verifies the provided Confidential GKE attestation info, returning a signed
+  /// OIDC token.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L511}
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L533}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(google::cloud::confidentialcomputing::v1::
+                            VerifyConfidentialGkeRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///

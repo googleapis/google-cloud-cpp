@@ -154,6 +154,19 @@ DefaultVmMigrationStub::FetchInventory(
   return response;
 }
 
+StatusOr<google::cloud::vmmigration::v1::FetchStorageInventoryResponse>
+DefaultVmMigrationStub::FetchStorageInventory(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+        request) {
+  google::cloud::vmmigration::v1::FetchStorageInventoryResponse response;
+  auto status = grpc_stub_->FetchStorageInventory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 DefaultVmMigrationStub::ListUtilizationReports(
     grpc::ClientContext& context, Options const&,
@@ -611,6 +624,37 @@ DefaultVmMigrationStub::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->FinalizeMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncExtendMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::ExtendMigrationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vmmigration::v1::ExtendMigrationRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExtendMigration(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::ExtendMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExtendMigration(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -1098,6 +1142,345 @@ DefaultVmMigrationStub::GetReplicationCycle(
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
   google::cloud::vmmigration::v1::ReplicationCycle response;
   auto status = grpc_stub_->GetReplicationCycle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportsResponse>
+DefaultVmMigrationStub::ListImageImports(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::ListImageImportsRequest const& request) {
+  google::cloud::vmmigration::v1::ListImageImportsResponse response;
+  auto status = grpc_stub_->ListImageImports(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+DefaultVmMigrationStub::GetImageImport(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::GetImageImportRequest const& request) {
+  google::cloud::vmmigration::v1::ImageImport response;
+  auto status = grpc_stub_->GetImageImport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncCreateImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::CreateImageImportRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::vmmigration::v1::CreateImageImportRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateImageImport(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateImageImport(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateImageImport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncDeleteImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::DeleteImageImportRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::vmmigration::v1::DeleteImageImportRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteImageImport(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::DeleteImageImport(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteImageImport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportJobsResponse>
+DefaultVmMigrationStub::ListImageImportJobs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest const& request) {
+  google::cloud::vmmigration::v1::ListImageImportJobsResponse response;
+  auto status = grpc_stub_->ListImageImportJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+DefaultVmMigrationStub::GetImageImportJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const& request) {
+  google::cloud::vmmigration::v1::ImageImportJob response;
+  auto status = grpc_stub_->GetImageImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncCancelImageImportJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCancelImageImportJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CancelImageImportJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CancelImageImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncCreateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDiskMigrationJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateDiskMigrationJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDiskMigrationJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse>
+DefaultVmMigrationStub::ListDiskMigrationJobs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+        request) {
+  google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse response;
+  auto status = grpc_stub_->ListDiskMigrationJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+DefaultVmMigrationStub::GetDiskMigrationJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request) {
+  google::cloud::vmmigration::v1::DiskMigrationJob response;
+  auto status = grpc_stub_->GetDiskMigrationJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncUpdateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDiskMigrationJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::UpdateDiskMigrationJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateDiskMigrationJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncDeleteDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDiskMigrationJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::DeleteDiskMigrationJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDiskMigrationJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncRunDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRunDiskMigrationJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::RunDiskMigrationJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunDiskMigrationJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVmMigrationStub::AsyncCancelDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCancelDiskMigrationJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CancelDiskMigrationJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CancelDiskMigrationJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

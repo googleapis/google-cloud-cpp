@@ -120,6 +120,34 @@ class AnalyticsHubServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency CreateQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          CreateQueryTemplateRequest const& request);
+
+  virtual google::cloud::Idempotency GetQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListQueryTemplates(
+      google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+          request);
+
+  virtual google::cloud::Idempotency UpdateQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          UpdateQueryTemplateRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteQueryTemplateRequest const& request);
+
+  virtual google::cloud::Idempotency SubmitQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          SubmitQueryTemplateRequest const& request);
+
+  virtual google::cloud::Idempotency ApproveQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          ApproveQueryTemplateRequest const& request);
 };
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>

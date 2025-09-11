@@ -63,6 +63,36 @@ ConfidentialComputingLogging::VerifyAttestation(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingLogging::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::confidentialcomputing::v1::
+                 VerifyConfidentialSpaceRequest const& request) {
+        return child_->VerifyConfidentialSpace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingLogging::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::confidentialcomputing::v1::
+                 VerifyConfidentialGkeRequest const& request) {
+        return child_->VerifyConfidentialGke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

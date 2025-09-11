@@ -160,6 +160,48 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::CreateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        CreateQueryTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListQueryTemplates(
+    google::cloud::bigquery::analyticshub::v1::
+        ListQueryTemplatesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::UpdateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        UpdateQueryTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteQueryTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SubmitQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        SubmitQueryTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+AnalyticsHubServiceConnectionIdempotencyPolicy::ApproveQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
 MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>();

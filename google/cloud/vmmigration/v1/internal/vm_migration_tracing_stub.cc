@@ -143,6 +143,19 @@ VmMigrationTracingStub::FetchInventory(
                            child_->FetchInventory(context, options, request));
 }
 
+StatusOr<google::cloud::vmmigration::v1::FetchStorageInventoryResponse>
+VmMigrationTracingStub::FetchStorageInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "FetchStorageInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->FetchStorageInventory(context, options, request));
+}
+
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 VmMigrationTracingStub::ListUtilizationReports(
     grpc::ClientContext& context, Options const& options,
@@ -554,6 +567,33 @@ VmMigrationTracingStub::FinalizeMigration(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->FinalizeMigration(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncExtendMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "ExtendMigration");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncExtendMigration(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::ExtendMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "ExtendMigration");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExtendMigration(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -993,6 +1033,309 @@ VmMigrationTracingStub::GetReplicationCycle(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->GetReplicationCycle(context, options, request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportsResponse>
+VmMigrationTracingStub::ListImageImports(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "ListImageImports");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListImageImports(context, options, request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationTracingStub::GetImageImport(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "GetImageImport");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetImageImport(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncCreateImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CreateImageImport");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateImageImport(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::CreateImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CreateImageImport");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateImageImport(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncDeleteImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "DeleteImageImport");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteImageImport(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::DeleteImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "DeleteImageImport");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteImageImport(context, options, request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportJobsResponse>
+VmMigrationTracingStub::ListImageImportJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "ListImageImportJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListImageImportJobs(context, options, request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationTracingStub::GetImageImportJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "GetImageImportJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetImageImportJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncCancelImageImportJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CancelImageImportJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCancelImageImportJob(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::CancelImageImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CancelImageImportJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CancelImageImportJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncCreateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CreateDiskMigrationJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateDiskMigrationJob(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::CreateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CreateDiskMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateDiskMigrationJob(context, options, request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse>
+VmMigrationTracingStub::ListDiskMigrationJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "ListDiskMigrationJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListDiskMigrationJobs(context, options, request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationTracingStub::GetDiskMigrationJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "GetDiskMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetDiskMigrationJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncUpdateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "UpdateDiskMigrationJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateDiskMigrationJob(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::UpdateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "UpdateDiskMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateDiskMigrationJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncDeleteDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "DeleteDiskMigrationJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteDiskMigrationJob(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::DeleteDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "DeleteDiskMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteDiskMigrationJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncRunDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "RunDiskMigrationJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRunDiskMigrationJob(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::RunDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "RunDiskMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RunDiskMigrationJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationTracingStub::AsyncCancelDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CancelDiskMigrationJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCancelDiskMigrationJob(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingStub::CancelDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
+                                     "CancelDiskMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CancelDiskMigrationJob(context, options, request));
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

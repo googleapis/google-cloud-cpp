@@ -49,6 +49,20 @@ class ConfidentialComputingAuth : public ConfidentialComputingStub {
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request) override;
+
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialGkeRequest const& request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

@@ -64,6 +64,11 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::FetchInventory(
   return Idempotency::kIdempotent;
 }
 
+Idempotency VmMigrationConnectionIdempotencyPolicy::FetchStorageInventory(
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListUtilizationReports(
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -152,6 +157,11 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::PauseMigration(
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::ExtendMigration(
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -263,6 +273,76 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::ListReplicationCycles(
 Idempotency VmMigrationConnectionIdempotencyPolicy::GetReplicationCycle(
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListImageImports(
+    google::cloud::vmmigration::v1::ListImageImportsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetImageImport(
+    google::cloud::vmmigration::v1::GetImageImportRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateImageImport(
+    google::cloud::vmmigration::v1::CreateImageImportRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteImageImport(
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListImageImportJobs(
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetImageImportJob(
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::CancelImageImportJob(
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::CreateDiskMigrationJob(
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListDiskMigrationJobs(
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetDiskMigrationJob(
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::UpdateDiskMigrationJob(
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteDiskMigrationJob(
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::RunDiskMigrationJob(
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::CancelDiskMigrationJob(
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListLocations(

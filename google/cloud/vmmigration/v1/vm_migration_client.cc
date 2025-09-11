@@ -209,6 +209,27 @@ VmMigrationClient::FetchInventory(
   return connection_->FetchInventory(request);
 }
 
+StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+VmMigrationClient::FetchStorageInventory(
+    std::string const& source,
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest::StorageType
+        type,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::FetchStorageInventoryRequest request;
+  request.set_source(source);
+  request.set_type(type);
+  return connection_->FetchStorageInventory(request);
+}
+
+StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+VmMigrationClient::FetchStorageInventory(
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchStorageInventory(std::move(request));
+}
+
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationClient::ListUtilizationReports(std::string const& parent,
                                           Options opts) {
@@ -782,6 +803,29 @@ VmMigrationClient::FinalizeMigration(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FinalizeMigration(operation);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+VmMigrationClient::ExtendMigration(
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExtendMigration(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::ExtendMigration(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExtendMigration(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+VmMigrationClient::ExtendMigration(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExtendMigration(operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
@@ -1459,6 +1503,442 @@ VmMigrationClient::GetReplicationCycle(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReplicationCycle(request);
+}
+
+StreamRange<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationClient::ListImageImports(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::ListImageImportsRequest request;
+  request.set_parent(parent);
+  return connection_->ListImageImports(request);
+}
+
+StreamRange<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationClient::ListImageImports(
+    google::cloud::vmmigration::v1::ListImageImportsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListImageImports(std::move(request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationClient::GetImageImport(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::GetImageImportRequest request;
+  request.set_name(name);
+  return connection_->GetImageImport(request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationClient::GetImageImport(
+    google::cloud::vmmigration::v1::GetImageImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetImageImport(request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+VmMigrationClient::CreateImageImport(
+    std::string const& parent,
+    google::cloud::vmmigration::v1::ImageImport const& image_import,
+    std::string const& image_import_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::CreateImageImportRequest request;
+  request.set_parent(parent);
+  *request.mutable_image_import() = image_import;
+  request.set_image_import_id(image_import_id);
+  return connection_->CreateImageImport(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::CreateImageImport(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmmigration::v1::ImageImport const& image_import,
+    std::string const& image_import_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::CreateImageImportRequest request;
+  request.set_parent(parent);
+  *request.mutable_image_import() = image_import;
+  request.set_image_import_id(image_import_id);
+  return connection_->CreateImageImport(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+VmMigrationClient::CreateImageImport(
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImageImport(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::CreateImageImport(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImageImport(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+VmMigrationClient::CreateImageImport(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImageImport(operation);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationClient::DeleteImageImport(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::DeleteImageImportRequest request;
+  request.set_name(name);
+  return connection_->DeleteImageImport(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteImageImport(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::DeleteImageImportRequest request;
+  request.set_name(name);
+  return connection_->DeleteImageImport(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationClient::DeleteImageImport(
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImageImport(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteImageImport(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImageImport(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationClient::DeleteImageImport(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImageImport(operation);
+}
+
+StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationClient::ListImageImportJobs(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::ListImageImportJobsRequest request;
+  request.set_parent(parent);
+  return connection_->ListImageImportJobs(request);
+}
+
+StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationClient::ListImageImportJobs(
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListImageImportJobs(std::move(request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationClient::GetImageImportJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::GetImageImportJobRequest request;
+  request.set_name(name);
+  return connection_->GetImageImportJob(request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationClient::GetImageImportJob(
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetImageImportJob(request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+VmMigrationClient::CancelImageImportJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::CancelImageImportJobRequest request;
+  request.set_name(name);
+  return connection_->CancelImageImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::CancelImageImportJob(NoAwaitTag, std::string const& name,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::CancelImageImportJobRequest request;
+  request.set_name(name);
+  return connection_->CancelImageImportJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+VmMigrationClient::CancelImageImportJob(
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelImageImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::CancelImageImportJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelImageImportJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+VmMigrationClient::CancelImageImportJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelImageImportJob(operation);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationClient::CreateDiskMigrationJob(
+    std::string const& parent,
+    google::cloud::vmmigration::v1::DiskMigrationJob const& disk_migration_job,
+    std::string const& disk_migration_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_disk_migration_job() = disk_migration_job;
+  request.set_disk_migration_job_id(disk_migration_job_id);
+  return connection_->CreateDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::CreateDiskMigrationJob(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmmigration::v1::DiskMigrationJob const& disk_migration_job,
+    std::string const& disk_migration_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_disk_migration_job() = disk_migration_job;
+  request.set_disk_migration_job_id(disk_migration_job_id);
+  return connection_->CreateDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationClient::CreateDiskMigrationJob(
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::CreateDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationClient::CreateDiskMigrationJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDiskMigrationJob(operation);
+}
+
+StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationClient::ListDiskMigrationJobs(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDiskMigrationJobs(request);
+}
+
+StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationClient::ListDiskMigrationJobs(
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDiskMigrationJobs(std::move(request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationClient::GetDiskMigrationJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::GetDiskMigrationJobRequest request;
+  request.set_name(name);
+  return connection_->GetDiskMigrationJob(request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationClient::GetDiskMigrationJob(
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDiskMigrationJob(request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationClient::UpdateDiskMigrationJob(
+    google::cloud::vmmigration::v1::DiskMigrationJob const& disk_migration_job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest request;
+  *request.mutable_disk_migration_job() = disk_migration_job;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::UpdateDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::DiskMigrationJob const& disk_migration_job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest request;
+  *request.mutable_disk_migration_job() = disk_migration_job;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationClient::UpdateDiskMigrationJob(
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::UpdateDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationClient::UpdateDiskMigrationJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDiskMigrationJob(operation);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationClient::DeleteDiskMigrationJob(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::DeleteDiskMigrationJob(NoAwaitTag, std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationClient::DeleteDiskMigrationJob(
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::DeleteDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationClient::DeleteDiskMigrationJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDiskMigrationJob(operation);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+VmMigrationClient::RunDiskMigrationJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::RunDiskMigrationJobRequest request;
+  request.set_name(name);
+  return connection_->RunDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::RunDiskMigrationJob(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::RunDiskMigrationJobRequest request;
+  request.set_name(name);
+  return connection_->RunDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+VmMigrationClient::RunDiskMigrationJob(
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationClient::RunDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+VmMigrationClient::RunDiskMigrationJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunDiskMigrationJob(operation);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+VmMigrationClient::CancelDiskMigrationJob(
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelDiskMigrationJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationClient::CancelDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelDiskMigrationJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+VmMigrationClient::CancelDiskMigrationJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelDiskMigrationJob(operation);
 }
 
 StreamRange<google::cloud::location::Location> VmMigrationClient::ListLocations(

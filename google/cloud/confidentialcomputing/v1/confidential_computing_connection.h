@@ -200,6 +200,16 @@ class ConfidentialComputingConnection {
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(google::cloud::confidentialcomputing::v1::
+                              VerifyConfidentialSpaceRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(google::cloud::confidentialcomputing::v1::
+                            VerifyConfidentialGkeRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
