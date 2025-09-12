@@ -964,7 +964,7 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 }
 
 TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
-  if (!UsingEmulator()) GTEST_SKIP();
+  GTEST_SKIP();
   auto async = AsyncClient(
       TestOptions().set<storage_experimental::MaximumRangeSizeOption>(1024));
   auto client = MakeIntegrationTestClient(true, TestOptions());

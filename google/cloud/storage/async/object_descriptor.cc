@@ -27,11 +27,14 @@ absl::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
 
 std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
                                                           std::int64_t limit) {
-  std::int64_t max_range =
-      impl_->options().get<storage_experimental::MaximumRangeSizeOption>();
-  if (limit > max_range) {
-    impl_->MakeSubsequentStream();
-  }
+  //TODO: This change is causing performance regression. We need to revisit it
+  //after benchmarking our code.
+
+  // std::int64_t max_range =
+  // impl_->options().get<storage_experimental::MaximumRangeSizeOption>();
+  // if (limit > max_range) {
+  //   impl_->MakeSubsequentStream();
+  // }
   auto reader = impl_->Read({offset, limit});
   auto token = storage_internal::MakeAsyncToken(reader.get());
   return {AsyncReader(std::move(reader)), std::move(token)};

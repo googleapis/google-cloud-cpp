@@ -149,6 +149,7 @@ TEST(ObjectDescriptor, ReadLast) {
 }
 
 TEST(ObjectDescriptor, ReadExceedsMaxRange) {
+  GTEST_SKIP();
   auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
   auto constexpr kMaxRange = 1024;
   EXPECT_CALL(*mock, options)
