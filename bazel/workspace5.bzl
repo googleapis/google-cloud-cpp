@@ -25,3 +25,12 @@ def gl_cpp_workspace5(name = None):
     """
     # This is a placeholder, if we ever need more phases the function already
     # exists.
+    native.bind(
+        name = "libcrypto",
+        actual = "@boringssl//:crypto",
+    )
+
+    native.bind(
+        name = "libssl",
+        actual = "@boringssl//:ssl",
+    )
