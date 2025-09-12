@@ -37,74 +37,87 @@ class DataTransferServiceConnectionIdempotencyPolicy {
   virtual ~DataTransferServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
+  clone() const;
+
+  virtual google::cloud::Idempotency ListMulticloudDataTransferConfigs(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferConfigsRequest request);
+
+  virtual google::cloud::Idempotency GetMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferConfigRequest const& request);
+
+  virtual google::cloud::Idempotency CreateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request);
+
+  virtual google::cloud::Idempotency ListDestinations(
+      google::cloud::networkconnectivity::v1::ListDestinationsRequest request);
+
+  virtual google::cloud::Idempotency GetDestination(
+      google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateDestination(
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateDestination(
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteDestination(
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetMulticloudDataTransferSupportedService(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferSupportedServiceRequest const& request);
 
   virtual google::cloud::Idempotency
-  ListMulticloudDataTransferConfigs(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request);
+  ListMulticloudDataTransferSupportedServices(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferSupportedServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDestinations(google::cloud::networkconnectivity::v1::ListDestinationsRequest request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetDestination(google::cloud::networkconnectivity::v1::GetDestinationRequest const& request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateDestination(google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDestination(google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDestination(google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request);
-
-  virtual google::cloud::Idempotency
-  GetMulticloudDataTransferSupportedService(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request);
-
-  virtual google::cloud::Idempotency
-  ListMulticloudDataTransferSupportedServices(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request);
-
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
-
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
-
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
-
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
-
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
-
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataTransferServiceConnectionIdempotencyPolicy();
+MakeDefaultDataTransferServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_v1

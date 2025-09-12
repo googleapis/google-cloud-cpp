@@ -32,50 +32,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataTransferServiceLogging::DataTransferServiceLogging(
     std::shared_ptr<DataTransferServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse>
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferConfigsResponse>
 DataTransferServiceLogging::ListMulticloudDataTransferConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) {
-        return child_->ListMulticloudDataTransferConfigs(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 ListMulticloudDataTransferConfigsRequest const& request) {
+        return child_->ListMulticloudDataTransferConfigs(context, options,
+                                                         request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
 DataTransferServiceLogging::GetMulticloudDataTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) {
-        return child_->GetMulticloudDataTransferConfig(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 GetMulticloudDataTransferConfigRequest const& request) {
+        return child_->GetMulticloudDataTransferConfig(context, options,
+                                                       request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceLogging::AsyncCreateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
+             google::cloud::networkconnectivity::v1::
+                 CreateMulticloudDataTransferConfigRequest const& request) {
         return child_->AsyncCreateMulticloudDataTransferConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -85,29 +88,32 @@ DataTransferServiceLogging::AsyncCreateMulticloudDataTransferConfig(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::CreateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
-        return child_->CreateMulticloudDataTransferConfig(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 CreateMulticloudDataTransferConfigRequest const& request) {
+        return child_->CreateMulticloudDataTransferConfig(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceLogging::AsyncUpdateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
+             google::cloud::networkconnectivity::v1::
+                 UpdateMulticloudDataTransferConfigRequest const& request) {
         return child_->AsyncUpdateMulticloudDataTransferConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -117,29 +123,32 @@ DataTransferServiceLogging::AsyncUpdateMulticloudDataTransferConfig(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::UpdateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
-        return child_->UpdateMulticloudDataTransferConfig(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 UpdateMulticloudDataTransferConfigRequest const& request) {
+        return child_->UpdateMulticloudDataTransferConfig(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceLogging::AsyncDeleteMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
+             google::cloud::networkconnectivity::v1::
+                 DeleteMulticloudDataTransferConfigRequest const& request) {
         return child_->AsyncDeleteMulticloudDataTransferConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -149,27 +158,29 @@ DataTransferServiceLogging::AsyncDeleteMulticloudDataTransferConfig(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::DeleteMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
-        return child_->DeleteMulticloudDataTransferConfig(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 DeleteMulticloudDataTransferConfigRequest const& request) {
+        return child_->DeleteMulticloudDataTransferConfig(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse>
 DataTransferServiceLogging::ListDestinations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+              request) {
         return child_->ListDestinations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -177,13 +188,14 @@ DataTransferServiceLogging::ListDestinations(
 
 StatusOr<google::cloud::networkconnectivity::v1::Destination>
 DataTransferServiceLogging::GetDestination(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+              request) {
         return child_->GetDestination(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -191,17 +203,19 @@ DataTransferServiceLogging::GetDestination(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceLogging::AsyncCreateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
-        return child_->AsyncCreateDestination(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::networkconnectivity::v1::
+                 CreateDestinationRequest const& request) {
+        return child_->AsyncCreateDestination(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -209,13 +223,13 @@ DataTransferServiceLogging::AsyncCreateDestination(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::CreateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 CreateDestinationRequest const& request) {
         return child_->CreateDestination(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -223,17 +237,19 @@ DataTransferServiceLogging::CreateDestination(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceLogging::AsyncUpdateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
-        return child_->AsyncUpdateDestination(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::networkconnectivity::v1::
+                 UpdateDestinationRequest const& request) {
+        return child_->AsyncUpdateDestination(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -241,13 +257,13 @@ DataTransferServiceLogging::AsyncUpdateDestination(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::UpdateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 UpdateDestinationRequest const& request) {
         return child_->UpdateDestination(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -255,17 +271,19 @@ DataTransferServiceLogging::UpdateDestination(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceLogging::AsyncDeleteDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
-        return child_->AsyncDeleteDestination(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::networkconnectivity::v1::
+                 DeleteDestinationRequest const& request) {
+        return child_->AsyncDeleteDestination(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -273,54 +291,58 @@ DataTransferServiceLogging::AsyncDeleteDestination(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::DeleteDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 DeleteDestinationRequest const& request) {
         return child_->DeleteDestination(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
 DataTransferServiceLogging::GetMulticloudDataTransferSupportedService(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferSupportedServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) {
-        return child_->GetMulticloudDataTransferSupportedService(context, options, request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::
+              GetMulticloudDataTransferSupportedServiceRequest const& request) {
+        return child_->GetMulticloudDataTransferSupportedService(
+            context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse>
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferSupportedServicesResponse>
 DataTransferServiceLogging::ListMulticloudDataTransferSupportedServices(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferSupportedServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) {
-        return child_->ListMulticloudDataTransferSupportedServices(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 ListMulticloudDataTransferSupportedServicesRequest const&
+                     request) {
+        return child_->ListMulticloudDataTransferSupportedServices(
+            context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataTransferServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -329,40 +351,32 @@ DataTransferServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 DataTransferServiceLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataTransferServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataTransferServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataTransferServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataTransferServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -371,12 +385,10 @@ DataTransferServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataTransferServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -385,12 +397,10 @@ DataTransferServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataTransferServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -399,40 +409,32 @@ DataTransferServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataTransferServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataTransferServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataTransferServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataTransferServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -450,8 +452,8 @@ DataTransferServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -467,8 +469,8 @@ future<Status> DataTransferServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

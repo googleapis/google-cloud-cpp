@@ -28,148 +28,220 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataTransferServiceClient::DataTransferServiceClient(
     std::shared_ptr<DataTransferServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataTransferServiceClient::~DataTransferServiceClient() = default;
 
-StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-DataTransferServiceClient::ListMulticloudDataTransferConfigs(std::string const& parent, Options opts) {
+StreamRange<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+DataTransferServiceClient::ListMulticloudDataTransferConfigs(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request;
+  google::cloud::networkconnectivity::v1::
+      ListMulticloudDataTransferConfigsRequest request;
   request.set_parent(parent);
   return connection_->ListMulticloudDataTransferConfigs(request);
 }
 
-StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-DataTransferServiceClient::ListMulticloudDataTransferConfigs(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request, Options opts) {
+StreamRange<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+DataTransferServiceClient::ListMulticloudDataTransferConfigs(
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMulticloudDataTransferConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-DataTransferServiceClient::GetMulticloudDataTransferConfig(std::string const& name, Options opts) {
+DataTransferServiceClient::GetMulticloudDataTransferConfig(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest request;
+  google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest
+      request;
   request.set_name(name);
   return connection_->GetMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-DataTransferServiceClient::GetMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request, Options opts) {
+DataTransferServiceClient::GetMulticloudDataTransferConfig(
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMulticloudDataTransferConfig(request);
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-DataTransferServiceClient::CreateMulticloudDataTransferConfig(std::string const& parent, google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, std::string const& multicloud_data_transfer_config_id, Options opts) {
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+DataTransferServiceClient::CreateMulticloudDataTransferConfig(
+    std::string const& parent,
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const&
+        multicloud_data_transfer_config,
+    std::string const& multicloud_data_transfer_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest request;
+  google::cloud::networkconnectivity::v1::
+      CreateMulticloudDataTransferConfigRequest request;
   request.set_parent(parent);
-  *request.mutable_multicloud_data_transfer_config() = multicloud_data_transfer_config;
-  request.set_multicloud_data_transfer_config_id(multicloud_data_transfer_config_id);
+  *request.mutable_multicloud_data_transfer_config() =
+      multicloud_data_transfer_config;
+  request.set_multicloud_data_transfer_config_id(
+      multicloud_data_transfer_config_id);
   return connection_->CreateMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::CreateMulticloudDataTransferConfig(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, std::string const& multicloud_data_transfer_config_id, Options opts) {
+DataTransferServiceClient::CreateMulticloudDataTransferConfig(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const&
+        multicloud_data_transfer_config,
+    std::string const& multicloud_data_transfer_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest request;
+  google::cloud::networkconnectivity::v1::
+      CreateMulticloudDataTransferConfigRequest request;
   request.set_parent(parent);
-  *request.mutable_multicloud_data_transfer_config() = multicloud_data_transfer_config;
-  request.set_multicloud_data_transfer_config_id(multicloud_data_transfer_config_id);
+  *request.mutable_multicloud_data_transfer_config() =
+      multicloud_data_transfer_config;
+  request.set_multicloud_data_transfer_config_id(
+      multicloud_data_transfer_config_id);
   return connection_->CreateMulticloudDataTransferConfig(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-DataTransferServiceClient::CreateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+DataTransferServiceClient::CreateMulticloudDataTransferConfig(
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::CreateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request, Options opts) {
+DataTransferServiceClient::CreateMulticloudDataTransferConfig(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMulticloudDataTransferConfig(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-DataTransferServiceClient::CreateMulticloudDataTransferConfig(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+DataTransferServiceClient::CreateMulticloudDataTransferConfig(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMulticloudDataTransferConfig(operation);
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-DataTransferServiceClient::UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+DataTransferServiceClient::UpdateMulticloudDataTransferConfig(
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const&
+        multicloud_data_transfer_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest request;
-  *request.mutable_multicloud_data_transfer_config() = multicloud_data_transfer_config;
+  google::cloud::networkconnectivity::v1::
+      UpdateMulticloudDataTransferConfigRequest request;
+  *request.mutable_multicloud_data_transfer_config() =
+      multicloud_data_transfer_config;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::UpdateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataTransferServiceClient::UpdateMulticloudDataTransferConfig(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const&
+        multicloud_data_transfer_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest request;
-  *request.mutable_multicloud_data_transfer_config() = multicloud_data_transfer_config;
+  google::cloud::networkconnectivity::v1::
+      UpdateMulticloudDataTransferConfigRequest request;
+  *request.mutable_multicloud_data_transfer_config() =
+      multicloud_data_transfer_config;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateMulticloudDataTransferConfig(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-DataTransferServiceClient::UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+DataTransferServiceClient::UpdateMulticloudDataTransferConfig(
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::UpdateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request, Options opts) {
+DataTransferServiceClient::UpdateMulticloudDataTransferConfig(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMulticloudDataTransferConfig(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-DataTransferServiceClient::UpdateMulticloudDataTransferConfig(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+DataTransferServiceClient::UpdateMulticloudDataTransferConfig(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMulticloudDataTransferConfig(operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-DataTransferServiceClient::DeleteMulticloudDataTransferConfig(std::string const& name, Options opts) {
+DataTransferServiceClient::DeleteMulticloudDataTransferConfig(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest request;
+  google::cloud::networkconnectivity::v1::
+      DeleteMulticloudDataTransferConfigRequest request;
   request.set_name(name);
   return connection_->DeleteMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::DeleteMulticloudDataTransferConfig(NoAwaitTag, std::string const& name, Options opts) {
+DataTransferServiceClient::DeleteMulticloudDataTransferConfig(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest request;
+  google::cloud::networkconnectivity::v1::
+      DeleteMulticloudDataTransferConfigRequest request;
   request.set_name(name);
   return connection_->DeleteMulticloudDataTransferConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-DataTransferServiceClient::DeleteMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request, Options opts) {
+DataTransferServiceClient::DeleteMulticloudDataTransferConfig(
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMulticloudDataTransferConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::DeleteMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request, Options opts) {
+DataTransferServiceClient::DeleteMulticloudDataTransferConfig(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMulticloudDataTransferConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-DataTransferServiceClient::DeleteMulticloudDataTransferConfig(google::longrunning::Operation const& operation, Options opts) {
+DataTransferServiceClient::DeleteMulticloudDataTransferConfig(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMulticloudDataTransferConfig(operation);
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Destination>
-DataTransferServiceClient::ListDestinations(std::string const& parent, Options opts) {
+DataTransferServiceClient::ListDestinations(std::string const& parent,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::ListDestinationsRequest request;
   request.set_parent(parent);
@@ -177,13 +249,16 @@ DataTransferServiceClient::ListDestinations(std::string const& parent, Options o
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Destination>
-DataTransferServiceClient::ListDestinations(google::cloud::networkconnectivity::v1::ListDestinationsRequest request, Options opts) {
+DataTransferServiceClient::ListDestinations(
+    google::cloud::networkconnectivity::v1::ListDestinationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDestinations(std::move(request));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Destination>
-DataTransferServiceClient::GetDestination(std::string const& name, Options opts) {
+DataTransferServiceClient::GetDestination(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::GetDestinationRequest request;
   request.set_name(name);
@@ -191,13 +266,19 @@ DataTransferServiceClient::GetDestination(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Destination>
-DataTransferServiceClient::GetDestination(google::cloud::networkconnectivity::v1::GetDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::GetDestination(
+    google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDestination(request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-DataTransferServiceClient::CreateDestination(std::string const& parent, google::cloud::networkconnectivity::v1::Destination const& destination, std::string const& destination_id, Options opts) {
+DataTransferServiceClient::CreateDestination(
+    std::string const& parent,
+    google::cloud::networkconnectivity::v1::Destination const& destination,
+    std::string const& destination_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::CreateDestinationRequest request;
   request.set_parent(parent);
@@ -207,7 +288,10 @@ DataTransferServiceClient::CreateDestination(std::string const& parent, google::
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::CreateDestination(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::Destination const& destination, std::string const& destination_id, Options opts) {
+DataTransferServiceClient::CreateDestination(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkconnectivity::v1::Destination const& destination,
+    std::string const& destination_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::CreateDestinationRequest request;
   request.set_parent(parent);
@@ -217,25 +301,35 @@ DataTransferServiceClient::CreateDestination(NoAwaitTag, std::string const& pare
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-DataTransferServiceClient::CreateDestination(google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::CreateDestination(
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDestination(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::CreateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::CreateDestination(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDestination(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-DataTransferServiceClient::CreateDestination(google::longrunning::Operation const& operation, Options opts) {
+DataTransferServiceClient::CreateDestination(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDestination(operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-DataTransferServiceClient::UpdateDestination(google::cloud::networkconnectivity::v1::Destination const& destination, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataTransferServiceClient::UpdateDestination(
+    google::cloud::networkconnectivity::v1::Destination const& destination,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::UpdateDestinationRequest request;
   *request.mutable_destination() = destination;
@@ -244,7 +338,10 @@ DataTransferServiceClient::UpdateDestination(google::cloud::networkconnectivity:
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::UpdateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::Destination const& destination, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataTransferServiceClient::UpdateDestination(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::Destination const& destination,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::UpdateDestinationRequest request;
   *request.mutable_destination() = destination;
@@ -253,25 +350,34 @@ DataTransferServiceClient::UpdateDestination(NoAwaitTag, google::cloud::networkc
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-DataTransferServiceClient::UpdateDestination(google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::UpdateDestination(
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDestination(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::UpdateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::UpdateDestination(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDestination(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-DataTransferServiceClient::UpdateDestination(google::longrunning::Operation const& operation, Options opts) {
+DataTransferServiceClient::UpdateDestination(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDestination(operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-DataTransferServiceClient::DeleteDestination(std::string const& name, Options opts) {
+DataTransferServiceClient::DeleteDestination(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::DeleteDestinationRequest request;
   request.set_name(name);
@@ -279,7 +385,9 @@ DataTransferServiceClient::DeleteDestination(std::string const& name, Options op
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::DeleteDestination(NoAwaitTag, std::string const& name, Options opts) {
+DataTransferServiceClient::DeleteDestination(NoAwaitTag,
+                                             std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::DeleteDestinationRequest request;
   request.set_name(name);
@@ -287,83 +395,111 @@ DataTransferServiceClient::DeleteDestination(NoAwaitTag, std::string const& name
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-DataTransferServiceClient::DeleteDestination(google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::DeleteDestination(
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDestination(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::DeleteDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request, Options opts) {
+DataTransferServiceClient::DeleteDestination(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDestination(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-DataTransferServiceClient::DeleteDestination(google::longrunning::Operation const& operation, Options opts) {
+DataTransferServiceClient::DeleteDestination(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDestination(operation);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-DataTransferServiceClient::GetMulticloudDataTransferSupportedService(std::string const& name, Options opts) {
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
+DataTransferServiceClient::GetMulticloudDataTransferSupportedService(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest request;
+  google::cloud::networkconnectivity::v1::
+      GetMulticloudDataTransferSupportedServiceRequest request;
   request.set_name(name);
   return connection_->GetMulticloudDataTransferSupportedService(request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-DataTransferServiceClient::GetMulticloudDataTransferSupportedService(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request, Options opts) {
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
+DataTransferServiceClient::GetMulticloudDataTransferSupportedService(
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferSupportedServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMulticloudDataTransferSupportedService(request);
 }
 
-StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-DataTransferServiceClient::ListMulticloudDataTransferSupportedServices(std::string const& parent, Options opts) {
+StreamRange<google::cloud::networkconnectivity::v1::
+                MulticloudDataTransferSupportedService>
+DataTransferServiceClient::ListMulticloudDataTransferSupportedServices(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request;
+  google::cloud::networkconnectivity::v1::
+      ListMulticloudDataTransferSupportedServicesRequest request;
   request.set_parent(parent);
   return connection_->ListMulticloudDataTransferSupportedServices(request);
 }
 
-StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-DataTransferServiceClient::ListMulticloudDataTransferSupportedServices(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request, Options opts) {
+StreamRange<google::cloud::networkconnectivity::v1::
+                MulticloudDataTransferSupportedService>
+DataTransferServiceClient::ListMulticloudDataTransferSupportedServices(
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferSupportedServicesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ListMulticloudDataTransferSupportedServices(std::move(request));
+  return connection_->ListMulticloudDataTransferSupportedServices(
+      std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DataTransferServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+DataTransferServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-DataTransferServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+DataTransferServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataTransferServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataTransferServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataTransferServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataTransferServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataTransferServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+DataTransferServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DataTransferServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+DataTransferServiceClient::ListOperations(std::string const& name,
+                                          std::string const& filter,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -372,7 +508,8 @@ DataTransferServiceClient::ListOperations(std::string const& name, std::string c
 }
 
 StreamRange<google::longrunning::Operation>
-DataTransferServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+DataTransferServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
@@ -386,35 +523,36 @@ DataTransferServiceClient::GetOperation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-DataTransferServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+DataTransferServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-DataTransferServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status DataTransferServiceClient::DeleteOperation(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-DataTransferServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status DataTransferServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-DataTransferServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status DataTransferServiceClient::CancelOperation(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-DataTransferServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status DataTransferServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -68,21 +68,22 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section networkconnectivity-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `networkconnectivity_v1::HubServiceClient`:
+For example, this will override the retry policies for `networkconnectivity_v1::DataTransferServiceClient`:
 
-@snippet hub_client_samples.cc set-retry-policy
+@snippet data_transfer_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet hub_client_samples.cc custom-idempotency-policy
+@snippet data_transfer_client_samples.cc custom-idempotency-policy
 
-This will override the polling policies for `networkconnectivity_v1::HubServiceClient`
+This will override the polling policies for `networkconnectivity_v1::DataTransferServiceClient`
 
-@snippet hub_client_samples.cc set-polling-policy
+@snippet data_transfer_client_samples.cc set-polling-policy
 
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c networkconnectivity_v1::DataTransferServiceClient](@ref networkconnectivity_v1::DataTransferServiceClient-retry-snippet)
 - [\c networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-retry-snippet)
 - [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref networkconnectivity_v1::PolicyBasedRoutingServiceClient-retry-snippet)
 
@@ -99,6 +100,18 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page networkconnectivity_v1::DataTransferServiceClient-retry-snippet Override networkconnectivity_v1::DataTransferServiceClient Retry Policies
+
+This shows how to override the retry policies for networkconnectivity_v1::DataTransferServiceClient:
+
+@snippet google/cloud/networkconnectivity/v1/samples/data_transfer_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/networkconnectivity/v1/samples/data_transfer_client_samples.cc custom-idempotency-policy
+
+*/
 
 /*! @page networkconnectivity_v1::HubServiceClient-retry-snippet Override networkconnectivity_v1::HubServiceClient Retry Policies
 

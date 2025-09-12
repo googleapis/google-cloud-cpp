@@ -32,119 +32,155 @@ DataTransferServiceTracingStub::DataTransferServiceTracingStub(
     std::shared_ptr<DataTransferServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse> DataTransferServiceTracingStub::ListMulticloudDataTransferConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "ListMulticloudDataTransferConfigs");
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferConfigsResponse>
+DataTransferServiceTracingStub::ListMulticloudDataTransferConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferConfigsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "ListMulticloudDataTransferConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListMulticloudDataTransferConfigs(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListMulticloudDataTransferConfigs(context, options, request));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig> DataTransferServiceTracingStub::GetMulticloudDataTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "GetMulticloudDataTransferConfig");
+StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+DataTransferServiceTracingStub::GetMulticloudDataTransferConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "GetMulticloudDataTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetMulticloudDataTransferConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetMulticloudDataTransferConfig(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceTracingStub::AsyncCreateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "CreateMulticloudDataTransferConfig");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "CreateMulticloudDataTransferConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateMulticloudDataTransferConfig(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateMulticloudDataTransferConfig(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceTracingStub::CreateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "CreateMulticloudDataTransferConfig");
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "CreateMulticloudDataTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateMulticloudDataTransferConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateMulticloudDataTransferConfig(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceTracingStub::AsyncUpdateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "UpdateMulticloudDataTransferConfig");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "UpdateMulticloudDataTransferConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateMulticloudDataTransferConfig(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateMulticloudDataTransferConfig(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceTracingStub::UpdateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "UpdateMulticloudDataTransferConfig");
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "UpdateMulticloudDataTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateMulticloudDataTransferConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateMulticloudDataTransferConfig(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceTracingStub::AsyncDeleteMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "DeleteMulticloudDataTransferConfig");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "DeleteMulticloudDataTransferConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteMulticloudDataTransferConfig(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteMulticloudDataTransferConfig(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceTracingStub::DeleteMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "DeleteMulticloudDataTransferConfig");
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "DeleteMulticloudDataTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteMulticloudDataTransferConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteMulticloudDataTransferConfig(context, options, request));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse> DataTransferServiceTracingStub::ListDestinations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "ListDestinations");
+StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse>
+DataTransferServiceTracingStub::ListDestinations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "ListDestinations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDestinations(context, options, request));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::Destination> DataTransferServiceTracingStub::GetDestination(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "GetDestination");
+StatusOr<google::cloud::networkconnectivity::v1::Destination>
+DataTransferServiceTracingStub::GetDestination(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "GetDestination");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -153,117 +189,148 @@ StatusOr<google::cloud::networkconnectivity::v1::Destination> DataTransferServic
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceTracingStub::AsyncCreateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "CreateDestination");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "CreateDestination");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDestination(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateDestination(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceTracingStub::CreateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "CreateDestination");
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "CreateDestination");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateDestination(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateDestination(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceTracingStub::AsyncUpdateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "UpdateDestination");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "UpdateDestination");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDestination(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateDestination(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceTracingStub::UpdateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "UpdateDestination");
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "UpdateDestination");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateDestination(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateDestination(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceTracingStub::AsyncDeleteDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "DeleteDestination");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "DeleteDestination");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDestination(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteDestination(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceTracingStub::DeleteDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "DeleteDestination");
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "DeleteDestination");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDestination(context, options, request));
+}
+
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
+DataTransferServiceTracingStub::GetMulticloudDataTransferSupportedService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferSupportedServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "GetMulticloudDataTransferSupportedService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteDestination(context, options, request));
+                           child_->GetMulticloudDataTransferSupportedService(
+                               context, options, request));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService> DataTransferServiceTracingStub::GetMulticloudDataTransferSupportedService(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "GetMulticloudDataTransferSupportedService");
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferSupportedServicesResponse>
+DataTransferServiceTracingStub::ListMulticloudDataTransferSupportedServices(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferSupportedServicesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "ListMulticloudDataTransferSupportedServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMulticloudDataTransferSupportedService(context, options, request));
+                           child_->ListMulticloudDataTransferSupportedServices(
+                               context, options, request));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse> DataTransferServiceTracingStub::ListMulticloudDataTransferSupportedServices(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "ListMulticloudDataTransferSupportedServices");
-  auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListMulticloudDataTransferSupportedServices(context, options, request));
-}
-
-StatusOr<google::cloud::location::ListLocationsResponse> DataTransferServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DataTransferServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> DataTransferServiceTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+DataTransferServiceTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -271,10 +338,11 @@ StatusOr<google::cloud::location::Location> DataTransferServiceTracingStub::GetL
 }
 
 StatusOr<google::iam::v1::Policy> DataTransferServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -282,43 +350,50 @@ StatusOr<google::iam::v1::Policy> DataTransferServiceTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataTransferServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> DataTransferServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataTransferServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DataTransferServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DataTransferServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> DataTransferServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+DataTransferServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -326,10 +401,11 @@ StatusOr<google::longrunning::Operation> DataTransferServiceTracingStub::GetOper
 }
 
 Status DataTransferServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -337,10 +413,11 @@ Status DataTransferServiceTracingStub::DeleteOperation(
 }
 
 Status DataTransferServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.DataTransferService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.DataTransferService",
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -357,8 +434,7 @@ DataTransferServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -371,8 +447,8 @@ future<Status> DataTransferServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

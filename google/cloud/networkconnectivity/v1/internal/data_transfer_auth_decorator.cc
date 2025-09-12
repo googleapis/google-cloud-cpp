@@ -31,19 +31,22 @@ DataTransferServiceAuth::DataTransferServiceAuth(
     std::shared_ptr<DataTransferServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse> DataTransferServiceAuth::ListMulticloudDataTransferConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferConfigsResponse>
+DataTransferServiceAuth::ListMulticloudDataTransferConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListMulticloudDataTransferConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig> DataTransferServiceAuth::GetMulticloudDataTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+DataTransferServiceAuth::GetMulticloudDataTransferConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetMulticloudDataTransferConfig(context, options, request);
@@ -51,14 +54,16 @@ StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig> D
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceAuth::AsyncCreateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -70,9 +75,9 @@ DataTransferServiceAuth::AsyncCreateMulticloudDataTransferConfig(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceAuth::CreateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateMulticloudDataTransferConfig(context, options, request);
@@ -80,14 +85,16 @@ DataTransferServiceAuth::CreateMulticloudDataTransferConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceAuth::AsyncUpdateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -99,9 +106,9 @@ DataTransferServiceAuth::AsyncUpdateMulticloudDataTransferConfig(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceAuth::UpdateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateMulticloudDataTransferConfig(context, options, request);
@@ -109,14 +116,16 @@ DataTransferServiceAuth::UpdateMulticloudDataTransferConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceAuth::AsyncDeleteMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -128,27 +137,29 @@ DataTransferServiceAuth::AsyncDeleteMulticloudDataTransferConfig(
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceAuth::DeleteMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteMulticloudDataTransferConfig(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse> DataTransferServiceAuth::ListDestinations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse>
+DataTransferServiceAuth::ListDestinations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDestinations(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::Destination> DataTransferServiceAuth::GetDestination(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::Destination>
+DataTransferServiceAuth::GetDestination(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDestination(context, options, request);
@@ -156,28 +167,30 @@ StatusOr<google::cloud::networkconnectivity::v1::Destination> DataTransferServic
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceAuth::AsyncCreateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDestination(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDestination(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceAuth::CreateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDestination(context, options, request);
@@ -185,28 +198,30 @@ DataTransferServiceAuth::CreateDestination(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceAuth::AsyncUpdateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDestination(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDestination(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceAuth::UpdateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDestination(context, options, request);
@@ -214,63 +229,71 @@ DataTransferServiceAuth::UpdateDestination(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTransferServiceAuth::AsyncDeleteDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDestination(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDestination(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceAuth::DeleteDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDestination(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService> DataTransferServiceAuth::GetMulticloudDataTransferSupportedService(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
+DataTransferServiceAuth::GetMulticloudDataTransferSupportedService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferSupportedServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMulticloudDataTransferSupportedService(context, options, request);
+  return child_->GetMulticloudDataTransferSupportedService(context, options,
+                                                           request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse> DataTransferServiceAuth::ListMulticloudDataTransferSupportedServices(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferSupportedServicesResponse>
+DataTransferServiceAuth::ListMulticloudDataTransferSupportedServices(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferSupportedServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMulticloudDataTransferSupportedServices(context, options, request);
+  return child_->ListMulticloudDataTransferSupportedServices(context, options,
+                                                             request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DataTransferServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DataTransferServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> DataTransferServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+DataTransferServiceAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -278,8 +301,7 @@ StatusOr<google::cloud::location::Location> DataTransferServiceAuth::GetLocation
 }
 
 StatusOr<google::iam::v1::Policy> DataTransferServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -287,26 +309,25 @@ StatusOr<google::iam::v1::Policy> DataTransferServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataTransferServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> DataTransferServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataTransferServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DataTransferServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DataTransferServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -314,8 +335,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DataTransferServiceAuth::L
 }
 
 StatusOr<google::longrunning::Operation> DataTransferServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -323,8 +343,7 @@ StatusOr<google::longrunning::Operation> DataTransferServiceAuth::GetOperation(
 }
 
 Status DataTransferServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -332,8 +351,7 @@ Status DataTransferServiceAuth::DeleteOperation(
 }
 
 Status DataTransferServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -347,15 +365,16 @@ DataTransferServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -364,13 +383,14 @@ future<Status> DataTransferServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

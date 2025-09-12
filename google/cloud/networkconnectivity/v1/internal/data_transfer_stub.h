@@ -25,9 +25,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
+#include <google/cloud/networkconnectivity/v1/data_transfer.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/networkconnectivity/v1/data_transfer.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,151 +40,171 @@ class DataTransferServiceStub {
  public:
   virtual ~DataTransferServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse> ListMulticloudDataTransferConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::networkconnectivity::v1::
+                       ListMulticloudDataTransferConfigsResponse>
+  ListMulticloudDataTransferConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferConfigsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig> GetMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  GetMulticloudDataTransferConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateMulticloudDataTransferConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMulticloudDataTransferConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  CreateMulticloudDataTransferConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateMulticloudDataTransferConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateMulticloudDataTransferConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> UpdateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateMulticloudDataTransferConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteMulticloudDataTransferConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteMulticloudDataTransferConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> DeleteMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMulticloudDataTransferConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse> ListDestinations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::networkconnectivity::v1::ListDestinationsResponse>
+  ListDestinations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Destination> GetDestination(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) = 0;
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Destination>
+  GetDestination(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDestination(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDestination(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDestination(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDestination(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteDestination(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDestination(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) = 0;
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService> GetMulticloudDataTransferSupportedService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::networkconnectivity::v1::
+                       MulticloudDataTransferSupportedService>
+  GetMulticloudDataTransferSupportedService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferSupportedServiceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse> ListMulticloudDataTransferSupportedServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::networkconnectivity::v1::
+                       ListMulticloudDataTransferSupportedServicesResponse>
+  ListMulticloudDataTransferSupportedServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferSupportedServicesRequest const&
+              request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -197,154 +217,168 @@ class DataTransferServiceStub {
 class DefaultDataTransferServiceStub : public DataTransferServiceStub {
  public:
   DefaultDataTransferServiceStub(
-      std::unique_ptr<google::cloud::networkconnectivity::v1::DataTransferService::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::networkconnectivity::v1::
+                          DataTransferService::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse> ListMulticloudDataTransferConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::
+               ListMulticloudDataTransferConfigsResponse>
+  ListMulticloudDataTransferConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferConfigsRequest const& request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig> GetMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  GetMulticloudDataTransferConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferConfigRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateMulticloudDataTransferConfig(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMulticloudDataTransferConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) override;
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMulticloudDataTransferConfig(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateMulticloudDataTransferConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) override;
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteMulticloudDataTransferConfig(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteMulticloudDataTransferConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) override;
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse> ListDestinations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse>
+  ListDestinations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+          request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Destination> GetDestination(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDestination(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) override;
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDestination(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) override;
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDestination(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) override;
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDestination(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService> GetMulticloudDataTransferSupportedService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::
+               MulticloudDataTransferSupportedService>
+  GetMulticloudDataTransferSupportedService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferSupportedServiceRequest const& request)
+      override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse> ListMulticloudDataTransferSupportedServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::
+               ListMulticloudDataTransferSupportedServicesResponse>
+  ListMulticloudDataTransferSupportedServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferSupportedServicesRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -360,10 +394,14 @@ class DefaultDataTransferServiceStub : public DataTransferServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::networkconnectivity::v1::DataTransferService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::networkconnectivity::v1::DataTransferService::
+                      StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

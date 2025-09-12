@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DataTransferServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DataTransferServiceClient`. To do so,
- * construct an object of type `DataTransferServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `DataTransferServiceClient`. To do
+ * so, construct an object of type `DataTransferServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTransferServiceConnection {
+class MockDataTransferServiceConnection
+    : public networkconnectivity_v1::DataTransferServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>),
-  ListMulticloudDataTransferConfigs,
-  (google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::
+                               MulticloudDataTransferConfig>),
+              ListMulticloudDataTransferConfigs,
+              (google::cloud::networkconnectivity::v1::
+                   ListMulticloudDataTransferConfigsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>,
-  GetMulticloudDataTransferConfig,
-  (google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>,
+      GetMulticloudDataTransferConfig,
+      (google::cloud::networkconnectivity::v1::
+           GetMulticloudDataTransferConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateMulticloudDataTransferConfig(Matcher<google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateMulticloudDataTransferConfig(Matcher<google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>,
-  CreateMulticloudDataTransferConfig,
-  (google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::
+                                  MulticloudDataTransferConfig>>,
+              CreateMulticloudDataTransferConfig,
+              (google::cloud::networkconnectivity::v1::
+                   CreateMulticloudDataTransferConfigRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -73,32 +85,41 @@ class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTra
   /// EXPECT_CALL(*mock, CreateMulticloudDataTransferConfig(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateMulticloudDataTransferConfig, (NoAwaitTag,
-    google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateMulticloudDataTransferConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>,
-  CreateMulticloudDataTransferConfig, (
-    google::longrunning::Operation const& operation), (override));
+              CreateMulticloudDataTransferConfig,
+              (NoAwaitTag,
+               google::cloud::networkconnectivity::v1::
+                   CreateMulticloudDataTransferConfigRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateMulticloudDataTransferConfig(Matcher<google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateMulticloudDataTransferConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>,
-  UpdateMulticloudDataTransferConfig,
-  (google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::
+                                  MulticloudDataTransferConfig>>,
+              CreateMulticloudDataTransferConfig,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMulticloudDataTransferConfig(Matcher<google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::
+                                  MulticloudDataTransferConfig>>,
+              UpdateMulticloudDataTransferConfig,
+              (google::cloud::networkconnectivity::v1::
+                   UpdateMulticloudDataTransferConfigRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,32 +128,42 @@ class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTra
   /// EXPECT_CALL(*mock, UpdateMulticloudDataTransferConfig(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateMulticloudDataTransferConfig, (NoAwaitTag,
-    google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateMulticloudDataTransferConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>,
-  UpdateMulticloudDataTransferConfig, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateMulticloudDataTransferConfig,
+              (NoAwaitTag,
+               google::cloud::networkconnectivity::v1::
+                   UpdateMulticloudDataTransferConfigRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteMulticloudDataTransferConfig(Matcher<google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateMulticloudDataTransferConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-  DeleteMulticloudDataTransferConfig,
-  (google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::
+                                  MulticloudDataTransferConfig>>,
+              UpdateMulticloudDataTransferConfig,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMulticloudDataTransferConfig(Matcher<google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteMulticloudDataTransferConfig,
+      (google::cloud::networkconnectivity::v1::
+           DeleteMulticloudDataTransferConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -141,40 +172,55 @@ class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTra
   /// EXPECT_CALL(*mock, DeleteMulticloudDataTransferConfig(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteMulticloudDataTransferConfig, (NoAwaitTag,
-    google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteMulticloudDataTransferConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-  DeleteMulticloudDataTransferConfig, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Destination>),
-  ListDestinations,
-  (google::cloud::networkconnectivity::v1::ListDestinationsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::Destination>,
-  GetDestination,
-  (google::cloud::networkconnectivity::v1::GetDestinationRequest const& request), (override));
+              DeleteMulticloudDataTransferConfig,
+              (NoAwaitTag,
+               google::cloud::networkconnectivity::v1::
+                   DeleteMulticloudDataTransferConfigRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDestination(Matcher<google::cloud::networkconnectivity::v1::CreateDestinationRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteMulticloudDataTransferConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
-  CreateDestination,
-  (google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteMulticloudDataTransferConfig,
+      (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkconnectivity::v1::Destination>),
+      ListDestinations,
+      (google::cloud::networkconnectivity::v1::ListDestinationsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkconnectivity::v1::Destination>,
+      GetDestination,
+      (google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDestination(Matcher<google::cloud::networkconnectivity::v1::CreateDestinationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
+      CreateDestination,
+      (google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -182,33 +228,41 @@ class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTra
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateDestination(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateDestination, (NoAwaitTag,
-    google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDestination(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
-  CreateDestination, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDestination,
+      (NoAwaitTag,
+       google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDestination(Matcher<google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateDestination(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
-  UpdateDestination,
-  (google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
+      CreateDestination, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDestination(Matcher<google::cloud::networkconnectivity::v1::UpdateDestinationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
+      UpdateDestination,
+      (google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -216,33 +270,42 @@ class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTra
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDestination(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateDestination, (NoAwaitTag,
-    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDestination(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
-  UpdateDestination, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDestination,
+      (NoAwaitTag,
+       google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDestination(Matcher<google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateDestination(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-  DeleteDestination,
-  (google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>,
+      UpdateDestination, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDestination(Matcher<google::cloud::networkconnectivity::v1::DeleteDestinationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteDestination,
+      (google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -250,65 +313,77 @@ class MockDataTransferServiceConnection : public networkconnectivity_v1::DataTra
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDestination(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteDestination, (NoAwaitTag,
-    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDestination,
+      (NoAwaitTag,
+       google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDestination(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteDestination(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-  DeleteDestination, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteDestination, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>,
-  GetMulticloudDataTransferSupportedService,
-  (google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkconnectivity::v1::
+                   MulticloudDataTransferSupportedService>,
+      GetMulticloudDataTransferSupportedService,
+      (google::cloud::networkconnectivity::v1::
+           GetMulticloudDataTransferSupportedServiceRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>),
-  ListMulticloudDataTransferSupportedServices,
-  (google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::
+                               MulticloudDataTransferSupportedService>),
+              ListMulticloudDataTransferSupportedServices,
+              (google::cloud::networkconnectivity::v1::
+                   ListMulticloudDataTransferSupportedServicesRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

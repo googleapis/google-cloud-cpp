@@ -31,162 +31,184 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataTransferServiceStub::~DataTransferServiceStub() = default;
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse>
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferConfigsResponse>
 DefaultDataTransferServiceStub::ListMulticloudDataTransferConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest const& request) {
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsResponse response;
-    auto status =
-        grpc_stub_->ListMulticloudDataTransferConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferConfigsRequest const& request) {
+  google::cloud::networkconnectivity::v1::
+      ListMulticloudDataTransferConfigsResponse response;
+  auto status = grpc_stub_->ListMulticloudDataTransferConfigs(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
 DefaultDataTransferServiceStub::GetMulticloudDataTransferConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) {
-    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig response;
-    auto status =
-        grpc_stub_->GetMulticloudDataTransferConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const& request) {
+  google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig response;
+  auto status =
+      grpc_stub_->GetMulticloudDataTransferConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTransferServiceStub::AsyncCreateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 CreateMulticloudDataTransferConfigRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateMulticloudDataTransferConfig(context, request, cq);
+        return grpc_stub_->AsyncCreateMulticloudDataTransferConfig(context,
+                                                                   request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::CreateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateMulticloudDataTransferConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMulticloudDataTransferConfig(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTransferServiceStub::AsyncUpdateMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 UpdateMulticloudDataTransferConfigRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncUpdateMulticloudDataTransferConfig(context, request, cq);
+        return grpc_stub_->AsyncUpdateMulticloudDataTransferConfig(context,
+                                                                   request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::UpdateMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateMulticloudDataTransferConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMulticloudDataTransferConfig(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTransferServiceStub::AsyncDeleteMulticloudDataTransferConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 DeleteMulticloudDataTransferConfigRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteMulticloudDataTransferConfig(context, request, cq);
+        return grpc_stub_->AsyncDeleteMulticloudDataTransferConfig(context,
+                                                                   request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::DeleteMulticloudDataTransferConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteMulticloudDataTransferConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMulticloudDataTransferConfig(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListDestinationsResponse>
 DefaultDataTransferServiceStub::ListDestinations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::ListDestinationsRequest const& request) {
-    google::cloud::networkconnectivity::v1::ListDestinationsResponse response;
-    auto status =
-        grpc_stub_->ListDestinations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::ListDestinationsRequest const&
+        request) {
+  google::cloud::networkconnectivity::v1::ListDestinationsResponse response;
+  auto status = grpc_stub_->ListDestinations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Destination>
 DefaultDataTransferServiceStub::GetDestination(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) {
-    google::cloud::networkconnectivity::v1::Destination response;
-    auto status =
-        grpc_stub_->GetDestination(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+        request) {
+  google::cloud::networkconnectivity::v1::Destination response;
+  auto status = grpc_stub_->GetDestination(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTransferServiceStub::AsyncCreateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::CreateDestinationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 CreateDestinationRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDestination(context, request, cq);
       },
@@ -195,29 +217,31 @@ DefaultDataTransferServiceStub::AsyncCreateDestination(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::CreateDestination(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDestination(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDestination(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTransferServiceStub::AsyncUpdateDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::UpdateDestinationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 UpdateDestinationRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDestination(context, request, cq);
       },
@@ -226,29 +250,31 @@ DefaultDataTransferServiceStub::AsyncUpdateDestination(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::UpdateDestination(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateDestination(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDestination(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTransferServiceStub::AsyncDeleteDestination(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::DeleteDestinationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 DeleteDestinationRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDestination(context, request, cq);
       },
@@ -257,159 +283,152 @@ DefaultDataTransferServiceStub::AsyncDeleteDestination(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::DeleteDestination(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDestination(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDestination(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
 DefaultDataTransferServiceStub::GetMulticloudDataTransferSupportedService(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) {
-    google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService response;
-    auto status =
-        grpc_stub_->GetMulticloudDataTransferSupportedService(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferSupportedServiceRequest const& request) {
+  google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService
+      response;
+  auto status = grpc_stub_->GetMulticloudDataTransferSupportedService(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse>
+StatusOr<google::cloud::networkconnectivity::v1::
+             ListMulticloudDataTransferSupportedServicesResponse>
 DefaultDataTransferServiceStub::ListMulticloudDataTransferSupportedServices(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest const& request) {
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesResponse response;
-    auto status =
-        grpc_stub_->ListMulticloudDataTransferSupportedServices(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferSupportedServicesRequest const& request) {
+  google::cloud::networkconnectivity::v1::
+      ListMulticloudDataTransferSupportedServicesResponse response;
+  auto status = grpc_stub_->ListMulticloudDataTransferSupportedServices(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataTransferServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultDataTransferServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataTransferServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataTransferServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataTransferServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataTransferServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataTransferServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataTransferServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTransferServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDataTransferServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataTransferServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultDataTransferServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataTransferServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -438,13 +457,14 @@ future<Status> DefaultDataTransferServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

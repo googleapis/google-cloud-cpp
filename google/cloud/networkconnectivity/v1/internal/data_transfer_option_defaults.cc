@@ -17,10 +17,10 @@
 // source: google/cloud/networkconnectivity/v1/data_transfer.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/data_transfer_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/networkconnectivity/v1/data_transfer_connection.h"
 #include "google/cloud/networkconnectivity/v1/data_transfer_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,48 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataTransferServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_AUTHORITY",
       "networkconnectivity.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<networkconnectivity_v1::DataTransferServiceRetryPolicyOption>()) {
+  if (!options.has<
+          networkconnectivity_v1::DataTransferServiceRetryPolicyOption>()) {
     options.set<networkconnectivity_v1::DataTransferServiceRetryPolicyOption>(
         networkconnectivity_v1::DataTransferServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<networkconnectivity_v1::DataTransferServiceBackoffPolicyOption>()) {
+  if (!options.has<
+          networkconnectivity_v1::DataTransferServiceBackoffPolicyOption>()) {
     options.set<networkconnectivity_v1::DataTransferServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<networkconnectivity_v1::DataTransferServicePollingPolicyOption>()) {
+  if (!options.has<
+          networkconnectivity_v1::DataTransferServicePollingPolicyOption>()) {
     options.set<networkconnectivity_v1::DataTransferServicePollingPolicyOption>(
         GenericPollingPolicy<
             networkconnectivity_v1::DataTransferServiceRetryPolicyOption::Type,
-            networkconnectivity_v1::DataTransferServiceBackoffPolicyOption::Type>(
-            options.get<networkconnectivity_v1::DataTransferServiceRetryPolicyOption>()->clone(),
+            networkconnectivity_v1::DataTransferServiceBackoffPolicyOption::
+                Type>(
+            options
+                .get<networkconnectivity_v1::
+                         DataTransferServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<networkconnectivity_v1::DataTransferServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<networkconnectivity_v1::DataTransferServiceConnectionIdempotencyPolicyOption>(
-        networkconnectivity_v1::MakeDefaultDataTransferServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<networkconnectivity_v1::
+                    DataTransferServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<networkconnectivity_v1::
+                    DataTransferServiceConnectionIdempotencyPolicyOption>(
+        networkconnectivity_v1::
+            MakeDefaultDataTransferServiceConnectionIdempotencyPolicy());
   }
 
   return options;

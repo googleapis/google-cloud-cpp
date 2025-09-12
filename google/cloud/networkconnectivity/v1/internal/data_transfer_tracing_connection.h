@@ -36,120 +36,155 @@ class DataTransferServiceTracingConnection
   ~DataTransferServiceTracingConnection() override = default;
 
   explicit DataTransferServiceTracingConnection(
-    std::shared_ptr<networkconnectivity_v1::DataTransferServiceConnection> child);
+      std::shared_ptr<networkconnectivity_v1::DataTransferServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  ListMulticloudDataTransferConfigs(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request) override;
+  StreamRange<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  ListMulticloudDataTransferConfigs(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferConfigsRequest request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  GetMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request) override;
+  GetMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  CreateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) override;
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  CreateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateMulticloudDataTransferConfig(NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
   CreateMulticloudDataTransferConfig(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) override;
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  UpdateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateMulticloudDataTransferConfig(NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
   UpdateMulticloudDataTransferConfig(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) override;
+  DeleteMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteMulticloudDataTransferConfig(NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteMulticloudDataTransferConfig(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkconnectivity::v1::Destination>
-  ListDestinations(google::cloud::networkconnectivity::v1::ListDestinationsRequest request) override;
+  ListDestinations(
+      google::cloud::networkconnectivity::v1::ListDestinationsRequest request)
+      override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::Destination>
-  GetDestination(google::cloud::networkconnectivity::v1::GetDestinationRequest const& request) override;
-
-  future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  CreateDestination(google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateDestination(NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::Destination> GetDestination(
+      google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
   CreateDestination(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  UpdateDestination(google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateDestination(NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request) override;
+  CreateDestination(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
   UpdateDestination(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteDestination(google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDestination(NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request) override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
+  UpdateDestination(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteDestination(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  GetMulticloudDataTransferSupportedService(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request) override;
 
-  StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  ListMulticloudDataTransferSupportedServices(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request) override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteDestination(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::
+               MulticloudDataTransferSupportedService>
+  GetMulticloudDataTransferSupportedService(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferSupportedServiceRequest const& request)
+      override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StreamRange<google::cloud::networkconnectivity::v1::
+                  MulticloudDataTransferSupportedService>
+  ListMulticloudDataTransferSupportedServices(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferSupportedServicesRequest request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<networkconnectivity_v1::DataTransferServiceConnection> child_;
@@ -165,7 +200,8 @@ class DataTransferServiceTracingConnection
  */
 std::shared_ptr<networkconnectivity_v1::DataTransferServiceConnection>
 MakeDataTransferServiceTracingConnection(
-    std::shared_ptr<networkconnectivity_v1::DataTransferServiceConnection> conn);
+    std::shared_ptr<networkconnectivity_v1::DataTransferServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_v1_internal

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_DATA_TRANSFER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_DATA_TRANSFER_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/networkconnectivity/v1/data_transfer_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,23 +64,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataTransferServiceClient {
  public:
-  explicit DataTransferServiceClient(std::shared_ptr<DataTransferServiceConnection> connection, Options opts = {});
+  explicit DataTransferServiceClient(
+      std::shared_ptr<DataTransferServiceConnection> connection,
+      Options opts = {});
   ~DataTransferServiceClient();
 
   ///@{
   /// @name Copy and move support
   DataTransferServiceClient(DataTransferServiceClient const&) = default;
-  DataTransferServiceClient& operator=(DataTransferServiceClient const&) = default;
+  DataTransferServiceClient& operator=(DataTransferServiceClient const&) =
+      default;
   DataTransferServiceClient(DataTransferServiceClient&&) = default;
   DataTransferServiceClient& operator=(DataTransferServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataTransferServiceClient const& a, DataTransferServiceClient const& b) {
+  friend bool operator==(DataTransferServiceClient const& a,
+                         DataTransferServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataTransferServiceClient const& a, DataTransferServiceClient const& b) {
+  friend bool operator!=(DataTransferServiceClient const& a,
+                         DataTransferServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,8 +122,10 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferConfig]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L195}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  ListMulticloudDataTransferConfigs(std::string const& parent, Options opts = {});
+  StreamRange<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  ListMulticloudDataTransferConfigs(std::string const& parent,
+                                    Options opts = {});
 
   // clang-format off
   ///
@@ -157,8 +164,12 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferConfig]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L195}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  ListMulticloudDataTransferConfigs(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request, Options opts = {});
+  StreamRange<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  ListMulticloudDataTransferConfigs(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferConfigsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -213,7 +224,10 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  GetMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  GetMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -249,8 +263,13 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferConfig]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L195}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  CreateMulticloudDataTransferConfig(std::string const& parent, google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, std::string const& multicloud_data_transfer_config_id, Options opts = {});
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  CreateMulticloudDataTransferConfig(
+      std::string const& parent,
+      google::cloud::networkconnectivity::v1::
+          MulticloudDataTransferConfig const& multicloud_data_transfer_config,
+      std::string const& multicloud_data_transfer_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -263,8 +282,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMulticloudDataTransferConfig(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, std::string const& multicloud_data_transfer_config_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMulticloudDataTransferConfig(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkconnectivity::v1::
+          MulticloudDataTransferConfig const& multicloud_data_transfer_config,
+      std::string const& multicloud_data_transfer_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +323,12 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferConfig]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L195}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  CreateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  CreateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -315,8 +341,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -327,8 +356,10 @@ class DataTransferServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  CreateMulticloudDataTransferConfig(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  CreateMulticloudDataTransferConfig(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +396,12 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.UpdateMulticloudDataTransferConfigRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L367}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  UpdateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          MulticloudDataTransferConfig const& multicloud_data_transfer_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -379,8 +414,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig const& multicloud_data_transfer_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          MulticloudDataTransferConfig const& multicloud_data_transfer_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -417,8 +455,12 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.UpdateMulticloudDataTransferConfigRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L367}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  UpdateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -431,8 +473,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -443,8 +488,10 @@ class DataTransferServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  UpdateMulticloudDataTransferConfig(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  UpdateMulticloudDataTransferConfig(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -477,7 +524,8 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteMulticloudDataTransferConfig(std::string const& name, Options opts = {});
+  DeleteMulticloudDataTransferConfig(std::string const& name,
+                                     Options opts = {});
 
   // clang-format off
   ///
@@ -490,8 +538,8 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMulticloudDataTransferConfig(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMulticloudDataTransferConfig(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -528,7 +576,10 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  DeleteMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -541,8 +592,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMulticloudDataTransferConfig(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -554,7 +608,8 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteMulticloudDataTransferConfig(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteMulticloudDataTransferConfig(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -627,7 +682,9 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Destination>
-  ListDestinations(google::cloud::networkconnectivity::v1::ListDestinationsRequest request, Options opts = {});
+  ListDestinations(
+      google::cloud::networkconnectivity::v1::ListDestinationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -651,8 +708,8 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.GetDestinationRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L584}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Destination>
-  GetDestination(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Destination> GetDestination(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -681,8 +738,10 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.GetDestinationRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L584}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Destination>
-  GetDestination(google::cloud::networkconnectivity::v1::GetDestinationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Destination> GetDestination(
+      google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -717,7 +776,10 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  CreateDestination(std::string const& parent, google::cloud::networkconnectivity::v1::Destination const& destination, std::string const& destination_id, Options opts = {});
+  CreateDestination(
+      std::string const& parent,
+      google::cloud::networkconnectivity::v1::Destination const& destination,
+      std::string const& destination_id, Options opts = {});
 
   // clang-format off
   ///
@@ -730,8 +792,10 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDestination(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::Destination const& destination, std::string const& destination_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDestination(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkconnectivity::v1::Destination const& destination,
+      std::string const& destination_id, Options opts = {});
 
   // clang-format off
   ///
@@ -768,7 +832,10 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  CreateDestination(google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request, Options opts = {});
+  CreateDestination(
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -781,8 +848,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -794,7 +864,8 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  CreateDestination(google::longrunning::Operation const& operation, Options opts = {});
+  CreateDestination(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -831,7 +902,9 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  UpdateDestination(google::cloud::networkconnectivity::v1::Destination const& destination, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDestination(
+      google::cloud::networkconnectivity::v1::Destination const& destination,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -844,8 +917,10 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::Destination const& destination, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::Destination const& destination,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -882,7 +957,10 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  UpdateDestination(google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request, Options opts = {});
+  UpdateDestination(
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -895,8 +973,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -908,7 +989,8 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  UpdateDestination(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateDestination(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -953,8 +1035,8 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDestination(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDestination(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -991,7 +1073,10 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteDestination(google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request, Options opts = {});
+  DeleteDestination(
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1004,8 +1089,11 @@ class DataTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1017,7 +1105,8 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteDestination(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteDestination(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1042,8 +1131,10 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferSupportedService]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L738}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  GetMulticloudDataTransferSupportedService(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::
+               MulticloudDataTransferSupportedService>
+  GetMulticloudDataTransferSupportedService(std::string const& name,
+                                            Options opts = {});
 
   // clang-format off
   ///
@@ -1073,8 +1164,12 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferSupportedService]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L738}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  GetMulticloudDataTransferSupportedService(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::
+               MulticloudDataTransferSupportedService>
+  GetMulticloudDataTransferSupportedService(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferSupportedServiceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1108,8 +1203,10 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferSupportedService]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L738}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  ListMulticloudDataTransferSupportedServices(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::
+                  MulticloudDataTransferSupportedService>
+  ListMulticloudDataTransferSupportedServices(std::string const& parent,
+                                              Options opts = {});
 
   // clang-format off
   ///
@@ -1148,8 +1245,12 @@ class DataTransferServiceClient {
   /// [google.cloud.networkconnectivity.v1.MulticloudDataTransferSupportedService]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/data_transfer.proto#L738}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  ListMulticloudDataTransferSupportedServices(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::
+                  MulticloudDataTransferSupportedService>
+  ListMulticloudDataTransferSupportedServices(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferSupportedServicesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1187,8 +1288,8 @@ class DataTransferServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1217,8 +1318,9 @@ class DataTransferServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1250,8 +1352,8 @@ class DataTransferServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1282,8 +1384,8 @@ class DataTransferServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1318,8 +1420,9 @@ class DataTransferServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1354,8 +1457,8 @@ class DataTransferServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1394,8 +1497,8 @@ class DataTransferServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1421,8 +1524,8 @@ class DataTransferServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1453,8 +1556,9 @@ class DataTransferServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1478,8 +1582,7 @@ class DataTransferServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1508,8 +1611,9 @@ class DataTransferServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1543,8 +1647,7 @@ class DataTransferServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1583,8 +1686,9 @@ class DataTransferServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DataTransferServiceConnection> connection_;

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_DATA_TRANSFER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_DATA_TRANSFER_CONNECTION_H
 
+#include "google/cloud/networkconnectivity/v1/data_transfer_connection_idempotency_policy.h"
+#include "google/cloud/networkconnectivity/v1/internal/data_transfer_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
-#include "google/cloud/networkconnectivity/v1/data_transfer_connection_idempotency_policy.h"
-#include "google/cloud/networkconnectivity/v1/internal/data_transfer_retry_traits.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -56,7 +56,8 @@ class DataTransferServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataTransferServiceLimitedErrorCountRetryPolicy : public DataTransferServiceRetryPolicy {
+class DataTransferServiceLimitedErrorCountRetryPolicy
+    : public DataTransferServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,16 @@ class DataTransferServiceLimitedErrorCountRetryPolicy : public DataTransferServi
    *     @p maximum_failures == 0.
    */
   explicit DataTransferServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DataTransferServiceLimitedErrorCountRetryPolicy(
       DataTransferServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DataTransferServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataTransferServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   DataTransferServiceLimitedErrorCountRetryPolicy(
       DataTransferServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DataTransferServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataTransferServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +96,9 @@ class DataTransferServiceLimitedErrorCountRetryPolicy : public DataTransferServi
   using BaseType = DataTransferServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<networkconnectivity_v1_internal::DataTransferServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      networkconnectivity_v1_internal::DataTransferServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +111,8 @@ class DataTransferServiceLimitedErrorCountRetryPolicy : public DataTransferServi
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataTransferServiceLimitedTimeRetryPolicy : public DataTransferServiceRetryPolicy {
+class DataTransferServiceLimitedTimeRetryPolicy
+    : public DataTransferServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +137,14 @@ class DataTransferServiceLimitedTimeRetryPolicy : public DataTransferServiceRetr
   template <typename DurationRep, typename DurationPeriod>
   explicit DataTransferServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DataTransferServiceLimitedTimeRetryPolicy(DataTransferServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataTransferServiceLimitedTimeRetryPolicy(DataTransferServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataTransferServiceLimitedTimeRetryPolicy(
+      DataTransferServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataTransferServiceLimitedTimeRetryPolicy(
+      DataTransferServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,20 +166,23 @@ class DataTransferServiceLimitedTimeRetryPolicy : public DataTransferServiceRetr
   using BaseType = DataTransferServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<networkconnectivity_v1_internal::DataTransferServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      networkconnectivity_v1_internal::DataTransferServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `DataTransferServiceConnection` object for `DataTransferServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataTransferServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DataTransferServiceClient`.
+ * sets in `DataTransferServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DataTransferServiceClient`.
  *
  * To create a concrete instance, see `MakeDataTransferServiceConnection()`.
  *
- * For mocking, see `networkconnectivity_v1_mocks::MockDataTransferServiceConnection`.
+ * For mocking, see
+ * `networkconnectivity_v1_mocks::MockDataTransferServiceConnection`.
  */
 class DataTransferServiceConnection {
  public:
@@ -179,129 +190,182 @@ class DataTransferServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  ListMulticloudDataTransferConfigs(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest request);
+  virtual StreamRange<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  ListMulticloudDataTransferConfigs(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferConfigsRequest request);
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
-  GetMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const& request);
+  virtual StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+  GetMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferConfigRequest const& request);
 
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  CreateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  CreateMulticloudDataTransferConfig( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
-  UpdateMulticloudDataTransferConfig( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  CreateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          CreateMulticloudDataTransferConfigRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  DeleteMulticloudDataTransferConfig(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const& request);
+  CreateMulticloudDataTransferConfig(
+      NoAwaitTag, google::cloud::networkconnectivity::v1::
+                      CreateMulticloudDataTransferConfigRequest const& request);
 
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteMulticloudDataTransferConfig( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  CreateMulticloudDataTransferConfig(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  UpdateMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          UpdateMulticloudDataTransferConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateMulticloudDataTransferConfig(
+      NoAwaitTag, google::cloud::networkconnectivity::v1::
+                      UpdateMulticloudDataTransferConfigRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+  UpdateMulticloudDataTransferConfig(
+      google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteMulticloudDataTransferConfig(
+      google::cloud::networkconnectivity::v1::
+          DeleteMulticloudDataTransferConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMulticloudDataTransferConfig(
+      NoAwaitTag, google::cloud::networkconnectivity::v1::
+                      DeleteMulticloudDataTransferConfigRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteMulticloudDataTransferConfig(
+      google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::Destination>
-  ListDestinations(google::cloud::networkconnectivity::v1::ListDestinationsRequest request);
+  ListDestinations(
+      google::cloud::networkconnectivity::v1::ListDestinationsRequest request);
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Destination>
-  GetDestination(google::cloud::networkconnectivity::v1::GetDestinationRequest const& request);
+  GetDestination(
+      google::cloud::networkconnectivity::v1::GetDestinationRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  CreateDestination(google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request);
+  CreateDestination(
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateDestinationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  CreateDestination( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  UpdateDestination(google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateDestinationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateDestinationRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
-  UpdateDestination( google::longrunning::Operation const& operation);
+  CreateDestination(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteDestination(google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
+  UpdateDestination(
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDestination(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteDestinationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteDestination( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
+  UpdateDestination(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  GetMulticloudDataTransferSupportedService(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteDestination(
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
-  ListMulticloudDataTransferSupportedServices(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteDestination(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteDestination(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::networkconnectivity::v1::
+                       MulticloudDataTransferSupportedService>
+  GetMulticloudDataTransferSupportedService(
+      google::cloud::networkconnectivity::v1::
+          GetMulticloudDataTransferSupportedServiceRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StreamRange<google::cloud::networkconnectivity::v1::
+                          MulticloudDataTransferSupportedService>
+  ListMulticloudDataTransferSupportedServices(
+      google::cloud::networkconnectivity::v1::
+          ListMulticloudDataTransferSupportedServicesRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DataTransferServiceConnection`.
+ * A factory function to construct an object of type
+ * `DataTransferServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DataTransferServiceClient.
+ * should be passed as an argument to the constructor of
+ * DataTransferServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataTransferServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DataTransferServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::networkconnectivity_v1::DataTransferServicePolicyOptionList`
+ * -
+ * `google::cloud::networkconnectivity_v1::DataTransferServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataTransferServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DataTransferServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<DataTransferServiceConnection> MakeDataTransferServiceConnection(
-    Options options = {});
+std::shared_ptr<DataTransferServiceConnection>
+MakeDataTransferServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_v1

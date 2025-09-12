@@ -17,17 +17,17 @@
 // source: google/cloud/networkconnectivity/v1/data_transfer.proto
 
 #include "google/cloud/networkconnectivity/v1/data_transfer_connection.h"
+#include "google/cloud/networkconnectivity/v1/data_transfer_options.h"
+#include "google/cloud/networkconnectivity/v1/internal/data_transfer_connection_impl.h"
+#include "google/cloud/networkconnectivity/v1/internal/data_transfer_option_defaults.h"
+#include "google/cloud/networkconnectivity/v1/internal/data_transfer_stub_factory.h"
+#include "google/cloud/networkconnectivity/v1/internal/data_transfer_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/networkconnectivity/v1/data_transfer_options.h"
-#include "google/cloud/networkconnectivity/v1/internal/data_transfer_connection_impl.h"
-#include "google/cloud/networkconnectivity/v1/internal/data_transfer_option_defaults.h"
-#include "google/cloud/networkconnectivity/v1/internal/data_transfer_stub_factory.h"
-#include "google/cloud/networkconnectivity/v1/internal/data_transfer_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,92 +38,105 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataTransferServiceConnection::~DataTransferServiceConnection() = default;
 
-StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig> DataTransferServiceConnection::ListMulticloudDataTransferConfigs(
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>();
+StreamRange<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
+DataTransferServiceConnection::ListMulticloudDataTransferConfigs(
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>();
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>
 DataTransferServiceConnection::GetMulticloudDataTransferConfig(
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const&) {
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
 DataTransferServiceConnection::CreateMulticloudDataTransferConfig(
-    google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::networkconnectivity::v1::
+        CreateMulticloudDataTransferConfigRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceConnection::CreateMulticloudDataTransferConfig(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    CreateMulticloudDataTransferConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
 DataTransferServiceConnection::CreateMulticloudDataTransferConfig(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
 DataTransferServiceConnection::UpdateMulticloudDataTransferConfig(
-    google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::networkconnectivity::v1::
+        UpdateMulticloudDataTransferConfigRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceConnection::UpdateMulticloudDataTransferConfig(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    UpdateMulticloudDataTransferConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
+future<StatusOr<
+    google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>
 DataTransferServiceConnection::UpdateMulticloudDataTransferConfig(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networkconnectivity::v1::MulticloudDataTransferConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 DataTransferServiceConnection::DeleteMulticloudDataTransferConfig(
-    google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const&) {
+    google::cloud::networkconnectivity::v1::
+        DeleteMulticloudDataTransferConfigRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTransferServiceConnection::DeleteMulticloudDataTransferConfig(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    DeleteMulticloudDataTransferConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 DataTransferServiceConnection::DeleteMulticloudDataTransferConfig(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::networkconnectivity::v1::Destination> DataTransferServiceConnection::ListDestinations(
-    google::cloud::networkconnectivity::v1::ListDestinationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkconnectivity::v1::Destination>
+DataTransferServiceConnection::ListDestinations(
+    google::cloud::networkconnectivity::v1::
+        ListDestinationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Destination>>();
 }
@@ -138,8 +151,8 @@ future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
 DataTransferServiceConnection::CreateDestination(
     google::cloud::networkconnectivity::v1::CreateDestinationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -147,23 +160,23 @@ DataTransferServiceConnection::CreateDestination(
     NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateDestinationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
 DataTransferServiceConnection::CreateDestination(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
 DataTransferServiceConnection::UpdateDestination(
     google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -171,23 +184,23 @@ DataTransferServiceConnection::UpdateDestination(
     NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Destination>>
 DataTransferServiceConnection::UpdateDestination(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::Destination>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 DataTransferServiceConnection::DeleteDestination(
     google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -195,31 +208,39 @@ DataTransferServiceConnection::DeleteDestination(
     NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 DataTransferServiceConnection::DeleteDestination(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>
+StatusOr<google::cloud::networkconnectivity::v1::
+             MulticloudDataTransferSupportedService>
 DataTransferServiceConnection::GetMulticloudDataTransferSupportedService(
-    google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const&) {
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferSupportedServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService> DataTransferServiceConnection::ListMulticloudDataTransferSupportedServices(
-    google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkconnectivity::v1::
+                MulticloudDataTransferSupportedService>
+DataTransferServiceConnection::ListMulticloudDataTransferSupportedServices(
+    google::cloud::networkconnectivity::v1::
+        ListMulticloudDataTransferSupportedServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::networkconnectivity::v1::MulticloudDataTransferSupportedService>>();
+      StreamRange<google::cloud::networkconnectivity::v1::
+                      MulticloudDataTransferSupportedService>>();
 }
 
-StreamRange<google::cloud::location::Location> DataTransferServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+DataTransferServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -230,14 +251,12 @@ DataTransferServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DataTransferServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> DataTransferServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DataTransferServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> DataTransferServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -248,8 +267,10 @@ DataTransferServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> DataTransferServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+DataTransferServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -260,32 +281,34 @@ DataTransferServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataTransferServiceConnection::DeleteOperation(
+Status DataTransferServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataTransferServiceConnection::CancelOperation(
+Status DataTransferServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DataTransferServiceConnection> MakeDataTransferServiceConnection(
-    Options options) {
+std::shared_ptr<DataTransferServiceConnection>
+MakeDataTransferServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DataTransferServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DataTransferServicePolicyOptionList>(options,
+                                                                      __func__);
   options = networkconnectivity_v1_internal::DataTransferServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = networkconnectivity_v1_internal::CreateDefaultDataTransferServiceStub(
-    std::move(auth), options);
-  return networkconnectivity_v1_internal::MakeDataTransferServiceTracingConnection(
-      std::make_shared<networkconnectivity_v1_internal::DataTransferServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      networkconnectivity_v1_internal::CreateDefaultDataTransferServiceStub(
+          std::move(auth), options);
+  return networkconnectivity_v1_internal::
+      MakeDataTransferServiceTracingConnection(
+          std::make_shared<networkconnectivity_v1_internal::
+                               DataTransferServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,66 +26,97 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataTransferServiceConnectionIdempotencyPolicy::~DataTransferServiceConnectionIdempotencyPolicy() = default;
+DataTransferServiceConnectionIdempotencyPolicy::
+    ~DataTransferServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 DataTransferServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListMulticloudDataTransferConfigs(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferConfigsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::
+    ListMulticloudDataTransferConfigs(
+        google::cloud::networkconnectivity::v1::
+            ListMulticloudDataTransferConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferConfigRequest const&) {
+Idempotency
+DataTransferServiceConnectionIdempotencyPolicy::GetMulticloudDataTransferConfig(
+    google::cloud::networkconnectivity::v1::
+        GetMulticloudDataTransferConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::CreateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::CreateMulticloudDataTransferConfigRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::
+    CreateMulticloudDataTransferConfig(
+        google::cloud::networkconnectivity::v1::
+            CreateMulticloudDataTransferConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::UpdateMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::UpdateMulticloudDataTransferConfigRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::
+    UpdateMulticloudDataTransferConfig(
+        google::cloud::networkconnectivity::v1::
+            UpdateMulticloudDataTransferConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteMulticloudDataTransferConfig(google::cloud::networkconnectivity::v1::DeleteMulticloudDataTransferConfigRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::
+    DeleteMulticloudDataTransferConfig(
+        google::cloud::networkconnectivity::v1::
+            DeleteMulticloudDataTransferConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListDestinations(google::cloud::networkconnectivity::v1::ListDestinationsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListDestinations(
+    google::cloud::networkconnectivity::v1::
+        ListDestinationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetDestination(google::cloud::networkconnectivity::v1::GetDestinationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetDestination(
+    google::cloud::networkconnectivity::v1::GetDestinationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::CreateDestination(google::cloud::networkconnectivity::v1::CreateDestinationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::CreateDestination(
+    google::cloud::networkconnectivity::v1::CreateDestinationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::UpdateDestination(google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::UpdateDestination(
+    google::cloud::networkconnectivity::v1::UpdateDestinationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteDestination(google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteDestination(
+    google::cloud::networkconnectivity::v1::DeleteDestinationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetMulticloudDataTransferSupportedService(google::cloud::networkconnectivity::v1::GetMulticloudDataTransferSupportedServiceRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::
+    GetMulticloudDataTransferSupportedService(
+        google::cloud::networkconnectivity::v1::
+            GetMulticloudDataTransferSupportedServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListMulticloudDataTransferSupportedServices(google::cloud::networkconnectivity::v1::ListMulticloudDataTransferSupportedServicesRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::
+    ListMulticloudDataTransferSupportedServices(
+        google::cloud::networkconnectivity::v1::
+            ListMulticloudDataTransferSupportedServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -95,32 +126,38 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
+MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>();
 }
 
