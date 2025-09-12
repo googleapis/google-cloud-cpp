@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
+#include <google/bigtable/v2/data.pb.h>
 #include <google/bigtable/v2/types.pb.h>
 
 namespace google {
@@ -81,7 +82,7 @@ class Value {
   StatusOr<T> get() const& {
     if (!TypeProtoIs(T{}, type_))
       return internal::UnknownError("wrong type", GCP_ERROR_INFO());
-    if (value_.kind_case() == google::protobuf::Value::kNullValue) {
+    if (is_null()) {
       if (IsOptional<T>::value) return T{};
       return internal::UnknownError("null value", GCP_ERROR_INFO());
     }
@@ -93,13 +94,15 @@ class Value {
   StatusOr<T> get() && {
     if (!TypeProtoIs(T{}, type_))
       return internal::UnknownError("wrong type", GCP_ERROR_INFO());
-    if (value_.kind_case() == google::protobuf::Value::kNullValue) {
+    if (is_null()) {
       if (IsOptional<T>::value) return T{};
       return internal::UnknownError("null value", GCP_ERROR_INFO());
     }
     auto tag = T{};  // Works around an odd msvc issue
     return GetValue(std::move(tag), std::move(value_), type_);
   }
+
+  bool is_null() const;
 
   // Equality operators are part of the interface, even if not implemented.
   friend bool operator==(Value const& a, Value const& b);
@@ -145,24 +148,25 @@ class Value {
 
   // Encodes the argument as a protobuf according to the rules described in
   // https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/type.proto
-  static google::protobuf::Value MakeValueProto(bool b);
+  static google::bigtable::v2::Value MakeValueProto(bool b);
   template <typename T>
-  static google::protobuf::Value MakeValueProto(absl::optional<T> opt) {
+  static google::bigtable::v2::Value MakeValueProto(absl::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
-    google::protobuf::Value v;
-    v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
+    google::bigtable::v2::Value v;
+    v.clear_kind();
+    v.clear_type();
     return v;
   }
 
   // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
   // first argument type is the tag, its value is ignored.
-  static StatusOr<bool> GetValue(bool, google::protobuf::Value const&,
+  static StatusOr<bool> GetValue(bool, google::bigtable::v2::Value const&,
                                  google::bigtable::v2::Type const&);
 
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(
       absl::optional<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
-    if (pv.kind_case() == google::protobuf::Value::kNullValue) {
+    if (pv.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
       return absl::optional<T>{};
     }
     auto value = GetValue(T{}, std::forward<V>(pv), pt);
@@ -181,13 +185,13 @@ class Value {
   Value(PrivateConstructor, T&& t)
       : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
 
-  Value(google::bigtable::v2::Type t, google::protobuf::Value v)
+  Value(google::bigtable::v2::Type t, google::bigtable::v2::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
   friend struct bigtable_internal::ValueInternals;
 
   google::bigtable::v2::Type type_;
-  google::protobuf::Value value_;
+  google::bigtable::v2::Value value_;
 };
 
 /**
@@ -210,23 +214,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct ValueInternals {
   static bigtable::Value FromProto(google::bigtable::v2::Type t,
-                                   google::protobuf::Value v) {
+                                   google::bigtable::v2::Value v) {
     return bigtable::Value(std::move(t), std::move(v));
   }
 
-  static std::pair<google::bigtable::v2::Type, google::protobuf::Value> ToProto(
-      bigtable::Value v) {
+  static std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value>
+  ToProto(bigtable::Value v) {
     return std::make_pair(std::move(v.type_), std::move(v.value_));
   }
 };
 
 inline bigtable::Value FromProto(google::bigtable::v2::Type t,
-                                 google::protobuf::Value v) {
+                                 google::bigtable::v2::Value v) {
   return ValueInternals::FromProto(std::move(t), std::move(v));
 }
 
-inline std::pair<google::bigtable::v2::Type, google::protobuf::Value> ToProto(
-    bigtable::Value v) {
+inline std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value>
+ToProto(bigtable::Value v) {
   return ValueInternals::ToProto(std::move(v));
 }
 
