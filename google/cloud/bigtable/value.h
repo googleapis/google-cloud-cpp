@@ -119,14 +119,6 @@ class Value {
    */
   friend std::ostream& operator<<(std::ostream& os, Value const& v);
 
-  /**
-   * Prints the same output as `operator<<`.
-   *
-   * @warning DO NOT CALL. This function will be removed in a future release.
-   *     Use `operator<<` instead.
-   */
-  friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
-
  private:
   // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
