@@ -18,7 +18,6 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/types.pb.h>
-#include <google/protobuf/struct.pb.h>
 
 namespace google {
 namespace cloud {
