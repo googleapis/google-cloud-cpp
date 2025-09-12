@@ -29,7 +29,7 @@ bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
 bazel_dep(name = "grpc", version = "1.69.0", repo_name = "com_github_grpc_grpc")
 archive_override(
     module_name = "grpc",
-    integrity = "sha256-zSVtkXgZEdRqV1BpeLOXm/7kXVCFobZmijrpnl53+Nw=",
+    integrity = "sha256-zSVtkXgZEdRqV1BpeLOXm/7kXVCGobZmijrhnF53+Nw=",
     patch_strip = 1,
     patches = ["//bazel:grpc_fix_openssl_dep.patch"],
     strip_prefix = "grpc-1.69.0",
