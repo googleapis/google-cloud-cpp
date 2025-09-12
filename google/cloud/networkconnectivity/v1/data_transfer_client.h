@@ -872,7 +872,7 @@ class DataTransferServiceClient {
   /// Updates a `Destination` resource in a specified project and location.
   ///
   /// @param destination  Required. The `Destination` resource to update.
-  /// @param update_mask  Optional. `FieldMask is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. `FieldMask` is used to specify the fields to be overwritten in the
   ///  `Destination` resource by the update.
   ///  The fields specified in `update_mask` are relative to the resource, not
   ///  the full request. A field is overwritten if it is in the mask. If you
