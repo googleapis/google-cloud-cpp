@@ -3055,6 +3055,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/networkconnectivity/v1/data_transfer.proto"
+  product_path: "google/cloud/networkconnectivity/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Management
 service {
   service_proto_path: "google/cloud/networkmanagement/v1/reachability.proto"

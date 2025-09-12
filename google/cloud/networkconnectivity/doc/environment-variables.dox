@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networkconnectivity.googleapis.com")
+  used by `MakeDataTransferServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_HUB_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "networkconnectivity.googleapis.com")
   used by `MakeHubServiceConnection()`.
