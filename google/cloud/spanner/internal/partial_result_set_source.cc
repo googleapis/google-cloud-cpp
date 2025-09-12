@@ -18,6 +18,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/container/fixed_array.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -81,7 +82,11 @@ PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
 
 PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader)
-    : options_(internal::CurrentOptions()), reader_(std::move(reader)) {
+    : options_(internal::CurrentOptions()),
+      reader_(std::move(reader)),
+      values_(absl::make_optional<
+              google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
+          &arena_)) {
   if (options_.has<spanner::StreamingResumabilityBufferSizeOption>()) {
     values_space_limit_ =
         options_.get<spanner::StreamingResumabilityBufferSizeOption>();
@@ -110,46 +115,76 @@ PartialResultSetSource::~PartialResultSetSource() {
 }
 
 StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
-  while (rows_.empty()) {
+  if (usable_rows_ == 0 && rows_returned_ > 0) {
+    // There may be complete or partial rows in values_ that haven't been
+    // returned to the clients yet. Let's copy it over before we reset
+    // the arena.
+    int partial_size =
+        static_cast<int>(values_->size() - rows_returned_ * columns_->size());
+    absl::FixedArray<google::protobuf::Value*> tmp(partial_size);
+    if (!tmp.empty()) {
+      values_->ExtractSubrange(values_->size() - partial_size, partial_size,
+                               tmp.data());
+    }
+    values_.reset();
+    values_space_.Clear();
+    arena_.Reset();
+    values_.emplace(&arena_);
+    for (auto* elem : tmp) {
+      values_->Add(std::move(*elem));
+      delete elem;
+    }
+    rows_returned_ = 0;
+  }
+  while (usable_rows_ == 0) {
     if (state_ == kFinished) return spanner::Row();
     internal::OptionsSpan span(options_);
     auto status = ReadFromStream();
     if (!status.ok()) return status;
   }
-  auto row = std::move(rows_.front());
-  rows_.pop_front();
-  return row;
+  auto value_it = values_->begin() + rows_returned_ * columns_->size();
+  ++rows_returned_;
+  --usable_rows_;
+  std::vector<spanner::Value> values;
+  values.reserve(metadata_->row_type().fields_size());
+  for (auto const& field : metadata_->row_type().fields()) {
+    values.push_back(FromProto(field.type(), std::move(*value_it)));
+    ++value_it;
+  }
+  return RowFriend::MakeRow(std::move(values), columns_);
 }
 
 Status PartialResultSetSource::ReadFromStream() {
-  absl::optional<PartialResultSet> result_set;
-  if (state_ == kFinished || !rows_.empty()) {
+  if (state_ == kFinished || usable_rows_ != 0 || rows_returned_ != 0) {
     return internal::InternalError("PartialResultSetSource state error",
                                    GCP_ERROR_INFO());
   }
+  auto* raw_result_set =
+      google::protobuf::Arena::Create<google::spanner::v1::PartialResultSet>(
+          &arena_);
+  auto result_set =
+      UnownedPartialResultSet::FromPartialResultSet(*raw_result_set);
   if (state_ == kReading) {
-    result_set = reader_->Read(resume_token_);
-    if (!result_set) state_ = kEndOfStream;
+    if (!reader_->Read(resume_token_, result_set)) state_ = kEndOfStream;
   }
   if (state_ == kEndOfStream) {
     // If we have no buffered data, we're done.
-    if (values_.empty()) {
+    if (values_->empty()) {
       state_ = kFinished;
       return reader_->Finish();
     }
     // Otherwise, proceed with a `PartialResultSet` using a fake resume
     // token to flush the buffer. The service does not appear to yield
     // a resume token in its final response, despite it completing a row.
-    result_set = PartialResultSet{{}, false};
-    result_set->result.set_resume_token("<end-of-stream>");
+    result_set.result.set_resume_token("<end-of-stream>");
   }
 
-  if (result_set->result.has_metadata()) {
+  if (result_set.result.has_metadata()) {
     // If we get metadata more than once, log it, but use the first one.
     if (metadata_) {
       GCP_LOG(WARNING) << "PartialResultSetSource: Additional metadata";
     } else {
-      metadata_ = std::move(*result_set->result.mutable_metadata());
+      metadata_ = std::move(*result_set.result.mutable_metadata());
       // Copy the column names into a vector that will be shared with
       // every Row object returned from NextRow().
       columns_ = std::make_shared<std::vector<std::string>>();
@@ -159,21 +194,21 @@ Status PartialResultSetSource::ReadFromStream() {
       }
     }
   }
-  if (result_set->result.has_stats()) {
+  if (result_set.result.has_stats()) {
     // If we get stats more than once, log it, but use the last one.
     if (stats_) {
       GCP_LOG(WARNING) << "PartialResultSetSource: Additional stats";
     }
-    stats_ = std::move(*result_set->result.mutable_stats());
+    stats_ = std::move(*result_set.result.mutable_stats());
   }
-  if (result_set->result.has_precommit_token()) {
-    precommit_token_ = std::move(*result_set->result.mutable_precommit_token());
+  if (result_set.result.has_precommit_token()) {
+    precommit_token_ = std::move(*result_set.result.mutable_precommit_token());
   }
 
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
   // used the token to resume an interrupted stream), then we must discard
   // any buffered data as it will be replayed.
-  if (result_set->resumption) {
+  if (result_set.resumption) {
     if (!resume_token_) {
       // The reader claims to have resumed the stream even though we said it
       // should not. That leaves us in the untenable position of possibly
@@ -184,29 +219,30 @@ Status PartialResultSetSource::ReadFromStream() {
           GCP_ERROR_INFO());
     }
     values_back_incomplete_ = false;
-    values_.Clear();
+    values_->Clear();
+    values_space_.Clear();
   }
 
   // If the final value in the previous `PartialResultSet` was incomplete,
   // it must be combined with the first value from the new set. And then
   // we move everything remaining from the new set to the end of `values_`.
-  if (!result_set->result.values().empty()) {
-    auto& new_values = *result_set->result.mutable_values();
+  if (!result_set.result.values().empty()) {
+    auto& new_values = *result_set.result.mutable_values();
     int append_start = 0;
     if (values_back_incomplete_) {
       auto& first = *new_values.Mutable(append_start++);
-      auto status = MergeChunk(*values_.rbegin(), std::move(first));
+      auto status = MergeChunk(*values_->rbegin(), std::move(first));
       if (!status.ok()) return status;
     }
-    ExtractSubrangeAndAppend(new_values, append_start, values_);
-    values_back_incomplete_ = result_set->result.chunked_value();
+    ExtractSubrangeAndAppend(new_values, append_start, *values_);
+    values_back_incomplete_ = result_set.result.chunked_value();
   }
 
   // Deliver whatever rows we can muster.
-  auto const n_values = values_.size() - (values_back_incomplete_ ? 1 : 0);
+  auto const n_values = values_->size() - (values_back_incomplete_ ? 1 : 0);
   auto const n_columns = columns_ ? static_cast<int>(columns_->size()) : 0;
   auto n_rows = n_columns ? n_values / n_columns : 0;
-  if (n_columns == 0 && !values_.empty()) {
+  if (n_columns == 0 && !values_->empty()) {
     return internal::InternalError(
         "PartialResultSetSource metadata is missing row type",
         GCP_ERROR_INFO());
@@ -214,8 +250,13 @@ Status PartialResultSetSource::ReadFromStream() {
 
   // If we didn't receive a resume token, and have not exceeded our buffer
   // limit, then we choose to `Read()` again so as to maintain resumability.
-  if (result_set->result.resume_token().empty()) {
-    if (values_.SpaceUsedExcludingSelfLong() < values_space_limit_) {
+  if (result_set.result.resume_token().empty() && values_space_limit_ > 0) {
+    for (auto it = values_->begin() + values_space_.index; it != values_->end();
+         ++it) {
+      values_space_.space_used += it->SpaceUsedLong();
+    }
+    values_space_.index = values_->size();
+    if (values_space_.space_used < values_space_limit_) {
       return {};  // OK
     }
   }
@@ -223,9 +264,9 @@ Status PartialResultSetSource::ReadFromStream() {
   // If we did receive a resume token then everything should be deliverable,
   // and we'll be able to resume the stream at this point after a breakage.
   // Otherwise, if we deliver anything at all, we must disable resumability.
-  if (!result_set->result.resume_token().empty()) {
-    resume_token_ = result_set->result.resume_token();
-    if (n_rows * n_columns != values_.size()) {
+  if (!result_set.result.resume_token().empty()) {
+    resume_token_ = result_set.result.resume_token();
+    if (n_rows * n_columns != values_->size()) {
       if (state_ != kEndOfStream) {
         return internal::InternalError(
             "PartialResultSetSource reader produced a resume token"
@@ -243,24 +284,7 @@ Status PartialResultSetSource::ReadFromStream() {
     resume_token_ = absl::nullopt;
   }
 
-  // Combine the available values into new elements of `rows_`.
-  int values_pos = 0;
-  std::vector<spanner::Value> values;
-  values.reserve(n_columns);
-  for (; n_rows != 0; --n_rows) {
-    for (auto const& field : metadata_->row_type().fields()) {
-      auto& value = *values_.Mutable(values_pos++);
-      values.push_back(FromProto(field.type(), std::move(value)));
-    }
-    rows_.push_back(RowFriend::MakeRow(std::move(values), columns_));
-    values.clear();
-  }
-
-  // If we didn't combine all the values, leave the remainder for next time.
-  auto* rem_values = result_set->result.mutable_values();
-  ExtractSubrangeAndAppend(values_, values_pos, *rem_values);
-  values_.Swap(rem_values);
-
+  usable_rows_ = n_rows;
   return {};  // OK
 }
 
