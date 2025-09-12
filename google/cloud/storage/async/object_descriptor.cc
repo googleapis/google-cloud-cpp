@@ -27,7 +27,7 @@ absl::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
 
 std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
                                                           std::int64_t limit) {
-  // TODO: This change is causing performance regression. We need to revisit it
+  // TODO(15340): This change is causing performance regression. We need to revisit it
   // after benchmarking our code.
 
   // std::int64_t max_range =
