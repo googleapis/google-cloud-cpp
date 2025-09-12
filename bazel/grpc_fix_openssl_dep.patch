@@ -1,0 +1,10 @@
+--- a/src/core/lib/security/credentials/jwt/BUILD.bazel
++++ b/src/core/lib/security/credentials/jwt/BUILD.bazel
+@@ -67,6 +67,7 @@
+         "//:json",
+         "//:slice",
+         "//:time",
++        "@boringssl//:ssl",
+         "//include/grpc/grpc_security:grpc_security_constants",
+         "//src/core:time",
+     ],

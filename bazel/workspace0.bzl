@@ -176,6 +176,9 @@ def gl_cpp_workspace0(name = None):
         ],
         sha256 = "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc",
         strip_prefix = "grpc-1.69.0",
+        patch_tool = "patch",
+        patch_args = ["-p1"],
+        patches = [Label("//bazel:grpc_fix_openssl_dep.patch")],
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
