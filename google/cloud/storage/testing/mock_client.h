@@ -117,6 +117,9 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (std::vector<std::thread>,
                std::vector<storage::internal::ParallelUploadFileShard>, bool),
               (override));
+  MOCK_METHOD(StatusOr<internal::ObjectWriteStreamParams>,
+              SetupObjectWriteStream,
+              (storage::internal::ResumableUploadRequest const&), (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,
               (internal::ListBucketAclRequest const&), (override));
