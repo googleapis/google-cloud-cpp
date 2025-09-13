@@ -640,6 +640,61 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestResetLabels) {
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcBucketRequestParser, PatchBucketRequestResetIpFilter) {
+  auto constexpr kTextProto = R"pb(
+    bucket { name: "projects/_/buckets/bucket-name" }
+    update_mask { paths: "ip_filter" }
+  )pb";
+  google::storage::v2::UpdateBucketRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchBucketRequest req(
+      "bucket-name", storage::BucketMetadataPatchBuilder{}.ResetIpFilter());
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, PatchBucketRequestIpFilter) {
+  auto constexpr kTextProto = R"pb(
+    bucket {
+      name: "projects/_/buckets/bucket-name"
+      ip_filter {
+        mode: "Enabled"
+        allow_all_service_agent_access: true
+        allow_cross_org_vpcs: true
+        public_network_source { allowed_ip_cidr_ranges: "1.2.3.4/32" }
+        vpc_network_sources {
+          network: "projects/p/global/networks/n"
+          allowed_ip_cidr_ranges: "5.6.7.8/32"
+        }
+      }
+    }
+    update_mask { paths: "ip_filter" }
+  )pb";
+  google::storage::v2::UpdateBucketRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::BucketIpFilter ip_filter;
+  ip_filter.mode = "Enabled";
+  ip_filter.allow_all_service_agent_access = true;
+  ip_filter.allow_cross_org_vpcs = true;
+  ip_filter.public_network_source =
+      storage::BucketIpFilterPublicNetworkSource{{"1.2.3.4/32"}};
+  ip_filter.vpc_network_sources =
+      absl::make_optional<std::vector<storage::BucketIpFilterVpcNetworkSource>>(
+          {storage::BucketIpFilterVpcNetworkSource{
+              "projects/p/global/networks/n", {"5.6.7.8/32"}}});
+  storage::internal::PatchBucketRequest req(
+      "bucket-name",
+      storage::BucketMetadataPatchBuilder().SetIpFilter(std::move(ip_filter)));
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
   google::storage::v2::UpdateBucketRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
