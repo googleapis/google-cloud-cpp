@@ -37,11 +37,6 @@ build --experimental_convenience_symlinks=ignore
 # automatically rewrites the URLs.
 # build --experimental_downloader_config=bazel/downloader.cfg
 
-# The boringssl library conflicts with system-installed versions of OpenSSL.
-# This can lead to compilation errors on macOS. This flag tells the
-# compiler to prioritize the headers from the boringssl library.
-build --per_file_copt=boringssl~//@-isystem,external/boringssl~/include
-
 # It is frustrating when long-running builds/tests fail, but it is even more
 # frustrating when they fail and don't give any output. So, remove the limit.
 build --experimental_ui_max_stdouterr_bytes=-1
@@ -49,6 +44,10 @@ build --experimental_ui_max_stdouterr_bytes=-1
 # TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
 #     `apple_rules`.
 # common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
+
+# This prevents the compiler from finding the system's OpenSSL headers when
+# building boringssl. This is necessary to avoid header conflicts on macOS.
+build:macos --copt:@boringssl//...="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
 
 # Inject ${GTEST_SHUFFLE} and ${GTEST_RANDOM_SEED} into the test environment
 # if they are set in the enclosing environment. This allows for running tests
