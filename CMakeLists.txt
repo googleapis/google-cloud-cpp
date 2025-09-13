@@ -23,6 +23,11 @@ project(
     google-cloud-cpp
     VERSION 2.42.0
     LANGUAGES CXX)
+
+if (MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif ()
+
 set(PROJECT_VERSION_PRE_RELEASE "rc")
 
 if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")

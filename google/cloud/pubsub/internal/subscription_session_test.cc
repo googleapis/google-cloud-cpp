@@ -28,6 +28,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <cstddef>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
@@ -225,7 +226,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
 
   auto spans = span_catcher->GetSpans();
   // There should be a process and ack span for each message.
-  EXPECT_THAT(spans, SizeIs(Ge(2 * kAckCount)));
+  EXPECT_THAT(spans, SizeIs(Ge(static_cast<std::size_t>(2 * kAckCount))));
   // Verify there is at least one process span.
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
