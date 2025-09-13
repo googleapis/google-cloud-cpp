@@ -32,11 +32,10 @@ I found this fragment particularly useful:
 https://github.com/bazelbuild/rules_cc/blob/0d68932a68bcd6f332b14ccc561990586de2318d/examples/my_c_compile/my_c_compile.bzl#L40-L51
 """
 
-load("@rules_cc//cc:action_names.bzl", "CPP_COMPILE_ACTION_NAME")
-load("@rules_cc//cc:toolchain_utils.bzl", "find_cpp_toolchain")
+load("@bazel_tools//tools/cpp:cc_common.bzl", "cc_common")
 
 def _capture_build_info_impl(ctx):
-    toolchain = find_cpp_toolchain(ctx)
+    toolchain = ctx.toolchains["@bazel_tools//tools/cpp:toolchain_type"]
     feature_configuration = cc_common.configure_features(
         ctx = ctx,
         cc_toolchain = toolchain,
@@ -52,7 +51,7 @@ def _capture_build_info_impl(ctx):
     )
     command_line = cc_common.get_memory_inefficient_command_line(
         feature_configuration = feature_configuration,
-        action_name = CPP_COMPILE_ACTION_NAME,
+        action_name = cc_common.ACTION_NAMES.cpp_compile,
         variables = cc_vars,
     )
 
