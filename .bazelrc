@@ -37,6 +37,11 @@ build --experimental_convenience_symlinks=ignore
 # automatically rewrites the URLs.
 # build --experimental_downloader_config=bazel/downloader.cfg
 
+# The boringssl library conflicts with system-installed versions of OpenSSL.
+# This can lead to compilation errors on macOS. This flag disables -Werror
+# for the boringssl library to work around this issue.
+build --per_file_copt=boringssl~//@-Wno-error
+
 # It is frustrating when long-running builds/tests fail, but it is even more
 # frustrating when they fail and don't give any output. So, remove the limit.
 build --experimental_ui_max_stdouterr_bytes=-1
