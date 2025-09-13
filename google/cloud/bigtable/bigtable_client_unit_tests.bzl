@@ -93,5 +93,6 @@ bigtable_client_unit_tests = [
     "table_test.cc",
     "testing/cleanup_stale_resources_test.cc",
     "testing/random_names_test.cc",
+    "value_test.cc",
     "wait_for_consistency_test.cc",
 ]
