@@ -38,9 +38,9 @@ build --experimental_convenience_symlinks=ignore
 # build --experimental_downloader_config=bazel/downloader.cfg
 
 # The boringssl library conflicts with system-installed versions of OpenSSL.
-# This can lead to compilation errors on macOS. This flag disables -Werror
-# for the boringssl library to work around this issue.
-build --per_file_copt=boringssl~//@-Wno-error
+# This can lead to compilation errors on macOS. This flag tells the
+# compiler to prioritize the headers from the boringssl library.
+build --per_file_copt=boringssl~//@-isystem,external/boringssl~/include
 
 # It is frustrating when long-running builds/tests fail, but it is even more
 # frustrating when they fail and don't give any output. So, remove the limit.
