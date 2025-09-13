@@ -171,7 +171,6 @@ future<bool> AsyncRowReader::OnDataReceived(
 }
 
 void AsyncRowReader::OnStreamFinished(Status status) {
-  operation_context_->PostCall(*client_context_, status);
   // assert(!continue_reading_);
   if (status_.ok()) {
     status_ = std::move(status);
@@ -208,6 +207,17 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   // success.
   if (row_set_.IsEmpty()) {
     status_ = Status();
+  }
+
+  // grpc::ClientContext::GetServerInitialMetadata check fails if the metadata
+  // has not been read. There is no way to check if the metadata is available
+  // before calling GetServerInitialMetadata, and we do not want to add a call
+  // to ClientReaderInterface::WaitForInitialMetadata, which would introduce
+  // latency, just for the sake of telemetry. Therefore, we will only call
+  // OperationContext::PostCall if we can guarantee that we've received some
+  // data which will include the metadata.
+  if (rows_count_ > 0) {
+    operation_context_->PostCall(*client_context_, status_);
   }
 
   if (status_.ok()) {
