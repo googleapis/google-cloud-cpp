@@ -32,6 +32,9 @@ bazel_args=(
   # cannot find the credentials, even if you do not use them. Some of the
   # unit tests do exactly that.
   "--action_env=GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"
+  # This tells Bazel's toolchain detector which SDK to use, solving the
+  # boringssl header conflict AND passing the hermeticity checks.
+  "--action_env=SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
   "--test_output=errors"
   "--verbose_failures=true"
   "--keep_going"
