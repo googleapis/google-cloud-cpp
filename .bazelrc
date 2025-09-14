@@ -27,10 +27,6 @@ build:macos --cxxopt=-std=c++14
 build:linux --host_cxxopt=-std=c++14
 build:macos --host_cxxopt=-std=c++14
 
-# This prevents Bazel from flagging absolute path inclusions, which are a
-# necessary consequence of using a hermetic sysroot on macOS.
-common:macos --features=-absolute_path_headers
-
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
