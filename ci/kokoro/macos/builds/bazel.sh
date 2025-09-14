@@ -21,8 +21,12 @@ source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 
 io::log_h2 "Uninstalling all Homebrew packages..."
-brew list --formula | xargs -n1 brew uninstall --ignore-dependencies
-brew list --cask | xargs -n1 brew uninstall --ignore-dependencies
+for pkg in $(brew list --formula); do
+  brew uninstall --ignore-dependencies "${pkg}" || true
+done
+for cask in $(brew list --cask); do
+  brew uninstall --ignore-dependencies "${cask}" || true
+done
 io::log_h2 "Installing just the essentials..."
 brew install coreutils
 brew install bazelisk
