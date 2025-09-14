@@ -20,8 +20,27 @@ source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 
+PACKAGES_TO_UNINSTALL=(
+  abseil
+  protobuf
+  grpc
+  nlohmann-json
+  curl
+  crc32c
+  opentelemetry-cpp
+  googletest
+  google-benchmark
+  yaml-cpp
+  pugixml
+  zlib
+  c-ares
+)
+
 io::log_h2 "Uninstalling Homebrew packages that are managed in MODULE.bazel..."
-brew uninstall --ignore-dependencies abseil protobuf grpc nlohmann-json curl crc32c opentelemetry-cpp googletest google-benchmark yaml-cpp pugixml zlib c-ares || true
+for pkg in "${PACKAGES_TO_UNINSTALL[@]}"; do
+  io::log_yellow "Uninstalling ${pkg}..."
+  brew uninstall --ignore-dependencies "${pkg}" || true
+done
 
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
