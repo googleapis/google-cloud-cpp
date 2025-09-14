@@ -20,10 +20,8 @@ source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 
-io::log_h2 "Uninstalling conflicting versions of Homebrew packages..."
-brew uninstall --ignore-dependencies openssl || echo "openssl not found or uninstall failed."
-brew uninstall --ignore-dependencies openssl@1.1 || echo "openssl@1.1 not found or uninstall failed."
-brew uninstall --ignore-dependencies google-benchmark || echo "google-benchmark not found or uninstall failed."
+io::log_h2 "Uninstalling Homebrew packages that are managed in MODULE.bazel..."
+brew uninstall --ignore-dependencies abseil protobuf grpc nlohmann-json curl crc32c opentelemetry-cpp googletest google-benchmark yaml-cpp pugixml zlib c-ares || true
 
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
