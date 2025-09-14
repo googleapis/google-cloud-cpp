@@ -32,6 +32,8 @@ bazel_args=(
   # cannot find the credentials, even if you do not use them. Some of the
   # unit tests do exactly that.
   "--action_env=GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"
+  "--copt=-msse4.2"
+  "--copt=-mcrc32"
   "--test_output=errors"
   "--verbose_failures=true"
   "--keep_going"
