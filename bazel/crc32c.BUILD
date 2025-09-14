@@ -125,6 +125,13 @@ cc_library(
     srcs = crc32c_SRCS + crc32c_sse42_SRCS + crc32c_arm64_SRCS,
     hdrs = crc32c_HDRS + ["crc32c/crc32c_config.h"],
     copts = crc32c_copts,
+    copts = crc32c_copts + select({
+        "@platforms//os:macos": [
+            "-msse4.2",
+            "-mcrc32",
+        ],
+        "//conditions:default": [],
+    }),
     includes = ["include"],
     deps = [],
 )
