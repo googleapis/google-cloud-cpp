@@ -16,6 +16,10 @@
 
 set -euo pipefail
 
+io::log_h2 "Uninstalling conflicting Homebrew OpenSSL versions..."
+brew uninstall --ignore-dependencies openssl || echo "openssl not found or uninstall failed."
+brew uninstall --ignore-dependencies openssl@1.1 || echo "openssl@1.1 not found or uninstall failed."
+
 source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
