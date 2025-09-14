@@ -35,6 +35,10 @@ bazel_args=(
   # This tells Bazel's toolchain detector which SDK to use, solving the
   # boringssl header conflict AND passing the hermeticity checks.
   "--action_env=SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+  # This manually enables the SSE4.2 and CRC32C instruction sets needed by
+  # the crc32c library.
+  "--copt:@crc32c//...=-msse4.2"
+  "--copt:@crc32c//...=-mcrc32"
   "--test_output=errors"
   "--verbose_failures=true"
   "--keep_going"
