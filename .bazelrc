@@ -21,11 +21,13 @@ build --enable_platform_specific_config=true
 # The project requires C++ >= 14. By default Bazel adds `-std=c++0x` which
 # disables C++14 features, even if the compilers defaults to C++ >= 14
 build:linux --cxxopt=-std=c++14
-build:macos --cxxopt=-std=c++14
 # Protobuf and gRPC require (or soon will require) C++14 to compile the "host"
 # targets, such as protoc and the grpc plugin.
 build:linux --host_cxxopt=-std=c++14
-build:macos --host_cxxopt=-std=c++14
+
+# This prevents the compiler from finding the system's OpenSSL headers when
+# building boringssl. This is necessary to avoid header conflicts on macOS.
+build:macos --cxxopt=-std=c++14 --host_cxxopt=-std=c++14 --cxxopt="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
 
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
@@ -44,10 +46,6 @@ build --experimental_ui_max_stdouterr_bytes=-1
 # TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
 #     `apple_rules`.
 # common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
-
-# This prevents the compiler from finding the system's OpenSSL headers when
-# building boringssl. This is necessary to avoid header conflicts on macOS.
-build:macos --copt:@boringssl//...="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
 
 # Inject ${GTEST_SHUFFLE} and ${GTEST_RANDOM_SEED} into the test environment
 # if they are set in the enclosing environment. This allows for running tests
