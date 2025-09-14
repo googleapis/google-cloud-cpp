@@ -23,6 +23,10 @@ source module ci/lib/io.sh
 io::log_h2 "Uninstalling all Homebrew packages..."
 brew list --formula | xargs -n1 brew uninstall --ignore-dependencies
 brew list --cask | xargs -n1 brew uninstall --ignore-dependencies
+io::log_h2 "Installing just the essentials..."
+brew install coreutils
+brew install bazelisk
+brew install git
 
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
