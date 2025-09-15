@@ -101,7 +101,6 @@ TEST(WriteConnectionResumed, FinalizedOnConstruction) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(TestObject()));
-  
   EXPECT_CALL(*mock, Finalize(_)).WillOnce([&](auto) {
     return sequencer.PushBack("Finalize").then([](auto) {
       return StatusOr<google::storage::v2::Object>(TestObject());
@@ -122,11 +121,9 @@ TEST(WriteConnectionResumed, FinalizedOnConstruction) {
   auto finalize = connection->Finalize({});
 
   EXPECT_FALSE(finalize.is_ready());
-  
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
   next.first.set_value(true);
-  
   EXPECT_TRUE(finalize.is_ready());
   EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
