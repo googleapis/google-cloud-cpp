@@ -86,7 +86,6 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions --formula
 brew list --versions --cask
 brew list --versions coreutils || brew install coreutils
-
 if [[ "${RUNNING_CI:-}" = "yes" ]]; then
   # We use `gcloud alpha storage` as it significantly improves the
   # upload and download performance of the cache.  If this step fails
