@@ -59,6 +59,7 @@ bazel_args=(
   "--test_output=errors"
   "--verbose_failures=true"
   "--keep_going"
+  "--compilation_mode=opt"
 )
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
