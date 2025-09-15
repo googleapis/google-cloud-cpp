@@ -25,9 +25,9 @@ namespace {
 // Compares two sets of Type and Value protos for equality. This method calls
 // itself recursively to compare subtypes and subvalues.
 bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
-           google::protobuf::Value const& pv1,
+           google::bigtable::v2::Value const& pv1,
            google::bigtable::v2::Type const& pt2,
-           google::protobuf::Value const& pv2) {
+           google::bigtable::v2::Value const& pv2) {
   if (pt1.kind_case() != pt2.kind_case()) return false;
   if (pv1.kind_case() != pv2.kind_case()) return false;
   if (pt1.has_bool_type()) {
@@ -36,17 +36,11 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   return false;
 }
 
-// uncomment this when implementing `string`
-// A helper to escape all double quotes in the given string `s`. For example,
-// if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
-// wrap `s` itself in double quotes.
-// std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
-//   for (auto const& c : s) {
-//     if (c == '"') os << "\\";
-//     os << c;
-//   }
-//   return os;
-// }
+// From the proto description, `NULL` values are represented by having a kind
+// equal to KIND_NOT_SET
+bool IsNullValue(google::bigtable::v2::Value const& value) {
+  return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
+}
 
 // An enum to tell StreamHelper() whether a value is being printed as a scalar
 // or as part of an aggregate type (i.e., a vector or tuple). Some types may
@@ -54,13 +48,13 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
 enum class StreamMode { kScalar, kAggregate };
 
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
-                           google::protobuf::Value const& v,
+                           google::bigtable::v2::Value const& v,
                            google::bigtable::v2::Type const&, StreamMode) {
-  if (v.kind_case() == google::protobuf::Value::kNullValue) {
+  if (IsNullValue(v)) {
     return os << "NULL";
   }
 
-  if (v.kind_case() == google::protobuf::Value::kBoolValue) {
+  if (v.kind_case() == google::bigtable::v2::Value::kBoolValue) {
     return os << v.bool_value();
   }
   // this should include type name
@@ -98,8 +92,8 @@ google::bigtable::v2::Type Value::MakeTypeProto(bool) {
 // Value::MakeValueProto
 //
 
-google::protobuf::Value Value::MakeValueProto(bool b) {
-  google::protobuf::Value v;
+google::bigtable::v2::Value Value::MakeValueProto(bool b) {
+  google::bigtable::v2::Value v;
   v.set_bool_value(b);
   return v;
 }
@@ -108,13 +102,15 @@ google::protobuf::Value Value::MakeValueProto(bool b) {
 // Value::GetValue
 //
 
-StatusOr<bool> Value::GetValue(bool, google::protobuf::Value const& pv,
+StatusOr<bool> Value::GetValue(bool, google::bigtable::v2::Value const& pv,
                                google::bigtable::v2::Type const&) {
-  if (pv.kind_case() != google::protobuf::Value::kBoolValue) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kBoolValue) {
     return internal::UnknownError("missing BOOL", GCP_ERROR_INFO());
   }
   return pv.bool_value();
 }
+
+bool Value::is_null() const { return IsNullValue(value_); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

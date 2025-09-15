@@ -62,8 +62,6 @@ void TestBasicSemantics(T init) {
   // Ensures that the protos for a NULL T have the same "type" as a non-null T.
   auto const null_protos = bigtable_internal::ToProto(null);
   EXPECT_THAT(null_protos.first, IsProtoEqual(protos.first));
-  EXPECT_EQ(null_protos.second.null_value(),
-            google::protobuf::NullValue::NULL_VALUE);
 
   Value const not_null{absl::optional<T>(init)};
   ASSERT_STATUS_OK(not_null.get<T>());
@@ -116,21 +114,22 @@ TEST(Value, ProtoConversionBool) {
   }
 }
 
-void SetProtoKind(Value& v, google::protobuf::NullValue x) {
+void SetNullProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
-  p.second.set_null_value(x);
+  p.second.clear_kind();
+  p.second.clear_type();
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
 void SetProtoKind(Value& v, double x) {
   auto p = bigtable_internal::ToProto(v);
-  p.second.set_number_value(x);
+  p.second.set_float_value(x);
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
 void SetProtoKind(Value& v, float x) {
   auto p = bigtable_internal::ToProto(v);
-  p.second.set_number_value(x);
+  p.second.set_float_value(x);
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
@@ -151,7 +150,7 @@ TEST(Value, GetBadBool) {
   ClearProtoKind(v);
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
-  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  SetNullProtoKind(v);
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
