@@ -56,7 +56,7 @@ bazel_args=(
   "--action_env=GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"
   "--copt=-msse4.2"
   "--copt=-mcrc32"
-  "--test_output=errors"
+  "--test_output=all"
   "--verbose_failures=true"
   "--keep_going"
 )
@@ -80,13 +80,10 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
 fi
 
 io::log_h2 "build and run unit tests"
-# Excluded tests
-readonly BAZEL_TEST_EXCLUDES=(
-  "-//generator/integration_tests:benchmarks_client_benchmark"
-  "-//google/cloud:options_benchmark"
-)
 echo "bazel test " "${bazel_args[@]}"
-bazelisk test "${bazel_args[@]}" "--test_tag_filters=-integration-test" ... "${BAZEL_TEST_EXCLUDES[@]}"
+bazelisk test "${bazel_args[@]}" \
+  "//generator/integration_tests:benchmarks_client_benchmark" \
+  "//google/cloud:options_benchmark"
 
 io::log_h2 "build all targets"
 bazelisk build "${bazel_args[@]}" ...
