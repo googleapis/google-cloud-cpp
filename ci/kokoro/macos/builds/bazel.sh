@@ -43,6 +43,10 @@ for pkg in "${PACKAGES_TO_UNINSTALL[@]}"; do
   brew uninstall --ignore-dependencies "${pkg}" || true
 done
 
+# Add this after your uninstall loop
+io::log_yellow "Removing leftover openssl@3 configuration..."
+rm -rf /usr/local/etc/openssl@3
+
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
 io::log_h2 "Using bazel version"
@@ -80,6 +84,9 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   # and https://github.com/bazelbuild/bazel/issues/3360
   bazel_args+=("--experimental_guard_against_concurrent_changes")
 fi
+
+io::log_h2 "Cleaning Bazel cache..."
+bazelisk clean --expunge
 
 io::log_h2 "build and run unit tests"
 echo "bazel test " "${bazel_args[@]}"
