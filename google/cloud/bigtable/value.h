@@ -45,6 +45,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Bigtable Type | C++ Type `T`
  * ------------ | ------------
  * BOOL         | `bool`
+ * INT64        | `std::int64_t`
+ * FLOAT32      | `float`
+ * FLOAT64      | `double`
+ * STRING       | `std::string`
  *
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
@@ -60,6 +64,34 @@ class Value {
   Value() = default;
   /// Constructs an instance with the specified type and value.
   explicit Value(bool v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
+  explicit Value(std::int64_t v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
+  explicit Value(float v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
+  explicit Value(double v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
+  explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /**
+   * Constructs an instance from common C++ literal types that closely, though
+   * not exactly, match supported Bigtable types.
+   *
+   * An integer literal in C++ is of type `int`, which is not exactly an
+   * allowed Spanner type. This will be allowed but it will be implicitly up
+   * converted to a `std::int64_t`. Similarly, a C++ string literal will be
+   * implicitly converted to a `std::string`. For example:
+   *
+   * @code
+   * bigtable::Value v1(42);
+   * assert(42 == *v1.get<std::int64_t>());
+   *
+   * bigtable::Value v2("hello");
+   * assert("hello" == *v2.get<std::string>());
+   * @endcode
+   */
+  explicit Value(int v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(int)
+  explicit Value(char const* v) : Value(PrivateConstructor{}, v) {}
 
   /**
    * Constructs a non-null instance if `opt` has a value, otherwise constructs
@@ -132,6 +164,10 @@ class Value {
   // Tag-dispatch overloads to check if a C++ type matches the type specified
   // by the given `Type` proto.
   static bool TypeProtoIs(bool, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(std::int64_t, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(float, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(double, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(std::string const&, google::bigtable::v2::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
                           google::bigtable::v2::Type const& type) {
@@ -141,6 +177,12 @@ class Value {
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
   // argument type is the tag, the argument value is ignored.
   static google::bigtable::v2::Type MakeTypeProto(bool);
+  static google::bigtable::v2::Type MakeTypeProto(std::int64_t);
+  static google::bigtable::v2::Type MakeTypeProto(float);
+  static google::bigtable::v2::Type MakeTypeProto(double);
+  static google::bigtable::v2::Type MakeTypeProto(std::string const&);
+  static google::bigtable::v2::Type MakeTypeProto(int);
+  static google::bigtable::v2::Type MakeTypeProto(char const*);
   template <typename T>
   static google::bigtable::v2::Type MakeTypeProto(absl::optional<T> const&) {
     return MakeTypeProto(T{});
@@ -149,6 +191,12 @@ class Value {
   // Encodes the argument as a protobuf according to the rules described in
   // https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/type.proto
   static google::bigtable::v2::Value MakeValueProto(bool b);
+  static google::bigtable::v2::Value MakeValueProto(std::int64_t i);
+  static google::bigtable::v2::Value MakeValueProto(float f);
+  static google::bigtable::v2::Value MakeValueProto(double d);
+  static google::bigtable::v2::Value MakeValueProto(std::string s);
+  static google::bigtable::v2::Value MakeValueProto(int i);
+  static google::bigtable::v2::Value MakeValueProto(char const* s);
   template <typename T>
   static google::bigtable::v2::Value MakeValueProto(absl::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
@@ -162,6 +210,19 @@ class Value {
   // first argument type is the tag, its value is ignored.
   static StatusOr<bool> GetValue(bool, google::bigtable::v2::Value const&,
                                  google::bigtable::v2::Type const&);
+  static StatusOr<std::int64_t> GetValue(std::int64_t,
+                                         google::bigtable::v2::Value const&,
+                                         google::bigtable::v2::Type const&);
+  static StatusOr<float> GetValue(float, google::bigtable::v2::Value const&,
+                                  google::bigtable::v2::Type const&);
+  static StatusOr<double> GetValue(double, google::bigtable::v2::Value const&,
+                                   google::bigtable::v2::Type const&);
+  static StatusOr<std::string> GetValue(std::string const&,
+                                        google::bigtable::v2::Value const&,
+                                        google::bigtable::v2::Type const&);
+  static StatusOr<std::string> GetValue(std::string const&,
+                                        google::bigtable::v2::Value&&,
+                                        google::bigtable::v2::Type const&);
 
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(

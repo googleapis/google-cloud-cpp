@@ -33,6 +33,7 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   if (pt1.has_bool_type()) {
     return pv1.bool_value() == pv2.bool_value();
   }
+  //if (pt1.has_int
   return false;
 }
 
