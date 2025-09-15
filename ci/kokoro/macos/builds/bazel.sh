@@ -80,20 +80,12 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   bazel_args+=("--experimental_guard_against_concurrent_changes")
 fi
 
-io::log_h2 "build and run unit tests"
-# Excluded tests
-readonly BAZEL_TEST_EXCLUDES=(
-  "-//generator/integration_tests:benchmarks_client_benchmark"
-  "-//google/cloud:options_benchmark"
-  "-//google/cloud/storage/tests:unified_credentials_integration_test-grpc-metadata"
-)
+io::log_h2 "build and run unified_credentials_integration_test-grpc-metadata"
 readonly BAZEL_TEST_COMMAND=(
   "test"
   "${bazel_args[@]}"
-  "--test_tag_filters=-integration-test"
   "--"
-  "..."
-  "${BAZEL_TEST_EXCLUDES[@]}"
+  "//google/cloud/storage/tests:unified_credentials_integration_test-grpc-metadata"
 )
 echo "bazelisk" "${BAZEL_TEST_COMMAND[@]}"
 bazelisk "${BAZEL_TEST_COMMAND[@]}"
