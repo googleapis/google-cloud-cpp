@@ -72,7 +72,8 @@ readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   io::log "Using bazel remote cache: ${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
   bazel_args+=(
-    "--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
+    #"--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
+    "--remote_cache=''"
   )
   bazel_args+=("--google_credentials=${TEST_KEY_FILE_JSON}")
   # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
