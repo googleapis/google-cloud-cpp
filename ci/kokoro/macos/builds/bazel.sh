@@ -80,8 +80,13 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
 fi
 
 io::log_h2 "build and run unit tests"
+# Excluded tests
+readonly BAZEL_TEST_EXCLUDES=(
+  "-//generator/integration_tests:benchmarks_client_benchmark"
+  "-//google/cloud:options_benchmark"
+)
 echo "bazel test " "${bazel_args[@]}"
-bazelisk test "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
+bazelisk test "${bazel_args[@]}" "--test_tag_filters=-integration-test" ... "${BAZEL_TEST_EXCLUDES[@]}"
 
 io::log_h2 "build all targets"
 bazelisk build "${bazel_args[@]}" ...
