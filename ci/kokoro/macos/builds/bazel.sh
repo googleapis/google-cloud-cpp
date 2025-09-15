@@ -85,6 +85,7 @@ io::log_h2 "build and run unit tests"
 readonly BAZEL_TEST_EXCLUDES=(
   "-//generator/integration_tests:benchmarks_client_benchmark"
   "-//google/cloud:options_benchmark"
+  "-//google/cloud/storage/tests:unified_credentials_integration_test-grpc-metadata"
 )
 readonly BAZEL_TEST_COMMAND=(
   "test"
