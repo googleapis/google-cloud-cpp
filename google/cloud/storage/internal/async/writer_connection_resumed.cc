@@ -637,7 +637,7 @@ class AsyncWriterConnectionResumed
       std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      google::storage::v2::BidiWriteObjectResponse first_response,
+      google::storage::v2::BidiWriteObjectResponse const& first_response,
       Options const& options)
       : state_(std::make_shared<AsyncWriterConnectionResumedState>(
             std::move(factory), std::move(impl), std::move(initial_request),
@@ -685,7 +685,7 @@ MakeWriterConnectionResumed(
     std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    google::storage::v2::BidiWriteObjectResponse first_response,
+    google::storage::v2::BidiWriteObjectResponse const& first_response,
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionResumed>(
       std::move(factory), std::move(impl), std::move(initial_request),
