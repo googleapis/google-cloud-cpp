@@ -91,8 +91,8 @@ readonly BAZEL_TEST_COMMAND=(
   "test"
   "${bazel_args[@]}"
   "--test_tag_filters=-integration-test"
-  "..."
   "--"
+  "..."
   "${BAZEL_TEST_EXCLUDES[@]}"
 )
 echo "bazelisk" "${BAZEL_TEST_COMMAND[@]}"
