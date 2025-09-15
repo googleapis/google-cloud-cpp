@@ -22,6 +22,7 @@ source module ci/lib/io.sh
 
 PACKAGES_TO_UNINSTALL=(
   abseil
+  openssl
   protobuf
   grpc
   nlohmann-json
