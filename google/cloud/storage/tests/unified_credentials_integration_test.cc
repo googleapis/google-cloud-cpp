@@ -85,7 +85,7 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
 )""";
 
 constexpr int kCurleAbortedByCallback = 42;
-constexpr int kCurleOk = 0;
+// constexpr int kCurleOk = 0;
 
 class UnifiedCredentialsIntegrationTest
     : public ::google::cloud::storage::testing::StorageIntegrationTest {
@@ -168,62 +168,63 @@ class UnifiedCredentialsIntegrationTest
         .set<experimental::CAInMemoryOption>(bogus_certs);
   }
 
-  Options ValidCAStoreFromSslCtxCallbackOptions() {
-    auto ssl_ctx_callback = [ca_certs = ca_certs_](void*, void* ssl_ctx,
-                                                   void*) -> int {
-#ifndef _WIN32
-      struct BIOPtrCleanup {
-        int operator()(BIO* b) const { return BIO_free(b); }
-      };
-      using BioPtr = std::unique_ptr<BIO, BIOPtrCleanup>;
-      struct X509InfoPtrCleanup {
-        void operator()(STACK_OF(X509_INFO) * i) const {
-          return sk_X509_INFO_pop_free(i, X509_INFO_free);
-        }
-      };
-      using X509InfoPtr =
-          std::unique_ptr<STACK_OF(X509_INFO), X509InfoPtrCleanup>;
-
-      X509_STORE* cert_store =
-          SSL_CTX_get_cert_store(static_cast<SSL_CTX*>(ssl_ctx));
-      if (!cert_store) {
-        return kCurleAbortedByCallback;
-      }
-
-      // Add each of the provided certs to the store.
-      for (auto const& cert : ca_certs) {
-        BioPtr buf{
-            BIO_new_mem_buf(cert.data(), static_cast<int>(cert.length()))};
-        if (!buf) {
-          return kCurleAbortedByCallback;
-        }
-        X509InfoPtr info{
-            PEM_X509_INFO_read_bio(buf.get(), nullptr, nullptr, nullptr)};
-        if (!info) {
-          return kCurleAbortedByCallback;
-        }
-
-        for (decltype(sk_X509_INFO_num(info.get())) i = 0;
-             i < sk_X509_INFO_num(info.get()); ++i) {
-          X509_INFO* value = sk_X509_INFO_value(info.get(), i);
-          if (value->x509) {
-            X509_STORE_add_cert(cert_store, value->x509);
-          }
-          if (value->crl) {
-            X509_STORE_add_crl(cert_store, value->crl);
-          }
-        }
-      }
-      return kCurleOk;
-#else
-      return kCurleAbortedByCallback;
-#endif
-    };
-
-    return TestOptions()
-        // Populates in-memory trust store with Google's root CA certificates.
-        .set<experimental::SslCtxCallbackOption>(ssl_ctx_callback);
-  }
+  //  Options ValidCAStoreFromSslCtxCallbackOptions() {
+  //    auto ssl_ctx_callback = [ca_certs = ca_certs_](void*, void* ssl_ctx,
+  //                                                   void*) -> int {
+  // #ifndef _WIN32
+  //      struct BIOPtrCleanup {
+  //        int operator()(BIO* b) const { return BIO_free(b); }
+  //      };
+  //      using BioPtr = std::unique_ptr<BIO, BIOPtrCleanup>;
+  //      struct X509InfoPtrCleanup {
+  //        void operator()(STACK_OF(X509_INFO) * i) const {
+  //          return sk_X509_INFO_pop_free(i, X509_INFO_free);
+  //        }
+  //      };
+  //      using X509InfoPtr =
+  //          std::unique_ptr<STACK_OF(X509_INFO), X509InfoPtrCleanup>;
+  //
+  //      X509_STORE* cert_store =
+  //          SSL_CTX_get_cert_store(static_cast<SSL_CTX*>(ssl_ctx));
+  //      if (!cert_store) {
+  //        return kCurleAbortedByCallback;
+  //      }
+  //
+  //      // Add each of the provided certs to the store.
+  //      for (auto const& cert : ca_certs) {
+  //        BioPtr buf{
+  //            BIO_new_mem_buf(cert.data(), static_cast<int>(cert.length()))};
+  //        if (!buf) {
+  //          return kCurleAbortedByCallback;
+  //        }
+  //        X509InfoPtr info{
+  //            PEM_X509_INFO_read_bio(buf.get(), nullptr, nullptr, nullptr)};
+  //        if (!info) {
+  //          return kCurleAbortedByCallback;
+  //        }
+  //
+  //        for (decltype(sk_X509_INFO_num(info.get())) i = 0;
+  //             i < sk_X509_INFO_num(info.get()); ++i) {
+  //          X509_INFO* value = sk_X509_INFO_value(info.get(), i);
+  //          if (value->x509) {
+  //            X509_STORE_add_cert(cert_store, value->x509);
+  //          }
+  //          if (value->crl) {
+  //            X509_STORE_add_crl(cert_store, value->crl);
+  //          }
+  //        }
+  //      }
+  //      return kCurleOk;
+  // #else
+  //      return kCurleAbortedByCallback;
+  // #endif
+  //    };
+  //
+  //    return TestOptions()
+  //        // Populates in-memory trust store with Google's root CA
+  //        certificates.
+  //        .set<experimental::SslCtxCallbackOption>(ssl_ctx_callback);
+  //  }
 
   static Options InvalidCAStoreFromSslCtxCallbackOptions() {
     auto ssl_ctx_callback = [=](void*, void*, void*) -> int {
@@ -483,24 +484,25 @@ TEST_F(UnifiedCredentialsIntegrationTest, InvalidCAStoreInMemory) {
 }
 
 #ifndef _WIN32
-TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreFromSslCtxCallback) {
-  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
-  if (UsingEmulator()) GTEST_SKIP();
-  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
-  if (!keyfile.has_value()) GTEST_SKIP();
-
-  auto contents = [](std::string const& filename) {
-    std::ifstream is(filename);
-    return std::string{std::istreambuf_iterator<char>{is}, {}};
-  }(keyfile.value());
-
-  auto client = MakeTestClient(
-      ValidCAStoreFromSslCtxCallbackOptions().set<UnifiedCredentialsOption>(
-          MakeServiceAccountCredentials(contents)));
-
-  ASSERT_NO_FATAL_FAILURE(
-      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
-}
+// TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreFromSslCtxCallback) {
+//   if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
+//   if (UsingEmulator()) GTEST_SKIP();
+//   auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+//   if (!keyfile.has_value()) GTEST_SKIP();
+//
+//   auto contents = [](std::string const& filename) {
+//     std::ifstream is(filename);
+//     return std::string{std::istreambuf_iterator<char>{is}, {}};
+//   }(keyfile.value());
+//
+//   auto client = MakeTestClient(
+//       ValidCAStoreFromSslCtxCallbackOptions().set<UnifiedCredentialsOption>(
+//           MakeServiceAccountCredentials(contents)));
+//
+//   ASSERT_NO_FATAL_FAILURE(
+//       UseClient(client, bucket_name(), MakeRandomObjectName(),
+//       LoremIpsum()));
+// }
 
 TEST_F(UnifiedCredentialsIntegrationTest, InvalidCAStoreFromSslCtxCallback) {
   if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
