@@ -34,6 +34,7 @@ PACKAGES_TO_UNINSTALL=(
   pugixml
   zlib
   c-ares
+  openssl
 )
 
 io::log_h2 "Uninstalling Homebrew packages that are managed in MODULE.bazel..."
