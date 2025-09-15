@@ -409,6 +409,7 @@ cc_library(
             "-D_GNU_SOURCE",
             "-DBUILDING_LIBCURL",
             "-DHAVE_CONFIG_H",
+            "-DOPENSSL_NO_ENGINE",
             "-DCURL_DISABLE_FTP",
             "-DCURL_DISABLE_NTLM",  # turning it off in configure is not enough
             "-DHAVE_LIBZ",
