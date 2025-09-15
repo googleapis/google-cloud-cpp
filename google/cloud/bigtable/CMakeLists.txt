@@ -215,6 +215,7 @@ add_library(
     internal/rpc_policy_parameters.inc
     internal/traced_row_reader.cc
     internal/traced_row_reader.h
+    internal/tuple_utils.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
     metadata_update_policy.h
@@ -464,6 +465,7 @@ if (BUILD_TESTING)
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
+        internal/tuple_utils_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
