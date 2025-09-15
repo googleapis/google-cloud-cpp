@@ -86,6 +86,7 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions --formula
 brew list --versions --cask
 brew list --versions coreutils || brew install coreutils
+
 if [[ "${RUNNING_CI:-}" = "yes" ]]; then
   # We use `gcloud alpha storage` as it significantly improves the
   # upload and download performance of the cache.  If this step fails
@@ -117,6 +118,11 @@ readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/${BRANCH}"
 readonly CACHE_NAME="cache-macos-${BUILD_NAME}"
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
+
+io::log_h2 "Uninstalling conflicting Homebrew OpenSSL versions..."
+brew uninstall --ignore-dependencies openssl || echo "openssl not found or uninstall failed."
+brew uninstall --ignore-dependencies openssl@1.1 || echo "openssl@1.1 not found or uninstall failed."
+brew uninstall --ignore-dependencies openssl@3 || echo "openssl@3 not found or uninstall failed."
 
 io::log_h1 "Starting Build: ${BUILD_NAME}"
 if "ci/kokoro/macos/builds/${BUILD_NAME}.sh"; then
