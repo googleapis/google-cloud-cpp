@@ -32,9 +32,12 @@ bazel_args=(
   # cannot find the credentials, even if you do not use them. Some of the
   # unit tests do exactly that.
   "--action_env=GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"
+  "--copt=-msse4.2"
+  "--copt=-mcrc32"
   "--test_output=errors"
   "--verbose_failures=true"
   "--keep_going"
+  "--sandbox_debug"
 )
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
@@ -54,25 +57,6 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   # and https://github.com/bazelbuild/bazel/issues/3360
   bazel_args+=("--experimental_guard_against_concurrent_changes")
 fi
-
-for repeat in 1 2 3; do
-  # Additional dependencies, these are not downloaded by `bazel fetch ...`,
-  # but are needed to compile the code
-  external=(
-    @local_config_platform//...
-    @local_config_cc_toolchains//...
-    @local_config_sh//...
-    @go_sdk//...
-    @remotejdk11_macos//:jdk
-  )
-  io::log_yellow "Fetch bazel dependencies [${repeat}/3]"
-  if bazelisk fetch ... "${external[@]}"; then
-    break
-  else
-    io::log_yellow "bazel fetch failed with $?"
-  fi
-  sleep $((120 * repeat))
-done
 
 io::log_h2 "build and run unit tests"
 echo "bazel test " "${bazel_args[@]}"
