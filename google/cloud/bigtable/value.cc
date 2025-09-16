@@ -167,22 +167,22 @@ google::bigtable::v2::Value Value::MakeValueProto(int i) {
   return Value::MakeValueProto(static_cast<std::int64_t>(i));
 }
 google::bigtable::v2::Value Value::MakeValueProto(float f) {
-  // NaN and Infinity are not supported
-  // See
+  // NaN and Infinity are not supported. See
   // https://github.com/googleapis/googleapis/blob/5caeec4d72173ea3f2772b1b67a5c3f9192a6d06/google/bigtable/v2/data.proto#L140-L142
   if (std::isnan(f) || std::isinf(f)) {
-    internal::ThrowInvalidArgument("NaN and Infinity are not supported");
+    internal::ThrowInvalidArgument(
+        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
   }
   google::bigtable::v2::Value v;
   v.set_float_value(f);
   return v;
 }
 google::bigtable::v2::Value Value::MakeValueProto(double d) {
-  // NaN and Infinity are not supported
-  // See
+  // NaN and Infinity are not supported. See
   // https://github.com/googleapis/googleapis/blob/5caeec4d72173ea3f2772b1b67a5c3f9192a6d06/google/bigtable/v2/data.proto#L140-L142
   if (std::isnan(d) || std::isinf(d)) {
-    internal::ThrowInvalidArgument("NaN and Infinity are not supported");
+    internal::ThrowInvalidArgument(
+        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
   }
   google::bigtable::v2::Value v;
   v.set_float_value(d);
