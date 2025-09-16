@@ -41,10 +41,6 @@ build --experimental_downloader_config=bazel/downloader.cfg
 # frustrating when they fail and don't give any output. So, remove the limit.
 build --experimental_ui_max_stdouterr_bytes=-1
 
-# TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
-#     `apple_rules`.
-common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
-
 # Inject ${GTEST_SHUFFLE} and ${GTEST_RANDOM_SEED} into the test environment
 # if they are set in the enclosing environment. This allows for running tests
 # in a random order to help expose undesirable interdependencies.
