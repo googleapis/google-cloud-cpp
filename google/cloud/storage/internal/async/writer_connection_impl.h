@@ -48,7 +48,7 @@ class AsyncWriterConnectionImpl
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      google::storage::v2::Object metadata);
+      google::storage::v2::Object metadata, bool first_request = true);
   ~AsyncWriterConnectionImpl() override;
 
   void Cancel() override { return impl_->Cancel(); }

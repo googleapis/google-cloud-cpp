@@ -384,10 +384,17 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
           std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
-        persisted_size = rpc->first_response.resource().size();
-        auto impl = std::make_unique<AsyncWriterConnectionImpl>(
-            current, request, std::move(rpc->stream), hash, persisted_size,
-            false);
+        std::unique_ptr<AsyncWriterConnectionImpl> impl;
+        if (rpc->first_response.has_resource()) {
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash,
+              rpc->first_response.resource(), false);
+        } else {
+          persisted_size = rpc->first_response.persisted_size();
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash, persisted_size,
+              false);
+        }
         return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
                                            std::move(request), std::move(hash),
                                            rpc->first_response, *current);
