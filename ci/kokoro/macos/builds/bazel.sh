@@ -85,6 +85,8 @@ readonly BAZEL_TEST_EXCLUDES=(
   # See #15544
   "-//generator/integration_tests:benchmarks_client_benchmark"
   "-//google/cloud:options_benchmark"
+  # See #15546
+  "-//google/cloud/storage/tests:unified_credentials_integration_test-grpc-metadata"
 )
 readonly BAZEL_TEST_COMMAND=(
   "test"
