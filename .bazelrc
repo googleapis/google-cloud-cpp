@@ -35,7 +35,8 @@ build --experimental_convenience_symlinks=ignore
 # We mirror critical tarballs from several sources in case the canonical source
 # is temporarily unavailable, e.g., github.com being down. This option and flag
 # automatically rewrites the URLs.
-build --experimental_downloader_config=bazel/downloader.cfg
+# TODO(#15549) - re-enable once the downloader config is fixed.
+# build --experimental_downloader_config=bazel/downloader.cfg
 
 # It is frustrating when long-running builds/tests fail, but it is even more
 # frustrating when they fail and don't give any output. So, remove the limit.
