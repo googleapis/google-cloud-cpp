@@ -96,7 +96,7 @@ class Value {
    * not exactly, match supported Bigtable types.
    *
    * An integer literal in C++ is of type `int`, which is not exactly an
-   * allowed Spanner type. This will be allowed but it will be implicitly up
+   * allowed Bigtable type. This will be allowed but it will be implicitly up
    * converted to a `std::int64_t`. Similarly, a C++ string literal will be
    * implicitly converted to a `std::string`. For example:
    *
