@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/value.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <google/bigtable/v2/types.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
@@ -33,7 +34,15 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   if (pt1.has_bool_type()) {
     return pv1.bool_value() == pv2.bool_value();
   }
-  //if (pt1.has_int
+  if (pt1.has_int64_type()) {
+    return pv1.int_value() == pv2.int_value();
+  }
+  if (pt1.has_float32_type() || pt1.has_float64_type()) {
+    return pv1.float_value() == pv2.float_value();
+  }
+  if (pt1.has_string_type()) {
+    return pv1.string_value() == pv2.string_value();
+  }
   return false;
 }
 
@@ -58,6 +67,15 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   if (v.kind_case() == google::bigtable::v2::Value::kBoolValue) {
     return os << v.bool_value();
   }
+  if (v.kind_case() == google::bigtable::v2::Value::kIntValue) {
+    return os << v.int_value();
+  }
+  if (v.kind_case() == google::bigtable::v2::Value::kFloatValue) {
+    return os << v.float_value();
+  }
+  if (v.kind_case() == google::bigtable::v2::Value::kStringValue) {
+    return os << v.string_value();
+  }
   // this should include type name
   return os << "Error: unknown value type code ";
 }
@@ -78,6 +96,19 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
 bool Value::TypeProtoIs(bool, google::bigtable::v2::Type const& type) {
   return type.has_bool_type();
 }
+bool Value::TypeProtoIs(std::int64_t, google::bigtable::v2::Type const& type) {
+  return type.has_int64_type();
+}
+bool Value::TypeProtoIs(float, google::bigtable::v2::Type const& type) {
+  return type.has_float32_type();
+}
+bool Value::TypeProtoIs(double, google::bigtable::v2::Type const& type) {
+  return type.has_float64_type();
+}
+bool Value::TypeProtoIs(std::string const&,
+                        google::bigtable::v2::Type const& type) {
+  return type.has_string_type();
+}
 
 //
 // Value::MakeTypeProto
@@ -88,6 +119,35 @@ google::bigtable::v2::Type Value::MakeTypeProto(bool) {
   t.set_allocated_bool_type(std::move(new google::bigtable::v2::Type_Bool()));
   return t;
 }
+google::bigtable::v2::Type Value::MakeTypeProto(int const i) {
+  return Value::MakeTypeProto(static_cast<std::int64_t>(i));
+}
+google::bigtable::v2::Type Value::MakeTypeProto(std::int64_t) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_int64_type(std::move(new google::bigtable::v2::Type_Int64()));
+  return t;
+}
+google::bigtable::v2::Type Value::MakeTypeProto(float) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_float32_type(
+      std::move(new google::bigtable::v2::Type_Float32()));
+  return t;
+}
+google::bigtable::v2::Type Value::MakeTypeProto(double) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_float64_type(
+      std::move(new google::bigtable::v2::Type_Float64()));
+  return t;
+}
+google::bigtable::v2::Type Value::MakeTypeProto(std::string const&) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_string_type(
+      std::move(new google::bigtable::v2::Type_String()));
+  return t;
+}
+google::bigtable::v2::Type Value::MakeTypeProto(char const* s) {
+  return Value::MakeTypeProto(std::string(std::move(s)));
+}
 
 //
 // Value::MakeValueProto
@@ -97,6 +157,44 @@ google::bigtable::v2::Value Value::MakeValueProto(bool b) {
   google::bigtable::v2::Value v;
   v.set_bool_value(b);
   return v;
+}
+google::bigtable::v2::Value Value::MakeValueProto(std::int64_t i) {
+  google::bigtable::v2::Value v;
+  v.set_int_value(i);
+  return v;
+}
+google::bigtable::v2::Value Value::MakeValueProto(int i) {
+  return Value::MakeValueProto(static_cast<std::int64_t>(i));
+}
+google::bigtable::v2::Value Value::MakeValueProto(float f) {
+  // NaN and Infinity are not supported
+  // See
+  // https://github.com/googleapis/googleapis/blob/5caeec4d72173ea3f2772b1b67a5c3f9192a6d06/google/bigtable/v2/data.proto#L140-L142
+  if (std::isnan(f) || std::isinf(f)) {
+    internal::ThrowInvalidArgument("NaN and Infinity are not supported");
+  }
+  google::bigtable::v2::Value v;
+  v.set_float_value(f);
+  return v;
+}
+google::bigtable::v2::Value Value::MakeValueProto(double d) {
+  // NaN and Infinity are not supported
+  // See
+  // https://github.com/googleapis/googleapis/blob/5caeec4d72173ea3f2772b1b67a5c3f9192a6d06/google/bigtable/v2/data.proto#L140-L142
+  if (std::isnan(d) || std::isinf(d)) {
+    internal::ThrowInvalidArgument("NaN and Infinity are not supported");
+  }
+  google::bigtable::v2::Value v;
+  v.set_float_value(d);
+  return v;
+}
+google::bigtable::v2::Value Value::MakeValueProto(std::string s) {
+  google::bigtable::v2::Value v;
+  v.set_string_value(std::move(s));
+  return v;
+}
+google::bigtable::v2::Value Value::MakeValueProto(char const* s) {
+  return Value::MakeValueProto(std::string(s));
 }
 
 //
@@ -109,6 +207,52 @@ StatusOr<bool> Value::GetValue(bool, google::bigtable::v2::Value const& pv,
     return internal::UnknownError("missing BOOL", GCP_ERROR_INFO());
   }
   return pv.bool_value();
+}
+StatusOr<std::int64_t> Value::GetValue(std::int64_t,
+                                       google::bigtable::v2::Value const& pv,
+                                       google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kIntValue) {
+    return internal::UnknownError("missing INT64", GCP_ERROR_INFO());
+  }
+  return pv.int_value();
+}
+StatusOr<float> Value::GetValue(float, google::bigtable::v2::Value const& pv,
+                                google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kFloatValue) {
+    return internal::UnknownError("missing FLOAT32", GCP_ERROR_INFO());
+  }
+  if (std::isnan(pv.float_value()) || std::isinf(pv.float_value())) {
+    return internal::UnimplementedError(
+        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
+  }
+  return pv.float_value();
+}
+StatusOr<double> Value::GetValue(double, google::bigtable::v2::Value const& pv,
+                                 google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kFloatValue) {
+    return internal::UnknownError("missing FLOAT64", GCP_ERROR_INFO());
+  }
+  if (std::isnan(pv.float_value()) || std::isinf(pv.float_value())) {
+    return internal::UnimplementedError(
+        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
+  }
+  return pv.float_value();
+}
+StatusOr<std::string> Value::GetValue(std::string const&,
+                                      google::bigtable::v2::Value const& pv,
+                                      google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
+    return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
+  }
+  return pv.string_value();
+}
+StatusOr<std::string> Value::GetValue(std::string const&,
+                                      google::bigtable::v2::Value&& pv,
+                                      google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
+    return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
+  }
+  return std::move(*pv.mutable_string_value());
 }
 
 bool Value::is_null() const { return IsNullValue(value_); }

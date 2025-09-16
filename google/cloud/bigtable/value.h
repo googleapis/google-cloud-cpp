@@ -26,6 +26,21 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct ValueInternals;
+
+static std::string const INVALID_FLOAT_VALUE_MESSAGE =
+    "NaN and Infinity are not supported for FLOAT** values";
+
+static bool _validate_float_value(double v) {
+  std::cout << v << std::endl;
+  if (std::isnan(v) || std::isinf(v)) {
+    throw internal::FailedPreconditionError(INVALID_FLOAT_VALUE_MESSAGE);
+  }
+  return true;
+}
+
+static bool ValidateFloatValue(double v) { return _validate_float_value(v); }
+
+static bool ValidateFloatValue(float v) { return _validate_float_value(v); }
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 
@@ -67,9 +82,13 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(std::int64_t v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
-  explicit Value(float v) : Value(PrivateConstructor{}, v) {}
+  explicit Value(float v) : Value(PrivateConstructor{}, v) {
+    bigtable_internal::ValidateFloatValue(v);
+  }
   /// @copydoc Value(bool)
-  explicit Value(double v) : Value(PrivateConstructor{}, v) {}
+  explicit Value(double v) : Value(PrivateConstructor{}, v) {
+    bigtable_internal::ValidateFloatValue(v);
+  }
   /// @copydoc Value(bool)
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
   /**
@@ -167,7 +186,8 @@ class Value {
   static bool TypeProtoIs(std::int64_t, google::bigtable::v2::Type const&);
   static bool TypeProtoIs(float, google::bigtable::v2::Type const&);
   static bool TypeProtoIs(double, google::bigtable::v2::Type const&);
-  static bool TypeProtoIs(std::string const&, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(std::string const&,
+                          google::bigtable::v2::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
                           google::bigtable::v2::Type const& type) {
