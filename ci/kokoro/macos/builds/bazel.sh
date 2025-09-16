@@ -81,10 +81,12 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
 fi
 
 io::log_h2 "build and run unit tests"
-readonly BAZEL_TEST_EXCLUDES=(
+readonly BAZEL_EXCLUDES=(
   # See #15544
   "-//generator/integration_tests:benchmarks_client_benchmark"
   "-//google/cloud:options_benchmark"
+  # See #15546
+  "-//google/cloud/storage/tests:unified_credentials_integration_test-grpc-metadata"
 )
 readonly BAZEL_TEST_COMMAND=(
   "test"
@@ -92,13 +94,13 @@ readonly BAZEL_TEST_COMMAND=(
   "--test_tag_filters=-integration-test"
   "--"
   "..."
-  "${BAZEL_TEST_EXCLUDES[@]}"
+  "${BAZEL_EXCLUDES[@]}"
 )
 echo "bazelisk" "${BAZEL_TEST_COMMAND[@]}"
 bazelisk "${BAZEL_TEST_COMMAND[@]}"
 
 io::log_h2 "build all targets"
-bazelisk build "${bazel_args[@]}" ...
+bazelisk build "${bazel_args[@]}" ... "${BAZEL_EXCLUDES[@]}"
 
 io::log_h2 "running minimal quickstart programs"
 bazelisk run "${bazel_args[@]}" \
