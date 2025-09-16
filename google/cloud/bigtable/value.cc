@@ -171,7 +171,7 @@ google::bigtable::v2::Value Value::MakeValueProto(float f) {
   // https://github.com/googleapis/googleapis/blob/5caeec4d72173ea3f2772b1b67a5c3f9192a6d06/google/bigtable/v2/data.proto#L140-L142
   if (std::isnan(f) || std::isinf(f)) {
     internal::ThrowInvalidArgument(
-        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
+        bigtable_internal::kInvalidFloatValueMessage);
   }
   google::bigtable::v2::Value v;
   v.set_float_value(f);
@@ -182,7 +182,7 @@ google::bigtable::v2::Value Value::MakeValueProto(double d) {
   // https://github.com/googleapis/googleapis/blob/5caeec4d72173ea3f2772b1b67a5c3f9192a6d06/google/bigtable/v2/data.proto#L140-L142
   if (std::isnan(d) || std::isinf(d)) {
     internal::ThrowInvalidArgument(
-        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
+        bigtable_internal::kInvalidFloatValueMessage);
   }
   google::bigtable::v2::Value v;
   v.set_float_value(d);
@@ -223,9 +223,9 @@ StatusOr<float> Value::GetValue(float, google::bigtable::v2::Value const& pv,
   }
   if (std::isnan(pv.float_value()) || std::isinf(pv.float_value())) {
     return internal::UnimplementedError(
-        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
+        bigtable_internal::kInvalidFloatValueMessage);
   }
-  return pv.float_value();
+  return static_cast<float>(pv.float_value());
 }
 StatusOr<double> Value::GetValue(double, google::bigtable::v2::Value const& pv,
                                  google::bigtable::v2::Type const&) {
@@ -234,7 +234,7 @@ StatusOr<double> Value::GetValue(double, google::bigtable::v2::Value const& pv,
   }
   if (std::isnan(pv.float_value()) || std::isinf(pv.float_value())) {
     return internal::UnimplementedError(
-        bigtable_internal::INVALID_FLOAT_VALUE_MESSAGE);
+        bigtable_internal::kInvalidFloatValueMessage);
   }
   return pv.float_value();
 }

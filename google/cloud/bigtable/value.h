@@ -27,20 +27,19 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct ValueInternals;
 
-static std::string const INVALID_FLOAT_VALUE_MESSAGE =
+static std::string const kInvalidFloatValueMessage =
     "NaN and Infinity are not supported for FLOAT** values";
 
-static bool _validate_float_value(double v) {
-  std::cout << v << std::endl;
+static bool validate_float_value(double v) {
   if (std::isnan(v) || std::isinf(v)) {
-    throw internal::FailedPreconditionError(INVALID_FLOAT_VALUE_MESSAGE);
+    throw internal::FailedPreconditionError(kInvalidFloatValueMessage);
   }
   return true;
 }
 
-static bool ValidateFloatValue(double v) { return _validate_float_value(v); }
+static bool ValidateFloatValue(double v) { return validate_float_value(v); }
 
-static bool ValidateFloatValue(float v) { return _validate_float_value(v); }
+static bool ValidateFloatValue(float v) { return validate_float_value(v); }
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 
