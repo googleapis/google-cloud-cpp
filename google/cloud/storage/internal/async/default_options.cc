@@ -27,7 +27,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::size_t MinLwmValue() { return 256 * 1024; }
+std::size_t MinLwmValue() { return 16 * 1024 * 1024; }
 
 std::size_t MaxLwmValue() {
   if (std::numeric_limits<std::size_t>::digits < 64) {
