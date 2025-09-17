@@ -112,7 +112,7 @@ class AsyncWriterConnectionResumedState
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
-    HandleNewData(std::move(lk));
+    HandleNewData(std::move(lk), true);
     // Return the unique future associated with this finalization.
     return std::move(finalized_future_);
   }
