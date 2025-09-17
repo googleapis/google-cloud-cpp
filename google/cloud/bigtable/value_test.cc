@@ -131,7 +131,7 @@ TEST(Value, Equality) {
       {Value(0), Value(1)},
       {Value(static_cast<std::int64_t>(0)),
        Value(static_cast<std::int64_t>(1))},
-      {Value(3.14f), Value(42.0f)},
+      {Value(3.14F), Value(42.0F)},
       {Value(3.14), Value(42.0)},
       {Value("foo"), Value("bar")},
   };
@@ -205,8 +205,8 @@ TEST(Value, ConstructionFromLiterals) {
   Value v_int64(42);
   EXPECT_EQ(42, *v_int64.get<std::int64_t>());
 
-  Value v_float32(1.5f);
-  EXPECT_EQ(1.5f, *v_float32.get<float>());
+  Value v_float32(1.5F);
+  EXPECT_EQ(1.5F, *v_float32.get<float>());
 
   Value v_float64(1.5);
   EXPECT_EQ(1.5, *v_float64.get<double>());
@@ -278,10 +278,14 @@ TEST(Value, ProtoConversionFloat64) {
     EXPECT_EQ(x, p.second.float_value());
   }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Tests special cases
-  EXPECT_ANY_THROW(Value(std::numeric_limits<double>::infinity()));
-  EXPECT_ANY_THROW(Value(-std::numeric_limits<double>::infinity()));
-  EXPECT_ANY_THROW(Value(std::nan("NaN")));
+  auto const infval = std::numeric_limits<double>::infinity();
+  auto const nanval = std::nan("NaN");
+  EXPECT_ANY_THROW(auto const x = Value(infval));
+  EXPECT_ANY_THROW(auto const x = Value(-infval));
+  EXPECT_ANY_THROW(auto const x = Value(nanval));
+#endif // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Value, ProtoConversionFloat32) {
@@ -294,10 +298,14 @@ TEST(Value, ProtoConversionFloat32) {
     EXPECT_EQ(x, p.second.float_value());
   }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Tests special cases
-  EXPECT_ANY_THROW(Value(std::numeric_limits<float>::infinity()));
-  EXPECT_ANY_THROW(Value(-std::numeric_limits<float>::infinity()));
-  EXPECT_ANY_THROW(Value(std::nan("NaN")));
+  auto const nanval = std::nanf("NaN");
+  auto const infval = std::numeric_limits<float>::infinity();
+  EXPECT_ANY_THROW(auto const x = Value(infval));
+  EXPECT_ANY_THROW(auto const x = Value(-infval));
+  EXPECT_ANY_THROW(auto const x = Value(nanval));
+#endif // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Value, ProtoConversionString) {
