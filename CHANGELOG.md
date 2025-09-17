@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.42.0 - TBD
+## v2.42.0 - 2025-09
 
 ### New Libraries
 
@@ -13,6 +13,29 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Security Compliance](/google/cloud/cloudsecuritycompliance/README.md)
 - [Config Delivery API](/google/cloud/configdelivery/README.md)
+
+### Updated Libraries
+
+- [Network Connectivity](/google/cloud/networkconnectivity/README.md) - added support for DataTransferService ([#15464](https://github.com/googleapis/google-cloud-cpp/pull/15464))
+
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- perf(spanner): Use arenas to speed up queries that fetch many rows ([#15441](https://github.com/googleapis/google-cloud-cpp/pull/15441))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Remove unnecessary code which was causing race condition ([#15551](https://github.com/googleapis/google-cloud-cpp/pull/15551))
+- feat(storage): Update the appendable object function to store the Object metadata ([#15422](https://github.com/googleapis/google-cloud-cpp/pull/15422))
+- feat(storage): Add generation in append_object_spec in resume operation ([#15395](https://github.com/googleapis/google-cloud-cpp/pull/15395))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- perf: Change StreamingReadRpc::Read interface to take ResponseType ([#15319](https://github.com/googleapis/google-cloud-cpp/pull/15319))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-09-05T15:58:06-07:00](https://github.com/googleapis/googleapis/tree/46403a9acec0719c130b33eb38b2ee62a45f9f6c)
 
 ## v2.41.0 - 2025-08-14
 
