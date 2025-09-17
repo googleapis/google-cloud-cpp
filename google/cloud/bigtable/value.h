@@ -19,6 +19,7 @@
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <google/bigtable/v2/types.pb.h>
+#include <cmath>
 
 namespace google {
 namespace cloud {

@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <cmath>
 
 namespace google {
 namespace cloud {
@@ -285,7 +286,7 @@ TEST(Value, ProtoConversionFloat64) {
   EXPECT_ANY_THROW(auto const x = Value(infval));
   EXPECT_ANY_THROW(auto const x = Value(-infval));
   EXPECT_ANY_THROW(auto const x = Value(nanval));
-#endif // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Value, ProtoConversionFloat32) {
@@ -305,7 +306,7 @@ TEST(Value, ProtoConversionFloat32) {
   EXPECT_ANY_THROW(auto const x = Value(infval));
   EXPECT_ANY_THROW(auto const x = Value(-infval));
   EXPECT_ANY_THROW(auto const x = Value(nanval));
-#endif // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Value, ProtoConversionString) {
