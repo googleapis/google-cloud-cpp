@@ -112,7 +112,7 @@ class AsyncWriterConnectionResumedState
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
-    HandleNewData(std::move(lk), true);
+    HandleNewData(std::move(lk));
     // Return the unique future associated with this finalization.
     return std::move(finalized_future_);
   }
@@ -192,8 +192,10 @@ class AsyncWriterConnectionResumedState
       // Still data to write, determine the next chunk.
       auto const n = resend_buffer_.size() - write_offset_;
       auto payload = resend_buffer_.Subcord(write_offset_, n);
-      if (flush_) return FlushStep(std::move(lk), std::move(payload));
-      return WriteStep(std::move(lk), std::move(payload));
+      if (flush_ || finalize_)
+        return FlushStep(std::move(lk), std::move(payload));
+      else
+        return WriteStep(std::move(lk), std::move(payload));
     }
 
     // No data left to write (writing_ is false).
