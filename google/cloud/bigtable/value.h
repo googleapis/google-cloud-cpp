@@ -33,7 +33,11 @@ static std::string const kInvalidFloatValueMessage =
 
 static bool validate_float_value(double v) {
   if (std::isnan(v) || std::isinf(v)) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     throw internal::FailedPreconditionError(kInvalidFloatValueMessage);
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    return false;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
   return true;
 }
