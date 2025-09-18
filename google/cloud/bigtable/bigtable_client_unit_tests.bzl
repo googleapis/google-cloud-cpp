@@ -21,6 +21,7 @@ bigtable_client_unit_tests = [
     "app_profile_config_test.cc",
     "async_read_stream_test.cc",
     "bigtable_version_test.cc",
+    "bytes_test.cc",
     "cell_test.cc",
     "client_options_test.cc",
     "cluster_config_test.cc",
