@@ -109,6 +109,8 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bytes.cc
+    bytes.h
     cell.h
     client_options.cc
     client_options.h
@@ -418,6 +420,7 @@ if (BUILD_TESTING)
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
+        bytes_test.cc
         cell_test.cc
         client_options_test.cc
         cluster_config_test.cc

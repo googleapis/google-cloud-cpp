@@ -43,6 +43,9 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   if (pt1.has_string_type()) {
     return pv1.string_value() == pv2.string_value();
   }
+  if (pt1.has_bytes_type()) {
+    return pv1.bytes_value() == pv2.bytes_value();
+  }
   return false;
 }
 
@@ -76,6 +79,9 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   if (v.kind_case() == google::bigtable::v2::Value::kStringValue) {
     return os << v.string_value();
   }
+  if (v.kind_case() == google::bigtable::v2::Value::kBytesValue) {
+    return os << Bytes(v.bytes_value());
+  }
   // this should include type name
   return os << "Error: unknown value type code ";
 }
@@ -108,6 +114,9 @@ bool Value::TypeProtoIs(double, google::bigtable::v2::Type const& type) {
 bool Value::TypeProtoIs(std::string const&,
                         google::bigtable::v2::Type const& type) {
   return type.has_string_type();
+}
+bool Value::TypeProtoIs(Bytes const&, google::bigtable::v2::Type const& type) {
+  return type.has_bytes_type();
 }
 
 //
@@ -147,6 +156,11 @@ google::bigtable::v2::Type Value::MakeTypeProto(std::string const&) {
 }
 google::bigtable::v2::Type Value::MakeTypeProto(char const* s) {
   return Value::MakeTypeProto(std::string(std::move(s)));
+}
+google::bigtable::v2::Type Value::MakeTypeProto(Bytes const&) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_bytes_type(std::move(new google::bigtable::v2::Type_Bytes()));
+  return t;
 }
 
 //
@@ -195,6 +209,11 @@ google::bigtable::v2::Value Value::MakeValueProto(std::string s) {
 }
 google::bigtable::v2::Value Value::MakeValueProto(char const* s) {
   return Value::MakeValueProto(std::string(s));
+}
+google::bigtable::v2::Value Value::MakeValueProto(Bytes const& b) {
+  google::bigtable::v2::Value v;
+  v.set_bytes_value(b.get<std::string>());
+  return v;
 }
 
 //
@@ -253,6 +272,14 @@ StatusOr<std::string> Value::GetValue(std::string const&,
     return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
   }
   return std::move(*pv.mutable_string_value());
+}
+StatusOr<Bytes> Value::GetValue(Bytes const&,
+                                google::bigtable::v2::Value const& pv,
+                                google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kBytesValue) {
+    return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
+  }
+  return Bytes(pv.bytes_value());
 }
 
 bool Value::is_null() const { return IsNullValue(value_); }

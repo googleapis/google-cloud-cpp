@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
+#include "bytes.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <google/bigtable/v2/types.pb.h>
 #include <cmath>
@@ -68,6 +69,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * FLOAT32      | `float`
  * FLOAT64      | `double`
  * STRING       | `std::string`
+ * BYTES        | `google::cloud::bigtable::v2::Bytes`
  *
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
@@ -95,6 +97,8 @@ class Value {
   }
   /// @copydoc Value(bool)
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
+  explicit Value(Bytes const& v) : Value(PrivateConstructor{}, std::move(v)) {}
   /**
    * Constructs an instance from common C++ literal types that closely, though
    * not exactly, match supported Bigtable types.
@@ -192,6 +196,7 @@ class Value {
   static bool TypeProtoIs(double, google::bigtable::v2::Type const&);
   static bool TypeProtoIs(std::string const&,
                           google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(Bytes const&, google::bigtable::v2::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
                           google::bigtable::v2::Type const& type) {
@@ -205,6 +210,7 @@ class Value {
   static google::bigtable::v2::Type MakeTypeProto(float);
   static google::bigtable::v2::Type MakeTypeProto(double);
   static google::bigtable::v2::Type MakeTypeProto(std::string const&);
+  static google::bigtable::v2::Type MakeTypeProto(Bytes const&);
   static google::bigtable::v2::Type MakeTypeProto(int);
   static google::bigtable::v2::Type MakeTypeProto(char const*);
   template <typename T>
@@ -219,6 +225,7 @@ class Value {
   static google::bigtable::v2::Value MakeValueProto(float f);
   static google::bigtable::v2::Value MakeValueProto(double d);
   static google::bigtable::v2::Value MakeValueProto(std::string s);
+  static google::bigtable::v2::Value MakeValueProto(Bytes const& b);
   static google::bigtable::v2::Value MakeValueProto(int i);
   static google::bigtable::v2::Value MakeValueProto(char const* s);
   template <typename T>
@@ -247,6 +254,9 @@ class Value {
   static StatusOr<std::string> GetValue(std::string const&,
                                         google::bigtable::v2::Value&&,
                                         google::bigtable::v2::Type const&);
+  static StatusOr<Bytes> GetValue(Bytes const&,
+                                  google::bigtable::v2::Value const&,
+                                  google::bigtable::v2::Type const&);
 
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(

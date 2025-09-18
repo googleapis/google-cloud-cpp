@@ -18,6 +18,14 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cmath>
+#include <cstdint>
+#include <iomanip>
+#include <ios>
+#include <limits>
+#include <string>
+#include <tuple>
+#include <type_traits>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -124,6 +132,16 @@ TEST(Value, BasicSemantics) {
     // v.resize(10);
     // TestBasicSemantics(v);
   }
+  for (auto const& x : std::vector<Bytes>{Bytes(""), Bytes("f"), Bytes("foo"),
+                                          Bytes("12345678901234567")}) {
+    SCOPED_TRACE("Testing: Bytes " + x.get<std::string>());
+    TestBasicSemantics(x);
+    // uncomment after enabling vector support
+    // TestBasicSemantics(std::vector<Bytes>(5, x));
+    // std::vector<absl::optional<Bytes>> v(5, x);
+    // v.resize(10);
+    // TestBasicSemantics(v);
+  }
 }
 
 TEST(Value, Equality) {
@@ -135,6 +153,7 @@ TEST(Value, Equality) {
       {Value(3.14F), Value(42.0F)},
       {Value(3.14), Value(42.0)},
       {Value("foo"), Value("bar")},
+      {Value(Bytes("foo")), Value(Bytes("bar"))},
   };
 
   for (auto const& tc : test_cases) {
@@ -177,7 +196,7 @@ TEST(Value, RvalueGetString) {
 // NOTE: This test relies on unspecified behavior about the moved-from state
 // of std::string. Specifically, this test relies on the fact that "large"
 // strings, when moved-from, end up empty. And we use this fact to verify that
-// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// bigtable::Value::get<T>() correctly handles moves. If this test ever breaks
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
 TEST(Value, RvalueGetOptionalString) {
@@ -197,6 +216,14 @@ TEST(Value, RvalueGetOptionalString) {
   s = v.get<Type>();
   ASSERT_STATUS_OK(s);
   EXPECT_EQ("", **s);
+}
+
+TEST(Value, BytesRelationalOperators) {
+  Bytes b1(std::string(1, '\x00'));
+  Bytes b2(std::string(1, '\xff'));
+
+  EXPECT_EQ(b1, b1);
+  EXPECT_NE(b1, b2);
 }
 
 TEST(Value, ConstructionFromLiterals) {
@@ -446,6 +473,21 @@ TEST(Value, GetBadString) {
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadBytes) {
+  Value v(Bytes("hello"));
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+}
+
 TEST(Value, GetBadOptional) {
   Value v(absl::optional<double>{});
   ClearProtoKind(v);
@@ -456,6 +498,61 @@ TEST(Value, GetBadOptional) {
 
   SetProtoKind(v, "blah");
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+}
+
+TEST(Value, OutputStream) {
+  auto const normal = [](std::ostream& os) -> std::ostream& { return os; };
+  auto const hex = [](std::ostream& os) -> std::ostream& {
+    return os << std::hex;
+  };
+  auto const boolalpha = [](std::ostream& os) -> std::ostream& {
+    return os << std::boolalpha;
+  };
+  auto const float4 = [](std::ostream& os) -> std::ostream& {
+    return os << std::showpoint << std::setprecision(4);
+  };
+
+  struct TestCase {
+    Value value;
+    std::string expected;
+    std::function<std::ostream&(std::ostream&)> manip;
+  };
+
+  std::vector<TestCase> test_case = {
+      {Value(false), "0", normal},
+      {Value(true), "1", normal},
+      {Value(false), "false", boolalpha},
+      {Value(true), "true", boolalpha},
+      {Value(42), "42", normal},
+      {Value(42), "2a", hex},
+      {Value(42.0), "42", normal},
+      {Value(42.0), "42.00", float4},
+      {Value(42.0F), "42", normal},
+      {Value(42.0F), "42.00", float4},
+      {Value(""), "", normal},
+      {Value("foo"), "foo", normal},
+      {Value("NULL"), "NULL", normal},
+      {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
+
+      // Tests string quoting: No quotes for scalars; quotes within aggregates
+      {Value(""), "", normal},
+      {Value("foo"), "foo", normal},
+
+      // Tests null values
+      {MakeNullValue<bool>(), "NULL", normal},
+      {MakeNullValue<std::int64_t>(), "NULL", normal},
+      {MakeNullValue<double>(), "NULL", normal},
+      {MakeNullValue<float>(), "NULL", normal},
+      {MakeNullValue<std::string>(), "NULL", normal},
+      {MakeNullValue<Bytes>(), "NULL", normal},
+
+  };
+
+  for (auto const& tc : test_case) {
+    std::stringstream ss;
+    tc.manip(ss) << tc.value;
+    EXPECT_EQ(ss.str(), tc.expected);
+  }
 }
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
