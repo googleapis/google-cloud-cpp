@@ -111,7 +111,7 @@ class AsyncWriterConnectionBufferedState
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
-    HandleNewData(std::move(lk), true);
+    HandleNewData(std::move(lk));
     return std::move(finalized_future_);
   }
 
@@ -151,11 +151,10 @@ class AsyncWriterConnectionBufferedState
     return std::make_unique<Impl>(std::move(p));
   }
 
-  future<Status> HandleNewData(std::unique_lock<std::mutex> lk,
-                               bool flush = false) {
+  future<Status> HandleNewData(std::unique_lock<std::mutex> lk) {
     if (!resume_status_.ok()) return make_ready_future(resume_status_);
     auto const buffer_size = resend_buffer_.size();
-    flush_ = (buffer_size >= buffer_size_lwm_) || flush;
+    flush_ = buffer_size >= buffer_size_lwm_;
     auto result = make_ready_future(Status{});
     if (buffer_size >= buffer_size_hwm_) {
       auto p = promise<Status>();
@@ -172,43 +171,16 @@ class AsyncWriterConnectionBufferedState
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
-    // Determine if there's data left to write *before* potentially finalizing.
     writing_ = write_offset_ < resend_buffer_.size();
-
-    // If we are writing data, continue doing so.
-    if (writing_) {
-      // Still data to write, determine the next chunk.
-      auto const n = resend_buffer_.size() - write_offset_;
-      auto payload = resend_buffer_.Subcord(write_offset_, n);
-      if (flush_) return FlushStep(std::move(lk), std::move(payload));
-      return WriteStep(std::move(lk), std::move(payload));
-    }
-
-    // No data left to write (writing_ is false).
-    // Check if we need to finalize (only if not already writing data AND not
-    // already finalizing).
-    if (finalize_ && !finalizing_) {
-      // FinalizeStep will set the finalizing_ flag.
-      return FinalizeStep(std::move(lk), absl::Cord{});
-    }
-    // If not finalizing, check if an empty flush is needed.
-    if (flush_) {
-      // Pass empty payload to FlushStep
-      return FlushStep(std::move(lk), absl::Cord{});
-    }
-
-    // No data to write, not finalizing, not flushing. The loop can stop.
-    // writing_ is already false.
+    if (!writing_ && !finalize_) return;
+    auto const n = resend_buffer_.size() - write_offset_;
+    auto payload = resend_buffer_.Subcord(write_offset_, n);
+    if (finalize_) return FinalizeStep(std::move(lk), std::move(payload));
+    if (flush_) return FlushStep(std::move(lk), std::move(payload));
+    WriteStep(std::move(lk), std::move(payload));
   }
 
   void FinalizeStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
-    // Check *under lock* if we are already finalizing.
-    if (finalizing_) {
-      // If another thread initiated FinalizeStep concurrently, just return.
-      return;
-    }
-    // Mark that we are starting the finalization process.
-    finalizing_ = true;
     auto impl = Impl(lk);
     lk.unlock();
     (void)impl->Finalize(WritePayloadImpl::Make(std::move(payload)))
@@ -337,7 +309,6 @@ class AsyncWriterConnectionBufferedState
     resend_buffer_.Clear();
     writing_ = false;
     finalize_ = false;
-    finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
     auto handlers = ClearHandlers(lk);
     promise<StatusOr<google::storage::v2::Object>> finalized{null_promise_t{}};
@@ -439,9 +410,6 @@ class AsyncWriterConnectionBufferedState
 
   // True if cancelled, in which case any RPC failures are final.
   bool cancelled_ = false;
-
-  // True if FinalizeStep has been initiated. Prevents re-entry.
-  bool finalizing_ = false;
 };
 
 /**
