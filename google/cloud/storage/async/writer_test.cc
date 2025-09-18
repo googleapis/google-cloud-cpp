@@ -150,6 +150,36 @@ TEST(AsyncWriterTest, FlushIsNotTerminal) {
   EXPECT_STATUS_OK(actual);
 }
 
+TEST(AsyncWriterTest, MultipleFlushesAreQueuedAndSequential) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ::testing::InSequence sequence;
+  // Expect three flushes, each with empty payload, and simulate delayed
+  // completion.
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    // Simulate async completion for first flush
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    // Simulate async completion for second flush
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    // Simulate async completion for third flush
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  // Issue three flushes in quick succession
+  auto f1 = writer.Flush();
+  auto f2 = writer.Flush();
+  auto f3 = writer.Flush();
+
+  // All futures should be satisfied in order
+  EXPECT_STATUS_OK(f1.get());
+  EXPECT_STATUS_OK(f2.get());
+  EXPECT_STATUS_OK(f3.get());
+}
+
 TEST(AsyncWriterTest, Close) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   ::testing::InSequence sequence;
