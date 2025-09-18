@@ -108,6 +108,95 @@ TEST(AsyncWriterTest, FinalizeEmpty) {
   EXPECT_STATUS_OK(actual);
 }
 
+TEST(AsyncWriterTest, Flush) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Flush().get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, ErrorOnFlush) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Flush().get();
+  EXPECT_THAT(actual, StatusIs(PermanentError().code()));
+}
+
+TEST(AsyncWriterTest, FlushIsNotTerminal) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* mock_ptr = mock.get();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Write).WillOnce([](auto const&) {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  ASSERT_STATUS_OK(writer.Flush().get());
+
+  auto token = storage_internal::MakeAsyncToken(mock_ptr);
+  auto const actual = writer.Write(std::move(token), {}).get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, Close) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Close().get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, ErrorOnClose) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Close().get();
+  EXPECT_THAT(actual, StatusIs(PermanentError().code()));
+}
+
+TEST(AsyncWriterTest, CloseIsTerminal) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* mock_ptr = mock.get();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  ASSERT_STATUS_OK(writer.Close().get());
+
+  // Create a token for the (now invalid) writer.
+  auto token = storage_internal::MakeAsyncToken(mock_ptr);
+  auto const actual = writer.Write(std::move(token), {}).get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
+}
+
+TEST(AsyncWriterTest, CloseAfterMove) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  AsyncWriter writer(std::move(mock));
+  AsyncWriter moved(std::move(writer));
+  auto const actual = writer.Close().get();
+  EXPECT_STATUS_OK(actual);
+}
+
 TEST(AsyncWriterTest, ErrorDuringWrite) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, Write).WillOnce([] {
