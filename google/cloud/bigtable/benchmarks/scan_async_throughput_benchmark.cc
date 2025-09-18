@@ -1,4 +1,4 @@
-// Copyright 2017 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@
 #include <iostream>
 #include <sstream>
 
-char const kDescription[] = R"""(Measure the throughput of `Table::ReadRows()`.
+char const kDescription[] =
+    R"""(Measure the throughput of `Table::AsyncReadRows()`.
 
-This benchmark measures the throughput of `ReadRows()` on a "typical" table used
-for serving data.  The benchmark:
+This benchmark measures the throughput of `AsyncReadRows()` on a "typical" table
+used for serving data.  The benchmark:
 - Creates a table with 10,000,000 rows, each row with a single column family,
   but with 10 columns.
 - If there is a collision on the table name the benchmark aborts immediately.
@@ -115,7 +116,7 @@ int main(int argc, char* argv[]) {
     std::cout << " DONE. Elapsed=" << FormatDuration(combined.elapsed)
               << ", Ops=" << combined.operations.size()
               << ", Rows=" << combined.row_count << "\n";
-    auto op_name = "Scan(" + std::to_string(scan_size) + ")";
+    auto op_name = "AsyncScan(" + std::to_string(scan_size) + ")";
     Benchmark::PrintLatencyResult(std::cout, "scant", op_name, combined);
     results_by_size[op_name] = std::move(combined);
   }
@@ -154,18 +155,25 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
     auto row_set = bigtable::RowSet{
         bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)))};
     long count = 0;  // NOLINT(google-runtime-int)
+    std::promise<long> all_done;
+    std::future<long> all_done_future = all_done.get_future();
 
-    auto op = [&count, &table, scan_size, &row_set]() -> google::cloud::Status {
-      auto reader = table.ReadRows(std::move(row_set), scan_size,
-                                   bigtable::Filter::ColumnRangeClosed(
-                                       kColumnFamily, "field0", "field9"));
-      for (auto& row : reader) {
-        if (!row) {
-          return row.status();
-        }
-        ++count;
-      }
-      return google::cloud::Status{};
+    auto op = [&all_done, &all_done_future, &count, &table, scan_size,
+               &row_set]() mutable -> google::cloud::Status {
+      long num_rows = 0;  // NOLINT(google-runtime-int)
+      table.AsyncReadRows(
+          [&num_rows](auto const&) mutable {
+            ++num_rows;
+            return google::cloud::make_ready_future(true);
+          },
+          [&all_done, &num_rows](auto const&) mutable {
+            all_done.set_value(num_rows);
+          },
+          std::move(row_set), scan_size,
+          bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0",
+                                              "field9"));
+      count = all_done_future.get();
+      return {};
     };
     result.operations.push_back(Benchmark::TimeOperation(op));
     result.row_count += count;
