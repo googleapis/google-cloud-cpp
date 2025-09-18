@@ -429,9 +429,6 @@ class AsyncWriterConnectionResumedState
 
   void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
-    // This flush step completed. We are no longer actively writing this chunk.
-    // WriteLoop will determine if another flush/write is needed.
-    writing_ = false;
     flush_ = false;  // Reset flush flag; WriteLoop may set it again.
     // Do NOT reset finalize_ or finalizing_ here.
     auto handlers = ClearHandlers(lk);
