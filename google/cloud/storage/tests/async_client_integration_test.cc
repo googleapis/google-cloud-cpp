@@ -451,9 +451,9 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
 TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
-  // Create a small block to send over and over.
-  auto constexpr kBlockSize = 256 * 1024;
-  auto constexpr kBlockCount = 16;
+  // Create a block to send over and over.
+  auto constexpr kBlockSize = 16 * 1024 * 1024;
+  auto constexpr kBlockCount = 3;
   auto const block = MakeRandomData(kBlockSize);
 
   auto w =
