@@ -26,6 +26,8 @@ build:macos --cxxopt=-std=c++14
 # targets, such as protoc and the grpc plugin.
 build:linux --host_cxxopt=-std=c++14
 build:macos --host_cxxopt=-std=c++14
+build:windows --cxxopt=/std:c++14
+build:windows --host_cxxopt=/std:c++14
 
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
