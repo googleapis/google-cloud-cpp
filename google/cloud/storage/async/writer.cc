@@ -86,8 +86,22 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
   return Finalize(std::move(token), WritePayload{});
 }
 
-future<Status> AsyncWriter::Close() {
+future<Status> AsyncWriter::Flush() {
+  if (!impl_) {
+    return make_ready_future(
+        internal::CancelledError("closed stream", GCP_ERROR_INFO()));
+  }
+
   return impl_->Flush(WritePayload{}).then([impl = impl_](auto f) {
+    return f.get();
+  });
+}
+
+future<Status> AsyncWriter::Close() {
+  // A moved-from writer is not an error.
+  if (!impl_) return make_ready_future(Status{});
+
+  return impl_->Flush(WritePayload{}).then([impl = std::move(impl_)](auto f) {
     return f.get();
   });
 }
