@@ -98,11 +98,13 @@ int main(int argc, char* argv[]) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
 #ifdef PROFILE
-  // Profiling docs: https://gperftools.github.io/gperftools/cpuprofile.html
-  // Typical execution:
-  //   $ PROFILER_PATH="/tmp/<filename>" bazel run -c opt --copt=-DPROFILE \
-  //       --copt=-g --linkopt='-lprofiler' \
-  //       google/cloud/bigtable/benchmarks:scan_async_throughput_benchmark
+  /*
+   * Profiling docs: https://gperftools.github.io/gperftools/cpuprofile.html
+   * Typical execution:
+   *   $ PROFILER_PATH="/tmp/<filename>" bazel run -c opt --copt=-DPROFILE \
+   *       --copt=-g --linkopt='-lprofiler' \
+   *       google/cloud/bigtable/benchmarks:scan_async_throughput_benchmark
+   */
   auto profile_data_path = google::cloud::internal::GetEnv("PROFILER_PATH");
   if (profile_data_path) ProfilerStart(profile_data_path->c_str());
   auto profiler_start = std::chrono::steady_clock::now();
@@ -159,8 +161,9 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
   while (std::chrono::steady_clock::now() < test_start + test_duration) {
     auto row_set = bigtable::RowSet{
         bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)))};
-    long count = 0;  // NOLINT(google-runtime-int)
-    std::promise<long> all_done;
+    long count = 0;               // NOLINT(google-runtime-int)
+    std::promise<long> all_done;  // NOLINT(google-runtime-int)
+    // NOLINTNEXTLINE(google-runtime-int)
     std::future<long> all_done_future = all_done.get_future();
 
     auto op = [&all_done, &all_done_future, &count, &table, scan_size,
