@@ -127,7 +127,7 @@ void Benchmark::DeleteTable() {
 
 Table Benchmark::MakeTable(Options connection_opts) const {
   auto connection_options =
-      google::cloud::internal::MergeOptions(connection_opts, opts_);
+      google::cloud::internal::MergeOptions(std::move(connection_opts), opts_);
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
   return Table(MakeDataConnection(std::move(connection_options)),
                TableResource(options_.project_id, options_.instance_id,
