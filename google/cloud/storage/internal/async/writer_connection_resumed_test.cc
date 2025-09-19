@@ -262,9 +262,9 @@ TEST(WriteConnectionResumed, ResumeUsesGenerationFromFirstResponse) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
-  initial_request.mutable_write_object_spec()->mutable_resource()->set_bucket(
+  initial_request.mutable_append_object_spec()->set_bucket(
       "projects/_/buckets/test-bucket");
-  initial_request.mutable_write_object_spec()->mutable_resource()->set_name(
+  initial_request.mutable_append_object_spec()->set_object(
       "test-object");
 
   google::storage::v2::BidiWriteObjectResponse first_response;
