@@ -14,9 +14,11 @@
 
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/bigtable/timestamp.h"
 #include <google/bigtable/v2/types.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
+#include <google/type/date.pb.h>
 
 namespace google {
 namespace cloud {
@@ -46,6 +48,15 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   if (pt1.has_bytes_type()) {
     return pv1.bytes_value() == pv2.bytes_value();
   }
+  if (pt1.has_timestamp_type()) {
+    return MakeTimestamp(pv1.timestamp_value()) ==
+           MakeTimestamp(pv2.timestamp_value());
+  }
+  if (pt1.has_date_type()) {
+    return pv1.date_value().day() == pv2.date_value().day()
+    && pv1.date_value().month() == pv2.date_value().month()
+    && pv1.date_value().year() == pv2.date_value().year();
+  }
   return false;
 }
 
@@ -62,7 +73,7 @@ enum class StreamMode { kScalar, kAggregate };
 
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
-                           google::bigtable::v2::Type const&, StreamMode) {
+                           google::bigtable::v2::Type const& t, StreamMode) {
   if (IsNullValue(v)) {
     return os << "NULL";
   }
@@ -81,6 +92,17 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   }
   if (v.kind_case() == google::bigtable::v2::Value::kBytesValue) {
     return os << Bytes(v.bytes_value());
+  }
+  if (v.kind_case() == google::bigtable::v2::Value::kTimestampValue) {
+    auto ts = MakeTimestamp(v.timestamp_value());
+    if (!ts) {
+      internal::ThrowStatus(ts.status());
+    }
+    return os << ts.value();
+  }
+  if (v.kind_case() == google::bigtable::v2::Value::kDateValue) {
+    auto date = bigtable_internal::FromProto(t, v).get<absl::CivilDay>().value();
+    return os << date;
   }
   // this should include type name
   return os << "Error: unknown value type code ";
@@ -117,6 +139,13 @@ bool Value::TypeProtoIs(std::string const&,
 }
 bool Value::TypeProtoIs(Bytes const&, google::bigtable::v2::Type const& type) {
   return type.has_bytes_type();
+}
+bool Value::TypeProtoIs(Timestamp const&,
+                        google::bigtable::v2::Type const& type) {
+  return type.has_timestamp_type();
+}
+bool Value::TypeProtoIs(absl::CivilDay, google::bigtable::v2::Type const& type) {
+  return type.has_date_type();
 }
 
 //
@@ -160,6 +189,18 @@ google::bigtable::v2::Type Value::MakeTypeProto(char const* s) {
 google::bigtable::v2::Type Value::MakeTypeProto(Bytes const&) {
   google::bigtable::v2::Type t;
   t.set_allocated_bytes_type(std::move(new google::bigtable::v2::Type_Bytes()));
+  return t;
+}
+google::bigtable::v2::Type Value::MakeTypeProto(Timestamp const&) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_timestamp_type(
+      std::move(new google::bigtable::v2::Type_Timestamp()));
+  return t;
+}
+google::bigtable::v2::Type Value::MakeTypeProto(absl::CivilDay const&) {
+  google::bigtable::v2::Type t;
+  t.set_allocated_date_type(
+      std::move(new google::bigtable::v2::Type_Date()));
   return t;
 }
 
@@ -213,6 +254,27 @@ google::bigtable::v2::Value Value::MakeValueProto(char const* s) {
 google::bigtable::v2::Value Value::MakeValueProto(Bytes const& b) {
   google::bigtable::v2::Value v;
   v.set_bytes_value(b.get<std::string>());
+  return v;
+}
+google::bigtable::v2::Value Value::MakeValueProto(Timestamp const& t) {
+  google::bigtable::v2::Value v;
+  auto proto_ts = t.get<protobuf::Timestamp>();
+  if (!proto_ts) {
+    internal::ThrowStatus(std::move(proto_ts).status());
+  }
+  auto proto = std::make_unique<protobuf::Timestamp>(*std::move(proto_ts));
+  v.set_allocated_timestamp_value(proto.release());
+  return v;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(absl::CivilDay const& d) {
+  auto date = type::Date();
+  date.set_day(d.day());
+  date.set_month(d.month());
+  date.set_year(d.year());
+  auto proto = std::make_unique<type::Date>(std::move(date));
+  google::bigtable::v2::Value v;
+  v.set_allocated_date_value(proto.release());
   return v;
 }
 
@@ -280,6 +342,25 @@ StatusOr<Bytes> Value::GetValue(Bytes const&,
     return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
   }
   return Bytes(pv.bytes_value());
+}
+StatusOr<Timestamp> Value::GetValue(Timestamp const&,
+                                    google::bigtable::v2::Value const& pv,
+                                    google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kTimestampValue) {
+    return internal::UnknownError("missing TIMESTAMP", GCP_ERROR_INFO());
+  }
+  return MakeTimestamp(pv.timestamp_value());
+}
+
+StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay const&,
+                                    google::bigtable::v2::Value const& pv,
+                                    google::bigtable::v2::Type const&) {
+  if (pv.kind_case() != google::bigtable::v2::Value::kDateValue) {
+    return internal::UnknownError("missing DATE", GCP_ERROR_INFO());
+  }
+  type::Date const& v = pv.date_value();
+  auto date = absl::CivilDay(v.year(), v.month(), v.day());
+  return date;
 }
 
 bool Value::is_null() const { return IsNullValue(value_); }

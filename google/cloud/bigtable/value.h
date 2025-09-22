@@ -18,6 +18,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "bytes.h"
+#include "timestamp.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <google/bigtable/v2/types.pb.h>
 #include <cmath>
@@ -69,7 +70,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * FLOAT32      | `float`
  * FLOAT64      | `double`
  * STRING       | `std::string`
- * BYTES        | `google::cloud::bigtable::v2::Bytes`
+ * BYTES        | `google::cloud::bigtable::Bytes`
+ * TIMESTAMP    | `google::cloud::bigtable::Timestamp`
+ * DATE         | `absl::CivilDay`
  *
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
@@ -95,12 +98,18 @@ class Value {
   explicit Value(double v) : Value(PrivateConstructor{}, v) {
     bigtable_internal::ValidateFloatValue(v);
   }
-  /// @copydoc Value(bool)
+  /// @copydoc Value(bool)v)
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Bytes const& v) : Value(PrivateConstructor{}, std::move(v)) {}
-  /**
-   * Constructs an instance from common C++ literal types that closely, though
+  /// @copydoc Value(bool)
+  explicit Value(Timestamp const& v)
+      : Value(PrivateConstructor{}, std::move(v)) {}
+  /// : Value(PrivateConstructor{}, : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(absl::CivilDay const& v)
+      : Value(PrivateConstructor{}, std::move(v)) {}
+    /**
+   : Value(PrivateConstructor{}, an instance from common C++ literal types that closely, though
    * not exactly, match supported Bigtable types.
    *
    * An integer literal in C++ is of type `int`, which is not exactly an
@@ -197,6 +206,8 @@ class Value {
   static bool TypeProtoIs(std::string const&,
                           google::bigtable::v2::Type const&);
   static bool TypeProtoIs(Bytes const&, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(Timestamp const&, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(absl::CivilDay, google::bigtable::v2::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
                           google::bigtable::v2::Type const& type) {
@@ -211,6 +222,8 @@ class Value {
   static google::bigtable::v2::Type MakeTypeProto(double);
   static google::bigtable::v2::Type MakeTypeProto(std::string const&);
   static google::bigtable::v2::Type MakeTypeProto(Bytes const&);
+  static google::bigtable::v2::Type MakeTypeProto(Timestamp const&);
+  static google::bigtable::v2::Type MakeTypeProto(absl::CivilDay const&);
   static google::bigtable::v2::Type MakeTypeProto(int);
   static google::bigtable::v2::Type MakeTypeProto(char const*);
   template <typename T>
@@ -226,6 +239,8 @@ class Value {
   static google::bigtable::v2::Value MakeValueProto(double d);
   static google::bigtable::v2::Value MakeValueProto(std::string s);
   static google::bigtable::v2::Value MakeValueProto(Bytes const& b);
+  static google::bigtable::v2::Value MakeValueProto(Timestamp const& b);
+  static google::bigtable::v2::Value MakeValueProto(absl::CivilDay const& d);
   static google::bigtable::v2::Value MakeValueProto(int i);
   static google::bigtable::v2::Value MakeValueProto(char const* s);
   template <typename T>
@@ -257,6 +272,12 @@ class Value {
   static StatusOr<Bytes> GetValue(Bytes const&,
                                   google::bigtable::v2::Value const&,
                                   google::bigtable::v2::Type const&);
+  static StatusOr<Timestamp> GetValue(Timestamp const&,
+                                      google::bigtable::v2::Value const&,
+                                      google::bigtable::v2::Type const&);
+  static StatusOr<absl::CivilDay> GetValue(absl::CivilDay const&,
+                                           google::bigtable::v2::Value const&,
+                                           google::bigtable::v2::Type const&);
 
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(

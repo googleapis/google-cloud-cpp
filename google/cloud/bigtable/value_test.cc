@@ -26,6 +26,7 @@
 #include <tuple>
 #include <type_traits>
 #include <vector>
+#include <google/type/date.pb.h>
 
 namespace google {
 namespace cloud {
@@ -36,6 +37,31 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Not;
+
+absl::Time MakeTime(std::int64_t sec, int nanos) {
+  return absl::FromUnixSeconds(sec) + absl::Nanoseconds(nanos);
+}
+
+std::vector<Timestamp> TestTimes() {
+  std::vector<Timestamp> times;
+  for (auto s : {
+           std::int64_t{-9223372035LL},  // near the limit of 64-bit/ns clock
+           std::int64_t{-2147483649LL},  // below min 32-bit value
+           std::int64_t{-2147483648LL},  // min 32-bit value
+           std::int64_t{-1},             // just before Unix epoch
+           std::int64_t{0},              // Unix epoch
+           std::int64_t{1},              // just after Unix epoch
+           std::int64_t{1561147549LL},   // contemporary
+           std::int64_t{2147483647LL},   // max 32-bit value
+           std::int64_t{2147483648LL},   // above max 32-bit value
+           std::int64_t{9223372036LL},   // near the limit of 64-bit/ns clock
+       }) {
+    for (auto nanos : {-1, 0, 1}) {
+      times.push_back(MakeTimestamp(MakeTime(s, nanos)).value());
+    }
+  }
+  return times;
+}
 
 template <typename T>
 void TestBasicSemantics(T init) {
@@ -142,6 +168,37 @@ TEST(Value, BasicSemantics) {
     // v.resize(10);
     // TestBasicSemantics(v);
   }
+
+  for (auto ts : TestTimes()) {
+    SCOPED_TRACE("Testing: google::cloud::bigtable::Timestamp " +
+                 bigtable_internal::TimestampToRFC3339(ts));
+    std::cout << "Testing: google::cloud::bigtable::Timestamp "
+              << bigtable_internal::TimestampToRFC3339(ts) << std::endl;
+    TestBasicSemantics(ts);
+    // uncomment after enabling vector support
+    // std::vector<Timestamp> v(5, ts);
+    // TestBasicSemantics(v);
+    // std::vector<absl::optional<Timestamp>> ov(5, ts);
+    // ov.resize(10);
+    // TestBasicSemantics(ov);
+  }
+  for (auto x : {
+           absl::CivilDay(1582, 10, 15),  // start of Gregorian calendar
+           absl::CivilDay(1677, 9, 21),   // before system_clock limit
+           absl::CivilDay(1901, 12, 13),  // around min 32-bit seconds limit
+           absl::CivilDay(1970, 1, 1),    // the unix epoch
+           absl::CivilDay(2019, 6, 21),   // contemporary
+           absl::CivilDay(2038, 1, 19),   // around max 32-bit seconds limit
+           absl::CivilDay(2262, 4, 12)    // after system_clock limit
+       }) {
+    SCOPED_TRACE("Testing: absl::CivilDay " + absl::FormatCivilTime(x));
+    TestBasicSemantics(x);
+    // uncomment after enabling vector support
+    // TestBasicSemantics(std::vector<absl::CivilDay>(5, x));
+    // std::vector<absl::optional<absl::CivilDay>> v(5, x);
+    // v.resize(10);
+    // TestBasicSemantics(v);
+  }
 }
 
 TEST(Value, Equality) {
@@ -154,6 +211,7 @@ TEST(Value, Equality) {
       {Value(3.14), Value(42.0)},
       {Value("foo"), Value("bar")},
       {Value(Bytes("foo")), Value(Bytes("bar"))},
+      {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
   };
 
   for (auto const& tc : test_cases) {
@@ -348,6 +406,58 @@ TEST(Value, ProtoConversionString) {
   }
 }
 
+TEST(Value, ProtoConversionTimestamp) {
+  for (auto ts : TestTimes()) {
+    Value const v(ts);
+    auto const p = bigtable_internal::ToProto(v);
+    EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
+    EXPECT_TRUE(p.second.has_timestamp_value());
+    EXPECT_EQ(bigtable_internal::TimestampToRFC3339(ts),
+              bigtable_internal::TimestampToRFC3339(
+                  MakeTimestamp(p.second.timestamp_value()).value()));
+  }
+}
+
+type::Date BuildDate(int year, int month, int day) {
+  auto d = type::Date();
+  d.set_year(year);
+  d.set_month(month);
+  d.set_day(day);
+  return d;
+}
+
+TEST(Value, ProtoConversionDate) {
+  struct {
+    absl::CivilDay day;
+    type::Date expected;
+  } test_cases[] = {
+    {absl::CivilDay(-9999, 1, 2), BuildDate(-9999, 1, 2)},
+    {absl::CivilDay(-999, 1, 2), BuildDate(-999, 1, 2)},
+    {absl::CivilDay(-1, 1, 2), BuildDate(-1, 1, 2)},
+    {absl::CivilDay(0, 1, 2), BuildDate(0, 1, 2)},
+    {absl::CivilDay(1, 1, 2), BuildDate(1, 1, 2)},
+    {absl::CivilDay(999, 1, 2), BuildDate(999, 1, 2)},
+    {absl::CivilDay(1582, 10, 15), BuildDate(1582, 10, 15)},
+    {absl::CivilDay(1677, 9, 21), BuildDate(1677, 9, 21)},
+    {absl::CivilDay(1901, 12, 13), BuildDate(1901, 12, 13)},
+    {absl::CivilDay(1970, 1, 1), BuildDate(1970, 1, 1)},
+    {absl::CivilDay(2019, 6, 21), BuildDate(2019, 6, 21)},
+    {absl::CivilDay(2038, 1, 19), BuildDate(2038, 1, 19)},
+    {absl::CivilDay(2262, 4, 12), BuildDate(2262, 4, 12)},
+};
+
+  for (auto const& tc : test_cases) {
+    SCOPED_TRACE("CivilDay: " + absl::FormatCivilTime(tc.day));
+    Value const v(tc.day);
+    auto const p = bigtable_internal::ToProto(v);
+    EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
+    EXPECT_TRUE(p.first.has_date_type());
+    EXPECT_EQ(tc.expected.year(), p.second.date_value().year());
+    EXPECT_EQ(tc.expected.month(), p.second.date_value().month());
+    EXPECT_EQ(tc.expected.day(), p.second.date_value().day());
+  }
+}
+
 void SetNullProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.second.clear_kind();
@@ -488,6 +598,42 @@ TEST(Value, GetBadBytes) {
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadTimestamp) {
+  Value v(Timestamp{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadDate) {
+  Value v(absl::CivilDay{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+}
+
 TEST(Value, GetBadOptional) {
   Value v(absl::optional<double>{});
   ClearProtoKind(v);
@@ -533,6 +679,8 @@ TEST(Value, OutputStream) {
       {Value("foo"), "foo", normal},
       {Value("NULL"), "NULL", normal},
       {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
+      {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
+      {Value(absl::CivilDay()), "1970-01-01", normal},
 
       // Tests string quoting: No quotes for scalars; quotes within aggregates
       {Value(""), "", normal},
@@ -545,6 +693,8 @@ TEST(Value, OutputStream) {
       {MakeNullValue<float>(), "NULL", normal},
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
+      {MakeNullValue<Timestamp>(), "NULL", normal},
+{MakeNullValue<absl::CivilDay>(), "NULL", normal},
 
   };
 
