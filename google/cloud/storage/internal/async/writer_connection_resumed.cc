@@ -324,10 +324,16 @@ class AsyncWriterConnectionResumedState
   void Resume(Status const& s) {
     auto proto_status = ExtractGrpcStatus(s);
     auto request = google::storage::v2::BidiWriteObjectRequest{};
-    auto spec = initial_request_.append_object_spec();
     auto& append_object_spec = *request.mutable_append_object_spec();
-    append_object_spec.set_bucket(spec.bucket());
-    append_object_spec.set_object(spec.object());
+    if (initial_request_.has_write_object_spec()) {
+      auto const& spec = initial_request_.write_object_spec();
+      append_object_spec.set_bucket(spec.resource().bucket());
+      append_object_spec.set_object(spec.resource().name());
+    } else {
+      auto const& spec = initial_request_.append_object_spec();
+      append_object_spec.set_bucket(spec.bucket());
+      append_object_spec.set_object(spec.object());
+    }
     append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
 
