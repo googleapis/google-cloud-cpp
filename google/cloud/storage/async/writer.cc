@@ -98,8 +98,10 @@ future<Status> AsyncWriter::Flush() {
 }
 
 future<Status> AsyncWriter::Close() {
-  // A moved-from writer is not an error.
-  if (!impl_) return make_ready_future(Status{});
+  if (!impl_) {
+    return make_ready_future(
+        internal::CancelledError("closed stream", GCP_ERROR_INFO()));
+  }
 
   return impl_->Flush(WritePayload{}).then([impl = std::move(impl_)](auto f) {
     return f.get();

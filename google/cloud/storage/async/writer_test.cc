@@ -201,7 +201,7 @@ TEST(AsyncWriterTest, Close) {
 TEST(AsyncWriterTest, CloseOnDefaultConstructed) {
   AsyncWriter writer;
   auto const actual = writer.Close().get();
-  EXPECT_STATUS_OK(actual);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled, "closed stream"));
 }
 
 TEST(AsyncWriterTest, CloseOnMovedWriter) {
