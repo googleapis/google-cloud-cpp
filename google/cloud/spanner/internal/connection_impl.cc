@@ -357,7 +357,8 @@ spanner::BatchedCommitResult FromProto(
 }
 
 template <typename T>
-absl::optional<T> GetRandomElement(google::protobuf::RepeatedPtrField<T> const& m) {
+absl::optional<T> GetRandomElement(
+    google::protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
   std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
