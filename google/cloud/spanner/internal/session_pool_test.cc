@@ -164,7 +164,7 @@ TEST_F(SessionPoolTest, Multiplexed) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
       db, {mock}, threads.cq(),
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+      Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -188,7 +188,7 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
       db, {mock}, threads.cq(),
       Options{}
           .set<spanner::RouteToLeaderOption>(true)
-          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+          .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -241,7 +241,7 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
       db, {mock}, threads.cq(),
       Options{}
           .set<spanner::RouteToLeaderOption>(false)
-          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+          .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -324,7 +324,7 @@ TEST_F(SessionPoolTest, MultiplexedCreateError) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
       db, {mock}, threads.cq(),
-      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+      Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   EXPECT_THAT(session,
               StatusIs(StatusCode::kInternal, HasSubstr("init failure")));
@@ -554,7 +554,7 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
       db, {mock}, threads.cq(),
       Options{}
           .set<spanner::SessionPoolLabelsOption>(std::move(labels))
-          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+          .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -598,7 +598,7 @@ TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
       db, {mock}, threads.cq(),
       Options{}
           .set<spanner::SessionCreatorRoleOption>(role)
-          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+          .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -773,7 +773,7 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementSuccess) {
               background_interval)
           .set<MultiplexedSessionReplacementIntervalOption>(
               replacement_interval)
-          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+          .set<spanner::EnableMultiplexedSessionOption>({}));
 
   auto s1 = pool->Multiplexed();
   ASSERT_STATUS_OK(s1);
@@ -815,7 +815,7 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
               background_interval)
           .set<MultiplexedSessionReplacementIntervalOption>(
               replacement_interval)
-          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+          .set<spanner::EnableMultiplexedSessionOption>({}));
 
   auto s1 = pool->Multiplexed();
   ASSERT_STATUS_OK(s1);

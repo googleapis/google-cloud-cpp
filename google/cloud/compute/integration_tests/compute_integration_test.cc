@@ -248,6 +248,8 @@ TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
 }
 
 TEST_F(ComputeIntegrationTest, VerifyRetrievalMalformedCamelCaseJsonField) {
+  // https://github.com/googleapis/google-cloud-cpp/issues/15399
+  GTEST_SKIP();
   namespace instances = ::google::cloud::compute_instances_v1;
   auto client =
       instances::InstancesClient(instances::MakeInstancesConnectionRest());

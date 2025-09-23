@@ -33,6 +33,7 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c networkconnectivity_v1::DataTransferServiceClient](@ref google::cloud::networkconnectivity_v1::DataTransferServiceClient)
 - [\c networkconnectivity_v1::HubServiceClient](@ref google::cloud::networkconnectivity_v1::HubServiceClient)
 - [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref google::cloud::networkconnectivity_v1::PolicyBasedRoutingServiceClient)
 <!-- inject-client-list-end -->

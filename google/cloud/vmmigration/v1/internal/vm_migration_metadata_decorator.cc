@@ -132,6 +132,16 @@ VmMigrationMetadata::FetchInventory(
   return child_->FetchInventory(context, options, request);
 }
 
+StatusOr<google::cloud::vmmigration::v1::FetchStorageInventoryResponse>
+VmMigrationMetadata::FetchStorageInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("source=", internal::UrlEncode(request.source())));
+  return child_->FetchStorageInventory(context, options, request);
+}
+
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 VmMigrationMetadata::ListUtilizationReports(
     grpc::ClientContext& context, Options const& options,
@@ -454,6 +464,28 @@ StatusOr<google::longrunning::Operation> VmMigrationMetadata::FinalizeMigration(
               absl::StrCat("migrating_vm=",
                            internal::UrlEncode(request.migrating_vm())));
   return child_->FinalizeMigration(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncExtendMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("migrating_vm=",
+                           internal::UrlEncode(request.migrating_vm())));
+  return child_->AsyncExtendMigration(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationMetadata::ExtendMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("migrating_vm=",
+                           internal::UrlEncode(request.migrating_vm())));
+  return child_->ExtendMigration(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -796,6 +828,241 @@ VmMigrationMetadata::GetReplicationCycle(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReplicationCycle(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportsResponse>
+VmMigrationMetadata::ListImageImports(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListImageImports(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationMetadata::GetImageImport(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetImageImport(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncCreateImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateImageImport(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationMetadata::CreateImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateImageImport(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncDeleteImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteImageImport(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationMetadata::DeleteImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteImageImport(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportJobsResponse>
+VmMigrationMetadata::ListImageImportJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListImageImportJobs(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationMetadata::GetImageImportJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetImageImportJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncCancelImageImportJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelImageImportJob(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationMetadata::CancelImageImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelImageImportJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncCreateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDiskMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationMetadata::CreateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDiskMigrationJob(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse>
+VmMigrationMetadata::ListDiskMigrationJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDiskMigrationJobs(context, options, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationMetadata::GetDiskMigrationJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncUpdateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("disk_migration_job.name=",
+                   internal::UrlEncode(request.disk_migration_job().name())));
+  return child_->AsyncUpdateDiskMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationMetadata::UpdateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("disk_migration_job.name=",
+                   internal::UrlEncode(request.disk_migration_job().name())));
+  return child_->UpdateDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncDeleteDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDiskMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationMetadata::DeleteDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncRunDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRunDiskMigrationJob(cq, std::move(context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationMetadata::RunDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RunDiskMigrationJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncCancelDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelDiskMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationMetadata::CancelDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelDiskMigrationJob(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

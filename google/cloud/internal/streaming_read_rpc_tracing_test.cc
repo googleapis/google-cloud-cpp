@@ -34,17 +34,19 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::_;
 using ::testing::AllOf;
+using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::Return;
+using ::testing::SetArgPointee;
 
 template <typename ResponseType>
 class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
  public:
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read, (ResponseType*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -58,14 +60,14 @@ void VerifyStream(StreamingReadRpc<int>& stream,
                   std::vector<int> const& expected_values,
                   Status const& expected_status) {
   std::vector<int> values;
+  int value;
   for (;;) {
-    auto v = stream.Read();
-    if (absl::holds_alternative<int>(v)) {
-      values.push_back(absl::get<int>(std::move(v)));
-      continue;
+    auto status = stream.Read(&value);
+    if (status.has_value()) {
+      EXPECT_EQ(status.value(), expected_status);
+      break;
     }
-    EXPECT_EQ(absl::get<Status>(std::move(v)), expected_status);
-    break;
+    values.push_back(value);
   }
   EXPECT_EQ(values, expected_values);
 }
@@ -100,9 +102,9 @@ TEST(StreamingReadRpcTracingTest, Read) {
 
   auto mock = std::make_unique<MockStreamingReadRpc<int>>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce(Return(100))
-      .WillOnce(Return(200))
-      .WillOnce(Return(300))
+      .WillOnce(DoAll(SetArgPointee<0>(100), Return(absl::nullopt)))
+      .WillOnce(DoAll(SetArgPointee<0>(200), Return(absl::nullopt)))
+      .WillOnce(DoAll(SetArgPointee<0>(300), Return(absl::nullopt)))
       .WillOnce(Return(Status()));
 
   auto span = MakeSpan("span");

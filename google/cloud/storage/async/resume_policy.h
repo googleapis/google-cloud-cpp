@@ -32,7 +32,9 @@ class ResumePolicy {
  public:
   enum Action { kStop, kContinue };
 
-  virtual ~ResumePolicy() = 0;
+  virtual ~ResumePolicy() = default;
+
+  virtual std::unique_ptr<ResumePolicy> clone() const = 0;
 
   /**
    * Notifies the policy about successful connections.

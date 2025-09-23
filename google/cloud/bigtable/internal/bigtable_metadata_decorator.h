@@ -124,6 +124,13 @@ class BigtableMetadata : public BigtableStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
+  future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+  AsyncPrepareQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PrepareQueryRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

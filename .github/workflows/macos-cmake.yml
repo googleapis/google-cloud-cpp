@@ -59,7 +59,7 @@ jobs:
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+    - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -263,9 +263,26 @@ jobs:
       run: |
         # Remove the older CMake version
         brew unlink cmake
+
+        # Create a temporary local tap
+        cd "${{runner.temp}}"
+        mkdir -p user/homebrew-tap/Formula
+        cd user/homebrew-tap
+        git init
+
         # Download the Homebrew formula for CMake==3.27.2
         curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-        brew install cmake.rb
+        mv cmake.rb ./Formula/
+
+        git add .
+        git commit -m "Add CMake formula"
+
+        # Tap the local repository
+        brew tap user/homebrew-tap "${{runner.temp}}/user/homebrew-tap"
+
+        # Uninstall existing CMake and install CMake from the local tap
+        brew uninstall cmake
+        brew install --build-from-source user/homebrew-tap/cmake
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"

@@ -1,0 +1,36 @@
+/*!
+@page cloudsecuritycompliance-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `cloudsecuritycompliance_v1::ConfigClient`:
+
+@snippet config_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudsecuritycompliance_v1::ConfigClient](@ref cloudsecuritycompliance_v1::ConfigClient-endpoint-snippet)
+- [\c cloudsecuritycompliance_v1::DeploymentClient](@ref cloudsecuritycompliance_v1::DeploymentClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page cloudsecuritycompliance_v1::ConfigClient-endpoint-snippet Override cloudsecuritycompliance_v1::ConfigClient Endpoint Configuration
+
+@snippet google/cloud/cloudsecuritycompliance/v1/samples/config_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page cloudsecuritycompliance_v1::DeploymentClient-endpoint-snippet Override cloudsecuritycompliance_v1::DeploymentClient Endpoint Configuration
+
+@snippet google/cloud/cloudsecuritycompliance/v1/samples/deployment_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

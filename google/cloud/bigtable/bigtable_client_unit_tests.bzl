@@ -21,6 +21,7 @@ bigtable_client_unit_tests = [
     "app_profile_config_test.cc",
     "async_read_stream_test.cc",
     "bigtable_version_test.cc",
+    "bytes_test.cc",
     "cell_test.cc",
     "client_options_test.cc",
     "cluster_config_test.cc",
@@ -67,6 +68,7 @@ bigtable_client_unit_tests = [
     "internal/rate_limiter_test.cc",
     "internal/retry_traits_test.cc",
     "internal/traced_row_reader_test.cc",
+    "internal/tuple_utils_test.cc",
     "legacy_table_test.cc",
     "metadata_update_policy_test.cc",
     "mocks/mock_row_reader_test.cc",
@@ -93,5 +95,6 @@ bigtable_client_unit_tests = [
     "table_test.cc",
     "testing/cleanup_stale_resources_test.cc",
     "testing/random_names_test.cc",
+    "value_test.cc",
     "wait_for_consistency_test.cc",
 ]

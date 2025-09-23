@@ -136,7 +136,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.ListMembershipsRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L196}
+  /// [google.cloud.gkehub.v1.ListMembershipsRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L195}
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
@@ -175,7 +175,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.ListMembershipsRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L196}
+  /// [google.cloud.gkehub.v1.ListMembershipsRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L195}
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
@@ -187,8 +187,8 @@ class GkeHubClient {
   ///
   /// Lists Features in a given project and location.
   ///
-  /// @param parent  Required. The parent (project and location) where the Features will be listed.
-  ///  Specified in the format `projects/*/locations/*`.
+  /// @param parent  Required. The parent (project and location) where the Features will be
+  ///  listed. Specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -212,7 +212,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-  /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L457}
+  /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L456}
   ///
   // clang-format on
   StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
@@ -251,7 +251,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-  /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L457}
+  /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L456}
   ///
   // clang-format on
   StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
@@ -277,7 +277,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.GetMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L259}
+  /// [google.cloud.gkehub.v1.GetMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L258}
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
@@ -307,7 +307,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.GetMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L259}
+  /// [google.cloud.gkehub.v1.GetMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L258}
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
@@ -335,7 +335,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-  /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L511}
+  /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L508}
   ///
   // clang-format on
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
@@ -365,7 +365,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-  /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L511}
+  /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L508}
   ///
   // clang-format on
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
@@ -412,7 +412,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.CreateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L271}
+  /// [google.cloud.gkehub.v1.CreateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L270}
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
@@ -471,7 +471,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.CreateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L271}
+  /// [google.cloud.gkehub.v1.CreateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L270}
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
@@ -511,8 +511,8 @@ class GkeHubClient {
   ///
   /// Adds a new Feature.
   ///
-  /// @param parent  Required. The parent (project and location) where the Feature will be created.
-  ///  Specified in the format `projects/*/locations/*`.
+  /// @param parent  Required. The parent (project and location) where the Feature will be
+  ///  created. Specified in the format `projects/*/locations/*`.
   /// @param resource  The Feature resource to create.
   /// @param feature_id  The ID of the feature to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -535,7 +535,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L522}
+  /// [google.cloud.gkehub.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L517}
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   ///
   // clang-format on
@@ -590,7 +590,7 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L522}
+  /// [google.cloud.gkehub.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L517}
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   ///
   // clang-format on
@@ -656,8 +656,8 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L312}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
+  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L311}
+  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
@@ -711,8 +711,8 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L312}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
+  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L311}
+  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
@@ -775,8 +775,8 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L554}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
+  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L547}
+  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
@@ -826,8 +826,8 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L554}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
+  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L547}
+  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
@@ -898,7 +898,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
-  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L344}
+  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L343}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
@@ -953,7 +953,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
-  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L344}
+  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L343}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
@@ -1024,7 +1024,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L585}
+  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L576}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
@@ -1079,7 +1079,7 @@ class GkeHubClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L585}
+  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L576}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
@@ -1140,8 +1140,8 @@ class GkeHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkehub.v1.GenerateConnectManifestRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L387}
-  /// [google.cloud.gkehub.v1.GenerateConnectManifestResponse]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L430}
+  /// [google.cloud.gkehub.v1.GenerateConnectManifestRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L386}
+  /// [google.cloud.gkehub.v1.GenerateConnectManifestResponse]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L429}
   ///
   // clang-format on
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

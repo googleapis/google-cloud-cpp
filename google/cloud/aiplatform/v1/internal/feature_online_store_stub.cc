@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
 #include <memory>
@@ -53,6 +54,22 @@ DefaultFeatureOnlineStoreServiceStub::SearchNearestEntities(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+DefaultFeatureOnlineStoreServiceStub::AsyncFeatureViewDirectWrite(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncFeatureViewDirectWrite(context, cq);
+      });
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

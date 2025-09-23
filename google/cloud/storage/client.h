@@ -1373,11 +1373,9 @@ class Client {
   }
 
   /**
-   * Moves an existing object to a new or existing object within a HNS enabled
-   * bucket.
+   * Moves an existing object to a new or existing object within a bucket.
    *
-   * @param bucket_name the name of the bucket in which to move the object. The
-   * bucket must be HNS enabled.
+   * @param bucket_name the name of the bucket in which to move the object.
    * @param source_object_name the name of the source object to move.
    * @param destination_object_name the destination name of the object after the
    * move is completed.

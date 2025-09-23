@@ -37,9 +37,9 @@ using ::google::test::admin::database::v1::Response;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Optional;
 using ::testing::Return;
 using ::testing::StartsWith;
-using ::testing::VariantWith;
 
 class LoggingDecoratorTest : public ::testing::Test {
  protected:
@@ -202,7 +202,8 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcNoRpcStreams) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   auto response = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
                                      Options{}, Request{});
-  EXPECT_THAT(response->Read(), VariantWith<Status>(IsOk()));
+  Response r;
+  EXPECT_THAT(response->Read(&r), Optional(IsOk()));
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead(")));
@@ -218,7 +219,8 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcWithRpcStreams) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
   auto response = stub.StreamingRead(std::make_shared<grpc::ClientContext>(),
                                      Options{}, Request{});
-  EXPECT_THAT(response->Read(), VariantWith<Status>(IsOk()));
+  Response r;
+  EXPECT_THAT(response->Read(&r), Optional(IsOk()));
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead(")));

@@ -376,6 +376,97 @@ DefaultAnalyticsHubServiceStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::CreateQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->CreateQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::GetQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->GetQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse>
+DefaultAnalyticsHubServiceStub::ListQueryTemplates(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse
+      response;
+  auto status = grpc_stub_->ListQueryTemplates(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::UpdateQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->UpdateQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultAnalyticsHubServiceStub::DeleteQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::SubmitQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->SubmitQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::ApproveQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->ApproveQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
