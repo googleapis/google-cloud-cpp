@@ -187,16 +187,6 @@ StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const& tp) {
   return MakeTimestamp(absl::UnixEpoch() + count * period);
 }
 
-/**
- * A sentinel type used to update a commit timestamp column.
- *
- * @see https://cloud.google.com/bigtable/docs/commit-timestamp
- */
-struct CommitTimestamp {
-  friend bool operator==(CommitTimestamp, CommitTimestamp) { return true; }
-  friend bool operator!=(CommitTimestamp, CommitTimestamp) { return false; }
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 
