@@ -262,6 +262,19 @@ absl::optional<std::string> GetStringChannelArgument(
  */
 BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts = {});
 
+namespace experimental{
+
+/**
+ * Enable gRPC Bound Tokens Authentication.
+ */
+struct EnableGrpcHardBoundTokensAuthenticationOption {
+  using Type = bool;
+};
+
+bool GrpcEnableHardBoundTokensIsSafe();
+
+}  // namespace experimental
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

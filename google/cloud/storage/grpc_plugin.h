@@ -102,13 +102,6 @@ struct GrpcMetricsPeriodOption {
   using Type = std::chrono::seconds;
 };
 
-/**
- * Enable gRPC Bound Tokens Authentication.
- */
-struct EnableGrpcHardBoundTokensAuthenticationOption {
-  using Type = bool;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

@@ -102,14 +102,13 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
           grpc::InsecureChannelCredentials());
     }
     void visit(GoogleDefaultCredentialsConfig const&) override {
-      auto const options =
-          storage_internal::DefaultOptionsGrpc::DefaultOptionsGrpc({});
       bool use_bound_tokens =
-          storage_internal::GrpcEnableBoundTokenssIsSafe() &&
-          options.get<storage_experimental::
-                          EnableGrpcHardBoundTokensAuthenticationOption>();
+          google::cloud::internal::experimental::
+              GrpcEnableHardBoundTokensIsSafe() &&
+          options.get<google::cloud::internal::experimental::
+                            EnableGrpcHardBoundTokensAuthenticationOption>();
       grpc::GoogleDefaultCredentialsOptions credentials_options = {};
-      credentials_options.use_alts = use_bound_tokens;
+      credentials_options.use_alts_call_credentials = use_bound_tokens;
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::GoogleDefaultCredentials(&credentials_options));
     }
