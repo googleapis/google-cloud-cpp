@@ -146,6 +146,26 @@ bool GrpcEnableMetricsIsSafe() {
 #endif  // GRPC_CPP_VERSION_MAJOR
 }
 
+bool GrpcEnableHardBoundTokensIsSafe(int major, int minor, int patch) {
+  // Never happens. No 0.x version is supported or implements the version
+  // macros, but it makes the rest more readable.
+  if (major < 1) return false;
+  if (major > 1) return true;
+  if (minor <= 62) return false;
+  if (minor == 63) return patch >= 1;
+  if (minor == 64) return patch >= 1;
+  return true;
+}
+
+bool GrpcEnableHardBoundTokensIsSafe() {
+#ifndef GRPC_CPP_VERSION_MAJOR
+  return false;
+#else
+  return GrpcEnableHardBoundTokensIsSafe(GRPC_CPP_VERSION_MAJOR, GRPC_CPP_VERSION_MINOR,
+                                 GRPC_CPP_VERSION_PATCH);
+#endif  // GRPC_CPP_VERSION_MAJOR
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
