@@ -272,7 +272,7 @@ google::bigtable::v2::Value Value::MakeValueProto(absl::CivilDay const& d) {
   auto date = type::Date();
   date.set_day(d.day());
   date.set_month(d.month());
-  date.set_year(d.year());
+  date.set_year(static_cast<int32_t>(d.year()));
   auto proto = std::make_unique<type::Date>(std::move(date));
   google::bigtable::v2::Value v;
   v.set_allocated_date_value(proto.release());
