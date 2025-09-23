@@ -258,7 +258,7 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kOk));
 }
 
-TEST(WriteConnectionResumed, ResumeUsesGenerationFromFirstResponse) {
+TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
@@ -316,6 +316,72 @@ TEST(WriteConnectionResumed, ResumeUsesGenerationFromFirstResponse) {
   // factory.
   EXPECT_THAT(write.get(), StatusIs(StatusCode::kAborted));
 
+  EXPECT_FALSE(captured_request.has_write_object_spec());
+  EXPECT_TRUE(captured_request.has_append_object_spec());
+  EXPECT_EQ(captured_request.append_object_spec().generation(), 12345);
+  EXPECT_EQ(captured_request.append_object_spec().object(), "test-object");
+  EXPECT_EQ(captured_request.append_object_spec().bucket(),
+            "projects/_/buckets/test-bucket");
+}
+
+TEST(WriteConnectionResumed, ResumeUsesAppendObjectSpecFromInitialRequest) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  initial_request.mutable_append_object_spec()->set_bucket(
+      "projects/_/buckets/test-bucket");
+  initial_request.mutable_append_object_spec()->set_object("test-object");
+
+  google::storage::v2::BidiWriteObjectResponse first_response;
+  first_response.mutable_resource()->set_generation(12345);
+
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  // Expect Flush to be called because flush_ is true by default.
+  // Make it fail to trigger Resume().
+  EXPECT_CALL(*mock, Flush(_)).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then([](auto f) {
+      if (f.get()) return google::cloud::Status{};  // Should not be true
+      return TransientError();
+    });
+  });
+
+  MockFactory mock_factory;
+  google::storage::v2::BidiWriteObjectRequest captured_request;
+  EXPECT_CALL(mock_factory, Call(_))
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest request) {
+        captured_request = std::move(request);
+        return sequencer.PushBack("Factory").then([](auto) {
+          return StatusOr<WriteObject::WriteResult>(
+              internal::AbortedError("stop test", GCP_ERROR_INFO()));
+        });
+      });
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  // This will call FlushStep -> mock->Flush()
+  auto write = connection->Write(TestPayload(1));
+  ASSERT_FALSE(write.is_ready());
+
+  // Trigger the Flush error in the mock
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(false);  // This makes the lambda return TransientError
+
+  // The error in OnFlush triggers Resume(), which calls the mock_factory.
+  // Allow the factory callback to proceed.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Factory");
+  next.first.set_value(true);
+
+  // The write future should now be ready, containing the error from the
+  // factory.
+  EXPECT_THAT(write.get(), StatusIs(StatusCode::kAborted));
+
+  EXPECT_FALSE(captured_request.has_write_object_spec());
   EXPECT_TRUE(captured_request.has_append_object_spec());
   EXPECT_EQ(captured_request.append_object_spec().generation(), 12345);
   EXPECT_EQ(captured_request.append_object_spec().object(), "test-object");
