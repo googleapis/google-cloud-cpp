@@ -105,11 +105,11 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(Timestamp const& v)
       : Value(PrivateConstructor{}, std::move(v)) {}
-  /// : Value(PrivateConstructor{}, : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
   explicit Value(absl::CivilDay const& v)
       : Value(PrivateConstructor{}, std::move(v)) {}
-    /**
-   : Value(PrivateConstructor{}, an instance from common C++ literal types that closely, though
+  /**
+   * Constructs an instance from common C++ literal types that closely, though
    * not exactly, match supported Bigtable types.
    *
    * An integer literal in C++ is of type `int`, which is not exactly an
@@ -239,7 +239,7 @@ class Value {
   static google::bigtable::v2::Value MakeValueProto(double d);
   static google::bigtable::v2::Value MakeValueProto(std::string s);
   static google::bigtable::v2::Value MakeValueProto(Bytes const& b);
-  static google::bigtable::v2::Value MakeValueProto(Timestamp const& b);
+  static google::bigtable::v2::Value MakeValueProto(Timestamp const& t);
   static google::bigtable::v2::Value MakeValueProto(absl::CivilDay const& d);
   static google::bigtable::v2::Value MakeValueProto(int i);
   static google::bigtable::v2::Value MakeValueProto(char const* s);

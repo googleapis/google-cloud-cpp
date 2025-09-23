@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/value.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/bigtable/timestamp.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <google/bigtable/v2/types.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
@@ -53,9 +53,9 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
            MakeTimestamp(pv2.timestamp_value());
   }
   if (pt1.has_date_type()) {
-    return pv1.date_value().day() == pv2.date_value().day()
-    && pv1.date_value().month() == pv2.date_value().month()
-    && pv1.date_value().year() == pv2.date_value().year();
+    return pv1.date_value().day() == pv2.date_value().day() &&
+           pv1.date_value().month() == pv2.date_value().month() &&
+           pv1.date_value().year() == pv2.date_value().year();
   }
   return false;
 }
@@ -101,7 +101,8 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << ts.value();
   }
   if (v.kind_case() == google::bigtable::v2::Value::kDateValue) {
-    auto date = bigtable_internal::FromProto(t, v).get<absl::CivilDay>().value();
+    auto date =
+        bigtable_internal::FromProto(t, v).get<absl::CivilDay>().value();
     return os << date;
   }
   // this should include type name
@@ -144,7 +145,8 @@ bool Value::TypeProtoIs(Timestamp const&,
                         google::bigtable::v2::Type const& type) {
   return type.has_timestamp_type();
 }
-bool Value::TypeProtoIs(absl::CivilDay, google::bigtable::v2::Type const& type) {
+bool Value::TypeProtoIs(absl::CivilDay,
+                        google::bigtable::v2::Type const& type) {
   return type.has_date_type();
 }
 
@@ -199,8 +201,7 @@ google::bigtable::v2::Type Value::MakeTypeProto(Timestamp const&) {
 }
 google::bigtable::v2::Type Value::MakeTypeProto(absl::CivilDay const&) {
   google::bigtable::v2::Type t;
-  t.set_allocated_date_type(
-      std::move(new google::bigtable::v2::Type_Date()));
+  t.set_allocated_date_type(std::move(new google::bigtable::v2::Type_Date()));
   return t;
 }
 
@@ -353,8 +354,8 @@ StatusOr<Timestamp> Value::GetValue(Timestamp const&,
 }
 
 StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay const&,
-                                    google::bigtable::v2::Value const& pv,
-                                    google::bigtable::v2::Type const&) {
+                                         google::bigtable::v2::Value const& pv,
+                                         google::bigtable::v2::Type const&) {
   if (pv.kind_case() != google::bigtable::v2::Value::kDateValue) {
     return internal::UnknownError("missing DATE", GCP_ERROR_INFO());
   }

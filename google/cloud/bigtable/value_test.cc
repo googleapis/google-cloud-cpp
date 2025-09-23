@@ -16,6 +16,7 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/type/date.pb.h>
 #include <gmock/gmock.h>
 #include <cmath>
 #include <cstdint>
@@ -26,7 +27,6 @@
 #include <tuple>
 #include <type_traits>
 #include <vector>
-#include <google/type/date.pb.h>
 
 namespace google {
 namespace cloud {
@@ -431,20 +431,20 @@ TEST(Value, ProtoConversionDate) {
     absl::CivilDay day;
     type::Date expected;
   } test_cases[] = {
-    {absl::CivilDay(-9999, 1, 2), BuildDate(-9999, 1, 2)},
-    {absl::CivilDay(-999, 1, 2), BuildDate(-999, 1, 2)},
-    {absl::CivilDay(-1, 1, 2), BuildDate(-1, 1, 2)},
-    {absl::CivilDay(0, 1, 2), BuildDate(0, 1, 2)},
-    {absl::CivilDay(1, 1, 2), BuildDate(1, 1, 2)},
-    {absl::CivilDay(999, 1, 2), BuildDate(999, 1, 2)},
-    {absl::CivilDay(1582, 10, 15), BuildDate(1582, 10, 15)},
-    {absl::CivilDay(1677, 9, 21), BuildDate(1677, 9, 21)},
-    {absl::CivilDay(1901, 12, 13), BuildDate(1901, 12, 13)},
-    {absl::CivilDay(1970, 1, 1), BuildDate(1970, 1, 1)},
-    {absl::CivilDay(2019, 6, 21), BuildDate(2019, 6, 21)},
-    {absl::CivilDay(2038, 1, 19), BuildDate(2038, 1, 19)},
-    {absl::CivilDay(2262, 4, 12), BuildDate(2262, 4, 12)},
-};
+      {absl::CivilDay(-9999, 1, 2), BuildDate(-9999, 1, 2)},
+      {absl::CivilDay(-999, 1, 2), BuildDate(-999, 1, 2)},
+      {absl::CivilDay(-1, 1, 2), BuildDate(-1, 1, 2)},
+      {absl::CivilDay(0, 1, 2), BuildDate(0, 1, 2)},
+      {absl::CivilDay(1, 1, 2), BuildDate(1, 1, 2)},
+      {absl::CivilDay(999, 1, 2), BuildDate(999, 1, 2)},
+      {absl::CivilDay(1582, 10, 15), BuildDate(1582, 10, 15)},
+      {absl::CivilDay(1677, 9, 21), BuildDate(1677, 9, 21)},
+      {absl::CivilDay(1901, 12, 13), BuildDate(1901, 12, 13)},
+      {absl::CivilDay(1970, 1, 1), BuildDate(1970, 1, 1)},
+      {absl::CivilDay(2019, 6, 21), BuildDate(2019, 6, 21)},
+      {absl::CivilDay(2038, 1, 19), BuildDate(2038, 1, 19)},
+      {absl::CivilDay(2262, 4, 12), BuildDate(2262, 4, 12)},
+  };
 
   for (auto const& tc : test_cases) {
     SCOPED_TRACE("CivilDay: " + absl::FormatCivilTime(tc.day));
@@ -694,7 +694,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
-{MakeNullValue<absl::CivilDay>(), "NULL", normal},
+      {MakeNullValue<absl::CivilDay>(), "NULL", normal},
 
   };
 
