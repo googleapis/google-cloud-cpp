@@ -49,8 +49,8 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
     return pv1.bytes_value() == pv2.bytes_value();
   }
   if (pt1.has_timestamp_type()) {
-    return MakeTimestamp(pv1.timestamp_value()) ==
-           MakeTimestamp(pv2.timestamp_value());
+    return pv1.timestamp_value().seconds() == pv2.timestamp_value().seconds() &&
+           pv1.timestamp_value().nanos() == pv2.timestamp_value().nanos();
   }
   if (pt1.has_date_type()) {
     return pv1.date_value().day() == pv2.date_value().day() &&
