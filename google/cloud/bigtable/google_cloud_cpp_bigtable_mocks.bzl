@@ -21,7 +21,6 @@ google_cloud_cpp_bigtable_mocks_hdrs = [
     "admin/mocks/mock_bigtable_table_admin_connection.h",
     "mocks/mock_data_connection.h",
     "mocks/mock_row_reader.h",
-    "mocks/query_row.h",
 ]
 
 google_cloud_cpp_bigtable_mocks_srcs = [
