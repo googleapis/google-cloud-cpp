@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/strings/cord.h"
 #include <google/bigtable/v2/types.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
