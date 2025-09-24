@@ -23,6 +23,30 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+// Some Bigtable proto fields use Cord internally and string externally.
+template <typename T, typename std::enable_if<
+                          std::is_same<T, std::string>::value>::type* = nullptr>
+std::string MaybeCord(T const& s) {
+  return s;
+}
+template <typename T, typename std::enable_if<
+                          std::is_same<T, std::string>::value>::type* = nullptr>
+std::string MaybeCord(T&& s) {
+  return std::move(s);  // NOLINT(bugprone-move-forwarding-reference)
+}
+template <typename T, typename std::enable_if<
+                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
+std::string MaybeCord(T const& s) {
+  return std::string(s);
+}
+template <typename T, typename std::enable_if<
+                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
+std::string MaybeCord(T&& s) {
+  return std::string(
+      std::move(s));  // NOLINT(bugprone-move-forwarding-reference)
+}
+
 // Compares two sets of Type and Value protos for equality. This method calls
 // itself recursively to compare subtypes and subvalues.
 bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
@@ -80,7 +104,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << v.string_value();
   }
   if (v.kind_case() == google::bigtable::v2::Value::kBytesValue) {
-    return os << Bytes(v.bytes_value());
+    return os << Bytes(MaybeCord(v.bytes_value()));
   }
   // this should include type name
   return os << "Error: unknown value type code ";
@@ -263,7 +287,7 @@ StatusOr<std::string> Value::GetValue(std::string const&,
   if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
     return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
   }
-  return pv.string_value();
+  return MaybeCord(pv.string_value());
 }
 StatusOr<std::string> Value::GetValue(std::string const&,
                                       google::bigtable::v2::Value&& pv,
@@ -271,7 +295,7 @@ StatusOr<std::string> Value::GetValue(std::string const&,
   if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
     return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
   }
-  return std::move(*pv.mutable_string_value());
+  return MaybeCord(std::move(*pv.mutable_string_value()));
 }
 StatusOr<Bytes> Value::GetValue(Bytes const&,
                                 google::bigtable::v2::Value const& pv,
@@ -279,7 +303,7 @@ StatusOr<Bytes> Value::GetValue(Bytes const&,
   if (pv.kind_case() != google::bigtable::v2::Value::kBytesValue) {
     return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
   }
-  return Bytes(pv.bytes_value());
+  return Bytes(MaybeCord(pv.bytes_value()));
 }
 
 bool Value::is_null() const { return IsNullValue(value_); }

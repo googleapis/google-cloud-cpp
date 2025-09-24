@@ -168,6 +168,30 @@ TEST(Value, Equality) {
   }
 }
 
+// The next tests assume std::string is the underlying type of protobuf
+// accessors for string values. In situations where the underlying type is
+// absl::Cord, the assumptions are no longer valid and checking the moved
+// from state of the std::string is even less of a good idea than normal.
+template <typename T,
+          typename U = decltype(std::declval<google::bigtable::v2::Value>()
+                                    .string_value()),
+          typename std::enable_if<
+              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                           std::string>::value>::type* = nullptr>
+StatusOr<T> MovedFromString(Value const& v) {
+  return v.get<T>();
+}
+
+template <typename T,
+          typename U = decltype(std::declval<google::bigtable::v2::Value>()
+                                    .string_value()),
+          typename std::enable_if<
+              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                           absl::Cord>::value>::type* = nullptr>
+StatusOr<T> MovedFromString(Value const&) {
+  return T{""};
+}
+
 // NOTE: This test relies on unspecified behavior about the moved-from state
 // of std::string. Specifically, this test relies on the fact that "large"
 // strings, when moved-from, end up empty. And we use this fact to verify that
@@ -188,7 +212,7 @@ TEST(Value, RvalueGetString) {
   EXPECT_EQ(data, *s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
-  s = v.get<Type>();
+  s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
   EXPECT_EQ("", *s);
 }
@@ -213,7 +237,7 @@ TEST(Value, RvalueGetOptionalString) {
   EXPECT_EQ(*data, **s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
-  s = v.get<Type>();
+  s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
   EXPECT_EQ("", **s);
 }
