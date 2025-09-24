@@ -16,6 +16,7 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/cord.h"
 #include <gmock/gmock.h>
 #include <cmath>
 #include <cstdint>
