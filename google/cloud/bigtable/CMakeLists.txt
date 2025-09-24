@@ -349,7 +349,9 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         admin/mocks/mock_bigtable_table_admin_connection.h
         mocks/mock_data_connection.h
         mocks/mock_row_reader.cc
-        mocks/mock_row_reader.h)
+        mocks/mock_row_reader.h
+        mocks/query_row.cc
+        mocks/query_row.h)
     target_link_libraries(
         google_cloud_cpp_bigtable_mocks
         PUBLIC google-cloud-cpp::bigtable
