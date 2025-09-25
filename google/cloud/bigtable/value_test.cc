@@ -110,11 +110,10 @@ TEST(Value, BasicSemantics) {
   for (auto x : {false, true}) {
     SCOPED_TRACE("Testing: bool " + std::to_string(x));
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<bool>(5, x));
-    // std::vector<absl::optional<bool>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<bool>(5, x));
+    std::vector<absl::optional<bool>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
 
   auto const min64 = std::numeric_limits<std::int64_t>::min();
@@ -122,52 +121,47 @@ TEST(Value, BasicSemantics) {
   for (auto x : std::vector<std::int64_t>{min64, -1, 0, 1, max64}) {
     SCOPED_TRACE("Testing: std::int64_t " + std::to_string(x));
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<std::int64_t>(5, x));
-    // std::vector<absl::optional<std::int64_t>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<std::int64_t>(5, x));
+    std::vector<absl::optional<std::int64_t>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
 
   for (auto x : {-1.0, -0.5, 0.0, 0.5, 1.0}) {
     SCOPED_TRACE("Testing: double " + std::to_string(x));
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<double>(5, x));
-    // std::vector<absl::optional<double>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<double>(5, x));
+    std::vector<absl::optional<double>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
 
   for (auto x : {-1.0F, -0.5F, 0.0F, 0.5F, 1.0F}) {
     SCOPED_TRACE("Testing: float " + std::to_string(x));
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<float>(5, x));
-    // std::vector<absl::optional<float>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<float>(5, x));
+    std::vector<absl::optional<float>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
 
   for (auto const& x :
        std::vector<std::string>{"", "f", "foo", "12345678901234567"}) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<std::string>(5, x));
-    // std::vector<absl::optional<std::string>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<std::string>(5, x));
+    std::vector<absl::optional<std::string>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
   for (auto const& x : std::vector<Bytes>{Bytes(""), Bytes("f"), Bytes("foo"),
                                           Bytes("12345678901234567")}) {
     SCOPED_TRACE("Testing: Bytes " + x.get<std::string>());
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<Bytes>(5, x));
-    // std::vector<absl::optional<Bytes>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<Bytes>(5, x));
+    std::vector<absl::optional<Bytes>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
 
   for (auto ts : TestTimes()) {
@@ -176,12 +170,11 @@ TEST(Value, BasicSemantics) {
     std::cout << "Testing: google::cloud::bigtable::Timestamp "
               << bigtable_internal::TimestampToRFC3339(ts) << std::endl;
     TestBasicSemantics(ts);
-    // uncomment after enabling vector support
-    // std::vector<Timestamp> v(5, ts);
-    // TestBasicSemantics(v);
-    // std::vector<absl::optional<Timestamp>> ov(5, ts);
-    // ov.resize(10);
-    // TestBasicSemantics(ov);
+    std::vector<Timestamp> v(5, ts);
+    TestBasicSemantics(v);
+    std::vector<absl::optional<Timestamp>> ov(5, ts);
+    ov.resize(10);
+    TestBasicSemantics(ov);
   }
   for (auto x : {
            absl::CivilDay(1582, 10, 15),  // start of Gregorian calendar
@@ -194,11 +187,10 @@ TEST(Value, BasicSemantics) {
        }) {
     SCOPED_TRACE("Testing: absl::CivilDay " + absl::FormatCivilTime(x));
     TestBasicSemantics(x);
-    // uncomment after enabling vector support
-    // TestBasicSemantics(std::vector<absl::CivilDay>(5, x));
-    // std::vector<absl::optional<absl::CivilDay>> v(5, x);
-    // v.resize(10);
-    // TestBasicSemantics(v);
+    TestBasicSemantics(std::vector<absl::CivilDay>(5, x));
+    std::vector<absl::optional<absl::CivilDay>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
   }
 }
 
@@ -213,6 +205,8 @@ TEST(Value, Equality) {
       {Value("foo"), Value("bar")},
       {Value(Bytes("foo")), Value(Bytes("bar"))},
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
+      {Value(std::vector<double>{1.2, 3.4}),
+       Value(std::vector<double>{4.5, 6.7})},
   };
 
   for (auto const& tc : test_cases) {
@@ -301,6 +295,31 @@ TEST(Value, RvalueGetOptionalString) {
   EXPECT_EQ("", **s);
 }
 
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// bigtable::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetVectorString) {
+  using Type = std::vector<std::string>;
+  Type const data(128, std::string(128, 'x'));
+  Value v(data);
+
+  auto s = v.get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = v.get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(Type(data.size(), ""), *s);
+}
+
 TEST(Value, BytesRelationalOperators) {
   Bytes b1(std::string(1, '\x00'));
   Bytes b2(std::string(1, '\xff'));
@@ -324,6 +343,10 @@ TEST(Value, ConstructionFromLiterals) {
 
   Value v_string("hello");
   EXPECT_EQ("hello", *v_string.get<std::string>());
+
+  std::vector<char const*> vec = {"foo", "bar"};
+  Value v_vec(vec);
+  EXPECT_STATUS_OK(v_vec.get<std::vector<std::string>>());
 }
 
 TEST(Value, MixingTypes) {
@@ -354,6 +377,65 @@ TEST(Value, MixingTypes) {
   EXPECT_NE(null_b, b);
   EXPECT_NE(null_b, null_a);
   EXPECT_NE(null_b, a);
+}
+
+TEST(Value, BigtableArray) {
+  using ArrayInt64 = std::vector<std::int64_t>;
+  using ArrayDouble = std::vector<double>;
+  using ArrayFloat = std::vector<float>;
+
+  ArrayInt64 const empty = {};
+  Value const ve(empty);
+  EXPECT_EQ(ve, ve);
+  ASSERT_STATUS_OK(ve.get<ArrayInt64>());
+  EXPECT_THAT(ve.get<ArrayDouble>(), Not(IsOk()));
+  EXPECT_EQ(empty, *ve.get<ArrayInt64>());
+
+  ArrayInt64 const ai = {1, 2, 3};
+  Value const vi(ai);
+  EXPECT_EQ(vi, vi);
+  ASSERT_STATUS_OK(vi.get<ArrayInt64>());
+  EXPECT_THAT(vi.get<ArrayDouble>(), Not(IsOk()));
+  EXPECT_EQ(ai, *vi.get<ArrayInt64>());
+
+  ArrayDouble const ad = {1.0, 2.0, 3.0};
+  Value const vd(ad);
+  EXPECT_EQ(vd, vd);
+  EXPECT_NE(vi, vd);
+  EXPECT_THAT(vd.get<ArrayInt64>(), Not(IsOk()));
+  ASSERT_STATUS_OK(vd.get<ArrayDouble>());
+  EXPECT_EQ(ad, *vd.get<ArrayDouble>());
+
+  ArrayFloat const af = {1.0, 2.0, 3.0};
+  Value const vf(af);
+  EXPECT_EQ(vf, vf);
+  EXPECT_NE(vi, vf);
+  EXPECT_THAT(vf.get<ArrayInt64>(), Not(IsOk()));
+  ASSERT_STATUS_OK(vf.get<ArrayFloat>());
+  EXPECT_EQ(af, *vf.get<ArrayFloat>());
+
+  Value const null_vi = MakeNullValue<ArrayInt64>();
+  EXPECT_EQ(null_vi, null_vi);
+  EXPECT_NE(null_vi, vi);
+  EXPECT_NE(null_vi, vd);
+  EXPECT_THAT(null_vi.get<ArrayInt64>(), Not(IsOk()));
+  EXPECT_THAT(null_vi.get<ArrayDouble>(), Not(IsOk()));
+
+  Value const null_vd = MakeNullValue<ArrayDouble>();
+  EXPECT_EQ(null_vd, null_vd);
+  EXPECT_NE(null_vd, null_vi);
+  EXPECT_NE(null_vd, vd);
+  EXPECT_NE(null_vd, vi);
+  EXPECT_THAT(null_vd.get<ArrayDouble>(), Not(IsOk()));
+  EXPECT_THAT(null_vd.get<ArrayInt64>(), Not(IsOk()));
+
+  Value const null_vf = MakeNullValue<ArrayFloat>();
+  EXPECT_EQ(null_vf, null_vf);
+  EXPECT_NE(null_vf, null_vi);
+  EXPECT_NE(null_vf, vf);
+  EXPECT_NE(null_vf, vi);
+  EXPECT_THAT(null_vf.get<ArrayFloat>(), Not(IsOk()));
+  EXPECT_THAT(null_vf.get<ArrayInt64>(), Not(IsOk()));
 }
 
 TEST(Value, ProtoConversionBool) {
@@ -481,6 +563,18 @@ TEST(Value, ProtoConversionDate) {
     EXPECT_EQ(tc.expected.month(), p.second.date_value().month());
     EXPECT_EQ(tc.expected.day(), p.second.date_value().day());
   }
+}
+
+TEST(Value, ProtoConversionArray) {
+  std::vector<std::int64_t> data{1, 2, 3};
+  Value const v(data);
+  auto const p = bigtable_internal::ToProto(v);
+  EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
+  EXPECT_TRUE(p.first.has_array_type());
+  EXPECT_TRUE(p.first.array_type().element_type().has_int64_type());
+  EXPECT_EQ(1, p.second.array_value().values(0).int_value());
+  EXPECT_EQ(2, p.second.array_value().values(1).int_value());
+  EXPECT_EQ(3, p.second.array_value().values(2).int_value());
 }
 
 void SetNullProtoKind(Value& v) {
@@ -671,6 +765,24 @@ TEST(Value, GetBadOptional) {
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadArray) {
+  Value v(std::vector<double>{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+}
+
 TEST(Value, OutputStream) {
   auto const normal = [](std::ostream& os) -> std::ostream& { return os; };
   auto const hex = [](std::ostream& os) -> std::ostream& {
@@ -710,6 +822,9 @@ TEST(Value, OutputStream) {
       // Tests string quoting: No quotes for scalars; quotes within aggregates
       {Value(""), "", normal},
       {Value("foo"), "foo", normal},
+      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
+      {Value(std::vector<std::string>{"\"a\"", "\"b\""}),
+       R"(["\"a\"", "\"b\""])", normal},
 
       // Tests null values
       {MakeNullValue<bool>(), "NULL", normal},
@@ -721,7 +836,34 @@ TEST(Value, OutputStream) {
       {MakeNullValue<Timestamp>(), "NULL", normal},
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
 
-  };
+      // Tests arrays
+      {Value(std::vector<bool>{false, true}), "[0, 1]", normal},
+      {Value(std::vector<bool>{false, true}), "[false, true]", boolalpha},
+      {Value(std::vector<std::int64_t>{10, 11}), "[10, 11]", normal},
+      {Value(std::vector<std::int64_t>{10, 11}), "[a, b]", hex},
+      {Value(std::vector<double>{1.0, 2.0}), "[1, 2]", normal},
+      {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", float4},
+      {Value(std::vector<float>{1.0F, 2.0F}), "[1, 2]", normal},
+      {Value(std::vector<float>{1.0F, 2.0F}), "[1.000, 2.000]", float4},
+      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
+      {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
+      {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
+       normal},
+      {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+
+      // Tests arrays with null elements
+      {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
+       normal},
+
+      // Tests null arrays
+      {MakeNullValue<std::vector<bool>>(), "NULL", normal},
+      {MakeNullValue<std::vector<std::int64_t>>(), "NULL", normal},
+      {MakeNullValue<std::vector<double>>(), "NULL", normal},
+      {MakeNullValue<std::vector<float>>(), "NULL", normal},
+      {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
+      {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal}};
 
   for (auto const& tc : test_case) {
     std::stringstream ss;
@@ -729,6 +871,64 @@ TEST(Value, OutputStream) {
     EXPECT_EQ(ss.str(), tc.expected);
   }
 }
+
+// Ensures that the following expressions produce the same output.
+//
+// `os << t`
+// `os << Value(t)`
+//
+template <typename T>
+void StreamMatchesValueStream(T t) {
+  std::ostringstream ss1;
+  ss1 << t;
+  std::ostringstream ss2;
+  ss2 << Value(std::move(t));
+  EXPECT_EQ(ss1.str(), ss2.str());
+}
+
+TEST(Value, OutputStreamMatchesT) {
+  // bool
+  StreamMatchesValueStream(false);
+  StreamMatchesValueStream(true);
+
+  // std::int64_t
+  StreamMatchesValueStream(-1);
+  StreamMatchesValueStream(0);
+  StreamMatchesValueStream(1);
+
+  // double
+  StreamMatchesValueStream(0.0);
+  StreamMatchesValueStream(3.14);
+
+  // float
+  StreamMatchesValueStream(0.0F);
+  StreamMatchesValueStream(3.14F);
+
+  // std::string
+  StreamMatchesValueStream("");
+  StreamMatchesValueStream("foo");
+  StreamMatchesValueStream("\"foo\"");
+
+  // Bytes
+  StreamMatchesValueStream(Bytes());
+  StreamMatchesValueStream(Bytes("foo"));
+
+  // Date
+  StreamMatchesValueStream(absl::CivilDay(1, 1, 1));
+  StreamMatchesValueStream(absl::CivilDay());
+  StreamMatchesValueStream(absl::CivilDay(9999, 12, 31));
+
+  // Timestamp
+  StreamMatchesValueStream(Timestamp());
+  StreamMatchesValueStream(MakeTimestamp(MakeTime(1, 1)).value());
+
+  // std::vector<T>
+  // Not included, because a raw vector cannot be streamed.
+
+  // std::tuple<...>
+  // Not included, because a raw tuple cannot be streamed.
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
