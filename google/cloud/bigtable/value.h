@@ -14,8 +14,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VALUE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VALUE_H
 
-#include "google/cloud/bigtable/version.h"
 #include "google/cloud/bigtable/internal/tuple_utils.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "bytes.h"
@@ -102,7 +102,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * assert(vec == copy);
  * @endcode
  *
-* @par Bigtable Structs
+ * @par Bigtable Structs
  *
  * Bigtable structs are represented in C++ as instances of `std::tuple` holding
  * zero or more of the allowed Bigtable types, such as `bool`, `std::int64_t`,
@@ -303,11 +303,11 @@ class Value {
   }
   template <typename... Ts>
   static bool TypeProtoIs(std::tuple<Ts...> const& tup,
-                            google::bigtable::v2::Type const& type) {
+                          google::bigtable::v2::Type const& type) {
     bool ok = type.has_struct_type();
     ok = ok && type.struct_type().fields().size() == sizeof...(Ts);
     bigtable_internal::ForEach(tup, IsStructTypeProto{ok, 0},
-                              type.struct_type());
+                               type.struct_type());
     return ok;
   }
 
@@ -361,9 +361,11 @@ class Value {
     return t;
   }
   template <typename... Ts>
-  static google::bigtable::v2::Type MakeTypeProto(std::tuple<Ts...> const& tup) {
+  static google::bigtable::v2::Type MakeTypeProto(
+      std::tuple<Ts...> const& tup) {
     google::bigtable::v2::Type t;
-    t.set_allocated_struct_type(std::move(new google::bigtable::v2::Type_Struct()));
+    t.set_allocated_struct_type(
+        std::move(new google::bigtable::v2::Type_Struct()));
     bigtable_internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
     return t;
   }
@@ -371,7 +373,7 @@ class Value {
   // A functor to be used with internal::ForEach to add type protos for all the
   // elements of a tuple.
   struct AddStructTypes {
-  template <typename T>
+    template <typename T>
     void operator()(T const& t,
                     google::bigtable::v2::Type_Struct& struct_type) const {
       auto* field = struct_type.add_fields();
@@ -420,7 +422,8 @@ class Value {
   template <typename... Ts>
   static google::bigtable::v2::Value MakeValueProto(std::tuple<Ts...> tup) {
     google::bigtable::v2::Value v;
-    bigtable_internal::ForEach(tup, AddStructValues{}, *v.mutable_array_value());
+    bigtable_internal::ForEach(tup, AddStructValues{},
+                               *v.mutable_array_value());
     return v;
   }
 
@@ -496,7 +499,7 @@ class Value {
   }
   template <typename V, typename... Ts>
   static StatusOr<std::tuple<Ts...>> GetValue(
-        std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const& pt) {
+      std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const& pt) {
     if (!pv.has_array_value()) {
       return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
     }

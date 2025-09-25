@@ -209,8 +209,8 @@ TEST(Value, Equality) {
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
       {Value(std::make_tuple(false, 123, "foo")),
-        Value(std::make_tuple(true, 456, "bar"))},
-};
+       Value(std::make_tuple(true, 456, "bar"))},
+  };
 
   for (auto const& tc : test_cases) {
     EXPECT_EQ(tc.first, tc.first);
@@ -344,7 +344,7 @@ TEST(Value, RvalueGetStructString) {
   EXPECT_EQ(data, *s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
-  s = v.get<Type>();
+  s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
   EXPECT_EQ(Type({"name", ""}, ""), *s);
 }

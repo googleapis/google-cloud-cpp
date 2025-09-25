@@ -156,7 +156,8 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   if (t.kind_case() == google::bigtable::v2::Type::kInt64Type) {
     return os << v.int_value();
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kFloat32Type || t.kind_case() == google::bigtable::v2::Type::kFloat64Type) {
+  if (t.kind_case() == google::bigtable::v2::Type::kFloat32Type ||
+      t.kind_case() == google::bigtable::v2::Type::kFloat64Type) {
     return os << v.float_value();
   }
   if (t.kind_case() == google::bigtable::v2::Type::kStringType) {
@@ -170,13 +171,8 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
     return os;  // Unreachable, but quiets warning.
   }
-<<<<<<< HEAD
-  if (v.kind_case() == google::bigtable::v2::Value::kBytesValue) {
-    return os << Bytes(AsString(v.bytes_value()));
-=======
   if (t.kind_case() == google::bigtable::v2::Type::kBytesType) {
-    return os << Bytes(v.bytes_value());
->>>>>>> dc192bfeeb (feat(bigtable): add support for STRUCT)
+    return os << Bytes(AsString(v.bytes_value()));
   }
   if (t.kind_case() == google::bigtable::v2::Type::kTimestampType) {
     auto ts = MakeTimestamp(v.timestamp_value());
@@ -202,20 +198,20 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << ']';
   }
   if (t.kind_case() == google::bigtable::v2::Type::kStructType) {
-      char const* delimiter = "";
-      os << '(';
-      for (int i = 0; i < v.array_value().values_size(); ++i) {
-        os << delimiter;
-        if (!t.struct_type().fields(i).field_name().empty()) {
-          os << '"';
-          EscapeQuotes(os, t.struct_type().fields(i).field_name());
-          os << '"' << ": ";
-        }
-        StreamHelper(os, v.array_value().values(i),
-                     t.struct_type().fields(i).type(), StreamMode::kAggregate);
-        delimiter = ", ";
+    char const* delimiter = "";
+    os << '(';
+    for (int i = 0; i < v.array_value().values_size(); ++i) {
+      os << delimiter;
+      if (!t.struct_type().fields(i).field_name().empty()) {
+        os << '"';
+        EscapeQuotes(os, t.struct_type().fields(i).field_name());
+        os << '"' << ": ";
       }
-      return os << ')';
+      StreamHelper(os, v.array_value().values(i),
+                   t.struct_type().fields(i).type(), StreamMode::kAggregate);
+      delimiter = ", ";
+    }
+    return os << ')';
   }
   // this should include type name
   return os << "Error: unknown value type code " << t.kind_case();
