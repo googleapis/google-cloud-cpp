@@ -256,6 +256,8 @@ add_library(
     table_config.h
     table_resource.cc
     table_resource.h
+    timestamp.cc
+    timestamp.h
     value.cc
     value.h
     version.cc
@@ -499,6 +501,7 @@ if (BUILD_TESTING)
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
+        timestamp_test.cc
         value_test.cc
         wait_for_consistency_test.cc)
 

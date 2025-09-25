@@ -1,0 +1,121 @@
+// Copyright 2025 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/bigtable/timestamp.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/status.h"
+#include <google/protobuf/util/time_util.h>
+#include <string>
+
+namespace google {
+namespace cloud {
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+
+Status OutOfRange(std::string message, internal::ErrorInfoBuilder info) {
+  return internal::OutOfRangeError(std::move(message), std::move(info));
+}
+
+Status PositiveOverflow(std::string const& type) {
+  return OutOfRange(type + " positive overflow", GCP_ERROR_INFO());
+}
+
+Status NegativeOverflow(std::string const& type) {
+  return OutOfRange(type + " negative overflow", GCP_ERROR_INFO());
+}
+
+}  // namespace
+
+StatusOr<protobuf::Timestamp> Timestamp::ConvertTo(
+    protobuf::Timestamp const&) const {
+  auto constexpr kDestType = "google::protobuf::Timestamp";
+  auto const s = absl::ToUnixSeconds(t_);
+  if (s > google::protobuf::util::TimeUtil::kTimestampMaxSeconds)
+    return PositiveOverflow(kDestType);
+  if (s < google::protobuf::util::TimeUtil::kTimestampMinSeconds)
+    return NegativeOverflow(kDestType);
+  auto const ns = absl::ToInt64Nanoseconds(t_ - absl::FromUnixSeconds(s));
+  google::protobuf::Timestamp proto;
+  proto.set_seconds(s);
+  proto.set_nanos(static_cast<std::int32_t>(ns));
+  return proto;
+}
+
+StatusOr<std::int64_t> Timestamp::ToRatio(std::int64_t min, std::int64_t max,
+                                          std::int64_t num,
+                                          std::int64_t den) const {
+  auto constexpr kDestType = "std::chrono::time_point";
+  auto const period = absl::Seconds(num) / den;
+  auto const duration = absl::Floor(t_ - absl::UnixEpoch(), period);
+  if (duration > max * period) return PositiveOverflow(kDestType);
+  if (duration < min * period) return NegativeOverflow(kDestType);
+  return duration / period;
+}
+
+StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
+  auto constexpr kDestType = "google::cloud::bigtable::Timestamp";
+  auto constexpr kMinTime = absl::FromUnixSeconds(
+      google::protobuf::util::TimeUtil::kTimestampMinSeconds);
+  auto constexpr kMaxTime = absl::FromUnixSeconds(
+      google::protobuf::util::TimeUtil::kTimestampMaxSeconds + 1);
+  if (t >= kMaxTime) return PositiveOverflow(kDestType);
+  if (t < kMinTime) return NegativeOverflow(kDestType);
+  return Timestamp(t);
+}
+
+StatusOr<Timestamp> MakeTimestamp(protobuf::Timestamp const& proto) {
+  return MakeTimestamp(absl::FromUnixSeconds(proto.seconds()) +
+                       absl::Nanoseconds(proto.nanos()));
+}
+
+std::ostream& operator<<(std::ostream& os, Timestamp ts) {
+  return os << bigtable_internal::TimestampToRFC3339(ts);
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable
+
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+
+// Timestamp objects are always formatted in UTC, and we always format them
+// with a trailing 'Z'. However, we're a bit more liberal in the UTC offsets we
+// accept, thus the use of '%Ez' in kParseSpec.
+auto constexpr kFormatSpec = "%E4Y-%m-%d%ET%H:%M:%E*SZ";
+auto constexpr kParseSpec = "%Y-%m-%d%ET%H:%M:%E*S%Ez";
+
+}  // namespace
+
+StatusOr<bigtable::Timestamp> TimestampFromRFC3339(std::string const& s) {
+  absl::Time t;
+  std::string err;
+  if (absl::ParseTime(kParseSpec, s, &t, &err)) {
+    return bigtable::MakeTimestamp(t);
+  }
+  return internal::InvalidArgumentError(s + ": " + err, GCP_ERROR_INFO());
+}
+
+std::string TimestampToRFC3339(bigtable::Timestamp ts) {
+  auto const t = ts.get<absl::Time>().value();  // Cannot fail.
+  return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+}  // namespace cloud
+}  // namespace google
