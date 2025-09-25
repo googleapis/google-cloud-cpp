@@ -49,6 +49,7 @@ static bool validate_float_value(double v) {
 static bool ValidateFloatValue(double v) { return validate_float_value(v); }
 
 static bool ValidateFloatValue(float v) { return validate_float_value(v); }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 
