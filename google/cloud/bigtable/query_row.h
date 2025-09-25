@@ -409,7 +409,6 @@ class TupleStream {
  * range. The `QueryRowRange` must be a range defined by
  * `QueryRowStreamIterator` objects.
  *
- * @snippet samples.cc stream-of
  *
  * @note Ownership of the @p range is not transferred, so it must outlive the
  *     returned `TupleStream`.
@@ -435,7 +434,6 @@ TupleStream<Tuple> StreamOf(QueryRowRange&& range) {
  * know how many rows may be returned, they should instead consume the range in
  * a loop.
  *
- * @snippet samples.cc get-singular-row
  */
 template <typename QueryRowRange>
 auto GetSingularRow(QueryRowRange range)
