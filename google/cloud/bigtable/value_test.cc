@@ -240,9 +240,27 @@ template <typename T,
                                     .string_value()),
           typename std::enable_if<
               std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
-                           absl::Cord>::value>::type* = nullptr>
+                           absl::Cord>::value>::type* = nullptr,
+          typename std::enable_if_t<
+              !std::is_same<T, std::vector<std::string>>::value, int> = 0>
 StatusOr<T> MovedFromString(Value const&) {
   return T{""};
+}
+
+template <typename T,
+          typename U = decltype(std::declval<google::bigtable::v2::Value>()
+                                    .string_value()),
+          typename std::enable_if<
+              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                           absl::Cord>::value>::type* = nullptr,
+          typename std::enable_if_t<
+              std::is_same<T, std::vector<std::string>>::value, int> = 0>
+StatusOr<T> MovedFromString(Value const& v) {
+  auto v2 = v.get<T>();
+  if (!v2.ok()) {
+    return v2.status();
+  }
+  return T{v2->size(), std::string{""}};
 }
 
 // NOTE: This test relies on unspecified behavior about the moved-from state

@@ -148,7 +148,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
         return os << v.string_value();
       case StreamMode::kAggregate:
         os << '"';
-        EscapeQuotes(os, v.string_value());
+        EscapeQuotes(os, AsString(v.string_value()));
         return os << '"';
     }
     return os;  // Unreachable, but quiets warning.
