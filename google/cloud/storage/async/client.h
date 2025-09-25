@@ -371,7 +371,7 @@ class AsyncClient {
       std::int64_t limit, Options opts = {});
 
   /*
-  create-and-write-appendable-object]
+  [create-and-write-appendable-object]
   Initiates a [resumable upload][resumable-link] for an appendable object.
 
   Appendable objects allow you to create an object and upload data to it
