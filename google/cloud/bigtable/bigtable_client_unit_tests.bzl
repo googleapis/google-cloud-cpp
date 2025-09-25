@@ -75,6 +75,7 @@ bigtable_client_unit_tests = [
     "mutation_batcher_test.cc",
     "mutations_test.cc",
     "polling_policy_test.cc",
+    "query_row_test.cc",
     "read_modify_write_rule_test.cc",
     "row_range_test.cc",
     "row_reader_test.cc",

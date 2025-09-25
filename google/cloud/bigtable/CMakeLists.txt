@@ -229,6 +229,8 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    query_row.cc
+    query_row.h
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
@@ -348,6 +350,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         admin/mocks/mock_bigtable_instance_admin_connection.h
         admin/mocks/mock_bigtable_table_admin_connection.h
         mocks/mock_data_connection.h
+        mocks/mock_query_row.h
         mocks/mock_row_reader.cc
         mocks/mock_row_reader.h)
     target_link_libraries(
@@ -477,6 +480,7 @@ if (BUILD_TESTING)
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc
+        query_row_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
         row_reader_test.cc
