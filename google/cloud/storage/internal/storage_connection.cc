@@ -55,6 +55,11 @@ StatusOr<ObjectMetadata> StorageConnection::ExecuteParallelUploadFile(
       "ExecuteParallelUploadFile() is not implemented by this Object");
 }
 
+StatusOr<ObjectWriteStreamParams> StorageConnection::SetupObjectWriteStream(
+    ResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "unimplemented");
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
