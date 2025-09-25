@@ -90,7 +90,7 @@ class QueryRow {
   QueryRow();
 
   /// @name Copy and move.
-  ///@}
+  ///@{
   QueryRow(QueryRow const&) = default;
   QueryRow& operator=(QueryRow const&) = default;
   QueryRow(QueryRow&&) = default;
@@ -169,7 +169,7 @@ class QueryRow {
   }
 
   /// @name Equality
-  ///@}
+  ///@{
   friend bool operator==(QueryRow const& a, QueryRow const& b);
   friend bool operator!=(QueryRow const& a, QueryRow const& b) {
     return !(a == b);
@@ -228,7 +228,7 @@ class QueryRowStreamIterator {
   using Source = std::function<StatusOr<QueryRow>()>;
 
   /// @name Iterator type aliases
-  ///@}
+  ///@{
   using iterator_category = std::input_iterator_tag;
   using value_type = StatusOr<QueryRow>;
   using difference_type = std::ptrdiff_t;
@@ -291,7 +291,7 @@ template <typename Tuple>
 class TupleStreamIterator {
  public:
   /// @name Iterator type aliases
-  ///@}
+  ///@{
   using iterator_category = std::input_iterator_tag;
   using value_type = StatusOr<Tuple>;
   using difference_type = std::ptrdiff_t;
