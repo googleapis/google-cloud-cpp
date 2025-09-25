@@ -221,9 +221,9 @@ TEST(Value, Equality) {
   }
 }
 
-// The next tests assume std::string is the underlying type of protobuf
-// accessors for string values. In situations where the underlying type is
-// absl::Cord, the assumptions are no longer valid and checking the moved
+// The next tests (RvalueGet*) assume std::string is the underlying type of
+// protobuf accessors for string values. In situations where the underlying type
+// is absl::Cord, the assumptions are no longer valid and checking the moved
 // from state of the std::string is even less of a good idea than normal.
 template <typename T,
           typename U = decltype(std::declval<google::bigtable::v2::Value>()
@@ -315,7 +315,7 @@ TEST(Value, RvalueGetVectorString) {
   EXPECT_EQ(data, *s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
-  s = v.get<Type>();
+  s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
   EXPECT_EQ(Type(data.size(), ""), *s);
 }
