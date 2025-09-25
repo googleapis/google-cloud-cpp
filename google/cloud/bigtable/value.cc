@@ -57,6 +57,24 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
            pv1.date_value().month() == pv2.date_value().month() &&
            pv1.date_value().year() == pv2.date_value().year();
   }
+  if (pt1.has_array_type()) {
+    auto const& vec1 = pv1.array_value().values();
+    auto const& vec2 = pv2.array_value().values();
+    if (vec1.size() != vec2.size()) {
+      return false;
+    }
+    auto const& el_type1 = pt1.array_type().element_type();
+    auto const& el_type2 = pt2.array_type().element_type();
+    if (el_type1.kind_case() != el_type2.kind_case()) {
+      return false;
+    }
+    for (int i = 0; i < vec1.size(); ++i) {
+      if (!Equal(el_type1, vec1.Get(i), el_type2, vec2.Get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
   return false;
 }
 
@@ -66,6 +84,17 @@ bool IsNullValue(google::bigtable::v2::Value const& value) {
   return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
 }
 
+// A helper to escape all double quotes in the given string `s`. For example,
+// if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
+// wrap `s` itself in double quotes.
+std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
+  for (auto const& c : s) {
+    if (c == '"') os << "\\";
+    os << c;
+  }
+  return os;
+}
+
 // An enum to tell StreamHelper() whether a value is being printed as a scalar
 // or as part of an aggregate type (i.e., a vector or tuple). Some types may
 // format themselves differently in each case.
@@ -73,7 +102,8 @@ enum class StreamMode { kScalar, kAggregate };
 
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
-                           google::bigtable::v2::Type const& t, StreamMode) {
+                           google::bigtable::v2::Type const& t,
+                           StreamMode mode) {
   if (IsNullValue(v)) {
     return os << "NULL";
   }
@@ -88,7 +118,15 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << v.float_value();
   }
   if (v.kind_case() == google::bigtable::v2::Value::kStringValue) {
-    return os << v.string_value();
+    switch (mode) {
+      case StreamMode::kScalar:
+        return os << v.string_value();
+      case StreamMode::kAggregate:
+        os << '"';
+        EscapeQuotes(os, v.string_value());
+        return os << '"';
+    }
+    return os;  // Unreachable, but quiets warning.
   }
   if (v.kind_case() == google::bigtable::v2::Value::kBytesValue) {
     return os << Bytes(v.bytes_value());
@@ -104,6 +142,18 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     auto date =
         bigtable_internal::FromProto(t, v).get<absl::CivilDay>().value();
     return os << date;
+  }
+  if (v.kind_case() == google::bigtable::v2::Value::kArrayValue) {
+    char const* delimiter = "";
+    os << '[';
+    for (auto&& val : v.array_value().values()) {
+      os << delimiter;
+      StreamHelper(os, val, t.array_type().element_type(),
+                   StreamMode::kAggregate);
+      delimiter = ", ";
+    }
+    return os << ']';
+    return os;
   }
   // this should include type name
   return os << "Error: unknown value type code ";
