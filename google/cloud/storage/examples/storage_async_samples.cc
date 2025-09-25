@@ -18,7 +18,7 @@
 //! [async-includes]
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/async/read_all.h"
-#include "google/cloud/future.h"
+
 //! [async-includes]
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
@@ -154,14 +154,6 @@ void InsertObjectVectorVectors(
   //! [insert-object-vv]
   (client, argv.at(0), argv.at(1));
 }
-
-void OpenObjectMultipleRangedRead(
-    google::cloud::storage_experimental::AsyncClient& client,
-    std::vector<std::string> const& argv);
-
-void OpenMultipleObjectRangedRead(
-    google::cloud::storage_experimental::AsyncClient& client,
-    std::vector<std::string> const& argv);
 
 #if GOOGLE_CLOUD_CPP_HAVE_COROUTINES
 void OpenObjectSingleRangedRead(
@@ -325,9 +317,11 @@ void OpenMultipleObjectRangedRead(
   };
   auto coro = [&count_newlines](
                   gcs_ex::AsyncClient& client, std::string bucket_name,
-                  std::string object_name1, std::string object_name2, std::string object_name3) -> google::cloud::future<void> {
+                  std::string object_name1, std::string object_name2,
+                  std::string object_name3) -> google::cloud::future<void> {
     // List of object names to read (passed as arguments)
-    std::vector<std::string> object_names = {object_name1, object_name2, object_name3};
+    std::vector<std::string> object_names = {object_name1, object_name2,
+                                             object_name3};
     std::vector<google::cloud::future<std::uint64_t>> futures;
 
     // Start ranged reads for all objects and collect futures
@@ -702,7 +696,8 @@ void CreateAndWriteAppendableObject(
   // [START storage_create_and_write_appendable_object]
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
-                 std::string object_name) -> google::cloud::future<void> {
+                 std::string object_name)
+      -> google::cloud::future<google::storage::v2::Object> {
     auto [writer, token] = (co_await client.StartAppendableObjectUpload(
                                 gcs_ex::BucketName(std::move(bucket_name)),
                                 std::move(object_name)))
@@ -731,12 +726,14 @@ void CreateAndWriteAppendableObject(
     std::cout << "Wrote more data.\n";
 
     // Finalize the upload to make it a regular object.
-    auto object = (co_await writer.Finalize(std::move(token))).value();
-    std::cout << "Upload finalized: " << object.DebugString() << "\n";
+    co_await writer.Finalize(std::move(token))).value();
   };
   // [END storage_create_and_write_appendable_object]
   //! [create-and-write-appendable-object]
-  coro(client, argv.at(0), argv.at(1)).get();
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes..
+  auto const object = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "File successfully uploaded " << object.DebugString() << "\n";
 }
 
 void PauseAndResumeAppendableUpload(
@@ -790,7 +787,11 @@ void PauseAndResumeAppendableUpload(
   };
   // [END storage_pause_and_resume_appendable_upload]
   //! [pause-and-resume-appendable-upload]
-  coro(client, argv.at(0), argv.at(1)).get();
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const object = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "File successfully uploaded and finalized "
+            << object.DebugString() << "\n";
 }
 
 void FinalizeAppendableObjectUpload(
@@ -1019,7 +1020,7 @@ std::string SuspendBufferedUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
   std::cerr
-      << "AsyncClient::SuspendBufferedUpload() example requires coroutines\n";
+      << "AsyncClient::StartBufferedUpload() example requires coroutines\n";
   return {};
 }
 
@@ -1052,27 +1053,27 @@ void ResumeUnbufferedUpload(google::cloud::storage_experimental::AsyncClient&,
 void CreateAndWriteAppendableObject(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
-  std::cerr << "create-and-write-appendable-object example requires "
+  std::cerr << "AsyncClient::CreateAndWriteAppendableObject() example requires "
                "coroutines\n";
 }
 
 void PauseAndResumeAppendableUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
-  std::cerr << "pause-and-resume-appendable-upload example requires "
+  std::cerr << "AsyncClient::PauseAndResumeAppendableUpload() example requires "
                "coroutines\n";
 }
 
 void FinalizeAppendableObjectUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
-  std::cerr << "finalize-appendable-object-upload example requires "
+  std::cerr << "AsyncClient::FinalizeAppendableObjectUpload() example requires "
                "coroutines\n";
 }
 
 void ReadObjectTail(google::cloud::storage_experimental::AsyncClient&,
                     std::vector<std::string> const&) {
-  std::cerr << "read-object-tail example requires coroutines\n";
+  std::cerr << "AsyncClient::ReadObjectTail() example requires coroutines\n";
 }
 
 void RewriteObject(google::cloud::storage_experimental::AsyncClient&,
@@ -1084,7 +1085,7 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient&,
                    std::vector<std::string> const&) {
   std::cerr << "AsyncClient::ResumeRewrite() example requires coroutines\n";
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_COROUTINES
+#endif  // GOOGLE_CLOUD_CPP
 
 void ComposeObject(google::cloud::storage_experimental::AsyncClient& client,
                    std::vector<std::string> const& argv) {
@@ -1299,7 +1300,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   if (!response.ok()) throw std::move(response).status();
 
   auto const metadata = response->metadata();
-  if (metadata.has_value()) {
+  if (!metadata.has_value()) {
     std::cout << "Running the ReadObjectWithOptions() example" << std::endl;
     ReadObjectWithOptions(client, {bucket_name, metadata->name(),
                                    std::to_string(metadata->generation())});
@@ -1322,7 +1323,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     auto upload_id = SuspendBufferedUpload(client, {bucket_name, object_name});
 
     std::cout << "Running the ResumeBufferedUpload() example" << std::endl;
-    ResumeBufferedUpload(client, {upload_id});
+    ResumeUnbufferedUpload(client, {upload_id});
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
 
@@ -1338,10 +1339,32 @@ void AutoRun(std::vector<std::string> const& argv) {
     std::cout << "Running the ResumeUnbufferedUpload() example" << std::endl;
     ResumeUnbufferedUpload(client, {upload_id, filename});
     scheduled_for_delete.push_back(std::move(object_name));
+    object_name = examples::MakeRandomObjectName(generator, "object-");
 
     std::cout << "Removing local file" << std::endl;
     (void)std::remove(filename.c_str());
   }
+
+  std::cout << "Running the RewriteObject() example" << std::endl;
+  RewriteObject(client, {bucket_name, composed_name, object_name});
+  scheduled_for_delete.push_back(std::move(object_name));
+  object_name = examples::MakeRandomObjectName(generator, "object-");
+
+  std::cout << "Running the ResumeRewrite() example" << std::endl;
+  auto const rewrite_source = object_name;
+  (void)client
+      .InsertObject(
+          google::cloud::storage_experimental::BucketName(bucket_name),
+          object_name, std::string(4 * 1024 * 1024, 'A'))
+      .get()
+      .value();
+  scheduled_for_delete.push_back(std::move(object_name));
+  object_name = examples::MakeRandomObjectName(generator, "object-");
+
+  auto const dest = examples::MakeRandomObjectName(generator, "object-");
+  ResumeRewrite(client, {bucket_name, rewrite_source, object_name});
+  scheduled_for_delete.push_back(std::move(object_name));
+  object_name = examples::MakeRandomObjectName(generator, "object-");
 
   if (examples::UsingEmulator()) {
     std::cout << "\nRunning appendable object samples..." << std::endl;
@@ -1377,28 +1400,6 @@ void AutoRun(std::vector<std::string> const& argv) {
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
   }
-
-  std::cout << "Running the RewriteObject() example" << std::endl;
-  // Create a large-ish source object for the rewrite.
-  auto const rewrite_source = object_name;
-  std::vector<char> data(2 * 1024 * 1024, 'A');
-  (void)client
-      .InsertObject(
-          google::cloud::storage_experimental::BucketName(bucket_name),
-          rewrite_source, std::string{data.begin(), data.end()})
-      .get()
-      .value();
-  scheduled_for_delete.push_back(rewrite_source);
-  object_name = examples::MakeRandomObjectName(generator, "object-");
-
-  RewriteObject(client, {bucket_name, rewrite_source, object_name});
-  scheduled_for_delete.push_back(std::move(object_name));
-  object_name = examples::MakeRandomObjectName(generator, "object-");
-
-  std::cout << "Running the ResumeRewrite() example" << std::endl;
-  ResumeRewrite(client, {bucket_name, rewrite_source, object_name});
-  scheduled_for_delete.push_back(std::move(object_name));
-  object_name = examples::MakeRandomObjectName(generator, "object-");
 
   std::cout << "Running ComposeObjectRequest() example" << std::endl;
   auto const to_delete = object_name;
@@ -1480,7 +1481,8 @@ int main(int argc, char* argv[]) try {
       make_entry("open-object-multiple-ranged-read", {},
                  OpenObjectMultipleRangedRead),
       make_entry("open-object-read-full-object", {}, OpenObjectReadFullObject),
-      make_entry("open-multiple-object-ranged-read", {"<object-name-1>", "<object-name-2>", "<object-name-3>"},
+      make_entry("open-multiple-object-ranged-read",
+                 {"<object-name-1>", "<object-name-2>", "<object-name-3>"},
                  OpenMultipleObjectRangedRead),
       make_entry("read-object", {}, ReadObject),
       make_entry("read-all", {}, ReadAll),
@@ -1496,7 +1498,7 @@ int main(int argc, char* argv[]) try {
       make_resume_entry("resume-buffered-upload", {}, ResumeBufferedUpload),
 
       make_entry("start-unbuffered-upload", {"<filename>"},
-                 StartUnbufferedUpload),
+                 StartBufferedUpload),
       make_entry("suspend-unbuffered-upload", {}, SuspendUnbufferedUpload),
       make_resume_entry("resume-unbuffered-upload", {"<filename>"},
                         ResumeUnbufferedUpload),
