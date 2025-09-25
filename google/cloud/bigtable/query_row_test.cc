@@ -14,7 +14,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/query_row.h"
-#include "google/cloud/bigtable/mocks/query_row.h"
+#include "google/cloud/bigtable/mocks/mock_query_row.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <tuple>
