@@ -36,6 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Not;
 
@@ -207,7 +208,9 @@ TEST(Value, Equality) {
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
-  };
+      {Value(std::make_tuple(false, 123, "foo")),
+        Value(std::make_tuple(true, 456, "bar"))},
+};
 
   for (auto const& tc : test_cases) {
     EXPECT_EQ(tc.first, tc.first);
@@ -318,6 +321,32 @@ TEST(Value, RvalueGetVectorString) {
   s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
   EXPECT_EQ(Type(data.size(), ""), *s);
+}
+
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetStructString) {
+  using Type = std::tuple<std::pair<std::string, std::string>, std::string>;
+  Type data{std::make_pair("name", std::string(128, 'x')),
+            std::string(128, 'x')};
+  Value v(data);
+
+  auto s = v.get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = v.get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(Type({"name", ""}, ""), *s);
 }
 
 TEST(Value, BytesRelationalOperators) {
@@ -436,6 +465,123 @@ TEST(Value, BigtableArray) {
   EXPECT_NE(null_vf, vi);
   EXPECT_THAT(null_vf.get<ArrayFloat>(), Not(IsOk()));
   EXPECT_THAT(null_vf.get<ArrayInt64>(), Not(IsOk()));
+}
+
+TEST(Value, BigtableStruct) {
+  // Using declarations to shorten the tests, making them more readable.
+  using std::int64_t;
+  using std::make_pair;
+  using std::make_tuple;
+  using std::pair;
+  using std::string;
+  using std::tuple;
+
+  auto tup1 = make_tuple(false, int64_t{123});
+  using T1 = decltype(tup1);
+  Value v1(tup1);
+  ASSERT_STATUS_OK(v1.get<T1>());
+  EXPECT_EQ(tup1, *v1.get<T1>());
+  EXPECT_EQ(v1, v1);
+
+  // Verify we can extract tuple elements even if they're wrapped in a pair.
+  auto const pair0 = v1.get<tuple<pair<string, bool>, int64_t>>();
+  ASSERT_STATUS_OK(pair0);
+  EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair0).second);
+  EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair0));
+  auto const pair1 = v1.get<tuple<bool, pair<string, int64_t>>>();
+  ASSERT_STATUS_OK(pair1);
+  EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair1));
+  EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair1).second);
+  auto const pair01 =
+      v1.get<tuple<pair<string, bool>, pair<string, int64_t>>>();
+  ASSERT_STATUS_OK(pair01);
+  EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair01).second);
+  EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair01).second);
+
+  auto tup2 = make_tuple(false, make_pair(string("f2"), int64_t{123}));
+  using T2 = decltype(tup2);
+  Value v2(tup2);
+  EXPECT_THAT(v2.get<T2>(), IsOkAndHolds(tup2));
+  EXPECT_EQ(v2, v2);
+  EXPECT_NE(v2, v1);
+
+  // T1 is lacking field names, but otherwise the same as T2.
+  EXPECT_EQ(tup1, *v2.get<T1>());
+  EXPECT_NE(tup2, *v1.get<T2>());
+
+  auto tup3 = make_tuple(false, make_pair(string("Other"), int64_t{123}));
+  using T3 = decltype(tup3);
+  Value v3(tup3);
+  EXPECT_THAT(v3.get<T3>(), IsOkAndHolds(tup3));
+  EXPECT_EQ(v3, v3);
+  EXPECT_NE(v3, v2);
+  EXPECT_NE(v3, v1);
+
+  static_assert(std::is_same<T2, T3>::value, "Only diff is field name");
+
+  // v1 != v2, yet T2 works with v1 and vice versa
+  EXPECT_NE(v1, v2);
+  EXPECT_STATUS_OK(v1.get<T2>());
+  EXPECT_STATUS_OK(v2.get<T1>());
+
+  Value v_null(absl::optional<T1>{});
+  EXPECT_FALSE(v_null.get<absl::optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<absl::optional<T2>>()->has_value());
+
+  EXPECT_NE(v1, v_null);
+  EXPECT_NE(v2, v_null);
+
+  auto array_struct = std::vector<T3>{
+      T3{false, {"age", 1}},
+      T3{true, {"age", 2}},
+      T3{false, {"age", 3}},
+  };
+  using T4 = decltype(array_struct);
+  Value v4(array_struct);
+  EXPECT_STATUS_OK(v4.get<T4>());
+  EXPECT_THAT(v4.get<T3>(), Not(IsOk()));
+  EXPECT_THAT(v4.get<T2>(), Not(IsOk()));
+  EXPECT_THAT(v4.get<T1>(), Not(IsOk()));
+
+  EXPECT_THAT(v4.get<T4>(), IsOkAndHolds(array_struct));
+
+  auto empty = tuple<>{};
+  using T5 = decltype(empty);
+  Value v5(empty);
+  EXPECT_STATUS_OK(v5.get<T5>());
+  EXPECT_THAT(v5.get<T4>(), Not(IsOk()));
+  EXPECT_EQ(v5, v5);
+  EXPECT_NE(v5, v4);
+
+  EXPECT_THAT(v5.get<T5>(), IsOkAndHolds(empty));
+
+  auto deeply_nested = tuple<tuple<std::vector<absl::optional<bool>>>>{};
+  using T6 = decltype(deeply_nested);
+  Value v6(deeply_nested);
+  EXPECT_STATUS_OK(v6.get<T6>());
+  EXPECT_THAT(v6.get<T5>(), Not(IsOk()));
+  EXPECT_EQ(v6, v6);
+  EXPECT_NE(v6, v5);
+
+  EXPECT_THAT(v6.get<T6>(), IsOkAndHolds(deeply_nested));
+}
+
+TEST(Value, BigtableStructWithNull) {
+  auto v1 = Value(std::make_tuple(123, true));
+  auto v2 = Value(std::make_tuple(123, absl::optional<bool>{}));
+
+  auto protos1 = bigtable_internal::ToProto(v1);
+  auto protos2 = bigtable_internal::ToProto(v2);
+
+  // The type protos match for both values, but the value protos DO NOT match.
+  EXPECT_THAT(protos1.first, IsProtoEqual(protos2.first));
+  EXPECT_THAT(protos1.second, Not(IsProtoEqual(protos2.second)));
+
+  // Now verify that the second value has two fields and the second field
+  // contains a NULL value.
+  ASSERT_EQ(protos2.second.array_value().values_size(), 2);
+  ASSERT_EQ(protos2.second.array_value().values(1).kind_case(),
+            google::bigtable::v2::Value::KIND_NOT_SET);
 }
 
 TEST(Value, ProtoConversionBool) {
@@ -575,6 +721,29 @@ TEST(Value, ProtoConversionArray) {
   EXPECT_EQ(1, p.second.array_value().values(0).int_value());
   EXPECT_EQ(2, p.second.array_value().values(1).int_value());
   EXPECT_EQ(3, p.second.array_value().values(2).int_value());
+}
+
+TEST(Value, ProtoConversionStruct) {
+  auto data = std::make_tuple(3.14, std::make_pair("foo", 42));
+  Value const v(data);
+  auto const p = bigtable_internal::ToProto(v);
+  EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
+  EXPECT_TRUE(p.first.has_struct_type());
+
+  Value const null_struct_value(
+      MakeNullValue<std::tuple<bool, std::int64_t>>());
+  auto const null_struct_proto = bigtable_internal::ToProto(null_struct_value);
+  EXPECT_TRUE(p.first.has_struct_type());
+
+  auto const& field0 = p.first.struct_type().fields(0);
+  EXPECT_EQ("", field0.field_name());
+  EXPECT_TRUE(field0.type().has_float64_type());
+  EXPECT_EQ(3.14, p.second.array_value().values(0).float_value());
+
+  auto const& field1 = p.first.struct_type().fields(1);
+  EXPECT_EQ("foo", field1.field_name());
+  EXPECT_TRUE(field1.type().has_int64_type());
+  EXPECT_EQ(42, p.second.array_value().values(1).int_value());
 }
 
 void SetNullProtoKind(Value& v) {
@@ -783,6 +952,24 @@ TEST(Value, GetBadArray) {
   EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadStruct) {
+  Value v(std::tuple<bool>{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
+}
+
 TEST(Value, OutputStream) {
   auto const normal = [](std::ostream& os) -> std::ostream& { return os; };
   auto const hex = [](std::ostream& os) -> std::ostream& {
@@ -793,6 +980,9 @@ TEST(Value, OutputStream) {
   };
   auto const float4 = [](std::ostream& os) -> std::ostream& {
     return os << std::showpoint << std::setprecision(4);
+  };
+  auto const alphahex = [](std::ostream& os) -> std::ostream& {
+    return os << std::boolalpha << std::hex;
   };
 
   struct TestCase {
@@ -863,7 +1053,47 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
       {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
-      {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal}};
+      {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
+
+      // Tests structs
+      {Value(std::make_tuple(true, 123)), "(1, 123)", normal},
+      {Value(std::make_tuple(true, 123)), "(true, 7b)", alphahex},
+      {Value(std::make_tuple(std::make_pair("A", true),
+                             std::make_pair("B", 123))),
+       R"(("A": 1, "B": 123))", normal},
+      {Value(std::make_tuple(std::make_pair("A", true),
+                             std::make_pair("B", 123))),
+       R"(("A": true, "B": 7b))", alphahex},
+      {Value(std::make_tuple(
+           std::vector<std::int64_t>{10, 11, 12},
+           std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
+       R"(([10, 11, 12], "B": [13, 14, 15]))", normal},
+      {Value(std::make_tuple(
+           std::vector<std::int64_t>{10, 11, 12},
+           std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
+       R"(([a, b, c], "B": [d, e, f]))", hex},
+      {Value(std::make_tuple(std::make_tuple(
+           std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
+       "((([10, 11, 12])))", normal},
+      {Value(std::make_tuple(std::make_tuple(
+           std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
+       "((([a, b, c])))", hex},
+
+      // Tests struct with null members
+      {Value(std::make_tuple(absl::optional<bool>{})), "(NULL)", normal},
+      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 123)",
+       normal},
+      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 7b)", hex},
+      {Value(std::make_tuple(absl::optional<bool>{},
+                             absl::optional<std::int64_t>{})),
+       "(NULL, NULL)", normal},
+
+      // Tests null structs
+      {MakeNullValue<std::tuple<bool>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<float, std::string>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
+  };
 
   for (auto const& tc : test_case) {
     std::stringstream ss;
