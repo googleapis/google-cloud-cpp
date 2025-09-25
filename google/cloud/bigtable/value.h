@@ -22,6 +22,7 @@
 #include <google/bigtable/v2/data.pb.h>
 #include <google/bigtable/v2/types.pb.h>
 #include <cmath>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -73,11 +74,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * BYTES        | `google::cloud::bigtable::Bytes`
  * TIMESTAMP    | `google::cloud::bigtable::Timestamp`
  * DATE         | `absl::CivilDay`
+ * ARRAY        | `std::vector<T>`  // [1]
+ *
+ * [1] The type `T` may be any of the other supported types, except for
+ *     ARRAY/`std::vector`.
  *
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
  * using the `MakeNullValue<T>()` factory function or by passing an empty
  * `absl::optional<T>` to the Value constructor.
+ *
+ * @par Bigtable Arrays
+ *
+ * Bigtable arrays are represented in C++ as a `std::vector<T>`, where the type
+ * `T` may be any of the other allowed Bigtable types, such as `bool`,
+ * `std::int64_t`, etc. The only exception is that arrays may not directly
+ * contain another array; to achieve a similar result you could create an array
+ * of a 1-element struct holding an array. The following examples show usage of
+ * arrays.
+ *
+ * @code
+ * std::vector<std::int64_t> vec = {1, 2, 3, 4, 5};
+ * bigtable::Value v(vec);
+ * auto copy = *v.get<std::vector<std::int64_t>>();
+ * assert(vec == copy);
+ * @endcode
  *
  */
 class Value {
@@ -136,6 +157,24 @@ class Value {
   template <typename T>
   explicit Value(absl::optional<T> opt)
       : Value(PrivateConstructor{}, std::move(opt)) {}
+
+  /**
+   * Constructs an instance from a Bigtable ARRAY of the specified type and
+   * values.
+   *
+   * The type `T` may be any valid type shown above, except vectors of vectors
+   * are not allowed.
+   *
+   * @warning If `T` is a `std::tuple` with field names (i.e., at least one of
+   *   its element types is a `std::pair<std::string, T>`) then, all of the
+   *   vector's elements must have exactly the same field names. Any mismatch
+   *   in in field names results in undefined behavior.
+   */
+  template <typename T>
+  explicit Value(std::vector<T> v) : Value(PrivateConstructor{}, std::move(v)) {
+    static_assert(!IsVector<std::decay_t<T>>::value,
+                  "vector of vector not allowed. See value.h documentation.");
+  }
 
   // Copy and move.
   Value(Value const&) = default;
@@ -197,6 +236,12 @@ class Value {
   template <typename T>
   struct IsOptional<absl::optional<T>> : std::true_type {};
 
+  // Metafunction that returns true if `T` is a std::vector<U>
+  template <typename T>
+  struct IsVector : std::false_type {};
+  template <typename... Ts>
+  struct IsVector<std::vector<Ts...>> : std::true_type {};
+
   // Tag-dispatch overloads to check if a C++ type matches the type specified
   // by the given `Type` proto.
   static bool TypeProtoIs(bool, google::bigtable::v2::Type const&);
@@ -212,6 +257,12 @@ class Value {
   static bool TypeProtoIs(absl::optional<T>,
                           google::bigtable::v2::Type const& type) {
     return TypeProtoIs(T{}, type);
+  }
+  template <typename T>
+  static bool TypeProtoIs(std::vector<T> const&,
+                          google::bigtable::v2::Type const& type) {
+    return type.has_array_type() &&
+           TypeProtoIs(T{}, type.array_type().element_type());
   }
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
@@ -229,6 +280,22 @@ class Value {
   template <typename T>
   static google::bigtable::v2::Type MakeTypeProto(absl::optional<T> const&) {
     return MakeTypeProto(T{});
+  }
+  template <typename T>
+  static google::bigtable::v2::Type MakeTypeProto(std::vector<T> const& v) {
+    google::bigtable::v2::Type t;
+    t.set_allocated_array_type(
+        std::move(new google::bigtable::v2::Type_Array()));
+    *t.mutable_array_type()->mutable_element_type() =
+        MakeTypeProto(v.empty() ? T{} : v[0]);
+    // Checks that vector elements have exactly the same proto Type, which
+    // includes field names. This is documented UB.
+    for (auto&& e : v) {
+      google::bigtable::v2::Type vt = MakeTypeProto(e);
+      if (t.array_type().element_type().kind_case() != vt.kind_case())
+        internal::ThrowInvalidArgument("Mismatched types");
+    }
+    return t;
   }
 
   // Encodes the argument as a protobuf according to the rules described in
@@ -249,6 +316,15 @@ class Value {
     google::bigtable::v2::Value v;
     v.clear_kind();
     v.clear_type();
+    return v;
+  }
+  template <typename T>
+  static google::bigtable::v2::Value MakeValueProto(std::vector<T> vec) {
+    google::bigtable::v2::Value v;
+    auto& list = *v.mutable_array_value();
+    for (auto&& e : vec) {
+      *list.add_values() = MakeValueProto(std::move(e));
+    }
     return v;
   }
 
@@ -288,6 +364,36 @@ class Value {
     auto value = GetValue(T{}, std::forward<V>(pv), pt);
     if (!value) return std::move(value).status();
     return absl::optional<T>{*std::move(value)};
+  }
+  template <typename T, typename V>
+  static StatusOr<std::vector<T>> GetValue(
+      std::vector<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
+    if (pv.kind_case() != google::bigtable::v2::Value::kArrayValue) {
+      return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
+    }
+    std::vector<T> v;
+    for (int i = 0; i < pv.array_value().values().size(); ++i) {
+      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      using ET = decltype(e);
+      auto value =
+          GetValue(T{}, std::forward<ET>(e), pt.array_type().element_type());
+      if (!value) return std::move(value).status();
+      v.push_back(*std::move(value));
+    }
+    return v;
+  }
+
+  // Protocol buffers are not friendly to generic programming, because they use
+  // different syntax and different names for mutable and non-mutable
+  // functions. To make GetValue(vector<T>, ...) (above) work, we need split
+  // the different protobuf syntaxes into overloaded functions.
+  static google::bigtable::v2::Value const& GetProtoListValueElement(
+      google::bigtable::v2::Value const& pv, int pos) {
+    return pv.array_value().values(pos);
+  }
+  static google::bigtable::v2::Value&& GetProtoListValueElement(
+      google::bigtable::v2::Value&& pv, int pos) {
+    return std::move(*pv.mutable_array_value()->mutable_values(pos));
   }
 
   // A private templated constructor that is called by all the public
