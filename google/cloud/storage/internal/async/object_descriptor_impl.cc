@@ -30,7 +30,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ObjectDescriptorImpl::ObjectDescriptorImpl(
-    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
+    std::unique_ptr<storage::ResumePolicy> resume_policy,
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream, Options options)
@@ -78,12 +78,12 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   OnRead(std::move(stream_result->first_response));
 }
 
-std::unique_ptr<storage_experimental::AsyncReaderConnection>
-ObjectDescriptorImpl::Read(ReadParams p) {
+std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
+    ReadParams p) {
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       std::shared_ptr<storage::internal::HashFunction>(
           storage::internal::CreateNullHashFunction());
-  if (options_.has<storage_experimental::EnableCrc32cValidationOption>()) {
+  if (options_.has<storage::EnableCrc32cValidationOption>()) {
     hash_function =
         std::make_shared<storage::internal::Crc32cMessageHashFunction>(
             storage::internal::CreateNullHashFunction());
@@ -100,7 +100,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   Flush(std::move(lk));
 
   if (!internal::TracingEnabled(options_)) {
-    return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+    return std::unique_ptr<storage::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
   }
 
@@ -250,7 +250,7 @@ bool ObjectDescriptorImpl::IsResumable(
   }
   std::unique_lock<std::mutex> lk(mu_);
   return streams_.back().resume_policy->OnFinish(status) ==
-         storage_experimental::ResumePolicy::kContinue;
+         storage::ResumePolicy::kContinue;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

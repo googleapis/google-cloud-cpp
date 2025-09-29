@@ -28,12 +28,11 @@ namespace {
 
 namespace sc = ::opentelemetry::trace::SemanticConventions;
 
-class AsyncWriterConnectionTracing
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
  public:
   explicit AsyncWriterConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl)
+      std::unique_ptr<storage::AsyncWriterConnection> impl)
       : span_(std::move(span)), impl_(std::move(impl)) {}
 
   void Cancel() override {
@@ -56,7 +55,7 @@ class AsyncWriterConnectionTracing
     return impl_->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload p) override {
+  future<Status> Write(storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Write(std::move(p))
@@ -76,7 +75,7 @@ class AsyncWriterConnectionTracing
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload p) override {
+      storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Finalize(std::move(p))
@@ -93,7 +92,7 @@ class AsyncWriterConnectionTracing
         });
   }
 
-  future<Status> Flush(storage_experimental::WritePayload p) override {
+  future<Status> Flush(storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Flush(std::move(p))
@@ -134,17 +133,16 @@ class AsyncWriterConnectionTracing
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  std::unique_ptr<storage_experimental::AsyncWriterConnection> impl_;
+  std::unique_ptr<storage::AsyncWriterConnection> impl_;
   std::int64_t sent_count_ = 0;
   std::int64_t recv_count_ = 0;
 };
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeTracingWriterConnection(
+std::unique_ptr<storage::AsyncWriterConnection> MakeTracingWriterConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl) {
+    std::unique_ptr<storage::AsyncWriterConnection> impl) {
   return std::make_unique<AsyncWriterConnectionTracing>(std::move(span),
                                                         std::move(impl));
 }

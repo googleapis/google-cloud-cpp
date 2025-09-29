@@ -66,10 +66,10 @@ auto TestOptions(Options options = {}) {
           // By default, disable timeouts, most tests are simpler without them.
           .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(0))
           // By default, disable resumes, most tests are simpler without them.
-          .set<storage_experimental::ResumePolicyOption>(
-              storage_experimental::LimitedErrorCountResumePolicy(0))
-          .set<storage_experimental::AsyncRetryPolicyOption>(
-              storage_experimental::LimitedErrorCountRetryPolicy(kRetryAttempts)
+          .set<storage::ResumePolicyOption>(
+              storage::LimitedErrorCountResumePolicy(0))
+          .set<storage::AsyncRetryPolicyOption>(
+              storage::LimitedErrorCountAsyncRetryPolicy(kRetryAttempts)
                   .clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));

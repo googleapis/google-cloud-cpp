@@ -22,10 +22,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::storage_experimental::AsyncReaderConnection;
-using ::google::cloud::storage_experimental::ResumePolicy;
+using ::google::cloud::storage::AsyncReaderConnection;
+using ::google::cloud::storage::ResumePolicy;
 using ReadResponse =
-    google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+    google::cloud::storage::AsyncReaderConnection::ReadResponse;
 
 void AsyncReaderConnectionResume::Cancel() {
   if (auto impl = CurrentImpl()) return impl->Cancel();
@@ -54,9 +54,9 @@ future<ReadResponse> AsyncReaderConnectionResume::Read(
 }
 
 future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
-  if (absl::holds_alternative<storage_experimental::ReadPayload>(r)) {
+  if (absl::holds_alternative<storage::ReadPayload>(r)) {
     resume_policy_->OnStartSuccess();
-    auto response = absl::get<storage_experimental::ReadPayload>(std::move(r));
+    auto response = absl::get<storage::ReadPayload>(std::move(r));
     hash_validator_->ProcessHashValues(
         ReadPayloadImpl::GetObjectHashes(response).value_or(
             storage::internal::HashValues{}));
@@ -103,12 +103,12 @@ future<ReadResponse> AsyncReaderConnectionResume::OnResume(
   return Read(std::move(lk));
 }
 
-std::shared_ptr<storage_experimental::AsyncReaderConnection>
+std::shared_ptr<storage::AsyncReaderConnection>
 AsyncReaderConnectionResume::CurrentImpl(std::unique_lock<std::mutex> const&) {
   return impl_;
 }
 
-std::shared_ptr<storage_experimental::AsyncReaderConnection>
+std::shared_ptr<storage::AsyncReaderConnection>
 AsyncReaderConnectionResume::CurrentImpl() {
   return CurrentImpl(std::unique_lock<std::mutex>(mu_));
 }

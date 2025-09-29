@@ -45,19 +45,17 @@ AsyncWriterConnectionFinalized::PersistedState() const {
   return object_;
 }
 
-future<Status> AsyncWriterConnectionFinalized::Write(
-    storage_experimental::WritePayload) {
+future<Status> AsyncWriterConnectionFinalized::Write(storage::WritePayload) {
   return make_ready_future(MakeError(GCP_ERROR_INFO()));
 }
 
 future<StatusOr<google::storage::v2::Object>>
-AsyncWriterConnectionFinalized::Finalize(storage_experimental::WritePayload) {
+AsyncWriterConnectionFinalized::Finalize(storage::WritePayload) {
   return make_ready_future(
       StatusOr<google::storage::v2::Object>(MakeError(GCP_ERROR_INFO())));
 }
 
-future<Status> AsyncWriterConnectionFinalized::Flush(
-    storage_experimental::WritePayload) {
+future<Status> AsyncWriterConnectionFinalized::Flush(storage::WritePayload) {
   return make_ready_future(MakeError(GCP_ERROR_INFO()));
 }
 
