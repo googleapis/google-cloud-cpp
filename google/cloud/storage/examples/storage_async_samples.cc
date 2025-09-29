@@ -207,7 +207,8 @@ void OpenObjectMultipleRangedRead(
   //! [open-object-multiple-ranged-read]
   // [START storage_open_object_multiple_ranged_read]
   namespace gcs_ex = google::cloud::storage_experimental;
-  // Helper coroutine, count lines returned by a AsyncReader
+
+  // Helper coroutine to count newlines returned by an AsyncReader.
   auto count_newlines =
       [](gcs_ex::AsyncReader reader,
          gcs_ex::AsyncToken token) -> google::cloud::future<std::uint64_t> {
@@ -294,11 +295,11 @@ void OpenObjectReadFullObject(
   std::cout << "The range contains " << count << " newlines\n";
 }
 
-void OpenMultipleObjectRangedRead(
+void OpenMultipleObjectsRangedRead(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
-  //! [open-multiple-object-ranged-read]
-  // [START storage_open_multiple_object_ranged_read]
+  //! [open-multiple-objects-ranged-read]
+  // [START storage_open_multiple_objects_ranged_read]
   namespace gcs_ex = google::cloud::storage_experimental;
 
   // Helper coroutine to count newlines returned by an AsyncReader.
@@ -315,6 +316,7 @@ void OpenMultipleObjectRangedRead(
     }
     co_return count;
   };
+
   auto coro = [&count_newlines](
                   gcs_ex::AsyncClient& client, std::string bucket_name,
                   std::string object_name1, std::string object_name2,
@@ -333,15 +335,28 @@ void OpenMultipleObjectRangedRead(
       futures.push_back(count_newlines(std::move(reader), std::move(token)));
     }
 
-    // Wait for all futures and print results
-    for (std::size_t i = 0; i < futures.size(); ++i) {
-      auto count = futures[i].get();
-      std::cout << "Object " << object_names[i] << " read returned " << count
-                << " newlines\n";
+    // Process futures as they become ready and print results
+    while (!futures.empty()) {
+      bool progress_made = false;
+      for (std::size_t i = 0; i < futures.size(); ++i) {
+        if (futures[i].is_ready()) {  // Check if the future is ready
+          auto count = futures[i].get();
+          std::cout << "Object " << object_names[i] << " read returned "
+                    << count << " newlines\n";
+          futures.erase(futures.begin() + i);
+          object_names.erase(object_names.begin() + i);
+          progress_made = true;
+          break;  // Restart the loop after modifying the vectors
+        }
+      }
+      if (!progress_made) {
+        std::this_thread::sleep_for(
+            std::chrono::milliseconds(10));  // Avoid busy spin
+      }
     }
   };
-  // [END storage_open_multiple_object_ranged_read]
-  //! [open-multiple-object-ranged-read]
+  // [END storage_open_multiple_objects_ranged_read]
+  //! [open-multiple-objects-ranged-read]
   coro(client, argv.at(0), argv.at(1), argv.at(2), argv.at(3)).get();
 }
 
@@ -702,8 +717,7 @@ void CreateAndWriteAppendableObject(
                                 gcs_ex::BucketName(std::move(bucket_name)),
                                 std::move(object_name)))
                                .value();
-    std::cout << "Appendable upload started for object " << object_name
-              << " with upload id " << writer.UploadId() << "\n";
+    std::cout << "Appendable upload started for object " << object_name "\n";
 
     token = (co_await writer.Write(std::move(token),
                                    gcs_ex::WritePayload("Some data\n")))
@@ -726,7 +740,7 @@ void CreateAndWriteAppendableObject(
     std::cout << "Wrote more data.\n";
 
     // Finalize the upload to make it a regular object.
-    co_await writer.Finalize(std::move(token))).value();
+    co_return (co_await writer.Finalize(std::move(token))).value();
   };
   // [END storage_create_and_write_appendable_object]
   //! [create-and-write-appendable-object]
@@ -750,8 +764,7 @@ void PauseAndResumeAppendableUpload(
     auto [writer, token] = (co_await client.StartAppendableObjectUpload(
                                 gcs_ex::BucketName(bucket_name), object_name))
                                .value();
-    std::cout << "Appendable upload started with upload id "
-              << writer.UploadId() << "\n";
+    std::cout << "Appendable upload started.\n";
     token = (co_await writer.Write(std::move(token),
                                    gcs_ex::WritePayload("paused data\n")))
                 .value();
@@ -808,8 +821,7 @@ void FinalizeAppendableObjectUpload(
                                 gcs_ex::BucketName(std::move(bucket_name)),
                                 std::move(object_name)))
                                .value();
-    std::cout << "Appendable upload started with upload id "
-              << writer.UploadId() << "\n";
+    std::cout << "Appendable upload started. \n";
 
     // Write some data.
     token =
@@ -829,10 +841,10 @@ void FinalizeAppendableObjectUpload(
   std::cout << "Finalized object: " << object.DebugString() << "\n";
 }
 
-void ReadObjectTail(google::cloud::storage_experimental::AsyncClient& client,
+void ReadAppendableObjectTail(google::cloud::storage_experimental::AsyncClient& client,
                     std::vector<std::string> const& argv) {
-  //! [read-object-tail]
-  // [START storage_read_object_tail]
+  //! [read-appendable-object-tail]
+  // [START storage_read_appendable_object_tail]
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
@@ -872,8 +884,8 @@ void ReadObjectTail(google::cloud::storage_experimental::AsyncClient& client,
       co_await google::cloud::sleep_for(std::chrono::seconds(1));
     }
   };
-  // [END storage_read_object_tail]
-  //! [read-object-tail]
+  // [END storage_read_appendable_object_tail]
+  //! [read-appendable-object-tail]
   coro(client, argv.at(0), argv.at(1)).get();
 }
 
@@ -978,7 +990,7 @@ void OpenObjectMultipleRangedRead(
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
 }
 
-void OpenMultipleObjectRangedRead(
+void OpenMultipleObjectsRangedRead(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
@@ -1071,9 +1083,9 @@ void FinalizeAppendableObjectUpload(
                "coroutines\n";
 }
 
-void ReadObjectTail(google::cloud::storage_experimental::AsyncClient&,
+void ReadAppendableObjectTail(google::cloud::storage_experimental::AsyncClient&,
                     std::vector<std::string> const&) {
-  std::cerr << "AsyncClient::ReadObjectTail() example requires coroutines\n";
+  std::cerr << "AsyncClient::ReadAppendableObjectTail() example requires coroutines\n";
 }
 
 void RewriteObject(google::cloud::storage_experimental::AsyncClient&,
@@ -1258,7 +1270,7 @@ void AutoRun(std::vector<std::string> const& argv) {
             << std::endl;
   OpenObjectMultipleRangedRead(client, {bucket_name, composed_name});
 
-  std::cout << "Running the OpenMultipleObjectRangedRead() example"
+  std::cout << "Running the OpenMultipleObjectsRangedRead() example"
             << std::endl;
   auto const multi_read_o1 =
       examples::MakeRandomObjectName(generator, "object-");
@@ -1272,7 +1284,7 @@ void AutoRun(std::vector<std::string> const& argv) {
       examples::MakeRandomObjectName(generator, "object-");
   InsertObject(client, {bucket_name, multi_read_o3});
   scheduled_for_delete.push_back(multi_read_o3);
-  OpenMultipleObjectRangedRead(
+  OpenMultipleObjectsRangedRead(
       client, {bucket_name, multi_read_o1, multi_read_o2, multi_read_o3});
   // The objects are already scheduled for deletion, no need to do it again.
   // We also need a new object name for the next test.
@@ -1387,7 +1399,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
 
-    std::cout << "Running ReadObjectTail() example" << std::endl;
+    std::cout << "Running ReadAppendableObjectTail() example" << std::endl;
     // Create a dummy object for the tail example to read. In a real
     // application another process would be writing to this object.
     (void)client
@@ -1396,7 +1408,7 @@ void AutoRun(std::vector<std::string> const& argv) {
             object_name, "content for tail example\n")
         .get()
         .value();
-    ReadObjectTail(client, {bucket_name, object_name});
+    ReadAppendableObjectTail(client, {bucket_name, object_name});
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
   }
@@ -1481,9 +1493,9 @@ int main(int argc, char* argv[]) try {
       make_entry("open-object-multiple-ranged-read", {},
                  OpenObjectMultipleRangedRead),
       make_entry("open-object-read-full-object", {}, OpenObjectReadFullObject),
-      make_entry("open-multiple-object-ranged-read",
+      make_entry("open-multiple-objects-ranged-read",
                  {"<object-name-1>", "<object-name-2>", "<object-name-3>"},
-                 OpenMultipleObjectRangedRead),
+                 OpenMultipleObjectsRangedRead),
       make_entry("read-object", {}, ReadObject),
       make_entry("read-all", {}, ReadAll),
       make_entry("read-object-range", {}, ReadObjectRange),
@@ -1512,7 +1524,7 @@ int main(int argc, char* argv[]) try {
 
       make_entry("rewrite-object", {"<destination>"}, RewriteObject),
       make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
-      make_entry("read-object-tail", {}, ReadObjectTail),
+      make_entry("read-appendable-object-tail", {}, ReadAppendableObjectTail),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
