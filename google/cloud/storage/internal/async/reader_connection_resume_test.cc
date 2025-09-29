@@ -36,12 +36,12 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::ReadPayload;
+using ::google::cloud::storage::ResumePolicy;
 using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::MockHashValidator;
 using ::google::cloud::storage::testing::MockResumePolicy;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::google::cloud::storage_experimental::ReadPayload;
-using ::google::cloud::storage_experimental::ResumePolicy;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -60,11 +60,11 @@ using ::testing::VariantWith;
 
 using MockReader = ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+    ::google::cloud::storage::AsyncReaderConnection::ReadResponse;
 
-using MockAsyncReaderConnectionFactory = ::testing::MockFunction<future<
-    StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>(
-    storage::Generation, std::int64_t)>;
+using MockAsyncReaderConnectionFactory = ::testing::MockFunction<
+    future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>(
+        storage::Generation, std::int64_t)>;
 
 auto WithGeneration(std::int64_t expected) {
   return ::testing::ResultOf(
@@ -96,7 +96,7 @@ auto constexpr kReadSize = 500;
 auto constexpr kRangeStart = 10000;
 
 auto MakeMockReaderPartial(std::int64_t offset)
-    -> std::unique_ptr<storage_experimental::AsyncReaderConnection> {
+    -> std::unique_ptr<storage::AsyncReaderConnection> {
   auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read)
       .WillOnce([offset] {
@@ -117,7 +117,7 @@ auto MakeMockReaderPartial(std::int64_t offset)
 }
 
 auto MakeMockReaderFull(int offset)
-    -> std::unique_ptr<storage_experimental::AsyncReaderConnection> {
+    -> std::unique_ptr<storage::AsyncReaderConnection> {
   auto mock = std::make_unique<MockReader>();
   {
     ::testing::InSequence sequence;
@@ -138,12 +138,12 @@ auto MakeMockReaderFull(int offset)
 }
 
 auto MakeMockReaderTransient()
-    -> StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>> {
+    -> StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> {
   return TransientError();
 }
 
 auto MakeMockReaderStartAndTransient()
-    -> std::unique_ptr<storage_experimental::AsyncReaderConnection> {
+    -> std::unique_ptr<storage::AsyncReaderConnection> {
   auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
     return make_ready_future(ReadResponse(TransientError()));
@@ -252,8 +252,7 @@ TEST(AsyncReaderConnectionResume, HashValidation) {
         })
         .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     return make_ready_future(make_status_or(
-        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-            std::move(mock))));
+        std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
@@ -312,8 +311,7 @@ TEST(AsyncReaderConnectionResume, HashValidationWithError) {
         })
         .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     return make_ready_future(make_status_or(
-        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-            std::move(mock))));
+        std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
@@ -340,8 +338,7 @@ TEST(AsyncReaderConnectionResume, Cancel) {
       return make_ready_future(ReadResponse(TransientError()));
     });
     return make_ready_future(make_status_or(
-        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-            std::move(mock))));
+        std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
@@ -369,8 +366,7 @@ TEST(AsyncReaderConnectionResume, GetRequestMetadata) {
         .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
                                      {{"tk0", "v0"}, {"tk1", "v1"}}}));
     return make_ready_future(make_status_or(
-        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-            std::move(mock))));
+        std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
@@ -478,8 +474,7 @@ TEST(AsyncReaderConnectionResume, StopAfterTooManyReconnects) {
     });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
-        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-            std::move(mock))));
+        std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();

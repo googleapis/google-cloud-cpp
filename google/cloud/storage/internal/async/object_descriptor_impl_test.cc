@@ -60,9 +60,7 @@ auto constexpr kMetadataText = R"pb(
   generation: 42
 )pb";
 
-auto NoResume() {
-  return storage_experimental::LimitedErrorCountResumePolicy(0)();
-}
+auto NoResume() { return storage::LimitedErrorCountResumePolicy(0)(); }
 
 MATCHER_P(IsProtoEqualModuloRepeatedFieldOrdering, value,
           "Checks whether protos are equal, ignoring repeated field ordering") {
@@ -205,11 +203,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
@@ -344,11 +340,9 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
@@ -473,11 +467,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
@@ -491,11 +483,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r2.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
@@ -730,9 +720,8 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
   auto tested = std::make_shared<ObjectDescriptorImpl>(
-      storage_experimental::LimitedErrorCountResumePolicy(1)(),
-      factory.AsStdFunction(), spec,
-      std::make_shared<OpenStream>(InitialStream(sequencer)));
+      storage::LimitedErrorCountResumePolicy(1)(), factory.AsStdFunction(),
+      spec, std::make_shared<OpenStream>(InitialStream(sequencer)));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -779,9 +768,9 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   EXPECT_TRUE(s2r1.is_ready());
   EXPECT_TRUE(s3r1.is_ready());
 
-  auto expected_r1 = VariantWith<storage_experimental::ReadPayload>(ResultOf(
+  auto expected_r1 = VariantWith<storage::ReadPayload>(ResultOf(
       "contents are",
-      [](storage_experimental::ReadPayload const& p) { return p.contents(); },
+      [](storage::ReadPayload const& p) { return p.contents(); },
       ElementsAre(absl::string_view{"0123456789"})));
 
   EXPECT_THAT(s1r1.get(), expected_r1);
@@ -999,9 +988,8 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
   auto tested = std::make_shared<ObjectDescriptorImpl>(
-      storage_experimental::LimitedErrorCountResumePolicy(1)(),
-      factory.AsStdFunction(), spec,
-      std::make_shared<OpenStream>(initial_stream()));
+      storage::LimitedErrorCountResumePolicy(1)(), factory.AsStdFunction(),
+      spec, std::make_shared<OpenStream>(initial_stream()));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -1320,11 +1308,9 @@ TEST(ObjectDescriptorImpl, ReadWithSubsequentStream) {
   read1.first.set_value(true);
 
   EXPECT_THAT(future1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{"payload-for-stream-1"}))));
 
   EXPECT_THAT(reader1->Read().get(), VariantWith<Status>(IsOk()));
@@ -1356,11 +1342,9 @@ TEST(ObjectDescriptorImpl, ReadWithSubsequentStream) {
   read2.first.set_value(true);
 
   EXPECT_THAT(future2.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{"payload-for-stream-2"}))));
 
   EXPECT_THAT(reader2->Read().get(), VariantWith<Status>(IsOk()));

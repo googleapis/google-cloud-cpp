@@ -70,16 +70,15 @@ std::ostream& operator<<(std::ostream& os, HashTestCase const& rhs) {
   os << "HashTestCase={options={";
   os << std::boolalpha  //
      << "enable_crc32c_validation="
-     << rhs.options.get<storage_experimental::EnableCrc32cValidationOption>();
-  if (rhs.options.has<storage_experimental::UseCrc32cValueOption>()) {
+     << rhs.options.get<storage::EnableCrc32cValidationOption>();
+  if (rhs.options.has<storage::UseCrc32cValueOption>()) {
     os << ", use_crc32_value="
-       << rhs.options.get<storage_experimental::UseCrc32cValueOption>();
+       << rhs.options.get<storage::UseCrc32cValueOption>();
   }
   os << ", enable_md5_validation="
-     << rhs.options.get<storage_experimental::EnableMD5ValidationOption>();
-  if (rhs.options.has<storage_experimental::UseMD5ValueOption>()) {
-    os << ", use_md5_value="
-       << rhs.options.get<storage_experimental::UseMD5ValueOption>();
+     << rhs.options.get<storage::EnableMD5ValidationOption>();
+  if (rhs.options.has<storage::UseMD5ValueOption>()) {
+    os << ", use_md5_value=" << rhs.options.get<storage::UseMD5ValueOption>();
   }
   os << "}, expected={"
      << google::cloud::internal::DebugString(ExpectedObjectChecksums(rhs),
@@ -117,58 +116,49 @@ auto constexpr kQuickFox = "The quick brown fox jumps over the lazy dog";
 INSTANTIATE_TEST_SUITE_P(
     Computed, AsyncConnectionImplUploadHashTest,
     ::testing::Values(
-        HashTestCase{
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true),
-            kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
-        HashTestCase{
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
-            kQuickFoxCrc32cChecksum, ""},
-        HashTestCase{
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(true),
-            absl::nullopt, kQuickFoxMD5Hash},
-        HashTestCase{
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
-            absl::nullopt, ""}));
+        HashTestCase{Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
+        HashTestCase{Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksum, ""},
+        HashTestCase{Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     absl::nullopt, kQuickFoxMD5Hash},
+        HashTestCase{Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     absl::nullopt, ""}));
 
 INSTANTIATE_TEST_SUITE_P(
     PreComputed, AsyncConnectionImplUploadHashTest,
     ::testing::Values(
         HashTestCase{
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(false)
-                .set<storage_experimental::UseCrc32cValueOption>(
-                    kQuickFoxCrc32cChecksum)
-                .set<storage_experimental::UseMD5ValueOption>(
-                    BinaryMD5(kQuickFoxMD5Hash)),
+                .set<storage::EnableCrc32cValidationOption>(false)
+                .set<storage::EnableMD5ValidationOption>(false)
+                .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksum)
+                .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         HashTestCase{
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(false)
-                .set<storage_experimental::UseCrc32cValueOption>(
-                    kQuickFoxCrc32cChecksum),
+                .set<storage::EnableCrc32cValidationOption>(false)
+                .set<storage::EnableMD5ValidationOption>(false)
+                .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksum),
             kQuickFoxCrc32cChecksum, ""},
         HashTestCase{
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(false)
-                .set<storage_experimental::UseMD5ValueOption>(
-                    BinaryMD5(kQuickFoxMD5Hash)),
+                .set<storage::EnableCrc32cValidationOption>(false)
+                .set<storage::EnableMD5ValidationOption>(false)
+                .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             absl::nullopt, kQuickFoxMD5Hash},
-        HashTestCase{
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
-            absl::nullopt, ""}));
+        HashTestCase{Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     absl::nullopt, ""}));
 
 TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
   auto const& param = GetParam();
@@ -247,7 +237,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
 
-  auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
@@ -347,7 +337,7 @@ TEST_P(AsyncConnectionImplUploadHashTest,
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
 
-  auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
@@ -445,7 +435,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
 
-  auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
@@ -542,7 +532,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
 
-  auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
@@ -641,7 +631,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
 
-  auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
@@ -739,7 +729,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
   EXPECT_EQ(writer->UploadId(), "resume-upload-id");
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
 
-  auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);

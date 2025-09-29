@@ -20,18 +20,20 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 StatusOr<std::pair<ReadPayload, AsyncToken>> InvalidTokenError(
-    internal::ErrorInfoBuilder eib) {
-  return internal::InvalidArgumentError("invalid token", std::move(eib));
+    google::cloud::internal::ErrorInfoBuilder eib) {
+  return google::cloud::internal::InvalidArgumentError("invalid token",
+                                                       std::move(eib));
 }
 
 StatusOr<std::pair<ReadPayload, AsyncToken>> ClosedStreamError(
-    internal::ErrorInfoBuilder eib) {
-  return internal::CancelledError("closed stream", std::move(eib));
+    google::cloud::internal::ErrorInfoBuilder eib) {
+  return google::cloud::internal::CancelledError("closed stream",
+                                                 std::move(eib));
 }
 
 class Discard : public std::enable_shared_from_this<Discard> {
@@ -93,6 +95,6 @@ RpcMetadata AsyncReader::GetRequestMetadata() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

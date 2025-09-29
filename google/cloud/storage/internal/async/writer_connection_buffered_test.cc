@@ -27,8 +27,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::AsyncWriterConnection;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::google::cloud::storage_experimental::AsyncWriterConnection;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
@@ -44,13 +44,13 @@ using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
-using MockFactory = ::testing::MockFunction<future<
-    StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>()>;
+using MockFactory = ::testing::MockFunction<
+    future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>()>;
 
 Options TestOptions() {
   return Options{}
-      .set<storage_experimental::BufferedUploadLwmOption>(16 * 1024)
-      .set<storage_experimental::BufferedUploadHwmOption>(32 * 1024);
+      .set<storage::BufferedUploadLwmOption>(16 * 1024)
+      .set<storage::BufferedUploadHwmOption>(32 * 1024);
 }
 
 absl::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
@@ -65,8 +65,8 @@ auto TestObject() {
   return object;
 }
 
-storage_experimental::WritePayload TestPayload(std::size_t n) {
-  return storage_experimental::WritePayload(std::string(n, 'A'));
+storage::WritePayload TestPayload(std::size_t n) {
+  return storage::WritePayload(std::string(n, 'A'));
 }
 
 TEST(WriteConnectionBuffered, FinalizeEmpty) {
