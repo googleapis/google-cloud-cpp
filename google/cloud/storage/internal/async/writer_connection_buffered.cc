@@ -112,7 +112,7 @@ class AsyncWriterConnectionBufferedState
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
-    HandleNewData(std::move(lk));
+    HandleNewData(std::move(lk), true);
     // Return the unique future associated with this finalization.
     return std::move(finalized_future_);
   }
@@ -258,8 +258,7 @@ private:
     write_offset_ += write_size;
     auto impl = Impl(lk);
     lk.unlock();
-    impl->Query().then([this, result, w = WeakFromThis()](auto f) {
-      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
+    impl->Query().then([w = WeakFromThis()](auto f) {
       if (auto self = w.lock()) return self->OnQuery(f.get());
     });
   }
@@ -301,7 +300,10 @@ private:
     write_offset_ -= static_cast<std::size_t>(n);
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = ClearHandlersIfEmpty(lk);
-    WriteLoop(std::move(lk));
+    // SetFlushed will release the lock before returning.
+    SetFlushed(std::move(lk), Status{});
+    // Re-acquire the lock to re-enter the write loop.
+    WriteLoop(std::unique_lock<std::mutex>(mu_));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
     for (auto const& h : handlers) h->Execute(Status{});
@@ -539,7 +541,7 @@ private:
   bool finalize_ = false;
 
   // If true, all data should be uploaded with `Flush()`.
-  bool flush_ = true;
+  bool flush_ = false;
 
   // The offset for the first byte in the resend_buffer_.
   std::int64_t buffer_offset_ = 0;

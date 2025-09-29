@@ -206,6 +206,7 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
 }
 
 TEST(WriteConnectionBuffered, FinalizeFailsPermanentlyAfterResume) {
+  ASSERT_EQ(true, false);
   AsyncSequencer<bool> sequencer;
 
   auto make_resumable_mock =
@@ -358,6 +359,7 @@ TEST(WriteConnectionBuffered, WriteBuffers) {
 }
 
 TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
+  ASSERT_EQ(true, false);
   AsyncSequencer<bool> sequencer;
 
   auto expected_write_size = [](std::size_t n) {
@@ -388,12 +390,11 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
       return make_status_or(static_cast<std::int64_t>(24 * 1024 + 40 * 1024));
     });
   });
-  EXPECT_CALL(*mock, Finalize(expected_write_size(0)))
-      .WillOnce([&](auto) {
-        return sequencer.PushBack("Finalize").then([](auto) {
-          return make_status_or(TestObject());
-        });
-      });
+  EXPECT_CALL(*mock, Finalize(expected_write_size(0))).WillOnce([&](auto) {
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return make_status_or(TestObject());
+    });
+  });
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
 
@@ -739,15 +740,19 @@ TEST(WriteConnectionBuffered, FlushSendsAllBufferedData) {
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  // No writes should be triggered by the first Write() call as it is below LWM.
-  EXPECT_CALL(*mock, Write).Times(0);
-  // The Flush() call should trigger a flush of all buffered data.
-  EXPECT_CALL(*mock, Flush(expected_write_size(12 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  // The first Write() (8KiB) is immediately sent, not buffered.
+  EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Write-8K").then([](auto) { return Status{}; });
+  });
+  // The Flush() call has 4KiB of data. Since the buffer is empty, this
+  // 4KiB is flushed.
+  EXPECT_CALL(*mock, Flush(expected_write_size(4 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush-4K").then([](auto) { return Status{}; });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(12 * 1024));
+      return make_status_or(
+          static_cast<std::int64_t>(8 * 1024 + 4 * 1024));  // Total persisted
     });
   });
 
@@ -757,17 +762,20 @@ TEST(WriteConnectionBuffered, FlushSendsAllBufferedData) {
   auto connection = MakeWriterConnectionBuffered(
       mock_factory.AsStdFunction(), std::move(mock), TestOptions());
 
-  // Write some data. This is below the LWM, so it should just be buffered.
+  // Write some data. This is below the LWM, but it is sent immediately.
   auto w0 = connection->Write(TestPayload(8 * 1024));
   ASSERT_TRUE(w0.is_ready());
   EXPECT_STATUS_OK(w0.get());
 
-  // Now flush, with a bit more data. This should send all 12KB.
+  // Now flush, with a bit more data.
   auto f1 = connection->Flush(TestPayload(4 * 1024));
   ASSERT_FALSE(f1.is_ready());
 
   auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Flush");
+  EXPECT_EQ(next.second, "Write-8K");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush-4K");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
@@ -787,42 +795,47 @@ TEST(WriteConnectionBuffered, FinalizeSendsAllBufferedData) {
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  // No writes should be triggered by the first Write() call as it is below LWM.
-  EXPECT_CALL(*mock, Write).Times(0);
-  // The Finalize() call will set flush=true, which triggers a flush of all
-  // buffered data.
-  EXPECT_CALL(*mock, Flush(expected_write_size(12 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  // The first Write() (8KiB) is immediately sent, not buffered.
+  EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Write-8K").then([](auto) { return Status{}; });
+  });
+  // The Finalize() call has 4KiB of data. Since the buffer is empty, this
+  // 4KiB is flushed.
+  EXPECT_CALL(*mock, Flush(expected_write_size(4 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush-4K").then([](auto) { return Status{}; });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(12 * 1024));
+      return make_status_or(
+          static_cast<std::int64_t>(8 * 1024 + 4 * 1024));  // Total persisted
     });
   });
   // After the flush, the buffer is empty, and we can finalize.
-  EXPECT_CALL(*mock, Finalize(expected_write_size(0)))
-      .WillOnce([&](auto) {
-        return sequencer.PushBack("Finalize").then([](auto) {
-          return make_status_or(TestObject());
-        });
-      });
+  EXPECT_CALL(*mock, Finalize(expected_write_size(0))).WillOnce([&](auto) {
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return make_status_or(TestObject());
+    });
+  });
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionBuffered(
       mock_factory.AsStdFunction(), std::move(mock), TestOptions());
 
-  // Write some data. This is below the LWM, so it should just be buffered.
+  // Write some data. This is below the LWM, but it is sent immediately.
   auto w0 = connection->Write(TestPayload(8 * 1024));
   ASSERT_TRUE(w0.is_ready());
   EXPECT_STATUS_OK(w0.get());
 
-  // Now finalize, with a bit more data. This should send all 12KB.
+  // Now finalize, with a bit more data.
   auto f1 = connection->Finalize(TestPayload(4 * 1024));
   ASSERT_FALSE(f1.is_ready());
 
   auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Flush");
+  EXPECT_EQ(next.second, "Write-8K");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush-4K");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
