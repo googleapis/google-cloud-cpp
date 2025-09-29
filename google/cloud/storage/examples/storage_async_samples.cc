@@ -841,8 +841,9 @@ void FinalizeAppendableObjectUpload(
   std::cout << "Finalized object: " << object.DebugString() << "\n";
 }
 
-void ReadAppendableObjectTail(google::cloud::storage_experimental::AsyncClient& client,
-                    std::vector<std::string> const& argv) {
+void ReadAppendableObjectTail(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
   //! [read-appendable-object-tail]
   // [START storage_read_appendable_object_tail]
   namespace gcs = google::cloud::storage;
@@ -1084,8 +1085,9 @@ void FinalizeAppendableObjectUpload(
 }
 
 void ReadAppendableObjectTail(google::cloud::storage_experimental::AsyncClient&,
-                    std::vector<std::string> const&) {
-  std::cerr << "AsyncClient::ReadAppendableObjectTail() example requires coroutines\n";
+                              std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::ReadAppendableObjectTail() example requires "
+               "coroutines\n";
 }
 
 void RewriteObject(google::cloud::storage_experimental::AsyncClient&,
