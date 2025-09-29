@@ -20,8 +20,8 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/cord.h"
 #include <cstdint>
-#include <memory>
 #include <deque>
+#include <memory>
 #include <mutex>
 #include <vector>
 
@@ -139,7 +139,7 @@ class AsyncWriterConnectionBufferedState
     return Impl(std::unique_lock<std::mutex>(mu_))->GetRequestMetadata();
   }
 
-private:
+ private:
   std::weak_ptr<AsyncWriterConnectionBufferedState> WeakFromThis() {
     return shared_from_this();
   }
@@ -338,7 +338,8 @@ private:
     }
     // Pass the original status `s` and `was_finalizing` to the callback.
     factory_().then([s, was_finalizing, w = WeakFromThis()](auto f) {
-      if (auto self = w.lock()) return self->OnResume(s, was_finalizing, f.get());
+      if (auto self = w.lock())
+        return self->OnResume(s, was_finalizing, f.get());
     });
   }
 
