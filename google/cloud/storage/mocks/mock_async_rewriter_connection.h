@@ -24,8 +24,7 @@ namespace cloud {
 namespace storage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockAsyncRewriterConnection
-    : public storage_experimental::AsyncRewriterConnection {
+class MockAsyncRewriterConnection : public storage::AsyncRewriterConnection {
  public:
   MOCK_METHOD(future<StatusOr<google::storage::v2::RewriteResponse>>, Iterate,
               (), (override));

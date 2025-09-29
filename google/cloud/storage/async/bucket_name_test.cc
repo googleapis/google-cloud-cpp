@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -77,6 +77,6 @@ TEST(BucketName, MakeBucketName) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

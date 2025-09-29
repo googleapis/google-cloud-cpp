@@ -19,7 +19,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReadPayload::ReadPayload(std::string contents)
@@ -32,6 +32,6 @@ ReadPayload::ReadPayload(std::vector<std::string> contents) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

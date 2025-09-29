@@ -53,8 +53,8 @@ absl::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
   return persisted_size;
 }
 
-storage_experimental::WritePayload TestPayload(std::size_t n) {
-  return storage_experimental::WritePayload(std::string(n, 'A'));
+storage::WritePayload TestPayload(std::size_t n) {
+  return storage::WritePayload(std::string(n, 'A'));
 }
 
 auto TestObject() {

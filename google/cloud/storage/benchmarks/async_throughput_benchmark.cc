@@ -52,7 +52,7 @@ namespace {
 
 auto constexpr kDescription = R"""(
 This program benchmarks concurrent uploads to and downloads from Google Cloud
-Storage (GCS) using the `google::cloud::storage_experimental::AsyncClient APIs.
+Storage (GCS) using the `google::cloud::storage::AsyncClient APIs.
 
 The benchmark tries to answer the following questions:
 
@@ -172,7 +172,6 @@ ${program} --bucket=${BUCKET} \
 
 namespace g = google::cloud;
 namespace gcs = google::cloud::storage;
-namespace gcs_ex = google::cloud::storage_experimental;
 
 using ::google::cloud::storage_benchmarks::kMiB;
 
@@ -311,14 +310,14 @@ auto MapPath(std::string_view path) {
 auto MakeAsyncClients(Configuration const& cfg,
                       std::set<ClientConfig> const& clients,
                       int background_threads) {
-  std::map<ClientConfig, gcs_ex::AsyncClient> result;
+  std::map<ClientConfig, gcs::AsyncClient> result;
   for (auto const& cc : clients) {
     if (cc.client != kAsyncClientName) continue;
     result.emplace(
-        cc, gcs_ex::AsyncClient(g::Options()
-                                    .set<g::GrpcBackgroundThreadPoolSizeOption>(
-                                        background_threads)
-                                    .set<g::EndpointOption>(MapPath(cc.path))));
+        cc, gcs::AsyncClient(g::Options()
+                                 .set<g::GrpcBackgroundThreadPoolSizeOption>(
+                                     background_threads)
+                                 .set<g::EndpointOption>(MapPath(cc.path))));
   }
   return result;
 }
@@ -494,13 +493,13 @@ Result MakeErrorResult(Configuration const& cfg, IterationConfig iteration,
 
 g::future<Result> DownloadOne(Configuration const& cfg,
                               IterationConfig iteration, int repeat,
-                              gcs_ex::AsyncClient client,
+                              gcs::AsyncClient client,
                               std::chrono::system_clock::time_point batch_start,
                               std::string object_name) try {
   auto const transfer_start = std::chrono::system_clock::now();
   auto const start = std::chrono::steady_clock::now();
   auto [reader, token] =
-      (co_await client.ReadObject(gcs_ex::BucketName(cfg.bucket), object_name))
+      (co_await client.ReadObject(gcs::BucketName(cfg.bucket), object_name))
           .value();
 
   std::int64_t generation = 0;
@@ -525,7 +524,7 @@ g::future<Result> DownloadOne(Configuration const& cfg,
 
 g::future<IterationResult> Download(Configuration const& cfg,
                                     IterationConfig iteration, int repeat,
-                                    gcs_ex::AsyncClient client,
+                                    gcs::AsyncClient client,
                                     std::vector<std::string> object_names) {
   std::vector<g::future<Result>> batch;
   auto const batch_start = std::chrono::system_clock::now();
@@ -538,17 +537,17 @@ g::future<IterationResult> Download(Configuration const& cfg,
 }
 
 g::future<Result> UploadOne(Configuration const& cfg, IterationConfig iteration,
-                            int repeat, gcs_ex::AsyncClient client,
+                            int repeat, gcs::AsyncClient client,
                             std::chrono::system_clock::time_point batch_start,
                             std::shared_ptr<std::string const> data,
                             std::string object_name) try {
   auto const transfer_start = std::chrono::system_clock::now();
   auto const start = std::chrono::steady_clock::now();
   auto [writer, token] = (co_await client.StartUnbufferedUpload(
-                              gcs_ex::BucketName(cfg.bucket), object_name))
+                              gcs::BucketName(cfg.bucket), object_name))
                              .value();
 
-  using google::cloud::storage_experimental::WritePayload;
+  using google::cloud::storage::WritePayload;
   for (auto remaining = iteration.transfer_size; remaining != 0;) {
     if (!token.valid()) break;
     auto const n =
@@ -573,7 +572,7 @@ g::future<Result> UploadOne(Configuration const& cfg, IterationConfig iteration,
 
 g::future<IterationResult> Upload(Configuration const& cfg,
                                   IterationConfig iteration, int repeat,
-                                  gcs_ex::AsyncClient client,
+                                  gcs::AsyncClient client,
                                   std::shared_ptr<std::string const> data,
                                   std::vector<std::string> object_names) {
   std::vector<g::future<Result>> batch;
@@ -766,15 +765,15 @@ void RunBenchmark(Configuration const& cfg) {
   std::cout << Header() << "\n";
   auto last_upload = std::chrono::steady_clock::now();
 
-  auto delete_client = gcs_ex::AsyncClient();
+  auto delete_client = gcs::AsyncClient();
   std::vector<g::future<void>> pending_deletes;
-  auto delete_all = [](gcs_ex::AsyncClient client, std::string bucket,
+  auto delete_all = [](gcs::AsyncClient client, std::string bucket,
                        std::vector<std::string> names) -> g::future<void> {
     std::vector<g::future<g::Status>> pending(names.size());
-    std::transform(
-        names.begin(), names.end(), pending.begin(), [&](auto const& name) {
-          return client.DeleteObject(gcs_ex::BucketName(bucket), name);
-        });
+    std::transform(names.begin(), names.end(), pending.begin(),
+                   [&](auto const& name) {
+                     return client.DeleteObject(gcs::BucketName(bucket), name);
+                   });
     names.clear();
     for (auto& p : pending) co_await std::move(p);
   };
@@ -953,7 +952,7 @@ int main(int argc, char* argv[]) try {
 #include <iostream>
 
 int main() {
-  std::cout << "The storage_experimental::AsyncClient benchmarks require"
+  std::cout << "The storage::AsyncClient benchmarks require"
             << " C++20 coroutines and the GCS+gRPC plugin\n";
   return 0;
 }

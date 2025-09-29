@@ -36,7 +36,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -85,8 +85,8 @@ auto TestOptions() {
 }
 
 auto AlwaysRetry() {
-  return TestOptions().set<IdempotencyPolicyOption>(
-      MakeAlwaysRetryIdempotencyPolicy);
+  return TestOptions().set<AsyncIdempotencyPolicyOption>(
+      MakeAlwaysRetryAsyncIdempotencyPolicy);
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
@@ -1007,7 +1007,7 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
   if (!UsingEmulator()) GTEST_SKIP();
   auto async = AsyncClient(
-      TestOptions().set<storage_experimental::MaximumRangeSizeOption>(1024));
+      TestOptions().set<storage::MaximumRangeSizeOption>(1024));
   auto client = MakeIntegrationTestClient(true, TestOptions());
   auto object_name = MakeRandomObjectName();
 
@@ -1061,7 +1061,7 @@ TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

@@ -25,9 +25,8 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<storage_experimental::AsyncConnection>
-MakeTracingAsyncConnection(
-    std::shared_ptr<storage_experimental::AsyncConnection> impl);
+std::shared_ptr<storage::AsyncConnection> MakeTracingAsyncConnection(
+    std::shared_ptr<storage::AsyncConnection> impl);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
