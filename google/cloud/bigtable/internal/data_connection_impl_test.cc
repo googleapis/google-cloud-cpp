@@ -811,8 +811,11 @@ TEST_F(DataConnectionTest, BulkApplySuccess) {
         EXPECT_THAT(request.entries(), ElementsAre(Entry("r0"), Entry("r1")));
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeBulkApplyResponse(
-                {{0, grpc::StatusCode::OK}, {1, grpc::StatusCode::OK}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse(
+                  {{0, grpc::StatusCode::OK}, {1, grpc::StatusCode::OK}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -855,11 +858,14 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(
-                MakeBulkApplyResponse({{0, grpc::StatusCode::OK},
-                                       {1, grpc::StatusCode::UNAVAILABLE},
-                                       {2, grpc::StatusCode::PERMISSION_DENIED},
-                                       {3, grpc::StatusCode::UNAVAILABLE}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse(
+                  {{0, grpc::StatusCode::OK},
+                   {1, grpc::StatusCode::UNAVAILABLE},
+                   {2, grpc::StatusCode::PERMISSION_DENIED},
+                   {3, grpc::StatusCode::UNAVAILABLE}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       })
@@ -871,8 +877,10 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
                     ElementsAre(Entry("retries-transient-error")));
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(
-                Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -910,8 +918,10 @@ TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(
-                Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       })
@@ -922,8 +932,10 @@ TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         EXPECT_THAT(request.entries(), ElementsAre(Entry("forgotten")));
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(
-                Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -1027,9 +1039,12 @@ TEST_F(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeBulkApplyResponse(
-                {{0, grpc::StatusCode::OK},
-                 {1, grpc::StatusCode::PERMISSION_DENIED}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse(
+                  {{0, grpc::StatusCode::OK},
+                   {1, grpc::StatusCode::PERMISSION_DENIED}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -1060,8 +1075,11 @@ TEST_F(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
             // The overall stream succeeds, but it contains failed mutations.
             // Our retry and backoff policies should take effect.
             EXPECT_CALL(*stream, Read)
-                .WillOnce(Return(MakeBulkApplyResponse(
-                    {{0, grpc::StatusCode::UNAVAILABLE}})))
+                .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+                  *r = MakeBulkApplyResponse(
+                      {{0, grpc::StatusCode::UNAVAILABLE}});
+                  return absl::nullopt;
+                })
                 .WillOnce(Return(Status()));
             return stream;
           });
@@ -1095,8 +1113,10 @@ TEST_F(DataConnectionTest, BulkApplyRetryInfoHeeded) {
       .WillOnce([](auto, auto const&, v2::MutateRowsRequest const&) {
         auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(
-                Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+              *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -1363,14 +1383,15 @@ TEST_F(DataConnectionTest, ReadRowSuccess) {
 
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce([]() {
-              v2::ReadRowsResponse r;
-              auto& chunk = *r.add_chunks();
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              v2::ReadRowsResponse resp;
+              auto& chunk = *resp.add_chunks();
               *chunk.mutable_row_key() = "row";
               chunk.mutable_family_name()->set_value("cf");
               chunk.mutable_qualifier()->set_value("cq");
               chunk.set_commit_row(true);
-              return r;
+              *r = resp;
+              return absl::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -1962,8 +1983,14 @@ TEST_F(DataConnectionTest, SampleRowsSuccess) {
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeSampleRowsResponse("test1", 11)))
-            .WillOnce(Return(MakeSampleRowsResponse("test2", 22)))
+            .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
+              *r = MakeSampleRowsResponse("test1", 11);
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
+              *r = MakeSampleRowsResponse("test2", 22);
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status{}));
         return stream;
       });
@@ -2004,7 +2031,10 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeSampleRowsResponse("discarded", 11)))
+            .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
+              *r = MakeSampleRowsResponse("discarded", 11);
+              return absl::nullopt;
+            })
             .WillOnce(Return(TransientError()));
         return stream;
       })
@@ -2013,7 +2043,10 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeSampleRowsResponse("returned", 22)))
+            .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
+              *r = MakeSampleRowsResponse("returned", 22);
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status{}));
         return stream;
       });

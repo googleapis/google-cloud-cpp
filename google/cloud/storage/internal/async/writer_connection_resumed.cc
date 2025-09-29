@@ -64,26 +64,24 @@ class AsyncWriterConnectionResumedState
       std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
+      google::storage::v2::BidiWriteObjectResponse const& first_response,
       Options const& options, std::size_t buffer_size_lwm,
       std::size_t buffer_size_hwm)
       : factory_(std::move(factory)),
         impl_(std::move(impl)),
         initial_request_(std::move(initial_request)),
         hash_function_(std::move(hash_function)),
+        first_response_(std::move(first_response)),
         buffer_size_lwm_(buffer_size_lwm),
         buffer_size_hwm_(buffer_size_hwm) {
     finalized_future_ = finalized_.get_future();
     options_ = internal::MakeImmutableOptions(options);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      SetFinalized(std::unique_lock<std::mutex>(mu_),
-                   absl::get<google::storage::v2::Object>(std::move(state)));
-      cancelled_ = true;
-      resume_status_ = internal::CancelledError("upload already finalized",
-                                                GCP_ERROR_INFO());
-      return;
+      buffer_offset_ = absl::get<google::storage::v2::Object>(state).size();
+    } else {
+      buffer_offset_ = absl::get<std::int64_t>(state);
     }
-    buffer_offset_ = absl::get<std::int64_t>(state);
   }
 
   void Cancel() {
@@ -326,10 +324,17 @@ class AsyncWriterConnectionResumedState
   void Resume(Status const& s) {
     auto proto_status = ExtractGrpcStatus(s);
     auto request = google::storage::v2::BidiWriteObjectRequest{};
-    auto spec = initial_request_.write_object_spec();
     auto& append_object_spec = *request.mutable_append_object_spec();
-    append_object_spec.set_bucket(spec.resource().bucket());
-    append_object_spec.set_object(spec.resource().name());
+    if (initial_request_.has_write_object_spec()) {
+      auto const& spec = initial_request_.write_object_spec();
+      append_object_spec.set_bucket(spec.resource().bucket());
+      append_object_spec.set_object(spec.resource().name());
+    } else {
+      auto const& spec = initial_request_.append_object_spec();
+      append_object_spec.set_bucket(spec.bucket());
+      append_object_spec.set_object(spec.object());
+    }
+    append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
 
     // Capture the finalization state *before* starting the async resume.
@@ -430,9 +435,6 @@ class AsyncWriterConnectionResumedState
 
   void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
-    // This flush step completed. We are no longer actively writing this chunk.
-    // WriteLoop will determine if another flush/write is needed.
-    writing_ = false;
     flush_ = false;  // Reset flush flag; WriteLoop may set it again.
     // Do NOT reset finalize_ or finalizing_ here.
     auto handlers = ClearHandlers(lk);
@@ -530,6 +532,8 @@ class AsyncWriterConnectionResumedState
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
 
   google::cloud::internal::ImmutableOptions options_;
+
+  google::storage::v2::BidiWriteObjectResponse first_response_;
 
   // Request a server-side flush if the buffer goes over this threshold.
   std::size_t const buffer_size_lwm_;
@@ -636,10 +640,11 @@ class AsyncWriterConnectionResumed
       std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
+      google::storage::v2::BidiWriteObjectResponse const& first_response,
       Options const& options)
       : state_(std::make_shared<AsyncWriterConnectionResumedState>(
             std::move(factory), std::move(impl), std::move(initial_request),
-            std::move(hash_function), options,
+            std::move(hash_function), first_response, options,
             options.get<storage_experimental::BufferedUploadLwmOption>(),
             options.get<storage_experimental::BufferedUploadHwmOption>())) {}
 
@@ -683,10 +688,11 @@ MakeWriterConnectionResumed(
     std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
+    google::storage::v2::BidiWriteObjectResponse const& first_response,
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionResumed>(
       std::move(factory), std::move(impl), std::move(initial_request),
-      std::move(hash_function), std::move(options));
+      std::move(hash_function), std::move(first_response), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

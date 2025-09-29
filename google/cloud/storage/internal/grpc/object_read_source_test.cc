@@ -49,15 +49,13 @@ TEST(GrpcObjectReadSource, Simple) {
   auto mock = std::make_unique<MockObjectMediaStream>();
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "0123456789");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "0123456789");
+        return absl::nullopt;
       })
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, " The quick brown fox jumps over the lazy dog");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, " The quick brown fox jumps over the lazy dog");
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -98,10 +96,9 @@ TEST(GrpcObjectReadSource, DataWithError) {
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "0123456789");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "0123456789");
+        return absl::nullopt;
       })
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -127,10 +124,9 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
-      .WillOnce([&contents]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, contents);
-        return response;
+      .WillOnce([&contents](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, contents);
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -162,10 +158,9 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
-      .WillOnce([&contents]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, contents);
-        return response;
+      .WillOnce([&contents](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, contents);
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -206,25 +201,23 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
-      .WillOnce([&]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "The quick brown");
-        response.mutable_object_checksums()->set_md5_hash(
+      .WillOnce([&](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "The quick brown");
+        r->mutable_object_checksums()->set_md5_hash(
             storage_internal::MD5ToProto(expected_md5).value());
-        response.mutable_object_checksums()->set_crc32c(
+        r->mutable_object_checksums()->set_crc32c(
             storage_internal::Crc32cToProto(expected_crc32c).value());
-        return response;
+        return absl::nullopt;
       })
-      .WillOnce([&] {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, " fox jumps over the lazy dog");
+      .WillOnce([&](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, " fox jumps over the lazy dog");
         // The headers may be included more than once in the stream,
         // `GrpcObjectReadSource` should return them only once.
-        response.mutable_object_checksums()->set_md5_hash(
+        r->mutable_object_checksums()->set_md5_hash(
             storage_internal::MD5ToProto(expected_md5).value());
-        response.mutable_object_checksums()->set_crc32c(
+        r->mutable_object_checksums()->set_crc32c(
             storage_internal::Crc32cToProto(expected_crc32c).value());
-        return response;
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -249,19 +242,17 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
   std::string const expected_payload =
       "The quick brown fox jumps over the lazy dog";
   EXPECT_CALL(*mock, Read)
-      .WillOnce([&] {
+      .WillOnce([&](storage_proto::ReadObjectResponse* r) {
         // Generate a response that includes the generation, but not enough data
         // to return immediately.
-        storage_proto::ReadObjectResponse response;
-        response.mutable_metadata()->set_generation(1234);
-        SetContent(response, "The quick brown");
-        return response;
+        r->mutable_metadata()->set_generation(1234);
+        SetContent(*r, "The quick brown");
+        return absl::nullopt;
       })
-      .WillOnce([&] {
+      .WillOnce([&](storage_proto::ReadObjectResponse* r) {
         // The last response, without metadata or generation.
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, " fox jumps over the lazy dog");
-        return response;
+        SetContent(*r, " fox jumps over the lazy dog");
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -277,25 +268,24 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
   auto mock = std::make_unique<MockObjectMediaStream>();
-  auto make_empty_response = [] { return storage_proto::ReadObjectResponse{}; };
+  auto make_empty_response = [](storage_proto::ReadObjectResponse*) {
+    return absl::nullopt;
+  };
   EXPECT_CALL(*mock, Read)
       .WillOnce(make_empty_response)
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "The quick brown ");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "The quick brown ");
+        return absl::nullopt;
       })
       .WillOnce(make_empty_response)
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "fox jumps over ");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "fox jumps over ");
+        return absl::nullopt;
       })
       .WillOnce(make_empty_response)
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "the lazy dog");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "the lazy dog");
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));
@@ -317,10 +307,9 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
 TEST(GrpcObjectReadSource, HandleExtraRead) {
   auto mock = std::make_unique<MockObjectMediaStream>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce([]() {
-        storage_proto::ReadObjectResponse response;
-        SetContent(response, "The quick brown fox jumps over the lazy dog");
-        return response;
+      .WillOnce([](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, "The quick brown fox jumps over the lazy dog");
+        return absl::nullopt;
       })
       .WillOnce(Return(Status{}));
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(RpcMetadata{}));

@@ -95,7 +95,11 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        [&options](std::string const& val) {
          options.include_read_rows = ParseBoolean(val).value_or(true);
        }},
-
+      {"--enable-metrics",
+       "whether to enable Client Side Metrics for benchmarking",
+       [&options](std::string const& val) {
+         options.enable_metrics = ParseBoolean(val).value_or(true);
+       }},
   };
 
   auto usage = BuildUsage(desc, argv[0]);

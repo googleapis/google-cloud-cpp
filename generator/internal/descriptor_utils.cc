@@ -261,6 +261,9 @@ ParameterCommentSubstitution substitutions[] = {
     // Extra quotes in asset/v1.
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
 
+    // From google/cloud/networkconnectivity/v1/data_transfer.proto
+    {R"""(`FieldMask is used)""", R"""(`FieldMask` is used)"""},
+
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
     // The workaround is to double quote these:

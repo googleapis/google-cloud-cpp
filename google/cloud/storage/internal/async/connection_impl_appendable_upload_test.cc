@@ -106,7 +106,7 @@ std::unique_ptr<AsyncBidiWriteObjectStream> MakeSuccessfulAppendStream(
         return sequencer.PushBack("Read(PersistedSize)")
             .then([persisted_size](auto) {
               auto response = google::storage::v2::BidiWriteObjectResponse{};
-              response.mutable_resource()->set_size(persisted_size);
+              response.set_persisted_size(persisted_size);
               return absl::make_optional(std::move(response));
             });
       })

@@ -140,6 +140,7 @@ cc_library(
     tags = ["benchmark"],
     deps = [
         ":google_cloud_cpp_common",
+        "@com_google_benchmark//:benchmark",
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_common_benchmarks]
@@ -228,6 +229,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_common",
         ":google_cloud_cpp_grpc_utils",
+        "@com_google_benchmark//:benchmark",
         "@com_google_benchmark//:benchmark_main",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
@@ -333,6 +335,7 @@ cc_library(
     tags = ["benchmark"],
     deps = [
         ":google_cloud_cpp_rest_internal",
+        "@com_google_benchmark//:benchmark",
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
