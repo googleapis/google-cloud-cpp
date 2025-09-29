@@ -20,8 +20,8 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-storage_experimental::AsyncToken MakeAsyncToken(void const* tag) {
-  return storage_experimental::AsyncToken(tag);
+storage::AsyncToken MakeAsyncToken(void const* tag) {
+  return storage::AsyncToken(tag);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

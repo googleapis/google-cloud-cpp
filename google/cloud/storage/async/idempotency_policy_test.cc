@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -32,7 +32,7 @@ auto TestMessage(char const* text, M m) {
 }
 
 TEST(IdempotencyPolicy, Strict) {
-  auto policy = MakeStrictIdempotencyPolicy();
+  auto policy = MakeStrictAsyncIdempotencyPolicy();
   ASSERT_THAT(policy, NotNull());
 
   EXPECT_EQ(policy->ReadObject(google::storage::v2::ReadObjectRequest{}),
@@ -86,7 +86,7 @@ TEST(IdempotencyPolicy, Strict) {
 }
 
 TEST(IdempotencyPolicy, AlwaysRetry) {
-  auto policy = MakeAlwaysRetryIdempotencyPolicy();
+  auto policy = MakeAlwaysRetryAsyncIdempotencyPolicy();
   ASSERT_THAT(policy, NotNull());
   EXPECT_EQ(policy->ReadObject(google::storage::v2::ReadObjectRequest{}),
             Idempotency::kIdempotent);
@@ -104,6 +104,6 @@ TEST(IdempotencyPolicy, AlwaysRetry) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -32,8 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * need to implement the `AsyncReaderConnection` interface, using `ReadRange` as
  * the underlying implementation.
  */
-class ObjectDescriptorReader
-    : public storage_experimental::AsyncReaderConnection {
+class ObjectDescriptorReader : public storage::AsyncReaderConnection {
  public:
   explicit ObjectDescriptorReader(std::shared_ptr<ReadRange> impl);
   ~ObjectDescriptorReader() override = default;

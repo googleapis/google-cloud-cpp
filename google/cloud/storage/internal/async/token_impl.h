@@ -19,18 +19,18 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AsyncToken;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-storage_experimental::AsyncToken MakeAsyncToken(void const* tag);
+storage::AsyncToken MakeAsyncToken(void const* tag);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

@@ -58,7 +58,7 @@ TEST(ReadPayload, FromString) {
 }
 
 TEST(ReadPayload, FromVector) {
-  auto const actual = storage_experimental::ReadPayload(
+  auto const actual = storage::ReadPayload(
       std::vector<std::string>({std::string(kQuick), std::string(kQuick)}));
   EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick),
                                              absl::string_view(kQuick)));
