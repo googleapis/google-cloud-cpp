@@ -205,6 +205,52 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
   EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
+TEST(WriteConnectionBuffered, FinalizeFailsPermanentlyAfterResume) {
+  AsyncSequencer<bool> sequencer;
+
+  auto make_resumable_mock =
+      [&sequencer]() -> std::unique_ptr<AsyncWriterConnection> {
+    auto mock = std::make_unique<MockAsyncWriterConnection>();
+    EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+    EXPECT_CALL(*mock, PersistedState)
+        .WillRepeatedly(Return(MakePersistedState(0)));
+    EXPECT_CALL(*mock, Finalize).WillOnce([&](auto) {
+      return sequencer.PushBack("Finalize")
+          .then([](auto) -> StatusOr<google::storage::v2::Object> {
+            return TransientError();
+          });
+    });
+    return mock;
+  };
+
+  auto mock = make_resumable_mock();
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
+    return sequencer.PushBack("Retry").then([](auto) {
+      // The resume succeeds, but the new connection is *not* finalized.
+      auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+      EXPECT_CALL(*resumed_mock, UploadId)
+          .WillRepeatedly(Return("test-upload-id"));
+      EXPECT_CALL(*resumed_mock, PersistedState)
+          .WillRepeatedly(Return(MakePersistedState(0)));
+      return make_status_or(
+          std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
+    });
+  });
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto finalize = connection->Finalize({});
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(false);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Retry");
+  next.first.set_value(true);
+  EXPECT_THAT(finalize.get(), StatusIs(TransientError().code()));
+}
+
 TEST(WriteConnectionBuffered, WriteResumes) {
   AsyncSequencer<bool> sequencer;
   auto make_mock = [&sequencer]() -> std::unique_ptr<AsyncWriterConnection> {
@@ -334,13 +380,20 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
       return make_status_or(static_cast<std::int64_t>(24 * 1024));
     });
   });
-  EXPECT_CALL(*mock, Finalize(expected_write_size(32 * 1024)))
+  EXPECT_CALL(*mock, Flush(expected_write_size(40 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush2").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query2").then([](auto) {
+      return make_status_or(static_cast<std::int64_t>(24 * 1024 + 40 * 1024));
+    });
+  });
+  EXPECT_CALL(*mock, Finalize(expected_write_size(0)))
       .WillOnce([&](auto) {
         return sequencer.PushBack("Finalize").then([](auto) {
           return make_status_or(TestObject());
         });
       });
-
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
 
@@ -380,6 +433,13 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
   // Assume there is now a Finalize() call.
   auto finalize = connection->Finalize(TestPayload(32 * 1024));
   EXPECT_FALSE(finalize.is_ready());
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query2");
+  next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
@@ -590,15 +650,12 @@ TEST(WriteConnectionBuffered, Flush) {
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Write").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Flush(expected_write_size(24 * 1024))).WillOnce([&](auto) {
+  EXPECT_CALL(*mock, Flush(expected_write_size(8 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(32 * 1024));
+      return make_status_or(static_cast<std::int64_t>(8 * 1024));
     });
   });
 
@@ -607,42 +664,18 @@ TEST(WriteConnectionBuffered, Flush) {
 
   auto connection = MakeWriterConnectionBuffered(
       mock_factory.AsStdFunction(), std::move(mock), TestOptions());
-  EXPECT_EQ(connection->UploadId(), "test-upload-id");
-  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
-  // TestOptions() configures the buffered writer to block once 32KiB of data
-  // are buffered. First verify we can write without blocking.
   auto w0 = connection->Flush(TestPayload(8 * 1024));
-  ASSERT_TRUE(w0.is_ready());
-  EXPECT_STATUS_OK(w0.get());
+  ASSERT_FALSE(w0.is_ready());
 
-  // The first connection->Write() should trigger a Write() request to drain the
-  // buffer.
   auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Write");
-
-  auto w1 = connection->Flush(TestPayload(8 * 1024));
-  ASSERT_TRUE(w1.is_ready());
-  EXPECT_STATUS_OK(w1.get());
-  auto w2 = connection->Flush(TestPayload(8 * 1024));
-  ASSERT_TRUE(w2.is_ready());
-  EXPECT_STATUS_OK(w2.get());
-
-  // This blocks as it fills the buffer.
-  auto w3 = connection->Flush(TestPayload(8 * 1024));
-  ASSERT_FALSE(w3.is_ready());
-
-  // Satisfying the first Write() call should trigger a second one.
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
 
-  ASSERT_TRUE(w3.is_ready());
-  EXPECT_STATUS_OK(w3.get());
+  EXPECT_STATUS_OK(w0.get());
 }
 
 TEST(WriteConnectionBuffered, Query) {
@@ -693,6 +726,150 @@ TEST(WriteConnectionBuffered, GetRequestMetadata) {
                                    Pair("k2", "v3")));
   EXPECT_THAT(actual.trailers,
               UnorderedElementsAre(Pair("t1", "v4"), Pair("t2", "v5")));
+}
+
+TEST(WriteConnectionBuffered, FlushSendsAllBufferedData) {
+  AsyncSequencer<bool> sequencer;
+  auto expected_write_size = [](std::size_t n) {
+    return ResultOf(
+        "payload size", [](auto payload) { return payload.size(); }, Eq(n));
+  };
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  // No writes should be triggered by the first Write() call as it is below LWM.
+  EXPECT_CALL(*mock, Write).Times(0);
+  // The Flush() call should trigger a flush of all buffered data.
+  EXPECT_CALL(*mock, Flush(expected_write_size(12 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then([](auto) {
+      return make_status_or(static_cast<std::int64_t>(12 * 1024));
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Write some data. This is below the LWM, so it should just be buffered.
+  auto w0 = connection->Write(TestPayload(8 * 1024));
+  ASSERT_TRUE(w0.is_ready());
+  EXPECT_STATUS_OK(w0.get());
+
+  // Now flush, with a bit more data. This should send all 12KB.
+  auto f1 = connection->Flush(TestPayload(4 * 1024));
+  ASSERT_FALSE(f1.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+
+  EXPECT_STATUS_OK(f1.get());
+}
+
+TEST(WriteConnectionBuffered, FinalizeSendsAllBufferedData) {
+  AsyncSequencer<bool> sequencer;
+  auto expected_write_size = [](std::size_t n) {
+    return ResultOf(
+        "payload size", [](auto payload) { return payload.size(); }, Eq(n));
+  };
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  // No writes should be triggered by the first Write() call as it is below LWM.
+  EXPECT_CALL(*mock, Write).Times(0);
+  // The Finalize() call will set flush=true, which triggers a flush of all
+  // buffered data.
+  EXPECT_CALL(*mock, Flush(expected_write_size(12 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then([](auto) {
+      return make_status_or(static_cast<std::int64_t>(12 * 1024));
+    });
+  });
+  // After the flush, the buffer is empty, and we can finalize.
+  EXPECT_CALL(*mock, Finalize(expected_write_size(0)))
+      .WillOnce([&](auto) {
+        return sequencer.PushBack("Finalize").then([](auto) {
+          return make_status_or(TestObject());
+        });
+      });
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Write some data. This is below the LWM, so it should just be buffered.
+  auto w0 = connection->Write(TestPayload(8 * 1024));
+  ASSERT_TRUE(w0.is_ready());
+  EXPECT_STATUS_OK(w0.get());
+
+  // Now finalize, with a bit more data. This should send all 12KB.
+  auto f1 = connection->Finalize(TestPayload(4 * 1024));
+  ASSERT_FALSE(f1.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(true);
+
+  EXPECT_THAT(f1.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
+}
+
+TEST(WriteConnectionBuffered, WriteTriggersMultipleFlushes) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  // Expect two separate flushes as the buffer fills up twice.
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush1").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query1").then([](auto) {
+      return make_status_or(static_cast<std::int64_t>(24 * 1024));
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Write enough to be over LWM but under HWM. This should trigger a flush.
+  auto w1 = connection->Write(TestPayload(24 * 1024));
+  ASSERT_TRUE(w1.is_ready());
+  EXPECT_STATUS_OK(w1.get());
+
+  // First flush is triggered.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query1");
+  next.first.set_value(true);
 }
 
 }  // namespace

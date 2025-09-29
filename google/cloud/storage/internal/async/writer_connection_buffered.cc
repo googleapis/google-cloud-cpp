@@ -21,6 +21,7 @@
 #include "absl/strings/cord.h"
 #include <cstdint>
 #include <memory>
+#include <deque>
 #include <mutex>
 #include <vector>
 
@@ -112,11 +113,22 @@ class AsyncWriterConnectionBufferedState
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk));
+    // Return the unique future associated with this finalization.
     return std::move(finalized_future_);
   }
 
   future<Status> Flush(storage_experimental::WritePayload const& p) {
-    return Write(p);
+    std::unique_lock<std::mutex> lk(mu_);
+    // Create a new promise for this flush operation.
+    promise<Status> current_flush_promise;
+    auto f = current_flush_promise.get_future();
+    pending_flush_promises_.push_back(std::move(current_flush_promise));
+
+    resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
+    flush_ = true;
+    HandleNewData(std::move(lk), true);
+    // Return the future associated with the new promise.
+    return f;
   }
 
   future<StatusOr<std::int64_t>> Query() {
@@ -127,7 +139,7 @@ class AsyncWriterConnectionBufferedState
     return Impl(std::unique_lock<std::mutex>(mu_))->GetRequestMetadata();
   }
 
- private:
+private:
   std::weak_ptr<AsyncWriterConnectionBufferedState> WeakFromThis() {
     return shared_from_this();
   }
@@ -151,10 +163,11 @@ class AsyncWriterConnectionBufferedState
     return std::make_unique<Impl>(std::move(p));
   }
 
-  future<Status> HandleNewData(std::unique_lock<std::mutex> lk) {
+  future<Status> HandleNewData(std::unique_lock<std::mutex> lk,
+                               bool flush = false) {
     if (!resume_status_.ok()) return make_ready_future(resume_status_);
     auto const buffer_size = resend_buffer_.size();
-    flush_ = buffer_size >= buffer_size_lwm_;
+    flush_ = (buffer_size >= buffer_size_lwm_) || flush;
     auto result = make_ready_future(Status{});
     if (buffer_size >= buffer_size_hwm_) {
       auto p = promise<Status>();
@@ -171,26 +184,58 @@ class AsyncWriterConnectionBufferedState
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
+    // Determine if there's data left to write *before* potentially finalizing.
     writing_ = write_offset_ < resend_buffer_.size();
-    if (!writing_ && !finalize_) return;
-    auto const n = resend_buffer_.size() - write_offset_;
-    auto payload = resend_buffer_.Subcord(write_offset_, n);
-    if (finalize_) return FinalizeStep(std::move(lk), std::move(payload));
-    if (flush_) return FlushStep(std::move(lk), std::move(payload));
-    WriteStep(std::move(lk), std::move(payload));
+
+    // If we are writing data, continue doing so.
+    if (writing_) {
+      // Still data to write, determine the next chunk.
+      auto const n = resend_buffer_.size() - write_offset_;
+      auto payload = resend_buffer_.Subcord(write_offset_, n);
+      if (flush_) return FlushStep(std::move(lk), std::move(payload));
+      return WriteStep(std::move(lk), std::move(payload));
+    }
+
+    // No data left to write (writing_ is false).
+    // Check if we need to finalize (only if not already writing data AND not
+    // already finalizing).
+    if (finalize_ && !finalizing_) {
+      // FinalizeStep will set the finalizing_ flag.
+      return FinalizeStep(std::move(lk));
+    }
+    // If not finalizing, check if an empty flush is needed.
+    if (flush_) {
+      // Pass empty payload to FlushStep
+      return FlushStep(std::move(lk), absl::Cord{});
+    }
+
+    // No data to write, not finalizing, not flushing. The loop can stop.
+    // writing_ is already false.
   }
 
-  void FinalizeStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
+  // FinalizeStep is now called only when all data in resend_buffer_ is written.
+  void FinalizeStep(std::unique_lock<std::mutex> lk) {
+    // Check *under lock* if we are already finalizing.
+    if (finalizing_) {
+      // If another thread initiated FinalizeStep concurrently, just return.
+      return;
+    }
+    // Mark that we are starting the finalization process.
+    finalizing_ = true;
     auto impl = Impl(lk);
     lk.unlock();
-    (void)impl->Finalize(WritePayloadImpl::Make(std::move(payload)))
+    // Finalize with an empty payload.
+    (void)impl->Finalize(storage_experimental::WritePayload{})
         .then([w = WeakFromThis()](auto f) {
           if (auto self = w.lock()) return self->OnFinalize(f.get());
         });
   }
 
   void OnFinalize(StatusOr<google::storage::v2::Object> result) {
-    if (!result) return Resume(std::move(result).status());
+    if (!result) {
+      finalizing_ = false;
+      return Resume(std::move(result).status());
+    }
     SetFinalized(std::unique_lock<std::mutex>(mu_), std::move(result));
   }
 
@@ -200,17 +245,21 @@ class AsyncWriterConnectionBufferedState
     auto const size = payload.size();
     (void)impl->Flush(WritePayloadImpl::Make(std::move(payload)))
         .then([size, w = WeakFromThis()](auto f) {
-          if (auto self = w.lock()) return self->OnFlush(f.get(), size);
+          if (auto self = w.lock()) {
+            self->OnFlush(f.get(), size);
+            return;
+          }
         });
   }
 
-  void OnFlush(Status result, std::size_t write_size) {
+  void OnFlush(Status const& result, std::size_t write_size) {
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
     auto impl = Impl(lk);
     lk.unlock();
-    impl->Query().then([w = WeakFromThis()](auto f) {
+    impl->Query().then([this, result, w = WeakFromThis()](auto f) {
+      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
       if (auto self = w.lock()) return self->OnQuery(f.get());
     });
   }
@@ -268,33 +317,68 @@ class AsyncWriterConnectionBufferedState
         });
   }
 
-  void OnWrite(Status result, std::size_t write_size) {
+  void OnWrite(Status const& result, std::size_t write_size) {
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
     return WriteLoop(std::move(lk));
   }
 
-  void Resume(Status s) {
-    if (!s.ok() && cancelled_) {
-      return SetError(std::unique_lock<std::mutex>(mu_), std::move(s));
+  void Resume(Status const& s) {
+    // Capture the finalization state *before* starting the async resume.
+    bool was_finalizing;
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      was_finalizing = finalizing_;
+      if (!s.ok() && cancelled_) {
+        return SetError(std::move(lk), std::move(s));
+      }
     }
-    factory_().then([w = WeakFromThis()](auto f) {
-      if (auto self = w.lock()) return self->OnResume(f.get());
+    // Pass the original status `s` and `was_finalizing` to the callback.
+    factory_().then([s, was_finalizing, w = WeakFromThis()](auto f) {
+      if (auto self = w.lock()) return self->OnResume(s, was_finalizing, f.get());
     });
   }
 
   void OnResume(
+      Status const& original_status, bool was_finalizing,
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>
           impl) {
     std::unique_lock<std::mutex> lk(mu_);
+
+    if (was_finalizing) {
+      // If resuming due to a finalization error, we *must* complete the
+      // finalized_ promise now, based on the resume attempt's outcome.
+      if (!impl) {
+        // The resume attempt itself failed. Use that error.
+        return SetError(std::move(lk), std::move(impl).status());
+      }
+      // Resume attempt succeeded, check the persisted state.
+      auto state = impl_->PersistedState();
+      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+        // Resume found the object is finalized. Success.
+        return SetFinalized(
+            std::move(lk),
+            absl::get<google::storage::v2::Object>(std::move(state)));
+      }
+      // Resume succeeded, but the object is still not finalized.
+      // This means the original finalization attempt failed permanently.
+      // Use the original status that triggered the resume. Reset finalizing_
+      // before setting the error, as the attempt is now over.
+      finalizing_ = false;
+      return SetError(std::move(lk), std::move(original_status));
+    }
+
+    // Resume was *not* triggered by finalization failure.
     if (!impl) return SetError(std::move(lk), std::move(impl).status());
-    impl_ = *std::move(impl);
+    impl_ = std::move(*impl);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+      // Found finalized object (maybe finalized concurrently or resumed).
       return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
                                              std::move(state)));
     }
+    // Regular resume succeeded, object not finalized. Continue writing.
     OnQuery(std::move(lk), absl::get<std::int64_t>(state));
   }
 
@@ -309,26 +393,90 @@ class AsyncWriterConnectionBufferedState
     resend_buffer_.Clear();
     writing_ = false;
     finalize_ = false;
+    finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
+    // Check if the promise has already been completed.
+    if (finalized_promise_completed_) {
+      lk.unlock();  // Release lock before returning
+      return;
+    }
+    // Mark the promise as completed *before* moving it.
+    finalized_promise_completed_ = true;
     auto handlers = ClearHandlers(lk);
-    promise<StatusOr<google::storage::v2::Object>> finalized{null_promise_t{}};
-    finalized.swap(finalized_);
+    // Also clear any pending flush promises on success.
+    auto pending_flushes = std::move(pending_flush_promises_);
+    auto p = std::move(finalized_);  // Move the member promise
     lk.unlock();
+    // Notify handlers and pending flushes *after* releasing the lock.
     for (auto& h : handlers) h->Execute(Status{});
-    finalized.set_value(std::move(object));
+    for (auto& pf : pending_flushes) pf.set_value(Status{});  // Success
+    p.set_value(std::move(object));  // Set value on the moved promise
   }
 
-  void SetError(std::unique_lock<std::mutex> lk, Status status) {
+  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
+    if (!result.ok()) return SetError(std::move(lk), std::move(result));
+    flush_ = false;  // Reset flush flag; WriteLoop may set it again.
+    // Do NOT reset finalize_ or finalizing_ here.
+    auto handlers = ClearHandlers(lk);
+    // Dequeue the promise corresponding to an explicit Flush() call, if any.
+    if (pending_flush_promises_.empty()) {
+      // This can happen if SetError cleared the queue first, or if this
+      // flush was triggered internally by buffer size (not by an explicit
+      // Flush() call) and thus has no promise in the queue.
+      lk.unlock();
+      for (auto& h : handlers) h->Execute(Status{});
+      return;
+    }
+    auto flushed = std::move(pending_flush_promises_.front());
+    pending_flush_promises_.pop_front();
+
+    lk.unlock();  // Unlock only once before notifying
+    // Notify handlers and the specific flush promise *after* releasing the
+    // lock.
+    for (auto& h : handlers) h->Execute(Status{});
+    flushed.set_value(result);
+    // Restart the write loop ONLY if we are not already finalizing.
+    // If finalizing_ is true, the completion will be handled by OnFinalize.
+    std::unique_lock<std::mutex> loop_lk(mu_);
+    if (!finalizing_) WriteLoop(std::move(loop_lk));
+  }
+
+  void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
     resume_status_ = status;
     writing_ = false;
     finalize_ = false;
+    finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
+
+    // Always clear handlers and pending flushes on error.
     auto handlers = ClearHandlers(lk);
-    promise<StatusOr<google::storage::v2::Object>> finalized{null_promise_t{}};
-    finalized.swap(finalized_);
-    lk.unlock();
+    auto pending_flushes = std::move(pending_flush_promises_);
+
+    // Check if the finalized promise has already been completed.
+    if (finalized_promise_completed_) {
+      // Finalized promise already set, just notify handlers and pending
+      // flushes.
+      lk.unlock();  // Release lock before notifying
+      for (auto& h : handlers) h->Execute(status);
+      for (auto& pf : pending_flushes) pf.set_value(status);
+      return;
+    }
+
+    // Mark the finalized promise as completed *before* moving it under the
+    // lock.
+    finalized_promise_completed_ = true;
+    // Move the finalized promise.
+    auto p = std::move(finalized_);
+    lk.unlock();  // Release lock before notifying
+
+    // Notify handlers first.
     for (auto& h : handlers) h->Execute(status);
-    finalized.set_value(std::move(status));
+    // Set error on all pending flush promises.
+    for (auto& pf : pending_flushes) {
+      pf.set_value(status);
+    }
+    // Set error on the moved finalized promise *once*.
+    p.set_value(status);
   }
 
   std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(
@@ -373,6 +521,9 @@ class AsyncWriterConnectionBufferedState
   // finalized_.
   future<StatusOr<google::storage::v2::Object>> finalized_future_;
 
+  // Queue of promises for outstanding Flush() calls.
+  std::deque<promise<Status>> pending_flush_promises_;
+
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.
   //
@@ -410,6 +561,12 @@ class AsyncWriterConnectionBufferedState
 
   // True if cancelled, in which case any RPC failures are final.
   bool cancelled_ = false;
+
+  // True if FinalizeStep has been initiated. Prevents re-entry.
+  bool finalizing_ = false;
+
+  // Tracks if the final promise (`finalized_`) has been completed.
+  bool finalized_promise_completed_ = false;
 };
 
 /**
@@ -476,7 +633,7 @@ class AsyncWriterConnectionBuffered
   }
 
   future<Status> Flush(storage_experimental::WritePayload p) override {
-    return Write(std::move(p));
+    return state_->Flush(std::move(p));
   }
 
   future<StatusOr<std::int64_t>> Query() override { return state_->Query(); }
