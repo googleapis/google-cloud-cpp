@@ -50,6 +50,24 @@ std::string AsString(T&& s) {
       std::move(s));  // NOLINT(bugprone-move-forwarding-reference)
 }
 
+// Forward declarations for mutually recursive functions.
+bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
+           google::bigtable::v2::Value const& pv1,
+           google::bigtable::v2::Type const& pt2,
+           google::bigtable::v2::Value const& pv2);
+
+bool ArrayEqual(  // NOLINT(misc-no-recursion)
+    google::bigtable::v2::Type const& pt1,
+    google::bigtable::v2::Value const& pv1,
+    google::bigtable::v2::Type const& pt2,
+    google::bigtable::v2::Value const& pv2);
+
+bool StructEqual(  // NOLINT(misc-no-recursion)
+    google::bigtable::v2::Type const& pt1,
+    google::bigtable::v2::Value const& pv1,
+    google::bigtable::v2::Type const& pt2,
+    google::bigtable::v2::Value const& pv2);
+
 // Compares two sets of Type and Value protos for equality. This method calls
 // itself recursively to compare subtypes and subvalues.
 bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
@@ -83,24 +101,61 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
            pv1.date_value().year() == pv2.date_value().year();
   }
   if (pt1.has_array_type()) {
-    auto const& vec1 = pv1.array_value().values();
-    auto const& vec2 = pv2.array_value().values();
-    if (vec1.size() != vec2.size()) {
-      return false;
-    }
-    auto const& el_type1 = pt1.array_type().element_type();
-    auto const& el_type2 = pt2.array_type().element_type();
-    if (el_type1.kind_case() != el_type2.kind_case()) {
-      return false;
-    }
-    for (int i = 0; i < vec1.size(); ++i) {
-      if (!Equal(el_type1, vec1.Get(i), el_type2, vec2.Get(i))) {
-        return false;
-      }
-    }
-    return true;
+    return ArrayEqual(pt1, pv1, pt2, pv2);
+  }
+  if (pt1.has_struct_type()) {
+    return StructEqual(pt1, pv1, pt2, pv2);
   }
   return false;
+}
+
+// Compares two sets of Type and Value protos that represent an ARRAY for
+// equality.
+bool ArrayEqual(  // NOLINT(misc-no-recursion)
+    google::bigtable::v2::Type const& pt1,
+    google::bigtable::v2::Value const& pv1,
+    google::bigtable::v2::Type const& pt2,
+    google::bigtable::v2::Value const& pv2) {
+  auto const& vec1 = pv1.array_value().values();
+  auto const& vec2 = pv2.array_value().values();
+  if (vec1.size() != vec2.size()) {
+    return false;
+  }
+  auto const& el_type1 = pt1.array_type().element_type();
+  auto const& el_type2 = pt2.array_type().element_type();
+  if (el_type1.kind_case() != el_type2.kind_case()) {
+    return false;
+  }
+  for (int i = 0; i < vec1.size(); ++i) {
+    if (!Equal(el_type1, vec1.Get(i), el_type2, vec2.Get(i))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Compares two sets of Type and Value protos that represent a STRUCT for
+// equality.
+bool StructEqual(  // NOLINT(misc-no-recursion)
+    google::bigtable::v2::Type const& pt1,
+    google::bigtable::v2::Value const& pv1,
+    google::bigtable::v2::Type const& pt2,
+    google::bigtable::v2::Value const& pv2) {
+  auto const& fields1 = pt1.struct_type().fields();
+  auto const& fields2 = pt2.struct_type().fields();
+  if (fields1.size() != fields2.size()) return false;
+  auto const& v1 = pv1.array_value().values();
+  auto const& v2 = pv2.array_value().values();
+  if (fields1.size() != v1.size() || v1.size() != v2.size()) return false;
+  for (int i = 0; i < fields1.size(); ++i) {
+    auto const& f1 = fields1.Get(i);
+    auto const& f2 = fields2.Get(i);
+    if (f1.field_name() != f2.field_name()) return false;
+    if (!Equal(f1.type(), v1.Get(i), f2.type(), v2.Get(i))) {
+      return false;
+    }
+  }
+  return true;
 }
 
 // From the proto description, `NULL` values are represented by having a kind
@@ -133,16 +188,17 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << "NULL";
   }
 
-  if (v.kind_case() == google::bigtable::v2::Value::kBoolValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kBoolType) {
     return os << v.bool_value();
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kIntValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kInt64Type) {
     return os << v.int_value();
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kFloatValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kFloat32Type ||
+      t.kind_case() == google::bigtable::v2::Type::kFloat64Type) {
     return os << v.float_value();
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kStringValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kStringType) {
     switch (mode) {
       case StreamMode::kScalar:
         return os << v.string_value();
@@ -153,22 +209,22 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
     return os;  // Unreachable, but quiets warning.
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kBytesValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kBytesType) {
     return os << Bytes(AsString(v.bytes_value()));
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kTimestampValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kTimestampType) {
     auto ts = MakeTimestamp(v.timestamp_value());
     if (!ts) {
       internal::ThrowStatus(ts.status());
     }
     return os << ts.value();
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kDateValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kDateType) {
     auto date =
         bigtable_internal::FromProto(t, v).get<absl::CivilDay>().value();
     return os << date;
   }
-  if (v.kind_case() == google::bigtable::v2::Value::kArrayValue) {
+  if (t.kind_case() == google::bigtable::v2::Type::kArrayType) {
     char const* delimiter = "";
     os << '[';
     for (auto&& val : v.array_value().values()) {
@@ -178,15 +234,30 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
       delimiter = ", ";
     }
     return os << ']';
-    return os;
+  }
+  if (t.kind_case() == google::bigtable::v2::Type::kStructType) {
+    char const* delimiter = "";
+    os << '(';
+    for (int i = 0; i < v.array_value().values_size(); ++i) {
+      os << delimiter;
+      if (!t.struct_type().fields(i).field_name().empty()) {
+        os << '"';
+        EscapeQuotes(os, t.struct_type().fields(i).field_name());
+        os << '"' << ": ";
+      }
+      StreamHelper(os, v.array_value().values(i),
+                   t.struct_type().fields(i).type(), StreamMode::kAggregate);
+      delimiter = ", ";
+    }
+    return os << ')';
   }
   // this should include type name
-  return os << "Error: unknown value type code ";
+  return os << "Error: unknown value type code " << t.kind_case();
 }
 }  // namespace
 
 bool operator==(Value const& a, Value const& b) {
-  return Equal(a.type_, a.value_, b.type_, b.value_);
+  return bigtable::Equal(a.type_, a.value_, b.type_, b.value_);
 }
 
 std::ostream& operator<<(std::ostream& os, Value const& v) {
