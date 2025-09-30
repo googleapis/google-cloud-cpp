@@ -115,8 +115,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1512}
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1935}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
@@ -154,8 +154,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1512}
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1935}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
@@ -180,8 +180,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1555}
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1978}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
@@ -210,8 +210,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1555}
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1978}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
@@ -245,8 +245,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1989}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
@@ -300,8 +300,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1989}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
@@ -366,8 +366,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
-  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
+  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2021}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
@@ -419,8 +419,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
-  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
+  /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
+  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2021}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
@@ -480,8 +480,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1626}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2049}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -532,8 +532,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1626}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2049}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -592,8 +592,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.FetchInventoryRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1653}
-  /// [google.cloud.vmmigration.v1.FetchInventoryResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1877}
+  /// [google.cloud.vmmigration.v1.FetchInventoryRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2076}
+  /// [google.cloud.vmmigration.v1.FetchInventoryResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2461}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
@@ -626,13 +626,103 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.FetchInventoryRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1653}
-  /// [google.cloud.vmmigration.v1.FetchInventoryResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1877}
+  /// [google.cloud.vmmigration.v1.FetchInventoryRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2076}
+  /// [google.cloud.vmmigration.v1.FetchInventoryResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2461}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
   FetchInventory(
       google::cloud::vmmigration::v1::FetchInventoryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List remote source's inventory of storage resources.
+  /// The remote source is another cloud vendor (e.g. AWS, Azure).
+  /// The inventory describes the list of existing storage resources in that
+  /// source. Note that this operation lists the resources on the remote source,
+  /// as opposed to listing the MigratingVms resources in the vmmigration
+  /// service.
+  ///
+  /// @param source  Required. The name of the Source.
+  /// @param type  Required. The type of the storage inventory to fetch.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.SourceStorageResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.FetchStorageInventoryRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2481}
+  /// [google.cloud.vmmigration.v1.SourceStorageResource]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2537}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+  FetchStorageInventory(
+      std::string const& source,
+      google::cloud::vmmigration::v1::FetchStorageInventoryRequest::StorageType
+          type,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List remote source's inventory of storage resources.
+  /// The remote source is another cloud vendor (e.g. AWS, Azure).
+  /// The inventory describes the list of existing storage resources in that
+  /// source. Note that this operation lists the resources on the remote source,
+  /// as opposed to listing the MigratingVms resources in the vmmigration
+  /// service.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.FetchStorageInventoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.SourceStorageResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.FetchStorageInventoryRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2481}
+  /// [google.cloud.vmmigration.v1.SourceStorageResource]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2537}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+  FetchStorageInventory(
+      google::cloud::vmmigration::v1::FetchStorageInventoryRequest request,
       Options opts = {});
 
   // clang-format off
@@ -662,8 +752,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListUtilizationReportsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2016}
-  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
+  /// [google.cloud.vmmigration.v1.ListUtilizationReportsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2669}
+  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2547}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
@@ -701,8 +791,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListUtilizationReportsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2016}
-  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
+  /// [google.cloud.vmmigration.v1.ListUtilizationReportsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2669}
+  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2547}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
@@ -728,8 +818,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2064}
-  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
+  /// [google.cloud.vmmigration.v1.GetUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2717}
+  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2547}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
@@ -758,8 +848,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2064}
-  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
+  /// [google.cloud.vmmigration.v1.GetUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2717}
+  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2547}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
@@ -800,8 +890,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2079}
-  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
+  /// [google.cloud.vmmigration.v1.CreateUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2732}
+  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2547}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
@@ -858,8 +948,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2079}
-  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
+  /// [google.cloud.vmmigration.v1.CreateUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2732}
+  /// [google.cloud.vmmigration.v1.UtilizationReport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2547}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
@@ -923,8 +1013,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2117}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2770}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -974,8 +1064,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2117}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteUtilizationReportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2770}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1041,8 +1131,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
-  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
+  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1784}
+  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2912}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -1080,8 +1170,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
-  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
+  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1784}
+  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2912}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -1107,8 +1197,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
-  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
+  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1784}
+  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2810}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -1137,8 +1227,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
-  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
+  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1784}
+  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2810}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -1177,8 +1267,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2168}
-  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
+  /// [google.cloud.vmmigration.v1.CreateDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2821}
+  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1784}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
@@ -1235,8 +1325,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2168}
-  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
+  /// [google.cloud.vmmigration.v1.CreateDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2821}
+  /// [google.cloud.vmmigration.v1.DatacenterConnector]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1784}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
@@ -1300,8 +1390,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2204}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2857}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1351,8 +1441,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2204}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteDatacenterConnectorRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2857}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1422,8 +1512,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.UpgradeApplianceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2230}
-  /// [google.cloud.vmmigration.v1.UpgradeApplianceResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2256}
+  /// [google.cloud.vmmigration.v1.UpgradeApplianceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2883}
+  /// [google.cloud.vmmigration.v1.UpgradeApplianceResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2909}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
@@ -1487,8 +1577,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2544}
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.CreateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3456}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -1543,8 +1633,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2544}
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.CreateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3456}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -1608,8 +1698,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListMigratingVmsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2576}
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.ListMigratingVmsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3488}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
@@ -1647,8 +1737,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListMigratingVmsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2576}
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.ListMigratingVmsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3488}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
@@ -1673,8 +1763,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2623}
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.GetMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3535}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
@@ -1703,8 +1793,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2623}
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.GetMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3535}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
@@ -1741,8 +1831,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
-  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
+  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3549}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -1796,8 +1886,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
-  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
+  /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1047}
+  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3549}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -1859,8 +1949,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2665}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3577}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1910,8 +2000,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2665}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteMigratingVmRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3577}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1974,8 +2064,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.StartMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2676}
-  /// [google.cloud.vmmigration.v1.StartMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2687}
+  /// [google.cloud.vmmigration.v1.StartMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3588}
+  /// [google.cloud.vmmigration.v1.StartMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3599}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
@@ -2026,8 +2116,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.StartMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2676}
-  /// [google.cloud.vmmigration.v1.StartMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2687}
+  /// [google.cloud.vmmigration.v1.StartMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3588}
+  /// [google.cloud.vmmigration.v1.StartMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3599}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
@@ -2097,8 +2187,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ResumeMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2704}
-  /// [google.cloud.vmmigration.v1.ResumeMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2715}
+  /// [google.cloud.vmmigration.v1.ResumeMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3616}
+  /// [google.cloud.vmmigration.v1.ResumeMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3627}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
@@ -2167,8 +2257,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.PauseMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2690}
-  /// [google.cloud.vmmigration.v1.PauseMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2701}
+  /// [google.cloud.vmmigration.v1.PauseMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3602}
+  /// [google.cloud.vmmigration.v1.PauseMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
@@ -2231,8 +2321,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.FinalizeMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2718}
-  /// [google.cloud.vmmigration.v1.FinalizeMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2729}
+  /// [google.cloud.vmmigration.v1.FinalizeMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3630}
+  /// [google.cloud.vmmigration.v1.FinalizeMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3655}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
@@ -2283,8 +2373,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.FinalizeMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2718}
-  /// [google.cloud.vmmigration.v1.FinalizeMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2729}
+  /// [google.cloud.vmmigration.v1.FinalizeMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3630}
+  /// [google.cloud.vmmigration.v1.FinalizeMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3655}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
@@ -2323,6 +2413,74 @@ class VmMigrationClient {
 
   // clang-format off
   ///
+  /// Extend the migrating VM time to live.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.ExtendMigrationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.ExtendMigrationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.ExtendMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3641}
+  /// [google.cloud.vmmigration.v1.ExtendMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3652}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+  ExtendMigration(
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExtendMigration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ExtendMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExtendMigration
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+  ExtendMigration(google::longrunning::Operation const& operation,
+                  Options opts = {});
+
+  // clang-format off
+  ///
   /// Initiates a Clone of a specific migrating VM.
   ///
   /// @param parent  Required. The Clone's parent.
@@ -2348,8 +2506,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
-  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
+  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1252}
+  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
@@ -2403,8 +2561,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
-  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
+  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1252}
+  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
@@ -2464,8 +2622,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CancelCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1168}
-  /// [google.cloud.vmmigration.v1.CancelCloneJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1179}
+  /// [google.cloud.vmmigration.v1.CancelCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1497}
+  /// [google.cloud.vmmigration.v1.CancelCloneJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
@@ -2515,8 +2673,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CancelCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1168}
-  /// [google.cloud.vmmigration.v1.CancelCloneJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1179}
+  /// [google.cloud.vmmigration.v1.CancelCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1497}
+  /// [google.cloud.vmmigration.v1.CancelCloneJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
@@ -2555,7 +2713,8 @@ class VmMigrationClient {
 
   // clang-format off
   ///
-  /// Lists CloneJobs of a given migrating VM.
+  /// Lists the CloneJobs of a migrating VM. Only 25 most recent CloneJobs are
+  /// listed.
   ///
   /// @param parent  Required. The parent, which owns this collection of source VMs.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2580,8 +2739,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
-  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
+  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1252}
+  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1511}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
@@ -2589,7 +2748,8 @@ class VmMigrationClient {
 
   // clang-format off
   ///
-  /// Lists CloneJobs of a given migrating VM.
+  /// Lists the CloneJobs of a migrating VM. Only 25 most recent CloneJobs are
+  /// listed.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2619,8 +2779,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
-  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
+  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1252}
+  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1511}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
@@ -2645,8 +2805,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
-  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
+  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1252}
+  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1554}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
@@ -2675,8 +2835,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
-  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
+  /// [google.cloud.vmmigration.v1.CloneJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1252}
+  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1554}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
@@ -2712,8 +2872,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3104}
-  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
+  /// [google.cloud.vmmigration.v1.CreateCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4046}
+  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1356}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
@@ -2769,8 +2929,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3104}
-  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
+  /// [google.cloud.vmmigration.v1.CreateCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4046}
+  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1356}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
@@ -2830,8 +2990,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CancelCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3136}
-  /// [google.cloud.vmmigration.v1.CancelCutoverJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3147}
+  /// [google.cloud.vmmigration.v1.CancelCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4078}
+  /// [google.cloud.vmmigration.v1.CancelCutoverJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4089}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
@@ -2881,8 +3041,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CancelCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3136}
-  /// [google.cloud.vmmigration.v1.CancelCutoverJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3147}
+  /// [google.cloud.vmmigration.v1.CancelCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4078}
+  /// [google.cloud.vmmigration.v1.CancelCutoverJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4089}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
@@ -2921,7 +3081,8 @@ class VmMigrationClient {
 
   // clang-format off
   ///
-  /// Lists CutoverJobs of a given migrating VM.
+  /// Lists the CutoverJobs of a migrating VM. Only 25 most recent CutoverJobs
+  /// are listed.
   ///
   /// @param parent  Required. The parent, which owns this collection of migrating VMs.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2946,8 +3107,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
-  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
+  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1356}
+  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4092}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
@@ -2955,7 +3116,8 @@ class VmMigrationClient {
 
   // clang-format off
   ///
-  /// Lists CutoverJobs of a given migrating VM.
+  /// Lists the CutoverJobs of a migrating VM. Only 25 most recent CutoverJobs
+  /// are listed.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2985,8 +3147,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
-  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
+  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1356}
+  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4092}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
@@ -3011,8 +3173,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
-  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
+  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1356}
+  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4136}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
@@ -3041,8 +3203,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
-  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
+  /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1356}
+  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4136}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
@@ -3076,8 +3238,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
-  /// [google.cloud.vmmigration.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
+  /// [google.cloud.vmmigration.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3868}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
@@ -3115,8 +3277,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
-  /// [google.cloud.vmmigration.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
+  /// [google.cloud.vmmigration.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3868}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
@@ -3141,8 +3303,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2969}
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3911}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
@@ -3171,8 +3333,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2969}
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3911}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
@@ -3206,8 +3368,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2980}
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.CreateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3922}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
@@ -3261,8 +3423,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2980}
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.CreateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3922}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
@@ -3327,8 +3489,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
-  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
+  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3954}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
@@ -3380,8 +3542,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
-  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
+  /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3827}
+  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3954}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
@@ -3441,8 +3603,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3040}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3982}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -3493,8 +3655,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3040}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3982}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -3555,8 +3717,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.AddGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3066}
-  /// [google.cloud.vmmigration.v1.AddGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3082}
+  /// [google.cloud.vmmigration.v1.AddGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4008}
+  /// [google.cloud.vmmigration.v1.AddGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4024}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
@@ -3606,8 +3768,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.AddGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3066}
-  /// [google.cloud.vmmigration.v1.AddGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3082}
+  /// [google.cloud.vmmigration.v1.AddGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4008}
+  /// [google.cloud.vmmigration.v1.AddGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4024}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
@@ -3669,8 +3831,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3085}
-  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3101}
+  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4027}
+  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4043}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
@@ -3720,8 +3882,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3085}
-  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3101}
+  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4027}
+  /// [google.cloud.vmmigration.v1.RemoveGroupMigrationResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4043}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
@@ -3790,8 +3952,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListTargetProjectsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2770}
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.ListTargetProjectsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3696}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
@@ -3832,8 +3994,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListTargetProjectsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2770}
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.ListTargetProjectsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3696}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
@@ -3861,8 +4023,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2759}
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.GetTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3685}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
@@ -3894,8 +4056,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2759}
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.GetTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3685}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
@@ -3932,8 +4094,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.CreateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3740}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -3991,8 +4153,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.CreateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.CreateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3740}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -4062,8 +4224,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
-  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
+  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3772}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -4120,8 +4282,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
-  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
+  /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3659}
+  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3772}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -4186,8 +4348,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2874}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3800}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -4240,8 +4402,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.DeleteTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2874}
-  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
+  /// [google.cloud.vmmigration.v1.DeleteTargetProjectRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3800}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -4305,8 +4467,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListReplicationCyclesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3316}
-  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  /// [google.cloud.vmmigration.v1.ListReplicationCyclesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4415}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L935}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
@@ -4344,8 +4506,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.ListReplicationCyclesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3316}
-  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  /// [google.cloud.vmmigration.v1.ListReplicationCyclesRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4415}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L935}
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
@@ -4371,8 +4533,8 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetReplicationCycleRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3360}
-  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  /// [google.cloud.vmmigration.v1.GetReplicationCycleRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4459}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L935}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
@@ -4401,14 +4563,1319 @@ class VmMigrationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmmigration.v1.GetReplicationCycleRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3360}
-  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  /// [google.cloud.vmmigration.v1.GetReplicationCycleRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4459}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L935}
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
   GetReplicationCycle(
       google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists ImageImports in a given project.
+  ///
+  /// @param parent  Required. The parent, which owns this collection of targets.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.ImageImport], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.ImageImport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4485}
+  /// [google.cloud.vmmigration.v1.ListImageImportsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4867}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::ImageImport> ListImageImports(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists ImageImports in a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.ListImageImportsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.ImageImport], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.ImageImport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4485}
+  /// [google.cloud.vmmigration.v1.ListImageImportsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4867}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::ImageImport> ListImageImports(
+      google::cloud::vmmigration::v1::ListImageImportsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ImageImport.
+  ///
+  /// @param name  Required. The ImageImport name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmmigration.v1.ImageImport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.GetImageImportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4856}
+  /// [google.cloud.vmmigration.v1.ImageImport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4485}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmmigration::v1::ImageImport> GetImageImport(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ImageImport.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.GetImageImportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmmigration.v1.ImageImport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.GetImageImportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4856}
+  /// [google.cloud.vmmigration.v1.ImageImport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4485}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmmigration::v1::ImageImport> GetImageImport(
+      google::cloud::vmmigration::v1::GetImageImportRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ImageImport in a given project.
+  ///
+  /// @param parent  Required. The ImageImport's parent.
+  /// @param image_import  Required. The create request body.
+  /// @param image_import_id  Required. The image import identifier.
+  ///  This value maximum length is 63 characters, and valid characters are
+  ///  /[a-z][0-9]-/. It must start with an english letter and must not end with a
+  ///  hyphen.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.ImageImport] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CreateImageImportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4914}
+  /// [google.cloud.vmmigration.v1.ImageImport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4485}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(
+      std::string const& parent,
+      google::cloud::vmmigration::v1::ImageImport const& image_import,
+      std::string const& image_import_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateImageImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateImageImport(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::vmmigration::v1::ImageImport const& image_import,
+      std::string const& image_import_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ImageImport in a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.CreateImageImportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.ImageImport] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CreateImageImportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4914}
+  /// [google.cloud.vmmigration.v1.ImageImport]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4485}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateImageImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateImageImport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateImageImport
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ImageImport.
+  ///
+  /// @param name  Required. The ImageImport name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DeleteImageImportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4949}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteImageImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteImageImport(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ImageImport.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.DeleteImageImportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DeleteImageImportRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4949}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteImageImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteImageImport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteImageImport
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists ImageImportJobs in a given project.
+  ///
+  /// @param parent  Required. The parent, which owns this collection of targets.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.ImageImportJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.ImageImportJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4531}
+  /// [google.cloud.vmmigration.v1.ListImageImportJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4986}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+  ListImageImportJobs(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists ImageImportJobs in a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.ListImageImportJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.ImageImportJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.ImageImportJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4531}
+  /// [google.cloud.vmmigration.v1.ListImageImportJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4986}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+  ListImageImportJobs(
+      google::cloud::vmmigration::v1::ListImageImportJobsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ImageImportJob.
+  ///
+  /// @param name  Required. The ImageImportJob name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmmigration.v1.ImageImportJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.GetImageImportJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4975}
+  /// [google.cloud.vmmigration.v1.ImageImportJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4531}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmmigration::v1::ImageImportJob> GetImageImportJob(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ImageImportJob.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.GetImageImportJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmmigration.v1.ImageImportJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.GetImageImportJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4975}
+  /// [google.cloud.vmmigration.v1.ImageImportJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4531}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmmigration::v1::ImageImportJob> GetImageImportJob(
+      google::cloud::vmmigration::v1::GetImageImportJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates the cancellation of a running clone job.
+  ///
+  /// @param name  Required. The image import job id.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.CancelImageImportJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CancelImageImportJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5033}
+  /// [google.cloud.vmmigration.v1.CancelImageImportJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5044}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelImageImportJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CancelImageImportJob(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates the cancellation of a running clone job.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.CancelImageImportJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.CancelImageImportJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CancelImageImportJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5033}
+  /// [google.cloud.vmmigration.v1.CancelImageImportJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5044}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelImageImportJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CancelImageImportJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelImageImportJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new disk migration job in a given Source.
+  ///
+  /// @param parent  Required. The DiskMigrationJob's parent.
+  /// @param disk_migration_job  Required. The create request body.
+  /// @param disk_migration_job_id  Required. The DiskMigrationJob identifier.
+  ///  The maximum length of this value is 63 characters.
+  ///  Valid characters are lower case Latin letters, digits and hyphen.
+  ///  It must start with a Latin letter and must not end with a hyphen.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.DiskMigrationJob] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CreateDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5257}
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(std::string const& parent,
+                         google::cloud::vmmigration::v1::DiskMigrationJob const&
+                             disk_migration_job,
+                         std::string const& disk_migration_job_id,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDiskMigrationJob(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::vmmigration::v1::DiskMigrationJob const&
+          disk_migration_job,
+      std::string const& disk_migration_job_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new disk migration job in a given Source.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.CreateDiskMigrationJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.DiskMigrationJob] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CreateDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5257}
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDiskMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists DiskMigrationJobs in a given Source.
+  ///
+  /// @param parent  Required. The parent, which owns this collection of DiskMigrationJobs.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.DiskMigrationJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  /// [google.cloud.vmmigration.v1.ListDiskMigrationJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5296}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+  ListDiskMigrationJobs(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists DiskMigrationJobs in a given Source.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.ListDiskMigrationJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vmmigration.v1.DiskMigrationJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  /// [google.cloud.vmmigration.v1.ListDiskMigrationJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5296}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+  ListDiskMigrationJobs(
+      google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single DiskMigrationJob.
+  ///
+  /// @param name  Required. The name of the DiskMigrationJob.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmmigration.v1.DiskMigrationJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  /// [google.cloud.vmmigration.v1.GetDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5350}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+  GetDiskMigrationJob(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single DiskMigrationJob.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.GetDiskMigrationJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vmmigration.v1.DiskMigrationJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  /// [google.cloud.vmmigration.v1.GetDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5350}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+  GetDiskMigrationJob(
+      google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single DiskMigrationJob.
+  ///
+  /// @param disk_migration_job  Required. The update request body.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  DiskMigrationJob resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask, then a mask equivalent to all fields that are
+  ///  populated (have a non-empty value), will be implied.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.DiskMigrationJob] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  /// [google.cloud.vmmigration.v1.UpdateDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5361}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(google::cloud::vmmigration::v1::DiskMigrationJob const&
+                             disk_migration_job,
+                         google::protobuf::FieldMask const& update_mask,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DiskMigrationJob const&
+          disk_migration_job,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single DiskMigrationJob.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.UpdateDiskMigrationJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.DiskMigrationJob] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DiskMigrationJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5048}
+  /// [google.cloud.vmmigration.v1.UpdateDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5361}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDiskMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single DiskMigrationJob.
+  ///
+  /// @param name  Required. The name of the DiskMigrationJob.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DeleteDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5395}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDiskMigrationJob(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single DiskMigrationJob.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.DeleteDiskMigrationJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.DeleteDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5395}
+  /// [google.cloud.vmmigration.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L4147}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDiskMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Runs the disk migration job.
+  ///
+  /// @param name  Required. The name of the DiskMigrationJob.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.RunDiskMigrationJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.RunDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5406}
+  /// [google.cloud.vmmigration.v1.RunDiskMigrationJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5417}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RunDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RunDiskMigrationJob(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Runs the disk migration job.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.RunDiskMigrationJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.RunDiskMigrationJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.RunDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5406}
+  /// [google.cloud.vmmigration.v1.RunDiskMigrationJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5417}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RunDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RunDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RunDiskMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels the disk migration job.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vmmigration.v1.CancelDiskMigrationJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vmmigration.v1.CancelDiskMigrationJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vmmigration.v1.CancelDiskMigrationJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5420}
+  /// [google.cloud.vmmigration.v1.CancelDiskMigrationJobResponse]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L5431}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+  CancelDiskMigrationJob(
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelDiskMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CancelDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelDiskMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+  CancelDiskMigrationJob(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///

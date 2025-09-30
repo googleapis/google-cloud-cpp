@@ -487,6 +487,139 @@ AnalyticsHubServiceClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::CreateQueryTemplate(
+    std::string const& parent,
+    google::cloud::bigquery::analyticshub::v1::QueryTemplate const&
+        query_template,
+    std::string const& query_template_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest request;
+  request.set_parent(parent);
+  *request.mutable_query_template() = query_template;
+  request.set_query_template_id(query_template_id);
+  return connection_->CreateQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::CreateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::GetQueryTemplate(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest request;
+  request.set_name(name);
+  return connection_->GetQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::GetQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetQueryTemplate(request);
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::ListQueryTemplates(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest request;
+  request.set_parent(parent);
+  return connection_->ListQueryTemplates(request);
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::ListQueryTemplates(
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListQueryTemplates(std::move(request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::UpdateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::QueryTemplate const&
+        query_template,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest request;
+  *request.mutable_query_template() = query_template;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::UpdateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateQueryTemplate(request);
+}
+
+Status AnalyticsHubServiceClient::DeleteQueryTemplate(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest request;
+  request.set_name(name);
+  return connection_->DeleteQueryTemplate(request);
+}
+
+Status AnalyticsHubServiceClient::DeleteQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::SubmitQueryTemplate(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest request;
+  request.set_name(name);
+  return connection_->SubmitQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::SubmitQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubmitQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::ApproveQueryTemplate(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::ApproveQueryTemplateRequest
+      request;
+  request.set_name(name);
+  return connection_->ApproveQueryTemplate(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceClient::ApproveQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ApproveQueryTemplate(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1
 }  // namespace cloud

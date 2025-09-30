@@ -60,6 +60,37 @@ ConfidentialComputingTracingStub::VerifyAttestation(
       context, *span, child_->VerifyAttestation(context, options, request));
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingTracingStub::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "VerifyConfidentialSpace");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->VerifyConfidentialSpace(context, options, request));
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingTracingStub::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "VerifyConfidentialGke");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->VerifyConfidentialGke(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -109,6 +109,8 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bytes.cc
+    bytes.h
     cell.h
     client_options.cc
     client_options.h
@@ -215,6 +217,7 @@ add_library(
     internal/rpc_policy_parameters.inc
     internal/traced_row_reader.cc
     internal/traced_row_reader.h
+    internal/tuple_utils.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
     metadata_update_policy.h
@@ -226,6 +229,8 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    query_row.cc
+    query_row.h
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
@@ -251,6 +256,10 @@ add_library(
     table_config.h
     table_resource.cc
     table_resource.h
+    timestamp.cc
+    timestamp.h
+    value.cc
+    value.h
     version.cc
     version.h
     version_info.h
@@ -341,6 +350,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         admin/mocks/mock_bigtable_instance_admin_connection.h
         admin/mocks/mock_bigtable_table_admin_connection.h
         mocks/mock_data_connection.h
+        mocks/mock_query_row.h
         mocks/mock_row_reader.cc
         mocks/mock_row_reader.h)
     target_link_libraries(
@@ -416,6 +426,7 @@ if (BUILD_TESTING)
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
+        bytes_test.cc
         cell_test.cc
         client_options_test.cc
         cluster_config_test.cc
@@ -462,12 +473,14 @@ if (BUILD_TESTING)
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
+        internal/tuple_utils_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc
+        query_row_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
         row_reader_test.cc
@@ -488,6 +501,8 @@ if (BUILD_TESTING)
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
+        timestamp_test.cc
+        value_test.cc
         wait_for_consistency_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.

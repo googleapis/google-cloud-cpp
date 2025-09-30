@@ -56,6 +56,30 @@ ConfidentialComputingTracingConnection::VerifyAttestation(
   return internal::EndSpan(*span, child_->VerifyAttestation(request));
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingTracingConnection::VerifyConfidentialSpace(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "VerifyConfidentialSpace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyConfidentialSpace(request));
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingTracingConnection::VerifyConfidentialGke(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "VerifyConfidentialGke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyConfidentialGke(request));
+}
+
 StreamRange<google::cloud::location::Location>
 ConfidentialComputingTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
