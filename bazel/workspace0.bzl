@@ -126,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/a92cee399e0fc8afa2d460373b1085f543bc8d3f.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/46403a9acec0719c130b33eb38b2ee62a45f9f6c.tar.gz",
         ],
-        sha256 = "468056c3244b7a4f6a575a135b6b6dde280a3f219203a01c4a09d0cf504a4ba6",
-        strip_prefix = "googleapis-a92cee399e0fc8afa2d460373b1085f543bc8d3f",
+        sha256 = "8286d42d466aee4caa13891fee42b66c3208069ce797bd7445275884b8d47c02",
+        strip_prefix = "googleapis-46403a9acec0719c130b33eb38b2ee62a45f9f6c",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]

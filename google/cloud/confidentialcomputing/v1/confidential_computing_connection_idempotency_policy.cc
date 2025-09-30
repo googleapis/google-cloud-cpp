@@ -45,6 +45,20 @@ Idempotency ConfidentialComputingConnectionIdempotencyPolicy::VerifyAttestation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+ConfidentialComputingConnectionIdempotencyPolicy::VerifyConfidentialSpace(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+ConfidentialComputingConnectionIdempotencyPolicy::VerifyConfidentialGke(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ConfidentialComputingConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

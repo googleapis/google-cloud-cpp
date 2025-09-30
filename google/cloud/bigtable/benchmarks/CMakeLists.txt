@@ -85,6 +85,7 @@ set(bigtable_benchmark_programs
     endurance_benchmark.cc
     mutation_batcher_throughput_benchmark.cc
     read_sync_vs_async_benchmark.cc
+    scan_async_throughput_benchmark.cc
     scan_throughput_benchmark.cc)
 export_list_to_bazel("bigtable_benchmark_programs.bzl"
                      "bigtable_benchmark_programs" YEAR "2018")

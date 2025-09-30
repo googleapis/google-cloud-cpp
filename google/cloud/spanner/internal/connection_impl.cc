@@ -137,15 +137,16 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   void TryCancel() override { context_->TryCancel(); }
 
-  absl::optional<PartialResultSet> Read(
-      absl::optional<std::string> const&) override {
-    google::spanner::v1::PartialResultSet result;
-    auto status = reader_->Read(&result);
-    if (status.has_value()) {
-      final_status_ = *std::move(status);
-      return absl::nullopt;
+  bool Read(absl::optional<std::string> const&,
+            UnownedPartialResultSet& response) override {
+    auto opt_status = reader_->Read(&response.result);
+    response.resumption = false;
+
+    if (opt_status.has_value()) {
+      final_status_ = *std::move(opt_status);
+      return false;
     }
-    return PartialResultSet{std::move(result), false};
+    return true;
   }
 
   Status Finish() override { return final_status_; }
@@ -356,7 +357,8 @@ spanner::BatchedCommitResult FromProto(
 }
 
 template <typename T>
-absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
+absl::optional<T> GetRandomElement(
+    google::protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
   std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();

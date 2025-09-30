@@ -123,8 +123,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L928}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1257}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -162,8 +162,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L928}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1257}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -201,8 +201,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L958}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1287}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -241,8 +241,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L958}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1287}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -270,8 +270,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L983}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1312}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -300,8 +300,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L983}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1312}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -330,8 +330,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L995}
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1324}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -364,8 +364,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L995}
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1324}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -394,8 +394,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1015}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1344}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -427,8 +427,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L351}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1015}
+  /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1344}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -453,7 +453,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1027}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1356}
   ///
   // clang-format on
   Status DeleteDataExchange(std::string const& name, Options opts = {});
@@ -479,7 +479,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1027}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1356}
   ///
   // clang-format on
   Status DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::
@@ -514,8 +514,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1039}
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
+  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1368}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Listing> ListListings(
@@ -553,8 +553,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1039}
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
+  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1368}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Listing> ListListings(
@@ -580,8 +580,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1068}
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
+  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1397}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> GetListing(
@@ -610,8 +610,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1068}
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
+  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1397}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> GetListing(
@@ -639,8 +639,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1080}
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1409}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> CreateListing(
@@ -671,8 +671,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1080}
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1409}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> CreateListing(
@@ -701,8 +701,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1100}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1429}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
@@ -732,8 +732,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1100}
+  /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1429}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
@@ -758,7 +758,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1112}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1441}
   ///
   // clang-format on
   Status DeleteListing(std::string const& name, Options opts = {});
@@ -784,7 +784,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1112}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1441}
   ///
   // clang-format on
   Status DeleteListing(
@@ -816,8 +816,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1129}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1153}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1458}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1482}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
@@ -851,8 +851,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1129}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1153}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1458}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1482}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
@@ -890,8 +890,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1159}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1191}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1488}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1520}
   ///
   // clang-format on
   future<StatusOr<
@@ -945,8 +945,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1159}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1191}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1488}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1520}
   ///
   // clang-format on
   future<StatusOr<
@@ -1014,8 +1014,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1197}
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1209}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1526}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1538}
   ///
   // clang-format on
   future<StatusOr<
@@ -1068,8 +1068,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1197}
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1209}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1526}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1538}
   ///
   // clang-format on
   future<StatusOr<
@@ -1128,8 +1128,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1215}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L801}
+  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1544}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1158,8 +1158,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1215}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L801}
+  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1544}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1196,8 +1196,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1227}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L801}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1556}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1235,8 +1235,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1227}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L801}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1556}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1275,8 +1275,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1271}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L801}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1600}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1315,8 +1315,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1271}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L801}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1600}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1344,8 +1344,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1302}
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1320}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1631}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1649}
   ///
   // clang-format on
   StatusOr<
@@ -1375,8 +1375,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1302}
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1320}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1631}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1649}
   ///
   // clang-format on
   StatusOr<
@@ -1411,8 +1411,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1323}
-  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1335}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1652}
+  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1664}
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
@@ -1462,8 +1462,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1323}
-  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1335}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1652}
+  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1664}
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
@@ -1591,6 +1591,442 @@ class AnalyticsHubServiceClient {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new QueryTemplate
+  ///
+  /// @param parent  Required. The parent resource path of the QueryTemplate.
+  ///  e.g.
+  ///  `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myQueryTemplate`.
+  /// @param query_template  Required. The QueryTemplate to create.
+  /// @param query_template_id  Required. The ID of the QueryTemplate to create.
+  ///  Must contain only Unicode letters, numbers (0-9), underscores (_).
+  ///  Max length: 100 bytes.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.CreateQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L561}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  CreateQueryTemplate(
+      std::string const& parent,
+      google::cloud::bigquery::analyticshub::v1::QueryTemplate const&
+          query_template,
+      std::string const& query_template_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new QueryTemplate
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.CreateQueryTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.CreateQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L561}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  CreateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          CreateQueryTemplateRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QueryTemplate
+  ///
+  /// @param name  Required. The parent resource path of the QueryTemplate.
+  ///  e.g.
+  ///  `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTemplate`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.GetQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L582}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  GetQueryTemplate(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QueryTemplate
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.GetQueryTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.GetQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L582}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  GetQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all QueryTemplates in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource path of the QueryTemplates.
+  ///  e.g. `projects/myproject/locations/us/dataExchanges/123`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.analyticshub.v1.QueryTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.ListQueryTemplatesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L595}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ListQueryTemplates(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all QueryTemplates in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.ListQueryTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.analyticshub.v1.QueryTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.ListQueryTemplatesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L595}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ListQueryTemplates(
+      google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an existing QueryTemplate
+  ///
+  /// @param query_template  Required. The QueryTemplate to update.
+  /// @param update_mask  Optional. Field mask specifies the fields to update in the query template
+  ///  resource. The fields specified in the `updateMask` are relative to the
+  ///  resource and are not a full request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L624}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  UpdateQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::QueryTemplate const&
+          query_template,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an existing QueryTemplate
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.UpdateQueryTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L624}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  UpdateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          UpdateQueryTemplateRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a query template.
+  ///
+  /// @param name  Required. The resource path of the QueryTemplate.
+  ///  e.g.
+  ///  `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTemplate`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L636}
+  ///
+  // clang-format on
+  Status DeleteQueryTemplate(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a query template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.DeleteQueryTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L636}
+  ///
+  // clang-format on
+  Status DeleteQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                                 DeleteQueryTemplateRequest const& request,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Submits a query template for approval.
+  ///
+  /// @param name  Required. The resource path of the QueryTemplate.
+  ///  e.g.
+  ///  `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTemplate`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  /// [google.cloud.bigquery.analyticshub.v1.SubmitQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L649}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  SubmitQueryTemplate(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Submits a query template for approval.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.SubmitQueryTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  /// [google.cloud.bigquery.analyticshub.v1.SubmitQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L649}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  SubmitQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          SubmitQueryTemplateRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Approves a query template.
+  ///
+  /// @param name  Required. The resource path of the QueryTemplate.
+  ///  e.g.
+  ///  `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTemplate`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.ApproveQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L662}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ApproveQueryTemplate(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Approves a query template.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.analyticshub.v1.ApproveQueryTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.analyticshub.v1.QueryTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.analyticshub.v1.ApproveQueryTemplateRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L662}
+  /// [google.cloud.bigquery.analyticshub.v1.QueryTemplate]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ApproveQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                           ApproveQueryTemplateRequest const& request,
+                       Options opts = {});
 
  private:
   std::shared_ptr<AnalyticsHubServiceConnection> connection_;
