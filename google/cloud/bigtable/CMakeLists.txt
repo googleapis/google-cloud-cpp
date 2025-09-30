@@ -232,6 +232,7 @@ add_library(
     query_row.cc
     query_row.h
     read_modify_write_rule.h
+    results.h
     resource_names.cc
     resource_names.h
     retry_policy.h
