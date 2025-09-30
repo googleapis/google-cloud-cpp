@@ -485,8 +485,6 @@ class Value {
   static StatusOr<std::vector<T>> GetValue(
       std::vector<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
     if (!pt.has_array_type() || !pv.has_array_value()) {
-      pt.PrintDebugString();
-      pv.PrintDebugString();
       return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
     }
     std::vector<T> v;
@@ -504,8 +502,6 @@ class Value {
   static StatusOr<std::tuple<Ts...>> GetValue(
       std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const& pt) {
     if (!pt.has_struct_type() || !pv.has_array_value()) {
-      pt.PrintDebugString();
-      pv.PrintDebugString();
       return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
     }
     std::tuple<Ts...> tup;
@@ -529,7 +525,6 @@ class Value {
       auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
       auto et = type.struct_type().fields(i).type();
       using ET = decltype(e);
-      std::cout << "getting value for " << e.DebugString() << std::endl;
       auto value = GetValue(T{}, std::forward<ET>(e), et);
       ++i;
       if (!value) {
@@ -544,7 +539,6 @@ class Value {
       auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
       auto et = type.struct_type().fields(i).type();
       using ET = decltype(e);
-      std::cout << "getting value&& for " << e.DebugString() << std::endl;
       auto value = GetValue(T{}, std::forward<ET>(e), et);
       ++i;
       if (!value) {
