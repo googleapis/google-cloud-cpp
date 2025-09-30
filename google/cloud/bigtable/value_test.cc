@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/value.h"
+#include "google/cloud/bigtable/internal/tuple_utils.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -192,6 +193,31 @@ TEST(Value, BasicSemantics) {
     std::vector<absl::optional<absl::CivilDay>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
+  }
+}
+
+TEST(Value, ArrayValueBasedEquality) {
+  std::vector<Value> test_cases = {
+      Value(std::vector<double>{1.2, 3.4}),
+      Value(std::make_tuple(1.2, 3.4)),
+
+      // empty containers
+      Value(std::vector<double>()),
+      Value(std::make_tuple()),
+  };
+
+  for (size_t i = 0; i < test_cases.size(); i++) {
+    auto const& tc1 = test_cases[i];
+    for (size_t j = 0; j < test_cases.size(); j++) {
+      auto const& tc2 = test_cases[j];
+      // Compares tc1 to tc2, which ensures that different "kinds" of
+      // value are never equal.
+      if (i == j) {
+        EXPECT_EQ(tc1, tc2);
+        continue;
+      }
+      EXPECT_NE(tc1, tc2);
+    }
   }
 }
 
@@ -777,6 +803,31 @@ void SetProtoKind(Value& v, char const* x) {
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
+void SetProtoKind(Value& v, std::vector<std::int64_t> x) {
+  auto p = bigtable_internal::ToProto(v);
+  auto list = *p.second.mutable_array_value();
+  for (auto&& e : x) {
+    google::bigtable::v2::Value el;
+    el.set_int_value(e);
+    *list.add_values() = el;
+  }
+  v = bigtable_internal::FromProto(p.first, p.second);
+}
+
+void SetProtoKind(Value& v, std::tuple<std::int64_t, std::int64_t> x) {
+  auto p = bigtable_internal::ToProto(v);
+  auto list = *p.second.mutable_array_value();
+  auto e = std::get<0>(x);
+  google::bigtable::v2::Value el;
+  el.set_int_value(e);
+  *list.add_values() = el;
+  el = google::bigtable::v2::Value();
+  e = std::get<1>(x);
+  el.set_int_value(e);
+  *list.add_values() = el;
+  v = bigtable_internal::FromProto(p.first, p.second);
+}
+
 void ClearProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.first.clear_kind();
@@ -799,6 +850,12 @@ TEST(Value, GetBadBool) {
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, "hello");
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 }
 
@@ -827,6 +884,12 @@ TEST(Value, GetBadFloat64) {
 
   SetProtoKind(v, std::nan("NaN"));
   EXPECT_THAT(v.get<double>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadFloat32) {
@@ -854,6 +917,12 @@ TEST(Value, GetBadFloat32) {
 
   SetProtoKind(v, std::nan("NaN"));
   EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadString) {
@@ -869,6 +938,12 @@ TEST(Value, GetBadString) {
 
   SetProtoKind(v, 0.0);
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadBytes) {
@@ -883,6 +958,12 @@ TEST(Value, GetBadBytes) {
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 }
 
@@ -902,6 +983,12 @@ TEST(Value, GetBadTimestamp) {
 
   SetProtoKind(v, "blah");
   EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadDate) {
@@ -920,6 +1007,12 @@ TEST(Value, GetBadDate) {
 
   SetProtoKind(v, "blah");
   EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadOptional) {
@@ -931,6 +1024,12 @@ TEST(Value, GetBadOptional) {
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 }
 
@@ -950,6 +1049,12 @@ TEST(Value, GetBadArray) {
 
   SetProtoKind(v, "blah");
   EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadStruct) {
@@ -968,6 +1073,12 @@ TEST(Value, GetBadStruct) {
 
   SetProtoKind(v, "blah");
   EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<std::tuple<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<std::tuple<double>>(), Not(IsOk()));
 }
 
 TEST(Value, OutputStream) {

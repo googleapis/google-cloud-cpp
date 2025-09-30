@@ -109,9 +109,8 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   return false;
 }
 
-// Compares two sets of Type and Value protos that represent a STRUCT for
-// equality. This method calls Equals() recursively to compare subtypes and
-// subvalues.
+// Compares two sets of Type and Value protos that represent an ARRAY for
+// equality.
 bool ArrayEqual(  // NOLINT(misc-no-recursion)
     google::bigtable::v2::Type const& pt1,
     google::bigtable::v2::Value const& pv1,
@@ -136,8 +135,7 @@ bool ArrayEqual(  // NOLINT(misc-no-recursion)
 }
 
 // Compares two sets of Type and Value protos that represent a STRUCT for
-// equality. This method calls Equals() recursively to compare subtypes and
-// subvalues.
+// equality.
 bool StructEqual(  // NOLINT(misc-no-recursion)
     google::bigtable::v2::Type const& pt1,
     google::bigtable::v2::Value const& pv1,

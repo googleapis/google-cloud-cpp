@@ -484,12 +484,14 @@ class Value {
   template <typename T, typename V>
   static StatusOr<std::vector<T>> GetValue(
       std::vector<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
-    if (pv.kind_case() != google::bigtable::v2::Value::kArrayValue) {
+    if (!pt.has_array_type() || !pv.has_array_value()) {
+      pt.PrintDebugString();
+      pv.PrintDebugString();
       return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
     }
     std::vector<T> v;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
-      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
       using ET = decltype(e);
       auto value =
           GetValue(T{}, std::forward<ET>(e), pt.array_type().element_type());
@@ -501,7 +503,9 @@ class Value {
   template <typename V, typename... Ts>
   static StatusOr<std::tuple<Ts...>> GetValue(
       std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const& pt) {
-    if (!pv.has_array_value()) {
+    if (!pt.has_struct_type() || !pv.has_array_value()) {
+      pt.PrintDebugString();
+      pv.PrintDebugString();
       return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
     }
     std::tuple<Ts...> tup;
@@ -513,7 +517,7 @@ class Value {
   }
 
   // A functor to be used with internal::ForEach to extract C++ types from a
-  // ListValue proto and store then in a tuple.
+  // bigtable::v2::Value proto and with array value store then in a tuple.
   template <typename V>
   struct ExtractTupleValues {
     Status& status;
@@ -522,9 +526,11 @@ class Value {
     google::bigtable::v2::Type const& type;
     template <typename T>
     void operator()(T& t) {
-      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
+      auto et = type.struct_type().fields(i).type();
       using ET = decltype(e);
-      auto value = GetValue(T{}, std::forward<ET>(e), type);
+      std::cout << "getting value for " << e.DebugString() << std::endl;
+      auto value = GetValue(T{}, std::forward<ET>(e), et);
       ++i;
       if (!value) {
         status = std::move(value).status();
@@ -535,9 +541,11 @@ class Value {
     template <typename T>
     void operator()(std::pair<std::string, T>& p) {
       p.first = type.struct_type().fields(i).field_name();
-      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
+      auto et = type.struct_type().fields(i).type();
       using ET = decltype(e);
-      auto value = GetValue(T{}, std::forward<ET>(e), type);
+      std::cout << "getting value&& for " << e.DebugString() << std::endl;
+      auto value = GetValue(T{}, std::forward<ET>(e), et);
       ++i;
       if (!value) {
         status = std::move(value).status();
@@ -549,13 +557,14 @@ class Value {
 
   // Protocol buffers are not friendly to generic programming, because they use
   // different syntax and different names for mutable and non-mutable
-  // functions. To make GetValue(vector<T>, ...) (above) work, we need split
-  // the different protobuf syntaxes into overloaded functions.
-  static google::bigtable::v2::Value const& GetProtoListValueElement(
+  // functions. To make GetValue(vector<T>, ...) or GetValue(tuple<K,V>, ...)
+  // (above) work, we need split the different protobuf syntaxes into
+  // overloaded functions.
+  static google::bigtable::v2::Value const& GetProtoValueArrayElement(
       google::bigtable::v2::Value const& pv, int pos) {
     return pv.array_value().values(pos);
   }
-  static google::bigtable::v2::Value&& GetProtoListValueElement(
+  static google::bigtable::v2::Value&& GetProtoValueArrayElement(
       google::bigtable::v2::Value&& pv, int pos) {
     return std::move(*pv.mutable_array_value()->mutable_values(pos));
   }
