@@ -48,24 +48,10 @@ class ResultSourceInterface {
   virtual StatusOr<bigtable::Row> NextRow() = 0;
 
   /**
-   * Returns metadata about the result set, such as the field types and the
-   * transaction id created by the request.
-   *
-   * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetmetadata
-   *     for more information.
+   * Returns metadata about the result set.
    */
   virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
   Metadata() = 0;
-
-  /**
-   * Returns statistics about the result set, such as the number of rows, and
-   * the query plan used to compute the results.
-   *
-   * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetstats
-   *     for more information.
-   */
-  virtual absl::optional<google::bigtable::v2::ResultSetStats> Stats()
-      const = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
