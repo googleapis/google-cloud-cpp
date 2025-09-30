@@ -803,7 +803,7 @@ void SetProtoKind(Value& v, char const* x) {
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
-void SetProtoKind(Value& v, std::vector<std::int64_t> x) {
+void SetProtoKind(Value& v, std::vector<std::int64_t> const& x) {
   auto p = bigtable_internal::ToProto(v);
   auto list = *p.second.mutable_array_value();
   for (auto&& e : x) {
@@ -814,7 +814,7 @@ void SetProtoKind(Value& v, std::vector<std::int64_t> x) {
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
-void SetProtoKind(Value& v, std::tuple<std::int64_t, std::int64_t> x) {
+void SetProtoKind(Value& v, std::tuple<std::int64_t, std::int64_t> const& x) {
   auto p = bigtable_internal::ToProto(v);
   auto list = *p.second.mutable_array_value();
   auto e = std::get<0>(x);
