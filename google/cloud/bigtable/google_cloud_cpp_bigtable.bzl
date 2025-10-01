@@ -120,6 +120,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "query_row.h",
     "read_modify_write_rule.h",
     "resource_names.h",
+    "results.h",
     "retry_policy.h",
     "row.h",
     "row_key.h",
