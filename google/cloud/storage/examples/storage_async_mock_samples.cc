@@ -41,8 +41,7 @@ TEST(StorageAsyncMockingSamples, MockDeleteObject) {
 
   auto client = gcs::AsyncClient(mock);
   auto actual =
-      client.DeleteObject(gcs::BucketName("test-bucket"), "test-object")
-          .get();
+      client.DeleteObject(gcs::BucketName("test-bucket"), "test-object").get();
   EXPECT_TRUE(actual.ok());
 }
 //! [mock-async-delete-object]
