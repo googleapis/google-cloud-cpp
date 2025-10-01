@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULTS_H
 
-#include "google/cloud/bigtable/row.h"
+#include "google/cloud/bigtable/query_row.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status_or.h"
 
@@ -41,11 +41,11 @@ class ResultSourceInterface {
    * Returns the next row in the stream.
    *
    * @return if the stream is interrupted due to a failure the
-   *   `StatusOr<bigtable::Row>` contains the error.  The function returns a
-   *   successful `StatusOr<>` with a `bigtable::Row` with an empty row_key()
-   *   to indicate end-of-stream.
+   *   `StatusOr<bigtable::QueryRow>` contains the error.  The function returns
+   * a successful `StatusOr<>` with a `bigtable::QueryRow` with an empty
+   * row_key() to indicate end-of-stream.
    */
-  virtual StatusOr<bigtable::Row> NextRow() = 0;
+  virtual StatusOr<bigtable::QueryRow> NextRow() = 0;
 
   /**
    * Returns metadata about the result set.
