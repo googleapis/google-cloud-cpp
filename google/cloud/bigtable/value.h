@@ -14,6 +14,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VALUE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VALUE_H
 
+#include "google/cloud/bigtable/internal/tuple_utils.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
@@ -48,6 +49,7 @@ static bool validate_float_value(double v) {
 static bool ValidateFloatValue(double v) { return validate_float_value(v); }
 
 static bool ValidateFloatValue(float v) { return validate_float_value(v); }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 
@@ -75,6 +77,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * TIMESTAMP    | `google::cloud::bigtable::Timestamp`
  * DATE         | `absl::CivilDay`
  * ARRAY        | `std::vector<T>`  // [1]
+ * STRUCT       | `std::tuple<Ts...>`
  *
  * [1] The type `T` may be any of the other supported types, except for
  *     ARRAY/`std::vector`.
@@ -100,6 +103,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * assert(vec == copy);
  * @endcode
  *
+ * @par Bigtable Structs
+ *
+ * Bigtable structs are represented in C++ as instances of `std::tuple` holding
+ * zero or more of the allowed Bigtable types, such as `bool`, `std::int64_t`,
+ * `std::vector`, and even other `std::tuple` objects. Each tuple element
+ * corresponds to a single field in a Bigtable STRUCT.
+ *
+ * Bigtable STRUCT fields may optionally contain a string indicating the field's
+ * name. Fields names may be empty, unique, or repeated. A named field may be
+ * specified as a tuple element of type `std::pair<std::string, T>`, where the
+ * pair's `.first` member indicates the field's name, and the `.second` member
+ * is any valid Bigtable type `T`.
+ *
+ * @code
+ * using Struct = std::tuple<bool, std::pair<std::string, std::int64_t>>;
+ * Struct s  = {true, {"Foo", 42}};
+ * bigtable::Value v(s);
+ * assert(s == *v.get<Struct>());
+ * @endcode
+ *
+ * @note While a STRUCT's (optional) field names are not part of its C++ type,
+ *   they are part of its Bigtable STRUCT type. Array's (i.e., `std::vector`)
+ *   must contain a single element type, therefore it is an error to construct
+ *   a `std::vector` of `std::tuple` objects with differently named fields.
  */
 class Value {
  public:
@@ -175,6 +202,17 @@ class Value {
     static_assert(!IsVector<std::decay_t<T>>::value,
                   "vector of vector not allowed. See value.h documentation.");
   }
+
+  /**
+   * Constructs an instance from a Bigtable STRUCT with a type and values
+   * matching the given `std::tuple`.
+   *
+   * Any STRUCT field may optionally have a name, which is specified as
+   * `std::pair<std::string, T>`.
+   */
+  template <typename... Ts>
+  explicit Value(std::tuple<Ts...> tup)
+      : Value(PrivateConstructor{}, std::move(tup)) {}
 
   // Copy and move.
   Value(Value const&) = default;
@@ -264,6 +302,32 @@ class Value {
     return type.has_array_type() &&
            TypeProtoIs(T{}, type.array_type().element_type());
   }
+  template <typename... Ts>
+  static bool TypeProtoIs(std::tuple<Ts...> const& tup,
+                          google::bigtable::v2::Type const& type) {
+    bool ok = type.has_struct_type();
+    ok = ok && type.struct_type().fields().size() == sizeof...(Ts);
+    bigtable_internal::ForEach(tup, IsStructTypeProto{ok, 0},
+                               type.struct_type());
+    return ok;
+  }
+
+  // A functor to be used with internal::ForEach to check if a StructType proto
+  // matches the types in a std::tuple.
+  struct IsStructTypeProto {
+    bool& ok;
+    int field;
+    template <typename T>
+    void operator()(T const&, google::bigtable::v2::Type_Struct const& type) {
+      ok = ok && TypeProtoIs(T{}, type.fields(field).type());
+      ++field;
+    }
+    template <typename T>
+    void operator()(std::pair<std::string, T> const&,
+                    google::bigtable::v2::Type_Struct const& type) {
+      operator()(T{}, type);
+    }
+  };
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
   // argument type is the tag, the argument value is ignored.
@@ -297,6 +361,35 @@ class Value {
     }
     return t;
   }
+  template <typename... Ts>
+  static google::bigtable::v2::Type MakeTypeProto(
+      std::tuple<Ts...> const& tup) {
+    google::bigtable::v2::Type t;
+    t.set_allocated_struct_type(
+        std::move(new google::bigtable::v2::Type_Struct()));
+    bigtable_internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
+    return t;
+  }
+
+  // A functor to be used with internal::ForEach to add type protos for all the
+  // elements of a tuple.
+  struct AddStructTypes {
+    template <typename T>
+    void operator()(T const& t,
+                    google::bigtable::v2::Type_Struct& struct_type) const {
+      auto* field = struct_type.add_fields();
+      *field->mutable_type() = MakeTypeProto(t);
+    }
+    template <
+        typename S, typename T,
+        std::enable_if_t<std::is_convertible<S, std::string>::value, int> = 0>
+    void operator()(std::pair<S, T> const& p,
+                    google::bigtable::v2::Type_Struct& struct_type) const {
+      auto* field = struct_type.add_fields();
+      field->set_allocated_field_name(std::move(new std::string(p.first)));
+      *field->mutable_type() = MakeTypeProto(p.second);
+    }
+  };
 
   // Encodes the argument as a protobuf according to the rules described in
   // https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/type.proto
@@ -327,6 +420,29 @@ class Value {
     }
     return v;
   }
+  template <typename... Ts>
+  static google::bigtable::v2::Value MakeValueProto(std::tuple<Ts...> tup) {
+    google::bigtable::v2::Value v;
+    bigtable_internal::ForEach(tup, AddStructValues{},
+                               *v.mutable_array_value());
+    return v;
+  }
+
+  // A functor to be used with internal::ForEach to add Value protos for all
+  // the elements of a tuple.
+  struct AddStructValues {
+    template <typename T>
+    void operator()(T& t, google::bigtable::v2::ArrayValue& list_value) const {
+      *list_value.add_values() = MakeValueProto(std::move(t));
+    }
+    template <
+        typename S, typename T,
+        std::enable_if_t<std::is_convertible<S, std::string>::value, int> = 0>
+    void operator()(std::pair<S, T> p,
+                    google::bigtable::v2::ArrayValue& list_value) const {
+      *list_value.add_values() = MakeValueProto(std::move(p.second));
+    }
+  };
 
   // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
   // first argument type is the tag, its value is ignored.
@@ -368,12 +484,12 @@ class Value {
   template <typename T, typename V>
   static StatusOr<std::vector<T>> GetValue(
       std::vector<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
-    if (pv.kind_case() != google::bigtable::v2::Value::kArrayValue) {
+    if (!pt.has_array_type() || !pv.has_array_value()) {
       return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
     }
     std::vector<T> v;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
-      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
       using ET = decltype(e);
       auto value =
           GetValue(T{}, std::forward<ET>(e), pt.array_type().element_type());
@@ -382,16 +498,67 @@ class Value {
     }
     return v;
   }
+  template <typename V, typename... Ts>
+  static StatusOr<std::tuple<Ts...>> GetValue(
+      std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const& pt) {
+    if (!pt.has_struct_type() || !pv.has_array_value()) {
+      return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
+    }
+    std::tuple<Ts...> tup;
+    Status status;  // OK
+    ExtractTupleValues<V> f{status, 0, std::forward<V>(pv), pt};
+    bigtable_internal::ForEach(tup, f);
+    if (!status.ok()) return status;
+    return tup;
+  }
+
+  // A functor to be used with internal::ForEach to extract C++ types from a
+  // bigtable::v2::Value proto and with array value store then in a tuple.
+  template <typename V>
+  struct ExtractTupleValues {
+    Status& status;
+    int i;
+    V&& pv;
+    google::bigtable::v2::Type const& type;
+    template <typename T>
+    void operator()(T& t) {
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
+      auto et = type.struct_type().fields(i).type();
+      using ET = decltype(e);
+      auto value = GetValue(T{}, std::forward<ET>(e), et);
+      ++i;
+      if (!value) {
+        status = std::move(value).status();
+      } else {
+        t = *std::move(value);
+      }
+    }
+    template <typename T>
+    void operator()(std::pair<std::string, T>& p) {
+      p.first = type.struct_type().fields(i).field_name();
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
+      auto et = type.struct_type().fields(i).type();
+      using ET = decltype(e);
+      auto value = GetValue(T{}, std::forward<ET>(e), et);
+      ++i;
+      if (!value) {
+        status = std::move(value).status();
+      } else {
+        p.second = *std::move(value);
+      }
+    }
+  };
 
   // Protocol buffers are not friendly to generic programming, because they use
   // different syntax and different names for mutable and non-mutable
-  // functions. To make GetValue(vector<T>, ...) (above) work, we need split
-  // the different protobuf syntaxes into overloaded functions.
-  static google::bigtable::v2::Value const& GetProtoListValueElement(
+  // functions. To make GetValue(vector<T>, ...) or GetValue(tuple<K,V>, ...)
+  // (above) work, we need split the different protobuf syntaxes into
+  // overloaded functions.
+  static google::bigtable::v2::Value const& GetProtoValueArrayElement(
       google::bigtable::v2::Value const& pv, int pos) {
     return pv.array_value().values(pos);
   }
-  static google::bigtable::v2::Value&& GetProtoListValueElement(
+  static google::bigtable::v2::Value&& GetProtoValueArrayElement(
       google::bigtable::v2::Value&& pv, int pos) {
     return std::move(*pv.mutable_array_value()->mutable_values(pos));
   }
