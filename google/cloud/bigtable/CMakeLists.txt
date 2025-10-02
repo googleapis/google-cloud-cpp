@@ -234,6 +234,7 @@ add_library(
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
+    results.h
     retry_policy.h
     row.h
     row_key.h
