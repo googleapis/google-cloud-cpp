@@ -571,6 +571,11 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
 
   auto stub = GetStubBasedOnSessionMode(*session, ctx);
   auto const& current = internal::CurrentOptions();
+
+  if (current.get<spanner::ExcludeTransactionFromChangeStreamsOption>()) {
+    begin.mutable_options()->set_exclude_txn_from_change_streams(true);
+  }
+
   auto response = RetryLoop(
       RetryPolicyPrototype(current)->clone(),
       BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
