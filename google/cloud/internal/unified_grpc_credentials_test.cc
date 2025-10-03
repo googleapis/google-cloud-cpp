@@ -98,6 +98,23 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
   ASSERT_EQ(nullptr, context.credentials());
 }
 
+TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentialsAndHardBoundToken) {
+  // Create a filename for a file that (most likely) does not exist. We just
+  // want to initialize the default credentials, the filename won't be used by
+  // the test.
+  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", "unused.json");
+
+  CompletionQueue cq;
+  auto result = CreateAuthenticationStrategy(
+      *MakeGoogleDefaultCredentials(), cq,
+      Options{}.set<EnableGrpcHardBoundTokensAuthenticationOption>(true));
+  ASSERT_NE(nullptr, result.get());
+  grpc::ClientContext context;
+  auto status = result->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
+  ASSERT_EQ(nullptr, context.credentials());
+}
+
 TEST(UnifiedGrpcCredentialsTest, WithAccessTokenCredentials) {
   auto const expiration =
       std::chrono::system_clock::now() + std::chrono::hours(1);
