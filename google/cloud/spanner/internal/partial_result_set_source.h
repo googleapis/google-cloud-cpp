@@ -115,8 +115,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   int usable_rows_ = 0;
 
   // Values that can be assembled into `Row`s ready to be returned by
-  // `NextRow()`.
-  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>>
+  // `NextRow()`. This is a pointer to an arena-allocated RepeatedPtrField.
+  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>*>
       values_;
 
   // `space_used` is the sum of the SpaceUsedLong() by the values at indexes [0,
