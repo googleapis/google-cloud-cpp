@@ -64,7 +64,7 @@ class AsyncWriterConnectionBufferedState
  public:
   AsyncWriterConnectionBufferedState(
       WriterConnectionFactory factory,
-      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+      std::unique_ptr<storage::AsyncWriterConnection> impl,
       std::size_t buffer_size_lwm, std::size_t buffer_size_hwm)
       : factory_(std::move(factory)),
         buffer_size_lwm_(buffer_size_lwm),
@@ -100,14 +100,14 @@ class AsyncWriterConnectionBufferedState
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload const& p) {
+  future<Status> Write(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     return HandleNewData(std::move(lk));
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload const& p) {
+      storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
@@ -115,9 +115,7 @@ class AsyncWriterConnectionBufferedState
     return std::move(finalized_future_);
   }
 
-  future<Status> Flush(storage_experimental::WritePayload const& p) {
-    return Write(p);
-  }
+  future<Status> Flush(storage::WritePayload const& p) { return Write(p); }
 
   future<StatusOr<std::int64_t>> Query() {
     return Impl(std::unique_lock<std::mutex>(mu_))->Query();
@@ -285,8 +283,7 @@ class AsyncWriterConnectionBufferedState
   }
 
   void OnResume(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>
-          impl) {
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> impl) {
     std::unique_lock<std::mutex> lk(mu_);
     if (!impl) return SetError(std::move(lk), std::move(impl).status());
     impl_ = *std::move(impl);
@@ -331,7 +328,7 @@ class AsyncWriterConnectionBufferedState
     finalized.set_value(std::move(status));
   }
 
-  std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(
+  std::shared_ptr<storage::AsyncWriterConnection> Impl(
       std::unique_lock<std::mutex> const& /*lk*/) const {
     return impl_;
   }
@@ -363,7 +360,7 @@ class AsyncWriterConnectionBufferedState
   Status resume_status_;
 
   // The current writer.
-  std::shared_ptr<storage_experimental::AsyncWriterConnection> impl_;
+  std::shared_ptr<storage::AsyncWriterConnection> impl_;
 
   // The result of calling `Finalize()`. Note that only one such call is ever
   // made.
@@ -446,12 +443,11 @@ class AsyncWriterConnectionBufferedState
  *
  * The loop also ends if there are no more bytes to send in the resend buffer.
  */
-class AsyncWriterConnectionBuffered
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionBuffered : public storage::AsyncWriterConnection {
  public:
   explicit AsyncWriterConnectionBuffered(
       WriterConnectionFactory factory,
-      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+      std::unique_ptr<storage::AsyncWriterConnection> impl,
       std::size_t buffer_size_lwm, std::size_t buffer_size_hwm)
       : state_(std::make_shared<AsyncWriterConnectionBufferedState>(
             std::move(factory), std::move(impl), buffer_size_lwm,
@@ -466,16 +462,16 @@ class AsyncWriterConnectionBuffered
     return state_->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload p) override {
+  future<Status> Write(storage::WritePayload p) override {
     return state_->Write(std::move(p));
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload p) override {
+      storage::WritePayload p) override {
     return state_->Finalize(std::move(p));
   }
 
-  future<Status> Flush(storage_experimental::WritePayload p) override {
+  future<Status> Flush(storage::WritePayload p) override {
     return Write(std::move(p));
   }
 
@@ -491,15 +487,14 @@ class AsyncWriterConnectionBuffered
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeWriterConnectionBuffered(
+std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionBuffered(
     WriterConnectionFactory factory,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+    std::unique_ptr<storage::AsyncWriterConnection> impl,
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionBuffered>(
       std::move(factory), std::move(impl),
-      options.get<storage_experimental::BufferedUploadLwmOption>(),
-      options.get<storage_experimental::BufferedUploadHwmOption>());
+      options.get<storage::BufferedUploadLwmOption>(),
+      options.get<storage::BufferedUploadHwmOption>());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

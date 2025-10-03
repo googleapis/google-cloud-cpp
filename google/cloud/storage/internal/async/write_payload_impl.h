@@ -27,14 +27,12 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Groups helpers to access implementation details in
-/// `storage_experimental::WritePayload`.
+/// `storage::WritePayload`.
 struct WritePayloadImpl {
-  static storage_experimental::WritePayload Make(absl::Cord impl) {
-    return storage_experimental::WritePayload(std::move(impl));
+  static storage::WritePayload Make(absl::Cord impl) {
+    return storage::WritePayload(std::move(impl));
   }
-  static absl::Cord GetImpl(storage_experimental::WritePayload const& p) {
-    return p.impl_;
-  }
+  static absl::Cord GetImpl(storage::WritePayload const& p) { return p.impl_; }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

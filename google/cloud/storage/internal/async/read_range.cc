@@ -92,7 +92,7 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
 }
 
 void ReadRange::Notify(std::unique_lock<std::mutex> lk,
-                       storage_experimental::ReadPayload p) {
+                       storage::ReadPayload p) {
   auto wait = std::move(*wait_);
   wait_.reset();
   payload_.reset();

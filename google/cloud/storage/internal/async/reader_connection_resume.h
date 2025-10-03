@@ -35,11 +35,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AsyncReaderConnectionResume
-    : public storage_experimental::AsyncReaderConnection {
+class AsyncReaderConnectionResume : public storage::AsyncReaderConnection {
  public:
   explicit AsyncReaderConnectionResume(
-      std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
+      std::unique_ptr<storage::ResumePolicy> resume_policy,
       std::shared_ptr<storage::internal::HashFunction> hash,
       std::unique_ptr<storage::internal::HashValidator> validator,
       AsyncReaderConnectionFactory reader_factory)
@@ -58,20 +57,19 @@ class AsyncReaderConnectionResume
   future<ReadResponse> OnRead(ReadResponse r);
   future<ReadResponse> Reconnect();
   future<ReadResponse> OnResume(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>
-          connection);
-  std::shared_ptr<storage_experimental::AsyncReaderConnection> CurrentImpl(
+      StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> connection);
+  std::shared_ptr<storage::AsyncReaderConnection> CurrentImpl(
       std::unique_lock<std::mutex> const&);
-  std::shared_ptr<storage_experimental::AsyncReaderConnection> CurrentImpl();
+  std::shared_ptr<storage::AsyncReaderConnection> CurrentImpl();
 
-  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
+  std::unique_ptr<storage::ResumePolicy> resume_policy_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
   std::unique_ptr<storage::internal::HashValidator> hash_validator_;
   AsyncReaderConnectionFactory reader_factory_;
   storage::Generation generation_;
   std::int64_t received_bytes_ = 0;
   std::mutex mu_;
-  std::shared_ptr<storage_experimental::AsyncReaderConnection> impl_;
+  std::shared_ptr<storage::AsyncReaderConnection> impl_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
