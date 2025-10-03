@@ -264,14 +264,18 @@ StatusOr<T> MovedFromString(Value const& v) {
   return v.get<T>();
 }
 
-template <typename T,
-          typename U = decltype(std::declval<google::bigtable::v2::Value>()
-                                    .string_value()),
-          typename std::enable_if<
-              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
-                           absl::Cord>::value>::type* = nullptr,
-          typename std::enable_if_t<
-              !std::is_same<T, std::vector<std::string>>::value, int> = 0>
+template <
+    typename T,
+    typename U =
+        decltype(std::declval<google::bigtable::v2::Value>().string_value()),
+    typename std::enable_if<
+        std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                     absl::Cord>::value>::type* = nullptr,
+    typename std::enable_if_t<
+        absl::disjunction<std::is_same<T, std::string>,
+                          std::is_same<T, absl::optional<std::string>>>::value,
+        int> = 0>
+
 StatusOr<T> MovedFromString(Value const&) {
   return T{""};
 }
@@ -290,6 +294,21 @@ StatusOr<T> MovedFromString(Value const& v) {
     return v2.status();
   }
   return T{v2->size(), std::string{""}};
+}
+
+template <typename T,
+          typename U = decltype(std::declval<google::bigtable::v2::Value>()
+                                    .string_value()),
+          typename std::enable_if<
+              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                           absl::Cord>::value>::type* = nullptr,
+          typename std::enable_if_t<
+              std::is_same<T, std::tuple<std::pair<std::string, std::string>,
+                                         std::string>>::value,
+              int> = 0>
+StatusOr<T> MovedFromString(Value const&) {
+  return std::tuple<std::pair<std::string, std::string>, std::string>{
+      std::pair<std::string, std::string>("name", ""), ""};
 }
 
 // NOTE: This test relies on unspecified behavior about the moved-from state
