@@ -56,11 +56,16 @@ class ObjectWriteStreambufIntegrationTest
     ASSERT_STATUS_OK(create);
 
     auto constexpr kTestUploadBufferSize = 16 * 1024 * 1024L;
+    internal::ObjectWriteStreamParams params;
+    params.buffer_size = kTestUploadBufferSize;
+    params.hash_function = CreateNullHashFunction();
+    params.hash_validator = CreateNullHashValidator();
+    params.auto_finalize = AutoFinalizeConfig::kEnabled;
     ObjectWriteStream writer(std::make_unique<ObjectWriteStreambuf>(
         connection, request, std::move(create->upload_id), /*committed_size=*/0,
-        /*metadata=*/absl::nullopt, kTestUploadBufferSize,
-        CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
-        AutoFinalizeConfig::kEnabled));
+        /*metadata=*/absl::nullopt, params.buffer_size,
+        std::move(params.hash_function), std::move(params.known_hashes),
+        std::move(params.hash_validator), params.auto_finalize));
 
     std::ostringstream expected_stream;
     WriteRandomLines(writer, expected_stream, line_count, line_size);
