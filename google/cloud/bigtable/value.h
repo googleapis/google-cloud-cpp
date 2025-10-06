@@ -78,9 +78,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * DATE         | `absl::CivilDay`
  * ARRAY        | `std::vector<T>`  // [1]
  * STRUCT       | `std::tuple<Ts...>`
+ * MAP          | `std::map<K, V>` // [2]
  *
  * [1] The type `T` may be any of the other supported types, except for
  *     ARRAY/`std::vector`.
+ * [2] The type `K` may be any of `Bytes`, `std::string`, and `std::int64_t`.
+ *
  *
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
@@ -127,6 +130,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   they are part of its Bigtable STRUCT type. Array's (i.e., `std::vector`)
  *   must contain a single element type, therefore it is an error to construct
  *   a `std::vector` of `std::tuple` objects with differently named fields.
+ *
+ * @par Bigtable Maps
+ *
+ * Bigtable maps are represented in C++ as a `std::map<K, V>`, where the type
+ * `K` may be any of `Bytes`, `std::string` or `std::int64_t`.
+ * Normally encoded Map values won't have repeated keys, however, this client
+ * handles the case as follows: if the same key appears
+ * multiple times, the _last_ value takes precedence.
+ *
+ * The following examples show usage of maps.
+ *
+ * @code
+ * std::map<std::string, std::map<std::string, std::int64_t>> m = {{"map1",
+ * {{"key1", 1}}, "map2": {{"key2", 2}}} bigtable::Value mv(m); auto copy =
+ * *v.get<std::map<std::string, std::int64_t>>>(); assert(m == copy);
+ * @endcode
  */
 class Value {
  public:
@@ -214,6 +233,17 @@ class Value {
   explicit Value(std::tuple<Ts...> tup)
       : Value(PrivateConstructor{}, std::move(tup)) {}
 
+  /**
+   * Constructs an instance from a Bigtable MAP with a type and values
+   * matching the given `std::map`.
+   *
+   * @warning if the same key appears
+   * multiple times, the _last_ value takes precedence.
+   */
+  template <typename K, typename V>
+  explicit Value(std::map<K, V> m)
+      : Value(PrivateConstructor{}, std::move(m)) {}
+
   // Copy and move.
   Value(Value const&) = default;
   Value(Value&&) = default;
@@ -280,6 +310,16 @@ class Value {
   template <typename... Ts>
   struct IsVector<std::vector<Ts...>> : std::true_type {};
 
+  // Metafunction that returns true if `K` is std::string, Bytes, or int64
+  template <typename K>
+  struct IsValidMapKey
+      : std::integral_constant<
+            bool,
+            std::is_same<typename std::decay<K>::type, std::string>::value ||
+                std::is_same<typename std::decay<K>::type, Bytes>::value ||
+                std::is_same<typename std::decay<K>::type,
+                             std::int64_t>::value> {};
+
   // Tag-dispatch overloads to check if a C++ type matches the type specified
   // by the given `Type` proto.
   static bool TypeProtoIs(bool, google::bigtable::v2::Type const&);
@@ -311,8 +351,16 @@ class Value {
                                type.struct_type());
     return ok;
   }
+  template <typename K, typename V>
+  static bool TypeProtoIs(std::map<K, V> const& m,
+                          google::bigtable::v2::Type const& type) {
+    bool ok = type.has_map_type();
+    ok = ok &&
+         bigtable_internal::ForEach(m, IsMapTypeProto{ok}, type.struct_type());
+    return ok;
+  }
 
-  // A functor to be used with internal::ForEach to check if a StructType proto
+  // A functor to be used with internal::ForEach to check if a Type_Struct proto
   // matches the types in a std::tuple.
   struct IsStructTypeProto {
     bool& ok;
@@ -326,6 +374,24 @@ class Value {
     void operator()(std::pair<std::string, T> const&,
                     google::bigtable::v2::Type_Struct const& type) {
       operator()(T{}, type);
+    }
+  };
+
+  // A functor to be used with internal::ForEach to check if a Type_Map proto
+  // matches the types in a std::map.
+  struct IsMapTypeProto {
+    bool& ok;
+    template <typename K, typename V>
+    void operator()(K const&, V const&,
+                    google::bigtable::v2::Type_Map const& type) {
+      ok = ok && TypeProtoIs(K{}, type.key_type());
+      ok = ok && IsValidMapKey<K>();
+      ok = ok && TypeProtoIs(V{}, type.value_type());
+    }
+    template <typename K, typename V>
+    void operator()(K const&, V const&,
+                    google::bigtable::v2::Type_Struct const& type) {
+      operator()(K{}, V{}, type);
     }
   };
 
@@ -368,6 +434,14 @@ class Value {
     t.set_allocated_struct_type(
         std::move(new google::bigtable::v2::Type_Struct()));
     bigtable_internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
+    return t;
+  }
+  template <typename K, typename V>
+  static google::bigtable::v2::Type MakeTypeProto(std::map<K, V> const& m) {
+    google::bigtable::v2::Type t;
+    t.set_allocated_map_type(std::move(new google::bigtable::v2::Type_Map()));
+    *t.mutable_map_type()->mutable_key_type() = MakeTypeProto(K{});
+    *t.mutable_map_type()->mutable_value_type() = MakeTypeProto(V{});
     return t;
   }
 
@@ -427,6 +501,20 @@ class Value {
                                *v.mutable_array_value());
     return v;
   }
+  template <typename K, typename V>
+  static google::bigtable::v2::Value MakeValueProto(std::map<K, V> m) {
+    google::bigtable::v2::Value v;
+    auto& list = *v.mutable_array_value();
+    for (auto&& kv : m) {
+      // we add a subarray for each key-value pair, where the first element
+      // is the key and the second element is the value
+      google::bigtable::v2::Value item;
+      *(*item.mutable_array_value()).add_values() = MakeValueProto(kv.first);
+      *(*item.mutable_array_value()).add_values() = MakeValueProto(kv.second);
+      *list.add_values() = std::move(item);
+    }
+    return v;
+  }
 
   // A functor to be used with internal::ForEach to add Value protos for all
   // the elements of a tuple.
@@ -471,25 +559,25 @@ class Value {
                                            google::bigtable::v2::Value const&,
                                            google::bigtable::v2::Type const&);
 
-  template <typename T, typename V>
+  template <typename T, typename PV>
   static StatusOr<absl::optional<T>> GetValue(
-      absl::optional<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
+      absl::optional<T> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
     if (pv.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
       return absl::optional<T>{};
     }
-    auto value = GetValue(T{}, std::forward<V>(pv), pt);
+    auto value = GetValue(T{}, std::forward<PV>(pv), pt);
     if (!value) return std::move(value).status();
     return absl::optional<T>{*std::move(value)};
   }
-  template <typename T, typename V>
+  template <typename T, typename PV>
   static StatusOr<std::vector<T>> GetValue(
-      std::vector<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
+      std::vector<T> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
     if (!pt.has_array_type() || !pv.has_array_value()) {
       return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
     }
     std::vector<T> v;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
-      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
+      auto&& e = GetProtoValueArrayElement(std::forward<PV>(pv), i);
       using ET = decltype(e);
       auto value =
           GetValue(T{}, std::forward<ET>(e), pt.array_type().element_type());
@@ -498,18 +586,48 @@ class Value {
     }
     return v;
   }
-  template <typename V, typename... Ts>
+  template <typename PV, typename... Ts>
   static StatusOr<std::tuple<Ts...>> GetValue(
-      std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const& pt) {
+      std::tuple<Ts...> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
     if (!pt.has_struct_type() || !pv.has_array_value()) {
       return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
     }
     std::tuple<Ts...> tup;
     Status status;  // OK
-    ExtractTupleValues<V> f{status, 0, std::forward<V>(pv), pt};
+    ExtractTupleValues<PV> f{status, 0, std::forward<PV>(pv), pt};
     bigtable_internal::ForEach(tup, f);
     if (!status.ok()) return status;
     return tup;
+  }
+  template <typename K, typename V, typename PV>
+  static StatusOr<std::map<K, V>> GetValue(
+      std::map<K, V> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
+    if (!pt.has_struct_type() || !pv.has_array_value()) {
+      return internal::UnknownError("missing MAP", GCP_ERROR_INFO());
+    }
+    std::map<K, V> m;
+    for (int i = 0; i < pv.array_value().values().size(); ++i) {
+      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
+      using ET = decltype(e);
+      // map key-value pairs are assumed to be an array of size 2
+      if (e.array_value().values().size() != 2) {
+        return internal::UnknownError("key-value pair has wrong size",
+                                      GCP_ERROR_INFO());
+      }
+      auto key =
+          GetValue(K{}, std::forward<ET>(e[0]), pt.map_type().key_type());
+      auto value =
+          GetValue(V{}, std::forward<ET>(e[1]), pt.map_type().value_type());
+      if (!key) return std::move(key).status();
+      if (!value) return std::move(value).status();
+      // because MAP behavior does not allow for duplicates, we will replace
+      // any existing key-value with the newer one
+      if (m.contains(&key)) {
+        m.erase(&key);
+      }
+      m.insert(std::make_pair(*std::move(key), *std::move(value)));
+    }
+    return m;
   }
 
   // A functor to be used with internal::ForEach to extract C++ types from a

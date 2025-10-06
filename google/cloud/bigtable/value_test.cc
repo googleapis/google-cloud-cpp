@@ -200,10 +200,12 @@ TEST(Value, ArrayValueBasedEquality) {
   std::vector<Value> test_cases = {
       Value(std::vector<double>{1.2, 3.4}),
       Value(std::make_tuple(1.2, 3.4)),
+      Value(std::map<std::int64_t, std::string>{{12, "foo"}, {34, "bar"}}),
 
       // empty containers
       Value(std::vector<double>()),
       Value(std::make_tuple()),
+      Value(std::map<std::int64_t, std::string>()),
   };
 
   for (size_t i = 0; i < test_cases.size(); i++) {
