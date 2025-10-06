@@ -354,10 +354,10 @@ class Value {
   template <typename K, typename V>
   static bool TypeProtoIs(std::map<K, V> const& m,
                           google::bigtable::v2::Type const& type) {
-    bool ok = type.has_map_type();
-    ok = ok &&
-         bigtable_internal::ForEach(m, IsMapTypeProto{ok}, type.struct_type());
-    return ok;
+    if (!type.has_map_type()) return false;
+    if (!IsValidMapKey<K>()) return false;
+      return TypeProtoIs(K{}, type.map_type().key_type()) &&
+       TypeProtoIs(V{}, type.map_type().value_type());
   }
 
   // A functor to be used with internal::ForEach to check if a Type_Struct proto
@@ -374,24 +374,6 @@ class Value {
     void operator()(std::pair<std::string, T> const&,
                     google::bigtable::v2::Type_Struct const& type) {
       operator()(T{}, type);
-    }
-  };
-
-  // A functor to be used with internal::ForEach to check if a Type_Map proto
-  // matches the types in a std::map.
-  struct IsMapTypeProto {
-    bool& ok;
-    template <typename K, typename V>
-    void operator()(K const&, V const&,
-                    google::bigtable::v2::Type_Map const& type) {
-      ok = ok && TypeProtoIs(K{}, type.key_type());
-      ok = ok && IsValidMapKey<K>();
-      ok = ok && TypeProtoIs(V{}, type.value_type());
-    }
-    template <typename K, typename V>
-    void operator()(K const&, V const&,
-                    google::bigtable::v2::Type_Struct const& type) {
-      operator()(K{}, V{}, type);
     }
   };
 
@@ -437,7 +419,7 @@ class Value {
     return t;
   }
   template <typename K, typename V>
-  static google::bigtable::v2::Type MakeTypeProto(std::map<K, V> const& m) {
+  static google::bigtable::v2::Type MakeTypeProto(std::map<K, V> const&) {
     google::bigtable::v2::Type t;
     t.set_allocated_map_type(std::move(new google::bigtable::v2::Type_Map()));
     *t.mutable_map_type()->mutable_key_type() = MakeTypeProto(K{});
@@ -602,28 +584,32 @@ class Value {
   template <typename K, typename V, typename PV>
   static StatusOr<std::map<K, V>> GetValue(
       std::map<K, V> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
-    if (!pt.has_struct_type() || !pv.has_array_value()) {
+    if (!pt.has_map_type() || !pv.has_array_value()) {
       return internal::UnknownError("missing MAP", GCP_ERROR_INFO());
     }
     std::map<K, V> m;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
-      auto&& e = GetProtoValueArrayElement(std::forward<V>(pv), i);
-      using ET = decltype(e);
+      auto&& map_value_proto = GetProtoValueArrayElement(std::forward<PV>(pv), i);
+      using ET = decltype(map_value_proto);
       // map key-value pairs are assumed to be an array of size 2
-      if (e.array_value().values().size() != 2) {
-        return internal::UnknownError("key-value pair has wrong size",
+      if (!map_value_proto.has_array_value() || map_value_proto.array_value().values().size() != 2) {
+        return internal::UnknownError("malformed key-value pair",
                                       GCP_ERROR_INFO());
       }
-      auto key =
-          GetValue(K{}, std::forward<ET>(e[0]), pt.map_type().key_type());
-      auto value =
-          GetValue(V{}, std::forward<ET>(e[1]), pt.map_type().value_type());
+      const auto& key_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 0);
+      const auto& value_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 1);
+      using KeyProto = decltype(key_proto);
+      using ValueProto = decltype(value_proto);
+      auto key = GetValue(K{}, std::forward<KeyProto>(key_proto), pt.map_type().key_type());
+      auto value = GetValue(V{}, std::forward<ValueProto>(value_proto), pt.map_type().value_type());
       if (!key) return std::move(key).status();
       if (!value) return std::move(value).status();
-      // because MAP behavior does not allow for duplicates, we will replace
-      // any existing key-value with the newer one
-      if (m.contains(&key)) {
-        m.erase(&key);
+
+      // the documented behavior indicates that the last value will take
+      // precedence for a given key.
+      auto const& pos = m.find(key.value());
+      if (pos != m.end()) {
+        m.erase(pos);
       }
       m.insert(std::make_pair(*std::move(key), *std::move(value)));
     }

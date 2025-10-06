@@ -225,6 +225,11 @@ std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
 // format themselves differently in each case.
 enum class StreamMode { kScalar, kAggregate };
 
+std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
+                           google::bigtable::v2::Value const& v,
+                           google::bigtable::v2::Type const& t,
+                           StreamMode mode);
+
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
                            google::bigtable::v2::Type const& t,
@@ -269,7 +274,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << date;
   }
   if (t.has_array_type()) {
-    auto delimiter = "";
+    const auto *delimiter = "";
     os << '[';
     for (auto&& val : v.array_value().values()) {
       os << delimiter;
@@ -280,7 +285,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << ']';
   }
   if (t.has_struct_type()) {
-    auto delimiter = "";
+    const auto *delimiter = "";
     os << '(';
     for (int i = 0; i < v.array_value().values_size(); ++i) {
       os << delimiter;
@@ -296,14 +301,25 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << ')';
   }
   if (t.has_map_type()) {
-    auto delimiter = "";
-    os << '(';
+    return MapStreamHelper(os, v, t, mode);
+  }
+  // this should include type name
+  return os << "Error: unknown value type code " << t.kind_case();
+}
+std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
+                           google::bigtable::v2::Value const& v,
+                           google::bigtable::v2::Type const& t,
+                           StreamMode mode) {
+    const auto *delimiter = "";
+    os << '{';
     for (int i = 0; i < v.array_value().values_size(); ++i) {
       os << delimiter;
       os << "{";
-      auto& kv = v.array_value().values(i);
-      if (!kv.type().has_array_type() || kv.array_value().values_size() != 2) {
-        return os << "Error: malformed key-value pair";
+      const auto& kv = v.array_value().values(i);
+      if (!kv.has_array_value() || kv.array_value().values_size() != 2) {
+        os << "malformed key-value pair";
+        delimiter = ", ";
+        continue;
       }
       StreamHelper(os, kv.array_value().values(0),
                    kv.type().map_type().key_type(), StreamMode::kAggregate);
@@ -313,10 +329,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
       os << "}";
       delimiter = ", ";
     }
-    return os << ')';
-  }
-  // this should include type name
-  return os << "Error: unknown value type code " << t.kind_case();
+    return os << '}';
 }
 }  // namespace
 

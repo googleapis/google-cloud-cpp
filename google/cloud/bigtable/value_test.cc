@@ -238,7 +238,9 @@ TEST(Value, Equality) {
        Value(std::vector<double>{4.5, 6.7})},
       {Value(std::make_tuple(false, 123, "foo")),
        Value(std::make_tuple(true, 456, "bar"))},
-  };
+      {Value(std::map<std::int64_t, std::string>{{123, "foo"}}),
+       Value(std::map<std::int64_t, std::string>{{456, "bar"}})}
+};
 
   for (auto const& tc : test_cases) {
     EXPECT_EQ(tc.first, tc.first);
@@ -372,7 +374,7 @@ TEST(Value, RvalueGetVectorString) {
 // NOTE: This test relies on unspecified behavior about the moved-from state
 // of std::string. Specifically, this test relies on the fact that "large"
 // strings, when moved-from, end up empty. And we use this fact to verify that
-// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// bigtable::Value::get<T>() correctly handles moves. If this test ever breaks
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
 TEST(Value, RvalueGetStructString) {
@@ -393,6 +395,31 @@ TEST(Value, RvalueGetStructString) {
   s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
   EXPECT_EQ(Type({"name", ""}, ""), *s);
+}
+
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// bigtable::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetMapString) {
+  using Type = std::map<std::string, std::string>;
+  Type data{{"foo", std::string(1024, 'x')},{"bar", std::string(1024, 'y')}};
+  Value v(data);
+
+  auto s = v.get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = MovedFromString<Type>(v);
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(Type({{"name", ""}, {"bar", ""}}), *s);
 }
 
 TEST(Value, BytesRelationalOperators) {
