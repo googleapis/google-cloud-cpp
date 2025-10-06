@@ -39,6 +39,7 @@ using ::google::cloud::storage::testing::MockAsyncBidiWriteObjectStream;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::storage::v2::BidiWriteObjectRequest;
 
 using AsyncBidiWriteObjectStream = ::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectRequest,
@@ -487,25 +488,43 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
     });
     EXPECT_CALL(*stream, Write)
         .WillOnce(
-            [&](google::storage::v2::BidiWriteObjectRequest const& request,
-                grpc::WriteOptions wopt) {
-              EXPECT_EQ(request.upload_id(), "test-upload-id");
-              EXPECT_TRUE(request.finish_write());
-              EXPECT_THAT(request.object_checksums(),
-                          IsProtoEqual(expected_checksums));
-              EXPECT_TRUE(wopt.is_last_message());
-              return sequencer.PushBack("Write");
-            });
-    EXPECT_CALL(*stream, Read).WillOnce([&] {
-      return sequencer.PushBack("Read").then([](auto) {
-        auto response = google::storage::v2::BidiWriteObjectResponse{};
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
-      });
-    });
+            [&](BidiWriteObjectRequest const& request, grpc::WriteOptions) {
+              EXPECT_FALSE(request.finish_write());
+              return sequencer.PushBack("Write(1)");
+            })
+        .WillOnce([&](BidiWriteObjectRequest const& request,
+                      grpc::WriteOptions wopt) {
+          EXPECT_FALSE(request.has_upload_id());
+          EXPECT_TRUE(request.finish_write());
+          EXPECT_THAT(request.object_checksums(),
+                      IsProtoEqual(expected_checksums));
+          EXPECT_TRUE(wopt.is_last_message());
+          return sequencer.PushBack("Write(2)");
+        });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&]() {
+          return sequencer.PushBack("Read(1)").then([](auto f) {
+            if (!f.get())
+              return absl::optional<
+                  google::storage::v2::BidiWriteObjectResponse>();
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.set_persisted_size(43);
+            return absl::make_optional(std::move(response));
+          });
+        })
+        .WillOnce([&]() {
+          return sequencer.PushBack("Read(2)").then([](auto f) {
+            if (!f.get())
+              return absl::optional<
+                  google::storage::v2::BidiWriteObjectResponse>();
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.mutable_resource()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_resource()->set_name("test-object");
+            response.mutable_resource()->set_generation(123456);
+            return absl::make_optional(std::move(response));
+          });
+        });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
@@ -543,11 +562,19 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
 
   auto w2 = writer->Finalize(storage_experimental::WritePayload(kQuickFox));
+  // The `Finalize()` call triggers a `Flush()` first.
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Write");
+  EXPECT_EQ(next.second, "Write(1)");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(1)");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Read");
+  EXPECT_EQ(next.second, "Write(2)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(2)");
   next.first.set_value(true);
 
   auto response = w2.get();

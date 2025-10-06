@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::Eq;
+using ::testing::InSequence;
 using ::testing::IsSupersetOf;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -206,7 +207,6 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
 }
 
 TEST(WriteConnectionBuffered, FinalizeFailsPermanentlyAfterResume) {
-  ASSERT_EQ(true, false);
   AsyncSequencer<bool> sequencer;
 
   auto make_resumable_mock =
@@ -226,18 +226,30 @@ TEST(WriteConnectionBuffered, FinalizeFailsPermanentlyAfterResume) {
 
   auto mock = make_resumable_mock();
   MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
-    return sequencer.PushBack("Retry").then([](auto) {
-      // The resume succeeds, but the new connection is *not* finalized.
-      auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
-      EXPECT_CALL(*resumed_mock, UploadId)
-          .WillRepeatedly(Return("test-upload-id"));
-      EXPECT_CALL(*resumed_mock, PersistedState)
-          .WillRepeatedly(Return(MakePersistedState(0)));
-      return make_status_or(
-          std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
+  {
+    InSequence sequence;
+    EXPECT_CALL(mock_factory, Call).WillOnce([&] {
+      return sequencer.PushBack("Retry").then([](auto) {
+        // The resume succeeds, but the new connection is *not* finalized.
+        auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*resumed_mock, UploadId)
+            .WillRepeatedly(Return("test-upload-id"));
+        // The resumed connection will also fail to finalize.
+        EXPECT_CALL(*resumed_mock, Finalize).WillOnce([](auto) {
+          return make_ready_future(
+              StatusOr<google::storage::v2::Object>(TransientError()));
+        });
+        EXPECT_CALL(*resumed_mock, PersistedState)
+            .WillRepeatedly(Return(MakePersistedState(0)));
+        return make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
+      });
     });
-  });
+    EXPECT_CALL(mock_factory, Call).WillOnce([] {
+      return make_ready_future(StatusOr<std::unique_ptr<AsyncWriterConnection>>(
+          Status(StatusCode::kPermissionDenied, "Permanent Error")));
+    });
+  }
 
   auto connection = MakeWriterConnectionBuffered(
       mock_factory.AsStdFunction(), std::move(mock), TestOptions());
@@ -249,7 +261,8 @@ TEST(WriteConnectionBuffered, FinalizeFailsPermanentlyAfterResume) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Retry");
   next.first.set_value(true);
-  EXPECT_THAT(finalize.get(), StatusIs(TransientError().code()));
+  EXPECT_THAT(finalize.get(),
+              StatusIs(StatusCode::kPermissionDenied, "Permanent Error"));
 }
 
 TEST(WriteConnectionBuffered, WriteResumes) {
@@ -359,7 +372,6 @@ TEST(WriteConnectionBuffered, WriteBuffers) {
 }
 
 TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
-  ASSERT_EQ(true, false);
   AsyncSequencer<bool> sequencer;
 
   auto expected_write_size = [](std::size_t n) {
@@ -377,18 +389,22 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
   EXPECT_CALL(*mock, Flush(expected_write_size(24 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
   });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(24 * 1024));
+  {
+    InSequence seq;
+    EXPECT_CALL(*mock, Query).WillOnce([&]() {
+      return sequencer.PushBack("Query").then([](auto) {
+        return make_status_or(static_cast<std::int64_t>(24 * 1024));
+      });
     });
-  });
-  EXPECT_CALL(*mock, Flush(expected_write_size(40 * 1024))).WillOnce([&](auto) {
+    EXPECT_CALL(*mock, Query).WillOnce([&]() {
+      return sequencer.PushBack("Query2").then([](auto) {
+        return make_status_or(static_cast<std::int64_t>(24 * 1024 + 32 * 1024));
+      });
+    });
+  }
+  // The Finalize() call will flush the remaining data.
+  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Flush2").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query2").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(24 * 1024 + 40 * 1024));
-    });
   });
   EXPECT_CALL(*mock, Finalize(expected_write_size(0))).WillOnce([&](auto) {
     return sequencer.PushBack("Finalize").then([](auto) {
@@ -441,7 +457,6 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query2");
   next.first.set_value(true);
-
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
   next.first.set_value(true);
