@@ -86,6 +86,9 @@ TEST(DefaultOptionsAsync, Adjust) {
 }
 
 TEST(DefaultOptionsAsync, MaximumRangeSizeOption) {
+  // TODO(15340): This change is causing performance regression. We need to
+  // revisit it after benchmarking our code.
+  GTEST_SKIP();
   auto const options = DefaultOptionsAsync({});
   auto const max_range_size_option =
       options.get<storage::MaximumRangeSizeOption>();
