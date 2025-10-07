@@ -31,7 +31,7 @@ read -r ENABLED_FEATURES < <(features::always_build_cmake)
 # We should test all the GA libraries
 ENABLED_FEATURES="${ENABLED_FEATURES},__ga_libraries__"
 readonly ENABLED_FEATURES
-
+rm cmake-out/CMakeCache.txt || true
 io::run cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_STANDARD=20 \
   -DGOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17=ON \
