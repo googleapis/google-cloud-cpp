@@ -28,11 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Defines the interface for `RowStream` implementations.
  *
- * The `RowStream` class represents a stream of `Rows` returned from
- * `bigtable::Table::ReadRows()`. There are
- * different implementations depending the the RPC. Applications can also
- * mock this class when testing their code and mocking the `bigtable::Table`
- * behavior.
+ * The `RowStream` class represents a stream of `QueryRows` returned from
+ * `bigtable::Client::ExecuteQuery()`.
  */
 class ResultSourceInterface {
  public:
@@ -56,14 +53,9 @@ class ResultSourceInterface {
 };
 
 /**
- * Represents the stream of `Rows` returned from `bigtable::Table::ReadRows()`.
+ * Represents the stream of `QueryRows` returned from
+ * `bigtable::Client::ExecuteQuery`.
  *
- * This is a range defined by the [Input Iterators][input-iterator] returned
- * from its `begin()` and `end()` members. Callers may directly iterate the
- * `RowStream` instance, which will return a sequence of `StatusOr<QueryRow>`
- * objects.
- *
- * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
 class RowStream {
  public:
@@ -75,14 +67,14 @@ class RowStream {
   RowStream(RowStream&&) = default;
   RowStream& operator=(RowStream&&) = default;
 
-  /// Returns a `QueryRowStreamIterator` defining the beginning of this range.
-  QueryRowStreamIterator begin() {
-    return QueryRowStreamIterator(
+  /// Returns a `RowStreamIterator` defining the beginning of this range.
+  RowStreamIterator begin() {
+    return RowStreamIterator(
         [this]() mutable { return source_->NextRow(); });
   }
 
-  /// Returns a `QueryRowStreamIterator` defining the end of this range.
-  QueryRowStreamIterator end() { return {}; }
+  /// Returns a `RowStreamIterator` defining the end of this range.
+  RowStreamIterator end() { return {}; }
 
  private:
   std::unique_ptr<ResultSourceInterface> source_;

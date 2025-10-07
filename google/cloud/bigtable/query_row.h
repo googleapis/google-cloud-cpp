@@ -205,11 +205,11 @@ class QueryRow {
 };
 
 /**
- * A `QueryRowStreamIterator` is an _Input Iterator_ (see below) that returns a
+ * A `RowStreamIterator` is an _Input Iterator_ (see below) that returns a
  * sequence of `StatusOr<QueryRow>` objects.
  *
  * As an [Input Iterator][input-iterator], the sequence may only be consumed
- * once. Default constructing a `QueryRowStreamIterator` creates an instance
+ * once. Default constructing a `RowStreamIterator` creates an instance
  * that represents "end".
  *
  * @note The term "stream" in this name refers to the general nature
@@ -218,7 +218,7 @@ class QueryRow {
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
-class QueryRowStreamIterator {
+class RowStreamIterator {
  public:
   /**
    * A function that returns a sequence of `StatusOr<QueryRow>` objects.
@@ -239,13 +239,13 @@ class QueryRowStreamIterator {
   ///@}
 
   /// Default constructs an "end" iterator.
-  QueryRowStreamIterator();
+  RowStreamIterator();
 
   /**
-   * Constructs a `QueryRowStreamIterator` that will consume rows from the given
+   * Constructs a `RowStreamIterator` that will consume rows from the given
    * @p source, which must not be `nullptr`.
    */
-  explicit QueryRowStreamIterator(Source source);
+  explicit RowStreamIterator(Source source);
 
   reference operator*() { return row_; }
   pointer operator->() { return &row_; }
@@ -253,13 +253,11 @@ class QueryRowStreamIterator {
   const_reference operator*() const { return row_; }
   const_pointer operator->() const { return &row_; }
 
-  QueryRowStreamIterator& operator++();
-  QueryRowStreamIterator operator++(int);
+  RowStreamIterator& operator++();
+  RowStreamIterator operator++(int);
 
-  friend bool operator==(QueryRowStreamIterator const&,
-                         QueryRowStreamIterator const&);
-  friend bool operator!=(QueryRowStreamIterator const&,
-                         QueryRowStreamIterator const&);
+  friend bool operator==(RowStreamIterator const&, RowStreamIterator const&);
+  friend bool operator!=(RowStreamIterator const&, RowStreamIterator const&);
 
  private:
   bool row_ok_{true};
@@ -269,7 +267,7 @@ class QueryRowStreamIterator {
 
 /**
  * A `TupleStreamIterator<Tuple>` is an "Input Iterator" that wraps a
- * `QueryRowStreamIterator`,
+ * `RowStreamIterator`,
  * parsing its elements into a sequence of
  * `StatusOr<Tuple>` objects.
  *
@@ -278,7 +276,7 @@ class QueryRowStreamIterator {
  *
  * Default constructing this object creates an instance that represents "end".
  *
- * Each `QueryRow` returned by the wrapped `QueryRowStreamIterator` must be
+ * Each `QueryRow` returned by the wrapped `RowStreamIterator` must be
  * convertible to the specified `Tuple` template parameter.
  *
  * @note The term "stream" in this name refers to the general nature
@@ -304,8 +302,8 @@ class TupleStreamIterator {
   /// Default constructs an "end" iterator.
   TupleStreamIterator() = default;
 
-  /// Creates an iterator that wraps the given `QueryRowStreamIterator` range.
-  TupleStreamIterator(QueryRowStreamIterator begin, QueryRowStreamIterator end)
+  /// Creates an iterator that wraps the given `RowStreamIterator` range.
+  TupleStreamIterator(RowStreamIterator begin, RowStreamIterator end)
       : it_(std::move(begin)), end_(std::move(end)) {
     ParseTuple();
   }
@@ -351,13 +349,13 @@ class TupleStreamIterator {
 
   bool tup_ok_{false};
   value_type tup_;
-  QueryRowStreamIterator it_;
-  QueryRowStreamIterator end_;
+  RowStreamIterator it_;
+  RowStreamIterator end_;
 };
 
 /**
  * A `TupleStream<Tuple>` defines a range that parses `Tuple` objects from the
- * given range of `QueryRowStreamIterator`s.
+ * given range of `RowStreamIterator`s.
  *
  * Users create instances using the `StreamOf<T>(range)` non-member factory
  * function (defined below). The following is a typical usage of this class in
@@ -407,13 +405,13 @@ class TupleStream {
 /**
  * A factory that creates a `TupleStream<Tuple>` by wrapping the given @p
  * range. The `QueryRowRange` must be a range defined by
- * `QueryRowStreamIterator` objects.
+ * `RowStreamIterator` objects.
  *
  *
  * @note Ownership of the @p range is not transferred, so it must outlive the
  *     returned `TupleStream`.
  *
- * @tparam QueryRowRange must be a range defined by `QueryRowStreamIterator`s.
+ * @tparam QueryRowRange must be a range defined by `RowStreamIterator`s.
  */
 template <typename Tuple, typename QueryRowRange>
 TupleStream<Tuple> StreamOf(QueryRowRange&& range) {
