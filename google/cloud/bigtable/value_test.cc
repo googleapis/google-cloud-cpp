@@ -1527,7 +1527,6 @@ TEST(Value, OutputStream) {
 
   for (auto const& tc : test_case) {
     std::stringstream ss;
-    std::cout << tc.expected << std::endl;
     tc.manip(ss) << tc.value;
     EXPECT_EQ(ss.str(), tc.expected);
   }
