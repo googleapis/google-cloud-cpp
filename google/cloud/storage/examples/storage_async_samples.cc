@@ -717,7 +717,7 @@ void CreateAndWriteAppendableObject(
                                 gcs_ex::BucketName(std::move(bucket_name)),
                                 std::move(object_name)))
                                .value();
-    std::cout << "Appendable upload started for object " << object_name  << "\n";
+    std::cout << "Appendable upload started for object " << object_name << "\n";
 
     token = (co_await writer.Write(std::move(token),
                                    gcs_ex::WritePayload("Some data\n")))
