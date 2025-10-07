@@ -45,7 +45,7 @@ RowStreamIterator::Source MakeRowStreamIteratorSource(
 // Given a `vector<QueryRow>` creates a 'QueryRow::Source' object.
 RowStreamIterator::Source MakeRowStreamIteratorSource(
     std::vector<QueryRow> const& rows = {}) {
-  return MakeRowStreamIterator(
+  return MakeRowStreamIteratorSource(
       std::vector<StatusOr<QueryRow>>(rows.begin(), rows.end()));
 }
 
@@ -205,7 +205,7 @@ TEST(RowStreamIterator, Basics) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow(2, "bar", true));
   rows.emplace_back(bigtable_mocks::MakeQueryRow(3, "baz", true));
 
-  auto it = RowStreamIterator(RowStreamIteratorSource(rows));
+  auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
   ASSERT_STATUS_OK(*it);
@@ -301,7 +301,7 @@ TEST(RowStreamIterator, RangeForLoopFloat32) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(3.2F)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(5.4F)}}));
 
-  QueryRowRange range(RowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   float sum = 0;
   for (auto const& row : range) {
     ASSERT_STATUS_OK(row);
