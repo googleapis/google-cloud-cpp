@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/query_row.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status_or.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -27,11 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Defines the interface for `RowStream` implementations.
  *
- * The `RowStream` class represents a stream of `Rows` returned from
- * `bigtable::Table::ReadRows()`. There are
- * different implementations depending the the RPC. Applications can also
- * mock this class when testing their code and mocking the `bigtable::Table`
- * behavior.
+ * The `RowStream` class represents a stream of `QueryRows` returned from
+ * `bigtable::Client::ExecuteQuery()`.
  */
 class ResultSourceInterface {
  public:
@@ -52,6 +50,33 @@ class ResultSourceInterface {
    */
   virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
   Metadata() = 0;
+};
+
+/**
+ * Represents the stream of `QueryRows` returned from
+ * `bigtable::Client::ExecuteQuery`.
+ *
+ */
+class RowStream {
+ public:
+  RowStream() = default;
+  explicit RowStream(std::unique_ptr<ResultSourceInterface> source)
+      : source_(std::move(source)) {}
+
+  // This class is movable but not copyable.
+  RowStream(RowStream&&) = default;
+  RowStream& operator=(RowStream&&) = default;
+
+  /// Returns a `RowStreamIterator` defining the beginning of this range.
+  RowStreamIterator begin() {
+    return RowStreamIterator([this]() mutable { return source_->NextRow(); });
+  }
+
+  /// Returns a `RowStreamIterator` defining the end of this range.
+  RowStreamIterator end() { return {}; }
+
+ private:
+  std::unique_ptr<ResultSourceInterface> source_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

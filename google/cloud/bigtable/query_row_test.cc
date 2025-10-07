@@ -33,7 +33,7 @@ using ::testing::Not;
 
 // Given a `vector<StatusOr<QueryRow>>` creates a 'QueryRow::Source' object.
 // This is helpful for unit testing and letting the test inject a non-OK Status.
-QueryRowStreamIterator::Source MakeQueryRowStreamIteratorSource(
+RowStreamIterator::Source MakeRowStreamIteratorSource(
     std::vector<StatusOr<QueryRow>> const& rows) {
   std::size_t index = 0;
   return [=]() mutable -> StatusOr<QueryRow> {
@@ -43,21 +43,21 @@ QueryRowStreamIterator::Source MakeQueryRowStreamIteratorSource(
 }
 
 // Given a `vector<QueryRow>` creates a 'QueryRow::Source' object.
-QueryRowStreamIterator::Source MakeQueryRowStreamIteratorSource(
+RowStreamIterator::Source MakeRowStreamIteratorSource(
     std::vector<QueryRow> const& rows = {}) {
-  return MakeQueryRowStreamIteratorSource(
+  return MakeRowStreamIteratorSource(
       std::vector<StatusOr<QueryRow>>(rows.begin(), rows.end()));
 }
 
 class QueryRowRange {
  public:
-  explicit QueryRowRange(QueryRowStreamIterator::Source s) : s_(std::move(s)) {}
-  QueryRowStreamIterator begin() { return QueryRowStreamIterator(s_); }
+  explicit QueryRowRange(RowStreamIterator::Source s) : s_(std::move(s)) {}
+  RowStreamIterator begin() { return RowStreamIterator(s_); }
   // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-  QueryRowStreamIterator end() { return QueryRowStreamIterator(); }
+  RowStreamIterator end() { return RowStreamIterator(); }
 
  private:
-  QueryRowStreamIterator::Source s_;
+  RowStreamIterator::Source s_;
 };
 
 TEST(QueryRow, DefaultConstruct) {
@@ -196,8 +196,8 @@ TEST(MakeQueryRow, ImplicitColumnNames) {
   EXPECT_EQ(Value(52), *row.get("1"));
 }
 
-TEST(QueryRowStreamIterator, Basics) {
-  QueryRowStreamIterator end;
+TEST(RowStreamIterator, Basics) {
+  RowStreamIterator end;
   EXPECT_EQ(end, end);
 
   std::vector<QueryRow> rows;
@@ -205,7 +205,7 @@ TEST(QueryRowStreamIterator, Basics) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow(2, "bar", true));
   rows.emplace_back(bigtable_mocks::MakeQueryRow(3, "baz", true));
 
-  auto it = QueryRowStreamIterator(MakeQueryRowStreamIteratorSource(rows));
+  auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
   ASSERT_STATUS_OK(*it);
@@ -235,17 +235,17 @@ TEST(QueryRowStreamIterator, Basics) {
   EXPECT_EQ(it, end);
 }
 
-TEST(QueryRowStreamIterator, Empty) {
-  QueryRowStreamIterator end;
-  auto it = QueryRowStreamIterator(MakeQueryRowStreamIteratorSource());
+TEST(RowStreamIterator, Empty) {
+  RowStreamIterator end;
+  auto it = RowStreamIterator(MakeRowStreamIteratorSource());
   EXPECT_EQ(it, end);
 }
 
-TEST(QueryRowStreamIterator, OneRow) {
-  QueryRowStreamIterator end;
+TEST(RowStreamIterator, OneRow) {
+  RowStreamIterator end;
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow(1, "foo", true));
-  auto it = QueryRowStreamIterator(MakeQueryRowStreamIteratorSource(rows));
+  auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_NE(it, end);
   ASSERT_STATUS_OK(*it);
   EXPECT_EQ(rows[0], **it);
@@ -255,14 +255,14 @@ TEST(QueryRowStreamIterator, OneRow) {
   EXPECT_EQ(it, end);
 }
 
-TEST(QueryRowStreamIterator, IterationError) {
-  QueryRowStreamIterator end;
+TEST(RowStreamIterator, IterationError) {
+  RowStreamIterator end;
   std::vector<StatusOr<QueryRow>> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow(1, "foo", true));
   rows.emplace_back(Status(StatusCode::kUnknown, "some error"));
   rows.emplace_back(bigtable_mocks::MakeQueryRow(2, "bar", true));
 
-  auto it = QueryRowStreamIterator(MakeQueryRowStreamIteratorSource(rows));
+  auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   ASSERT_NE(it, end);
   EXPECT_STATUS_OK(*it);
   EXPECT_EQ(rows[0], *it);
@@ -278,15 +278,15 @@ TEST(QueryRowStreamIterator, IterationError) {
   EXPECT_EQ(it, end);
 }
 
-TEST(QueryRowStreamIterator, ForLoop) {
+TEST(RowStreamIterator, ForLoop) {
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(3)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(5)}}));
 
-  auto source = MakeQueryRowStreamIteratorSource(rows);
+  auto source = MakeRowStreamIteratorSource(rows);
   std::int64_t product = 1;
-  for (QueryRowStreamIterator it(source), end; it != end; ++it) {
+  for (RowStreamIterator it(source), end; it != end; ++it) {
     ASSERT_STATUS_OK(*it);
     auto num = (*it)->get<std::int64_t>("num");
     ASSERT_STATUS_OK(num);
@@ -295,13 +295,13 @@ TEST(QueryRowStreamIterator, ForLoop) {
   EXPECT_EQ(product, 30);
 }
 
-TEST(QueryRowStreamIterator, RangeForLoopFloat32) {
+TEST(RowStreamIterator, RangeForLoopFloat32) {
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2.1F)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(3.2F)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(5.4F)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   float sum = 0;
   for (auto const& row : range) {
     ASSERT_STATUS_OK(row);
@@ -312,13 +312,13 @@ TEST(QueryRowStreamIterator, RangeForLoopFloat32) {
   EXPECT_FLOAT_EQ(sum, 10.7F);
 }
 
-TEST(QueryRowStreamIterator, RangeForLoop) {
+TEST(RowStreamIterator, RangeForLoop) {
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(3)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(5)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
   for (auto const& row : range) {
     ASSERT_STATUS_OK(row);
@@ -329,12 +329,12 @@ TEST(QueryRowStreamIterator, RangeForLoop) {
   EXPECT_EQ(product, 30);
 }
 
-TEST(QueryRowStreamIterator, MovedFromValueOk) {
+TEST(RowStreamIterator, MovedFromValueOk) {
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(1)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto it = range.begin();
   auto end = range.end();
 
@@ -369,9 +369,8 @@ TEST(TupleStreamIterator, Basics) {
   auto end = TupleIterator();
   EXPECT_EQ(end, end);
 
-  auto it = TupleIterator(
-      QueryRowStreamIterator(MakeQueryRowStreamIteratorSource(rows)),
-      QueryRowStreamIterator());
+  auto it = TupleIterator(RowStreamIterator(MakeRowStreamIteratorSource(rows)),
+                          RowStreamIterator());
 
   EXPECT_EQ(it, it);
   ASSERT_NE(it, end);
@@ -409,9 +408,8 @@ TEST(TupleStreamIterator, Empty) {
   auto end = TupleIterator();
   EXPECT_EQ(end, end);
 
-  auto it =
-      TupleIterator(QueryRowStreamIterator(MakeQueryRowStreamIteratorSource()),
-                    QueryRowStreamIterator());
+  auto it = TupleIterator(RowStreamIterator(MakeRowStreamIteratorSource()),
+                          RowStreamIterator());
   EXPECT_EQ(it, end);
 }
 
@@ -427,9 +425,8 @@ TEST(TupleStreamIterator, Error) {
   auto end = TupleIterator();
   EXPECT_EQ(end, end);
 
-  auto it = TupleIterator(
-      QueryRowStreamIterator(MakeQueryRowStreamIteratorSource(rows)),
-      QueryRowStreamIterator());
+  auto it = TupleIterator(RowStreamIterator(MakeRowStreamIteratorSource(rows)),
+                          RowStreamIterator());
 
   EXPECT_EQ(it, it);
   ASSERT_NE(it, end);
@@ -451,7 +448,7 @@ TEST(TupleStreamIterator, MovedFromValueOk) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(1)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   using RowType = std::tuple<std::int64_t>;
   using TupleIterator = TupleStreamIterator<RowType>;
   auto it = TupleIterator(range.begin(), range.end());
@@ -479,7 +476,7 @@ TEST(TupleStream, Basics) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow(3, "baz", true));
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto parser = StreamOf<RowType>(range);
   auto it = parser.begin();
   auto end = parser.end();
@@ -514,7 +511,7 @@ TEST(TupleStream, RangeForLoop) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(5)}}));
   using RowType = std::tuple<std::int64_t>;
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
   for (auto const& row : StreamOf<RowType>(range)) {
     ASSERT_STATUS_OK(row);
@@ -529,7 +526,7 @@ TEST(TupleStream, IterationError) {
   rows.emplace_back(Status(StatusCode::kUnknown, "some error"));
   rows.emplace_back(bigtable_mocks::MakeQueryRow(2, "bar", true));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
   auto stream = StreamOf<RowType>(range);
@@ -553,7 +550,7 @@ TEST(TupleStream, IterationError) {
 
 TEST(GetSingularRow, BasicEmpty) {
   std::vector<QueryRow> rows;
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
   EXPECT_THAT(row,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("no rows")));
@@ -561,7 +558,7 @@ TEST(GetSingularRow, BasicEmpty) {
 
 TEST(GetSingularRow, TupleStreamEmpty) {
   std::vector<QueryRow> rows;
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
   EXPECT_THAT(row,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("no rows")));
@@ -571,7 +568,7 @@ TEST(GetSingularRow, BasicSingleRow) {
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(1)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
   ASSERT_STATUS_OK(row);
   EXPECT_EQ(1, *row->get<std::int64_t>(0));
@@ -581,7 +578,7 @@ TEST(GetSingularRow, TupleStreamSingleRow) {
   std::vector<QueryRow> rows;
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(1)}}));
 
-  auto row_range = QueryRowRange(MakeQueryRowStreamIteratorSource(rows));
+  auto row_range = QueryRowRange(MakeRowStreamIteratorSource(rows));
   auto tup_range = StreamOf<std::tuple<std::int64_t>>(row_range);
 
   auto row = GetSingularRow(tup_range);
@@ -594,7 +591,7 @@ TEST(GetSingularRow, BasicTooManyRows) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(1)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
   EXPECT_THAT(
       row, StatusIs(StatusCode::kInvalidArgument, HasSubstr("too many rows")));
@@ -605,7 +602,7 @@ TEST(GetSingularRow, TupleStreamTooManyRows) {
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(1)}}));
   rows.emplace_back(bigtable_mocks::MakeQueryRow({{"num", Value(2)}}));
 
-  QueryRowRange range(MakeQueryRowStreamIteratorSource(rows));
+  QueryRowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
   EXPECT_THAT(
       row, StatusIs(StatusCode::kInvalidArgument, HasSubstr("too many rows")));

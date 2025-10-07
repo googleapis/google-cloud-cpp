@@ -66,17 +66,17 @@ bool operator==(QueryRow const& a, QueryRow const& b) {
 }
 
 //
-// QueryRowStreamIterator
+// RowStreamIterator
 //
 
-QueryRowStreamIterator::QueryRowStreamIterator() = default;
+RowStreamIterator::RowStreamIterator() = default;
 
-QueryRowStreamIterator::QueryRowStreamIterator(Source source)
+RowStreamIterator::RowStreamIterator(Source source)
     : source_(std::move(source)) {
   ++*this;
 }
 
-QueryRowStreamIterator& QueryRowStreamIterator::operator++() {
+RowStreamIterator& RowStreamIterator::operator++() {
   if (!row_ok_) {
     source_ = nullptr;  // Last row was an error; become "end"
     return *this;
@@ -90,14 +90,13 @@ QueryRowStreamIterator& QueryRowStreamIterator::operator++() {
   return *this;
 }
 
-QueryRowStreamIterator QueryRowStreamIterator::operator++(int) {
+RowStreamIterator RowStreamIterator::operator++(int) {
   auto old = *this;
   ++*this;
   return old;
 }
 
-bool operator==(QueryRowStreamIterator const& a,
-                QueryRowStreamIterator const& b) {
+bool operator==(RowStreamIterator const& a, RowStreamIterator const& b) {
   // Input iterators may only be compared to (copies of) themselves and end.
   // See https://en.cppreference.com/w/cpp/named_req/InputIterator. Therefore,
   // by definition, all input iterators are equal unless one is end and the
@@ -105,8 +104,7 @@ bool operator==(QueryRowStreamIterator const& a,
   return !a.source_ == !b.source_;
 }
 
-bool operator!=(QueryRowStreamIterator const& a,
-                QueryRowStreamIterator const& b) {
+bool operator!=(RowStreamIterator const& a, RowStreamIterator const& b) {
   return !(a == b);
 }
 
