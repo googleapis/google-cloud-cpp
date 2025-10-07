@@ -226,9 +226,9 @@ std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
 enum class StreamMode { kScalar, kAggregate };
 
 std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
-                           google::bigtable::v2::Value const& v,
-                           google::bigtable::v2::Type const& t,
-                           StreamMode mode);
+                              google::bigtable::v2::Value const& v,
+                              google::bigtable::v2::Type const& t,
+                              StreamMode mode);
 
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
@@ -274,7 +274,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << date;
   }
   if (t.has_array_type()) {
-    const auto *delimiter = "";
+    auto const* delimiter = "";
     os << '[';
     for (auto&& val : v.array_value().values()) {
       os << delimiter;
@@ -285,7 +285,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << ']';
   }
   if (t.has_struct_type()) {
-    const auto *delimiter = "";
+    auto const* delimiter = "";
     os << '(';
     for (int i = 0; i < v.array_value().values_size(); ++i) {
       os << delimiter;
@@ -307,29 +307,28 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   return os << "Error: unknown value type code " << t.kind_case();
 }
 std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
-                           google::bigtable::v2::Value const& v,
-                           google::bigtable::v2::Type const& t,
-                           StreamMode mode) {
-    const auto *delimiter = "";
-    os << '{';
-    for (int i = 0; i < v.array_value().values_size(); ++i) {
-      os << delimiter;
-      os << "{";
-      const auto& kv = v.array_value().values(i);
-      if (!kv.has_array_value() || kv.array_value().values_size() != 2) {
-        os << "malformed key-value pair";
-        delimiter = ", ";
-        continue;
-      }
-      StreamHelper(os, kv.array_value().values(0),
-                   t.map_type().key_type(), StreamMode::kAggregate);
-      os << " : ";
-      StreamHelper(os, kv.array_value().values(1),
-                   t.map_type().value_type(), StreamMode::kAggregate);
-      os << "}";
+                              google::bigtable::v2::Value const& v,
+                              google::bigtable::v2::Type const& t, StreamMode) {
+  auto const* delimiter = "";
+  os << '{';
+  for (int i = 0; i < v.array_value().values_size(); ++i) {
+    os << delimiter;
+    os << "{";
+    auto const& kv = v.array_value().values(i);
+    if (!kv.has_array_value() || kv.array_value().values_size() != 2) {
+      os << "malformed key-value pair";
       delimiter = ", ";
+      continue;
     }
-    return os << '}';
+    StreamHelper(os, kv.array_value().values(0), t.map_type().key_type(),
+                 StreamMode::kAggregate);
+    os << " : ";
+    StreamHelper(os, kv.array_value().values(1), t.map_type().value_type(),
+                 StreamMode::kAggregate);
+    os << "}";
+    delimiter = ", ";
+  }
+  return os << '}';
 }
 }  // namespace
 

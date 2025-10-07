@@ -239,8 +239,7 @@ TEST(Value, Equality) {
       {Value(std::make_tuple(false, 123, "foo")),
        Value(std::make_tuple(true, 456, "bar"))},
       {Value(std::map<std::int64_t, std::string>{{123, "foo"}}),
-       Value(std::map<std::int64_t, std::string>{{456, "bar"}})}
-};
+       Value(std::map<std::int64_t, std::string>{{456, "bar"}})}};
 
   for (auto const& tc : test_cases) {
     EXPECT_EQ(tc.first, tc.first);
@@ -314,15 +313,15 @@ StatusOr<T> MovedFromString(Value const&) {
   return std::tuple<std::pair<std::string, std::string>, std::string>{
       std::pair<std::string, std::string>("name", ""), ""};
 }
-template <typename T,
-          typename U = decltype(std::declval<google::bigtable::v2::Value>()
-                                    .string_value()),
-          typename std::enable_if<
-              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
-                           absl::Cord>::value>::type* = nullptr,
-          typename std::enable_if_t<
-              std::is_same<T, std::map<std::string, std::string>>::value,
-              int> = 0>
+template <
+    typename T,
+    typename U =
+        decltype(std::declval<google::bigtable::v2::Value>().string_value()),
+    typename std::enable_if<
+        std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                     absl::Cord>::value>::type* = nullptr,
+    typename std::enable_if_t<
+        std::is_same<T, std::map<std::string, std::string>>::value, int> = 0>
 StatusOr<T> MovedFromString(Value const& v) {
   // For Cord builds, we can't rely on the moved-from state. Instead, we
   // get the keys from the moved-from object and construct a new map with
@@ -445,7 +444,7 @@ TEST(Value, RvalueGetStructString) {
 // better way to test move semantics.
 TEST(Value, RvalueGetMapString) {
   using Type = std::map<std::string, std::string>;
-  Type data{{"foo", std::string(128, 'x')},{"bar", std::string(128, 'y')}};
+  Type data{{"foo", std::string(128, 'x')}, {"bar", std::string(128, 'y')}};
   Value v(data);
 
   auto s = v.get<Type>();
@@ -495,7 +494,7 @@ TEST(Value, ConstructionFromLiterals) {
   auto v_tup_res = v_tup.get<std::tuple<std::string, std::int64_t>>();
   EXPECT_STATUS_OK(v_tup_res);
 
-  std::map<std::int64_t, std::string> m = {{12, "foo"},{34, "bar"}};
+  std::map<std::int64_t, std::string> m = {{12, "foo"}, {34, "bar"}};
   Value v_map(m);
   auto v_map_res = v_map.get<std::map<std::int64_t, std::string>>();
   EXPECT_STATUS_OK(v_map_res);
@@ -710,8 +709,8 @@ TEST(Value, BigtableStructWithNull) {
 TEST(Value, BigtableMap) {
   // Using declarations to shorten the tests, making them more readable.
   using std::int64_t;
-  using std::string;
   using std::map;
+  using std::string;
 
   auto map1 = map<string, int64_t>{{"foo", 1}, {"bar", 2}};
   using T1 = decltype(map1);
@@ -730,7 +729,8 @@ TEST(Value, BigtableMap) {
   EXPECT_EQ(map2, *v2.get<T1>());
   EXPECT_NE(map2, *v1.get<T2>());
 
-  static_assert(std::is_same<T1, T2>::value, "Two maps with same type and different values");
+  static_assert(std::is_same<T1, T2>::value,
+                "Two maps with same type and different values");
 
   // v1 != v2, yet T2 works with v1 and vice versa
   EXPECT_NE(v1, v2);
@@ -767,7 +767,8 @@ TEST(Value, BigtableMap) {
 
   EXPECT_THAT(v4.get<T4>(), IsOkAndHolds(empty));
 
-  auto deeply_nested = map<std::int64_t, std::map<std::string, std::vector<std::string>>>{};
+  auto deeply_nested =
+      map<std::int64_t, std::map<std::string, std::vector<std::string>>>{};
   using T5 = decltype(deeply_nested);
   Value v5(deeply_nested);
   EXPECT_STATUS_OK(v5.get<T5>());
@@ -778,7 +779,8 @@ TEST(Value, BigtableMap) {
   EXPECT_THAT(v5.get<T5>(), IsOkAndHolds(deeply_nested));
 
   // tests maps with bytes key
-  auto byte_key = map<Bytes, string>{{Bytes("foo"), "bar"}, {Bytes("baz"), "qux"}};
+  auto byte_key =
+      map<Bytes, string>{{Bytes("foo"), "bar"}, {Bytes("baz"), "qux"}};
   EXPECT_EQ(byte_key[Bytes("foo")], "bar");
   using T6 = decltype(byte_key);
   Value v6(byte_key);
@@ -969,7 +971,8 @@ TEST(Value, ProtoConversionMap) {
   auto const& value_type = p.first.map_type().value_type();
   EXPECT_TRUE(key_type.has_bytes_type());
   EXPECT_TRUE(value_type.has_int64_type());
-  // we stored "foo" before "bar", but the underlying ordered map puts "bar" first
+  // we stored "foo" before "bar", but the underlying ordered map puts "bar"
+  // first
   auto const& first_map_entry = p.second.array_value().values(1).array_value();
   auto const& second_map_entry = p.second.array_value().values(0).array_value();
   EXPECT_EQ(Bytes("foo"), Bytes(first_map_entry.values(0).bytes_value()));
@@ -1406,8 +1409,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<std::string>{"\"a\"", "\"b\""}),
        R"(["\"a\"", "\"b\""])", normal},
-{Value(std::map<std::string,std::string>{{"\"a\"", "\"b\""}}),
- R"({{"\"a\"" : "\"b\""}})", normal},
+      {Value(std::map<std::string, std::string>{{"\"a\"", "\"b\""}}),
+       R"({{"\"a\"" : "\"b\""}})", normal},
 
       // Tests null values
       {MakeNullValue<bool>(), "NULL", normal},
@@ -1487,34 +1490,49 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<float, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
 
-    // Tests maps
-    {Value(std::map<std::string, bool>{{{"bar", false}, {"foo", true}}}), R"({{"bar" : 0}, {"foo" : 1}})", normal},
-    {Value(std::map<std::string, bool>{{{"bar", false}, {"foo", true}}}), R"({{"bar" : false}, {"foo" : true}})", boolalpha},
-    {Value(std::map<std::string, std::int64_t>{{{"bar", 12}, {"foo", 34}}}), R"({{"bar" : 12}, {"foo" : 34}})", normal},
-    {Value(std::map<std::int64_t, std::int64_t>{{{10, 11}, {12, 13}}}), R"({{a : b}, {c : d}})", hex},
-    {Value(std::map<std::string, double>{{{"bar", 12.0}, {"foo", 34.0}}}), R"({{"bar" : 12}, {"foo" : 34}})", normal},
-    {Value(std::map<std::string, double>{{{"bar", 2.0}, {"foo", 3.0}}}), R"({{"bar" : 2.000}, {"foo" : 3.000}})", float4},
-    {Value(std::map<std::string, float>{{{"bar", 12.0F}, {"foo", 34.0F}}}), R"({{"bar" : 12}, {"foo" : 34}})", normal},
-    {Value(std::map<std::string, float>{{{"bar", 2.0F}, {"foo", 3.0F}}}), R"({{"bar" : 2.000}, {"foo" : 3.000}})", float4},
-    {Value(std::map<std::string, std::string>{{{"bar", std::string("a")}, {"foo", std::string("b")}}}), R"({{"bar" : "a"}, {"foo" : "b"}})", normal},
-    {Value(std::map<Bytes, Bytes>{{Bytes(std::string("bar")), Bytes(std::string("foo"))}}), R"({{B"bar" : B"foo"}})", normal},
-    {Value(std::map<Bytes, absl::CivilDay>{{Bytes(std::string("bar")), absl::CivilDay()}}), R"({{B"bar" : 1970-01-01}})",
-     normal},
-    {Value(std::map<std::string, Timestamp>{{"bar", Timestamp()}}), R"({{"bar" : 1970-01-01T00:00:00Z}})", normal},
+      // Tests maps
+      {Value(std::map<std::string, bool>{{{"bar", false}, {"foo", true}}}),
+       R"({{"bar" : 0}, {"foo" : 1}})", normal},
+      {Value(std::map<std::string, bool>{{{"bar", false}, {"foo", true}}}),
+       R"({{"bar" : false}, {"foo" : true}})", boolalpha},
+      {Value(std::map<std::string, std::int64_t>{{{"bar", 12}, {"foo", 34}}}),
+       R"({{"bar" : 12}, {"foo" : 34}})", normal},
+      {Value(std::map<std::int64_t, std::int64_t>{{{10, 11}, {12, 13}}}),
+       R"({{a : b}, {c : d}})", hex},
+      {Value(std::map<std::string, double>{{{"bar", 12.0}, {"foo", 34.0}}}),
+       R"({{"bar" : 12}, {"foo" : 34}})", normal},
+      {Value(std::map<std::string, double>{{{"bar", 2.0}, {"foo", 3.0}}}),
+       R"({{"bar" : 2.000}, {"foo" : 3.000}})", float4},
+      {Value(std::map<std::string, float>{{{"bar", 12.0F}, {"foo", 34.0F}}}),
+       R"({{"bar" : 12}, {"foo" : 34}})", normal},
+      {Value(std::map<std::string, float>{{{"bar", 2.0F}, {"foo", 3.0F}}}),
+       R"({{"bar" : 2.000}, {"foo" : 3.000}})", float4},
+      {Value(std::map<std::string, std::string>{
+           {{"bar", std::string("a")}, {"foo", std::string("b")}}}),
+       R"({{"bar" : "a"}, {"foo" : "b"}})", normal},
+      {Value(std::map<Bytes, Bytes>{
+           {Bytes(std::string("bar")), Bytes(std::string("foo"))}}),
+       R"({{B"bar" : B"foo"}})", normal},
+      {Value(std::map<Bytes, absl::CivilDay>{
+           {Bytes(std::string("bar")), absl::CivilDay()}}),
+       R"({{B"bar" : 1970-01-01}})", normal},
+      {Value(std::map<std::string, Timestamp>{{"bar", Timestamp()}}),
+       R"({{"bar" : 1970-01-01T00:00:00Z}})", normal},
 
-    // Tests maps with null elements
-    {Value(std::map<std::string, absl::optional<double>>{{"foo", 2.0}, {"bar", absl::optional<double>()}}), R"({{"bar" : NULL}, {"foo" : 2}})", normal},
+      // Tests maps with null elements
+      {Value(std::map<std::string, absl::optional<double>>{
+           {"foo", 2.0}, {"bar", absl::optional<double>()}}),
+       R"({{"bar" : NULL}, {"foo" : 2}})", normal},
 
-    // Tests null arrays
-    {MakeNullValue<std::map<std::int64_t, bool>>(), "NULL", normal},
-    {MakeNullValue<std::map<std::int64_t, std::int64_t>>(), "NULL", normal},
-    {MakeNullValue<std::map<std::int64_t, double>>(), "NULL", normal},
-    {MakeNullValue<std::map<std::int64_t, float>>(), "NULL", normal},
-    {MakeNullValue<std::map<Bytes, std::string>>(), "NULL", normal},
-    {MakeNullValue<std::map<Bytes, Bytes>>(), "NULL", normal},
-    {MakeNullValue<std::map<Bytes, absl::CivilDay>>(), "NULL", normal},
-    {MakeNullValue<std::map<Bytes, Timestamp>>(), "NULL", normal}
-};
+      // Tests null arrays
+      {MakeNullValue<std::map<std::int64_t, bool>>(), "NULL", normal},
+      {MakeNullValue<std::map<std::int64_t, std::int64_t>>(), "NULL", normal},
+      {MakeNullValue<std::map<std::int64_t, double>>(), "NULL", normal},
+      {MakeNullValue<std::map<std::int64_t, float>>(), "NULL", normal},
+      {MakeNullValue<std::map<Bytes, std::string>>(), "NULL", normal},
+      {MakeNullValue<std::map<Bytes, Bytes>>(), "NULL", normal},
+      {MakeNullValue<std::map<Bytes, absl::CivilDay>>(), "NULL", normal},
+      {MakeNullValue<std::map<Bytes, Timestamp>>(), "NULL", normal}};
 
   for (auto const& tc : test_case) {
     std::stringstream ss;

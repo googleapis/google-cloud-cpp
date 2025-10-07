@@ -241,8 +241,7 @@ class Value {
    * multiple times, the _last_ value takes precedence.
    */
   template <typename K, typename V>
-  explicit Value(std::map<K, V> m)
-      : Value(PrivateConstructor{}, std::move(m)) {
+  explicit Value(std::map<K, V> m) : Value(PrivateConstructor{}, std::move(m)) {
     static_assert(IsValidMapKey<K>::value,
                   "Invalid key type. See value.h documentation.");
   }
@@ -317,10 +316,9 @@ class Value {
   template <typename K>
   struct IsValidMapKey
       : std::integral_constant<
-            bool,
-            std::is_same<std::decay_t<K>, std::string>::value ||
-                std::is_same<std::decay_t<K>, Bytes>::value ||
-                std::is_same<std::decay_t<K>, std::int64_t>::value> {};
+            bool, std::is_same<std::decay_t<K>, std::string>::value ||
+                      std::is_same<std::decay_t<K>, Bytes>::value ||
+                      std::is_same<std::decay_t<K>, std::int64_t>::value> {};
 
   // Tag-dispatch overloads to check if a C++ type matches the type specified
   // by the given `Type` proto.
@@ -354,12 +352,12 @@ class Value {
     return ok;
   }
   template <typename K, typename V>
-  static bool TypeProtoIs(std::map<K, V> const& m,
+  static bool TypeProtoIs(std::map<K, V> const&,
                           google::bigtable::v2::Type const& type) {
     if (!type.has_map_type()) return false;
     if (!IsValidMapKey<K>()) return false;
-      return TypeProtoIs(K{}, type.map_type().key_type()) &&
-       TypeProtoIs(V{}, type.map_type().value_type());
+    return TypeProtoIs(K{}, type.map_type().key_type()) &&
+           TypeProtoIs(V{}, type.map_type().value_type());
   }
 
   // A functor to be used with internal::ForEach to check if a Type_Struct proto
@@ -493,8 +491,10 @@ class Value {
       // we add a subarray for each key-value pair, where the first element
       // is the key and the second element is the value
       google::bigtable::v2::Value item;
-      *(*item.mutable_array_value()).add_values() = MakeValueProto(std::move(kv.first));
-      *(*item.mutable_array_value()).add_values() = MakeValueProto(std::move(kv.second));
+      *(*item.mutable_array_value()).add_values() =
+          MakeValueProto(std::move(kv.first));
+      *(*item.mutable_array_value()).add_values() =
+          MakeValueProto(std::move(kv.second));
       *list.add_values() = std::move(item);
     }
     return v;
@@ -591,19 +591,25 @@ class Value {
     }
     std::map<K, V> m;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
-      auto&& map_value_proto = GetProtoValueArrayElement(std::forward<PV>(pv), i);
+      auto&& map_value_proto =
+          GetProtoValueArrayElement(std::forward<PV>(pv), i);
       using ET = decltype(map_value_proto);
       // map key-value pairs are assumed to be an array of size 2
-      if (!map_value_proto.has_array_value() || map_value_proto.array_value().values().size() != 2) {
+      if (!map_value_proto.has_array_value() ||
+          map_value_proto.array_value().values().size() != 2) {
         return internal::UnknownError("malformed key-value pair",
                                       GCP_ERROR_INFO());
       }
-      auto&& key_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 0);
-      auto&& value_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 1);
+      auto&& key_proto =
+          GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 0);
+      auto&& value_proto =
+          GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 1);
       using KeyProto = decltype(key_proto);
       using ValueProto = decltype(value_proto);
-      auto const& key = GetValue(K{}, std::forward<KeyProto>(key_proto), pt.map_type().key_type());
-      auto const& value = GetValue(V{}, std::forward<ValueProto>(value_proto), pt.map_type().value_type());
+      auto const& key = GetValue(K{}, std::forward<KeyProto>(key_proto),
+                                 pt.map_type().key_type());
+      auto const& value = GetValue(V{}, std::forward<ValueProto>(value_proto),
+                                   pt.map_type().value_type());
       if (!key) return std::move(key).status();
       if (!value) return std::move(value).status();
 
