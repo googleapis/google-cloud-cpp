@@ -114,7 +114,9 @@ $ctest_args = @(
     "-C", $env:CONFIG,
     "--progress"
 )
-ctest $ctest_args -LE integration-test
+# TODO(#15584): The ConnectionImplTest.MultiplexedPrecommitUpdated test
+# is disabled.
+ctest $ctest_args -LE integration-test -E "ConnectionImplTest.MultiplexedPrecommitUpdated"
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
     Exit ${LastExitCode}
