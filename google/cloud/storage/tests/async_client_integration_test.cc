@@ -1005,6 +1005,8 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 }
 
 TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
+  // TODO(15340): This change is causing performance regression. We need to
+  // revisit it after benchmarking our code.
   GTEST_SKIP();
   auto async =
       AsyncClient(TestOptions().set<storage::MaximumRangeSizeOption>(1024));

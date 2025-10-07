@@ -74,8 +74,10 @@ Options DefaultOptionsAsync(Options opts) {
               storage::StopOnConsecutiveErrorsResumePolicy())
           .set<storage::AsyncIdempotencyPolicyOption>(
               storage::MakeStrictAsyncIdempotencyPolicy)
-          .set<storage::EnableCrc32cValidationOption>(true)
-          .set<storage::MaximumRangeSizeOption>(128 * 1024 * 1024L));
+          .set<storage::EnableCrc32cValidationOption>(true));
+  // TODO(15340): This change is causing performance regression. We need to
+  // revisit it after benchmarking our code.
+  // .set<storage::MaximumRangeSizeOption>(128 * 1024 * 1024L));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 
