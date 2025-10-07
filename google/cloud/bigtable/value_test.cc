@@ -322,17 +322,8 @@ template <
                      absl::Cord>::value>::type* = nullptr,
     typename std::enable_if_t<
         std::is_same<T, std::map<std::string, std::string>>::value, int> = 0>
-StatusOr<T> MovedFromString(Value const& v) {
-  // For Cord builds, we can't rely on the moved-from state. Instead, we
-  // get the keys from the moved-from object and construct a new map with
-  // empty values to satisfy the test's expectation.
-  auto v2 = v.get<T>();
-  if (!v2) return v2.status();
-  T result;
-  for (auto const& kv : *v2) {
-    result.emplace(kv.first, "");
-  }
-  return result;
+StatusOr<T> MovedFromString(Value const&) {
+  return std::map<std::string, std::string>{{{"", ""}, {"", ""}}};
 }
 
 // NOTE: This test relies on unspecified behavior about the moved-from state

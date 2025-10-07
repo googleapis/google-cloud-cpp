@@ -143,8 +143,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @code
  * std::map<std::string, std::map<std::string, std::int64_t>> m = {{"map1",
- * {{"key1", 1}}, "map2": {{"key2", 2}}} bigtable::Value mv(m); auto copy =
- * *v.get<std::map<std::string, std::int64_t>>>(); assert(m == copy);
+ * {{"key1", 1}}, "map2": {{"key2", 2}}};
+ * bigtable::Value mv(m);
+ * auto copy = *v.get<std::map<std::string, std::int64_t>>>();
+ * assert(m == copy);
  * @endcode
  */
 class Value {
