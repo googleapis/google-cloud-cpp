@@ -964,11 +964,6 @@ void OpenMultipleObjectsRangedRead(google::cloud::storage::AsyncClient&,
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
 }
 
-void OpenMultipleObjectsRangedRead(google::cloud::storage::AsyncClient&,
-                                   std::vector<std::string> const&) {
-  std::cerr << "AsyncClient::Open() example requires coroutines\n";
-}
-
 void OpenObjectReadFullObject(google::cloud::storage::AsyncClient&,
                               std::vector<std::string> const&) {
   std::cerr << "AsyncClient::Open() example requires coroutines\n";
