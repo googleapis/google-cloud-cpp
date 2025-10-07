@@ -69,8 +69,7 @@ class RowStream {
 
   /// Returns a `RowStreamIterator` defining the beginning of this range.
   RowStreamIterator begin() {
-    return RowStreamIterator(
-        [this]() mutable { return source_->NextRow(); });
+    return RowStreamIterator([this]() mutable { return source_->NextRow(); });
   }
 
   /// Returns a `RowStreamIterator` defining the end of this range.
