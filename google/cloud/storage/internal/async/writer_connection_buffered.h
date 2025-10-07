@@ -29,13 +29,12 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using WriterConnectionFactory = std::function<future<
-    StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>()>;
+using WriterConnectionFactory = std::function<
+    future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>()>;
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeWriterConnectionBuffered(
+std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionBuffered(
     WriterConnectionFactory factory,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+    std::unique_ptr<storage::AsyncWriterConnection> impl,
     Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

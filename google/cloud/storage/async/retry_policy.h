@@ -23,11 +23,11 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /// Defines what error codes are permanent errors.
-struct StatusTraits {
+struct AsyncStatusTraits {
   static bool IsPermanentFailure(Status const& status) {
     return status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kInternal &&
@@ -59,7 +59,7 @@ class AsyncRetryPolicy : public google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kAborted`](@ref google::cloud::StatusCode)
  */
-class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
+class LimitedErrorCountAsyncRetryPolicy : public AsyncRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,13 +68,15 @@ class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit LimitedErrorCountRetryPolicy(int maximum_failures)
+  explicit LimitedErrorCountAsyncRetryPolicy(int maximum_failures)
       : impl_(maximum_failures) {}
 
-  LimitedErrorCountRetryPolicy(LimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
-  LimitedErrorCountRetryPolicy(LimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  LimitedErrorCountAsyncRetryPolicy(
+      LimitedErrorCountAsyncRetryPolicy&& rhs) noexcept
+      : LimitedErrorCountAsyncRetryPolicy(rhs.maximum_failures()) {}
+  LimitedErrorCountAsyncRetryPolicy(
+      LimitedErrorCountAsyncRetryPolicy const& rhs) noexcept
+      : LimitedErrorCountAsyncRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -84,7 +86,7 @@ class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
     return impl_.IsPermanentFailure(s);
   }
   std::unique_ptr<AsyncRetryPolicy> clone() const override {
-    return std::make_unique<LimitedErrorCountRetryPolicy>(
+    return std::make_unique<LimitedErrorCountAsyncRetryPolicy>(
         impl_.maximum_failures());
   }
 
@@ -92,7 +94,8 @@ class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
   using BaseType = AsyncRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<internal::StatusTraits>
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      internal::AsyncStatusTraits>
       impl_;
 };
 
@@ -110,7 +113,7 @@ class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kAborted`](@ref google::cloud::StatusCode)
  */
-class LimitedTimeRetryPolicy : public AsyncRetryPolicy {
+class LimitedTimeAsyncRetryPolicy : public AsyncRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +136,14 @@ class LimitedTimeRetryPolicy : public AsyncRetryPolicy {
    *     about `std::chrono::duration`.
    */
   template <typename DurationRep, typename DurationPeriod>
-  explicit LimitedTimeRetryPolicy(
+  explicit LimitedTimeAsyncRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
       : impl_(maximum_duration) {}
 
-  LimitedTimeRetryPolicy(LimitedTimeRetryPolicy&& rhs) noexcept
-      : LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LimitedTimeRetryPolicy(LimitedTimeRetryPolicy const& rhs) noexcept
-      : LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LimitedTimeAsyncRetryPolicy(LimitedTimeAsyncRetryPolicy&& rhs) noexcept
+      : LimitedTimeAsyncRetryPolicy(rhs.maximum_duration()) {}
+  LimitedTimeAsyncRetryPolicy(LimitedTimeAsyncRetryPolicy const& rhs) noexcept
+      : LimitedTimeAsyncRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,14 +155,16 @@ class LimitedTimeRetryPolicy : public AsyncRetryPolicy {
     return impl_.IsPermanentFailure(s);
   }
   std::unique_ptr<AsyncRetryPolicy> clone() const override {
-    return std::make_unique<LimitedTimeRetryPolicy>(impl_.maximum_duration());
+    return std::make_unique<LimitedTimeAsyncRetryPolicy>(
+        impl_.maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<internal::StatusTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<internal::AsyncStatusTraits>
+      impl_;
 };
 
 /// The backoff policy base class.
@@ -175,7 +180,7 @@ struct AsyncRetryPolicyOption {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

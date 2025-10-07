@@ -19,20 +19,21 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 template <typename T>
-future<StatusOr<T>> TokenError(internal::ErrorInfoBuilder eib) {
-  return make_ready_future(StatusOr<T>(
-      internal::InvalidArgumentError("invalid token", std::move(eib))));
+future<StatusOr<T>> TokenError(google::cloud::internal::ErrorInfoBuilder eib) {
+  return make_ready_future(
+      StatusOr<T>(google::cloud::internal::InvalidArgumentError(
+          "invalid token", std::move(eib))));
 }
 
 template <typename T>
-future<StatusOr<T>> NullImpl(internal::ErrorInfoBuilder eib) {
-  return make_ready_future(
-      StatusOr<T>(internal::CancelledError("null impl", std::move(eib))));
+future<StatusOr<T>> NullImpl(google::cloud::internal::ErrorInfoBuilder eib) {
+  return make_ready_future(StatusOr<T>(
+      google::cloud::internal::CancelledError("null impl", std::move(eib))));
 }
 
 using IterateResponse =
@@ -60,6 +61,6 @@ future<StatusOr<IterateResponse>> AsyncRewriter::Iterate(AsyncToken token) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

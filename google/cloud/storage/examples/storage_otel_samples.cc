@@ -41,13 +41,12 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
   }
   //! [instrumented-client]
   namespace gc = ::google::cloud;
-  namespace gcs_ex = ::google::cloud::storage_experimental;
   [](std::string const& project_id, std::string const& bucket_name,
      std::string const& object_name) {
     auto configuration =
         gc::otel::ConfigureBasicTracing(gc::Project(project_id));
 
-    auto client = google::cloud::storage_experimental::AsyncClient(
+    auto client = google::cloud::storage::AsyncClient(
         gc::Options{}.set<gc::OpenTelemetryTracingOption>(true));
 
     auto coro = [&]() -> gc::future<void> {
@@ -55,12 +54,12 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
       std::generate(data.begin(), data.end(),
                     [n = 0]() mutable { return std::to_string(++n) + "\n"; });
       auto metadata = co_await client.InsertObject(
-          gcs_ex::BucketName(bucket_name), object_name, std::move(data));
+          gcs::BucketName(bucket_name), object_name, std::move(data));
       if (!metadata) throw std::move(metadata).status();
 
       std::int64_t count = 0;
       auto [reader, token] = (co_await client.ReadObject(
-                                  gcs_ex::BucketName(bucket_name), object_name))
+                                  gcs::BucketName(bucket_name), object_name))
                                  .value();
       while (token.valid()) {
         auto [payload, t] = (co_await reader.Read(std::move(token))).value();
@@ -71,8 +70,8 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
       }
       std::cout << "Counted " << count << " 7's in the GCS object\n";
 
-      auto deleted = co_await client.DeleteObject(
-          gcs_ex::BucketName(bucket_name), object_name);
+      auto deleted = co_await client.DeleteObject(gcs::BucketName(bucket_name),
+                                                  object_name);
       if (!deleted.ok()) throw gc::Status(std::move(deleted));
 
       co_return;

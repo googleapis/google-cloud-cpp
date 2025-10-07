@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -36,8 +36,7 @@ using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Optional;
 
-using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+using ReadResponse = AsyncReaderConnection::ReadResponse;
 
 TEST(ReadAll, Basic) {
   auto mock = std::make_unique<MockAsyncReaderConnection>();
@@ -168,6 +167,6 @@ TEST(ReadAll, Error) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

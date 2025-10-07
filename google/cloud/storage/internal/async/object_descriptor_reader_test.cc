@@ -22,7 +22,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::storage_experimental::ReadPayload;
+using ::google::cloud::storage::ReadPayload;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 using ::testing::ResultOf;
