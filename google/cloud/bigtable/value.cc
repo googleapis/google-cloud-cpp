@@ -322,10 +322,10 @@ std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
         continue;
       }
       StreamHelper(os, kv.array_value().values(0),
-                   kv.type().map_type().key_type(), StreamMode::kAggregate);
+                   t.map_type().key_type(), StreamMode::kAggregate);
       os << " : ";
       StreamHelper(os, kv.array_value().values(1),
-                   kv.type().map_type().value_type(), StreamMode::kAggregate);
+                   t.map_type().value_type(), StreamMode::kAggregate);
       os << "}";
       delimiter = ", ";
     }

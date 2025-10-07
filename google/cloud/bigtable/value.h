@@ -242,7 +242,10 @@ class Value {
    */
   template <typename K, typename V>
   explicit Value(std::map<K, V> m)
-      : Value(PrivateConstructor{}, std::move(m)) {}
+      : Value(PrivateConstructor{}, std::move(m)) {
+    static_assert(IsValidMapKey<K>::value,
+                  "Invalid key type. See value.h documentation.");
+  }
 
   // Copy and move.
   Value(Value const&) = default;
@@ -315,10 +318,9 @@ class Value {
   struct IsValidMapKey
       : std::integral_constant<
             bool,
-            std::is_same<typename std::decay<K>::type, std::string>::value ||
-                std::is_same<typename std::decay<K>::type, Bytes>::value ||
-                std::is_same<typename std::decay<K>::type,
-                             std::int64_t>::value> {};
+            std::is_same<std::decay_t<K>, std::string>::value ||
+                std::is_same<std::decay_t<K>, Bytes>::value ||
+                std::is_same<std::decay_t<K>, std::int64_t>::value> {};
 
   // Tag-dispatch overloads to check if a C++ type matches the type specified
   // by the given `Type` proto.
@@ -491,8 +493,8 @@ class Value {
       // we add a subarray for each key-value pair, where the first element
       // is the key and the second element is the value
       google::bigtable::v2::Value item;
-      *(*item.mutable_array_value()).add_values() = MakeValueProto(kv.first);
-      *(*item.mutable_array_value()).add_values() = MakeValueProto(kv.second);
+      *(*item.mutable_array_value()).add_values() = MakeValueProto(std::move(kv.first));
+      *(*item.mutable_array_value()).add_values() = MakeValueProto(std::move(kv.second));
       *list.add_values() = std::move(item);
     }
     return v;
@@ -596,12 +598,12 @@ class Value {
         return internal::UnknownError("malformed key-value pair",
                                       GCP_ERROR_INFO());
       }
-      const auto& key_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 0);
-      const auto& value_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 1);
+      auto&& key_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 0);
+      auto&& value_proto = GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 1);
       using KeyProto = decltype(key_proto);
       using ValueProto = decltype(value_proto);
-      auto key = GetValue(K{}, std::forward<KeyProto>(key_proto), pt.map_type().key_type());
-      auto value = GetValue(V{}, std::forward<ValueProto>(value_proto), pt.map_type().value_type());
+      auto const& key = GetValue(K{}, std::forward<KeyProto>(key_proto), pt.map_type().key_type());
+      auto const& value = GetValue(V{}, std::forward<ValueProto>(value_proto), pt.map_type().value_type());
       if (!key) return std::move(key).status();
       if (!value) return std::move(value).status();
 

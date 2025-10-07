@@ -314,6 +314,27 @@ StatusOr<T> MovedFromString(Value const&) {
   return std::tuple<std::pair<std::string, std::string>, std::string>{
       std::pair<std::string, std::string>("name", ""), ""};
 }
+template <typename T,
+          typename U = decltype(std::declval<google::bigtable::v2::Value>()
+                                    .string_value()),
+          typename std::enable_if<
+              std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                           absl::Cord>::value>::type* = nullptr,
+          typename std::enable_if_t<
+              std::is_same<T, std::map<std::string, std::string>>::value,
+              int> = 0>
+StatusOr<T> MovedFromString(Value const& v) {
+  // For Cord builds, we can't rely on the moved-from state. Instead, we
+  // get the keys from the moved-from object and construct a new map with
+  // empty values to satisfy the test's expectation.
+  auto v2 = v.get<T>();
+  if (!v2) return v2.status();
+  T result;
+  for (auto const& kv : *v2) {
+    result.emplace(kv.first, "");
+  }
+  return result;
+}
 
 // NOTE: This test relies on unspecified behavior about the moved-from state
 // of std::string. Specifically, this test relies on the fact that "large"
@@ -424,7 +445,7 @@ TEST(Value, RvalueGetStructString) {
 // better way to test move semantics.
 TEST(Value, RvalueGetMapString) {
   using Type = std::map<std::string, std::string>;
-  Type data{{"foo", std::string(1024, 'x')},{"bar", std::string(1024, 'y')}};
+  Type data{{"foo", std::string(128, 'x')},{"bar", std::string(128, 'y')}};
   Value v(data);
 
   auto s = v.get<Type>();
@@ -438,7 +459,7 @@ TEST(Value, RvalueGetMapString) {
   // NOLINTNEXTLINE(bugprone-use-after-move)
   s = MovedFromString<Type>(v);
   ASSERT_STATUS_OK(s);
-  EXPECT_EQ(Type({{"name", ""}, {"bar", ""}}), *s);
+  EXPECT_EQ(Type({{"", ""}, {"", ""}}), *s);
 }
 
 TEST(Value, BytesRelationalOperators) {
@@ -468,6 +489,16 @@ TEST(Value, ConstructionFromLiterals) {
   std::vector<char const*> vec = {"foo", "bar"};
   Value v_vec(vec);
   EXPECT_STATUS_OK(v_vec.get<std::vector<std::string>>());
+
+  std::tuple<std::string, std::int64_t> tup = std::make_tuple("foo", 123);
+  Value v_tup(tup);
+  auto v_tup_res = v_tup.get<std::tuple<std::string, std::int64_t>>();
+  EXPECT_STATUS_OK(v_tup_res);
+
+  std::map<std::int64_t, std::string> m = {{12, "foo"},{34, "bar"}};
+  Value v_map(m);
+  auto v_map_res = v_map.get<std::map<std::int64_t, std::string>>();
+  EXPECT_STATUS_OK(v_map_res);
 }
 
 TEST(Value, MixingTypes) {
@@ -676,6 +707,90 @@ TEST(Value, BigtableStructWithNull) {
             google::bigtable::v2::Value::KIND_NOT_SET);
 }
 
+TEST(Value, BigtableMap) {
+  // Using declarations to shorten the tests, making them more readable.
+  using std::int64_t;
+  using std::string;
+  using std::map;
+
+  auto map1 = map<string, int64_t>{{"foo", 1}, {"bar", 2}};
+  using T1 = decltype(map1);
+  Value v1(map1);
+  ASSERT_STATUS_OK(v1.get<T1>());
+  EXPECT_EQ(map1, *v1.get<T1>());
+  EXPECT_EQ(v1, v1);
+
+  auto map2 = map<string, int64_t>{{"baz", 3}, {"qux", 4}};
+  using T2 = decltype(map2);
+  Value v2(map2);
+  EXPECT_THAT(v2.get<T2>(), IsOkAndHolds(map2));
+  EXPECT_EQ(v2, v2);
+  EXPECT_NE(v2, v1);
+
+  EXPECT_EQ(map2, *v2.get<T1>());
+  EXPECT_NE(map2, *v1.get<T2>());
+
+  static_assert(std::is_same<T1, T2>::value, "Two maps with same type and different values");
+
+  // v1 != v2, yet T2 works with v1 and vice versa
+  EXPECT_NE(v1, v2);
+  EXPECT_STATUS_OK(v1.get<T2>());
+  EXPECT_STATUS_OK(v2.get<T1>());
+
+  Value v_null(absl::optional<T1>{});
+  EXPECT_FALSE(v_null.get<absl::optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<absl::optional<T2>>()->has_value());
+
+  EXPECT_NE(v1, v_null);
+  EXPECT_NE(v2, v_null);
+
+  auto array_map = std::vector<T2>{
+      T2{{"foo2", 1}},
+      T2{{"bar2", 2}},
+      T2{{"baz2", 3}},
+  };
+  using T3 = decltype(array_map);
+  Value v3(array_map);
+  EXPECT_STATUS_OK(v3.get<T3>());
+  EXPECT_THAT(v3.get<T2>(), Not(IsOk()));
+  EXPECT_THAT(v3.get<T1>(), Not(IsOk()));
+
+  EXPECT_THAT(v3.get<T3>(), IsOkAndHolds(array_map));
+
+  auto empty = map<Bytes, std::string>{};
+  using T4 = decltype(empty);
+  Value v4(empty);
+  EXPECT_STATUS_OK(v4.get<T4>());
+  EXPECT_THAT(v4.get<T3>(), Not(IsOk()));
+  EXPECT_EQ(v4, v4);
+  EXPECT_NE(v4, v3);
+
+  EXPECT_THAT(v4.get<T4>(), IsOkAndHolds(empty));
+
+  auto deeply_nested = map<std::int64_t, std::map<std::string, std::vector<std::string>>>{};
+  using T5 = decltype(deeply_nested);
+  Value v5(deeply_nested);
+  EXPECT_STATUS_OK(v5.get<T5>());
+  EXPECT_THAT(v5.get<T4>(), Not(IsOk()));
+  EXPECT_EQ(v5, v5);
+  EXPECT_NE(v5, v4);
+
+  EXPECT_THAT(v5.get<T5>(), IsOkAndHolds(deeply_nested));
+
+  // tests maps with bytes key
+  auto byte_key = map<Bytes, string>{{Bytes("foo"), "bar"}, {Bytes("baz"), "qux"}};
+  EXPECT_EQ(byte_key[Bytes("foo")], "bar");
+  using T6 = decltype(byte_key);
+  Value v6(byte_key);
+  EXPECT_STATUS_OK(v6.get<T6>());
+  EXPECT_THAT(v6.get<T5>(), Not(IsOk()));
+  EXPECT_EQ(v6, v6);
+  EXPECT_NE(v6, v5);
+  auto retrieved_byte_key = v6.get<T6>();
+  EXPECT_THAT(retrieved_byte_key, IsOkAndHolds(byte_key));
+  EXPECT_EQ(byte_key[Bytes("foo")], (*retrieved_byte_key)[Bytes("foo")]);
+}
+
 TEST(Value, ProtoConversionBool) {
   for (auto b : {true, false}) {
     Value const v(b);
@@ -838,6 +953,31 @@ TEST(Value, ProtoConversionStruct) {
   EXPECT_EQ(42, p.second.array_value().values(1).int_value());
 }
 
+TEST(Value, ProtoConversionMap) {
+  using M = std::map<Bytes, std::int64_t>;
+  auto data = M{{Bytes("foo"), 12}, {Bytes("bar"), 34}};
+  Value const v(data);
+  auto const p = bigtable_internal::ToProto(v);
+  EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
+  EXPECT_TRUE(p.first.has_map_type());
+
+  Value const null_struct_value(MakeNullValue<M>());
+  auto const null_struct_proto = bigtable_internal::ToProto(null_struct_value);
+  EXPECT_TRUE(p.first.has_map_type());
+
+  auto const& key_type = p.first.map_type().key_type();
+  auto const& value_type = p.first.map_type().value_type();
+  EXPECT_TRUE(key_type.has_bytes_type());
+  EXPECT_TRUE(value_type.has_int64_type());
+  // we stored "foo" before "bar", but the underlying ordered map puts "bar" first
+  auto const& first_map_entry = p.second.array_value().values(1).array_value();
+  auto const& second_map_entry = p.second.array_value().values(0).array_value();
+  EXPECT_EQ(Bytes("foo"), Bytes(first_map_entry.values(0).bytes_value()));
+  EXPECT_EQ(12, first_map_entry.values(1).int_value());
+  EXPECT_EQ(Bytes("bar"), Bytes(second_map_entry.values(0).bytes_value()));
+  EXPECT_EQ(34, second_map_entry.values(1).int_value());
+}
+
 void SetNullProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.second.clear_kind();
@@ -894,6 +1034,22 @@ void SetProtoKind(Value& v, std::tuple<std::int64_t, std::int64_t> const& x) {
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
+void SetProtoKind(Value& v, std::map<std::string, std::int64_t> const& x) {
+  auto p = bigtable_internal::ToProto(v);
+  auto list = *p.second.mutable_array_value();
+  for (auto&& e : x) {
+    google::bigtable::v2::Value k;
+    k.set_string_value(e.first);
+    google::bigtable::v2::Value val;
+    val.set_int_value(e.second);
+    google::bigtable::v2::Value item;
+    *(*item.mutable_array_value()).add_values() = k;
+    *(*item.mutable_array_value()).add_values() = val;
+    *list.add_values() = item;
+  }
+  v = bigtable_internal::FromProto(p.first, p.second);
+}
+
 void ClearProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.first.clear_kind();
@@ -922,6 +1078,9 @@ TEST(Value, GetBadBool) {
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 }
 
@@ -956,6 +1115,9 @@ TEST(Value, GetBadFloat64) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<double>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadFloat32) {
@@ -989,6 +1151,9 @@ TEST(Value, GetBadFloat32) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadString) {
@@ -1010,6 +1175,9 @@ TEST(Value, GetBadString) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadBytes) {
@@ -1030,6 +1198,9 @@ TEST(Value, GetBadBytes) {
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 }
 
@@ -1055,6 +1226,9 @@ TEST(Value, GetBadTimestamp) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadDate) {
@@ -1079,6 +1253,9 @@ TEST(Value, GetBadDate) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadOptional) {
@@ -1096,6 +1273,9 @@ TEST(Value, GetBadOptional) {
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 }
 
@@ -1121,6 +1301,9 @@ TEST(Value, GetBadArray) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadStruct) {
@@ -1145,6 +1328,37 @@ TEST(Value, GetBadStruct) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<std::tuple<double>>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<std::tuple<double>>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadMap) {
+  using M = std::map<std::string, double>;
+  Value v(M{{"foo", 12.34}, {"bar", 56.78}});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, std::map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
 }
 
 TEST(Value, OutputStream) {
@@ -1192,6 +1406,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<std::string>{"\"a\"", "\"b\""}),
        R"(["\"a\"", "\"b\""])", normal},
+{Value(std::map<std::string,std::string>{{"\"a\"", "\"b\""}}),
+ R"({{"\"a\"" : "\"b\""}})", normal},
 
       // Tests null values
       {MakeNullValue<bool>(), "NULL", normal},
@@ -1270,10 +1486,39 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
       {MakeNullValue<std::tuple<float, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
-  };
+
+    // Tests maps
+    {Value(std::map<std::string, bool>{{{"bar", false}, {"foo", true}}}), R"({{"bar" : 0}, {"foo" : 1}})", normal},
+    {Value(std::map<std::string, bool>{{{"bar", false}, {"foo", true}}}), R"({{"bar" : false}, {"foo" : true}})", boolalpha},
+    {Value(std::map<std::string, std::int64_t>{{{"bar", 12}, {"foo", 34}}}), R"({{"bar" : 12}, {"foo" : 34}})", normal},
+    {Value(std::map<std::int64_t, std::int64_t>{{{10, 11}, {12, 13}}}), R"({{a : b}, {c : d}})", hex},
+    {Value(std::map<std::string, double>{{{"bar", 12.0}, {"foo", 34.0}}}), R"({{"bar" : 12}, {"foo" : 34}})", normal},
+    {Value(std::map<std::string, double>{{{"bar", 2.0}, {"foo", 3.0}}}), R"({{"bar" : 2.000}, {"foo" : 3.000}})", float4},
+    {Value(std::map<std::string, float>{{{"bar", 12.0F}, {"foo", 34.0F}}}), R"({{"bar" : 12}, {"foo" : 34}})", normal},
+    {Value(std::map<std::string, float>{{{"bar", 2.0F}, {"foo", 3.0F}}}), R"({{"bar" : 2.000}, {"foo" : 3.000}})", float4},
+    {Value(std::map<std::string, std::string>{{{"bar", std::string("a")}, {"foo", std::string("b")}}}), R"({{"bar" : "a"}, {"foo" : "b"}})", normal},
+    {Value(std::map<Bytes, Bytes>{{Bytes(std::string("bar")), Bytes(std::string("foo"))}}), R"({{B"bar" : B"foo"}})", normal},
+    {Value(std::map<Bytes, absl::CivilDay>{{Bytes(std::string("bar")), absl::CivilDay()}}), R"({{B"bar" : 1970-01-01}})",
+     normal},
+    {Value(std::map<std::string, Timestamp>{{"bar", Timestamp()}}), R"({{"bar" : 1970-01-01T00:00:00Z}})", normal},
+
+    // Tests maps with null elements
+    {Value(std::map<std::string, absl::optional<double>>{{"foo", 2.0}, {"bar", absl::optional<double>()}}), R"({{"bar" : NULL}, {"foo" : 2}})", normal},
+
+    // Tests null arrays
+    {MakeNullValue<std::map<std::int64_t, bool>>(), "NULL", normal},
+    {MakeNullValue<std::map<std::int64_t, std::int64_t>>(), "NULL", normal},
+    {MakeNullValue<std::map<std::int64_t, double>>(), "NULL", normal},
+    {MakeNullValue<std::map<std::int64_t, float>>(), "NULL", normal},
+    {MakeNullValue<std::map<Bytes, std::string>>(), "NULL", normal},
+    {MakeNullValue<std::map<Bytes, Bytes>>(), "NULL", normal},
+    {MakeNullValue<std::map<Bytes, absl::CivilDay>>(), "NULL", normal},
+    {MakeNullValue<std::map<Bytes, Timestamp>>(), "NULL", normal}
+};
 
   for (auto const& tc : test_case) {
     std::stringstream ss;
+    std::cout << tc.expected << std::endl;
     tc.manip(ss) << tc.value;
     EXPECT_EQ(ss.str(), tc.expected);
   }

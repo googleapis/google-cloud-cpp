@@ -67,6 +67,10 @@ class Bytes {
     return a.bytes_ == b.bytes_;
   }
   friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
+  friend bool operator<(Bytes const& a, Bytes const& b) { return a.bytes_ < b.bytes_; }
+  friend bool operator>(Bytes const& a, Bytes const& b) { return a.bytes_ > b.bytes_; }
+  friend bool operator<=(Bytes const& a, Bytes const& b) { return a.bytes_ <= b.bytes_; }
+  friend bool operator>=(Bytes const& a, Bytes const& b) { return a.bytes_ >= b.bytes_; }
   ///@}
 
   /**
