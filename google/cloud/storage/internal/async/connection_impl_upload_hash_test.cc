@@ -503,27 +503,27 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
         });
     EXPECT_CALL(*stream, Read)
         .WillOnce([&]() {
-          return sequencer.PushBack("Read(1)").then([](auto f) {
-            if (!f.get())
-              return absl::optional<
-                  google::storage::v2::BidiWriteObjectResponse>();
-            auto response = google::storage::v2::BidiWriteObjectResponse{};
-            response.set_persisted_size(43);
-            return absl::make_optional(std::move(response));
-          });
+          return sequencer.PushBack("Read(1)").then(
+              [](auto f) -> absl::optional<
+                             google::storage::v2::BidiWriteObjectResponse> {
+                if (!f.get()) return absl::nullopt;
+                auto response = google::storage::v2::BidiWriteObjectResponse{};
+                response.set_persisted_size(43);
+                return absl::make_optional(std::move(response));
+              });
         })
         .WillOnce([&]() {
-          return sequencer.PushBack("Read(2)").then([](auto f) {
-            if (!f.get())
-              return absl::optional<
-                  google::storage::v2::BidiWriteObjectResponse>();
-            auto response = google::storage::v2::BidiWriteObjectResponse{};
-            response.mutable_resource()->set_bucket(
-                "projects/_/buckets/test-bucket");
-            response.mutable_resource()->set_name("test-object");
-            response.mutable_resource()->set_generation(123456);
-            return absl::make_optional(std::move(response));
-          });
+          return sequencer.PushBack("Read(2)").then(
+              [](auto f) -> absl::optional<
+                             google::storage::v2::BidiWriteObjectResponse> {
+                if (!f.get()) return absl::nullopt;
+                auto response = google::storage::v2::BidiWriteObjectResponse{};
+                response.mutable_resource()->set_bucket(
+                    "projects/_/buckets/test-bucket");
+                response.mutable_resource()->set_name("test-object");
+                response.mutable_resource()->set_generation(123456);
+                return absl::make_optional(std::move(response));
+              });
         });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
