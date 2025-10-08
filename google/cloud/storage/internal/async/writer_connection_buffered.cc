@@ -397,7 +397,7 @@ class AsyncWriterConnectionBufferedState
     flush_ = false;
     // Check if the promise has already been completed.
     if (finalized_promise_completed_) {
-      lk.unlock();  // Release lock before returning
+      // Since the lock is passed by value, no explicit unlock is needed.
       return;
     }
     // Mark the promise as completed *before* moving it.
