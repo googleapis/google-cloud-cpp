@@ -216,10 +216,9 @@ class AsyncWriterConnectionBufferedState
   // FinalizeStep is now called only when all data in resend_buffer_ is written.
   void FinalizeStep(std::unique_lock<std::mutex> lk) {
     // Check *under lock* if we are already finalizing.
-    if (finalizing_) {
-      // If another thread initiated FinalizeStep concurrently, just return.
-      return;
-    }
+    // If another thread initiated FinalizeStep concurrently, just return.
+    if (finalizing_) return;
+
     // Mark that we are starting the finalization process.
     finalizing_ = true;
     auto impl = Impl(lk);
@@ -354,10 +353,9 @@ class AsyncWriterConnectionBufferedState
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
       // finalized_ promise now, based on the resume attempt's outcome.
-      if (!impl) {
-        // The resume attempt itself failed. Use that error.
-        return SetError(std::move(lk), std::move(impl).status());
-      }
+      // The resume attempt itself failed. Use that error.
+      if (!impl) return SetError(std::move(lk), std::move(impl).status());
+
       // Resume attempt succeeded, check the persisted state.
       auto state = impl_->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
