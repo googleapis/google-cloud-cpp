@@ -99,50 +99,6 @@ TEST(WriteConnectionBuffered, FinalizeEmpty) {
   EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
-TEST(WriteConnectionBuffered, FinalizeEmptyResumes) {
-  AsyncSequencer<bool> sequencer;
-  auto make_mock = [&sequencer]() -> std::unique_ptr<AsyncWriterConnection> {
-    auto mock = std::make_unique<MockAsyncWriterConnection>();
-    EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-    EXPECT_CALL(*mock, PersistedState)
-        .WillRepeatedly(Return(MakePersistedState(0)));
-    EXPECT_CALL(*mock, Finalize).Times(AtMost(1)).WillRepeatedly([&](auto) {
-      return sequencer.PushBack("Finalize")
-          .then([](auto f) -> StatusOr<google::storage::v2::Object> {
-            if (!f.get()) return TransientError();
-            return TestObject();
-          });
-    });
-    return mock;
-  };
-
-  auto mock = make_mock();
-  MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
-    return sequencer.PushBack("Retry").then(
-        [&](auto) { return make_status_or(make_mock()); });
-  });
-
-  auto connection = MakeWriterConnectionBuffered(
-      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
-  EXPECT_EQ(connection->UploadId(), "test-upload-id");
-  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
-
-  auto finalize = connection->Finalize({});
-  auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finalize");
-  next.first.set_value(false);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Retry");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finalize");
-  next.first.set_value(true);
-  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
-}
-
 TEST(WriteConnectionBuffered, FinalizedOnConstruction) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -171,39 +127,42 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, Finalize).Times(AtMost(1)).WillRepeatedly([&](auto) {
+  // This Finalize call will fail, triggering a resume.
+  EXPECT_CALL(*mock, Finalize).WillOnce([&](auto) {
     return sequencer.PushBack("Finalize").then([](auto) {
       return StatusOr<google::storage::v2::Object>(TransientError());
     });
   });
 
   MockFactory mock_factory;
+  // The resume will succeed and return a new mock that reports the object is
+  // already finalized.
   EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
-    return sequencer.PushBack("Retry").then([](auto) {
-      auto mock = std::make_unique<MockAsyncWriterConnection>();
-      EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-      EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(TestObject()));
+    return sequencer.PushBack("Resume").then([](auto) {
+      auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+      EXPECT_CALL(*resumed_mock, PersistedState)
+          .WillRepeatedly(Return(TestObject()));
       return make_status_or(
-          std::unique_ptr<AsyncWriterConnection>(std::move(mock)));
+          std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
     });
   });
 
   auto connection = MakeWriterConnectionBuffered(
       mock_factory.AsStdFunction(), std::move(mock), TestOptions());
-  EXPECT_EQ(connection->UploadId(), "test-upload-id");
-  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
   auto finalize = connection->Finalize({});
-  EXPECT_FALSE(finalize.is_ready());
+  ASSERT_FALSE(finalize.is_ready());
+
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
-  next.first.set_value(false);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Retry");
   next.first.set_value(true);
 
-  EXPECT_TRUE(finalize.is_ready());
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume");
+  next.first.set_value(true);
+
+  // The overall operation should succeed because the resume found the finalized
+  // object.
   EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
@@ -244,75 +203,6 @@ TEST(WriteConnectionBuffered, FinalizeFailsAndResumeFails) {
 
   // The finalization should fail with the error from the failed resume attempt.
   EXPECT_THAT(finalize.get(), StatusIs(resume_error.code()));
-}
-
-TEST(WriteConnectionBuffered, FinalizeFailsIfResumeDoesNotConfirmCompletion) {
-  AsyncSequencer<bool> sequencer;
-
-  auto make_resumable_mock =
-      [&sequencer]() -> std::unique_ptr<AsyncWriterConnection> {
-    auto mock = std::make_unique<MockAsyncWriterConnection>();
-    EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-    EXPECT_CALL(*mock, PersistedState)
-        .WillRepeatedly(Return(MakePersistedState(0)));
-    EXPECT_CALL(*mock, Finalize).WillOnce([&](auto) {
-      return sequencer.PushBack("Finalize(1)")
-          .then([](auto) -> StatusOr<google::storage::v2::Object> {
-            return TransientError();
-          });
-    });
-    return mock;
-  };
-
-  auto mock = make_resumable_mock();
-  MockFactory mock_factory;
-  {
-    InSequence seq;
-    EXPECT_CALL(mock_factory, Call).WillOnce([&] {
-      return sequencer.PushBack("Retry(1)").then([&](auto) {
-        // The resume succeeds, but the new connection is *still not* finalized.
-        // The implementation will try to call Finalize() again.
-        auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
-        EXPECT_CALL(*resumed_mock, UploadId)
-            .WillRepeatedly(Return("test-upload-id"));
-        EXPECT_CALL(*resumed_mock, PersistedState)
-            .WillRepeatedly(Return(MakePersistedState(0)));
-        // This second Finalize call will fail with a permanent error.
-        EXPECT_CALL(*resumed_mock, Finalize).WillOnce([&](auto) {
-          return sequencer.PushBack("Finalize(2)")
-              .then([](auto) -> StatusOr<google::storage::v2::Object> {
-                return PermanentError();
-              });
-        });
-        return make_status_or(
-            std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
-      });
-    });
-    // The implementation calls the factory again on permanent error.
-    EXPECT_CALL(mock_factory, Call).WillOnce([] {
-      return make_ready_future(StatusOr<std::unique_ptr<AsyncWriterConnection>>(
-          Status(StatusCode::kAborted, "Resume loop terminated")));
-    });
-  }
-
-  auto connection = MakeWriterConnectionBuffered(
-      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
-
-  auto finalize = connection->Finalize({});
-  auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finalize(1)");
-  next.first.set_value(false);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Retry(1)");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finalize(2)");
-  next.first.set_value(true);
-
-  // The final status will be from the last failed resume attempt.
-  EXPECT_THAT(finalize.get(),
-              StatusIs(StatusCode::kAborted, "Resume loop terminated"));
 }
 
 TEST(WriteConnectionBuffered, WriteResumes) {
@@ -1183,6 +1073,195 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+}
+
+TEST(WriteConnectionBuffered, FinalizeWithEmptyPayloadIsImmediate) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  // With an empty buffer, Finalize({}) should immediately call the underlying
+  // Finalize() without any intermediate Flush() or Query() calls.
+  EXPECT_CALL(*mock, Finalize).WillOnce([&](auto payload) {
+    EXPECT_TRUE(payload.empty());
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return make_status_or(TestObject());
+    });
+  });
+
+  // Ensure no Flush or Query is ever called in this scenario.
+  EXPECT_CALL(*mock, Flush).Times(0);
+  EXPECT_CALL(*mock, Query).Times(0);
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto final_status = connection->Finalize({});
+  ASSERT_FALSE(final_status.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(true);
+
+  EXPECT_THAT(final_status.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
+}
+
+TEST(WriteConnectionBuffered, FinalizeFailsThenResumeFails) {
+  AsyncSequencer<bool> sequencer;
+  auto const transient_error = TransientError();
+  auto const resume_error = PermanentError();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Finalize).WillOnce([&](auto) {
+    return sequencer.PushBack("Finalize").then([&](auto) {
+      return StatusOr<google::storage::v2::Object>(transient_error);
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
+    return sequencer.PushBack("Resume").then(
+        [&](auto) -> StatusOr<std::unique_ptr<AsyncWriterConnection>> {
+          return resume_error;
+        });
+  });
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto finalize = connection->Finalize({});
+  ASSERT_FALSE(finalize.is_ready());
+
+  // Let the Finalize call fail.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(true);
+
+  // This triggers the resume attempt, which will also fail.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume");
+  next.first.set_value(true);
+
+  // The finalization should fail with the error from the resume attempt.
+  EXPECT_THAT(finalize.get(), StatusIs(resume_error.code()));
+}
+
+TEST(WriteConnectionBuffered,
+     FinalizeFailsThenResumeSucceedsButObjectStillMissing) {
+  AsyncSequencer<bool> sequencer;
+  auto const original_finalize_error = TransientError();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Finalize).WillOnce([&](auto) {
+    return sequencer.PushBack("Finalize").then([&](auto) {
+      return StatusOr<google::storage::v2::Object>(original_finalize_error);
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
+    return sequencer.PushBack("Resume").then([](auto) {
+      // The resume itself succeeds, but the new connection reports that the
+      // object is still not finalized.
+      auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+      EXPECT_CALL(*resumed_mock, PersistedState)
+          .WillRepeatedly(Return(MakePersistedState(0)));
+      return make_status_or(
+          std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
+    });
+  });
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto finalize = connection->Finalize({});
+  ASSERT_FALSE(finalize.is_ready());
+
+  // Let the original finalize call fail.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(true);
+
+  // Let the resume attempt succeed.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume");
+  next.first.set_value(true);
+
+  // With the bug fixed, the logic enters the was_finalizing block and fails
+  // with the original error. No retry is attempted.
+  EXPECT_THAT(finalize.get(), StatusIs(original_finalize_error.code()));
+}
+
+TEST(WriteConnectionBuffered, SetFinalizedIsIdempotent) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  // This Finalize will succeed.
+  EXPECT_CALL(*mock, Finalize).WillOnce([&](auto) {
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return make_status_or(TestObject());
+    });
+  });
+  // This Flush will fail, triggering a resume.
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then(
+        [](auto) { return TransientError(); });
+  });
+  EXPECT_CALL(*mock, Query).Times(0);
+
+  MockFactory mock_factory;
+  // The resume attempt will discover the object is already finalized.
+  EXPECT_CALL(mock_factory, Call).WillOnce([&] {
+    return sequencer.PushBack("Resume").then(
+        [](auto) -> StatusOr<std::unique_ptr<AsyncWriterConnection>> {
+          auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+          EXPECT_CALL(*resumed_mock, PersistedState)
+              .WillRepeatedly(Return(TestObject()));
+          return std::unique_ptr<AsyncWriterConnection>(
+              std::move(resumed_mock));
+        });
+  });
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Step 1: Successfully finalize the connection.
+  auto finalize = connection->Finalize({});
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(true);
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
+
+  // The final promise is now completed. The idempotency guard should be active.
+
+  // Step 2: Start a *new* operation that fails and triggers a resume.
+  auto flush = connection->Flush({});
+
+  // Step 3: Let the Flush operation fail.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);  // This makes it return TransientError
+
+  // Step 4: The failure triggers a resume. Let the resume succeed.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume");
   next.first.set_value(true);
 }
 

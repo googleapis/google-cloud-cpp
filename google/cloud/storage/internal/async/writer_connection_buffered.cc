@@ -232,10 +232,7 @@ class AsyncWriterConnectionBufferedState
   }
 
   void OnFinalize(StatusOr<google::storage::v2::Object> result) {
-    if (!result) {
-      finalizing_ = false;
-      return Resume(std::move(result).status());
-    }
+    if (!result) return Resume(std::move(result).status());
     SetFinalized(std::unique_lock<std::mutex>(mu_), std::move(result));
   }
 
@@ -349,6 +346,11 @@ class AsyncWriterConnectionBufferedState
           impl) {
     std::unique_lock<std::mutex> lk(mu_);
 
+    // Resume was *not* triggered by finalization failure.
+    if (!impl) return SetError(std::move(lk), std::move(impl).status());
+    // On successful resume, immediately update the active connection.
+    impl_ = std::move(*impl);
+
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
       // finalized_ promise now, based on the resume attempt's outcome.
@@ -372,9 +374,6 @@ class AsyncWriterConnectionBufferedState
       return SetError(std::move(lk), std::move(original_status));
     }
 
-    // Resume was *not* triggered by finalization failure.
-    if (!impl) return SetError(std::move(lk), std::move(impl).status());
-    impl_ = std::move(*impl);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
       // Found finalized object (maybe finalized concurrently or resumed).
