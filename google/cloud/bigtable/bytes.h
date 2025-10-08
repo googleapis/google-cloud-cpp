@@ -71,13 +71,13 @@ class Bytes {
     return a.bytes_ < b.bytes_;
   }
   friend bool operator>(Bytes const& a, Bytes const& b) {
-    return a.bytes_ > b.bytes_;
+    return !(a < b) && !(a == b);
   }
   friend bool operator<=(Bytes const& a, Bytes const& b) {
-    return a.bytes_ <= b.bytes_;
+    return (a < b) || (a == b);
   }
   friend bool operator>=(Bytes const& a, Bytes const& b) {
-    return a.bytes_ >= b.bytes_;
+    return !(a < b);
   }
   ///@}
 
@@ -100,5 +100,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 }  // namespace cloud
 }  // namespace google
+
+template <>
+struct std::hash<google::cloud::bigtable::Bytes> {
+  std::size_t operator()(
+      google::cloud::bigtable::Bytes const& b) const noexcept {
+    return std::hash<std::string>()(b.get<std::string>());
+  }
+};
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BYTES_H

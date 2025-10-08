@@ -78,7 +78,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * DATE         | `absl::CivilDay`
  * ARRAY        | `std::vector<T>`  // [1]
  * STRUCT       | `std::tuple<Ts...>`
- * MAP          | `std::map<K, V>` // [2]
+ * MAP          | `std::unordered_map<K, V>` // [2]
  *
  * [1] The type `T` may be any of the other supported types, except for
  *     ARRAY/`std::vector`.
@@ -133,19 +133,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @par Bigtable Maps
  *
- * Bigtable maps are represented in C++ as a `std::map<K, V>`, where the type
- * `K` may be any of `Bytes`, `std::string` or `std::int64_t`.
- * Normally encoded Map values won't have repeated keys, however, this client
- * handles the case as follows: if the same key appears
- * multiple times, the _last_ value takes precedence.
+ * Bigtable maps are represented in C++ as a `std::unordered_map<K, V>`, where
+ * the type `K` may be any of `Bytes`, `std::string` or `std::int64_t`. Normally
+ * encoded Map values won't have repeated keys, however, this client handles the
+ * case as follows: if the same key appears multiple times, the _last_ value
+ * takes precedence.
  *
  * The following examples show usage of maps.
  *
  * @code
- * std::map<std::string, std::map<std::string, std::int64_t>> m = {{"map1",
+ * std::unordered_map<std::string, std::unordered_map<std::string,
+ * std::int64_t>> m = {{"map1",
  * {{"key1", 1}}, "map2": {{"key2", 2}}};
  * bigtable::Value mv(m);
- * auto copy = *v.get<std::map<std::string, std::int64_t>>>();
+ * auto copy = *v.get<std::unordered_map<std::string, std::int64_t>>>();
  * assert(m == copy);
  * @endcode
  */
@@ -237,13 +238,14 @@ class Value {
 
   /**
    * Constructs an instance from a Bigtable MAP with a type and values
-   * matching the given `std::map`.
+   * matching the given `std::unordered_map`.
    *
    * @warning if the same key appears
    * multiple times, the _last_ value takes precedence.
    */
   template <typename K, typename V>
-  explicit Value(std::map<K, V> m) : Value(PrivateConstructor{}, std::move(m)) {
+  explicit Value(std::unordered_map<K, V> m)
+      : Value(PrivateConstructor{}, std::move(m)) {
     static_assert(IsValidMapKey<K>::value,
                   "Invalid key type. See value.h documentation.");
   }
@@ -354,7 +356,7 @@ class Value {
     return ok;
   }
   template <typename K, typename V>
-  static bool TypeProtoIs(std::map<K, V> const&,
+  static bool TypeProtoIs(std::unordered_map<K, V> const&,
                           google::bigtable::v2::Type const& type) {
     if (!type.has_map_type()) return false;
     if (!IsValidMapKey<K>()) return false;
@@ -421,7 +423,8 @@ class Value {
     return t;
   }
   template <typename K, typename V>
-  static google::bigtable::v2::Type MakeTypeProto(std::map<K, V> const&) {
+  static google::bigtable::v2::Type MakeTypeProto(
+      std::unordered_map<K, V> const&) {
     google::bigtable::v2::Type t;
     t.set_allocated_map_type(std::move(new google::bigtable::v2::Type_Map()));
     *t.mutable_map_type()->mutable_key_type() = MakeTypeProto(K{});
@@ -486,7 +489,8 @@ class Value {
     return v;
   }
   template <typename K, typename V>
-  static google::bigtable::v2::Value MakeValueProto(std::map<K, V> m) {
+  static google::bigtable::v2::Value MakeValueProto(
+      std::unordered_map<K, V> m) {
     google::bigtable::v2::Value v;
     auto& list = *v.mutable_array_value();
     for (auto&& kv : m) {
@@ -586,12 +590,13 @@ class Value {
     return tup;
   }
   template <typename K, typename V, typename PV>
-  static StatusOr<std::map<K, V>> GetValue(
-      std::map<K, V> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
+  static StatusOr<std::unordered_map<K, V>> GetValue(
+      std::unordered_map<K, V> const&, PV&& pv,
+      google::bigtable::v2::Type const& pt) {
     if (!pt.has_map_type() || !pv.has_array_value()) {
       return internal::UnknownError("missing MAP", GCP_ERROR_INFO());
     }
-    std::map<K, V> m;
+    std::unordered_map<K, V> m;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
       auto&& map_value_proto =
           GetProtoValueArrayElement(std::forward<PV>(pv), i);
