@@ -102,7 +102,7 @@ class AsyncWriter {
    * point.
    * 
    * In the case of an appendable object, this variant will be populated
-   * with a google::storage::v2::Object on the first response.
+   * with a `google::storage::v2::Object` on the first response.
    *
    * @note
    * Calling this function on a default-constructed or moved-from `AsyncWriter`
