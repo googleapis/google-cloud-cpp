@@ -717,7 +717,7 @@ void CreateAndWriteAppendableObject(
                                 gcs_ex::BucketName(std::move(bucket_name)),
                                 std::move(object_name)))
                                .value();
-    std::cout << "Appendable upload started for object " << object_name "\n";
+    std::cout << "Appendable upload started for object " << object_name << "\n";
 
     token = (co_await writer.Write(std::move(token),
                                    gcs_ex::WritePayload("Some data\n")))
@@ -882,7 +882,7 @@ void ReadAppendableObjectTail(
         bytes_read += buffer.size();
       }
       // In a real application you would wait here, e.g. with a timer.
-      co_await google::cloud::sleep_for(std::chrono::seconds(1));
+      std::this_thread::sleep_for(std::chrono::seconds(1));
     }
   };
   // [END storage_read_appendable_object_tail]
