@@ -205,6 +205,9 @@ add_library(
     internal/operation_context.h
     internal/operation_context_factory.cc
     internal/operation_context_factory.h
+    internal/partial_result_set_reader.h
+    internal/partial_result_set_source.cc
+    internal/partial_result_set_source.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/rate_limiter.cc
@@ -390,6 +393,7 @@ if (BUILD_TESTING)
         testing/mock_mutate_rows_limiter.h
         testing/mock_mutate_rows_reader.h
         testing/mock_policies.h
+        testing/mock_partial_result_set_reader.h
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
         testing/mock_sample_row_keys_reader.h

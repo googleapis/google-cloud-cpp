@@ -44,12 +44,6 @@ class ResultSourceInterface {
    * row_key() to indicate end-of-stream.
    */
   virtual StatusOr<bigtable::QueryRow> NextRow() = 0;
-
-  /**
-   * Returns metadata about the result set.
-   */
-  virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
-  Metadata() = 0;
 };
 
 /**
