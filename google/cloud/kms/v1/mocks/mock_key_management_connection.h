@@ -172,6 +172,11 @@ class MockKeyManagementServiceConnection
               (google::cloud::kms::v1::MacVerifyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::DecapsulateResponse>,
+              Decapsulate,
+              (google::cloud::kms::v1::DecapsulateRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>,
       GenerateRandomBytes,

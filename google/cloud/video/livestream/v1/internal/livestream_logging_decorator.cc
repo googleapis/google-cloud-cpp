@@ -220,6 +220,78 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::StopChannel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncStartDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::StartDistributionRequest const&
+              request) {
+        return child_->AsyncStartDistribution(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::StartDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::StartDistributionRequest const&
+              request) {
+        return child_->StartDistribution(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncStopDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::StopDistributionRequest const&
+              request) {
+        return child_->AsyncStopDistribution(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::StopDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::StopDistributionRequest const&
+              request) {
+        return child_->StopDistribution(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -334,6 +406,19 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::UpdateInput(
              google::cloud::video::livestream::v1::UpdateInputRequest const&
                  request) {
         return child_->UpdateInput(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceLogging::PreviewInput(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::livestream::v1::PreviewInputRequest const&
+                 request) {
+        return child_->PreviewInput(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

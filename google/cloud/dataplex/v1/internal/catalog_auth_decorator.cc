@@ -449,6 +449,33 @@ Status CatalogServiceAuth::CancelMetadataJob(
   return child_->CancelMetadataJob(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::CreateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::DeleteEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::GetEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEntryLink(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

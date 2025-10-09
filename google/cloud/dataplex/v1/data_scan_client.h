@@ -97,7 +97,7 @@ class DataScanServiceClient {
   /// @param parent  Required. The resource name of the parent location:
   ///  `projects/{project}/locations/{location_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param data_scan  Required. DataScan resource.
   /// @param data_scan_id  Required. DataScan identifier.
   ///  @n
@@ -341,7 +341,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the dataScan:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -458,7 +458,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the dataScan:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -517,7 +517,7 @@ class DataScanServiceClient {
   /// @param parent  Required. The resource name of the parent location:
   ///  `projects/{project}/locations/{location_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -594,7 +594,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the DataScan:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`.
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   ///  @n
   ///  Only **OnDemand** data scans are allowed.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -655,7 +655,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the DataScanJob:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -714,7 +714,7 @@ class DataScanServiceClient {
   /// @param parent  Required. The resource name of the parent environment:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

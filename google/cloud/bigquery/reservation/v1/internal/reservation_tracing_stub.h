@@ -167,6 +167,41 @@ class ReservationServiceTracingStub : public ReservationServiceStub {
                       google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          CreateReservationGroupRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request) override;
+
+  Status DeleteReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request) override;
+
+  StatusOr<
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse>
+  ListReservationGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          ListReservationGroupsRequest const& request) override;
+
  private:
   std::shared_ptr<ReservationServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

@@ -98,7 +98,7 @@ class DataplexServiceClient {
   ///
   /// @param parent  Required. The resource name of the lake location, of the form:
   ///  projects/{project_number}/locations/{location_id}
-  ///  where `location_id` refers to a GCP region.
+  ///  where `location_id` refers to a Google Cloud region.
   /// @param lake  Required. Lake resource
   /// @param lake_id  Required. Lake identifier.
   ///  This ID will be used to generate names such as database and dataset names
@@ -453,7 +453,7 @@ class DataplexServiceClient {
   ///
   /// @param parent  Required. The resource name of the lake location, of the form:
   ///  `projects/{project_number}/locations/{location_id}`
-  ///  where `location_id` refers to a GCP region.
+  ///  where `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
