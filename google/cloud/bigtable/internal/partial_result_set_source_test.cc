@@ -61,16 +61,6 @@ CreatePartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
   return PartialResultSetSource::Create(std::move(reader));
 }
 
-// // Returns a functor that expects the current `StringOption` to match the
-// test
-// // name.
-// std::function<void()> VoidMock() {
-//   return [] {
-//     EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-//               CurrentTestName());
-//   };
-// }
-
 // Returns a functor that will return the argument after expecting that the
 // current `StringOption` matches the test name.
 template <typename T>
