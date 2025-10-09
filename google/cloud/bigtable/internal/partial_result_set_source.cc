@@ -140,17 +140,6 @@ Status PartialResultSetSource::ReadFromStream() {
     result_set.result.set_resume_token("<end-of-stream>");
   }
 
-  // ExecuteQueryResponse contains metadata and partialResult
-//   // Copy the column names into a vector that will be shared with
-//   // every Row object returned from NextRow().
-    //   columns_ = std::make_shared<std::vector<std::string>>();
-    //   columns_->reserve(result_set.result.proto_rows_batch.fields_size());
-    //   for (auto const& field : metadata_->row_type().fields()) {
-    //     columns_->push_back(field.name());
-    //   }
-//     }
-//   }
-
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
   // used the token to resume an interrupted stream), then we must discard
   // any buffered data as it will be replayed.
