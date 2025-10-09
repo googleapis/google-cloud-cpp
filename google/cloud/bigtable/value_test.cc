@@ -224,6 +224,33 @@ TEST(Value, ArrayValueBasedEquality) {
   }
 }
 
+TEST(Value, UnsortedKeysMapEquality) {
+  std::vector<std::pair<Value, Value>> const test_cases = {
+      {
+          Value(std::unordered_map<std::int64_t, std::string>{{12, "foo"},
+                                                              {34, "bar"}}),
+          Value(std::unordered_map<std::int64_t, std::string>{{34, "bar"},
+                                                              {12, "foo"}}),
+      },
+      {
+          Value(std::unordered_map<std::string, std::string>{{"12", "foo"},
+                                                             {"34", "bar"}}),
+          Value(std::unordered_map<std::string, std::string>{{"34", "bar"},
+                                                             {"12", "foo"}}),
+      },
+      {
+          Value(std::unordered_map<Bytes, std::string>{{Bytes("12"), "foo"},
+                                                       {Bytes("34"), "bar"}}),
+          Value(std::unordered_map<Bytes, std::string>{{Bytes("34"), "bar"},
+                                                       {Bytes("12"), "foo"}}),
+      }
+
+  };
+  for (auto const& tc : test_cases) {
+    EXPECT_EQ(tc.first, tc.second);
+  }
+}
+
 TEST(Value, Equality) {
   std::vector<std::pair<Value, Value>> test_cases = {
       {Value(false), Value(true)},

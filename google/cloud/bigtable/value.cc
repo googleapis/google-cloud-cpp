@@ -174,33 +174,36 @@ bool MapEqual(  // NOLINT(misc-no-recursion)
     google::bigtable::v2::Value const& pv1,
     google::bigtable::v2::Type const& pt2,
     google::bigtable::v2::Value const& pv2) {
-  if (pt1.map_type().key_type().kind_case() !=
-      pt2.map_type().key_type().kind_case())
-    return false;
-  if (pt1.map_type().value_type().kind_case() !=
-      pt2.map_type().value_type().kind_case())
-    return false;
-
-  auto const& mv1 = pv1.array_value().values();
-  auto const& mv2 = pv2.array_value().values();
-  if (mv1.size() != mv2.size()) return false;
   auto const& kt1 = pt1.map_type().key_type();
   auto const& kt2 = pt2.map_type().key_type();
   auto const& vt1 = pt1.map_type().value_type();
   auto const& vt2 = pt2.map_type().value_type();
+  if (kt1.kind_case() != kt2.kind_case()) return false;
+  if (vt1.kind_case() != vt2.kind_case()) return false;
+
+  auto const& mv1 = pv1.array_value().values();
+  auto const& mv2 = pv2.array_value().values();
+  if (mv1.size() != mv2.size()) return false;
+  // We double-check that all subarrays are of size 2;
   for (int i = 0; i < mv1.size(); ++i) {
     auto const& f1 = mv1.Get(i);
     auto const& f2 = mv2.Get(i);
     if (f1.array_value().values_size() != 2) return false;
     if (f2.array_value().values_size() != 2) return false;
+  }
+  // NOLINTNEXTLINE(misc-no-recursion)
+  auto comparison_function = [&kt1, &kt2, &vt1, &vt2](
+                                 google::bigtable::v2::Value const& f1,
+                                 google::bigtable::v2::Value const& f2) {
     auto const& k1 = f1.array_value().values(0);
     auto const& k2 = f2.array_value().values(0);
     auto const& v1 = f1.array_value().values(1);
     auto const& v2 = f2.array_value().values(1);
     if (!Equal(kt1, k1, kt2, k2)) return false;
-    if (!Equal(vt1, v1, vt2, v2)) return false;
-  }
-  return true;
+    return Equal(vt1, v1, vt2, v2);
+  };
+  return std::is_permutation(mv1.begin(), mv1.end(), mv2.begin(), mv2.end(),
+                             comparison_function);
 }
 
 // From the proto description, `NULL` values are represented by having a kind
