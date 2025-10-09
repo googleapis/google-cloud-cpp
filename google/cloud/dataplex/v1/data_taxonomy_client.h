@@ -508,7 +508,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   ///
   /// @param parent  Required. The resource name of the DataTaxonomy location, of the form:
   ///  projects/{project_number}/locations/{location_id}
-  ///  where `location_id` refers to a GCP region.
+  ///  where `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

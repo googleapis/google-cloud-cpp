@@ -208,6 +208,12 @@ KeyManagementServiceConnection::MacVerify(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceConnection::Decapsulate(
+    google::cloud::kms::v1::DecapsulateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceConnection::GenerateRandomBytes(
     google::cloud::kms::v1::GenerateRandomBytesRequest const&) {

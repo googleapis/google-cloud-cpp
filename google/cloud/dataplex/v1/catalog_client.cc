@@ -719,6 +719,59 @@ Status CatalogServiceClient::CancelMetadataJob(
   return connection_->CancelMetadataJob(request);
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::CreateEntryLink(
+    std::string const& parent,
+    google::cloud::dataplex::v1::EntryLink const& entry_link,
+    std::string const& entry_link_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateEntryLinkRequest request;
+  request.set_parent(parent);
+  *request.mutable_entry_link() = entry_link;
+  request.set_entry_link_id(entry_link_id);
+  return connection_->CreateEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::CreateEntryLink(
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::DeleteEntryLink(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteEntryLinkRequest request;
+  request.set_name(name);
+  return connection_->DeleteEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::DeleteEntryLink(
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::GetEntryLink(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::GetEntryLinkRequest request;
+  request.set_name(name);
+  return connection_->GetEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::GetEntryLink(
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEntryLink(request);
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

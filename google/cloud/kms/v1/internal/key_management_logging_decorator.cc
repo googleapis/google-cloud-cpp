@@ -368,6 +368,18 @@ KeyManagementServiceLogging::MacVerify(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceLogging::Decapsulate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::DecapsulateRequest const& request) {
+        return child_->Decapsulate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceLogging::GenerateRandomBytes(
     grpc::ClientContext& context, Options const& options,

@@ -479,6 +479,13 @@ KeyManagementServiceClient::MacVerify(
   return connection_->MacVerify(request);
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceClient::Decapsulate(
+    google::cloud::kms::v1::DecapsulateRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Decapsulate(request);
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceClient::GenerateRandomBytes(
     std::string const& location, std::int32_t length_bytes,
