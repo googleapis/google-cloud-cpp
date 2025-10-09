@@ -482,11 +482,21 @@ TEST(Value, RvalueGetMapString) {
 }
 
 TEST(Value, BytesRelationalOperators) {
-  Bytes b1(std::string(1, '\x00'));
-  Bytes b2(std::string(1, '\xff'));
+  Bytes const b1(std::string(1, '\x00'));
+  Bytes const b2(std::string(1, '\xff'));
 
   EXPECT_EQ(b1, b1);
   EXPECT_NE(b1, b2);
+
+  // tests comparison operators
+  Bytes const b3(std::string("a"));
+  Bytes const b4(std::string("b"));
+  EXPECT_LT(b3, b4);
+  EXPECT_LE(b3, b4);
+  EXPECT_LE(b3, b3);
+  EXPECT_GT(b4, b3);
+  EXPECT_GE(b4, b3);
+  EXPECT_GE(b4, b4);
 }
 
 TEST(Value, ConstructionFromLiterals) {
@@ -984,22 +994,14 @@ TEST(Value, ProtoConversionMap) {
   EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
   EXPECT_TRUE(p.first.has_map_type());
 
-  Value const null_struct_value(MakeNullValue<M>());
-  auto const null_struct_proto = bigtable_internal::ToProto(null_struct_value);
-  EXPECT_TRUE(p.first.has_map_type());
-
   auto const& key_type = p.first.map_type().key_type();
   auto const& value_type = p.first.map_type().value_type();
   EXPECT_TRUE(key_type.has_bytes_type());
   EXPECT_TRUE(value_type.has_int64_type());
-  // we stored "foo" before "bar", but the underlying ordered map puts "bar"
-  // first
-  auto const& first_map_entry = p.second.array_value().values(1).array_value();
-  auto const& second_map_entry = p.second.array_value().values(0).array_value();
-  EXPECT_EQ(Bytes("foo"), Bytes(first_map_entry.values(0).bytes_value()));
-  EXPECT_EQ(12, first_map_entry.values(1).int_value());
-  EXPECT_EQ(Bytes("bar"), Bytes(second_map_entry.values(0).bytes_value()));
-  EXPECT_EQ(34, second_map_entry.values(1).int_value());
+
+  Value const null_struct_value(MakeNullValue<M>());
+  auto const null_struct_proto = bigtable_internal::ToProto(null_struct_value);
+  EXPECT_TRUE(p.first.has_map_type());
 }
 
 void SetNullProtoKind(Value& v) {

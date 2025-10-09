@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <algorithm>
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/timestamp.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -21,6 +20,7 @@
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 #include <google/type/date.pb.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
