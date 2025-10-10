@@ -27,6 +27,11 @@ build:macos --cxxopt=-std=c++14
 build:linux --host_cxxopt=-std=c++14
 build:macos --host_cxxopt=-std=c++14
 
+# Enable C11 standard for Windows builds. This is required by BoringSSL
+# and other modern C libraries when compiling with MSVC.
+build:windows --copt=/std:c11
+build:windows --host_copt=/std:c11
+
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
