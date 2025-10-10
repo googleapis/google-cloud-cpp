@@ -67,18 +67,19 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section managedkafka-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `managedkafka_v1::ManagedKafkaClient`:
+For example, this will override the retry policies for `managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient`:
 
-@snippet managed_kafka_client_samples.cc set-retry-policy
+@snippet managed_schema_registry_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet managed_kafka_client_samples.cc custom-idempotency-policy
+@snippet managed_schema_registry_client_samples.cc custom-idempotency-policy
 
-This will override the polling policies for `managedkafka_v1::ManagedKafkaClient`
 
-@snippet managed_kafka_client_samples.cc set-polling-policy
+Follow these links to find examples for other \c *Client classes:
 
+- [\c managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient](@ref managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-retry-snippet)
+- [\c managedkafka_v1::ManagedKafkaClient](@ref managedkafka_v1::ManagedKafkaClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -93,6 +94,18 @@ This will override the polling policies for `managedkafka_v1::ManagedKafkaClient
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-retry-snippet Override managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient Retry Policies
+
+This shows how to override the retry policies for managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient:
+
+@snippet google/cloud/managedkafka/schemaregistry/v1/samples/managed_schema_registry_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/managedkafka/schemaregistry/v1/samples/managed_schema_registry_client_samples.cc custom-idempotency-policy
+
+*/
 
 /*! @page managedkafka_v1::ManagedKafkaClient-retry-snippet Override managedkafka_v1::ManagedKafkaClient Retry Policies
 

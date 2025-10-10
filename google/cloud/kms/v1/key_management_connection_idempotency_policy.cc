@@ -178,6 +178,11 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacVerify(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Decapsulate(
+    google::cloud::kms::v1::DecapsulateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 KeyManagementServiceConnectionIdempotencyPolicy::GenerateRandomBytes(
     google::cloud::kms::v1::GenerateRandomBytesRequest const&) {

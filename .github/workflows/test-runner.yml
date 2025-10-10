@@ -54,7 +54,8 @@ jobs:
     needs: [debug]
     if: >-
       ${{
-          ((github.event.pull_request.author_association == 'MEMBER' ||
+          ((github.event.pull_request.author_association == 'OWNER' ||
+           github.event.pull_request.author_association == 'MEMBER' ||
            github.event.pull_request.author_association == 'COLLABORATOR') &&
           github.event_name == 'pull_request_target') ||
           github.event_name == 'push' ||
@@ -112,6 +113,8 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   macos-cmake:
+    # Disabled
+    if: false
     name: macOS-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/macos-cmake.yml
@@ -154,7 +157,7 @@ jobs:
     # Wait until all the other jobs have completed.
     needs:
       - macos-bazel
-      - macos-cmake
+      # macos-cmake is disabled
       - windows-bazel
       - windows-cmake
     # Run even if the other jobs failed or were skipped.

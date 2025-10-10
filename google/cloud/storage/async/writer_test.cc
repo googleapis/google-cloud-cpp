@@ -108,6 +108,140 @@ TEST(AsyncWriterTest, FinalizeEmpty) {
   EXPECT_STATUS_OK(actual);
 }
 
+TEST(AsyncWriterTest, Flush) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Flush().get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, ErrorOnFlush) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Flush().get();
+  EXPECT_THAT(actual, StatusIs(PermanentError().code()));
+}
+
+TEST(AsyncWriterTest, FlushOnDefaultConstructed) {
+  AsyncWriter writer;
+  auto const actual = writer.Flush().get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled, "closed stream"));
+}
+
+TEST(AsyncWriterTest, FlushThenWrite) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* mock_ptr = mock.get();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Write).WillOnce([](auto const&) {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  ASSERT_STATUS_OK(writer.Flush().get());
+
+  auto token = storage_internal::MakeAsyncToken(mock_ptr);
+  auto const actual = writer.Write(std::move(token), {}).get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, MultipleFlushesAreQueuedAndSequential) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ::testing::InSequence sequence;
+  // Expect three flushes, each with empty payload, and simulate delayed
+  // completion.
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    // Simulate async completion for first flush
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    // Simulate async completion for second flush
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    // Simulate async completion for third flush
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  // Issue three flushes in quick succession
+  auto f1 = writer.Flush();
+  auto f2 = writer.Flush();
+  auto f3 = writer.Flush();
+
+  // All futures should be satisfied in order
+  EXPECT_STATUS_OK(f1.get());
+  EXPECT_STATUS_OK(f2.get());
+  EXPECT_STATUS_OK(f3.get());
+}
+
+TEST(AsyncWriterTest, Close) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Close().get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, CloseOnDefaultConstructed) {
+  AsyncWriter writer;
+  auto const actual = writer.Close().get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled, "closed stream"));
+}
+
+TEST(AsyncWriterTest, CloseOnMovedWriter) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  AsyncWriter writer(std::move(mock));
+  AsyncWriter moved(std::move(writer));
+  auto const actual = moved.Close().get();
+  EXPECT_STATUS_OK(actual);
+}
+
+TEST(AsyncWriterTest, ErrorOnWriteAfterClose) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* mock_ptr = mock.get();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  AsyncWriter writer(std::move(mock));
+  ASSERT_STATUS_OK(writer.Close().get());
+
+  // Create a token for the (now invalid) writer.
+  auto token = storage_internal::MakeAsyncToken(mock_ptr);
+  auto const actual = writer.Write(std::move(token), {}).get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
+}
+
+TEST(AsyncWriterTest, ErrorOnClose) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+
+  AsyncWriter writer(std::move(mock));
+  auto const actual = writer.Close().get();
+  EXPECT_THAT(actual, StatusIs(PermanentError().code()));
+}
+
 TEST(AsyncWriterTest, ErrorDuringWrite) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, Write).WillOnce([] {

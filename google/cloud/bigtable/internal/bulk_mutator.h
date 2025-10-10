@@ -20,7 +20,7 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/status.h"
@@ -117,7 +117,8 @@ class BulkMutator {
  public:
   BulkMutator(std::string const& app_profile_id, std::string const& table_name,
               bigtable::IdempotentMutationPolicy& idempotent_policy,
-              bigtable::BulkMutation mut);
+              bigtable::BulkMutation mut,
+              std::shared_ptr<OperationContext> operation_context);
 
   /// Return true if there are pending mutations in the mutator
   bool HasPendingMutations() const { return state_.HasPendingMutations(); }
@@ -135,7 +136,7 @@ class BulkMutator {
 
  protected:
   BulkMutatorState state_;
-  RetryContext retry_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

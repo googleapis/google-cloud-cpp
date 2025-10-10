@@ -113,8 +113,9 @@ class CertificateAuthorityServiceClient {
   /// @param certificate_id  Optional. It must be unique within a location and match the regular
   ///  expression `[a-zA-Z0-9_-]{1,63}`. This field is required when using a
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the Enterprise [CertificateAuthority.Tier][], but is optional and its
-  ///  value is ignored otherwise.
+  ///  in the Enterprise
+  ///  [CertificateAuthority.tier][google.cloud.security.privateca.v1.CertificateAuthority.tier],
+  ///  but is optional and its value is ignored otherwise.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -128,9 +129,10 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.tier]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L257}
   /// [google.cloud.security.privateca.v1.CreateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L419}
   ///
   // clang-format on
@@ -165,8 +167,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
   /// [google.cloud.security.privateca.v1.CreateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L419}
   ///
   // clang-format on
@@ -196,9 +198,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.Certificate.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L686}
-  /// [google.cloud.security.privateca.v1.GetCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L492}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.Certificate.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L729}
+  /// [google.cloud.security.privateca.v1.GetCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L493}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
@@ -227,8 +229,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.GetCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L492}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.GetCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L493}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
@@ -265,8 +267,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L506}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L507}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::Certificate>
@@ -304,8 +306,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L506}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L507}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::Certificate>
@@ -333,8 +335,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L559}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L560}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -363,8 +365,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L559}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L560}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -395,9 +397,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.Certificate.labels]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L773}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L593}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.Certificate.labels]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L811}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L594}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -430,9 +432,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L663}
-  /// [google.cloud.security.privateca.v1.Certificate.labels]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L773}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L593}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L706}
+  /// [google.cloud.security.privateca.v1.Certificate.labels]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L811}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L594}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -477,10 +479,10 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L620}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L95}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L59}
+  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L621}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L94}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L58}
   /// [google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L175}
   ///
   // clang-format on
@@ -540,10 +542,10 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L620}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L95}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L59}
+  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L621}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L94}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L58}
   /// [google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L175}
   ///
   // clang-format on
@@ -618,9 +620,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L658}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L662}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -679,8 +681,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L658}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L662}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -747,8 +749,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L698}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -799,8 +801,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L698}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -867,8 +869,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L733}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L740}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -919,8 +921,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L733}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L740}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -989,12 +991,12 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L95}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L59}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L94}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L58}
   /// [google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L104}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L762}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L776}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L772}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L786}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::
@@ -1034,12 +1036,12 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L95}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L59}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.State.AWAITING_USER_ACTIVATION]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L94}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.Type.SUBORDINATE]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L58}
   /// [google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L104}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L762}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L776}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L772}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L786}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::
@@ -1071,9 +1073,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L186}
-  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L783}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L207}
+  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -1103,8 +1105,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L783}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -1143,9 +1145,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L798}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L808}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -1184,8 +1186,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L798}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L808}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -1223,8 +1225,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L849}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L859}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -1276,8 +1278,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L849}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L859}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -1344,8 +1346,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L878}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L891}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -1396,8 +1398,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L878}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L891}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -1465,8 +1467,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L922}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L938}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -1523,8 +1525,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L922}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L39}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L938}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -1594,8 +1596,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L951}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L970}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
@@ -1649,8 +1651,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L951}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L970}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
@@ -1714,8 +1716,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L988}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1010}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
@@ -1767,8 +1769,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L988}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1010}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
@@ -1824,9 +1826,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CaPool.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L535}
-  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1093}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.CaPool.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L578}
+  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1121}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
@@ -1855,8 +1857,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1093}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1121}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
@@ -1892,8 +1894,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1106}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1134}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
@@ -1931,8 +1933,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1106}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1134}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
@@ -1966,9 +1968,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1015}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1410}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1040}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -2019,9 +2021,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1015}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1410}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1040}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -2083,9 +2085,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1050}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1079}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1078}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1107}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -2117,9 +2119,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1050}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1079}
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L347}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1078}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1107}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -2151,9 +2153,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L569}
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L617}
-  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1154}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L612}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L660}
+  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1182}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -2183,8 +2185,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L569}
-  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1154}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L612}
+  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1182}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -2223,8 +2225,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L569}
-  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1170}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L612}
+  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1198}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -2263,8 +2265,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L569}
-  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1170}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L612}
+  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1198}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -2302,8 +2304,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L569}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1220}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L612}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1248}
   ///
   // clang-format on
   future<StatusOr<
@@ -2361,8 +2363,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L569}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1220}
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L612}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1248}
   ///
   // clang-format on
   future<StatusOr<
@@ -2437,8 +2439,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1249}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1277}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -2497,8 +2499,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1249}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1277}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -2564,9 +2566,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1288}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1410}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1319}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -2617,9 +2619,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1288}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1410}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1319}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -2679,9 +2681,9 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.CertificateTemplate.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L788}
-  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1317}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate.name]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L826}
+  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1351}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -2711,8 +2713,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1317}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1351}
   ///
   // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -2750,8 +2752,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1332}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1366}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -2790,8 +2792,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1332}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1366}
   ///
   // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -2829,8 +2831,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1382}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1416}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -2887,8 +2889,8 @@ class CertificateAuthorityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L779}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1382}
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L817}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1416}
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>

@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
+#include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -40,6 +41,13 @@ class DataConnectionImpl : public bigtable::DataConnection {
                      std::shared_ptr<BigtableStub> stub,
                      std::shared_ptr<MutateRowsLimiter> limiter,
                      Options options);
+
+  // This constructor is used for testing.
+  DataConnectionImpl(
+      std::unique_ptr<BackgroundThreads> background,
+      std::shared_ptr<BigtableStub> stub,
+      std::unique_ptr<OperationContextFactory> operation_context_factory,
+      std::shared_ptr<MutateRowsLimiter> limiter, Options options);
 
   Options options() override { return options_; }
 
@@ -94,8 +102,17 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::Filter filter) override;
 
  private:
+  void AsyncReadRowsHelper(std::string const& table_name,
+                           std::function<future<bool>(bigtable::Row)> on_row,
+                           std::function<void(Status)> on_finish,
+                           bigtable::RowSet row_set, std::int64_t rows_limit,
+                           bigtable::Filter filter,
+                           internal::ImmutableOptions const& current,
+                           std::shared_ptr<OperationContext> operation_context);
+
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
+  std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
 };

@@ -464,6 +464,108 @@ BigtableTableAdminLogging::TestIamPermissions(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncCreateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::CreateSchemaBundleRequest const&
+                 request) {
+        return child_->AsyncCreateSchemaBundle(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::CreateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateSchemaBundleRequest const&
+                 request) {
+        return child_->CreateSchemaBundle(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncUpdateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::UpdateSchemaBundleRequest const&
+                 request) {
+        return child_->AsyncUpdateSchemaBundle(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::UpdateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateSchemaBundleRequest const&
+                 request) {
+        return child_->UpdateSchemaBundle(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminLogging::GetSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+        return child_->GetSchemaBundle(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+BigtableTableAdminLogging::ListSchemaBundles(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::ListSchemaBundlesRequest const&
+                 request) {
+        return child_->ListSchemaBundles(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status BigtableTableAdminLogging::DeleteSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::DeleteSchemaBundleRequest const&
+                 request) {
+        return child_->DeleteSchemaBundle(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminLogging::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,

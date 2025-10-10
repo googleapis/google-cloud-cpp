@@ -99,6 +99,15 @@ FeatureOnlineStoreServiceConnectionImpl::SearchNearestEntities(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceConnectionImpl::AsyncFeatureViewDirectWrite() {
+  return stub_->AsyncFeatureViewDirectWrite(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

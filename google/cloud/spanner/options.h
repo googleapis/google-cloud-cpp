@@ -41,6 +41,8 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/directed_read_replicas.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/lock_hint.h"
+#include "google/cloud/spanner/order_by.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -55,24 +57,28 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_experimental {
+namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Option for `google::cloud::Options` to use MultiplexedSessions in lieu of
+ * Option for `google::cloud::Options` to use Multiplexed sessions in lieu of
  * pooled sessions.
+ *
+ * When Multiplexed sessions are enabled, ALL operations: read-only,
+ * partitioned, and read-write will use Multiplexed sessions. Selectively
+ * enabling Multiplexed sessions for some subset of operations is not supported.
+ *
+ * @note None of the GOOGLE_CLOUD_SPANNER_MULTIPLEXED_SESSIONS* environment
+ * variables are supported.
+ *
+ * @see https://cloud.google.com/spanner/docs/sessions#multiplexed_sessions for
+ * more information.
  *
  * @ingroup google-cloud-spanner-options
  */
 struct EnableMultiplexedSessionOption {
   using Type = absl::monostate;
 };
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_experimental
-
-namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
@@ -128,10 +134,10 @@ struct RouteToLeaderOption {
  * Option for `google::cloud::Options` to set the database role used for
  * session creation.
  *
- * When used in combination with Multiplexed Sessions, the database role applies
- * to all operations performed using that spanner::Connection. To perform
- * operations with a different database role, using Multiplexed Sessions, a
- * separate spanner::Connection is required.
+ * @note When used in combination with Multiplexed sessions, the database role
+ * applies to all operations performed using that spanner::Connection. To
+ * perform operations with a different database role, using Multiplexed
+ * sessions, a separate spanner::Connection is required.
  *
  * @ingroup google-cloud-spanner-options
  */
@@ -196,6 +202,26 @@ struct SessionPoolActionOnExhaustionOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set the order in which the rows are
+ * returned from a read request.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct OrderByOption {
+  using Type = spanner::OrderBy;
+};
+
+/**
+ * Option for `google::cloud::Options` to set the lock hint mechanism for reads
+ * done within a transaction.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct LockHintOption {
+  using Type = spanner::LockHint;
+};
+
+/**
  * Option for `google::cloud::Options` to set the interval at which we refresh
  * sessions so they don't get collected by the backend GC.
  *
@@ -230,7 +256,7 @@ using SessionPoolOptionList = OptionList<
     RouteToLeaderOption, SessionCreatorRoleOption, SessionPoolMinSessionsOption,
     SessionPoolMaxSessionsPerChannelOption, SessionPoolMaxIdleSessionsOption,
     SessionPoolActionOnExhaustionOption, SessionPoolKeepAliveIntervalOption,
-    SessionPoolLabelsOption>;
+    SessionPoolLabelsOption, EnableMultiplexedSessionOption>;
 
 /**
  * Option for `google::cloud::Options` to set the optimizer version used in an

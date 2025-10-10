@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
@@ -105,7 +106,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * @return a `SessionHolder` on success (which is guaranteed not to be
    * `nullptr`), or an error.
    */
-  StatusOr<SessionHolder> Allocate(bool dissociate_from_pool = false);
+  StatusOr<SessionHolder> Allocate(Session::Mode mode = Session::Mode::kPooled);
 
   /**
    * Returns the multiplexed session, which allows an unbounded number of
@@ -119,12 +120,15 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * @return a `SessionHolder` on success (which is guaranteed not to be
    * `nullptr`), or an error.
    */
-  StatusOr<SessionHolder> Multiplexed();
+  StatusOr<SessionHolder> Multiplexed(
+      Session::Mode mode = Session::Mode::kMultiplexed);
 
   /**
    * Return a `SpannerStub` to be used when making calls using `session`.
    */
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
+  std::shared_ptr<SpannerStub> GetStub(Session const& session,
+                                       TransactionContext& context);
 
   /**
    * Returns the number of sessions in the session pool plus the number of
@@ -161,7 +165,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   // Allocate a session from the pool.
   StatusOr<SessionHolder> Allocate(std::unique_lock<std::mutex>,
-                                   bool dissociate_from_pool);
+                                   Session::Mode mode);
 
   // Returns a stub to use by round-robining between the channels.
   std::shared_ptr<SpannerStub> GetStub(std::unique_lock<std::mutex>);
@@ -185,6 +189,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
       std::shared_ptr<SpannerStub>);
   Status HandleMultiplexedCreateSessionDone(
       StatusOr<google::spanner::v1::Session> response);
+  bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
 
   Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
               WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
@@ -202,7 +207,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
                            int num_sessions);  // LOCKS_EXCLUDED(mu_)
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
-                                  bool dissociate_from_pool);
+                                  Session::Mode mode);
 
   friend struct SessionPoolFriendForTest;  // To test Async*()
   // Asynchronous calls used to maintain the pool.

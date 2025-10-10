@@ -24,6 +24,7 @@ google_cloud_cpp_add_gapic_library(
         "biglake/v1/"
         "connection/v1/"
         "datapolicies/v1/"
+        "datapolicies/v2/"
         "datatransfer/v1/"
         "migration/v2/"
         "reservation/v1/"

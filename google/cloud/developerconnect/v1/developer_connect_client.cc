@@ -428,6 +428,318 @@ StreamRange<std::string> DeveloperConnectClient::FetchGitRefs(
   return connection_->FetchGitRefs(std::move(request));
 }
 
+StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectClient::ListAccountConnectors(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::ListAccountConnectorsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAccountConnectors(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectClient::ListAccountConnectors(
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAccountConnectors(std::move(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectClient::GetAccountConnector(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::GetAccountConnectorRequest request;
+  request.set_name(name);
+  return connection_->GetAccountConnector(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectClient::GetAccountConnector(
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAccountConnector(request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectClient::CreateAccountConnector(
+    std::string const& parent,
+    google::cloud::developerconnect::v1::AccountConnector const&
+        account_connector,
+    std::string const& account_connector_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::CreateAccountConnectorRequest request;
+  request.set_parent(parent);
+  *request.mutable_account_connector() = account_connector;
+  request.set_account_connector_id(account_connector_id);
+  return connection_->CreateAccountConnector(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectClient::CreateAccountConnector(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::developerconnect::v1::AccountConnector const&
+        account_connector,
+    std::string const& account_connector_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::CreateAccountConnectorRequest request;
+  request.set_parent(parent);
+  *request.mutable_account_connector() = account_connector;
+  request.set_account_connector_id(account_connector_id);
+  return connection_->CreateAccountConnector(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectClient::CreateAccountConnector(
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAccountConnector(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectClient::CreateAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAccountConnector(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectClient::CreateAccountConnector(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAccountConnector(operation);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectClient::UpdateAccountConnector(
+    google::cloud::developerconnect::v1::AccountConnector const&
+        account_connector,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::UpdateAccountConnectorRequest request;
+  *request.mutable_account_connector() = account_connector;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAccountConnector(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectClient::UpdateAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::AccountConnector const&
+        account_connector,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::UpdateAccountConnectorRequest request;
+  *request.mutable_account_connector() = account_connector;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAccountConnector(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectClient::UpdateAccountConnector(
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAccountConnector(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectClient::UpdateAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAccountConnector(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectClient::UpdateAccountConnector(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAccountConnector(operation);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteAccountConnector(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DeleteAccountConnectorRequest request;
+  request.set_name(name);
+  return connection_->DeleteAccountConnector(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectClient::DeleteAccountConnector(NoAwaitTag,
+                                               std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DeleteAccountConnectorRequest request;
+  request.set_name(name);
+  return connection_->DeleteAccountConnector(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteAccountConnector(
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAccountConnector(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectClient::DeleteAccountConnector(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAccountConnector(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteAccountConnector(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAccountConnector(operation);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectClient::FetchAccessToken(std::string const& account_connector,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FetchAccessTokenRequest request;
+  request.set_account_connector(account_connector);
+  return connection_->FetchAccessToken(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectClient::FetchAccessToken(
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchAccessToken(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::User>
+DeveloperConnectClient::ListUsers(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::ListUsersRequest request;
+  request.set_parent(parent);
+  return connection_->ListUsers(request);
+}
+
+StreamRange<google::cloud::developerconnect::v1::User>
+DeveloperConnectClient::ListUsers(
+    google::cloud::developerconnect::v1::ListUsersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListUsers(std::move(request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteUser(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DeleteUserRequest request;
+  request.set_name(name);
+  return connection_->DeleteUser(request);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectClient::DeleteUser(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DeleteUserRequest request;
+  request.set_name(name);
+  return connection_->DeleteUser(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteUser(
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUser(request);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectClient::DeleteUser(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUser(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteUser(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUser(operation);
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectClient::FetchSelf(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FetchSelfRequest request;
+  request.set_name(name);
+  return connection_->FetchSelf(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectClient::FetchSelf(
+    google::cloud::developerconnect::v1::FetchSelfRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchSelf(request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteSelf(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DeleteSelfRequest request;
+  request.set_name(name);
+  return connection_->DeleteSelf(request);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectClient::DeleteSelf(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::DeleteSelfRequest request;
+  request.set_name(name);
+  return connection_->DeleteSelf(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteSelf(
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSelf(request);
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectClient::DeleteSelf(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSelf(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectClient::DeleteSelf(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSelf(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 DeveloperConnectClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

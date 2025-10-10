@@ -324,6 +324,42 @@ ConfigMetadata::GetTerraformVersion(
   return child_->GetTerraformVersion(context, options, request);
 }
 
+StatusOr<google::cloud::config::v1::ListResourceChangesResponse>
+ConfigMetadata::ListResourceChanges(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceChangesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListResourceChanges(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigMetadata::GetResourceChange(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetResourceChange(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ListResourceDriftsResponse>
+ConfigMetadata::ListResourceDrifts(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceDriftsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListResourceDrifts(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigMetadata::GetResourceDrift(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetResourceDrift(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

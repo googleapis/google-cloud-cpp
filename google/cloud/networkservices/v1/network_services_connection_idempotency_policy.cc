@@ -60,6 +60,52 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteEndpointPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListWasmPluginVersions(
+    google::cloud::networkservices::v1::
+        ListWasmPluginVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetWasmPluginVersion(
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateWasmPluginVersion(
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteWasmPluginVersion(
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListWasmPlugins(
+    google::cloud::networkservices::v1::ListWasmPluginsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetWasmPlugin(
+    google::cloud::networkservices::v1::GetWasmPluginRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateWasmPlugin(
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateWasmPlugin(
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteWasmPlugin(
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkServicesConnectionIdempotencyPolicy::ListGateways(
     google::cloud::networkservices::v1::ListGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;

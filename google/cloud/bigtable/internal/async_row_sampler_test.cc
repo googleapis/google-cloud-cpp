@@ -18,6 +18,10 @@
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_status.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/testing_util/fake_clock.h"
+#endif
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -76,16 +80,76 @@ absl::optional<v2::SampleRowKeysResponse> MakeResponse(std::string row_key,
   return absl::make_optional(r);
 };
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+class MockMetric : public Metric {
+ public:
+  MOCK_METHOD(void, PreCall,
+              (opentelemetry::context::Context const&, PreCallParams const&),
+              (override));
+  MOCK_METHOD(void, PostCall,
+              (opentelemetry::context::Context const&,
+               grpc::ClientContext const&, PostCallParams const&),
+              (override));
+  MOCK_METHOD(void, OnDone,
+              (opentelemetry::context::Context const&, OnDoneParams const&),
+              (override));
+  MOCK_METHOD(void, ElementRequest,
+              (opentelemetry::context::Context const&,
+               ElementRequestParams const&),
+              (override));
+  MOCK_METHOD(void, ElementDelivery,
+              (opentelemetry::context::Context const&,
+               ElementDeliveryParams const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+              (ResourceLabels resource_labels, DataLabels data_labels),
+              (const, override));
+};
+
+// This class is a vehicle to get a MockMetric into the OperationContext object.
+class CloningMetric : public Metric {
+ public:
+  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
+      : metric_(std::move(metric)) {}
+  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+    return std::move(metric_);
+  }
+
+ private:
+  mutable std::unique_ptr<MockMetric> metric_;
+};
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 class AsyncSampleRowKeysTest : public ::testing::Test {
  protected:
   testing_util::ValidateMetadataFixture metadata_fixture_;
 };
 
 TEST_F(AsyncSampleRowKeysTest, Simple) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([](CompletionQueue const&, auto, auto,
-                   v2::SampleRowKeysRequest const& request) {
+      .WillOnce([this](CompletionQueue const&, auto client_context, auto,
+                       v2::SampleRowKeysRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -119,10 +183,10 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), false, kAppProfile,
+                                     kTableName, std::move(operation_context))
+                 .get();
 
   ASSERT_STATUS_OK(sor);
   auto samples = RowKeySampleVectors(*sor);
@@ -131,6 +195,24 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
 }
 
 TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
@@ -155,8 +237,9 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
         });
         return stream;
       })
-      .WillOnce([](CompletionQueue const&, auto, auto,
-                   v2::SampleRowKeysRequest const& request) {
+      .WillOnce([this](CompletionQueue const&, auto client_context, auto,
+                       v2::SampleRowKeysRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -191,10 +274,10 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), false, kAppProfile,
+                                     kTableName, std::move(operation_context))
+                 .get();
 
   ASSERT_STATUS_OK(sor);
   auto samples = RowKeySampleVectors(*sor);
@@ -203,6 +286,24 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
 }
 
 TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .Times(kNumRetries + 1)
@@ -240,15 +341,33 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), false, kAppProfile,
+                                     kTableName, std::move(operation_context))
+                 .get();
 
   EXPECT_THAT(sor, StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
 }
 
 TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(2);
+  EXPECT_CALL(*mock_metric, PostCall).Times(2);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
@@ -295,14 +414,32 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion);
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              true, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), true, kAppProfile,
+                                     kTableName, std::move(operation_context))
+                 .get();
   EXPECT_STATUS_OK(sor);
 }
 
 TEST_F(AsyncSampleRowKeysTest, RetryInfoIgnored) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
@@ -328,10 +465,10 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoIgnored) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), false, kAppProfile,
+                                     kTableName, std::move(operation_context))
+                 .get();
   EXPECT_THAT(sor, StatusIs(StatusCode::kResourceExhausted));
 }
 
@@ -370,10 +507,10 @@ TEST_F(AsyncSampleRowKeysTest, TimerError) {
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(
+                 cq, mock, std::move(retry), std::move(mock_b), false,
+                 kAppProfile, kTableName, std::make_shared<OperationContext>())
+                 .get();
   // If the TimerFuture returns a bad status, it is almost always because the
   // call has been cancelled. So it is more informative for the sampler to
   // return "call cancelled" than to pass along the exact error.
@@ -385,11 +522,29 @@ TEST_F(AsyncSampleRowKeysTest, TimerError) {
 
 TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
   promise<absl::optional<v2::SampleRowKeysResponse>> p;
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([&p](CompletionQueue const&, auto, auto,
-                     v2::SampleRowKeysRequest const& request) {
+      .WillOnce([&p, this](CompletionQueue const&, auto client_context, auto,
+                           v2::SampleRowKeysRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -420,9 +575,9 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto fut =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName);
+  auto fut = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), false, kAppProfile,
+                                     kTableName, std::move(operation_context));
   // Cancel the call after performing the one and only read of this test stream.
   fut.cancel();
   // Proceed with the rest of the stream. In this test, there are no more
@@ -437,11 +592,29 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
 
 TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
   promise<absl::optional<v2::SampleRowKeysResponse>> p;
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([&p](CompletionQueue const&, auto, auto,
-                     v2::SampleRowKeysRequest const& request) {
+      .WillOnce([&p, this](CompletionQueue const&, auto client_context, auto,
+                           v2::SampleRowKeysRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -484,9 +657,9 @@ TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
   internal::OptionsSpan span(
       Options{}.set<internal::GrpcSetupOption>(mock_setup.AsStdFunction()));
 
-  auto fut =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName);
+  auto fut = AsyncRowSampler::Create(cq, mock, std::move(retry),
+                                     std::move(mock_b), false, kAppProfile,
+                                     kTableName, std::move(operation_context));
   // Cancel the call after performing one read of this test stream.
   fut.cancel();
   // Proceed with the rest of the stream. In this test, there are more responses
@@ -538,9 +711,9 @@ TEST_F(AsyncSampleRowKeysTest, CurrentOptionsContinuedOnRetries) {
       Options{}
           .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
           .set<TestOption>(5));
-  auto fut =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName);
+  auto fut = AsyncRowSampler::Create(
+      cq, mock, std::move(retry), std::move(mock_b), false, kAppProfile,
+      kTableName, std::make_shared<OperationContext>());
 
   // Simulate the timer being satisfied in a thread with different prevailing
   // options than the calling thread.
@@ -591,10 +764,10 @@ TEST_F(AsyncSampleRowKeysTest, BigtableCookie) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(1);
 
-  auto sor =
-      AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
-                              false, kAppProfile, kTableName)
-          .get();
+  auto sor = AsyncRowSampler::Create(
+                 cq, mock, std::move(retry), std::move(mock_b), false,
+                 kAppProfile, kTableName, std::make_shared<OperationContext>())
+                 .get();
 
   EXPECT_THAT(sor, StatusIs(StatusCode::kPermissionDenied, HasSubstr("fail")));
 }
@@ -627,9 +800,9 @@ TEST_F(AsyncSampleRowKeysTest, TracedBackoff) {
   EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
 
   internal::OptionsSpan o(EnableTracing(Options{}));
-  (void)AsyncRowSampler::Create(background.cq(), mock, std::move(retry),
-                                std::move(mock_b), false, kAppProfile,
-                                kTableName)
+  (void)AsyncRowSampler::Create(
+      background.cq(), mock, std::move(retry), std::move(mock_b), false,
+      kAppProfile, kTableName, std::make_shared<OperationContext>())
       .get();
 
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -658,9 +831,9 @@ TEST_F(AsyncSampleRowKeysTest, CallSpanActiveThroughout) {
 
   internal::OTelScope scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
-  auto f = AsyncRowSampler::Create(background.cq(), mock, std::move(retry),
-                                   std::move(mock_b), false, kAppProfile,
-                                   kTableName);
+  auto f = AsyncRowSampler::Create(
+      background.cq(), mock, std::move(retry), std::move(mock_b), false,
+      kAppProfile, kTableName, std::make_shared<OperationContext>());
 
   auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
   (void)f.get();

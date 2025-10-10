@@ -104,6 +104,91 @@ class NetworkServicesConnectionImpl
   DeleteEndpointPolicy(
       google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
+  ListWasmPluginVersions(
+      google::cloud::networkservices::v1::ListWasmPluginVersionsRequest request)
+      override;
+
+  StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+  GetWasmPluginVersion(
+      google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+  CreateWasmPluginVersion(
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateWasmPluginVersion(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+  CreateWasmPluginVersion(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPluginVersion(
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWasmPluginVersion(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPluginVersion(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::networkservices::v1::WasmPlugin> ListWasmPlugins(
+      google::cloud::networkservices::v1::ListWasmPluginsRequest request)
+      override;
+
+  StatusOr<google::cloud::networkservices::v1::WasmPlugin> GetWasmPlugin(
+      google::cloud::networkservices::v1::GetWasmPluginRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  CreateWasmPlugin(
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  CreateWasmPlugin(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  UpdateWasmPlugin(
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  UpdateWasmPlugin(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPlugin(
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPlugin(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
       google::cloud::networkservices::v1::ListGatewaysRequest request) override;
 

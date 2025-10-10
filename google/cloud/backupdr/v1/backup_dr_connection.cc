@@ -317,6 +317,27 @@ BackupDRConnection::CreateBackupPlan(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRConnection::UpdateBackupPlan(
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::BackupPlan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRConnection::UpdateBackupPlan(
+    NoAwaitTag, google::cloud::backupdr::v1::UpdateBackupPlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRConnection::UpdateBackupPlan(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::BackupPlan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlan>
 BackupDRConnection::GetBackupPlan(
     google::cloud::backupdr::v1::GetBackupPlanRequest const&) {
@@ -352,6 +373,20 @@ BackupDRConnection::DeleteBackupPlan(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRConnection::GetBackupPlanRevision(
+    google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRConnection::ListBackupPlanRevisions(
+    google::cloud::backupdr::v1::
+        ListBackupPlanRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>>();
+}
+
 future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
 BackupDRConnection::CreateBackupPlanAssociation(
     google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&) {
@@ -376,6 +411,30 @@ BackupDRConnection::CreateBackupPlanAssociation(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRConnection::UpdateBackupPlanAssociation(
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::UpdateBackupPlanAssociation(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRConnection::UpdateBackupPlanAssociation(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
 BackupDRConnection::GetBackupPlanAssociation(
     google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&) {
@@ -386,6 +445,14 @@ StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
 BackupDRConnection::ListBackupPlanAssociations(
     google::cloud::backupdr::v1::
         ListBackupPlanAssociationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>>();
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRConnection::FetchBackupPlanAssociationsForResourceType(
+    google::cloud::backupdr::v1::
+        FetchBackupPlanAssociationsForResourceTypeRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>>();
 }
@@ -433,6 +500,20 @@ BackupDRConnection::TriggerBackup(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRConnection::GetDataSourceReference(
+    google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRConnection::FetchDataSourceReferencesForResourceType(
+    google::cloud::backupdr::v1::
+        FetchDataSourceReferencesForResourceTypeRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::DataSourceReference>>();
 }
 
 future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>

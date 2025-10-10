@@ -115,8 +115,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L217}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
+  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L226}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::Parameter> ListParameters(
@@ -154,8 +154,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L217}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
+  /// [google.cloud.parametermanager.v1.ListParametersRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L226}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::Parameter> ListParameters(
@@ -181,8 +181,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L255}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
+  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L264}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
@@ -211,8 +211,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L255}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
+  /// [google.cloud.parametermanager.v1.GetParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L264}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
@@ -240,8 +240,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L267}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
+  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L276}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
@@ -272,8 +272,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L267}
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
+  /// [google.cloud.parametermanager.v1.CreateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L276}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
@@ -305,8 +305,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
-  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L303}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L312}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
@@ -336,8 +336,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L177}
-  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L303}
+  /// [google.cloud.parametermanager.v1.Parameter]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L181}
+  /// [google.cloud.parametermanager.v1.UpdateParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L312}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
@@ -362,7 +362,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L336}
+  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L345}
   ///
   // clang-format on
   Status DeleteParameter(std::string const& name, Options opts = {});
@@ -388,7 +388,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L336}
+  /// [google.cloud.parametermanager.v1.DeleteParameterRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L345}
   ///
   // clang-format on
   Status DeleteParameter(
@@ -424,8 +424,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L418}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
+  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L427}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
@@ -463,8 +463,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L418}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
+  /// [google.cloud.parametermanager.v1.ListParameterVersionsRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L427}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
   ///
   // clang-format on
   StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
@@ -491,8 +491,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L456}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
+  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L465}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -521,8 +521,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L456}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
+  /// [google.cloud.parametermanager.v1.GetParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L465}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -549,8 +549,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L473}
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L484}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L482}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L493}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
@@ -579,8 +579,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L473}
-  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L484}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L482}
+  /// [google.cloud.parametermanager.v1.RenderParameterVersionResponse]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L493}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
@@ -610,8 +610,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L505}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
+  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L514}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -644,8 +644,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L505}
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
+  /// [google.cloud.parametermanager.v1.CreateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L514}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -678,8 +678,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
-  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L542}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L551}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -711,8 +711,8 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L366}
-  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L542}
+  /// [google.cloud.parametermanager.v1.ParameterVersion]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L375}
+  /// [google.cloud.parametermanager.v1.UpdateParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L551}
   ///
   // clang-format on
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
@@ -738,7 +738,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L576}
+  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L585}
   ///
   // clang-format on
   Status DeleteParameterVersion(std::string const& name, Options opts = {});
@@ -764,7 +764,7 @@ class ParameterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L576}
+  /// [google.cloud.parametermanager.v1.DeleteParameterVersionRequest]: @googleapis_reference_link{google/cloud/parametermanager/v1/service.proto#L585}
   ///
   // clang-format on
   Status DeleteParameterVersion(

@@ -541,6 +541,70 @@ ConfigClient::GetTerraformVersion(
   return connection_->GetTerraformVersion(request);
 }
 
+StreamRange<google::cloud::config::v1::ResourceChange>
+ConfigClient::ListResourceChanges(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ListResourceChangesRequest request;
+  request.set_parent(parent);
+  return connection_->ListResourceChanges(request);
+}
+
+StreamRange<google::cloud::config::v1::ResourceChange>
+ConfigClient::ListResourceChanges(
+    google::cloud::config::v1::ListResourceChangesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListResourceChanges(std::move(request));
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigClient::GetResourceChange(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetResourceChangeRequest request;
+  request.set_name(name);
+  return connection_->GetResourceChange(request);
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigClient::GetResourceChange(
+    google::cloud::config::v1::GetResourceChangeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetResourceChange(request);
+}
+
+StreamRange<google::cloud::config::v1::ResourceDrift>
+ConfigClient::ListResourceDrifts(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ListResourceDriftsRequest request;
+  request.set_parent(parent);
+  return connection_->ListResourceDrifts(request);
+}
+
+StreamRange<google::cloud::config::v1::ResourceDrift>
+ConfigClient::ListResourceDrifts(
+    google::cloud::config::v1::ListResourceDriftsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListResourceDrifts(std::move(request));
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigClient::GetResourceDrift(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetResourceDriftRequest request;
+  request.set_name(name);
+  return connection_->GetResourceDrift(request);
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigClient::GetResourceDrift(
+    google::cloud::config::v1::GetResourceDriftRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetResourceDrift(request);
+}
+
 StreamRange<google::cloud::location::Location> ConfigClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

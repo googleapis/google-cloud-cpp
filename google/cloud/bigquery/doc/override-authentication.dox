@@ -17,6 +17,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-service-account-snippet)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-service-account-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet)
+- [\c bigquery_datapolicies_v2::DataPolicyServiceClient](@ref bigquery_datapolicies_v2::DataPolicyServiceClient-service-account-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-service-account-snippet)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-service-account-snippet)
@@ -60,6 +61,12 @@ guide for more details.
 /*! @page bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet Override bigquery_datapolicies_v1::DataPolicyServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/datapolicies/v1/samples/data_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_datapolicies_v2::DataPolicyServiceClient-service-account-snippet Override bigquery_datapolicies_v2::DataPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/datapolicies/v2/samples/data_policy_client_samples.cc with-service-account
 
 */
 

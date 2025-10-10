@@ -602,6 +602,50 @@ BackupDRClient::CreateBackupPlan(
   return connection_->CreateBackupPlan(operation);
 }
 
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRClient::UpdateBackupPlan(
+    google::cloud::backupdr::v1::BackupPlan const& backup_plan,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::UpdateBackupPlanRequest request;
+  *request.mutable_backup_plan() = backup_plan;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupPlan(request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRClient::UpdateBackupPlan(
+    NoAwaitTag, google::cloud::backupdr::v1::BackupPlan const& backup_plan,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::UpdateBackupPlanRequest request;
+  *request.mutable_backup_plan() = backup_plan;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupPlan(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRClient::UpdateBackupPlan(
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPlan(request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRClient::UpdateBackupPlan(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPlan(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRClient::UpdateBackupPlan(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPlan(operation);
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlan> BackupDRClient::GetBackupPlan(
     std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -671,6 +715,39 @@ BackupDRClient::DeleteBackupPlan(
   return connection_->DeleteBackupPlan(operation);
 }
 
+StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRClient::GetBackupPlanRevision(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::GetBackupPlanRevisionRequest request;
+  request.set_name(name);
+  return connection_->GetBackupPlanRevision(request);
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRClient::GetBackupPlanRevision(
+    google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackupPlanRevision(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRClient::ListBackupPlanRevisions(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackupPlanRevisions(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>
+BackupDRClient::ListBackupPlanRevisions(
+    google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackupPlanRevisions(std::move(request));
+}
+
 future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
 BackupDRClient::CreateBackupPlanAssociation(
     std::string const& parent,
@@ -725,6 +802,57 @@ BackupDRClient::CreateBackupPlanAssociation(
   return connection_->CreateBackupPlanAssociation(operation);
 }
 
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRClient::UpdateBackupPlanAssociation(
+    google::cloud::backupdr::v1::BackupPlanAssociation const&
+        backup_plan_association,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest request;
+  *request.mutable_backup_plan_association() = backup_plan_association;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupPlanAssociation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::UpdateBackupPlanAssociation(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::BackupPlanAssociation const&
+        backup_plan_association,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest request;
+  *request.mutable_backup_plan_association() = backup_plan_association;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupPlanAssociation(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRClient::UpdateBackupPlanAssociation(
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPlanAssociation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRClient::UpdateBackupPlanAssociation(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPlanAssociation(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRClient::UpdateBackupPlanAssociation(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupPlanAssociation(operation);
+}
+
 StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
 BackupDRClient::GetBackupPlanAssociation(std::string const& name,
                                          Options opts) {
@@ -757,6 +885,27 @@ BackupDRClient::ListBackupPlanAssociations(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackupPlanAssociations(std::move(request));
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRClient::FetchBackupPlanAssociationsForResourceType(
+    std::string const& parent, std::string const& resource_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::FetchBackupPlanAssociationsForResourceTypeRequest
+      request;
+  request.set_parent(parent);
+  request.set_resource_type(resource_type);
+  return connection_->FetchBackupPlanAssociationsForResourceType(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRClient::FetchBackupPlanAssociationsForResourceType(
+    google::cloud::backupdr::v1::
+        FetchBackupPlanAssociationsForResourceTypeRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchBackupPlanAssociationsForResourceType(
+      std::move(request));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -844,6 +993,43 @@ BackupDRClient::TriggerBackup(google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TriggerBackup(operation);
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRClient::GetDataSourceReference(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::GetDataSourceReferenceRequest request;
+  request.set_name(name);
+  return connection_->GetDataSourceReference(request);
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRClient::GetDataSourceReference(
+    google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDataSourceReference(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRClient::FetchDataSourceReferencesForResourceType(
+    std::string const& parent, std::string const& resource_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::FetchDataSourceReferencesForResourceTypeRequest
+      request;
+  request.set_parent(parent);
+  request.set_resource_type(resource_type);
+  return connection_->FetchDataSourceReferencesForResourceType(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRClient::FetchDataSourceReferencesForResourceType(
+    google::cloud::backupdr::v1::FetchDataSourceReferencesForResourceTypeRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchDataSourceReferencesForResourceType(
+      std::move(request));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>

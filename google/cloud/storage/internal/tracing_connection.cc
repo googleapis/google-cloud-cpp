@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/internal/tracing_object_read_source.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
 #include <string>
@@ -233,6 +234,48 @@ TracingConnection::UploadChunk(
   auto span = internal::MakeSpan("storage::Client::WriteObject/UploadChunk");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->UploadChunk(request));
+}
+
+StatusOr<std::unique_ptr<std::string>> TracingConnection::UploadFileSimple(
+    std::string const& file_name, std::size_t file_size,
+    storage::internal::InsertObjectMediaRequest& request) {
+  auto span =
+      internal::MakeSpan("storage::Client::UploadFile/UploadFileSimple");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, impl_->UploadFileSimple(file_name, file_size, request));
+}
+
+StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
+    std::string const& file_name,
+    storage::internal::ResumableUploadRequest& request) {
+  auto span =
+      internal::MakeSpan("storage::Client::UploadFile/UploadFileResumable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           impl_->UploadFileResumable(file_name, request));
+}
+
+Status TracingConnection::DownloadStreamToFile(
+    storage::ObjectReadStream&& stream, std::string const& file_name,
+    storage::internal::ReadObjectRangeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storage::Client::DownloadToFile/DownloadStreamToFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->DownloadStreamToFile(
+                                      std::move(stream), file_name, request));
+}
+
+StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
+    std::vector<std::thread> threads,
+    std::vector<storage::internal::ParallelUploadFileShard> shards,
+    bool ignore_cleanup_failures) {
+  auto span = internal::MakeSpan(
+      "storage::ParallelUploadFile/ExecuteParallelUploadFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->ExecuteParallelUploadFile(
+                                      std::move(threads), std::move(shards),
+                                      ignore_cleanup_failures));
 }
 
 StatusOr<storage::internal::ListBucketAclResponse>

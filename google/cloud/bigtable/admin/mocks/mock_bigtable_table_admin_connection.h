@@ -389,6 +389,99 @@ class MockBigtableTableAdminConnection
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSchemaBundle(Matcher<google::bigtable::admin::v2::CreateSchemaBundleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>,
+      CreateSchemaBundle,
+      (google::bigtable::admin::v2::CreateSchemaBundleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateSchemaBundle(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSchemaBundle,
+      (NoAwaitTag,
+       google::bigtable::admin::v2::CreateSchemaBundleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSchemaBundle(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>,
+              CreateSchemaBundle,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateSchemaBundle(Matcher<google::bigtable::admin::v2::UpdateSchemaBundleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>,
+      UpdateSchemaBundle,
+      (google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateSchemaBundle(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateSchemaBundle,
+      (NoAwaitTag,
+       google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateSchemaBundle(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>,
+              UpdateSchemaBundle,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::bigtable::admin::v2::SchemaBundle>, GetSchemaBundle,
+      (google::bigtable::admin::v2::GetSchemaBundleRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::bigtable::admin::v2::SchemaBundle>),
+              ListSchemaBundles,
+              (google::bigtable::admin::v2::ListSchemaBundlesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      Status, DeleteSchemaBundle,
+      (google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>,
       AsyncCheckConsistency,

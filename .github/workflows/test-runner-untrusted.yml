@@ -28,7 +28,7 @@ jobs:
     # `ref` of the pull request, so downstream jobs know what to checkout.
     environment: 'external'
     name: Require Approval for External PRs
-    if: ${{ github.event.pull_request.author_association != 'MEMBER' && github.event.pull_request.author_association != 'COLLABORATOR' }}
+    if: ${{ github.event.pull_request.author_association != 'OWNER' && github.event.pull_request.author_association != 'MEMBER' && github.event.pull_request.author_association != 'COLLABORATOR' }}
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}

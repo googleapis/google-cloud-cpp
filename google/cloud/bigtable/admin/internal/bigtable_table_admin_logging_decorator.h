@@ -195,6 +195,45 @@ class BigtableTableAdminLogging : public BigtableTableAdminStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateSchemaBundle(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateSchemaBundle(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateSchemaBundle(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateSchemaBundle(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::SchemaBundle> GetSchemaBundle(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+  ListSchemaBundles(grpc::ClientContext& context, Options const& options,
+                    google::bigtable::admin::v2::ListSchemaBundlesRequest const&
+                        request) override;
+
+  Status DeleteSchemaBundle(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request)
+      override;
+
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
       google::cloud::CompletionQueue& cq,

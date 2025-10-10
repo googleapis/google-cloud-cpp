@@ -30,6 +30,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/networkservices/v1/extensibility.pb.h>
 #include <google/cloud/networkservices/v1/network_services.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -236,6 +237,95 @@ class NetworkServicesConnection {
   virtual future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteEndpointPolicy(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
+  ListWasmPluginVersions(
+      google::cloud::networkservices::v1::ListWasmPluginVersionsRequest
+          request);
+
+  virtual StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+  GetWasmPluginVersion(
+      google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+  CreateWasmPluginVersion(
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateWasmPluginVersion(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
+  CreateWasmPluginVersion(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPluginVersion(
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteWasmPluginVersion(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPluginVersion(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::networkservices::v1::WasmPlugin>
+  ListWasmPlugins(
+      google::cloud::networkservices::v1::ListWasmPluginsRequest request);
+
+  virtual StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+  GetWasmPlugin(
+      google::cloud::networkservices::v1::GetWasmPluginRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  CreateWasmPlugin(
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  CreateWasmPlugin(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  UpdateWasmPlugin(
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
+  UpdateWasmPlugin(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPlugin(
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteWasmPlugin(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
       google::cloud::networkservices::v1::ListGatewaysRequest request);

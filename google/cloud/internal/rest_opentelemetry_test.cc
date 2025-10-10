@@ -46,7 +46,7 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
   RestRequest request(kUrl, RestRequest::HttpHeaders{{"empty", {}}});
   auto const secret =
       std::string{"Bearer secret-0123456789aaaaabbbbbcccccddddd"};
-  ASSERT_THAT(secret.size(), Gt(32));
+  ASSERT_THAT(secret.size(), Gt(static_cast<std::size_t>(32)));
   request.AddHeader("Authorization", secret);
   request.AddHeader("X-Goog-Foo", "bar");
   auto constexpr kLongValue =

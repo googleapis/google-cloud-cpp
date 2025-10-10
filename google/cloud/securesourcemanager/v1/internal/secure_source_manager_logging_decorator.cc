@@ -200,6 +200,42 @@ SecureSourceManagerLogging::CreateRepository(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdateRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+              request) {
+        return child_->AsyncUpdateRepository(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UpdateRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+              request) {
+        return child_->UpdateRepository(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -231,6 +267,125 @@ SecureSourceManagerLogging::DeleteRepository(
           google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
               request) {
         return child_->DeleteRepository(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListHooksResponse>
+SecureSourceManagerLogging::ListHooks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListHooksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::ListHooksRequest const&
+                 request) {
+        return child_->ListHooks(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerLogging::GetHook(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::GetHookRequest const&
+                 request) {
+        return child_->GetHook(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCreateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::CreateHookRequest const&
+                 request) {
+        return child_->AsyncCreateHook(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerLogging::CreateHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::CreateHookRequest const&
+                 request) {
+        return child_->CreateHook(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdateHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+                 request) {
+        return child_->AsyncUpdateHook(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerLogging::UpdateHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::UpdateHookRequest const&
+                 request) {
+        return child_->UpdateHook(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncDeleteHook(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+                 request) {
+        return child_->AsyncDeleteHook(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerLogging::DeleteHook(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteHookRequest const&
+                 request) {
+        return child_->DeleteHook(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -402,6 +557,802 @@ SecureSourceManagerLogging::DeleteBranchRule(
           google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
               request) {
         return child_->DeleteBranchRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCreatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestRequest const& request) {
+        return child_->AsyncCreatePullRequest(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::CreatePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestRequest const& request) {
+        return child_->CreatePullRequest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerLogging::GetPullRequest(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+              request) {
+        return child_->GetPullRequest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListPullRequestsResponse>
+SecureSourceManagerLogging::ListPullRequests(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::ListPullRequestsRequest const&
+              request) {
+        return child_->ListPullRequests(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdatePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestRequest const& request) {
+        return child_->AsyncUpdatePullRequest(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UpdatePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestRequest const& request) {
+        return child_->UpdatePullRequest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncMergePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+              request) {
+        return child_->AsyncMergePullRequest(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::MergePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+              request) {
+        return child_->MergePullRequest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncOpenPullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+              request) {
+        return child_->AsyncOpenPullRequest(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::OpenPullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+              request) {
+        return child_->OpenPullRequest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncClosePullRequest(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+              request) {
+        return child_->AsyncClosePullRequest(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::ClosePullRequest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+              request) {
+        return child_->ClosePullRequest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsResponse>
+SecureSourceManagerLogging::ListPullRequestFileDiffs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestFileDiffsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 ListPullRequestFileDiffsRequest const& request) {
+        return child_->ListPullRequestFileDiffs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchTreeResponse>
+SecureSourceManagerLogging::FetchTree(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchTreeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::FetchTreeRequest const&
+                 request) {
+        return child_->FetchTree(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerLogging::FetchBlob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::FetchBlobRequest const&
+                 request) {
+        return child_->FetchBlob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCreateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+                 request) {
+        return child_->AsyncCreateIssue(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::CreateIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+                 request) {
+        return child_->CreateIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerLogging::GetIssue(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::GetIssueRequest const&
+                 request) {
+        return child_->GetIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssuesResponse>
+SecureSourceManagerLogging::ListIssues(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListIssuesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::ListIssuesRequest const&
+                 request) {
+        return child_->ListIssues(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdateIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+                 request) {
+        return child_->AsyncUpdateIssue(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UpdateIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+                 request) {
+        return child_->UpdateIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncDeleteIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+                 request) {
+        return child_->AsyncDeleteIssue(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::DeleteIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+                 request) {
+        return child_->DeleteIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncOpenIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::OpenIssueRequest const&
+                 request) {
+        return child_->AsyncOpenIssue(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerLogging::OpenIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::OpenIssueRequest const&
+                 request) {
+        return child_->OpenIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCloseIssue(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+                 request) {
+        return child_->AsyncCloseIssue(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SecureSourceManagerLogging::CloseIssue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::CloseIssueRequest const&
+                 request) {
+        return child_->CloseIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerLogging::GetPullRequestComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 GetPullRequestCommentRequest const& request) {
+        return child_->GetPullRequestComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsResponse>
+SecureSourceManagerLogging::ListPullRequestComments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::
+        ListPullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 ListPullRequestCommentsRequest const& request) {
+        return child_->ListPullRequestComments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCreatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestCommentRequest const& request) {
+        return child_->AsyncCreatePullRequestComment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::CreatePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 CreatePullRequestCommentRequest const& request) {
+        return child_->CreatePullRequestComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdatePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestCommentRequest const& request) {
+        return child_->AsyncUpdatePullRequestComment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UpdatePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UpdatePullRequestCommentRequest const& request) {
+        return child_->UpdatePullRequestComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncDeletePullRequestComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 DeletePullRequestCommentRequest const& request) {
+        return child_->AsyncDeletePullRequestComment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::DeletePullRequestComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 DeletePullRequestCommentRequest const& request) {
+        return child_->DeletePullRequestComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncBatchCreatePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 BatchCreatePullRequestCommentsRequest const& request) {
+        return child_->AsyncBatchCreatePullRequestComments(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::BatchCreatePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 BatchCreatePullRequestCommentsRequest const& request) {
+        return child_->BatchCreatePullRequestComments(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncResolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 ResolvePullRequestCommentsRequest const& request) {
+        return child_->AsyncResolvePullRequestComments(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::ResolvePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 ResolvePullRequestCommentsRequest const& request) {
+        return child_->ResolvePullRequestComments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUnresolvePullRequestComments(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 UnresolvePullRequestCommentsRequest const& request) {
+        return child_->AsyncUnresolvePullRequestComments(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UnresolvePullRequestComments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UnresolvePullRequestCommentsRequest const& request) {
+        return child_->UnresolvePullRequestComments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCreateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 CreateIssueCommentRequest const& request) {
+        return child_->AsyncCreateIssueComment(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::CreateIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 CreateIssueCommentRequest const& request) {
+        return child_->CreateIssueComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerLogging::GetIssueComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+              request) {
+        return child_->GetIssueComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListIssueCommentsResponse>
+SecureSourceManagerLogging::ListIssueComments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 ListIssueCommentsRequest const& request) {
+        return child_->ListIssueComments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdateIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 UpdateIssueCommentRequest const& request) {
+        return child_->AsyncUpdateIssueComment(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UpdateIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 UpdateIssueCommentRequest const& request) {
+        return child_->UpdateIssueComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncDeleteIssueComment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::
+                 DeleteIssueCommentRequest const& request) {
+        return child_->AsyncDeleteIssueComment(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::DeleteIssueComment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::
+                 DeleteIssueCommentRequest const& request) {
+        return child_->DeleteIssueComment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

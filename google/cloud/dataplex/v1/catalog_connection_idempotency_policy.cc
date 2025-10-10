@@ -164,6 +164,21 @@ Idempotency CatalogServiceConnectionIdempotencyPolicy::CancelMetadataJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntryLink(
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntryLink(
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntryLink(
+    google::cloud::dataplex::v1::GetEntryLinkRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency CatalogServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

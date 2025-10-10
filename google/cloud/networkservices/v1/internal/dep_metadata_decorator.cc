@@ -230,6 +230,99 @@ DepServiceMetadata::DeleteLbRouteExtension(
   return child_->DeleteLbRouteExtension(context, options, request);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
+DepServiceMetadata::ListAuthzExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAuthzExtensions(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceMetadata::GetAuthzExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAuthzExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncCreateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAuthzExtension(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::CreateAuthzExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAuthzExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncUpdateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("authz_extension.name=",
+                   internal::UrlEncode(request.authz_extension().name())));
+  return child_->AsyncUpdateAuthzExtension(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::UpdateAuthzExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("authz_extension.name=",
+                   internal::UrlEncode(request.authz_extension().name())));
+  return child_->UpdateAuthzExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncDeleteAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAuthzExtension(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::DeleteAuthzExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAuthzExtension(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DepServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

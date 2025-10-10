@@ -326,6 +326,17 @@ class BackupDRConnection {
   virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
   CreateBackupPlan(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  UpdateBackupPlan(
+      google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  UpdateBackupPlan(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
       google::cloud::backupdr::v1::GetBackupPlanRequest const& request);
 
@@ -343,6 +354,14 @@ class BackupDRConnection {
   virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteBackupPlan(google::longrunning::Operation const& operation);
 
+  virtual StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+  GetBackupPlanRevision(
+      google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>
+  ListBackupPlanRevisions(
+      google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest request);
+
   virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
   CreateBackupPlanAssociation(
       google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
@@ -356,6 +375,19 @@ class BackupDRConnection {
   virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
   CreateBackupPlanAssociation(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  UpdateBackupPlanAssociation(
+      google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  UpdateBackupPlanAssociation(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
   GetBackupPlanAssociation(
       google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
@@ -364,6 +396,11 @@ class BackupDRConnection {
   virtual StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
   ListBackupPlanAssociations(
       google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+  FetchBackupPlanAssociationsForResourceType(
+      google::cloud::backupdr::v1::
+          FetchBackupPlanAssociationsForResourceTypeRequest request);
 
   virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteBackupPlanAssociation(
@@ -388,6 +425,16 @@ class BackupDRConnection {
 
   virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
   TriggerBackup(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+  GetDataSourceReference(
+      google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+  FetchDataSourceReferencesForResourceType(
+      google::cloud::backupdr::v1::
+          FetchDataSourceReferencesForResourceTypeRequest request);
 
   virtual future<
       StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>

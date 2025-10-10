@@ -175,6 +175,41 @@ SecureSourceManagerTracingConnection::CreateRepository(
                            child_->CreateRepository(operation));
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerTracingConnection::UpdateRepository(
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateRepository(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdateRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateRepository");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateRepository(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerTracingConnection::UpdateRepository(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRepository(operation));
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerTracingConnection::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
@@ -208,6 +243,111 @@ SecureSourceManagerTracingConnection::DeleteRepository(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteRepository(operation));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerTracingConnection::ListHooks(
+    google::cloud::securesourcemanager::v1::ListHooksRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::ListHooks");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListHooks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::Hook>(std::move(span),
+                                                    std::move(sr));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Hook>
+SecureSourceManagerTracingConnection::GetHook(
+    google::cloud::securesourcemanager::v1::GetHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::GetHook");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetHook(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerTracingConnection::CreateHook(
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateHook");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateHook(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateHook");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateHook(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerTracingConnection::CreateHook(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateHook");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateHook(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerTracingConnection::UpdateHook(
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::UpdateHook");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateHook(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdateHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::UpdateHook");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateHook(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Hook>>
+SecureSourceManagerTracingConnection::UpdateHook(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::UpdateHook");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateHook(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteHook(
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteHook");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteHook(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeleteHook(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteHookRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteHook");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteHook(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteHook(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteHook");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteHook(operation));
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -365,6 +505,768 @@ SecureSourceManagerTracingConnection::DeleteBranchRule(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteBranchRule(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::CreatePullRequest(
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreatePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreatePullRequest(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreatePullRequest");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreatePullRequest(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::CreatePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreatePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePullRequest(operation));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerTracingConnection::GetPullRequest(
+    google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::GetPullRequest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPullRequest(request));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+SecureSourceManagerTracingConnection::ListPullRequests(
+    google::cloud::securesourcemanager::v1::ListPullRequestsRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ListPullRequests");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListPullRequests(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::PullRequest>(std::move(span),
+                                                           std::move(sr));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::UpdatePullRequest(
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdatePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdatePullRequest(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdatePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdatePullRequest");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdatePullRequest(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::UpdatePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdatePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePullRequest(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::MergePullRequest(
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "MergePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MergePullRequest(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::MergePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "MergePullRequest");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->MergePullRequest(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::MergePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "MergePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->MergePullRequest(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::OpenPullRequest(
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::OpenPullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->OpenPullRequest(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::OpenPullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::OpenPullRequest");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->OpenPullRequest(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::OpenPullRequest(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::OpenPullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->OpenPullRequest(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::ClosePullRequest(
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ClosePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ClosePullRequest(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::ClosePullRequest(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ClosePullRequest");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ClosePullRequest(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+SecureSourceManagerTracingConnection::ClosePullRequest(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ClosePullRequest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ClosePullRequest(operation));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+SecureSourceManagerTracingConnection::ListPullRequestFileDiffs(
+    google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ListPullRequestFileDiffs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListPullRequestFileDiffs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::FileDiff>(std::move(span),
+                                                        std::move(sr));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::TreeEntry>
+SecureSourceManagerTracingConnection::FetchTree(
+    google::cloud::securesourcemanager::v1::FetchTreeRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::FetchTree");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchTree(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::TreeEntry>(std::move(span),
+                                                         std::move(sr));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse>
+SecureSourceManagerTracingConnection::FetchBlob(
+    google::cloud::securesourcemanager::v1::FetchBlobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::FetchBlob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchBlob(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::CreateIssue(
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateIssue(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateIssue");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateIssue(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::CreateIssue(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateIssue(operation));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerTracingConnection::GetIssue(
+    google::cloud::securesourcemanager::v1::GetIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::GetIssue");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIssue(request));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::Issue>
+SecureSourceManagerTracingConnection::ListIssues(
+    google::cloud::securesourcemanager::v1::ListIssuesRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::ListIssues");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListIssues(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::Issue>(std::move(span),
+                                                     std::move(sr));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::UpdateIssue(
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::UpdateIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateIssue(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdateIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::UpdateIssue");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateIssue(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::UpdateIssue(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::UpdateIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateIssue(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteIssue(
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteIssue(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeleteIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteIssue");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteIssue(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteIssue(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteIssue(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::OpenIssue(
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::OpenIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->OpenIssue(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::OpenIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::OpenIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::OpenIssue");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->OpenIssue(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::OpenIssue(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::OpenIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->OpenIssue(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::CloseIssue(
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CloseIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CloseIssue(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CloseIssue(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CloseIssueRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CloseIssue");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CloseIssue(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Issue>>
+SecureSourceManagerTracingConnection::CloseIssue(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CloseIssue");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CloseIssue(operation));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerTracingConnection::GetPullRequestComment(
+    google::cloud::securesourcemanager::v1::GetPullRequestCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "GetPullRequestComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPullRequestComment(request));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+SecureSourceManagerTracingConnection::ListPullRequestComments(
+    google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ListPullRequestComments");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListPullRequestComments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::PullRequestComment>(
+      std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerTracingConnection::CreatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        CreatePullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreatePullRequestComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePullRequestComment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreatePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    CreatePullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreatePullRequestComment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreatePullRequestComment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerTracingConnection::CreatePullRequestComment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreatePullRequestComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePullRequestComment(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerTracingConnection::UpdatePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        UpdatePullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdatePullRequestComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePullRequestComment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdatePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    UpdatePullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdatePullRequestComment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePullRequestComment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+SecureSourceManagerTracingConnection::UpdatePullRequestComment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdatePullRequestComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePullRequestComment(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeletePullRequestComment(
+    google::cloud::securesourcemanager::v1::
+        DeletePullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeletePullRequestComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePullRequestComment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeletePullRequestComment(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    DeletePullRequestCommentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeletePullRequestComment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeletePullRequestComment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeletePullRequestComment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeletePullRequestComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePullRequestComment(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerTracingConnection::BatchCreatePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        BatchCreatePullRequestCommentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "BatchCreatePullRequestComments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreatePullRequestComments(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::BatchCreatePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "BatchCreatePullRequestComments");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchCreatePullRequestComments(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    BatchCreatePullRequestCommentsResponse>>
+SecureSourceManagerTracingConnection::BatchCreatePullRequestComments(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "BatchCreatePullRequestComments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreatePullRequestComments(operation));
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerTracingConnection::ResolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        ResolvePullRequestCommentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ResolvePullRequestComments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResolvePullRequestComments(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::ResolvePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    ResolvePullRequestCommentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ResolvePullRequestComments");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResolvePullRequestComments(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::securesourcemanager::v1::ResolvePullRequestCommentsResponse>>
+SecureSourceManagerTracingConnection::ResolvePullRequestComments(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ResolvePullRequestComments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResolvePullRequestComments(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerTracingConnection::UnresolvePullRequestComments(
+    google::cloud::securesourcemanager::v1::
+        UnresolvePullRequestCommentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UnresolvePullRequestComments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UnresolvePullRequestComments(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UnresolvePullRequestComments(
+    NoAwaitTag, google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UnresolvePullRequestComments");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UnresolvePullRequestComments(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::
+                    UnresolvePullRequestCommentsResponse>>
+SecureSourceManagerTracingConnection::UnresolvePullRequestComments(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UnresolvePullRequestComments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UnresolvePullRequestComments(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerTracingConnection::CreateIssueComment(
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateIssueComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateIssueComment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateIssueComment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateIssueComment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerTracingConnection::CreateIssueComment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateIssueComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateIssueComment(operation));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerTracingConnection::GetIssueComment(
+    google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::GetIssueComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIssueComment(request));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+SecureSourceManagerTracingConnection::ListIssueComments(
+    google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "ListIssueComments");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListIssueComments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::IssueComment>(std::move(span),
+                                                            std::move(sr));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerTracingConnection::UpdateIssueComment(
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateIssueComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateIssueComment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdateIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateIssueComment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateIssueComment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+SecureSourceManagerTracingConnection::UpdateIssueComment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateIssueComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateIssueComment(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteIssueComment(
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteIssueComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteIssueComment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeleteIssueComment(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteIssueComment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteIssueComment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteIssueComment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteIssueComment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteIssueComment(operation));
 }
 
 StreamRange<google::cloud::location::Location>

@@ -17,8 +17,8 @@
 
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/options.h"
@@ -54,6 +54,7 @@ class DefaultRowReader : public RowReaderImpl {
       bigtable::Filter filter, bool reverse,
       std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
+      std::shared_ptr<OperationContext> operation_context,
       Sleeper sleeper = [](auto d) { std::this_thread::sleep_for(d); });
 
   ~DefaultRowReader() override;
@@ -101,8 +102,8 @@ class DefaultRowReader : public RowReaderImpl {
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   bool enable_server_retries_;
   Sleeper sleeper_;
-  std::shared_ptr<grpc::ClientContext> context_;
-  RetryContext retry_context_;
+  std::shared_ptr<grpc::ClientContext> client_context_;
+  std::shared_ptr<OperationContext> operation_context_;
 
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   std::unique_ptr<
@@ -110,6 +111,8 @@ class DefaultRowReader : public RowReaderImpl {
       stream_;
   bool stream_is_open_ = false;
   bool operation_cancelled_ = false;
+  // TODO(#15314): Refactor state machine to not require this flag.
+  bool called_post_call_ = false;
 
   /// The end of stream Status.
   Status last_status_;

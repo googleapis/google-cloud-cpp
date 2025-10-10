@@ -212,6 +212,17 @@ class CatalogServiceTracingConnection
       google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
+      google::cloud::dataplex::v1::CreateEntryLinkRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
+      google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
+      google::cloud::dataplex::v1::GetEntryLinkRequest const& request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

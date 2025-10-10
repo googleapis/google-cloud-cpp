@@ -176,12 +176,14 @@ add_library(
     json.h
     keys.cc
     keys.h
+    lock_hint.h
     mutations.cc
     mutations.h
     numeric.cc
     numeric.h
     oid.h
     options.h
+    order_by.h
     partition_options.cc
     partition_options.h
     partitioned_dml_result.h

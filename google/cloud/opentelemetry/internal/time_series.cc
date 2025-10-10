@@ -67,14 +67,75 @@ double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
              : static_cast<double>(absl::get<std::int64_t>(v));
 }
 
+std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequestsHelper(
+    std::string const& project,
+    absl::optional<google::api::MonitoredResource> const& mr_proto,
+    std::vector<google::monitoring::v3::TimeSeries> tss) {
+  std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
+  for (auto& ts : tss) {
+    if (requests.empty() ||
+        requests.back().time_series().size() == kMaxTimeSeriesPerRequest) {
+      // If the current request has hit the maximum number of TimeSeries, create
+      // a new request.
+      requests.emplace_back();
+      requests.back().set_name(project);
+    }
+    if (mr_proto) {
+      *ts.mutable_resource() = *mr_proto;
+    }
+    *requests.back().add_time_series() = std::move(ts);
+  }
+  return requests;
+}
+
+void ToTimeSeriesHelper(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::function<
+        void(opentelemetry::sdk::metrics::MetricData const& metric_data,
+             opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+             google::monitoring::v3::TimeSeries ts)> const& ts_collector_fn) {
+  for (auto const& scope_metric : data.scope_metric_data_) {
+    for (auto const& metric_data : scope_metric.metric_data_) {
+      for (auto const& pda : metric_data.point_data_attr_) {
+        struct Visitor {
+          opentelemetry::sdk::metrics::MetricData const& metric_data;
+
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::SumPointData const& point) {
+            return ToTimeSeries(metric_data, point);
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::LastValuePointData const& point) {
+            return ToTimeSeries(metric_data, point);
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::HistogramPointData const& point) {
+            return ToTimeSeries(metric_data, point);
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::DropPointData const&) {
+            return absl::nullopt;
+          }
+        };
+        auto ts = absl::visit(Visitor{metric_data}, pda.point_data);
+        if (!ts) continue;
+        ts->set_unit(metric_data.instrument_descriptor.unit_);
+        ts_collector_fn(metric_data, pda, *std::move(ts));
+      }
+    }
+  }
+}
+
 }  // namespace
 
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
     opentelemetry::sdk::resource::Resource const* resource,
-    std::function<std::string(std::string)> const& name_formatter) {
-  auto add_label = [](auto& labels, auto key, auto const& value) {
+    std::function<std::string(std::string)> const& name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn) {
+  auto add_label = [&resource_filter_fn](auto& labels, auto key,
+                                         auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
     if (key.empty()) return;
     if (!std::isalpha(key[0]) && key[0] != '_') {
@@ -86,6 +147,7 @@ google::api::Metric ToMetric(
     for (auto& c : key) {
       if (!std::isalnum(c)) c = '_';
     }
+    if (resource_filter_fn && resource_filter_fn(key)) return;
     labels[std::move(key)] = AsString(value);
   };
 
@@ -114,6 +176,14 @@ google::api::Metric ToMetric(
     add_label(labels, kv.first, kv.second);
   }
   return proto;
+}
+
+google::api::Metric ToMetric(
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::PointAttributes const& attributes,
+    opentelemetry::sdk::resource::Resource const* resource,
+    std::function<std::string(std::string)> const& name_formatter) {
+  return ToMetric(metric_data, attributes, resource, name_formatter, nullptr);
 }
 
 google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
@@ -203,62 +273,67 @@ google::api::MonitoredResource ToMonitoredResource(
   return resource;
 }
 
+bool IsEmptyTimeSeries(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+  for (auto const& scope_metric : data.scope_metric_data_) {
+    for (auto const& metric_data : scope_metric.metric_data_) {
+      if (!metric_data.point_data_attr_.empty()) return false;
+    }
+  }
+  return true;
+}
+
 std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter) {
   std::vector<google::monitoring::v3::TimeSeries> tss;
-  for (auto const& scope_metric : data.scope_metric_data_) {
-    for (auto const& metric_data : scope_metric.metric_data_) {
-      for (auto const& pda : metric_data.point_data_attr_) {
-        struct Visitor {
-          opentelemetry::sdk::metrics::MetricData const& metric_data;
-
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
-              opentelemetry::sdk::metrics::SumPointData const& point) {
-            return ToTimeSeries(metric_data, point);
-          }
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
-              opentelemetry::sdk::metrics::LastValuePointData const& point) {
-            return ToTimeSeries(metric_data, point);
-          }
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
-              opentelemetry::sdk::metrics::HistogramPointData const& point) {
-            return ToTimeSeries(metric_data, point);
-          }
-          absl::optional<google::monitoring::v3::TimeSeries> operator()(
-              opentelemetry::sdk::metrics::DropPointData const&) {
-            return absl::nullopt;
-          }
-        };
-        auto ts = absl::visit(Visitor{metric_data}, pda.point_data);
-        if (!ts) continue;
-        ts->set_unit(metric_data.instrument_descriptor.unit_);
-        *ts->mutable_metric() =
+  auto collector =
+      [&](opentelemetry::sdk::metrics::MetricData const& metric_data,
+          opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+          google::monitoring::v3::TimeSeries ts) mutable {
+        *ts.mutable_metric() =
             ToMetric(metric_data, pda.attributes, data.resource_,
-                     metrics_name_formatter);
-        tss.push_back(*std::move(ts));
-      }
-    }
-  }
+                     metrics_name_formatter, nullptr);
+        tss.push_back(std::move(ts));
+      };
+  ToTimeSeriesHelper(data, collector);
   return tss;
+}
+
+std::unordered_map<std::string, std::vector<google::monitoring::v3::TimeSeries>>
+ToTimeSeriesWithResources(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::function<std::string(std::string)> const& metrics_name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn,
+    MonitoredResourceFromDataFn const& dynamic_resource_fn) {
+  std::unordered_map<std::string,
+                     std::vector<google::monitoring::v3::TimeSeries>>
+      tss_map;
+  auto collector =
+      [&](opentelemetry::sdk::metrics::MetricData const& metric_data,
+          opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+          google::monitoring::v3::TimeSeries ts) mutable {
+        *ts.mutable_metric() =
+            ToMetric(metric_data, pda.attributes, data.resource_,
+                     metrics_name_formatter, resource_filter_fn);
+        auto p = dynamic_resource_fn(pda);
+        *ts.mutable_resource() = std::move(p.second);
+        tss_map[p.first].push_back(std::move(ts));
+      };
+  ToTimeSeriesHelper(data, collector);
+  return tss_map;
 }
 
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     std::string const& project, google::api::MonitoredResource const& mr_proto,
     std::vector<google::monitoring::v3::TimeSeries> tss) {
-  std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
-  for (auto& ts : tss) {
-    if (requests.empty() ||
-        requests.back().time_series().size() == kMaxTimeSeriesPerRequest) {
-      // If the current request has hit the maximum number of TimeSeries, create
-      // a new request.
-      requests.emplace_back();
-      requests.back().set_name(project);
-    }
-    *ts.mutable_resource() = mr_proto;
-    *requests.back().add_time_series() = std::move(ts);
-  }
-  return requests;
+  return ToRequestsHelper(project, mr_proto, std::move(tss));
+}
+
+std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
+    std::string const& project,
+    std::vector<google::monitoring::v3::TimeSeries> tss) {
+  return ToRequestsHelper(project, absl::nullopt, std::move(tss));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

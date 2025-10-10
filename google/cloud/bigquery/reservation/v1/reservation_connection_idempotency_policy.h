@@ -123,6 +123,31 @@ class ReservationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateBiReservation(
       google::cloud::bigquery::reservation::v1::
           UpdateBiReservationRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency CreateReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          CreateReservationGroupRequest const& request);
+
+  virtual google::cloud::Idempotency GetReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          GetReservationGroupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request);
+
+  virtual google::cloud::Idempotency ListReservationGroups(
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+          request);
 };
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>

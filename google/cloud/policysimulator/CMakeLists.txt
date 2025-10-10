@@ -16,8 +16,10 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(policysimulator "Policy Simulator API"
-                                   SERVICE_DIRS "v1/")
+google_cloud_cpp_add_gapic_library(
+    policysimulator "Policy Simulator API"
+    SERVICE_DIRS "v1/"
+    SHARED_PROTO_DEPS "orgpolicy")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(policysimulator_quickstart "quickstart/quickstart.cc")

@@ -129,6 +129,11 @@ Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupPlan(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BackupDRConnectionIdempotencyPolicy::UpdateBackupPlan(
+    google::cloud::backupdr::v1::UpdateBackupPlanRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupPlan(
     google::cloud::backupdr::v1::GetBackupPlanRequest const&) {
   return Idempotency::kIdempotent;
@@ -144,8 +149,23 @@ Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlan(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupPlanRevision(
+    google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupPlanRevisions(
+    google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupPlanAssociation(
     google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::UpdateBackupPlanAssociation(
+    google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -159,6 +179,13 @@ Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupPlanAssociations(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+BackupDRConnectionIdempotencyPolicy::FetchBackupPlanAssociationsForResourceType(
+    google::cloud::backupdr::v1::
+        FetchBackupPlanAssociationsForResourceTypeRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlanAssociation(
     google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -167,6 +194,18 @@ Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlanAssociation(
 Idempotency BackupDRConnectionIdempotencyPolicy::TriggerBackup(
     google::cloud::backupdr::v1::TriggerBackupRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::GetDataSourceReference(
+    google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BackupDRConnectionIdempotencyPolicy::FetchDataSourceReferencesForResourceType(
+    google::cloud::backupdr::v1::
+        FetchDataSourceReferencesForResourceTypeRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency BackupDRConnectionIdempotencyPolicy::InitializeService(

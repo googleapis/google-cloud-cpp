@@ -7,15 +7,26 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `managedkafka_v1::ManagedKafkaClient`:
+For example, this will override the default endpoint for `managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient`:
 
-@snippet managed_kafka_client_samples.cc set-client-endpoint
+@snippet managed_schema_registry_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient](@ref managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-endpoint-snippet)
+- [\c managedkafka_v1::ManagedKafkaClient](@ref managedkafka_v1::ManagedKafkaClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-endpoint-snippet Override managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient Endpoint Configuration
+
+@snippet google/cloud/managedkafka/schemaregistry/v1/samples/managed_schema_registry_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page managedkafka_v1::ManagedKafkaClient-endpoint-snippet Override managedkafka_v1::ManagedKafkaClient Endpoint Configuration
 

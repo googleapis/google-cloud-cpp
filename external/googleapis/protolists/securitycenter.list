@@ -52,11 +52,14 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:valued_resource.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:vulnerability.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:access.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:affected_resources.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:ai_model.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:application.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:attack_exposure.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:attack_path.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:backup_disaster_recovery.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:bigquery_export.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:chokepoint.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:cloud_armor.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:cloud_dlp_data_profile.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:cloud_dlp_inspection.proto
@@ -77,6 +80,8 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:group_membership.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:iam_binding.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:indicator.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:ip_rules.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:job.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:kernel_rootkit.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:kubernetes.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:label.proto
@@ -84,6 +89,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:log_entry.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:mitre_attack.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:mute_config.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:network.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:notebook.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:notification_config.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:notification_message.proto
@@ -98,4 +104,5 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:source.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:toxic_combination.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:valued_resource.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:vertex_ai.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:vulnerability.proto

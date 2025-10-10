@@ -41,23 +41,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Access Secure Source Manager instances, resources, and repositories.
 ///
-/// This API is split across two servers: the Control Plane and the Data Plane.
-///
-/// Data Plane endpoints are hosted directly by your Secure Source Manager
-/// instance, so you must connect to your instance's API hostname to access
-/// them. The API hostname looks like the following:
-///
-///    https://[instance-id]-[project-number]-api.[location].sourcemanager.dev
-///
-/// For example,
-///
-///    https://my-instance-702770452863-api.us-central1.sourcemanager.dev
-///
-/// Data Plane endpoints are denoted with **Host: Data Plane**.
-///
-/// All other endpoints are found in the normal Cloud API location, namely,
-/// `securcesourcemanager.googleapis.com`.
-///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment
@@ -136,8 +119,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
-  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L691}
+  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L672}
+  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1453}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
@@ -175,8 +158,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
-  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L691}
+  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L672}
+  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1453}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
@@ -201,8 +184,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L726}
-  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
+  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1488}
+  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L672}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::Instance> GetInstance(
@@ -231,8 +214,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L726}
-  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
+  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1488}
+  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L672}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::Instance> GetInstance(
@@ -266,8 +249,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L737}
-  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
+  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1499}
+  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L672}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
@@ -322,8 +305,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L737}
-  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
+  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1499}
+  /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L672}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
@@ -387,8 +370,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L769}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L795}
+  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1531}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -438,8 +421,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L769}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L795}
+  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1531}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -482,7 +465,8 @@ class SecureSourceManagerClient {
   ///
   /// Lists Repositories in a given project and location.
   ///
-  /// **Host: Data Plane**
+  /// The instance field is required in the query parameter for requests using
+  /// the securesourcemanager.googleapis.com endpoint.
   ///
   /// @param parent  Required. Parent value for ListRepositoriesRequest.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -507,8 +491,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L825}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
+  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1587}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -518,7 +502,8 @@ class SecureSourceManagerClient {
   ///
   /// Lists Repositories in a given project and location.
   ///
-  /// **Host: Data Plane**
+  /// The instance field is required in the query parameter for requests using
+  /// the securesourcemanager.googleapis.com endpoint.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -548,8 +533,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L825}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
+  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1587}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -560,8 +545,6 @@ class SecureSourceManagerClient {
   // clang-format off
   ///
   /// Gets metadata of a repository.
-  ///
-  /// **Host: Data Plane**
   ///
   /// @param name  Required. Name of the repository to retrieve.
   ///  The format is
@@ -579,8 +562,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L868}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
+  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1629}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
@@ -589,8 +572,6 @@ class SecureSourceManagerClient {
   // clang-format off
   ///
   /// Gets metadata of a repository.
-  ///
-  /// **Host: Data Plane**
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -611,8 +592,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L868}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
+  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1629}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
@@ -624,7 +605,8 @@ class SecureSourceManagerClient {
   ///
   /// Creates a new repository in a given project and location.
   ///
-  /// **Host: Data Plane**
+  /// The Repository.Instance field is required in the request body for requests
+  /// using the securesourcemanager.googleapis.com endpoint.
   ///
   /// @param parent  Required. The project in which to create the repository. Values are of the
   ///  form `projects/{project_number}/locations/{location_id}`
@@ -652,8 +634,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L881}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
+  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1642}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
@@ -682,7 +664,8 @@ class SecureSourceManagerClient {
   ///
   /// Creates a new repository in a given project and location.
   ///
-  /// **Host: Data Plane**
+  /// The Repository.Instance field is required in the request body for requests
+  /// using the securesourcemanager.googleapis.com endpoint.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -710,8 +693,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L881}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
+  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1642}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
@@ -752,13 +735,136 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// Deletes a Repository.
+  /// Updates the metadata of a repository.
   ///
-  /// **Host: Data Plane**
+  /// @param repository  Required. The repository being updated.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  repository resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Repository] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
+  /// [google.cloud.securesourcemanager.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1662}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  UpdateRepository(
+      google::cloud::securesourcemanager::v1::Repository const& repository,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateRepository(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::Repository const& repository,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the metadata of a repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UpdateRepositoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Repository] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L835}
+  /// [google.cloud.securesourcemanager.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1662}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  UpdateRepository(
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateRepository(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateRepository
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  UpdateRepository(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Repository.
   ///
   /// @param name  Required. Name of the repository to delete.
   ///  The format is
-  ///  projects/{project_number}/locations/{location_id}/repositories/{repository_id}.
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -779,8 +885,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L901}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L795}
+  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1680}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -803,8 +909,6 @@ class SecureSourceManagerClient {
   // clang-format off
   ///
   /// Deletes a Repository.
-  ///
-  /// **Host: Data Plane**
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -832,8 +936,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L901}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L795}
+  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1680}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -871,6 +975,497 @@ class SecureSourceManagerClient {
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteRepository(google::longrunning::Operation const& operation,
                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists hooks in a given repository.
+  ///
+  /// @param parent  Required. Parent value for ListHooksRequest.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.Hook], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  /// [google.cloud.securesourcemanager.v1.ListHooksRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1697}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::Hook> ListHooks(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists hooks in a given repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ListHooksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.Hook], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  /// [google.cloud.securesourcemanager.v1.ListHooksRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1697}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::Hook> ListHooks(
+      google::cloud::securesourcemanager::v1::ListHooksRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets metadata of a hook.
+  ///
+  /// @param name  Required. Name of the hook to retrieve.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/hooks/{hook_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.Hook])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1724}
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::Hook> GetHook(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets metadata of a hook.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.GetHookRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.Hook])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1724}
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::Hook> GetHook(
+      google::cloud::securesourcemanager::v1::GetHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new hook in a given repository.
+  ///
+  /// @param parent  Required. The repository in which to create the hook. Values are of the
+  ///  form
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}`
+  /// @param hook  Required. The resource being created.
+  /// @param hook_id  Required. The ID to use for the hook, which will become the final component
+  ///  of the hook's resource name. This value restricts to lower-case letters,
+  ///  numbers, and hyphen, with the first character a letter, the last a letter
+  ///  or a number, and a 63 character maximum.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Hook] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreateHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1737}
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> CreateHook(
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::Hook const& hook,
+      std::string const& hook_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateHook
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateHook(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::securesourcemanager::v1::Hook const& hook,
+      std::string const& hook_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new hook in a given repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.CreateHookRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Hook] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreateHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1737}
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> CreateHook(
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateHook
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateHook(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateHook
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> CreateHook(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the metadata of a hook.
+  ///
+  /// @param hook  Required. The hook being updated.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  hook resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask.
+  ///  The special value "*" means full replacement.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Hook] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  /// [google.cloud.securesourcemanager.v1.UpdateHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1759}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> UpdateHook(
+      google::cloud::securesourcemanager::v1::Hook const& hook,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateHook
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateHook(
+      NoAwaitTag, google::cloud::securesourcemanager::v1::Hook const& hook,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the metadata of a hook.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UpdateHookRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Hook] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Hook]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1039}
+  /// [google.cloud.securesourcemanager.v1.UpdateHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1759}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> UpdateHook(
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateHook
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateHook(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateHook
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Hook>> UpdateHook(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Hook.
+  ///
+  /// @param name  Required. Name of the hook to delete.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/hooks/{hook_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeleteHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1773}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteHook(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteHook
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteHook(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Hook.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.DeleteHookRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeleteHookRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1773}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteHook(
+      google::cloud::securesourcemanager::v1::DeleteHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteHook
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteHook(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteHookRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteHook
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteHook(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -1070,8 +1665,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.CreateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L931}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.CreateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1799}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
@@ -1126,8 +1721,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.CreateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L931}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.CreateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1799}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
@@ -1193,8 +1788,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.ListBranchRulesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L945}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.ListBranchRulesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1813}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
@@ -1232,8 +1827,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.ListBranchRulesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L945}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.ListBranchRulesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1813}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
@@ -1261,8 +1856,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.GetBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L918}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.GetBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1786}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
@@ -1291,8 +1886,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.GetBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L918}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.GetBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1786}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
@@ -1330,8 +1925,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.UpdateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L973}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.UpdateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1841}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
@@ -1385,8 +1980,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L615}
-  /// [google.cloud.securesourcemanager.v1.UpdateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L973}
+  /// [google.cloud.securesourcemanager.v1.BranchRule]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1100}
+  /// [google.cloud.securesourcemanager.v1.UpdateBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1841}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
@@ -1450,8 +2045,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L959}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L795}
+  /// [google.cloud.securesourcemanager.v1.DeleteBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1827}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -1501,8 +2096,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L959}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L795}
+  /// [google.cloud.securesourcemanager.v1.DeleteBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1827}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -1540,6 +2135,3027 @@ class SecureSourceManagerClient {
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteBranchRule(google::longrunning::Operation const& operation,
                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a pull request.
+  ///
+  /// @param parent  Required. The repository that the pull request is created from. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}`
+  /// @param pull_request  Required. The pull request to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreatePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1867}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  CreatePullRequest(
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreatePullRequest(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a pull request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.CreatePullRequestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreatePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1867}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  CreatePullRequest(
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreatePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePullRequest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  CreatePullRequest(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a pull request.
+  ///
+  /// @param name  Required. Name of the pull request to retrieve.
+  ///  The format is
+  ///  `projects/{project}/locations/{location}/repositories/{repository}/pullRequests/{pull_request}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.PullRequest])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetPullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1882}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequest> GetPullRequest(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a pull request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.GetPullRequestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.PullRequest])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetPullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1882}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequest> GetPullRequest(
+      google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists pull requests in a repository.
+  ///
+  /// @param parent  Required. The repository in which to list pull requests. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.PullRequest], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ListPullRequestsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1895}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+  ListPullRequests(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists pull requests in a repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ListPullRequestsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.PullRequest], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ListPullRequestsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1895}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::PullRequest>
+  ListPullRequests(
+      google::cloud::securesourcemanager::v1::ListPullRequestsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a pull request.
+  ///
+  /// @param pull_request  Required. The pull request to update.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  pull request resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask.
+  ///  The special value "*" means full replacement.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  /// [google.cloud.securesourcemanager.v1.UpdatePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1923}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  UpdatePullRequest(
+      google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdatePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::PullRequest const& pull_request,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a pull request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UpdatePullRequestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  /// [google.cloud.securesourcemanager.v1.UpdatePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1923}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  UpdatePullRequest(
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdatePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePullRequest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  UpdatePullRequest(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Merges a pull request.
+  ///
+  /// @param name  Required. The pull request to merge.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.MergePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1937}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  MergePullRequest(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief MergePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> MergePullRequest(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Merges a pull request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.MergePullRequestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.MergePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1937}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  MergePullRequest(
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief MergePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> MergePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief MergePullRequest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  MergePullRequest(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Opens a pull request.
+  ///
+  /// @param name  Required. The pull request to open.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.OpenPullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1950}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  OpenPullRequest(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief OpenPullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> OpenPullRequest(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Opens a pull request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.OpenPullRequestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.OpenPullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1950}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  OpenPullRequest(
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief OpenPullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> OpenPullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief OpenPullRequest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  OpenPullRequest(google::longrunning::Operation const& operation,
+                  Options opts = {});
+
+  // clang-format off
+  ///
+  /// Closes a pull request without merging.
+  ///
+  /// @param name  Required. The pull request to close.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ClosePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1963}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  ClosePullRequest(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ClosePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ClosePullRequest(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Closes a pull request without merging.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ClosePullRequestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequest] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ClosePullRequestRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1963}
+  /// [google.cloud.securesourcemanager.v1.PullRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1177}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  ClosePullRequest(
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ClosePullRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ClosePullRequest(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ClosePullRequest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequest>>
+  ClosePullRequest(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists a pull request's file diffs.
+  ///
+  /// @param name  Required. The pull request to list file diffs for.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.FileDiff], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.FileDiff]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1244}
+  /// [google.cloud.securesourcemanager.v1.ListPullRequestFileDiffsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1977}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+  ListPullRequestFileDiffs(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists a pull request's file diffs.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ListPullRequestFileDiffsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.FileDiff], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.FileDiff]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1244}
+  /// [google.cloud.securesourcemanager.v1.ListPullRequestFileDiffsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1977}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::FileDiff>
+  ListPullRequestFileDiffs(
+      google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetches a tree from a repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.FetchTreeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.TreeEntry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.FetchTreeRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2169}
+  /// [google.cloud.securesourcemanager.v1.TreeEntry]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2134}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::TreeEntry> FetchTree(
+      google::cloud::securesourcemanager::v1::FetchTreeRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetches a blob from a repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.FetchBlobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.FetchBlobResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.FetchBlobRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2206}
+  /// [google.cloud.securesourcemanager.v1.FetchBlobResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2222}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::FetchBlobResponse> FetchBlob(
+      google::cloud::securesourcemanager::v1::FetchBlobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an issue.
+  ///
+  /// @param parent  Required. The repository in which to create the issue. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}`
+  /// @param issue  Required. The issue to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreateIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2007}
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CreateIssue(
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::Issue const& issue,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateIssue(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::securesourcemanager::v1::Issue const& issue,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.CreateIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreateIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2007}
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CreateIssue(
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateIssue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CreateIssue(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an issue.
+  ///
+  /// @param name  Required. Name of the issue to retrieve.
+  ///  The format is
+  ///  `projects/{project}/locations/{location}/repositories/{repository}/issues/{issue_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.Issue])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2022}
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::Issue> GetIssue(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.GetIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.Issue])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2022}
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::Issue> GetIssue(
+      google::cloud::securesourcemanager::v1::GetIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists issues in a repository.
+  ///
+  /// @param parent  Required. The repository in which to list issues. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.Issue], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  /// [google.cloud.securesourcemanager.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2035}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::Issue> ListIssues(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists issues in a repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ListIssuesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.Issue], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  /// [google.cloud.securesourcemanager.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2035}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::Issue> ListIssues(
+      google::cloud::securesourcemanager::v1::ListIssuesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a issue.
+  ///
+  /// @param issue  Required. The issue to update.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  issue resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask.
+  ///  The special value "*" means full replacement.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  /// [google.cloud.securesourcemanager.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2066}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> UpdateIssue(
+      google::cloud::securesourcemanager::v1::Issue const& issue,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateIssue(
+      NoAwaitTag, google::cloud::securesourcemanager::v1::Issue const& issue,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UpdateIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  /// [google.cloud.securesourcemanager.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2066}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> UpdateIssue(
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateIssue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> UpdateIssue(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an issue.
+  ///
+  /// @param name  Required. Name of the issue to delete.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/issues/{issue_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2080}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssue(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteIssue(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.DeleteIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2080}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssue(
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteIssue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssue(google::longrunning::Operation const& operation,
+              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Opens an issue.
+  ///
+  /// @param name  Required. Name of the issue to open.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/issues/{issue_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  /// [google.cloud.securesourcemanager.v1.OpenIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2116}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> OpenIssue(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief OpenIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> OpenIssue(NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Opens an issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.OpenIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  /// [google.cloud.securesourcemanager.v1.OpenIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2116}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> OpenIssue(
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief OpenIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> OpenIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief OpenIssue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> OpenIssue(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Closes an issue.
+  ///
+  /// @param name  Required. Name of the issue to close.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/issues/{issue_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CloseIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2098}
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CloseIssue(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CloseIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CloseIssue(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Closes an issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.CloseIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.Issue] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CloseIssueRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2098}
+  /// [google.cloud.securesourcemanager.v1.Issue]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1274}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CloseIssue(
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CloseIssue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CloseIssue(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CloseIssue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::Issue>> CloseIssue(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a pull request comment.
+  ///
+  /// @param name  Required. Name of the pull request comment to retrieve.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}/pullRequestComments/{comment_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.PullRequestComment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetPullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2331}
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+  GetPullRequestComment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a pull request comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.GetPullRequestCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.PullRequestComment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetPullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2331}
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>
+  GetPullRequestComment(google::cloud::securesourcemanager::v1::
+                            GetPullRequestCommentRequest const& request,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists pull request comments.
+  ///
+  /// @param parent  Required. The pull request in which to list pull request comments. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.PullRequestComment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ListPullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2231}
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+  ListPullRequestComments(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists pull request comments.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ListPullRequestCommentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.PullRequestComment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ListPullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2231}
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::PullRequestComment>
+  ListPullRequestComments(
+      google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a pull request comment. This function is used to create a single
+  /// PullRequestComment of type Comment, or a single PullRequestComment of type
+  /// Code that's replying to another PullRequestComment of type Code. Use
+  /// BatchCreatePullRequestComments to create multiple PullRequestComments for
+  /// code reviews.
+  ///
+  /// @param parent  Required. The pull request in which to create the pull request comment.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param pull_request_comment  Required. The pull request comment to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequestComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreatePullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2261}
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  CreatePullRequestComment(
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::PullRequestComment const&
+          pull_request_comment,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePullRequestComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreatePullRequestComment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::securesourcemanager::v1::PullRequestComment const&
+          pull_request_comment,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a pull request comment. This function is used to create a single
+  /// PullRequestComment of type Comment, or a single PullRequestComment of type
+  /// Code that's replying to another PullRequestComment of type Code. Use
+  /// BatchCreatePullRequestComments to create multiple PullRequestComments for
+  /// code reviews.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.CreatePullRequestCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequestComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreatePullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2261}
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  CreatePullRequestComment(google::cloud::securesourcemanager::v1::
+                               CreatePullRequestCommentRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePullRequestComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreatePullRequestComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          CreatePullRequestCommentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePullRequestComment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  CreatePullRequestComment(google::longrunning::Operation const& operation,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a pull request comment.
+  ///
+  /// @param pull_request_comment  Required. The pull request comment to update.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  pull request comment resource by the update. Updatable fields are
+  ///  `body`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequestComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  /// [google.cloud.securesourcemanager.v1.UpdatePullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2304}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  UpdatePullRequestComment(
+      google::cloud::securesourcemanager::v1::PullRequestComment const&
+          pull_request_comment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePullRequestComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdatePullRequestComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::PullRequestComment const&
+          pull_request_comment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a pull request comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UpdatePullRequestCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.PullRequestComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.PullRequestComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1349}
+  /// [google.cloud.securesourcemanager.v1.UpdatePullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2304}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  UpdatePullRequestComment(google::cloud::securesourcemanager::v1::
+                               UpdatePullRequestCommentRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePullRequestComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdatePullRequestComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          UpdatePullRequestCommentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePullRequestComment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::PullRequestComment>>
+  UpdatePullRequestComment(google::longrunning::Operation const& operation,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a pull request comment.
+  ///
+  /// @param name  Required. Name of the pull request comment to delete.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}/pullRequestComments/{comment_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeletePullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2318}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeletePullRequestComment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeletePullRequestComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeletePullRequestComment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a pull request comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.DeletePullRequestCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeletePullRequestCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2318}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeletePullRequestComment(google::cloud::securesourcemanager::v1::
+                               DeletePullRequestCommentRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeletePullRequestComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeletePullRequestComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          DeletePullRequestCommentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeletePullRequestComment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeletePullRequestComment(google::longrunning::Operation const& operation,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Batch creates pull request comments. This function is used to create
+  /// multiple PullRequestComments for code review. There needs to be exactly one
+  /// PullRequestComment of type Review, and at most 100 PullRequestComments of
+  /// type Code per request. The Postition of the code comments must be unique
+  /// within the request.
+  ///
+  /// @param parent  Required. The pull request in which to create the pull request comments.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param requests  Required. The request message specifying the resources to create. There
+  ///  should be exactly one CreatePullRequestCommentRequest with CommentDetail
+  ///  being REVIEW in the list, and no more than 100
+  ///  CreatePullRequestCommentRequests with CommentDetail being CODE in the list
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2278}
+  /// [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2298}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      BatchCreatePullRequestCommentsResponse>>
+  BatchCreatePullRequestComments(
+      std::string const& parent,
+      std::vector<google::cloud::securesourcemanager::v1::
+                      CreatePullRequestCommentRequest> const& requests,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreatePullRequestComments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BatchCreatePullRequestComments(
+      NoAwaitTag, std::string const& parent,
+      std::vector<google::cloud::securesourcemanager::v1::
+                      CreatePullRequestCommentRequest> const& requests,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Batch creates pull request comments. This function is used to create
+  /// multiple PullRequestComments for code review. There needs to be exactly one
+  /// PullRequestComment of type Review, and at most 100 PullRequestComments of
+  /// type Code per request. The Postition of the code comments must be unique
+  /// within the request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2278}
+  /// [google.cloud.securesourcemanager.v1.BatchCreatePullRequestCommentsResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2298}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      BatchCreatePullRequestCommentsResponse>>
+  BatchCreatePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreatePullRequestComments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BatchCreatePullRequestComments(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreatePullRequestComments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      BatchCreatePullRequestCommentsResponse>>
+  BatchCreatePullRequestComments(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Resolves pull request comments. A list of PullRequestComment names must be
+  /// provided. The PullRequestComment names must be in the same conversation
+  /// thread. If auto_fill is set, all comments in the conversation thread will
+  /// be resolved.
+  ///
+  /// @param parent  Required. The pull request in which to resolve the pull request comments.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param names  Required. The names of the pull request comments to resolve. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}/pullRequestComments/{comment_id}`
+  ///  Only comments from the same threads are allowed in the same request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2344}
+  /// [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2372}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      ResolvePullRequestCommentsResponse>>
+  ResolvePullRequestComments(std::string const& parent,
+                             std::vector<std::string> const& names,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ResolvePullRequestComments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ResolvePullRequestComments(
+      NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Resolves pull request comments. A list of PullRequestComment names must be
+  /// provided. The PullRequestComment names must be in the same conversation
+  /// thread. If auto_fill is set, all comments in the conversation thread will
+  /// be resolved.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2344}
+  /// [google.cloud.securesourcemanager.v1.ResolvePullRequestCommentsResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2372}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      ResolvePullRequestCommentsResponse>>
+  ResolvePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ResolvePullRequestComments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ResolvePullRequestComments(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ResolvePullRequestComments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      ResolvePullRequestCommentsResponse>>
+  ResolvePullRequestComments(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Unresolves pull request comments. A list of PullRequestComment names must
+  /// be provided. The PullRequestComment names must be in the same conversation
+  /// thread. If auto_fill is set, all comments in the conversation thread will
+  /// be unresolved.
+  ///
+  /// @param parent  Required. The pull request in which to resolve the pull request comments.
+  ///  Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}`
+  /// @param names  Required. The names of the pull request comments to unresolve. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/pullRequests/{pull_request_id}/pullRequestComments/{comment_id}`
+  ///  Only comments from the same threads are allowed in the same request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2378}
+  /// [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2406}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      UnresolvePullRequestCommentsResponse>>
+  UnresolvePullRequestComments(std::string const& parent,
+                               std::vector<std::string> const& names,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UnresolvePullRequestComments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UnresolvePullRequestComments(
+      NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Unresolves pull request comments. A list of PullRequestComment names must
+  /// be provided. The PullRequestComment names must be in the same conversation
+  /// thread. If auto_fill is set, all comments in the conversation thread will
+  /// be unresolved.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2378}
+  /// [google.cloud.securesourcemanager.v1.UnresolvePullRequestCommentsResponse]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2406}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      UnresolvePullRequestCommentsResponse>>
+  UnresolvePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UnresolvePullRequestComments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UnresolvePullRequestComments(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UnresolvePullRequestComments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::
+                      UnresolvePullRequestCommentsResponse>>
+  UnresolvePullRequestComments(google::longrunning::Operation const& operation,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an issue comment.
+  ///
+  /// @param parent  Required. The issue in which to create the issue comment. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/issues/{issue_id}`
+  /// @param issue_comment  Required. The issue comment to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.IssueComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreateIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2412}
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  CreateIssueComment(
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateIssueComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateIssueComment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an issue comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.CreateIssueCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.IssueComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.CreateIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2412}
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  CreateIssueComment(
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateIssueComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateIssueComment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  CreateIssueComment(google::longrunning::Operation const& operation,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an issue comment.
+  ///
+  /// @param name  Required. Name of the issue comment to retrieve.
+  ///  The format is
+  ///  `projects/{project}/locations/{location}/repositories/{repository}/issues/{issue_id}/issueComments/{comment_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.IssueComment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2427}
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+  GetIssueComment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an issue comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.GetIssueCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securesourcemanager.v1.IssueComment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.GetIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2427}
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securesourcemanager::v1::IssueComment>
+  GetIssueComment(
+      google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists comments in an issue.
+  ///
+  /// @param parent  Required. The issue in which to list the comments. Format:
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/issues/{issue_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.IssueComment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  /// [google.cloud.securesourcemanager.v1.ListIssueCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2440}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+  ListIssueComments(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists comments in an issue.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.ListIssueCommentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securesourcemanager.v1.IssueComment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  /// [google.cloud.securesourcemanager.v1.ListIssueCommentsRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2440}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::securesourcemanager::v1::IssueComment>
+  ListIssueComments(
+      google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an issue comment.
+  ///
+  /// @param issue_comment  Required. The issue comment to update.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  issue comment resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask.
+  ///  The special value "*" means full replacement.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.IssueComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  /// [google.cloud.securesourcemanager.v1.UpdateIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2468}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  UpdateIssueComment(
+      google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateIssueComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::IssueComment const& issue_comment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an issue comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.UpdateIssueCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.IssueComment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.IssueComment]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1325}
+  /// [google.cloud.securesourcemanager.v1.UpdateIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2468}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  UpdateIssueComment(
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateIssueComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateIssueComment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::IssueComment>>
+  UpdateIssueComment(google::longrunning::Operation const& operation,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an issue comment.
+  ///
+  /// @param name  Required. Name of the issue comment to delete.
+  ///  The format is
+  ///  `projects/{project_number}/locations/{location_id}/repositories/{repository_id}/issues/{issue_id}/issueComments/{comment_id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeleteIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2482}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssueComment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteIssueComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteIssueComment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an issue comment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securesourcemanager.v1.DeleteIssueCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securesourcemanager.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securesourcemanager.v1.DeleteIssueCommentRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L2482}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L1557}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssueComment(
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteIssueComment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteIssueComment(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteIssueComment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteIssueComment(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///

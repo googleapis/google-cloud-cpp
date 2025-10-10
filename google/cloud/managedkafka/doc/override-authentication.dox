@@ -9,7 +9,12 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet managed_kafka_client_samples.cc with-service-account
+@snippet managed_schema_registry_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient](@ref managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-service-account-snippet)
+- [\c managedkafka_v1::ManagedKafkaClient](@ref managedkafka_v1::ManagedKafkaClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -26,6 +31,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-service-account-snippet Override managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient Authentication Defaults
+
+@snippet google/cloud/managedkafka/schemaregistry/v1/samples/managed_schema_registry_client_samples.cc with-service-account
+
+*/
 
 /*! @page managedkafka_v1::ManagedKafkaClient-service-account-snippet Override managedkafka_v1::ManagedKafkaClient Authentication Defaults
 

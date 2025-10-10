@@ -34,6 +34,7 @@ application.
 - [\c bigquery_biglake_v1::MetastoreServiceClient](@ref google::cloud::bigquery_biglake_v1::MetastoreServiceClient)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref google::cloud::bigquery_connection_v1::ConnectionServiceClient)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref google::cloud::bigquery_datapolicies_v1::DataPolicyServiceClient)
+- [\c bigquery_datapolicies_v2::DataPolicyServiceClient](@ref google::cloud::bigquery_datapolicies_v2::DataPolicyServiceClient)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref google::cloud::bigquery_datatransfer_v1::DataTransferServiceClient)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref google::cloud::bigquery_migration_v2::MigrationServiceClient)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref google::cloud::bigquery_reservation_v1::ReservationServiceClient)

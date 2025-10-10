@@ -424,6 +424,54 @@ DefaultConfigStub::GetTerraformVersion(
   return response;
 }
 
+StatusOr<google::cloud::config::v1::ListResourceChangesResponse>
+DefaultConfigStub::ListResourceChanges(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::ListResourceChangesRequest const& request) {
+  google::cloud::config::v1::ListResourceChangesResponse response;
+  auto status = grpc_stub_->ListResourceChanges(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+DefaultConfigStub::GetResourceChange(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  google::cloud::config::v1::ResourceChange response;
+  auto status = grpc_stub_->GetResourceChange(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::ListResourceDriftsResponse>
+DefaultConfigStub::ListResourceDrifts(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::ListResourceDriftsRequest const& request) {
+  google::cloud::config::v1::ListResourceDriftsResponse response;
+  auto status = grpc_stub_->ListResourceDrifts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+DefaultConfigStub::GetResourceDrift(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  google::cloud::config::v1::ResourceDrift response;
+  auto status = grpc_stub_->GetResourceDrift(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConfigStub::ListLocations(
     grpc::ClientContext& context, Options const&,

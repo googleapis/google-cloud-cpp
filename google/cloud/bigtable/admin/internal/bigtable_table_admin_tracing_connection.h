@@ -180,6 +180,43 @@ class BigtableTableAdminTracingConnection
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  CreateSchemaBundle(
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateSchemaBundle(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  CreateSchemaBundle(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle(
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateSchemaBundle(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::bigtable::admin::v2::SchemaBundle> GetSchemaBundle(
+      google::bigtable::admin::v2::GetSchemaBundleRequest const& request)
+      override;
+
+  StreamRange<google::bigtable::admin::v2::SchemaBundle> ListSchemaBundles(
+      google::bigtable::admin::v2::ListSchemaBundlesRequest request) override;
+
+  Status DeleteSchemaBundle(
+      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request)
+      override;
+
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request)

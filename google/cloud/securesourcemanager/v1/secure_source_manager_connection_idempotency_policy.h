@@ -66,9 +66,28 @@ class SecureSourceManagerConnectionIdempotencyPolicy {
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateRepository(
+      google::cloud::securesourcemanager::v1::UpdateRepositoryRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteRepository(
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListHooks(
+      google::cloud::securesourcemanager::v1::ListHooksRequest request);
+
+  virtual google::cloud::Idempotency GetHook(
+      google::cloud::securesourcemanager::v1::GetHookRequest const& request);
+
+  virtual google::cloud::Idempotency CreateHook(
+      google::cloud::securesourcemanager::v1::CreateHookRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateHook(
+      google::cloud::securesourcemanager::v1::UpdateHookRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteHook(
+      google::cloud::securesourcemanager::v1::DeleteHookRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicyRepo(
       google::iam::v1::GetIamPolicyRequest const& request);
@@ -96,6 +115,118 @@ class SecureSourceManagerConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteBranchRule(
       google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreatePullRequest(
+      google::cloud::securesourcemanager::v1::CreatePullRequestRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetPullRequest(
+      google::cloud::securesourcemanager::v1::GetPullRequestRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPullRequests(
+      google::cloud::securesourcemanager::v1::ListPullRequestsRequest request);
+
+  virtual google::cloud::Idempotency UpdatePullRequest(
+      google::cloud::securesourcemanager::v1::UpdatePullRequestRequest const&
+          request);
+
+  virtual google::cloud::Idempotency MergePullRequest(
+      google::cloud::securesourcemanager::v1::MergePullRequestRequest const&
+          request);
+
+  virtual google::cloud::Idempotency OpenPullRequest(
+      google::cloud::securesourcemanager::v1::OpenPullRequestRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ClosePullRequest(
+      google::cloud::securesourcemanager::v1::ClosePullRequestRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPullRequestFileDiffs(
+      google::cloud::securesourcemanager::v1::ListPullRequestFileDiffsRequest
+          request);
+
+  virtual google::cloud::Idempotency FetchTree(
+      google::cloud::securesourcemanager::v1::FetchTreeRequest request);
+
+  virtual google::cloud::Idempotency FetchBlob(
+      google::cloud::securesourcemanager::v1::FetchBlobRequest const& request);
+
+  virtual google::cloud::Idempotency CreateIssue(
+      google::cloud::securesourcemanager::v1::CreateIssueRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetIssue(
+      google::cloud::securesourcemanager::v1::GetIssueRequest const& request);
+
+  virtual google::cloud::Idempotency ListIssues(
+      google::cloud::securesourcemanager::v1::ListIssuesRequest request);
+
+  virtual google::cloud::Idempotency UpdateIssue(
+      google::cloud::securesourcemanager::v1::UpdateIssueRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteIssue(
+      google::cloud::securesourcemanager::v1::DeleteIssueRequest const&
+          request);
+
+  virtual google::cloud::Idempotency OpenIssue(
+      google::cloud::securesourcemanager::v1::OpenIssueRequest const& request);
+
+  virtual google::cloud::Idempotency CloseIssue(
+      google::cloud::securesourcemanager::v1::CloseIssueRequest const& request);
+
+  virtual google::cloud::Idempotency GetPullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          GetPullRequestCommentRequest const& request);
+
+  virtual google::cloud::Idempotency ListPullRequestComments(
+      google::cloud::securesourcemanager::v1::ListPullRequestCommentsRequest
+          request);
+
+  virtual google::cloud::Idempotency CreatePullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          CreatePullRequestCommentRequest const& request);
+
+  virtual google::cloud::Idempotency UpdatePullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          UpdatePullRequestCommentRequest const& request);
+
+  virtual google::cloud::Idempotency DeletePullRequestComment(
+      google::cloud::securesourcemanager::v1::
+          DeletePullRequestCommentRequest const& request);
+
+  virtual google::cloud::Idempotency BatchCreatePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          BatchCreatePullRequestCommentsRequest const& request);
+
+  virtual google::cloud::Idempotency ResolvePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          ResolvePullRequestCommentsRequest const& request);
+
+  virtual google::cloud::Idempotency UnresolvePullRequestComments(
+      google::cloud::securesourcemanager::v1::
+          UnresolvePullRequestCommentsRequest const& request);
+
+  virtual google::cloud::Idempotency CreateIssueComment(
+      google::cloud::securesourcemanager::v1::CreateIssueCommentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetIssueComment(
+      google::cloud::securesourcemanager::v1::GetIssueCommentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListIssueComments(
+      google::cloud::securesourcemanager::v1::ListIssueCommentsRequest request);
+
+  virtual google::cloud::Idempotency UpdateIssueComment(
+      google::cloud::securesourcemanager::v1::UpdateIssueCommentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteIssueComment(
+      google::cloud::securesourcemanager::v1::DeleteIssueCommentRequest const&
           request);
 
   virtual google::cloud::Idempotency ListLocations(

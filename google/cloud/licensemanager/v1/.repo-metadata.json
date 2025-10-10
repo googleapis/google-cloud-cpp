@@ -1,0 +1,14 @@
+{
+    "api_id": "licensemanager.googleapis.com",
+    "api_shortname": "licensemanager",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/licensemanager/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1659587%20status=open",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "License Manager API",
+    "product_documentation": "https://cloud.google.com/compute/docs/instances/windows/ms-licensing",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

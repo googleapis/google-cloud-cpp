@@ -301,6 +301,99 @@ class DeveloperConnectConnection {
   virtual StreamRange<std::string> FetchGitRefs(
       google::cloud::developerconnect::v1::FetchGitRefsRequest request);
 
+  virtual StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+  ListAccountConnectors(
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest
+          request);
+
+  virtual StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+  GetAccountConnector(
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+  FetchAccessToken(
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      google::cloud::developerconnect::v1::ListUsersRequest request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteUser(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSelf(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

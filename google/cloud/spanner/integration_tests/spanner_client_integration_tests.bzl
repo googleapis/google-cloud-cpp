@@ -19,7 +19,6 @@
 spanner_client_integration_tests = [
     "backup_extra_integration_test.cc",
     "backup_integration_test.cc",
-    "client_integration_test.cc",
     "client_stress_test.cc",
     "data_types_integration_test.cc",
     "database_admin_integration_test.cc",

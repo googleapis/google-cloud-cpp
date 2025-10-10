@@ -131,6 +131,9 @@
 ./include/google/cloud/bigquery/datapolicies/v1
 ./include/google/cloud/bigquery/datapolicies/v1/internal
 ./include/google/cloud/bigquery/datapolicies/v1/mocks
+./include/google/cloud/bigquery/datapolicies/v2
+./include/google/cloud/bigquery/datapolicies/v2/internal
+./include/google/cloud/bigquery/datapolicies/v2/mocks
 ./include/google/cloud/bigquery/datatransfer
 ./include/google/cloud/bigquery/datatransfer/v1
 ./include/google/cloud/bigquery/datatransfer/v1/internal
@@ -204,6 +207,10 @@
 ./include/google/cloud/cloudquotas/v1
 ./include/google/cloud/cloudquotas/v1/internal
 ./include/google/cloud/cloudquotas/v1/mocks
+./include/google/cloud/cloudsecuritycompliance
+./include/google/cloud/cloudsecuritycompliance/v1
+./include/google/cloud/cloudsecuritycompliance/v1/internal
+./include/google/cloud/cloudsecuritycompliance/v1/mocks
 ./include/google/cloud/commerce
 ./include/google/cloud/commerce/consumer
 ./include/google/cloud/commerce/consumer/procurement
@@ -644,6 +651,10 @@
 ./include/google/cloud/config/v1
 ./include/google/cloud/config/v1/internal
 ./include/google/cloud/config/v1/mocks
+./include/google/cloud/configdelivery
+./include/google/cloud/configdelivery/v1
+./include/google/cloud/configdelivery/v1/internal
+./include/google/cloud/configdelivery/v1/mocks
 ./include/google/cloud/connectors
 ./include/google/cloud/connectors/mocks
 ./include/google/cloud/connectors/v1
@@ -857,6 +868,10 @@
 ./include/google/cloud/language/v2
 ./include/google/cloud/language/v2/internal
 ./include/google/cloud/language/v2/mocks
+./include/google/cloud/licensemanager
+./include/google/cloud/licensemanager/v1
+./include/google/cloud/licensemanager/v1/internal
+./include/google/cloud/licensemanager/v1/mocks
 ./include/google/cloud/logging
 ./include/google/cloud/logging/mocks
 ./include/google/cloud/logging/v2
@@ -872,6 +887,10 @@
 ./include/google/cloud/managedidentities/v1/internal
 ./include/google/cloud/managedidentities/v1/mocks
 ./include/google/cloud/managedkafka
+./include/google/cloud/managedkafka/schemaregistry
+./include/google/cloud/managedkafka/schemaregistry/v1
+./include/google/cloud/managedkafka/schemaregistry/v1/internal
+./include/google/cloud/managedkafka/schemaregistry/v1/mocks
 ./include/google/cloud/managedkafka/v1
 ./include/google/cloud/managedkafka/v1/internal
 ./include/google/cloud/managedkafka/v1/mocks
@@ -1377,6 +1396,8 @@
 ./lib64/cmake/google_cloud_cpp_cloudcontrolspartner_mocks
 ./lib64/cmake/google_cloud_cpp_cloudquotas
 ./lib64/cmake/google_cloud_cpp_cloudquotas_mocks
+./lib64/cmake/google_cloud_cpp_cloudsecuritycompliance
+./lib64/cmake/google_cloud_cpp_cloudsecuritycompliance_mocks
 ./lib64/cmake/google_cloud_cpp_commerce
 ./lib64/cmake/google_cloud_cpp_commerce_mocks
 ./lib64/cmake/google_cloud_cpp_composer
@@ -1386,6 +1407,8 @@
 ./lib64/cmake/google_cloud_cpp_confidentialcomputing_mocks
 ./lib64/cmake/google_cloud_cpp_config
 ./lib64/cmake/google_cloud_cpp_config_mocks
+./lib64/cmake/google_cloud_cpp_configdelivery
+./lib64/cmake/google_cloud_cpp_configdelivery_mocks
 ./lib64/cmake/google_cloud_cpp_connectors
 ./lib64/cmake/google_cloud_cpp_connectors_mocks
 ./lib64/cmake/google_cloud_cpp_contactcenterinsights
@@ -1462,6 +1485,8 @@
 ./lib64/cmake/google_cloud_cpp_kms_mocks
 ./lib64/cmake/google_cloud_cpp_language
 ./lib64/cmake/google_cloud_cpp_language_mocks
+./lib64/cmake/google_cloud_cpp_licensemanager
+./lib64/cmake/google_cloud_cpp_licensemanager_mocks
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_logging_mocks
 ./lib64/cmake/google_cloud_cpp_lustre

@@ -98,6 +98,9 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateBackupPlan(
       google::cloud::backupdr::v1::CreateBackupPlanRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateBackupPlan(
+      google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request);
+
   virtual google::cloud::Idempotency GetBackupPlan(
       google::cloud::backupdr::v1::GetBackupPlanRequest const& request);
 
@@ -107,8 +110,18 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteBackupPlan(
       google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request);
 
+  virtual google::cloud::Idempotency GetBackupPlanRevision(
+      google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackupPlanRevisions(
+      google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest request);
+
   virtual google::cloud::Idempotency CreateBackupPlanAssociation(
       google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateBackupPlanAssociation(
+      google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
           request);
 
   virtual google::cloud::Idempotency GetBackupPlanAssociation(
@@ -118,12 +131,24 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListBackupPlanAssociations(
       google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request);
 
+  virtual google::cloud::Idempotency FetchBackupPlanAssociationsForResourceType(
+      google::cloud::backupdr::v1::
+          FetchBackupPlanAssociationsForResourceTypeRequest request);
+
   virtual google::cloud::Idempotency DeleteBackupPlanAssociation(
       google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
           request);
 
   virtual google::cloud::Idempotency TriggerBackup(
       google::cloud::backupdr::v1::TriggerBackupRequest const& request);
+
+  virtual google::cloud::Idempotency GetDataSourceReference(
+      google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency FetchDataSourceReferencesForResourceType(
+      google::cloud::backupdr::v1::
+          FetchDataSourceReferencesForResourceTypeRequest request);
 
   virtual google::cloud::Idempotency InitializeService(
       google::cloud::backupdr::v1::InitializeServiceRequest const& request);

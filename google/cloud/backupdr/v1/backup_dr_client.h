@@ -118,8 +118,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L540}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
+  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L618}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L498}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
@@ -157,8 +157,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L540}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
+  /// [google.cloud.backupdr.v1.ListManagementServersRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L618}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L498}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
@@ -185,8 +185,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L588}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
+  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L666}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L498}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
@@ -215,8 +215,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L588}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
+  /// [google.cloud.backupdr.v1.GetManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L666}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L498}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
@@ -254,8 +254,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L600}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
+  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L678}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L498}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
@@ -310,8 +310,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L600}
-  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
+  /// [google.cloud.backupdr.v1.CreateManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L678}
+  /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L498}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
@@ -373,8 +373,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L637}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L715}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -424,8 +424,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L637}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteManagementServerRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L715}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -491,8 +491,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L580}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L643}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
@@ -546,8 +546,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L580}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L643}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
@@ -614,8 +614,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L621}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L684}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
@@ -653,8 +653,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L621}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L684}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
@@ -695,8 +695,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L673}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L736}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
@@ -736,8 +736,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L673}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L736}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
@@ -763,8 +763,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L721}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L784}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
@@ -793,8 +793,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L721}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L784}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
@@ -831,8 +831,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L737}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L800}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
@@ -884,8 +884,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L38}
-  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L737}
+  /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L40}
+  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L800}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
@@ -945,8 +945,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L777}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L845}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -996,8 +996,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L777}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L845}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -1066,8 +1066,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L164}
-  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L828}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L169}
+  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L896}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
@@ -1105,8 +1105,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L164}
-  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L828}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L169}
+  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L896}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
@@ -1132,8 +1132,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L164}
-  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L876}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L169}
+  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L944}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
@@ -1162,8 +1162,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L164}
-  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L876}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L169}
+  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L944}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
@@ -1200,8 +1200,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L164}
-  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L888}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L169}
+  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L956}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
@@ -1253,8 +1253,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L164}
-  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L888}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L169}
+  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L956}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
@@ -1321,8 +1321,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L923}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L991}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
@@ -1360,8 +1360,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L923}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L991}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
@@ -1387,8 +1387,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L975}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1043}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
@@ -1417,8 +1417,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L975}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1043}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
@@ -1455,8 +1455,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L989}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1057}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
@@ -1508,8 +1508,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L989}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1057}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
@@ -1569,8 +1569,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1021}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1089}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
@@ -1621,8 +1621,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L446}
-  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1021}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L473}
+  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1089}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
@@ -1683,8 +1683,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1048}
-  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1088}
+  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1116}
+  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1165}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
@@ -1734,8 +1734,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1048}
-  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1088}
+  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1116}
+  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1165}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
@@ -1804,8 +1804,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L38}
-  /// [google.cloud.backupdr.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L300}
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L325}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
@@ -1859,8 +1859,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L38}
-  /// [google.cloud.backupdr.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L300}
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L325}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
@@ -1897,6 +1897,128 @@ class BackupDRClient {
 
   // clang-format off
   ///
+  /// Update a BackupPlan.
+  ///
+  /// @param backup_plan  Required. The resource being updated
+  /// @param update_mask  Required. The list of fields to update.
+  ///  Field mask is used to specify the fields to be overwritten in the
+  ///  BackupPlan resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then the request will fail.
+  ///  Currently, these fields are supported in update: description, schedules,
+  ///  retention period, adding and removing Backup Rules.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.BackupPlan] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L470}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> UpdateBackupPlan(
+      google::cloud::backupdr::v1::BackupPlan const& backup_plan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      NoAwaitTag, google::cloud::backupdr::v1::BackupPlan const& backup_plan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a BackupPlan.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.UpdateBackupPlanRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.BackupPlan] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L470}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> UpdateBackupPlan(
+      google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupPlanRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupPlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> UpdateBackupPlan(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Gets details of a single BackupPlan.
   ///
   /// @param name  Required. The resource name of the `BackupPlan` to retrieve.
@@ -1915,8 +2037,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L38}
-  /// [google.cloud.backupdr.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L401}
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L426}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
@@ -1945,8 +2067,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L38}
-  /// [google.cloud.backupdr.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L401}
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L426}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
@@ -1984,8 +2106,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L38}
-  /// [google.cloud.backupdr.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L340}
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L365}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlan> ListBackupPlans(
@@ -2023,8 +2145,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L38}
-  /// [google.cloud.backupdr.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L340}
+  /// [google.cloud.backupdr.v1.BackupPlan]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L39}
+  /// [google.cloud.backupdr.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L365}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlan> ListBackupPlans(
@@ -2058,8 +2180,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L414}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L439}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -2109,8 +2231,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L414}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L439}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -2149,6 +2271,144 @@ class BackupDRClient {
 
   // clang-format off
   ///
+  /// Gets details of a single BackupPlanRevision.
+  ///
+  /// @param name  Required. The resource name of the `BackupPlanRevision` to retrieve.
+  ///  @n
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/{revision}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.BackupPlanRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanRevision]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L506}
+  /// [google.cloud.backupdr.v1.GetBackupPlanRevisionRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L558}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+  GetBackupPlanRevision(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single BackupPlanRevision.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.GetBackupPlanRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.BackupPlanRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanRevision]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L506}
+  /// [google.cloud.backupdr.v1.GetBackupPlanRevisionRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L558}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::BackupPlanRevision>
+  GetBackupPlanRevision(
+      google::cloud::backupdr::v1::GetBackupPlanRevisionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackupPlanRevisions in a given project and location.
+  ///
+  /// @param parent  Required. The project and location for which to retrieve
+  ///  `BackupPlanRevisions` information. Format:
+  ///  `projects/{project}/locations/{location}/backupPlans/{backup_plan}`. In
+  ///  Cloud BackupDR, locations map to GCP regions, for e.g. **us-central1**.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.BackupPlanRevision], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanRevision]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L506}
+  /// [google.cloud.backupdr.v1.ListBackupPlanRevisionsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L572}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>
+  ListBackupPlanRevisions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackupPlanRevisions in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.ListBackupPlanRevisionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.BackupPlanRevision], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanRevision]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L506}
+  /// [google.cloud.backupdr.v1.ListBackupPlanRevisionsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L572}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::BackupPlanRevision>
+  ListBackupPlanRevisions(
+      google::cloud::backupdr::v1::ListBackupPlanRevisionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Create a BackupPlanAssociation
   ///
   /// @param parent  Required. The backup plan association project and location in the format
@@ -2177,8 +2437,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L153}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L184}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2235,8 +2495,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L153}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.CreateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L184}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2277,6 +2537,135 @@ class BackupDRClient {
 
   // clang-format off
   ///
+  /// Update a BackupPlanAssociation.
+  ///
+  /// @param backup_plan_association  Required. The resource being updated
+  /// @param update_mask  Required. The list of fields to update.
+  ///  Field mask is used to specify the fields to be overwritten in the
+  ///  BackupPlanAssociation resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then the request will fail.
+  ///  Currently backup_plan_association.backup_plan is the only supported field.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.BackupPlanAssociation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L371}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  UpdateBackupPlanAssociation(
+      google::cloud::backupdr::v1::BackupPlanAssociation const&
+          backup_plan_association,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupPlanAssociation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::BackupPlanAssociation const&
+          backup_plan_association,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a BackupPlanAssociation.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.backupdr.v1.BackupPlanAssociation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.UpdateBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L371}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  UpdateBackupPlanAssociation(
+      google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupPlanAssociation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupPlanAssociationRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupPlanAssociation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  UpdateBackupPlanAssociation(google::longrunning::Operation const& operation,
+                              Options opts = {});
+
+  // clang-format off
+  ///
   /// Gets details of a single BackupPlanAssociation.
   ///
   /// @param name  Required. Name of the backup plan association resource, in the format
@@ -2294,8 +2683,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L238}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L329}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2324,8 +2713,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L238}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.GetBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L329}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2366,8 +2755,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L193}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L224}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
@@ -2405,13 +2794,94 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L193}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.ListBackupPlanAssociationsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L224}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
   ListBackupPlanAssociations(
       google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List BackupPlanAssociations for a given resource type.
+  ///
+  /// @param parent  Required. The parent resource name.
+  ///  Format: projects/{project}/locations/{location}
+  /// @param resource_type  Required. The type of the GCP resource.
+  ///  Ex: sql.googleapis.com/Instance
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.BackupPlanAssociation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L269}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+  FetchBackupPlanAssociationsForResourceType(std::string const& parent,
+                                             std::string const& resource_type,
+                                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// List BackupPlanAssociations for a given resource type.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.BackupPlanAssociation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.FetchBackupPlanAssociationsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L269}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+  FetchBackupPlanAssociationsForResourceType(
+      google::cloud::backupdr::v1::
+          FetchBackupPlanAssociationsForResourceTypeRequest request,
       Options opts = {});
 
   // clang-format off
@@ -2440,8 +2910,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L250}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L341}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -2491,8 +2961,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L250}
-  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L707}
+  /// [google.cloud.backupdr.v1.DeleteBackupPlanAssociationRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L341}
+  /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L793}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -2558,8 +3028,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L280}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L406}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2611,8 +3081,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L35}
-  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L280}
+  /// [google.cloud.backupdr.v1.BackupPlanAssociation]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L37}
+  /// [google.cloud.backupdr.v1.TriggerBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplanassociation.proto#L406}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
@@ -2651,6 +3121,146 @@ class BackupDRClient {
 
   // clang-format off
   ///
+  /// Gets details of a single DataSourceReference.
+  ///
+  /// @param name  Required. The name of the DataSourceReference to retrieve.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/dataSourceReferences/{data_source_reference}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.DataSourceReference])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.DataSourceReference]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L34}
+  /// [google.cloud.backupdr.v1.GetDataSourceReferenceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L113}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+  GetDataSourceReference(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single DataSourceReference.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.GetDataSourceReferenceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.backupdr.v1.DataSourceReference])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.DataSourceReference]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L34}
+  /// [google.cloud.backupdr.v1.GetDataSourceReferenceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L113}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::backupdr::v1::DataSourceReference>
+  GetDataSourceReference(
+      google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch DataSourceReferences for a given project, location and resource type.
+  ///
+  /// @param parent  Required. The parent resource name.
+  ///  Format: projects/{project}/locations/{location}
+  /// @param resource_type  Required. The type of the GCP resource.
+  ///  Ex: sql.googleapis.com/Instance
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.DataSourceReference], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.DataSourceReference]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L34}
+  /// [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L126}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+  FetchDataSourceReferencesForResourceType(std::string const& parent,
+                                           std::string const& resource_type,
+                                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch DataSourceReferences for a given project, location and resource type.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.backupdr.v1.DataSourceReference], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.backupdr.v1.DataSourceReference]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L34}
+  /// [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L126}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+  FetchDataSourceReferencesForResourceType(
+      google::cloud::backupdr::v1::
+          FetchDataSourceReferencesForResourceTypeRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Initializes the service related config for a project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2679,8 +3289,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.InitializeServiceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L663}
-  /// [google.cloud.backupdr.v1.InitializeServiceResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L694}
+  /// [google.cloud.backupdr.v1.InitializeServiceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L741}
+  /// [google.cloud.backupdr.v1.InitializeServiceResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L780}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>

@@ -529,6 +529,42 @@ Status DefaultCatalogServiceStub::CancelMetadataJob(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+DefaultCatalogServiceStub::CreateEntryLink(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  google::cloud::dataplex::v1::EntryLink response;
+  auto status = grpc_stub_->CreateEntryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+DefaultCatalogServiceStub::DeleteEntryLink(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  google::cloud::dataplex::v1::EntryLink response;
+  auto status = grpc_stub_->DeleteEntryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+DefaultCatalogServiceStub::GetEntryLink(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  google::cloud::dataplex::v1::EntryLink response;
+  auto status = grpc_stub_->GetEntryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCatalogServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

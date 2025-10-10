@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_connection.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include <utility>
 #include <vector>
 
@@ -42,6 +43,16 @@ StatusOr<CreateOrResumeResponse> CreateOrResume(
   return CreateOrResumeResponse{std::move(session_id),
                                 response->committed_size.value_or(0),
                                 std::move(response->payload)};
+}
+
+StatusOr<ObjectMetadata> StorageConnection::ExecuteParallelUploadFile(
+    std::vector<std::thread>,  // NOLINT(performance-unnecessary-value-param)
+    std::vector<
+        ParallelUploadFileShard>,  // NOLINT(performance-unnecessary-value-param)
+    bool) {
+  return Status(
+      StatusCode::kUnimplemented,
+      "ExecuteParallelUploadFile() is not implemented by this Object");
 }
 
 }  // namespace internal

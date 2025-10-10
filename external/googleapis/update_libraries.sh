@@ -67,6 +67,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/datapolicies/v2:datapolicies_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc" \
@@ -99,11 +100,13 @@ declare -A -r LIBRARIES=(
   )"
   ["cloudcontrolspartner"]="@com_google_googleapis//google/cloud/cloudcontrolspartner/v1:cloudcontrolspartner_cc_grpc"
   ["cloudquotas"]="@com_google_googleapis//google/api/cloudquotas/v1:cloudquotas_cc_grpc"
+  ["cloudsecuritycompliance"]="@com_google_googleapis//google/cloud/cloudsecuritycompliance/v1:cloudsecuritycompliance_cc_grpc"
   ["commerce"]="@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
   ["confidentialcomputing"]="@com_google_googleapis//google/cloud/confidentialcomputing/v1:confidentialcomputing_cc_grpc"
   ["config"]="@com_google_googleapis//google/cloud/config/v1:config_cc_grpc"
+  ["configdelivery"]="@com_google_googleapis//google/cloud/configdelivery/v1:configdelivery_cc_grpc"
   ["connectors"]="@com_google_googleapis//google/cloud/connectors/v1:connectors_cc_grpc"
   ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
@@ -186,11 +189,16 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/language/v1:language_cc_grpc" \
       "@com_google_googleapis//google/cloud/language/v2:language_cc_grpc"
   )"
+  ["licensemanager"]="@com_google_googleapis//google/cloud/licensemanager/v1:licensemanager_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["lustre"]="@com_google_googleapis//google/cloud/lustre/v1:lustre_cc_grpc"
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
-  ["managedkafka"]="@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
+  ["managedkafka"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/managedkafka/schemaregistry/v1:schemaregistry_cc_grpc" \
+      "@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
+  )"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
   ["memorystore"]="@com_google_googleapis//google/cloud/memorystore/v1:memorystore_cc_grpc"
   ["metastore"]="$(

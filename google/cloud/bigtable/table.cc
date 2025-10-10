@@ -175,8 +175,9 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut, Options opts) {
   auto retry_policy = clone_rpc_retry_policy();
   auto idempotent_policy = clone_idempotent_mutation_policy();
 
-  bigtable_internal::BulkMutator mutator(app_profile_id(), table_name_,
-                                         *idempotent_policy, std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      app_profile_id(), table_name_, *idempotent_policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
   while (true) {
     grpc::ClientContext client_context;
     backoff_policy->Setup(client_context);

@@ -602,7 +602,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
-  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L277}
+  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L306}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2842,8 +2842,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L274}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L302}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Replication> ListReplications(
@@ -2881,8 +2881,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L274}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L302}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Replication> ListReplications(
@@ -2908,8 +2908,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L313}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L341}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
@@ -2938,8 +2938,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L313}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L341}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
@@ -2977,8 +2977,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L354}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L382}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
@@ -3032,8 +3032,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L354}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L382}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
@@ -3094,7 +3094,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L375}
+  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L403}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
@@ -3145,7 +3145,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L375}
+  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L403}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
@@ -3210,8 +3210,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
-  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L387}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
+  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L415}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
@@ -3263,8 +3263,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
-  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L387}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
+  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L415}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
@@ -3329,8 +3329,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
-  /// [google.cloud.netapp.v1.StopReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L398}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
+  /// [google.cloud.netapp.v1.StopReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L426}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
@@ -3395,8 +3395,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
-  /// [google.cloud.netapp.v1.ResumeReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L418}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
+  /// [google.cloud.netapp.v1.ResumeReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L446}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
@@ -3462,8 +3462,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
-  /// [google.cloud.netapp.v1.ReverseReplicationDirectionRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L431}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
+  /// [google.cloud.netapp.v1.ReverseReplicationDirectionRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L459}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -3532,8 +3532,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.EstablishPeeringRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L444}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.EstablishPeeringRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L472}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> EstablishPeering(
@@ -3599,8 +3599,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
-  /// [google.cloud.netapp.v1.SyncReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L472}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L67}
+  /// [google.cloud.netapp.v1.SyncReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L500}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> SyncReplication(

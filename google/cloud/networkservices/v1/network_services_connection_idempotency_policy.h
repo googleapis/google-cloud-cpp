@@ -59,6 +59,40 @@ class NetworkServicesConnectionIdempotencyPolicy {
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListWasmPluginVersions(
+      google::cloud::networkservices::v1::ListWasmPluginVersionsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetWasmPluginVersion(
+      google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateWasmPluginVersion(
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteWasmPluginVersion(
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListWasmPlugins(
+      google::cloud::networkservices::v1::ListWasmPluginsRequest request);
+
+  virtual google::cloud::Idempotency GetWasmPlugin(
+      google::cloud::networkservices::v1::GetWasmPluginRequest const& request);
+
+  virtual google::cloud::Idempotency CreateWasmPlugin(
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateWasmPlugin(
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteWasmPlugin(
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListGateways(
       google::cloud::networkservices::v1::ListGatewaysRequest request);
 

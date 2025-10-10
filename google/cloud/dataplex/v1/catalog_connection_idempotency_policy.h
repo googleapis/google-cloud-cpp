@@ -118,6 +118,15 @@ class CatalogServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CancelMetadataJob(
       google::cloud::dataplex::v1::CancelMetadataJobRequest const& request);
 
+  virtual google::cloud::Idempotency CreateEntryLink(
+      google::cloud::dataplex::v1::CreateEntryLinkRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteEntryLink(
+      google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request);
+
+  virtual google::cloud::Idempotency GetEntryLink(
+      google::cloud::dataplex::v1::GetEntryLinkRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

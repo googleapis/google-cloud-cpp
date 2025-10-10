@@ -384,6 +384,90 @@ BigtableTableAdminAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncCreateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateSchemaBundle(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::CreateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSchemaBundle(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncUpdateSchemaBundle(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateSchemaBundle(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::UpdateSchemaBundle(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSchemaBundle(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle>
+BigtableTableAdminAuth::GetSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSchemaBundle(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+BigtableTableAdminAuth::ListSchemaBundles(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSchemaBundles(context, options, request);
+}
+
+Status BigtableTableAdminAuth::DeleteSchemaBundle(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSchemaBundle(context, options, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminAuth::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,

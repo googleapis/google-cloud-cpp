@@ -83,7 +83,7 @@ struct UseMD5ValueOption {
  * @endcode
  */
 struct MaximumRangeSizeOption {
-  using Type = std::uint64_t;
+  using Type = std::int64_t;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

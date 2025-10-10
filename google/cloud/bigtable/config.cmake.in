@@ -17,6 +17,7 @@ include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(google_cloud_cpp_grpc_utils)
+find_dependency(google_cloud_cpp_opentelemetry)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_bigtable-targets.cmake")

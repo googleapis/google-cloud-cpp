@@ -437,6 +437,58 @@ ConfigLogging::GetTerraformVersion(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::config::v1::ListResourceChangesResponse>
+ConfigLogging::ListResourceChanges(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceChangesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::ListResourceChangesRequest const&
+                 request) {
+        return child_->ListResourceChanges(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::ResourceChange>
+ConfigLogging::GetResourceChange(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceChangeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::GetResourceChangeRequest const& request) {
+        return child_->GetResourceChange(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::ListResourceDriftsResponse>
+ConfigLogging::ListResourceDrifts(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListResourceDriftsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::ListResourceDriftsRequest const& request) {
+        return child_->ListResourceDrifts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::ResourceDrift>
+ConfigLogging::GetResourceDrift(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetResourceDriftRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::GetResourceDriftRequest const& request) {
+        return child_->GetResourceDrift(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

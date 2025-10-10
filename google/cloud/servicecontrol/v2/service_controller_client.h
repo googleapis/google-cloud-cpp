@@ -38,8 +38,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// [Service Control API
 /// v2](https://cloud.google.com/service-infrastructure/docs/service-control/access-control)
 ///
-/// Private Preview. This feature is only available for approved services.
-///
 /// This API provides admission control and telemetry reporting for services
 /// that are integrated with [Service
 /// Infrastructure](https://cloud.google.com/service-infrastructure).
@@ -96,8 +94,6 @@ class ServiceControllerClient {
 
   // clang-format off
   ///
-  /// Private Preview. This feature is only available for approved services.
-  ///
   /// This method provides admission control for services that are integrated
   /// with [Service
   /// Infrastructure](https://cloud.google.com/service-infrastructure). It checks
@@ -138,8 +134,8 @@ class ServiceControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicecontrol.v2.CheckRequest]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L104}
-  /// [google.api.servicecontrol.v2.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L157}
+  /// [google.api.servicecontrol.v2.CheckRequest]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L95}
+  /// [google.api.servicecontrol.v2.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L147}
   ///
   // clang-format on
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
@@ -147,8 +143,6 @@ class ServiceControllerClient {
       Options opts = {});
 
   // clang-format off
-  ///
-  /// Private Preview. This feature is only available for approved services.
   ///
   /// This method provides telemetry reporting for services that are integrated
   /// with [Service
@@ -158,9 +152,8 @@ class ServiceControllerClient {
   /// [Telemetry
   /// Reporting](https://cloud.google.com/service-infrastructure/docs/telemetry-reporting).
   ///
-  /// NOTE: The telemetry reporting has a hard limit of 1000 operations and 1MB
-  /// per Report call. It is recommended to have no more than 100 operations per
-  /// call.
+  /// NOTE: The telemetry reporting has a hard limit of 100 operations and 1MB
+  /// per Report call.
   ///
   /// This method requires the `servicemanagement.services.report` permission
   /// on the specified service. For more information, see
@@ -186,8 +179,8 @@ class ServiceControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicecontrol.v2.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L168}
-  /// [google.api.servicecontrol.v2.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L190}
+  /// [google.api.servicecontrol.v2.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L158}
+  /// [google.api.servicecontrol.v2.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L180}
   ///
   // clang-format on
   StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(

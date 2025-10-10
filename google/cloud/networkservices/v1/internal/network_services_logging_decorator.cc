@@ -172,6 +172,231 @@ NetworkServicesLogging::DeleteEndpointPolicy(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListWasmPluginVersionsResponse>
+NetworkServicesLogging::ListWasmPluginVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListWasmPluginVersionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 ListWasmPluginVersionsRequest const& request) {
+        return child_->ListWasmPluginVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
+NetworkServicesLogging::GetWasmPluginVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+              request) {
+        return child_->GetWasmPluginVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncCreateWasmPluginVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 CreateWasmPluginVersionRequest const& request) {
+        return child_->AsyncCreateWasmPluginVersion(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::CreateWasmPluginVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 CreateWasmPluginVersionRequest const& request) {
+        return child_->CreateWasmPluginVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncDeleteWasmPluginVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 DeleteWasmPluginVersionRequest const& request) {
+        return child_->AsyncDeleteWasmPluginVersion(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::DeleteWasmPluginVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 DeleteWasmPluginVersionRequest const& request) {
+        return child_->DeleteWasmPluginVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListWasmPluginsResponse>
+NetworkServicesLogging::ListWasmPlugins(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListWasmPluginsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::ListWasmPluginsRequest const&
+                 request) {
+        return child_->ListWasmPlugins(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::WasmPlugin>
+NetworkServicesLogging::GetWasmPlugin(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetWasmPluginRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::GetWasmPluginRequest const&
+                 request) {
+        return child_->GetWasmPlugin(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncCreateWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+                 request) {
+        return child_->AsyncCreateWasmPlugin(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::CreateWasmPlugin(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+                 request) {
+        return child_->CreateWasmPlugin(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncUpdateWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+                 request) {
+        return child_->AsyncUpdateWasmPlugin(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::UpdateWasmPlugin(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+                 request) {
+        return child_->UpdateWasmPlugin(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncDeleteWasmPlugin(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+                 request) {
+        return child_->AsyncDeleteWasmPlugin(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::DeleteWasmPlugin(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+                 request) {
+        return child_->DeleteWasmPlugin(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
 NetworkServicesLogging::ListGateways(
     grpc::ClientContext& context, Options const& options,

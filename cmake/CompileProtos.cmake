@@ -302,7 +302,8 @@ function (google_cloud_cpp_load_protodeps var file)
         "logging_type_type_protos\;logging_type_protos"
         "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
         "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
-        "cloud_documentai_v1_documentai_protos\;documentai_protos")
+        "cloud_documentai_v1_documentai_protos\;documentai_protos"
+        "cloud_orgpolicy_v2_orgpolicy_protos\;orgpolicy_protos")
 
     foreach (line IN LISTS contents)
         if ("${line}" STREQUAL "")

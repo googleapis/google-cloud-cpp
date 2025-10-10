@@ -195,8 +195,8 @@ future<
     StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
 AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
-  *initial_request.mutable_read_object_spec() = std::move(p.read_spec);
-  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  *initial_request.mutable_read_object_spec() = p.read_spec;
+  auto current = internal::MakeImmutableOptions(p.options);
   // Get the policy factory and immediately create a policy.
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();
@@ -307,7 +307,7 @@ AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto request = std::move(p.request);
+  auto request = p.request;
   std::int64_t persisted_size = 0;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       CreateHashFunction(*current);
@@ -384,13 +384,20 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
           std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
-        persisted_size = rpc->first_response.resource().size();
-        auto impl = std::make_unique<AsyncWriterConnectionImpl>(
-            current, request, std::move(rpc->stream), hash, persisted_size,
-            false);
+        std::unique_ptr<AsyncWriterConnectionImpl> impl;
+        if (rpc->first_response.has_resource()) {
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash,
+              rpc->first_response.resource(), false);
+        } else {
+          persisted_size = rpc->first_response.persisted_size();
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash, persisted_size,
+              false);
+        }
         return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
                                            std::move(request), std::move(hash),
-                                           *current);
+                                           rpc->first_response, *current);
       });
 }
 

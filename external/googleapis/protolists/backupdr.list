@@ -6,4 +6,7 @@
 @com_google_googleapis//google/cloud/backupdr/v1:backupplanassociation.proto
 @com_google_googleapis//google/cloud/backupdr/v1:backupvault.proto
 @com_google_googleapis//google/cloud/backupdr/v1:backupvault_ba.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupvault_cloudsql.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupvault_disk.proto
 @com_google_googleapis//google/cloud/backupdr/v1:backupvault_gce.proto
+@com_google_googleapis//google/cloud/backupdr/v1:datasourcereference.proto

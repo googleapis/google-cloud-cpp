@@ -313,6 +313,243 @@ class MockDeveloperConnectConnection
       (google::cloud::developerconnect::v1::FetchGitRefsRequest request),
       (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::developerconnect::v1::AccountConnector>),
+      ListAccountConnectors,
+      (google::cloud::developerconnect::v1::ListAccountConnectorsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>,
+      GetAccountConnector,
+      (google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAccountConnector(Matcher<google::cloud::developerconnect::v1::CreateAccountConnectorRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>,
+      CreateAccountConnector,
+      (google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAccountConnector(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAccountConnector,
+      (NoAwaitTag,
+       google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAccountConnector(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>,
+      CreateAccountConnector, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAccountConnector(Matcher<google::cloud::developerconnect::v1::UpdateAccountConnectorRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>,
+      UpdateAccountConnector,
+      (google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAccountConnector(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAccountConnector,
+      (NoAwaitTag,
+       google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAccountConnector(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>,
+      UpdateAccountConnector, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAccountConnector(Matcher<google::cloud::developerconnect::v1::DeleteAccountConnectorRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteAccountConnector,
+      (google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAccountConnector(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAccountConnector,
+      (NoAwaitTag,
+       google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAccountConnector(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteAccountConnector, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>,
+      FetchAccessToken,
+      (google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::developerconnect::v1::User>),
+              ListUsers,
+              (google::cloud::developerconnect::v1::ListUsersRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteUser(Matcher<google::cloud::developerconnect::v1::DeleteUserRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteUser,
+      (google::cloud::developerconnect::v1::DeleteUserRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteUser(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteUser,
+      (NoAwaitTag,
+       google::cloud::developerconnect::v1::DeleteUserRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteUser(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteUser, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::User>, FetchSelf,
+      (google::cloud::developerconnect::v1::FetchSelfRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSelf(Matcher<google::cloud::developerconnect::v1::DeleteSelfRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteSelf,
+      (google::cloud::developerconnect::v1::DeleteSelfRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSelf(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSelf,
+      (NoAwaitTag,
+       google::cloud::developerconnect::v1::DeleteSelfRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteSelf(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteSelf, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -254,6 +254,54 @@ TEST_F(ObjectTest, UploadFile) {
   EXPECT_EQ(expected, *actual);
 }
 
+TEST_F(ObjectTest, UploadFileSimple) {
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  ObjectMetadata expected =
+      storage::internal::ObjectMetadataParser::FromString(text).value();
+  std::string const contents = std::string{"some simple contents"};
+
+  EXPECT_CALL(*mock_, InsertObjectMedia)
+      .WillOnce([&](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+        EXPECT_EQ(contents, request.payload());
+        return make_status_or(expected);
+      });
+
+  TempFile temp(contents);
+  auto client = ClientForMock();
+  StatusOr<ObjectMetadata> actual =
+      client.UploadFile(temp.name(), "test-bucket-name", "test-object-name");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST_F(ObjectTest, UploadFileResumable) {
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  ObjectMetadata expected =
+      storage::internal::ObjectMetadataParser::FromString(text).value();
+  std::string const contents = std::string{"some not so simple contents"};
+
+  EXPECT_CALL(*mock_, CreateResumableUpload)
+      .WillOnce(
+          Return(internal::CreateResumableUploadResponse{"test-upload-id"}));
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillOnce(Return(make_status_or(
+          internal::QueryResumableUploadResponse{absl::nullopt, expected})));
+
+  TempFile temp(contents);
+  auto client = ClientForMock();
+  StatusOr<ObjectMetadata> actual =
+      client.UploadFile(temp.name(), "test-bucket-name", "test-object-name",
+                        UseResumableUploadSession(""));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(expected, *actual);
+}
+
 TEST_F(ObjectTest, DeleteResumableUpload) {
   EXPECT_CALL(*mock_, DeleteResumableUpload)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))

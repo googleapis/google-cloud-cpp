@@ -73,7 +73,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.policysimulator.v1.Replay]:
-/// @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
+/// @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
 ///
 class SimulatorClient {
  public:
@@ -126,8 +126,8 @@ class SimulatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policysimulator.v1.GetReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L255}
-  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
+  /// [google.cloud.policysimulator.v1.GetReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L254}
+  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
   ///
   // clang-format on
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
@@ -157,8 +157,8 @@ class SimulatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policysimulator.v1.GetReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L255}
-  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
+  /// [google.cloud.policysimulator.v1.GetReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L254}
+  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
   ///
   // clang-format on
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
@@ -197,9 +197,9 @@ class SimulatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policysimulator.v1.CreateReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L234}
-  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
-  /// [google.cloud.policysimulator.v1.ReplayConfig]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L321}
+  /// [google.cloud.policysimulator.v1.CreateReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L233}
+  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
+  /// [google.cloud.policysimulator.v1.ReplayConfig]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
@@ -254,9 +254,9 @@ class SimulatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policysimulator.v1.CreateReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L234}
-  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
-  /// [google.cloud.policysimulator.v1.ReplayConfig]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L321}
+  /// [google.cloud.policysimulator.v1.CreateReplayRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L233}
+  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
+  /// [google.cloud.policysimulator.v1.ReplayConfig]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
@@ -325,9 +325,9 @@ class SimulatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policysimulator.v1.ListReplayResultsRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L275}
-  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
-  /// [google.cloud.policysimulator.v1.ReplayResult]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L181}
+  /// [google.cloud.policysimulator.v1.ListReplayResultsRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L274}
+  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
+  /// [google.cloud.policysimulator.v1.ReplayResult]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L180}
   ///
   // clang-format on
   StreamRange<google::cloud::policysimulator::v1::ReplayResult>
@@ -366,9 +366,9 @@ class SimulatorClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policysimulator.v1.ListReplayResultsRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L275}
-  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
-  /// [google.cloud.policysimulator.v1.ReplayResult]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L181}
+  /// [google.cloud.policysimulator.v1.ListReplayResultsRequest]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L274}
+  /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L108}
+  /// [google.cloud.policysimulator.v1.ReplayResult]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L180}
   ///
   // clang-format on
   StreamRange<google::cloud::policysimulator::v1::ReplayResult>

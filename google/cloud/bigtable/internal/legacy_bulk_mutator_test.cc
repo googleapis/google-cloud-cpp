@@ -76,8 +76,9 @@ TEST(MultipleRowsMutatorTest, Simple) {
       .WillOnce(reader.release()->MakeMockReturner());
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto context = TestContext();
@@ -130,8 +131,9 @@ TEST(MultipleRowsMutatorTest, BulkApplyAppProfileId) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("test-id", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "test-id", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto context = TestContext("test-id");
@@ -197,8 +199,9 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -261,8 +264,9 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       .WillOnce(r2.release()->MakeMockReturner());
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -325,8 +329,9 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(r2.release()->MakeMockReturner());
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice: for the r1 and r2 cases.
@@ -404,8 +409,9 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -466,8 +472,9 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
       });
 
   auto policy = DefaultIdempotentMutationPolicy();
-  bigtable_internal::BulkMutator mutator("", kTableName, *policy,
-                                         std::move(mut));
+  bigtable_internal::BulkMutator mutator(
+      "", kTableName, *policy, std::move(mut),
+      std::make_shared<bigtable_internal::OperationContext>());
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   auto context = TestContext();

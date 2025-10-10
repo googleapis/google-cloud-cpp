@@ -17,7 +17,8 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
-    managedkafka "Managed Service for Apache Kafka API" SERVICE_DIRS "v1/")
+    managedkafka "Managed Service for Apache Kafka API"
+    SERVICE_DIRS "v1/" "schemaregistry/v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(managedkafka_quickstart "quickstart/quickstart.cc")

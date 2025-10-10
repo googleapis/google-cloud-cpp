@@ -108,7 +108,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> CreateTopic(std::string const& name,
@@ -138,7 +138,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
@@ -168,8 +168,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
-  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L908}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
+  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L937}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
@@ -200,8 +200,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
-  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L908}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
+  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L937}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
@@ -226,8 +226,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L898}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L927}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> GetTopic(std::string const& topic,
@@ -256,8 +256,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L898}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L927}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> GetTopic(
@@ -291,8 +291,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L943}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L972}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
   StreamRange<google::pubsub::v1::Topic> ListTopics(std::string const& project,
@@ -330,8 +330,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L943}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L972}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
   StreamRange<google::pubsub::v1::Topic> ListTopics(
@@ -363,7 +363,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L973}
+  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1002}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSubscriptions(std::string const& topic,
@@ -399,7 +399,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L973}
+  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1002}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSubscriptions(
@@ -436,7 +436,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1008}
+  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSnapshots(std::string const& topic,
@@ -476,7 +476,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1008}
+  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSnapshots(
@@ -503,7 +503,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
+  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1066}
   ///
   // clang-format on
   Status DeleteTopic(std::string const& topic, Options opts = {});
@@ -533,7 +533,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
+  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1066}
   ///
   // clang-format on
   Status DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request,
@@ -565,8 +565,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DetachSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1047}
-  /// [google.pubsub.v1.DetachSubscriptionResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1060}
+  /// [google.pubsub.v1.DetachSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1076}
+  /// [google.pubsub.v1.DetachSubscriptionResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1089}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
