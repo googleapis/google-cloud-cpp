@@ -26,6 +26,32 @@ $BuildName = $args[0]
 
 . ci/kokoro/windows/lib/bazel.ps1
 
+# Install the specific version of the Visual Studio 2022 Build Tools that
+# corresponds to the version used in the GHA CI (v17.10).
+Write-Host "`n$(Get-Date -Format o) Installing Visual Studio 2022 v17.10.2 Build Tools..."
+choco install visualstudio2022buildtools --version=117.10.2.0 --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet" -y
+
+# The script must exit immediately if the installation fails to prevent
+# confusing downstream errors.
+if ($LastExitCode) {
+    Write-Host -ForegroundColor Red "Chocolatey installation failed with exit code ${LastExitCode}."
+    Exit $LastExitCode
+}
+
+# Use Microsoft's official tool, vswhere.exe, to dynamically find the path
+# to the newly installed C++ build tools. This is the most reliable method.
+$vs_path = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+if (-not $vs_path) {
+    Write-Host -ForegroundColor Red "Could not find a valid Visual Studio installation path after installation."
+    Exit 1
+}
+
+# The BAZEL_VC environment variable must be set to the path of the Visual C++
+# installation directory to ensure Bazel uses the new toolchain.
+$vc_path = "${vs_path}\VC"
+Write-Host "Configuring Bazel to use the newly installed MSVC from ${vc_path}"
+$env:BAZEL_VC = $vc_path
+
 $common_flags = Get-Bazel-Common-Flags
 
 Write-Bazel-Config
