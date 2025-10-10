@@ -200,8 +200,7 @@ bool MapEqual(  // NOLINT(misc-no-recursion)
     auto const& k2 = f2.array_value().values(0);
     auto const& v1 = f1.array_value().values(1);
     auto const& v2 = f2.array_value().values(1);
-    if (!Equal(kt1, k1, kt2, k2)) return false;
-    return Equal(vt1, v1, vt2, v2);
+    return Equal(kt1, k1, kt2, k2) && Equal(vt1, v1, vt2, v2);
   };
   return std::is_permutation(mv1.begin(), mv1.end(), mv2.begin(), mv2.end(),
                              comparison_function);
