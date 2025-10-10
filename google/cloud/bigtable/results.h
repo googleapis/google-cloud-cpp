@@ -44,6 +44,15 @@ class ResultSourceInterface {
    * row_key() to indicate end-of-stream.
    */
   virtual StatusOr<bigtable::QueryRow> NextRow() = 0;
+
+  /**
+   * Returns metadata about the result set, such as the column names and types
+   *
+   * @see https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto
+   *     for more information.
+   */
+  virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
+  Metadata() = 0;
 };
 
 /**

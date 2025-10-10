@@ -22,6 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/substitute.h"
+#include <google/bigtable/v2/data.pb.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -38,6 +40,7 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::ElementsAre;
 using ::testing::Return;
 using ::testing::UnitTest;
 
@@ -53,12 +56,13 @@ struct StringOption {
 // `StringOption` set to the current test name, so that we might check that
 // all `PartialResultSetReader` calls happen within a matching span.
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
-CreatePartialResultSetSource(std::unique_ptr<PartialResultSetReader> reader,
-                             Options opts = {}) {
+CreatePartialResultSetSource(
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::unique_ptr<PartialResultSetReader> reader, Options opts = {}) {
   internal::OptionsSpan span(internal::MergeOptions(
       std::move(opts.set<StringOption>(CurrentTestName())),
       internal::CurrentOptions()));
-  return PartialResultSetSource::Create(std::move(reader));
+  return PartialResultSetSource::Create(std::move(metadata), std::move(reader));
 }
 
 // Returns a functor that will return the argument after expecting that the
@@ -89,7 +93,8 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
+  auto reader =
+      CreatePartialResultSetSource(absl::nullopt, std::move(grpc_reader));
   EXPECT_THAT(reader, StatusIs(StatusCode::kInvalidArgument, "invalid"));
 }
 
@@ -98,6 +103,7 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   auto constexpr kText = R"pb(
+    proto_rows_batch: {}
   )pb";
   google::bigtable::v2::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
@@ -115,8 +121,269 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
+  auto reader = CreatePartialResultSetSource(
+      google::bigtable::v2::ResultSetMetadata{}, std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+/// @test Verify a single response is handled correctly.
+TEST(PartialResultSetSourceTest, SingleResponse) {
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+      columns {
+        name: "email"
+        type { string_type {} }
+      }
+      columns {
+        name: "name"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+  auto constexpr kProtoRowsText = R"pb(
+    values { string_value: "r1" }
+    values { string_value: "f1" }
+    values { string_value: "q1" }
+  )pb";
+  google::bigtable::v2::ProtoRows proto_rows;
+  ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
+
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+
+  std::string partial_result_set_text =
+      absl::Substitute(R"pb(
+                         proto_rows_batch: {
+                           batch_data: "$0",
+                         },
+                         resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+                         reset: true,
+                         estimated_batch_size: 31,
+                         batch_checksum: 3400346059
+                       )pb",
+                       binary_batch_data);
+  google::bigtable::v2::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(partial_result_set_text, &response));
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  auto reader = CreatePartialResultSetSource(metadata, std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+  auto row = (*reader)->NextRow();
+  ASSERT_STATUS_OK(row);
+  auto first_row = *row;
+  ASSERT_EQ(first_row.values().size(), 3);
+  EXPECT_EQ(*row->values().at(0).get<std::string>(), "r1");
+  EXPECT_EQ(*row->values().at(1).get<std::string>(), "f1");
+  EXPECT_EQ(*row->values().at(2).get<std::string>(), "q1");
+
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+/**
+ * @test Verify the behavior when we get an incomplete Row.
+ */
+TEST(PartialResultSetSourceTest, MultipleResponses) {
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+      columns {
+        name: "email"
+        type { string_type {} }
+      }
+      columns {
+        name: "name"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+
+  std::array<char const*, 3> proto_rows_text{{
+      R"pb(
+        values { string_value: "a1" }
+        values { string_value: "a2" }
+        values { string_value: "a3" }
+      )pb",
+      R"pb(
+        values { string_value: "b1" }
+        values { string_value: "b2" }
+        values { string_value: "b3" }
+      )pb",
+      R"pb(
+        values { string_value: "c1" }
+        values { string_value: "c2" }
+        values { string_value: "c3" }
+      )pb",
+  }};
+
+  std::vector<google::bigtable::v2::PartialResultSet> responses;
+  for (auto const* text : proto_rows_text) {
+    google::bigtable::v2::ProtoRows proto_rows;
+    ASSERT_TRUE(TextFormat::ParseFromString(text, &proto_rows));
+    std::string binary_batch_data = proto_rows.SerializeAsString();
+    std::string partial_result_set_text = absl::Substitute(
+        R"pb(
+          proto_rows_batch: {
+            batch_data: "$0",
+          },
+          resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+          reset: true,
+          estimated_batch_size: 31,
+          batch_checksum: 3400346059
+        )pb",
+        binary_batch_data);
+    google::bigtable::v2::PartialResultSet response;
+    ASSERT_TRUE(
+        TextFormat::ParseFromString(partial_result_set_text, &response));
+    responses.push_back(std::move(response));
+  }
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&responses](absl::optional<std::string> const&,
+                             UnownedPartialResultSet& result) {
+        result.result = responses[0];
+        return true;
+      })
+      .WillOnce([&responses](absl::optional<std::string> const&,
+                             UnownedPartialResultSet& result) {
+        result.result = responses[1];
+        return true;
+      })
+      .WillOnce([&responses](absl::optional<std::string> const&,
+                             UnownedPartialResultSet& result) {
+        result.result = responses[2];
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+
+  auto reader = CreatePartialResultSetSource(metadata, std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+
+  auto row0 = (*reader)->NextRow();
+  ASSERT_STATUS_OK(row0);
+  ASSERT_EQ(row0->values().size(), 3);
+  EXPECT_EQ(*row0->values().at(0).get<std::string>(), "a1");
+  EXPECT_EQ(*row0->values().at(1).get<std::string>(), "a2");
+  EXPECT_EQ(*row0->values().at(2).get<std::string>(), "a3");
+
+  auto row1 = (*reader)->NextRow();
+  ASSERT_STATUS_OK(row1);
+  ASSERT_EQ(row1->values().size(), 3);
+  EXPECT_EQ(*row1->values().at(0).get<std::string>(), "b1");
+  EXPECT_EQ(*row1->values().at(1).get<std::string>(), "b2");
+  EXPECT_EQ(*row1->values().at(2).get<std::string>(), "b3");
+
+  auto row2 = (*reader)->NextRow();
+  ASSERT_STATUS_OK(row2);
+  ASSERT_EQ(row2->values().size(), 3);
+  EXPECT_EQ(*row2->values().at(0).get<std::string>(), "c1");
+  EXPECT_EQ(*row2->values().at(1).get<std::string>(), "c2");
+  EXPECT_EQ(*row2->values().at(2).get<std::string>(), "c3");
+
+  EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+/**
+ * @test Verify the behavior when we get an incomplete Row.
+ */
+TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+
+  std::array<char const*, 3> proto_rows_text{{
+      R"pb(
+        values { string_value: "a1" }
+      )pb",
+      R"pb(
+      )pb",
+      R"pb(
+      )pb"}};
+
+  std::vector<google::bigtable::v2::PartialResultSet> responses;
+  for (auto const* text : proto_rows_text) {
+    google::bigtable::v2::ProtoRows proto_rows;
+    ASSERT_TRUE(TextFormat::ParseFromString(text, &proto_rows));
+    std::string binary_batch_data = proto_rows.SerializeAsString();
+    std::string partial_result_set_text = absl::Substitute(
+        R"pb(
+          proto_rows_batch: {
+            batch_data: "$0",
+          },
+          resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+          reset: true,
+          estimated_batch_size: 31,
+          batch_checksum: 3400346059
+        )pb",
+        binary_batch_data);
+    google::bigtable::v2::PartialResultSet response;
+    ASSERT_TRUE(
+        TextFormat::ParseFromString(partial_result_set_text, &response));
+    responses.push_back(std::move(response));
+  }
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&responses](absl::optional<std::string> const&,
+                             UnownedPartialResultSet& result) {
+        result.result = responses[0];
+        return true;
+      })
+      .WillOnce([&responses](absl::optional<std::string> const&,
+                             UnownedPartialResultSet& result) {
+        result.result = responses[1];
+        return true;
+      })
+      .WillOnce([&responses](absl::optional<std::string> const&,
+                             UnownedPartialResultSet& result) {
+        result.result = responses[2];
+        return true;
+      })
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto reader = CreatePartialResultSetSource(metadata, std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+
+  // Verify the returned row is correct.
+  EXPECT_THAT((*reader)->NextRow(),
+              IsValidAndEquals(bigtable_mocks::MakeQueryRow(
+                  {{"user_id", bigtable::Value("a1")}})));
+
+  // At end of stream, we get an 'ok' response with an empty row.
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
 }
 

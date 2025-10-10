@@ -24,11 +24,12 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
-PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
+PartialResultSetSource::Create(
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::unique_ptr<PartialResultSetReader> reader) {
   std::unique_ptr<PartialResultSetSource> source(
-      new PartialResultSetSource(std::move(reader)));
+      new PartialResultSetSource(std::move(metadata), std::move(reader)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
@@ -41,13 +42,22 @@ PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
 }
 
 PartialResultSetSource::PartialResultSetSource(
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::unique_ptr<PartialResultSetReader> reader)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
+      metadata_(std::move(metadata)),
       values_(absl::make_optional(
           google::protobuf::Arena::Create<
               google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
               &arena_))) {
+  if (metadata_.has_value()) {
+    columns_ = std::make_shared<std::vector<std::string>>();
+    columns_->reserve(metadata_->proto_schema().columns_size());
+    for (auto const& c : metadata_->proto_schema().columns()) {
+      columns_->push_back(c.name());
+    }
+  }
   if (options_.has<bigtable::StreamingResumabilityBufferSizeOption>()) {
     values_space_limit_ =
         options_.get<bigtable::StreamingResumabilityBufferSizeOption>();
@@ -76,53 +86,28 @@ PartialResultSetSource::~PartialResultSetSource() {
 }
 
 StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
-  if (usable_rows_ == 0 && rows_returned_ > 0) {
-    // There may be complete or partial rows in values_ that haven't been
-    // returned to the clients yet. Let's copy it over before we reset
-    // the arena.
-    auto* values = *values_;
-    int partial_size =
-        static_cast<int>(values->size() - rows_returned_ * columns_->size());
-    absl::FixedArray<google::protobuf::Value*> tmp(partial_size);
-    if (!tmp.empty()) {
-      values->ExtractSubrange(values->size() - partial_size, partial_size,
-                              tmp.data());
-    }
-    values_.reset();
-    values_space_.Clear();
-    arena_.Reset();
-    values_.emplace(
-        google::protobuf::Arena::Create<
-            google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
-            &arena_));
-    values = *values_;
-    for (auto* elem : tmp) {
-      values->Add(std::move(*elem));
-      delete elem;
-    }
-    rows_returned_ = 0;
-  }
-  while (usable_rows_ == 0) {
+  while (rows_.empty()) {
     if (state_ == kFinished) return bigtable::QueryRow();
     internal::OptionsSpan span(options_);
+    // Continue fetching if there are more rows in the stream.
     auto status = ReadFromStream();
     if (!status.ok()) return status;
   }
-  ++rows_returned_;
-  --usable_rows_;
-  std::vector<bigtable::Value> values;
-  return QueryRowFriend::MakeQueryRow(std::move(values), columns_);
+  // Returns the row at the front of the queue
+  auto row = std::move(rows_.front());
+  rows_.pop_front();
+  return row;
 }
 
 Status PartialResultSetSource::ReadFromStream() {
-  if (state_ == kFinished || usable_rows_ != 0 || rows_returned_ != 0) {
+  if (state_ == kFinished || !rows_.empty()) {
     return internal::InternalError("PartialResultSetSource state error",
                                    GCP_ERROR_INFO());
   }
-  auto* values = *values_;
   auto* raw_result_set =
       google::protobuf::Arena::Create<google::bigtable::v2::PartialResultSet>(
           &arena_);
+  auto* values = *values_;
   auto result_set =
       UnownedPartialResultSet::FromPartialResultSet(*raw_result_set);
   if (state_ == kReading) {
@@ -140,71 +125,56 @@ Status PartialResultSetSource::ReadFromStream() {
     result_set.result.set_resume_token("<end-of-stream>");
   }
 
+  return ProcessDataFromStream(result_set.result);
+}
+
+Status PartialResultSetSource::ProcessDataFromStream(
+    google::bigtable::v2::PartialResultSet& result) {
+  // Gather results from returned from `ProtoRowsBatch` which is a field within
+  // the PartialResultSet message.
+  if (result.estimated_batch_size() > 0) {
+    if (read_buffer_.empty()) {
+      read_buffer_.reserve(result.estimated_batch_size());
+    }
+  }
+  if (result.has_proto_rows_batch()) {
+    absl::StrAppend(&read_buffer_, result.proto_rows_batch().batch_data());
+  }
+
+  if (result.has_batch_checksum() && !read_buffer_.empty()) {
+    google::bigtable::v2::ProtoRows proto_rows;
+    if (proto_rows.ParseFromString(read_buffer_)) {
+      read_buffer_.clear();
+      if (metadata_.has_value()) {
+        auto columns = metadata_.value().proto_schema().columns_size();
+        auto parsed_value = proto_rows.values().begin();
+        std::vector<bigtable::Value> values;
+        values.reserve(columns);
+
+        while (parsed_value != proto_rows.values().end()) {
+          for (auto const& column : metadata_->proto_schema().columns()) {
+            auto value = FromProto(column.type(), *parsed_value);
+            values.push_back(std::move(value));
+            ++parsed_value;
+          }
+          uncommitted_rows_.push_back(
+              QueryRowFriend::MakeQueryRow(std::move(values), columns_));
+          values.clear();
+        }
+      }
+    }
+  }
+
   // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
   // used the token to resume an interrupted stream), then we must discard
   // any buffered data as it will be replayed.
-  if (result_set.resumption) {
-    if (!resume_token_) {
-      // The reader claims to have resumed the stream even though we said it
-      // should not. That leaves us in the untenable position of possibly
-      // having returned data that will be replayed, so fail the stream now.
-      return internal::InternalError(
-          "PartialResultSetSource reader resumed the stream"
-          " despite our having asked it not to",
-          GCP_ERROR_INFO());
-    }
-    values_back_incomplete_ = false;
-    values->Clear();
-    values_space_.Clear();
+  if (!result.resume_token().empty()) {
+    // Commit completed rows into rows_
+    rows_.insert(rows_.end(), uncommitted_rows_.begin(),
+                 uncommitted_rows_.end());
+    uncommitted_rows_.clear();
+    resume_token_ = result.resume_token();
   }
-
-  // Deliver whatever rows we can muster.
-  auto const n_values = values->size() - (values_back_incomplete_ ? 1 : 0);
-  auto const n_columns = columns_ ? static_cast<int>(columns_->size()) : 0;
-  auto n_rows = n_columns ? n_values / n_columns : 0;
-  if (n_columns == 0 && !values->empty()) {
-    return internal::InternalError(
-        "PartialResultSetSource metadata is missing row type",
-        GCP_ERROR_INFO());
-  }
-
-  // If we didn't receive a resume token, and have not exceeded our buffer
-  // limit, then we choose to `Read()` again so as to maintain resumability.
-  if (result_set.result.resume_token().empty() && values_space_limit_ > 0) {
-    for (auto it = values->begin() + values_space_.index; it != values->end();
-         ++it) {
-      values_space_.space_used += it->SpaceUsedLong();
-    }
-    values_space_.index = values->size();
-    if (values_space_.space_used < values_space_limit_) {
-      return {};  // OK
-    }
-  }
-
-  // If we did receive a resume token then everything should be deliverable,
-  // and we'll be able to resume the stream at this point after a breakage.
-  // Otherwise, if we deliver anything at all, we must disable resumability.
-  if (!result_set.result.resume_token().empty()) {
-    resume_token_ = result_set.result.resume_token();
-    if (n_rows * n_columns != values->size()) {
-      if (state_ != kEndOfStream) {
-        return internal::InternalError(
-            "PartialResultSetSource reader produced a resume token"
-            " that is not on a row boundary",
-            GCP_ERROR_INFO());
-      }
-      if (n_rows == 0) {
-        return internal::InternalError(
-            "PartialResultSetSource stream ended at a point"
-            " that is not on a row boundary",
-            GCP_ERROR_INFO());
-      }
-    }
-  } else if (n_rows != 0) {
-    resume_token_ = absl::nullopt;
-  }
-
-  usable_rows_ = n_rows;
   return {};  // OK
 }
 

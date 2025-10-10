@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H
 
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
+// #include "google/cloud/bigtable/query_row.cc"
 #include "google/cloud/bigtable/results.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
@@ -23,10 +24,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <google/protobuf/arena.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/struct.pb.h>
-#include <google/bigtable/v2/bigtable.pb.h>
 #include <cstddef>
 #include <deque>
 #include <memory>
@@ -38,27 +39,34 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PartialResultSourceInterface : public bigtable::ResultSourceInterface {
-};
+class PartialResultSourceInterface : public bigtable::ResultSourceInterface {};
 
 /**
- * Class used to iterate over the rows returned from a read operations. 
+ * Class used to iterate over the rows returned from a read operations.
  */
 class PartialResultSetSource : public PartialResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
+      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
       std::unique_ptr<PartialResultSetReader> reader);
 
   ~PartialResultSetSource() override;
 
   StatusOr<bigtable::QueryRow> NextRow() override;
 
+  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    return metadata_;
+  }
+
  private:
   explicit PartialResultSetSource(
+      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
       std::unique_ptr<PartialResultSetReader> reader);
 
   Status ReadFromStream();
+  Status ProcessDataFromStream(google::bigtable::v2::PartialResultSet& result);
+  std::string read_buffer_;
 
   // Arena for the values_ field.
   google::protobuf::Arena arena_;
@@ -66,7 +74,14 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
 
+  // The ResultSetMetadata is received in the first response. It is received
+  // from ExecuteQueryResponse
+  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_;
+
   std::shared_ptr<std::vector<std::string>> columns_;
+
+  std::deque<bigtable::QueryRow> rows_;
+  std::vector<bigtable::QueryRow> uncommitted_rows_;
 
   // Number of rows returned to the client.
   int rows_returned_ = 0;
