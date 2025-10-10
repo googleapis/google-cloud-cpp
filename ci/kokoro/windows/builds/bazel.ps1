@@ -26,6 +26,29 @@ $BuildName = $args[0]
 
 . ci/kokoro/windows/lib/bazel.ps1
 
+# Uninstall vcpkg packages that are managed by Bzlmod.
+$packages_to_uninstall = @(
+    "abseil",
+    "protobuf",
+    "grpc",
+    "nlohmann-json",
+    "curl",
+    "crc32c",
+    "opentelemetry-cpp",
+    "googletest",
+    "google-benchmark",
+    "yaml-cpp",
+    "pugixml",
+    "zlib",
+    "c-ares",
+    "openssl"
+)
+Write-Host "`n$(Get-Date -Format o) Uninstalling vcpkg packages that are managed in MODULE.bazel..."
+foreach ($pkg in $packages_to_uninstall) {
+    Write-Host -ForegroundColor Yellow "Uninstalling $pkg..."
+    vcpkg remove --recurse $pkg
+}
+
 $common_flags = Get-Bazel-Common-Flags
 
 Write-Bazel-Config
