@@ -790,44 +790,41 @@ void CheckExecuteQueryWithSingleUseOptions(
 }
 
 /// @test Verify the `ReadLockMode` option is sent in the RPC by creating a
-/// situation where a transaction A performs a commit while a transaction B
-/// performed one after tx A started.
+/// situation where a transaction "A" performs a commit while a transaction "B"
+/// performed one after tx "A" started.
 TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
-  if (UsingEmulator()) {
-    GTEST_SKIP() << "Optimistic locks not supported by emulator";
-  }
   auto const singer_id = 101;
 
-  auto mutation_helper = [singer_id](std::string new_name) {
+  auto mutation_helper = [singer_id](const std::string & new_name) {
     return Mutations{MakeInsertOrUpdateMutation(
         "Singers", {"SingerId", "FirstName"}, singer_id, new_name)};
   };
 
-  // initial insert
+  // Initial insert
   auto insert = client_->Commit(mutation_helper("InitialName"));
   ASSERT_STATUS_OK(insert);
 
-  // transaction A will do a DML after another transaction has executed DML
-  // If optimistic, we expect transaction A to be aborted
+  // Transaction "A" will do a DML after another transaction has executed DML.
+  // If optimistic, we expect transaction "A" to be aborted
   auto test_helper =
       [&mutation_helper, singer_id](
           Transaction::ReadLockMode read_lock_mode) -> StatusOr<CommitResult> {
-    // here we create tx A and confirm it can perform a read.
+    // Here we create tx A and confirm it can perform a read.
     auto tx_a =
         MakeReadWriteTransaction(Transaction::ReadWriteOptions(read_lock_mode));
     auto tx_a_read_result = client_->Read(
         tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
-    for (auto row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
+    for (const auto & row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
       EXPECT_STATUS_OK(row);
     }
 
-    // now a separate tx b will perform a write operation before tx A is
+    // Now a separate tx "B" will perform a write operation before tx "A" is
     // finished.
     auto tx_b = client_->Commit(mutation_helper("FirstModifiedName"));
     EXPECT_STATUS_OK(tx_b);
 
-    // depending on the read lock mode, the result of the next write operation
-    // in tx A will vary.
+    // Depending on the read lock mode, the result of the next write operation
+    // in tx "A" will vary.
     return client_->Commit(tx_a, mutation_helper("SecondModifiedName"));
   };
 
