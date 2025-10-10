@@ -27,14 +27,14 @@ using ::testing::IsEmpty;
 TEST(TransactionOptions, Construction) {
   Timestamp read_timestamp{};
   std::chrono::nanoseconds staleness{};
-  auto read_lock_mode = Transaction::ReadLockMode::kOptimistic;
 
   Transaction::ReadOnlyOptions strong;
   Transaction::ReadOnlyOptions exact_ts(read_timestamp);
   Transaction::ReadOnlyOptions exact_dur(staleness);
 
   Transaction::ReadWriteOptions none;
-  Transaction::ReadWriteOptions rw_with_read_lock(read_lock_mode);
+  Transaction::ReadWriteOptions rw_with_read_lock(
+      Transaction::ReadLockMode::kOptimistic);
 
   Transaction::SingleUseOptions su_strong(strong);
   Transaction::SingleUseOptions su_exact_ts(exact_ts);

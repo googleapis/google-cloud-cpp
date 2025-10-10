@@ -34,18 +34,23 @@ google::protobuf::Duration ToProto(std::chrono::nanoseconds ns) {
   return proto;
 }
 
-google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode ProtoReadLockMode(
+google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode
+ProtoReadLockMode(
     absl::optional<Transaction::ReadLockMode> const& read_lock_mode) {
   if (!read_lock_mode) {
-    return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED;
+    return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+        TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED;
   }
   switch (*read_lock_mode) {
     case Transaction::ReadLockMode::kOptimistic:
-      return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::TransactionOptions_ReadWrite_ReadLockMode_OPTIMISTIC;
-      case Transaction::ReadLockMode::kPessimistic:
-      return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::TransactionOptions_ReadWrite_ReadLockMode_PESSIMISTIC;
-      case Transaction::ReadLockMode::kUnspecified:
-    return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED;
+      return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+          TransactionOptions_ReadWrite_ReadLockMode_OPTIMISTIC;
+    case Transaction::ReadLockMode::kPessimistic:
+      return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+          TransactionOptions_ReadWrite_ReadLockMode_PESSIMISTIC;
+    default:
+      return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+          TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED;
   }
 }
 

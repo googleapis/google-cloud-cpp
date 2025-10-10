@@ -791,11 +791,10 @@ void CheckExecuteQueryWithSingleUseOptions(
 
 /// @test Verify the `ReadLockMode` option is sent in the RPC by creating a
 /// situation where a transaction "A" performs a commit while a transaction "B"
-/// performed one after tx "A" started.
+/// performed another commit after tx "A" started.
 TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   auto const singer_id = 101;
-
-  auto mutation_helper = [singer_id](const std::string & new_name) {
+  auto mutation_helper = [singer_id](std::string const& new_name) {
     return Mutations{MakeInsertOrUpdateMutation(
         "Singers", {"SingerId", "FirstName"}, singer_id, new_name)};
   };
@@ -814,7 +813,8 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
         MakeReadWriteTransaction(Transaction::ReadWriteOptions(read_lock_mode));
     auto tx_a_read_result = client_->Read(
         tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
-    for (const auto & row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
+    for (auto const& row :
+         StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
       EXPECT_STATUS_OK(row);
     }
 
