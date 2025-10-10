@@ -26,6 +26,17 @@ $BuildName = $args[0]
 
 . ci/kokoro/windows/lib/bazel.ps1
 
+# Install the specific version of Visual Studio 2022 Build Tools that is
+# known to work in the GHA CI.
+Write-Host "`n$(Get-Date -Format o) Installing Visual Studio 2022 v17.10 Build Tools..."
+choco install visualstudio2022buildtools --version=17.10.0 --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet" -y
+
+# The BAZEL_VC environment variable must be set to the path of the
+# newly installed Visual C++ installation directory.
+$vc_path = "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC"
+Write-Host "Configuring Bazel to use MSVC from ${vc_path}"
+$env:BAZEL_VC = $vc_path
+
 $common_flags = Get-Bazel-Common-Flags
 
 Write-Bazel-Config
