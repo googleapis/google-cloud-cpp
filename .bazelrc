@@ -27,6 +27,11 @@ build:macos --cxxopt=-std=c++14
 build:linux --host_cxxopt=-std=c++14
 build:macos --host_cxxopt=-std=c++14
 
+# Enable C11 standard for BoringSSL's C files on Windows. This is required
+# because BoringSSL uses C11 features not enabled by default in MSVC's C
+# compiler, and `--copt` is too broad, conflicting with C++ standards.
+build:windows --per_file_copt=external/boringssl~/crypto/.*\.c@/std:c11
+
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
