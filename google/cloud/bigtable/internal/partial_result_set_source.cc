@@ -146,7 +146,7 @@ Status PartialResultSetSource::ReadFromStream() {
 Status PartialResultSetSource::ProcessDataFromStream(
     google::bigtable::v2::PartialResultSet& result) {
   // If the `reset` is true then all the data buffered since the last
-  // resume_token should be discared.
+  // resume_token should be discarded.
   if (result.reset()) {
     read_buffer_.clear();
     uncommitted_rows_.clear();
