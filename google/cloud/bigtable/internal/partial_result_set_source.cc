@@ -22,6 +22,14 @@
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
+
+namespace {
+bool isValidChecksum(std::string data, uint32_t expected_checksum) {
+  absl::crc32c_t computed_crc = absl::ComputeCrc32c(data);
+  return static_cast<uint32_t>(computed_crc) == expected_checksum;
+}
+
+}  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
@@ -38,7 +46,9 @@ PartialResultSetSource::Create(
   // creating the `PartialResultSetSource` should fail with the same error.
   if (source->state_ == kFinished && !status.ok()) return status;
 
-  return {std::move(source)};
+  std::unique_ptr<PartialResultSourceInterface> interface_ptr =
+      std::move(source);
+  return interface_ptr;
 }
 
 PartialResultSetSource::PartialResultSetSource(
@@ -100,56 +110,70 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 }
 
 Status PartialResultSetSource::ReadFromStream() {
-  if (state_ == kFinished || !rows_.empty()) {
-    return internal::InternalError("PartialResultSetSource state error",
+  if (state_ == kFinished) {
+    return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());
   }
+  // The application should consume rows_ before calling ReadFromStream again.
+  if (!rows_.empty()) {
+    return internal::InternalError("PartialResultSetSource has unconsumed rows",
+                                   GCP_ERROR_INFO());
+  }
+
   auto* raw_result_set =
       google::protobuf::Arena::Create<google::bigtable::v2::PartialResultSet>(
           &arena_);
-  auto* values = *values_;
   auto result_set =
       UnownedPartialResultSet::FromPartialResultSet(*raw_result_set);
-  if (state_ == kReading) {
-    if (!reader_->Read(resume_token_, result_set)) state_ = kEndOfStream;
-  }
-  if (state_ == kEndOfStream) {
-    // If we have no buffered data, we're done.
-    if (values->empty()) {
-      state_ = kFinished;
-      return reader_->Finish();
-    }
-    // Otherwise, proceed with a `PartialResultSet` using a fake resume
-    // token to flush the buffer. The service does not appear to yield
-    // a resume token in its final response, despite it completing a row.
-    result_set.result.set_resume_token("<end-of-stream>");
-  }
 
-  return ProcessDataFromStream(result_set.result);
+  // The resume_token_ member holds the token from the previous
+  // PartialResultSet. It's empty on the first call.
+  if (reader_->Read(resume_token_, result_set)) {
+    return ProcessDataFromStream(result_set.result);
+  } else {
+    state_ = kFinished;
+    // The uncommitted_rows_ is expected to be empty because the last successful
+    // read would have had a sentinel resume_token, causing
+    // ProcessDataFromStream to commit them.
+    if (!uncommitted_rows_.empty()) {
+      return internal::InternalError("Stream ended with uncommitted rows.",
+                                     GCP_ERROR_INFO());
+    }
+    return reader_->Finish();
+  }
 }
 
 Status PartialResultSetSource::ProcessDataFromStream(
     google::bigtable::v2::PartialResultSet& result) {
-  // Gather results from returned from `ProtoRowsBatch` which is a field within
-  // the PartialResultSet message.
-  if (result.estimated_batch_size() > 0) {
-    if (read_buffer_.empty()) {
-      read_buffer_.reserve(result.estimated_batch_size());
-    }
+  // If the `reset` is true then all the data buffered since the last
+  // resume_token should be discared.
+  if (result.reset()) {
+    read_buffer_.clear();
+    uncommitted_rows_.clear();
   }
+
+  // Reserve space of the buffer at the start of a new batch of data.
+  if (result.estimated_batch_size() > 0 && read_buffer_.empty()) {
+    read_buffer_.reserve(result.estimated_batch_size());
+  }
+
   if (result.has_proto_rows_batch()) {
     absl::StrAppend(&read_buffer_, result.proto_rows_batch().batch_data());
   }
 
   if (result.has_batch_checksum() && !read_buffer_.empty()) {
+    if (!isValidChecksum(read_buffer_, result.batch_checksum())) {
+      read_buffer_.clear();
+      uncommitted_rows_.clear();
+      return internal::InternalError("Batch checksum mismatch");
+    }
     google::bigtable::v2::ProtoRows proto_rows;
     if (proto_rows.ParseFromString(read_buffer_)) {
-      read_buffer_.clear();
       if (metadata_.has_value()) {
-        auto columns = metadata_.value().proto_schema().columns_size();
+        auto columns_size = metadata_.value().proto_schema().columns_size();
         auto parsed_value = proto_rows.values().begin();
         std::vector<bigtable::Value> values;
-        values.reserve(columns);
+        values.reserve(columns_size);
 
         while (parsed_value != proto_rows.values().end()) {
           for (auto const& column : metadata_->proto_schema().columns()) {
@@ -162,14 +186,16 @@ Status PartialResultSetSource::ProcessDataFromStream(
           values.clear();
         }
       }
+    } else {
+      read_buffer_.clear();
+      uncommitted_rows_.clear();
+      return internal::InternalError("Failed to parse ProtoRows from buffer");
     }
   }
 
-  // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
-  // used the token to resume an interrupted stream), then we must discard
-  // any buffered data as it will be replayed.
+  // Buffered rows in uncommitted_rows_ are ready to be committed into rows_
+  // once the resume_token is received.
   if (!result.resume_token().empty()) {
-    // Commit completed rows into rows_
     rows_.insert(rows_.end(), uncommitted_rows_.begin(),
                  uncommitted_rows_.end());
     uncommitted_rows_.clear();
@@ -177,7 +203,6 @@ Status PartialResultSetSource::ProcessDataFromStream(
   }
   return {};  // OK
 }
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

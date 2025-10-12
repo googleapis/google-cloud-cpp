@@ -15,14 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PARTIAL_RESULT_SET_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PARTIAL_RESULT_SET_READER_H
 
-#include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <google/bigtable/v2/data.pb.h>
-#include <grpcpp/grpcpp.h>
-#include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {

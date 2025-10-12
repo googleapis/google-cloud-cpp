@@ -266,7 +266,7 @@ using DataPolicyOptionList =
  * If the limit is exceeded, and the stream is subsequently interrupted before
  * a new resumption point can be established, the read/query will fail.
  *
- * @ingroup google-cloud-spanner-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct StreamingResumabilityBufferSizeOption {
   using Type = std::size_t;
