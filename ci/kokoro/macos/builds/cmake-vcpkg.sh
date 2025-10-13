@@ -20,6 +20,7 @@ source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 source module ci/kokoro/lib/vcpkg.sh
+source module ci/kokoro/macos/brew-utils.sh
 
 readonly SOURCE_DIR="."
 readonly BINARY_DIR="cmake-out/macos-vcpkg"
@@ -29,7 +30,7 @@ readonly NCPU
 
 io::log_h2 "Update or install dependencies"
 # Install bash and ninja
-brew install bash ninja
+brew_with_fallback install bash ninja
 
 # Install a specific version of CMake to match our GHA builds
 (
