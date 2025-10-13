@@ -121,10 +121,14 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
       grpc::SslCredentialsOptions ssl_options;
       auto cainfo = LoadCAInfo(options);
       if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
-      result = std::make_unique<GrpcChannelCredentialsAuthentication>(
-          grpc::CompositeChannelCredentials(
-              grpc::SslCredentials(ssl_options),
-              GrpcExternalAccountCredentials(cfg)));
+    auto call_creds = GrpcExternalAccountCredentials(cfg);
+     auto channel_creds = grpc::SslCredentials(ssl_options);
+      if (call_creds) {
+        result = std::make_unique<GrpcChannelCredentialsAuthentication>(
+            grpc::CompositeChannelCredentials(channel_creds, call_creds));
+      } else {
+        result = std::make_unique<GrpcChannelCredentialsAuthentication>(channel_creds);
+      }
     }
     void visit(ApiKeyConfig const& cfg) override {
       result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());
