@@ -39,8 +39,9 @@ function Get-Bazel-Build-Flags {
     # These flags are shared by all builds
     $build_flags = @(
         "--keep_going",
-	# The project requires C++14. BoringSSL (a transitive dependency) requires
-        # C11. These flags are required for all Windows builds.
+        # The project requires C++14. BoringSSL (a transitive dependency) requires
+        # C11. On MSVC, /permissive- is needed for full C11 conformance.
+        "--copt=/permissive-",
         "--cxxopt=/std:c++14", "--conlyopt=/std:c11",
         "--per_file_copt=^//google/cloud@-W3",
         "--per_file_copt=^//google/cloud@-WX",
