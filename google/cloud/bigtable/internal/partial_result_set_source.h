@@ -82,11 +82,6 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   std::deque<bigtable::QueryRow> rows_;
   std::vector<bigtable::QueryRow> uncommitted_rows_;
 
-  // Values that can be assembled into `QueryRow`s ready to be returned by
-  // `NextRow()`. This is a pointer to an arena-allocated RepeatedPtrField.
-  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>*>
-      values_;
-
   // When engaged, the token we can use to resume the stream immediately after
   // any data in (or previously in) `rows_`. When disengaged, we have already
   // delivered data that would be replayed, so resumption is disabled until we

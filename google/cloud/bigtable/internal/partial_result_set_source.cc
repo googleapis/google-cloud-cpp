@@ -46,11 +46,7 @@ PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
-      metadata_(std::move(metadata)),
-      values_(absl::make_optional(
-          google::protobuf::Arena::Create<
-              google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
-              &arena_))) {
+      metadata_(std::move(metadata)) {
   if (metadata_.has_value()) {
     columns_ = std::make_shared<std::vector<std::string>>();
     columns_->reserve(metadata_->proto_schema().columns_size());
