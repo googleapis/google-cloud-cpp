@@ -65,8 +65,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   Status ReadFromStream();
   Status ProcessDataFromStream(google::bigtable::v2::PartialResultSet& result);
-  Status BufferProtoRows(
-      google::bigtable::v2::ProtoRows const& proto_rows);
+  Status BufferProtoRows(google::bigtable::v2::ProtoRows const& proto_rows);
   std::string read_buffer_;
 
   // Arena for the values_ field.
@@ -93,7 +92,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   // delivered data that would be replayed, so resumption is disabled until we
   // see a new token.
   absl::optional<std::string> resume_token_ = "";
-  
+
   // The state of our PartialResultSetReader.
   enum : char {
     // `Read()` has yet to return nullopt.
