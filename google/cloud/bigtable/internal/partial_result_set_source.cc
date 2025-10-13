@@ -24,7 +24,7 @@ namespace cloud {
 namespace bigtable_internal {
 
 namespace {
-bool isValidChecksum(std::string data, uint32_t expected_checksum) {
+bool isValidChecksum(std::string const& data, uint32_t expected_checksum) {
   absl::crc32c_t computed_crc = absl::ComputeCrc32c(data);
   return static_cast<uint32_t>(computed_crc) == expected_checksum;
 }
@@ -130,17 +130,16 @@ Status PartialResultSetSource::ReadFromStream() {
   // PartialResultSet. It's empty on the first call.
   if (reader_->Read(resume_token_, result_set)) {
     return ProcessDataFromStream(result_set.result);
-  } else {
-    state_ = kFinished;
-    // The uncommitted_rows_ is expected to be empty because the last successful
-    // read would have had a sentinel resume_token, causing
-    // ProcessDataFromStream to commit them.
-    if (!uncommitted_rows_.empty()) {
-      return internal::InternalError("Stream ended with uncommitted rows.",
-                                     GCP_ERROR_INFO());
-    }
-    return reader_->Finish();
   }
+  state_ = kFinished;
+  // The uncommitted_rows_ is expected to be empty because the last successful
+  // read would have had a sentinel resume_token, causing
+  // ProcessDataFromStream to commit them.
+  if (!uncommitted_rows_.empty()) {
+    return internal::InternalError("Stream ended with uncommitted rows.",
+                                   GCP_ERROR_INFO());
+  }
+  return reader_->Finish();
 }
 
 Status PartialResultSetSource::ProcessDataFromStream(
