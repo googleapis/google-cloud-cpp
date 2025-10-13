@@ -81,6 +81,7 @@ printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 
 io::log_h2 "Brew packages"
+export HOMEBREW_CURL_RETRIES=3
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions --formula
