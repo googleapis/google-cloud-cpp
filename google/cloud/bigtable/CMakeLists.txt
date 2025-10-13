@@ -272,7 +272,6 @@ add_library(
 target_link_libraries(
     google_cloud_cpp_bigtable
     PUBLIC 
-           absl::crc
            absl::memory
            google-cloud-cpp::bigtable_protos
            google-cloud-cpp::common
