@@ -37,15 +37,22 @@ $build_flags = Get-Bazel-Build-Flags "${BuildName}"
 $test_flags = $build_flags
 $test_flags += @("--test_output=errors", "--verbose_failures=true")
 
+# Add compiler flags to enable C++14 and C11. The latter is needed by a
+# modern version of BoringSSL, a transitive dependency of gRPC.
+$compiler_flags = @("--cxxopt=/std:c++14", "--conlyopt=/std:c11")
+
 # For a faster feedback loop, we will build a single target.
-# This avoids running all the tests and building all the code, which can be
-# slow. If this single target builds, it is a strong indication that the
-# toolchain issue is resolved.
+# ...
 Write-Host "`n$(Get-Date -Format o) Compiling a single target to verify the toolchain"
-bazelisk $common_flags build $build_flags //google/cloud/storage/quickstart:quickstart
+
+# Echo the full command we are about to run for easy debugging.
+$command_string = "bazelisk $($common_flags -join ' ') build $($build_flags -join ' ') $($compiler_flags -join ' ') //google/cloud/storage/quickstart:quickstart"
+Write-Host "Executing Command: ${command_string}"
+
+bazelisk $common_flags build $build_flags $compiler_flags //google/cloud/storage/quickstart:quickstart
 if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
-    Exit ${LastExitCode}
+     Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
+     Exit ${LastExitCode}
 }
 
 # The integration tests are not needed to verify the toolchain, and they are
