@@ -271,7 +271,9 @@ add_library(
     wait_for_consistency.h)
 target_link_libraries(
     google_cloud_cpp_bigtable
-    PUBLIC absl::memory
+    PUBLIC 
+           absl::crc
+           absl::memory
            google-cloud-cpp::bigtable_protos
            google-cloud-cpp::common
            google-cloud-cpp::grpc_utils
@@ -417,7 +419,6 @@ if (BUILD_TESTING)
                GTest::gtest
                gRPC::grpc++
                gRPC::grpc
-               absl::crc
                absl::memory
                absl::str_format
                protobuf::libprotobuf)
