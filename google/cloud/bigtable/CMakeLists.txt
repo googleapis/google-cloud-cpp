@@ -417,6 +417,7 @@ if (BUILD_TESTING)
                GTest::gtest
                gRPC::grpc++
                gRPC::grpc
+               absl::crc
                absl::memory
                absl::str_format
                protobuf::libprotobuf)
