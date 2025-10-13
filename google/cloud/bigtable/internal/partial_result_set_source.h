@@ -92,12 +92,11 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   // see a new token.
   absl::optional<std::string> resume_token_ = "";
 
-  // Should the space used by `values_` get larger than this limit, we will
-  // move complete rows into `rows_` and disable resumption until we see a
-  // new token. During this time, an error in the stream will be returned by
-  // `NextRow()`. No individual row in a result set can exceed 100 MiB, so we
-  // set the default limit to twice that.
-  std::size_t values_space_limit_ = 2 * 100 * (std::size_t{1} << 20);
+  // The default value is set to 2*256 MiB. A single row in Bigtable can't
+  // exceed 256 MiB so setting the limit to twice that size to provide a safe
+  // upper bound for the buffer.
+  std::size_t values_space_limit_ =
+      2 * 256 * (std::size_t{1} << 20);  // 512 MiB
 
   // The state of our PartialResultSetReader.
   enum : char {

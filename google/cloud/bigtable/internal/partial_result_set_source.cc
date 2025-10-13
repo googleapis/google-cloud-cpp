@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/container/fixed_array.h"
+#include "absl/crc/crc32c.h"
 #include "absl/types/optional.h"
 
 namespace google {
