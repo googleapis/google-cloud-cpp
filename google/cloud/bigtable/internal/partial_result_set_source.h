@@ -65,6 +65,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   Status ReadFromStream();
   Status ProcessDataFromStream(google::bigtable::v2::PartialResultSet& result);
+  Status BufferProtoRows(
+      google::bigtable::v2::ProtoRows const& proto_rows);
   std::string read_buffer_;
 
   // Arena for the values_ field.
@@ -91,13 +93,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   // delivered data that would be replayed, so resumption is disabled until we
   // see a new token.
   absl::optional<std::string> resume_token_ = "";
-
-  // The default value is set to 2*256 MiB. A single row in Bigtable can't
-  // exceed 256 MiB so setting the limit to twice that size to provide a safe
-  // upper bound for the buffer.
-  std::size_t values_space_limit_ =
-      2 * 256 * (std::size_t{1} << 20);  // 512 MiB
-
+  
   // The state of our PartialResultSetReader.
   enum : char {
     // `Read()` has yet to return nullopt.

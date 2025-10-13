@@ -16,21 +16,12 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
-#include "absl/container/fixed_array.h"
-#include "absl/crc/crc32c.h"
 #include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 
-namespace {
-bool isValidChecksum(std::string const& data, uint32_t expected_checksum) {
-  absl::crc32c_t computed_crc = absl::ComputeCrc32c(data);
-  return static_cast<uint32_t>(computed_crc) == expected_checksum;
-}
-
-}  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
@@ -47,9 +38,7 @@ PartialResultSetSource::Create(
   // creating the `PartialResultSetSource` should fail with the same error.
   if (source->state_ == kFinished && !status.ok()) return status;
 
-  std::unique_ptr<PartialResultSourceInterface> interface_ptr =
-      std::move(source);
-  return interface_ptr;
+  return {std::move(source)};
 }
 
 PartialResultSetSource::PartialResultSetSource(
@@ -68,10 +57,6 @@ PartialResultSetSource::PartialResultSetSource(
     for (auto const& c : metadata_->proto_schema().columns()) {
       columns_->push_back(c.name());
     }
-  }
-  if (options_.has<bigtable::StreamingResumabilityBufferSizeOption>()) {
-    values_space_limit_ =
-        options_.get<bigtable::StreamingResumabilityBufferSizeOption>();
   }
 }
 
@@ -161,31 +146,12 @@ Status PartialResultSetSource::ProcessDataFromStream(
     absl::StrAppend(&read_buffer_, result.proto_rows_batch().batch_data());
   }
 
+  // TODO(#15617): Validate that the checksum matches the contents of `buffer`.
   if (result.has_batch_checksum() && !read_buffer_.empty()) {
-    if (!isValidChecksum(read_buffer_, result.batch_checksum())) {
-      read_buffer_.clear();
-      uncommitted_rows_.clear();
-      return internal::InternalError("Batch checksum mismatch");
-    }
     google::bigtable::v2::ProtoRows proto_rows;
     if (proto_rows.ParseFromString(read_buffer_)) {
-      if (metadata_.has_value()) {
-        auto columns_size = metadata_.value().proto_schema().columns_size();
-        auto parsed_value = proto_rows.values().begin();
-        std::vector<bigtable::Value> values;
-        values.reserve(columns_size);
-
-        while (parsed_value != proto_rows.values().end()) {
-          for (auto const& column : metadata_->proto_schema().columns()) {
-            auto value = FromProto(column.type(), *parsed_value);
-            values.push_back(std::move(value));
-            ++parsed_value;
-          }
-          uncommitted_rows_.push_back(
-              QueryRowFriend::MakeQueryRow(std::move(values), columns_));
-          values.clear();
-        }
-      }
+      auto status = BufferProtoRows(proto_rows);
+      if (!status.ok()) return status;
     } else {
       read_buffer_.clear();
       uncommitted_rows_.clear();
@@ -199,10 +165,50 @@ Status PartialResultSetSource::ProcessDataFromStream(
     rows_.insert(rows_.end(), uncommitted_rows_.begin(),
                  uncommitted_rows_.end());
     uncommitted_rows_.clear();
+    read_buffer_.clear();
     resume_token_ = result.resume_token();
   }
   return {};  // OK
 }
+
+Status PartialResultSetSource::BufferProtoRows(
+    google::bigtable::v2::ProtoRows const& proto_rows) {
+  if (metadata_.has_value()) {
+    auto const& proto_schema = metadata_->proto_schema();
+    auto const columns_size = proto_schema.columns_size();
+    auto const& proto_values = proto_rows.values();
+
+    if (columns_size == 0) {
+      if (!proto_values.empty()) {
+        return internal::InternalError(
+            "ProtoRows has values but the schema has no columns.",
+            GCP_ERROR_INFO());
+      }
+    } else if (proto_values.size() % columns_size != 0) {
+      return internal::InternalError(
+          "The number of values in ProtoRows is not a multiple of the "
+          "number of columns in the schema.",
+          GCP_ERROR_INFO());
+    }
+
+    auto parsed_value = proto_values.begin();
+    std::vector<bigtable::Value> values;
+    values.reserve(columns_size);
+
+    while (parsed_value != proto_values.end()) {
+      for (auto const& column : proto_schema.columns()) {
+        auto value = FromProto(column.type(), *parsed_value);
+        values.push_back(std::move(value));
+        ++parsed_value;
+      }
+      uncommitted_rows_.push_back(
+          QueryRowFriend::MakeQueryRow(std::move(values), columns_));
+      values.clear();
+    }
+  }
+  return {};
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

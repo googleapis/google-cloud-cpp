@@ -260,19 +260,6 @@ using DataPolicyOptionList =
                IdempotentMutationPolicyOption, EnableMetricsOption,
                MetricsPeriodOption>;
 
-/**
- * Option for `google::cloud::Options` to set a limit on how much data will
- * be buffered to guarantee resumability of a streaming read or SQL query.
- * If the limit is exceeded, and the stream is subsequently interrupted before
- * a new resumption point can be established, the read/query will fail. The
- * default is 512 MiB (2*256).
- *
- * @ingroup google-cloud-bigtable-options
- */
-struct StreamingResumabilityBufferSizeOption {
-  using Type = std::size_t;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
