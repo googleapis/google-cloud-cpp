@@ -76,7 +76,7 @@ class RowStream {
   }
 
   /// Returns a `RowStreamIterator` defining the end of this range.
-  RowStreamIterator end() { return {}; }
+  static RowStreamIterator end() { return {}; }
 
  private:
   std::unique_ptr<ResultSourceInterface> source_;
