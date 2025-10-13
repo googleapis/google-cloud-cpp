@@ -39,6 +39,7 @@ function Get-Bazel-Build-Flags {
     # These flags are shared by all builds
     $build_flags = @(
         "--keep_going",
+        "-s",
         "--copt=/permissive-",
         "--cxxopt=/std:c++14",
         "--conlyopt=/std:c11",
