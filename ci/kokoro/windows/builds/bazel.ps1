@@ -42,6 +42,9 @@ $test_flags += @("--test_output=errors", "--verbose_failures=true")
 # slow. If this single target builds, it is a strong indication that the
 # toolchain issue is resolved.
 Write-Host "`n$(Get-Date -Format o) Compiling a single target to verify the toolchain"
+# Echo the full command we are about to run for easy debugging.
+$command_string = "bazelisk $($common_flags -join ' ') build $($build_flags -join ' ') //google/cloud/storage/quickstart:quickstart"
+Write-Host "Executing Command: ${command_string}"
 bazelisk $common_flags build $build_flags //google/cloud/storage/quickstart:quickstart
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
