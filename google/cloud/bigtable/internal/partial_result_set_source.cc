@@ -25,7 +25,7 @@ namespace bigtable_internal {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<std::unique_ptr<PartialResultSourceInterface>>
+StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 PartialResultSetSource::Create(
     absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::unique_ptr<PartialResultSetReader> reader) {
@@ -37,7 +37,7 @@ PartialResultSetSource::Create(
 
   // If the initial read finished the stream, and `Finish()` failed, then
   // creating the `PartialResultSetSource` should fail with the same error.
-  if (source->state_ == kFinished && !status.ok()) return status;
+  if (source->state_ == State::kFinished && !status.ok()) return status;
 
   return {std::move(source)};
 }
@@ -59,13 +59,13 @@ PartialResultSetSource::PartialResultSetSource(
 
 PartialResultSetSource::~PartialResultSetSource() {
   internal::OptionsSpan span(options_);
-  if (state_ == kReading) {
+  if (state_ == State::kReading) {
     // Finish() can deadlock if there is still data in the streaming RPC,
     // so before trying to read the final status we need to cancel.
     reader_->TryCancel();
-    state_ = kEndOfStream;
+    state_ = State::kEndOfStream;
   }
-  if (state_ == kEndOfStream) {
+  if (state_ == State::kEndOfStream) {
     // The user didn't iterate over all the data, so finish the stream on
     // their behalf, although we have no way to communicate error status.
     auto status = reader_->Finish();
@@ -74,13 +74,13 @@ PartialResultSetSource::~PartialResultSetSource() {
           << "PartialResultSetSource: Finish() failed in destructor: "
           << status;
     }
-    state_ = kFinished;
+    state_ = State::kFinished;
   }
 }
 
 StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
   while (rows_.empty()) {
-    if (state_ == kFinished) return bigtable::QueryRow();
+    if (state_ == State::kFinished) return bigtable::QueryRow();
     internal::OptionsSpan span(options_);
     // Continue fetching if there are more rows in the stream.
     auto status = ReadFromStream();
@@ -93,7 +93,7 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 }
 
 Status PartialResultSetSource::ReadFromStream() {
-  if (state_ == kFinished) {
+  if (state_ == State::kFinished) {
     return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());
   }
@@ -114,11 +114,11 @@ Status PartialResultSetSource::ReadFromStream() {
   if (reader_->Read(resume_token_, result_set)) {
     return ProcessDataFromStream(result_set.result);
   }
-  state_ = kFinished;
-  // The uncommitted_rows_ is expected to be empty because the last successful
+  state_ = State::kFinished;
+  // The buffered_rows_ is expected to be empty because the last successful
   // read would have had a sentinel resume_token, causing
   // ProcessDataFromStream to commit them.
-  if (!uncommitted_rows_.empty()) {
+  if (!buffered_rows_.empty()) {
     return internal::InternalError("Stream ended with uncommitted rows.",
                                    GCP_ERROR_INFO());
   }
@@ -131,7 +131,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
   // resume_token should be discarded.
   if (result.reset()) {
     read_buffer_.clear();
-    uncommitted_rows_.clear();
+    buffered_rows_.clear();
   }
 
   // Reserve space of the buffer at the start of a new batch of data.
@@ -145,43 +145,40 @@ Status PartialResultSetSource::ProcessDataFromStream(
 
   // TODO(#15617): Validate that the checksum matches the contents of `buffer`.
   if (result.has_batch_checksum() && !read_buffer_.empty()) {
-    google::bigtable::v2::ProtoRows proto_rows;
-    if (proto_rows.ParseFromString(read_buffer_)) {
-      auto status = BufferProtoRows(proto_rows);
+    if (proto_rows_.ParseFromString(read_buffer_)) {
+      auto status = BufferProtoRows();
       if (!status.ok()) return status;
+      proto_rows_.Clear();
     } else {
       read_buffer_.clear();
-      uncommitted_rows_.clear();
+      buffered_rows_.clear();
       return internal::InternalError("Failed to parse ProtoRows from buffer");
     }
   }
 
-  // Buffered rows in uncommitted_rows_ are ready to be committed into rows_
+  // Buffered rows in buffered_rows_ are ready to be committed into rows_
   // once the resume_token is received.
   if (!result.resume_token().empty()) {
-    rows_.insert(rows_.end(), uncommitted_rows_.begin(),
-                 uncommitted_rows_.end());
-    uncommitted_rows_.clear();
+    rows_.insert(rows_.end(), buffered_rows_.begin(), buffered_rows_.end());
+    buffered_rows_.clear();
     read_buffer_.clear();
     resume_token_ = result.resume_token();
   }
   return {};  // OK
 }
 
-Status PartialResultSetSource::BufferProtoRows(
-    google::bigtable::v2::ProtoRows const& proto_rows) {
+Status PartialResultSetSource::BufferProtoRows() {
   if (metadata_.has_value()) {
     auto const& proto_schema = metadata_->proto_schema();
     auto const columns_size = proto_schema.columns_size();
-    auto const& proto_values = proto_rows.values();
+    auto const& proto_values = proto_rows_.values();
 
-    if (columns_size == 0) {
-      if (!proto_values.empty()) {
-        return internal::InternalError(
-            "ProtoRows has values but the schema has no columns.",
-            GCP_ERROR_INFO());
-      }
-    } else if (proto_values.size() % columns_size != 0) {
+    if (columns_size == 0 && !proto_values.empty()) {
+      return internal::InternalError(
+          "ProtoRows has values but the schema has no columns.",
+          GCP_ERROR_INFO());
+    }
+    if (proto_values.size() % columns_size != 0) {
       return internal::InternalError(
           "The number of values in ProtoRows is not a multiple of the "
           "number of columns in the schema.",
@@ -198,7 +195,7 @@ Status PartialResultSetSource::BufferProtoRows(
         values.push_back(std::move(value));
         ++parsed_value;
       }
-      uncommitted_rows_.push_back(
+      buffered_rows_.push_back(
           QueryRowFriend::MakeQueryRow(std::move(values), columns_));
       values.clear();
     }

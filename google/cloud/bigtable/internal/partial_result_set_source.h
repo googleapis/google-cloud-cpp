@@ -38,15 +38,10 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PartialResultSourceInterface : public bigtable::ResultSourceInterface {};
-
-/**
- * Class used to iterate over the rows returned from a read operations.
- */
-class PartialResultSetSource : public PartialResultSourceInterface {
+class PartialResultSetSource : public bigtable::ResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
-  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> Create(
       absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
       std::unique_ptr<PartialResultSetReader> reader);
 
@@ -65,7 +60,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   Status ReadFromStream();
   Status ProcessDataFromStream(google::bigtable::v2::PartialResultSet& result);
-  Status BufferProtoRows(google::bigtable::v2::ProtoRows const& proto_rows);
+  Status BufferProtoRows();
   std::string read_buffer_;
 
   // Arena for the values_ field.
@@ -80,7 +75,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   std::shared_ptr<std::vector<std::string>> columns_;
   std::deque<bigtable::QueryRow> rows_;
-  std::vector<bigtable::QueryRow> uncommitted_rows_;
+  std::vector<bigtable::QueryRow> buffered_rows_;
+  google::bigtable::v2::ProtoRows proto_rows_;
 
   // When engaged, the token we can use to resume the stream immediately after
   // any data in (or previously in) `rows_`. When disengaged, we have already
@@ -89,7 +85,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   absl::optional<std::string> resume_token_ = "";
 
   // The state of our PartialResultSetReader.
-  enum : char {
+  enum class State {
     // `Read()` has yet to return nullopt.
     kReading,
     // `Read()` has returned nullopt, but we are yet to call `Finish()`.
@@ -97,7 +93,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
     // `Finish()` has been called, which means `NextRow()` has returned
     // either an empty row or an error status.
     kFinished,
-  } state_ = kReading;
+  };
+  State state_ = State::kReading;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -1,4 +1,3 @@
-
 // Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,7 +53,7 @@ struct StringOption {
 // Create the `PartialResultSetSource` within an `OptionsSpan` that has its
 // `StringOption` set to the current test name, so that we might check that
 // all `PartialResultSetReader` calls happen within a matching span.
-StatusOr<std::unique_ptr<PartialResultSourceInterface>>
+StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 CreatePartialResultSetSource(
     absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::unique_ptr<PartialResultSetReader> reader, Options opts = {}) {
