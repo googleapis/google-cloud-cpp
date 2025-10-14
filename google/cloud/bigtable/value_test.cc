@@ -200,10 +200,13 @@ TEST(Value, ArrayValueBasedEquality) {
   std::vector<Value> test_cases = {
       Value(std::vector<double>{1.2, 3.4}),
       Value(std::make_tuple(1.2, 3.4)),
+      Value(std::unordered_map<std::int64_t, std::string>{{12, "foo"},
+                                                          {34, "bar"}}),
 
       // empty containers
       Value(std::vector<double>()),
       Value(std::make_tuple()),
+      Value(std::unordered_map<std::int64_t, std::string>()),
   };
 
   for (size_t i = 0; i < test_cases.size(); i++) {
@@ -218,6 +221,33 @@ TEST(Value, ArrayValueBasedEquality) {
       }
       EXPECT_NE(tc1, tc2);
     }
+  }
+}
+
+TEST(Value, UnsortedKeysMapEquality) {
+  std::vector<std::pair<Value, Value>> const test_cases = {
+      {
+          Value(std::unordered_map<std::int64_t, std::string>{{12, "foo"},
+                                                              {34, "bar"}}),
+          Value(std::unordered_map<std::int64_t, std::string>{{34, "bar"},
+                                                              {12, "foo"}}),
+      },
+      {
+          Value(std::unordered_map<std::string, std::string>{{"12", "foo"},
+                                                             {"34", "bar"}}),
+          Value(std::unordered_map<std::string, std::string>{{"34", "bar"},
+                                                             {"12", "foo"}}),
+      },
+      {
+          Value(std::unordered_map<Bytes, std::string>{{Bytes("12"), "foo"},
+                                                       {Bytes("34"), "bar"}}),
+          Value(std::unordered_map<Bytes, std::string>{{Bytes("34"), "bar"},
+                                                       {Bytes("12"), "foo"}}),
+      }
+
+  };
+  for (auto const& tc : test_cases) {
+    EXPECT_EQ(tc.first, tc.second);
   }
 }
 
@@ -236,7 +266,8 @@ TEST(Value, Equality) {
        Value(std::vector<double>{4.5, 6.7})},
       {Value(std::make_tuple(false, 123, "foo")),
        Value(std::make_tuple(true, 456, "bar"))},
-  };
+      {Value(std::unordered_map<std::int64_t, std::string>{{123, "foo"}}),
+       Value(std::unordered_map<std::int64_t, std::string>{{456, "bar"}})}};
 
   for (auto const& tc : test_cases) {
     EXPECT_EQ(tc.first, tc.first);
@@ -309,6 +340,19 @@ template <typename T,
 StatusOr<T> MovedFromString(Value const&) {
   return std::tuple<std::pair<std::string, std::string>, std::string>{
       std::pair<std::string, std::string>("name", ""), ""};
+}
+template <
+    typename T,
+    typename U =
+        decltype(std::declval<google::bigtable::v2::Value>().string_value()),
+    typename std::enable_if<
+        std::is_same<std::remove_cv_t<std::remove_reference_t<U>>,
+                     absl::Cord>::value>::type* = nullptr,
+    typename std::enable_if_t<
+        std::is_same<T, std::unordered_map<std::string, std::string>>::value,
+        int> = 0>
+StatusOr<T> MovedFromString(Value const&) {
+  return std::unordered_map<std::string, std::string>{{{"", ""}, {"", ""}}};
 }
 
 // NOTE: This test relies on unspecified behavior about the moved-from state
@@ -389,7 +433,7 @@ TEST(Value, RvalueGetVectorString) {
 // NOTE: This test relies on unspecified behavior about the moved-from state
 // of std::string. Specifically, this test relies on the fact that "large"
 // strings, when moved-from, end up empty. And we use this fact to verify that
-// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// bigtable::Value::get<T>() correctly handles moves. If this test ever breaks
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
 TEST(Value, RvalueGetStructString) {
@@ -412,12 +456,47 @@ TEST(Value, RvalueGetStructString) {
   EXPECT_EQ(Type({"name", ""}, ""), *s);
 }
 
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// bigtable::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetMapString) {
+  using Type = std::unordered_map<std::string, std::string>;
+  Type data{{"foo", std::string(128, 'x')}, {"bar", std::string(128, 'y')}};
+  Value v(data);
+
+  auto s = v.get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = MovedFromString<Type>(v);
+  ASSERT_STATUS_OK(s);
+  EXPECT_EQ(Type({{"", ""}, {"", ""}}), *s);
+}
+
 TEST(Value, BytesRelationalOperators) {
-  Bytes b1(std::string(1, '\x00'));
-  Bytes b2(std::string(1, '\xff'));
+  Bytes const b1(std::string(1, '\x00'));
+  Bytes const b2(std::string(1, '\xff'));
 
   EXPECT_EQ(b1, b1);
   EXPECT_NE(b1, b2);
+
+  // tests comparison operators
+  Bytes const b3(std::string("a"));
+  Bytes const b4(std::string("b"));
+  EXPECT_LT(b3, b4);
+  EXPECT_LE(b3, b4);
+  EXPECT_LE(b3, b3);
+  EXPECT_GT(b4, b3);
+  EXPECT_GE(b4, b3);
+  EXPECT_GE(b4, b4);
 }
 
 TEST(Value, ConstructionFromLiterals) {
@@ -439,6 +518,16 @@ TEST(Value, ConstructionFromLiterals) {
   std::vector<char const*> vec = {"foo", "bar"};
   Value v_vec(vec);
   EXPECT_STATUS_OK(v_vec.get<std::vector<std::string>>());
+
+  std::tuple<std::string, std::int64_t> tup = std::make_tuple("foo", 123);
+  Value v_tup(tup);
+  auto v_tup_res = v_tup.get<std::tuple<std::string, std::int64_t>>();
+  EXPECT_STATUS_OK(v_tup_res);
+
+  std::unordered_map<std::int64_t, std::string> m = {{12, "foo"}, {34, "bar"}};
+  Value v_map(m);
+  auto v_map_res = v_map.get<std::unordered_map<std::int64_t, std::string>>();
+  EXPECT_STATUS_OK(v_map_res);
 }
 
 TEST(Value, MixingTypes) {
@@ -647,6 +736,94 @@ TEST(Value, BigtableStructWithNull) {
             google::bigtable::v2::Value::KIND_NOT_SET);
 }
 
+TEST(Value, BigtableMap) {
+  // Using declarations to shorten the tests, making them more readable.
+  using std::int64_t;
+  using std::string;
+  using std::unordered_map;
+
+  auto map1 = unordered_map<string, int64_t>{{"foo", 1}, {"bar", 2}};
+  using T1 = decltype(map1);
+  Value v1(map1);
+  ASSERT_STATUS_OK(v1.get<T1>());
+  EXPECT_EQ(map1, *v1.get<T1>());
+  EXPECT_EQ(v1, v1);
+
+  auto map2 = unordered_map<string, int64_t>{{"baz", 3}, {"qux", 4}};
+  using T2 = decltype(map2);
+  Value v2(map2);
+  EXPECT_THAT(v2.get<T2>(), IsOkAndHolds(map2));
+  EXPECT_EQ(v2, v2);
+  EXPECT_NE(v2, v1);
+
+  EXPECT_EQ(map2, *v2.get<T1>());
+  EXPECT_NE(map2, *v1.get<T2>());
+
+  static_assert(std::is_same<T1, T2>::value,
+                "Two maps with same type and different values");
+
+  // v1 != v2, yet T2 works with v1 and vice versa
+  EXPECT_NE(v1, v2);
+  EXPECT_STATUS_OK(v1.get<T2>());
+  EXPECT_STATUS_OK(v2.get<T1>());
+
+  Value v_null(absl::optional<T1>{});
+  EXPECT_FALSE(v_null.get<absl::optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<absl::optional<T2>>()->has_value());
+
+  EXPECT_NE(v1, v_null);
+  EXPECT_NE(v2, v_null);
+
+  auto array_map = std::vector<T2>{
+      T2{{"foo2", 1}},
+      T2{{"bar2", 2}},
+      T2{{"baz2", 3}},
+  };
+  using T3 = decltype(array_map);
+  Value v3(array_map);
+  EXPECT_STATUS_OK(v3.get<T3>());
+  EXPECT_THAT(v3.get<T2>(), Not(IsOk()));
+  EXPECT_THAT(v3.get<T1>(), Not(IsOk()));
+
+  EXPECT_THAT(v3.get<T3>(), IsOkAndHolds(array_map));
+
+  auto empty = unordered_map<Bytes, std::string>{};
+  using T4 = decltype(empty);
+  Value v4(empty);
+  EXPECT_STATUS_OK(v4.get<T4>());
+  EXPECT_THAT(v4.get<T3>(), Not(IsOk()));
+  EXPECT_EQ(v4, v4);
+  EXPECT_NE(v4, v3);
+
+  EXPECT_THAT(v4.get<T4>(), IsOkAndHolds(empty));
+
+  auto deeply_nested = unordered_map<
+      std::int64_t,
+      std::unordered_map<std::string, std::vector<std::string>>>{};
+  using T5 = decltype(deeply_nested);
+  Value v5(deeply_nested);
+  EXPECT_STATUS_OK(v5.get<T5>());
+  EXPECT_THAT(v5.get<T4>(), Not(IsOk()));
+  EXPECT_EQ(v5, v5);
+  EXPECT_NE(v5, v4);
+
+  EXPECT_THAT(v5.get<T5>(), IsOkAndHolds(deeply_nested));
+
+  // tests maps with bytes key
+  auto byte_key = unordered_map<Bytes, string>{{Bytes("foo"), "bar"},
+                                               {Bytes("baz"), "qux"}};
+  EXPECT_EQ(byte_key[Bytes("foo")], "bar");
+  using T6 = decltype(byte_key);
+  Value v6(byte_key);
+  EXPECT_STATUS_OK(v6.get<T6>());
+  EXPECT_THAT(v6.get<T5>(), Not(IsOk()));
+  EXPECT_EQ(v6, v6);
+  EXPECT_NE(v6, v5);
+  auto retrieved_byte_key = v6.get<T6>();
+  EXPECT_THAT(retrieved_byte_key, IsOkAndHolds(byte_key));
+  EXPECT_EQ(byte_key[Bytes("foo")], (*retrieved_byte_key)[Bytes("foo")]);
+}
+
 TEST(Value, ProtoConversionBool) {
   for (auto b : {true, false}) {
     Value const v(b);
@@ -809,6 +986,24 @@ TEST(Value, ProtoConversionStruct) {
   EXPECT_EQ(42, p.second.array_value().values(1).int_value());
 }
 
+TEST(Value, ProtoConversionMap) {
+  using M = std::unordered_map<Bytes, std::int64_t>;
+  auto data = M{{Bytes("foo"), 12}, {Bytes("bar"), 34}};
+  Value const v(data);
+  auto const p = bigtable_internal::ToProto(v);
+  EXPECT_EQ(v, bigtable_internal::FromProto(p.first, p.second));
+  EXPECT_TRUE(p.first.has_map_type());
+
+  auto const& key_type = p.first.map_type().key_type();
+  auto const& value_type = p.first.map_type().value_type();
+  EXPECT_TRUE(key_type.has_bytes_type());
+  EXPECT_TRUE(value_type.has_int64_type());
+
+  Value const null_struct_value(MakeNullValue<M>());
+  auto const null_struct_proto = bigtable_internal::ToProto(null_struct_value);
+  EXPECT_TRUE(p.first.has_map_type());
+}
+
 void SetNullProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.second.clear_kind();
@@ -865,6 +1060,23 @@ void SetProtoKind(Value& v, std::tuple<std::int64_t, std::int64_t> const& x) {
   v = bigtable_internal::FromProto(p.first, p.second);
 }
 
+void SetProtoKind(Value& v,
+                  std::unordered_map<std::string, std::int64_t> const& x) {
+  auto p = bigtable_internal::ToProto(v);
+  auto list = *p.second.mutable_array_value();
+  for (auto&& e : x) {
+    google::bigtable::v2::Value k;
+    k.set_string_value(e.first);
+    google::bigtable::v2::Value val;
+    val.set_int_value(e.second);
+    google::bigtable::v2::Value item;
+    *(*item.mutable_array_value()).add_values() = k;
+    *(*item.mutable_array_value()).add_values() = val;
+    *list.add_values() = item;
+  }
+  v = bigtable_internal::FromProto(p.first, p.second);
+}
+
 void ClearProtoKind(Value& v) {
   auto p = bigtable_internal::ToProto(v);
   p.first.clear_kind();
@@ -893,6 +1105,10 @@ TEST(Value, GetBadBool) {
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 }
 
@@ -927,6 +1143,10 @@ TEST(Value, GetBadFloat64) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<double>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadFloat32) {
@@ -960,6 +1180,10 @@ TEST(Value, GetBadFloat32) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadString) {
@@ -981,6 +1205,10 @@ TEST(Value, GetBadString) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadBytes) {
@@ -1001,6 +1229,10 @@ TEST(Value, GetBadBytes) {
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 }
 
@@ -1026,6 +1258,10 @@ TEST(Value, GetBadTimestamp) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadDate) {
@@ -1050,6 +1286,10 @@ TEST(Value, GetBadDate) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadOptional) {
@@ -1067,6 +1307,10 @@ TEST(Value, GetBadOptional) {
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
   EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 }
 
@@ -1092,6 +1336,10 @@ TEST(Value, GetBadArray) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadStruct) {
@@ -1116,6 +1364,39 @@ TEST(Value, GetBadStruct) {
 
   SetProtoKind(v, std::make_tuple(1, 2));
   EXPECT_THAT(v.get<std::tuple<double>>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<std::tuple<double>>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadMap) {
+  using M = std::unordered_map<std::string, double>;
+  Value v(M{{"foo", 12.34}, {"bar", 56.78}});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetNullProtoKind(v);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, std::vector<int64_t>{1, 2});
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(v, std::make_tuple(1, 2));
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
+
+  SetProtoKind(
+      v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
+  EXPECT_THAT(v.get<M>(), Not(IsOk()));
 }
 
 TEST(Value, OutputStream) {
@@ -1163,6 +1444,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<std::string>{"\"a\"", "\"b\""}),
        R"(["\"a\"", "\"b\""])", normal},
+      {Value(std::unordered_map<std::string, std::string>{{"\"a\"", "\"b\""}}),
+       R"({{"\"a\"" : "\"b\""}})", normal},
 
       // Tests null values
       {MakeNullValue<bool>(), "NULL", normal},
@@ -1241,7 +1524,62 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
       {MakeNullValue<std::tuple<float, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
-  };
+
+      // Tests maps
+      {Value(std::unordered_map<std::string, bool>{
+           {{"bar", false}, {"foo", true}}}),
+       R"({{"foo" : 1}, {"bar" : 0}})", normal},
+      {Value(std::unordered_map<std::string, bool>{
+           {{"bar", false}, {"foo", true}}}),
+       R"({{"foo" : true}, {"bar" : false}})", boolalpha},
+      {Value(std::unordered_map<std::string, std::int64_t>{
+           {{"bar", 12}, {"foo", 34}}}),
+       R"({{"foo" : 34}, {"bar" : 12}})", normal},
+      {Value(std::unordered_map<std::int64_t, std::int64_t>{
+           {{10, 11}, {12, 13}}}),
+       R"({{c : d}, {a : b}})", hex},
+      {Value(std::unordered_map<std::string, double>{
+           {{"bar", 12.0}, {"foo", 34.0}}}),
+       R"({{"foo" : 34}, {"bar" : 12}})", normal},
+      {Value(std::unordered_map<std::string, double>{
+           {{"bar", 2.0}, {"foo", 3.0}}}),
+       R"({{"foo" : 3.000}, {"bar" : 2.000}})", float4},
+      {Value(std::unordered_map<std::string, float>{
+           {{"bar", 12.0F}, {"foo", 34.0F}}}),
+       R"({{"foo" : 34}, {"bar" : 12}})", normal},
+      {Value(std::unordered_map<std::string, float>{
+           {{"bar", 2.0F}, {"foo", 3.0F}}}),
+       R"({{"foo" : 3.000}, {"bar" : 2.000}})", float4},
+      {Value(std::unordered_map<std::string, std::string>{
+           {{"bar", std::string("a")}, {"foo", std::string("b")}}}),
+       R"({{"foo" : "b"}, {"bar" : "a"}})", normal},
+      {Value(std::unordered_map<Bytes, Bytes>{
+           {Bytes(std::string("bar")), Bytes(std::string("foo"))}}),
+       R"({{B"bar" : B"foo"}})", normal},
+      {Value(std::unordered_map<Bytes, absl::CivilDay>{
+           {Bytes(std::string("bar")), absl::CivilDay()}}),
+       R"({{B"bar" : 1970-01-01}})", normal},
+      {Value(std::unordered_map<std::string, Timestamp>{{"bar", Timestamp()}}),
+       R"({{"bar" : 1970-01-01T00:00:00Z}})", normal},
+
+      // Tests maps with null elements
+      {Value(std::unordered_map<std::string, absl::optional<double>>{
+           {"foo", 2.0}, {"bar", absl::optional<double>()}}),
+       R"({{"bar" : NULL}, {"foo" : 2}})", normal},
+
+      // Tests null arrays
+      {MakeNullValue<std::unordered_map<std::int64_t, bool>>(), "NULL", normal},
+      {MakeNullValue<std::unordered_map<std::int64_t, std::int64_t>>(), "NULL",
+       normal},
+      {MakeNullValue<std::unordered_map<std::int64_t, double>>(), "NULL",
+       normal},
+      {MakeNullValue<std::unordered_map<std::int64_t, float>>(), "NULL",
+       normal},
+      {MakeNullValue<std::unordered_map<Bytes, std::string>>(), "NULL", normal},
+      {MakeNullValue<std::unordered_map<Bytes, Bytes>>(), "NULL", normal},
+      {MakeNullValue<std::unordered_map<Bytes, absl::CivilDay>>(), "NULL",
+       normal},
+      {MakeNullValue<std::unordered_map<Bytes, Timestamp>>(), "NULL", normal}};
 
   for (auto const& tc : test_case) {
     std::stringstream ss;
@@ -1305,6 +1643,9 @@ TEST(Value, OutputStreamMatchesT) {
 
   // std::tuple<...>
   // Not included, because a raw tuple cannot be streamed.
+
+  // std::unordered_map<...>
+  // Not included, because a raw map cannot be streamed.
 }
 
 }  // namespace

@@ -262,6 +262,36 @@ class LivestreamServiceConnection {
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(google::longrunning::Operation const& operation);
 
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartDistribution(
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> StartDistribution(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartDistribution(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopDistribution(
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> StopDistribution(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopDistribution(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
   CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request);
@@ -302,6 +332,10 @@ class LivestreamServiceConnection {
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
   UpdateInput(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(
+      google::cloud::video::livestream::v1::PreviewInputRequest const& request);
 
   virtual StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request);

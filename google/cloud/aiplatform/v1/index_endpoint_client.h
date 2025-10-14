@@ -799,8 +799,8 @@ class IndexEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeployedIndex.automatic_resources]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L195}
-  /// [google.cloud.aiplatform.v1.DeployedIndex.dedicated_resources]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L216}
+  /// [google.cloud.aiplatform.v1.DeployedIndex.automatic_resources]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L204}
+  /// [google.cloud.aiplatform.v1.DeployedIndex.dedicated_resources]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L225}
   /// [google.cloud.aiplatform.v1.MutateDeployedIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L330}
   /// [google.cloud.aiplatform.v1.MutateDeployedIndexResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L351}
   ///

@@ -286,6 +286,33 @@ class ReservationServiceConnection {
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(google::cloud::bigquery::reservation::v1::
+                             CreateReservationGroupRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request);
+
+  virtual Status DeleteReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request);
+
+  virtual StreamRange<
+      google::cloud::bigquery::reservation::v1::ReservationGroup>
+  ListReservationGroups(
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+          request);
 };
 
 /**

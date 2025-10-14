@@ -363,6 +363,18 @@ KeyManagementServiceTracingStub::MacVerify(
                            child_->MacVerify(context, options, request));
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceTracingStub::Decapsulate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "Decapsulate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->Decapsulate(context, options, request));
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceTracingStub::GenerateRandomBytes(
     grpc::ClientContext& context, Options const& options,

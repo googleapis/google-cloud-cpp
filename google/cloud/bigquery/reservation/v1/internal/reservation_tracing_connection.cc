@@ -284,6 +284,80 @@ ReservationServiceTracingConnection::UpdateBiReservation(
   return internal::EndSpan(*span, child_->UpdateBiReservation(request));
 }
 
+StatusOr<google::iam::v1::Policy>
+ReservationServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy>
+ReservationServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ReservationServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceTracingConnection::CreateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "CreateReservationGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateReservationGroup(request));
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceTracingConnection::GetReservationGroup(
+    google::cloud::bigquery::reservation::v1::GetReservationGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "GetReservationGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetReservationGroup(request));
+}
+
+Status ReservationServiceTracingConnection::DeleteReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "DeleteReservationGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteReservationGroup(request));
+}
+
+StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceTracingConnection::ListReservationGroups(
+    google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "ListReservationGroups");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListReservationGroups(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::reservation::v1::ReservationGroup>(
+      std::move(span), std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>

@@ -69,6 +69,16 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::StopChannel(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::StartDistribution(
+    google::cloud::video::livestream::v1::StartDistributionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::StopDistribution(
+    google::cloud::video::livestream::v1::StopDistributionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -91,6 +101,11 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteInput(
 
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateInput(
     google::cloud::video::livestream::v1::UpdateInputRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::PreviewInput(
+    google::cloud::video::livestream::v1::PreviewInputRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -286,6 +286,15 @@ KeyManagementServiceTracingConnection::MacVerify(
   return internal::EndSpan(*span, child_->MacVerify(request));
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceTracingConnection::Decapsulate(
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::KeyManagementServiceConnection::Decapsulate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Decapsulate(request));
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceTracingConnection::GenerateRandomBytes(
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {

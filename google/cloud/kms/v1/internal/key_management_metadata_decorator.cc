@@ -291,6 +291,15 @@ KeyManagementServiceMetadata::MacVerify(
   return child_->MacVerify(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceMetadata::Decapsulate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->Decapsulate(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceMetadata::GenerateRandomBytes(
     grpc::ClientContext& context, Options const& options,

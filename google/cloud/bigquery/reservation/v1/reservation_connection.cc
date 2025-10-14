@@ -186,6 +186,50 @@ ReservationServiceConnection::UpdateBiReservation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::iam::v1::Policy> ReservationServiceConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ReservationServiceConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnection::CreateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnection::GetReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        GetReservationGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ReservationServiceConnection::DeleteReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnection::ListReservationGroups(
+    google::cloud::bigquery::reservation::v1::
+        ListReservationGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::bigquery::reservation::v1::ReservationGroup>>();
+}
+
 std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

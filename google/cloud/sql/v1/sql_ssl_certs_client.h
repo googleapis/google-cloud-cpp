@@ -112,7 +112,7 @@ class SqlSslCertsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
-  /// [google.cloud.sql.v1.SqlSslCertsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L72}
+  /// [google.cloud.sql.v1.SqlSslCertsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L70}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
@@ -144,7 +144,7 @@ class SqlSslCertsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlSslCertsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L83}
+  /// [google.cloud.sql.v1.SqlSslCertsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L81}
   /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1418}
   ///
   // clang-format on
@@ -177,8 +177,8 @@ class SqlSslCertsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlSslCertsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L94}
-  /// [google.cloud.sql.v1.SslCertsInsertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L120}
+  /// [google.cloud.sql.v1.SqlSslCertsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L92}
+  /// [google.cloud.sql.v1.SslCertsInsertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L118}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
@@ -208,8 +208,8 @@ class SqlSslCertsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlSslCertsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L104}
-  /// [google.cloud.sql.v1.SslCertsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L137}
+  /// [google.cloud.sql.v1.SqlSslCertsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L102}
+  /// [google.cloud.sql.v1.SslCertsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L135}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
