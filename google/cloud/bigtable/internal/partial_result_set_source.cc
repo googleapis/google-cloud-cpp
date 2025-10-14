@@ -147,8 +147,8 @@ Status PartialResultSetSource::ProcessDataFromStream(
   if (result.has_batch_checksum() && !read_buffer_.empty()) {
     if (proto_rows_.ParseFromString(read_buffer_)) {
       auto status = BufferProtoRows();
-      if (!status.ok()) return status;
       proto_rows_.Clear();
+      if (!status.ok()) return status;
     } else {
       read_buffer_.clear();
       buffered_rows_.clear();
