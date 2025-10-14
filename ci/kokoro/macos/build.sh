@@ -80,6 +80,19 @@ printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
 printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 
+io::log_h1 "Network Diagnostics"
+io::log_h2 "Testing DNS Resolution"
+dig ghcr.io || true
+io::log_h2 "Testing Basic Reachability (ping)"
+ping -c 5 ghcr.io || true
+io::log_h2 "Tracing Route to Host"
+traceroute ghcr.io || true
+io::log_h2 "Testing Full Connection with Curl (verbose)"
+# We expect this curl command to hang and time out, replicating the error.
+# The gtimeout command will prevent it from stalling the build for too long.
+# We use 90s to be longer than the default 75s curl timeout.
+gtimeout 90s curl -v https://ghcr.io || true
+
 io::log_h2 "Brew packages"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
