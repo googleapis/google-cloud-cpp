@@ -40,7 +40,6 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
-using ::testing::ElementsAre;
 using ::testing::Return;
 using ::testing::UnitTest;
 
