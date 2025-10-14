@@ -46,7 +46,10 @@ class ResultSourceInterface {
   virtual StatusOr<bigtable::QueryRow> NextRow() = 0;
 
   /**
-   * Returns metadata about the result set.
+   * Returns metadata about the result set, such as the column names and types
+   *
+   * @see https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto
+   *     for more information.
    */
   virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
   Metadata() = 0;
@@ -73,7 +76,7 @@ class RowStream {
   }
 
   /// Returns a `RowStreamIterator` defining the end of this range.
-  RowStreamIterator end() { return {}; }
+  static RowStreamIterator end() { return {}; }
 
  private:
   std::unique_ptr<ResultSourceInterface> source_;
