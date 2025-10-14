@@ -182,6 +182,19 @@ struct GrpcBackgroundThreadsFactoryOption {
 };
 
 /**
+ * The gRPC HTTP/2 stream lookahead bytes.
+ *
+ * If set to a value > 0, this will also set `GRPC_ARG_HTTP2_BDP_PROBE` to 0.
+ * See go/gcs-grpc-stream-lookahead-proposal for details.
+ *
+ * @ingroup options
+ */
+struct GrpcStreamLookaheadBytesOption {
+  using Type = int;
+};
+
+
+/**
  * A list of all the gRPC options.
  */
 using GrpcOptionList =
