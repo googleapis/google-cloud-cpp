@@ -283,6 +283,8 @@ class Value {
     return GetValue(std::move(tag), std::move(value_), type_);
   }
 
+  google::bigtable::v2::Type const& type() const& { return type_; }
+
   bool is_null() const;
 
   // Equality operators are part of the interface, even if not implemented.

@@ -249,6 +249,8 @@ add_library(
     rpc_backoff_policy.h
     rpc_retry_policy.cc
     rpc_retry_policy.h
+    sql_statement.cc
+    sql_statement.h
     table.cc
     table.h
     table_admin.cc
