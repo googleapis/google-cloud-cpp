@@ -36,6 +36,7 @@ namespace {
 
 auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
 auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
+auto constexpr kDefaultMetricsExportTimeout = std::chrono::seconds(30);
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing

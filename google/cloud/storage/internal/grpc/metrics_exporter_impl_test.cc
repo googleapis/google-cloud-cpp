@@ -110,6 +110,22 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
             std::chrono::milliseconds(0));
 }
 
+TEST(GrpcMetricsExporter, CustomExportTimeout) {
+  auto config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<storage_experimental::GrpcMetricsPeriodOption>(
+              std::chrono::seconds(10))
+          .set<storage_experimental::GrpcMetricsExportTimeoutOption>(
+              std::chrono::seconds(2)));
+  ASSERT_TRUE(config.has_value());
+  EXPECT_EQ(config->project, Project("project-id-resource"));
+  EXPECT_EQ(config->reader_options.export_interval_millis,
+            std::chrono::seconds(10));
+  EXPECT_EQ(config->reader_options.export_timeout_millis,
+            std::chrono::seconds(2));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
