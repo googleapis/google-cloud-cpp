@@ -73,7 +73,7 @@ class Parameter {
     return !(a == b);
   }
 
-  friend std::ostream& operator<<(std::ostream& os, Parameter const& v);
+  friend std::ostream& operator<<(std::ostream& os, Parameter const& p);
 
  private:
   struct PrivateConstructor {};
