@@ -1399,21 +1399,101 @@ TEST(Value, GetBadMap) {
   EXPECT_THAT(v.get<M>(), Not(IsOk()));
 }
 
-TEST(Value, OutputStream) {
-  auto const normal = [](std::ostream& os) -> std::ostream& { return os; };
-  auto const hex = [](std::ostream& os) -> std::ostream& {
-    return os << std::hex;
-  };
-  auto const boolalpha = [](std::ostream& os) -> std::ostream& {
+struct OsModes {
+  static std::ostream& normal(std::ostream& os) { return os; };
+  static std::ostream& hex(std::ostream& os) { return os << std::hex; };
+  static std::ostream& boolalpha(std::ostream& os) {
     return os << std::boolalpha;
   };
-  auto const float4 = [](std::ostream& os) -> std::ostream& {
+  static std::ostream& float4(std::ostream& os) {
     return os << std::showpoint << std::setprecision(4);
   };
-  auto const alphahex = [](std::ostream& os) -> std::ostream& {
+  static std::ostream& alphahex(std::ostream& os) {
     return os << std::boolalpha << std::hex;
   };
+};
 
+TEST(Value, MapsWithValuesOutputStream) {
+  struct TestCase {
+    Value value;
+    std::vector<std::string> expected;
+    std::function<std::ostream&(std::ostream&)> manip;
+  };
+
+  std::vector<TestCase> test_case = {
+      {Value(std::unordered_map<std::string, bool>{
+           {{"bar", false}, {"foo", true}}}),
+       {R"({"foo" : 1})", R"({"bar" : 0})"},
+       OsModes::normal},
+      {Value(std::unordered_map<std::string, bool>{
+           {{"bar", false}, {"foo", true}}}),
+       {R"({"foo" : true})", R"({"bar" : false})"},
+       OsModes::boolalpha},
+      {Value(std::unordered_map<std::string, std::int64_t>{
+           {{"bar", 12}, {"foo", 34}}}),
+       {R"({"foo" : 34})", R"({"bar" : 12})"},
+       OsModes::normal},
+      {Value(std::unordered_map<std::int64_t, std::int64_t>{
+           {{10, 11}, {12, 13}}}),
+       {R"({c : d})", R"({a : b})"},
+       OsModes::hex},
+      {Value(std::unordered_map<std::string, double>{
+           {{"bar", 12.0}, {"foo", 34.0}}}),
+       {R"({"foo" : 34})", R"({"bar" : 12})"},
+       OsModes::normal},
+      {Value(std::unordered_map<std::string, double>{
+           {{"bar", 2.0}, {"foo", 3.0}}}),
+       {R"({"foo" : 3.000})", R"({"bar" : 2.000})"},
+       OsModes::float4},
+      {Value(std::unordered_map<std::string, float>{
+           {{"bar", 12.0F}, {"foo", 34.0F}}}),
+       {R"({"foo" : 34})", R"({"bar" : 12})"},
+       OsModes::normal},
+      {Value(std::unordered_map<std::string, float>{
+           {{"bar", 2.0F}, {"foo", 3.0F}}}),
+       {R"({"foo" : 3.000})", R"({"bar" : 2.000})"},
+       OsModes::float4},
+      {Value(std::unordered_map<std::string, std::string>{
+           {{"bar", std::string("a")}, {"foo", std::string("b")}}}),
+       {R"({"foo" : "b"})", R"({"bar" : "a"})"},
+       OsModes::normal},
+      {Value(std::unordered_map<Bytes, Bytes>{
+           {Bytes(std::string("bar")), Bytes(std::string("foo"))}}),
+       {R"({B"bar" : B"foo"})"},
+       OsModes::normal},
+      {Value(std::unordered_map<Bytes, absl::CivilDay>{
+           {Bytes(std::string("bar")), absl::CivilDay()}}),
+       {R"({B"bar" : 1970-01-01})"},
+       OsModes::normal},
+      {Value(std::unordered_map<std::string, Timestamp>{{"bar", Timestamp()}}),
+       {R"({"bar" : 1970-01-01T00:00:00Z})"},
+       OsModes::normal},
+
+      // Tests maps with null elements
+      {Value(std::unordered_map<std::string, absl::optional<double>>{
+           {"foo", 2.0}, {"bar", absl::optional<double>()}}),
+       {R"({"bar" : NULL})", R"({"foo" : 2})"},
+       OsModes::normal},
+
+  };
+
+  for (auto const& tc : test_case) {
+    std::stringstream ss;
+    tc.manip(ss) << tc.value;
+    // 2 outer brackets and 2(n - 1) commas and spaces.
+    size_t expected_length = 2 + (2 * (tc.expected.size() - 1));
+    std::cout << ss.str() << std::endl;
+    for (auto const& expected_kv : tc.expected) {
+      std::cout << expected_kv << std::endl;
+      EXPECT_TRUE(ss.str().find(expected_kv) != std::string::npos);
+      expected_length += expected_kv.size();
+    }
+    EXPECT_EQ(ss.str().size(), expected_length);
+    std::cout << std::endl;
+  }
+}
+
+TEST(Value, OutputStream) {
   struct TestCase {
     Value value;
     std::string expected;
@@ -1421,165 +1501,138 @@ TEST(Value, OutputStream) {
   };
 
   std::vector<TestCase> test_case = {
-      {Value(false), "0", normal},
-      {Value(true), "1", normal},
-      {Value(false), "false", boolalpha},
-      {Value(true), "true", boolalpha},
-      {Value(42), "42", normal},
-      {Value(42), "2a", hex},
-      {Value(42.0), "42", normal},
-      {Value(42.0), "42.00", float4},
-      {Value(42.0F), "42", normal},
-      {Value(42.0F), "42.00", float4},
-      {Value(""), "", normal},
-      {Value("foo"), "foo", normal},
-      {Value("NULL"), "NULL", normal},
-      {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
-      {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
-      {Value(absl::CivilDay()), "1970-01-01", normal},
+      {Value(false), "0", OsModes::normal},
+      {Value(true), "1", OsModes::normal},
+      {Value(false), "false", OsModes::boolalpha},
+      {Value(true), "true", OsModes::boolalpha},
+      {Value(42), "42", OsModes::normal},
+      {Value(42), "2a", OsModes::hex},
+      {Value(42.0), "42", OsModes::normal},
+      {Value(42.0), "42.00", OsModes::float4},
+      {Value(42.0F), "42", OsModes::normal},
+      {Value(42.0F), "42.00", OsModes::float4},
+      {Value(""), "", OsModes::normal},
+      {Value("foo"), "foo", OsModes::normal},
+      {Value("NULL"), "NULL", OsModes::normal},
+      {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")",
+       OsModes::normal},
+      {Value(Timestamp()), "1970-01-01T00:00:00Z", OsModes::normal},
+      {Value(absl::CivilDay()), "1970-01-01", OsModes::normal},
 
       // Tests string quoting: No quotes for scalars; quotes within aggregates
-      {Value(""), "", normal},
-      {Value("foo"), "foo", normal},
-      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
+      {Value(""), "", OsModes::normal},
+      {Value("foo"), "foo", OsModes::normal},
+      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])",
+       OsModes::normal},
       {Value(std::vector<std::string>{"\"a\"", "\"b\""}),
-       R"(["\"a\"", "\"b\""])", normal},
+       R"(["\"a\"", "\"b\""])", OsModes::normal},
       {Value(std::unordered_map<std::string, std::string>{{"\"a\"", "\"b\""}}),
-       R"({{"\"a\"" : "\"b\""}})", normal},
+       R"({{"\"a\"" : "\"b\""}})", OsModes::normal},
 
       // Tests null values
-      {MakeNullValue<bool>(), "NULL", normal},
-      {MakeNullValue<std::int64_t>(), "NULL", normal},
-      {MakeNullValue<double>(), "NULL", normal},
-      {MakeNullValue<float>(), "NULL", normal},
-      {MakeNullValue<std::string>(), "NULL", normal},
-      {MakeNullValue<Bytes>(), "NULL", normal},
-      {MakeNullValue<Timestamp>(), "NULL", normal},
-      {MakeNullValue<absl::CivilDay>(), "NULL", normal},
+      {MakeNullValue<bool>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::int64_t>(), "NULL", OsModes::normal},
+      {MakeNullValue<double>(), "NULL", OsModes::normal},
+      {MakeNullValue<float>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::string>(), "NULL", OsModes::normal},
+      {MakeNullValue<Bytes>(), "NULL", OsModes::normal},
+      {MakeNullValue<Timestamp>(), "NULL", OsModes::normal},
+      {MakeNullValue<absl::CivilDay>(), "NULL", OsModes::normal},
 
       // Tests arrays
-      {Value(std::vector<bool>{false, true}), "[0, 1]", normal},
-      {Value(std::vector<bool>{false, true}), "[false, true]", boolalpha},
-      {Value(std::vector<std::int64_t>{10, 11}), "[10, 11]", normal},
-      {Value(std::vector<std::int64_t>{10, 11}), "[a, b]", hex},
-      {Value(std::vector<double>{1.0, 2.0}), "[1, 2]", normal},
-      {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", float4},
-      {Value(std::vector<float>{1.0F, 2.0F}), "[1, 2]", normal},
-      {Value(std::vector<float>{1.0F, 2.0F}), "[1.000, 2.000]", float4},
-      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
-      {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
+      {Value(std::vector<bool>{false, true}), "[0, 1]", OsModes::normal},
+      {Value(std::vector<bool>{false, true}), "[false, true]",
+       OsModes::boolalpha},
+      {Value(std::vector<std::int64_t>{10, 11}), "[10, 11]", OsModes::normal},
+      {Value(std::vector<std::int64_t>{10, 11}), "[a, b]", OsModes::hex},
+      {Value(std::vector<double>{1.0, 2.0}), "[1, 2]", OsModes::normal},
+      {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", OsModes::float4},
+      {Value(std::vector<float>{1.0F, 2.0F}), "[1, 2]", OsModes::normal},
+      {Value(std::vector<float>{1.0F, 2.0F}), "[1.000, 2.000]",
+       OsModes::float4},
+      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])",
+       OsModes::normal},
+      {Value(std::vector<Bytes>{2}), R"([B"", B""])", OsModes::normal},
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
-       normal},
-      {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+       OsModes::normal},
+      {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]",
+       OsModes::normal},
 
       // Tests arrays with null elements
       {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
-       normal},
+       OsModes::normal},
 
       // Tests null arrays
-      {MakeNullValue<std::vector<bool>>(), "NULL", normal},
-      {MakeNullValue<std::vector<std::int64_t>>(), "NULL", normal},
-      {MakeNullValue<std::vector<double>>(), "NULL", normal},
-      {MakeNullValue<std::vector<float>>(), "NULL", normal},
-      {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
-      {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
-      {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
-      {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
+      {MakeNullValue<std::vector<bool>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<std::int64_t>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<double>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<float>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<std::string>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<Bytes>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::vector<Timestamp>>(), "NULL", OsModes::normal},
 
       // Tests structs
-      {Value(std::make_tuple(true, 123)), "(1, 123)", normal},
-      {Value(std::make_tuple(true, 123)), "(true, 7b)", alphahex},
+      {Value(std::make_tuple(true, 123)), "(1, 123)", OsModes::normal},
+      {Value(std::make_tuple(true, 123)), "(true, 7b)", OsModes::alphahex},
       {Value(std::make_tuple(std::make_pair("A", true),
                              std::make_pair("B", 123))),
-       R"(("A": 1, "B": 123))", normal},
+       R"(("A": 1, "B": 123))", OsModes::normal},
       {Value(std::make_tuple(std::make_pair("A", true),
                              std::make_pair("B", 123))),
-       R"(("A": true, "B": 7b))", alphahex},
+       R"(("A": true, "B": 7b))", OsModes::alphahex},
       {Value(std::make_tuple(
            std::vector<std::int64_t>{10, 11, 12},
            std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
-       R"(([10, 11, 12], "B": [13, 14, 15]))", normal},
+       R"(([10, 11, 12], "B": [13, 14, 15]))", OsModes::normal},
       {Value(std::make_tuple(
            std::vector<std::int64_t>{10, 11, 12},
            std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
-       R"(([a, b, c], "B": [d, e, f]))", hex},
+       R"(([a, b, c], "B": [d, e, f]))", OsModes::hex},
       {Value(std::make_tuple(std::make_tuple(
            std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
-       "((([10, 11, 12])))", normal},
+       "((([10, 11, 12])))", OsModes::normal},
       {Value(std::make_tuple(std::make_tuple(
            std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
-       "((([a, b, c])))", hex},
+       "((([a, b, c])))", OsModes::hex},
 
       // Tests struct with null members
-      {Value(std::make_tuple(absl::optional<bool>{})), "(NULL)", normal},
+      {Value(std::make_tuple(absl::optional<bool>{})), "(NULL)",
+       OsModes::normal},
       {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 123)",
-       normal},
-      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 7b)", hex},
+       OsModes::normal},
+      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 7b)",
+       OsModes::hex},
       {Value(std::make_tuple(absl::optional<bool>{},
                              absl::optional<std::int64_t>{})),
-       "(NULL, NULL)", normal},
+       "(NULL, NULL)", OsModes::normal},
 
       // Tests null structs
-      {MakeNullValue<std::tuple<bool>>(), "NULL", normal},
-      {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
-      {MakeNullValue<std::tuple<float, std::string>>(), "NULL", normal},
-      {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<bool>>(), "NULL", OsModes::normal},
+      {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL",
+       OsModes::normal},
+      {MakeNullValue<std::tuple<float, std::string>>(), "NULL",
+       OsModes::normal},
+      {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL",
+       OsModes::normal},
 
-      // Tests maps
-      {Value(std::unordered_map<std::string, bool>{
-           {{"bar", false}, {"foo", true}}}),
-       R"({{"foo" : 1}, {"bar" : 0}})", normal},
-      {Value(std::unordered_map<std::string, bool>{
-           {{"bar", false}, {"foo", true}}}),
-       R"({{"foo" : true}, {"bar" : false}})", boolalpha},
-      {Value(std::unordered_map<std::string, std::int64_t>{
-           {{"bar", 12}, {"foo", 34}}}),
-       R"({{"foo" : 34}, {"bar" : 12}})", normal},
-      {Value(std::unordered_map<std::int64_t, std::int64_t>{
-           {{10, 11}, {12, 13}}}),
-       R"({{c : d}, {a : b}})", hex},
-      {Value(std::unordered_map<std::string, double>{
-           {{"bar", 12.0}, {"foo", 34.0}}}),
-       R"({{"foo" : 34}, {"bar" : 12}})", normal},
-      {Value(std::unordered_map<std::string, double>{
-           {{"bar", 2.0}, {"foo", 3.0}}}),
-       R"({{"foo" : 3.000}, {"bar" : 2.000}})", float4},
-      {Value(std::unordered_map<std::string, float>{
-           {{"bar", 12.0F}, {"foo", 34.0F}}}),
-       R"({{"foo" : 34}, {"bar" : 12}})", normal},
-      {Value(std::unordered_map<std::string, float>{
-           {{"bar", 2.0F}, {"foo", 3.0F}}}),
-       R"({{"foo" : 3.000}, {"bar" : 2.000}})", float4},
-      {Value(std::unordered_map<std::string, std::string>{
-           {{"bar", std::string("a")}, {"foo", std::string("b")}}}),
-       R"({{"foo" : "b"}, {"bar" : "a"}})", normal},
-      {Value(std::unordered_map<Bytes, Bytes>{
-           {Bytes(std::string("bar")), Bytes(std::string("foo"))}}),
-       R"({{B"bar" : B"foo"}})", normal},
-      {Value(std::unordered_map<Bytes, absl::CivilDay>{
-           {Bytes(std::string("bar")), absl::CivilDay()}}),
-       R"({{B"bar" : 1970-01-01}})", normal},
-      {Value(std::unordered_map<std::string, Timestamp>{{"bar", Timestamp()}}),
-       R"({{"bar" : 1970-01-01T00:00:00Z}})", normal},
-
-      // Tests maps with null elements
-      {Value(std::unordered_map<std::string, absl::optional<double>>{
-           {"foo", 2.0}, {"bar", absl::optional<double>()}}),
-       R"({{"bar" : NULL}, {"foo" : 2}})", normal},
-
-      // Tests null arrays
-      {MakeNullValue<std::unordered_map<std::int64_t, bool>>(), "NULL", normal},
+      // Tests null maps
+      {MakeNullValue<std::unordered_map<std::int64_t, bool>>(), "NULL",
+       OsModes::normal},
       {MakeNullValue<std::unordered_map<std::int64_t, std::int64_t>>(), "NULL",
-       normal},
+       OsModes::normal},
       {MakeNullValue<std::unordered_map<std::int64_t, double>>(), "NULL",
-       normal},
+       OsModes::normal},
       {MakeNullValue<std::unordered_map<std::int64_t, float>>(), "NULL",
-       normal},
-      {MakeNullValue<std::unordered_map<Bytes, std::string>>(), "NULL", normal},
-      {MakeNullValue<std::unordered_map<Bytes, Bytes>>(), "NULL", normal},
+       OsModes::normal},
+      {MakeNullValue<std::unordered_map<Bytes, std::string>>(), "NULL",
+       OsModes::normal},
+      {MakeNullValue<std::unordered_map<Bytes, Bytes>>(), "NULL",
+       OsModes::normal},
       {MakeNullValue<std::unordered_map<Bytes, absl::CivilDay>>(), "NULL",
-       normal},
-      {MakeNullValue<std::unordered_map<Bytes, Timestamp>>(), "NULL", normal}};
+       OsModes::normal},
+      {MakeNullValue<std::unordered_map<Bytes, Timestamp>>(), "NULL",
+       OsModes::normal}};
 
   for (auto const& tc : test_case) {
     std::stringstream ss;
