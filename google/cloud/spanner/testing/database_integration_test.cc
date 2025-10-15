@@ -94,6 +94,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           DateValue DATE,
           JsonValue JSON,
           NumericValue NUMERIC,
+          UuidValue UUID,
           ArrayBoolValue ARRAY<BOOL>,
           ArrayInt64Value ARRAY<INT64>,
           ArrayFloat64Value ARRAY<FLOAT64>,
@@ -107,7 +108,8 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayTimestampValue ARRAY<TIMESTAMP>,
           ArrayDateValue ARRAY<DATE>,
           ArrayJsonValue ARRAY<JSON>,
-          ArrayNumericValue ARRAY<NUMERIC>
+          ArrayNumericValue ARRAY<NUMERIC>,
+          ArrayUuidValue ARRAY<UUID>
         ) PRIMARY KEY (Id)
       )sql"));
   if (!emulator_) {  // proto columns
