@@ -1482,14 +1482,11 @@ TEST(Value, MapsWithValuesOutputStream) {
     tc.manip(ss) << tc.value;
     // 2 outer brackets and 2(n - 1) commas and spaces.
     size_t expected_length = 2 + (2 * (tc.expected.size() - 1));
-    std::cout << ss.str() << std::endl;
     for (auto const& expected_kv : tc.expected) {
-      std::cout << expected_kv << std::endl;
       EXPECT_TRUE(ss.str().find(expected_kv) != std::string::npos);
       expected_length += expected_kv.size();
     }
     EXPECT_EQ(ss.str().size(), expected_length);
-    std::cout << std::endl;
   }
 }
 
