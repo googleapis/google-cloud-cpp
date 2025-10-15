@@ -92,8 +92,6 @@ class Parameter {
  * Parameter placeholders are specified by `@<param name>` in the SQL string.
  * Values for parameters are a collection of `std::pair<std::string const,
  * google::cloud:bigtable::Value>`.
- * @par Example
- * @snippet samples.cc bigtable-sql-statement-params
  */
 class SqlStatement {
  public:
