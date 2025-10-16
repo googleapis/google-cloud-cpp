@@ -110,6 +110,16 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
             std::chrono::milliseconds(0));
 }
 
+TEST(GrpcMetricsExporter, DefaultExportTimeout) {
+  auto config = MakeMeterProviderConfig(FullResource(), TestOptions());
+  ASSERT_TRUE(config.has_value());
+  EXPECT_EQ(config->project, Project("project-id-resource"));
+  EXPECT_EQ(config->reader_options.export_interval_millis,
+            std::chrono::seconds(60));
+  EXPECT_EQ(config->reader_options.export_timeout_millis,
+            std::chrono::seconds(30));
+}
+
 TEST(GrpcMetricsExporter, CustomExportTimeout) {
   auto config = MakeMeterProviderConfig(
       FullResource(),
