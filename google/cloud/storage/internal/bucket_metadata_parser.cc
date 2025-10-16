@@ -192,6 +192,49 @@ Status ParseIamConfiguration(BucketMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseIpFilter(BucketMetadata& meta, nlohmann::json const& json) {
+  if (!json.contains("ipFilter")) return Status{};
+  BucketIpFilter value;
+  auto f = json["ipFilter"];
+  if (f.contains("mode")) {
+    value.mode = f.value("mode", "");
+  }
+  if (f.contains("allowAllServiceAgentAccess")) {
+    value.allow_all_service_agent_access =
+        f.value("allowAllServiceAgentAccess", false);
+  }
+  if (f.contains("allowCrossOrgVpcs")) {
+    value.allow_cross_org_vpcs = f.value("allowCrossOrgVpcs", false);
+  }
+  if (f.contains("publicNetworkSource")) {
+    BucketIpFilterPublicNetworkSource pns;
+    auto p = f["publicNetworkSource"];
+    if (p.contains("allowedIpCidrRanges")) {
+      for (auto const& kv : p["allowedIpCidrRanges"].items()) {
+        pns.allowed_ip_cidr_ranges.emplace_back(kv.value().get<std::string>());
+      }
+    }
+    value.public_network_source = std::move(pns);
+  }
+  if (f.contains("vpcNetworkSources")) {
+    std::vector<BucketIpFilterVpcNetworkSource> vns;
+    for (auto const& kv : f["vpcNetworkSources"].items()) {
+      BucketIpFilterVpcNetworkSource entry;
+      entry.network = kv.value().value("network", "");
+      if (kv.value().contains("allowedIpCidrRanges")) {
+        for (auto const& ip : kv.value()["allowedIpCidrRanges"].items()) {
+          entry.allowed_ip_cidr_ranges.emplace_back(
+              ip.value().get<std::string>());
+        }
+      }
+      vns.push_back(std::move(entry));
+    }
+    value.vpc_network_sources = std::move(vns);
+  }
+  meta.set_ip_filter(std::move(value));
+  return Status{};
+}
+
 Status ParseLifecycle(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("lifecycle")) return Status{};
   auto const& l = json["lifecycle"];
@@ -402,6 +445,38 @@ void ToJsonIamConfiguration(nlohmann::json& json, BucketMetadata const& meta) {
   json["iamConfiguration"] = std::move(value);
 }
 
+void ToJsonIpFilter(nlohmann::json& json, BucketMetadata const& meta) {
+  if (!meta.has_ip_filter()) return;
+  nlohmann::json ip_filter;
+  auto const& f = meta.ip_filter();
+  if (f.mode.has_value()) {
+    ip_filter["mode"] = *f.mode;
+  }
+  if (f.allow_all_service_agent_access.has_value()) {
+    ip_filter["allowAllServiceAgentAccess"] = *f.allow_all_service_agent_access;
+  }
+  if (f.allow_cross_org_vpcs.has_value()) {
+    ip_filter["allowCrossOrgVpcs"] = *f.allow_cross_org_vpcs;
+  }
+  if (f.public_network_source.has_value()) {
+    nlohmann::json pns;
+    pns["allowedIpCidrRanges"] =
+        f.public_network_source->allowed_ip_cidr_ranges;
+    ip_filter["publicNetworkSource"] = std::move(pns);
+  }
+  if (f.vpc_network_sources.has_value()) {
+    nlohmann::json vns;
+    for (auto const& v : *f.vpc_network_sources) {
+      nlohmann::json entry;
+      entry["network"] = v.network;
+      entry["allowedIpCidrRanges"] = v.allowed_ip_cidr_ranges;
+      vns.push_back(std::move(entry));
+    }
+    ip_filter["vpcNetworkSources"] = std::move(vns);
+  }
+  json["ipFilter"] = std::move(ip_filter);
+}
+
 void ToJsonLabels(nlohmann::json& json, BucketMetadata const& meta) {
   if (meta.labels().empty()) return;
   nlohmann::json value;
@@ -544,6 +619,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
       },
       ParseHierarchicalNamespace,
       ParseIamConfiguration,
+      ParseIpFilter,
       [](BucketMetadata& meta, nlohmann::json const& json) {
         meta.set_id(json.value("id", ""));
         return Status{};
@@ -634,6 +710,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   ToJsonEncryption(json, meta);
   ToJsonHierarchicalNamespace(json, meta);
   ToJsonIamConfiguration(json, meta);
+  ToJsonIpFilter(json, meta);
   ToJsonLabels(json, meta);
   ToJsonLifecycle(json, meta);
   ToJsonLocation(json, meta);
