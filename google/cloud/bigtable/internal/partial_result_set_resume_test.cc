@@ -196,7 +196,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
 
 TEST(PartialResultSetResume, PermanentError) {
   auto make_response = [](std::vector<std::string> const& values,
-                          std::string resume_token) {
+                          std::string const& resume_token) {
     google::bigtable::v2::PartialResultSet response;
     google::bigtable::v2::ProtoRows proto_rows;
     for (auto const& v : values) {
@@ -257,7 +257,7 @@ TEST(PartialResultSetResume, PermanentError) {
 
 TEST(PartialResultSetResume, TransientNonIdempotent) {
   auto make_response = [](std::vector<std::string> const& values,
-                          std::string resume_token) {
+                          std::string const& resume_token) {
     google::bigtable::v2::PartialResultSet response;
     google::bigtable::v2::ProtoRows proto_rows;
     for (auto const& v : values) {
