@@ -27,6 +27,12 @@ readonly BINARY_DIR="cmake-out/macos-vcpkg"
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
+echo "--- Network Diagnostics ---"
+ping -c 20 ghcr.io
+curl -Iv https://ghcr.io
+nslookup ghcr.io
+echo "--- End Network Diagnostics ---"
+
 io::log_h2 "Update or install dependencies"
 # Install bash and ninja
 brew install bash ninja

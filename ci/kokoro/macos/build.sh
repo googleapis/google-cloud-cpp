@@ -84,11 +84,23 @@ io::log_h2 "Brew packages"
 export HOMEBREW_CURL_RETRIES=3
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+echo "--- Network Diagnostics ---"
+ping -c 20 ghcr.io
+curl -Iv https://ghcr.io
+nslookup ghcr.io
+echo "--- End Network Diagnostics ---"
+
+io::log_yellow "Calling brew list --versions --formula"
 brew list --versions --formula || io::log_yellow \
   "brew list --formula failed. Trusting Homebrew's fallback and continuing."
+io::log_yellow "Calling brew list --versions --cask"
 brew list --versions --cask || io::log_yellow \
   "brew list --cask failed. Trusting Homebrew's fallback and continuing."
-brew list --versions coreutils || brew install coreutils
+if ! brew list --versions coreutils >/dev/null 2>&1; then
+  io::log_yellow "coreutils not found. Attempting to install..."
+  brew install coreutils
+fi
 if [[ "${RUNNING_CI:-}" = "yes" ]]; then
   # We use `gcloud alpha storage` as it significantly improves the
   # upload and download performance of the cache.  If this step fails
