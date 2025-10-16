@@ -110,7 +110,7 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
             std::chrono::milliseconds(0));
 }
 
-TEST(GrpcMetricsExporter, DefaultExportTimeout) {
+TEST(GrpcMetricsExporter, DefaultExportTime) {
   auto config = MakeMeterProviderConfig(FullResource(), TestOptions());
   ASSERT_TRUE(config.has_value());
   EXPECT_EQ(config->project, Project("project-id-resource"));
@@ -120,7 +120,7 @@ TEST(GrpcMetricsExporter, DefaultExportTimeout) {
             std::chrono::seconds(30));
 }
 
-TEST(GrpcMetricsExporter, CustomExportTimeout) {
+TEST(GrpcMetricsExporter, CustomExportTime) {
   auto config = MakeMeterProviderConfig(
       FullResource(),
       TestOptions()
