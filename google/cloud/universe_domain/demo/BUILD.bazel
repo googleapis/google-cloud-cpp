@@ -16,9 +16,11 @@ licenses(["notice"])  # Apache 2.0
 
 service_demos = [
     "bigquery",
+    "bigtable",
     "compute",
     "kms",
     "pubsub",
+    "spanner",
     "storage",
 ]
 
