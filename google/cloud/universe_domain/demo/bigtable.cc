@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) try {
       admin::MakeBigtableInstanceAdminConnection(*ud_options));
 
   std::cout << "bigtable.ListInstances:\n";
-  auto response = client.ListInstances(location.FullName());
+  auto response = client.ListInstances(location.project().FullName());
   if (!response) throw std::move(response).status();
   for (auto const& i : response->instances()) {
     std::string name = i.name();
