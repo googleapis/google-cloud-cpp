@@ -28,10 +28,9 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 io::log_h2 "Update or install dependencies"
-# Install bash and ninja
-brew install --build-from-source bash ninja
+brew install --build-from-source bash ninja readline libunistring gettext
 
-# Install a specific version of CMake to match our GHA builds
+# Install a specific version of CMake
 (
   cd "${HOME}"
   # Create a temporary local tap
