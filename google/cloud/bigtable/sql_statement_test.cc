@@ -62,7 +62,7 @@ TEST(SqlStatementTest, GetParameterExists) {
   auto results = stmt.GetParameter("first");
   ASSERT_STATUS_OK(results);
   EXPECT_EQ(expected, *results);
-  EXPECT_EQ(std::string("Elwood"), *results->get<std::string>());
+  EXPECT_TRUE(results->type().has_string_type());
 }
 
 TEST(SqlStatementTest, GetParameterNotExist) {

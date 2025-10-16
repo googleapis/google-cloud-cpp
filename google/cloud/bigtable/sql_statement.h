@@ -66,12 +66,7 @@ class Parameter {
   Parameter& operator=(Parameter const&) = default;
   Parameter& operator=(Parameter&&) = default;
 
-  google::bigtable::v2::Type const& type() const { return value_.type(); }
-
-  template <typename T>
-  StatusOr<T> get() const& {
-    return value_.get<T>();
-  }
+  google::bigtable::v2::Type const& type() const { return value_.type_; }
 
   friend bool operator==(Parameter const& a, Parameter const& b);
   friend bool operator!=(Parameter const& a, Parameter const& b) {
@@ -136,7 +131,7 @@ class SqlStatement {
   std::vector<std::string> ParameterNames() const;
 
   /**
-   * Returns the value of the requested parameter.
+   * Returns the requested parameter.
    * @param parameter_name name of requested parameter.
    * @return `StatusCode::kNotFound` returned for invalid names.
    */
