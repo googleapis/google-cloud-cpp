@@ -20,10 +20,11 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-PrepareQueryProto SqlStatementInternals::ToProto(bigtable::SqlStatement s) {
+PrepareQueryProto SqlStatementInternals::ToProto(
+    bigtable::SqlStatement s, bigtable::InstanceResource const& r) {
   ::google::bigtable::v2::PrepareQueryRequest statement_proto;
   statement_proto.set_query(std::move(s.statement_));
-  statement_proto.set_instance_name(std::move(s.instance_name_));
+  statement_proto.set_instance_name(r.FullName());
   if (!s.params_.empty()) {
     auto& types = *statement_proto.mutable_param_types();
     for (auto& param : s.params_) {
@@ -48,23 +49,23 @@ std::vector<std::string> SqlStatement::ParameterNames() const {
   return keys;
 }
 
-google::cloud::StatusOr<Value> SqlStatement::GetParameter(
+google::cloud::StatusOr<Parameter> SqlStatement::GetParameter(
     std::string const& parameter_name) const {
   auto iter = params_.find(parameter_name);
   if (iter != params_.end()) {
     // This method does not return a const value, so we copy it.
-    return Value(iter->second.value());
+    return iter->second;
   }
   return internal::NotFoundError("No such parameter: " + parameter_name,
                                  GCP_ERROR_INFO());
 }
 
 bool operator==(Parameter const& a, Parameter const& b) {
-  return a.value() == b.value();
+  return a.value_ == b.value_;
 }
 
 std::ostream& operator<<(std::ostream& os, Parameter const& p) {
-  return os << p.value();
+  return os << p.value_;
 }
 
 std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt) {

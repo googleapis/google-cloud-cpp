@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/sql_statement.h"
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -54,14 +55,14 @@ TEST(SqlStatementTest, ParameterNames) {
 }
 
 TEST(SqlStatementTest, GetParameterExists) {
-  auto expected = Value("Elwood");
+  auto expected = Parameter("Elwood");
   SqlStatement::ParamType params = {{"last", Parameter("Blues")},
                                     {"first", Parameter("Elwood")}};
   SqlStatement stmt("SELECT * FROM foo", params);
   auto results = stmt.GetParameter("first");
   ASSERT_STATUS_OK(results);
   EXPECT_EQ(expected, *results);
-  EXPECT_EQ(std::string("Elwood"), *(results->get<std::string>()));
+  EXPECT_EQ(std::string("Elwood"), *results->get<std::string>());
 }
 
 TEST(SqlStatementTest, GetParameterNotExist) {
@@ -112,15 +113,20 @@ TEST(SqlStatementTest, Equality) {
 }
 
 TEST(SqlStatementTest, ToProtoStatementOnly) {
+  InstanceResource instance(Project("test-project"), "test-instance");
   SqlStatement stmt("SELECT * FROM foo");
-  auto constexpr kText = R"pb(query: "SELECT * FROM foo")pb";
+  auto constexpr kText =
+      R"pb(query: "SELECT * FROM foo"
+           instance_name: "projects/test-project/instances/test-instance"
+      )pb";
   bigtable_internal::PrepareQueryProto expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
-  EXPECT_THAT(bigtable_internal::ToProto(std::move(stmt)),
+  EXPECT_THAT(bigtable_internal::ToProto(std::move(stmt), instance),
               IsProtoEqual(expected));
 }
 
 TEST(SqlStatementTest, ToProtoWithParams) {
+  InstanceResource instance(Project("test-project"), "test-instance");
   SqlStatement::ParamType params = {
       {"last", Parameter("Blues")},
       {"first", Parameter("Elwood")},
@@ -131,6 +137,7 @@ TEST(SqlStatementTest, ToProtoWithParams) {
       "destroyed_cars >= @destroyed_cars";
   SqlStatement stmt(kSql, params);
   auto const text = std::string(R"(query: ")") + kSql + R"(")" + R"pb(
+    instance_name: "projects/test-project/instances/test-instance"
     param_types {
       key: "destroyed_cars"
       value { int64_type {} }
@@ -146,7 +153,7 @@ TEST(SqlStatementTest, ToProtoWithParams) {
   )pb";
   bigtable_internal::PrepareQueryProto expected;
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
-  EXPECT_THAT(bigtable_internal::ToProto(std::move(stmt)),
+  EXPECT_THAT(bigtable_internal::ToProto(std::move(stmt), instance),
               IsProtoEqual(expected));
 }
 

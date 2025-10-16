@@ -1,3 +1,4 @@
+
 // Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +16,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_SQL_STATEMENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_SQL_STATEMENT_H
 
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_status.h"
@@ -66,7 +68,10 @@ class Parameter {
 
   google::bigtable::v2::Type const& type() const { return value_.type(); }
 
-  Value const& value() const { return value_; }
+  template <typename T>
+  StatusOr<T> get() const& {
+    return value_.get<T>();
+  }
 
   friend bool operator==(Parameter const& a, Parameter const& b);
   friend bool operator!=(Parameter const& a, Parameter const& b) {
@@ -126,11 +131,6 @@ class SqlStatement {
   ParamType const& params() const { return params_; }
 
   /**
-   * Returns the instance name.
-   */
-  std::string const& instance_name() const { return instance_name_; }
-
-  /**
    * Returns the names of all the parameters.
    */
   std::vector<std::string> ParameterNames() const;
@@ -140,7 +140,7 @@ class SqlStatement {
    * @param parameter_name name of requested parameter.
    * @return `StatusCode::kNotFound` returned for invalid names.
    */
-  google::cloud::StatusOr<Value> GetParameter(
+  google::cloud::StatusOr<Parameter> GetParameter(
       std::string const& parameter_name) const;
 
   friend bool operator==(SqlStatement const& a, SqlStatement const& b) {
@@ -162,7 +162,6 @@ class SqlStatement {
   friend struct bigtable_internal::SqlStatementInternals;
 
   std::string statement_;
-  std::string instance_name_;
   ParamType params_;
 };
 
@@ -174,11 +173,13 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using PrepareQueryProto = ::google::bigtable::v2::PrepareQueryRequest;
 struct SqlStatementInternals {
-  static PrepareQueryProto ToProto(bigtable::SqlStatement s);
+  static PrepareQueryProto ToProto(bigtable::SqlStatement s,
+                                   bigtable::InstanceResource const& r);
 };
 
-inline PrepareQueryProto ToProto(bigtable::SqlStatement s) {
-  return SqlStatementInternals::ToProto(std::move(s));
+inline PrepareQueryProto ToProto(bigtable::SqlStatement s,
+                                 bigtable::InstanceResource const& r) {
+  return SqlStatementInternals::ToProto(std::move(s), r);
 }
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
