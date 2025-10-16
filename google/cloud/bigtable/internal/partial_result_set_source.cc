@@ -94,11 +94,13 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 
 Status PartialResultSetSource::ReadFromStream() {
   if (state_ == State::kFinished) {
+    std::cout << "HELLO FINISHED: " << std::endl;
     return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());
   }
   // The application should consume rows_ before calling ReadFromStream again.
   if (!rows_.empty()) {
+    std::cout << "HELLO row not empty: " << std::endl;
     return internal::InternalError("PartialResultSetSource has unconsumed rows",
                                    GCP_ERROR_INFO());
   }
@@ -119,6 +121,7 @@ Status PartialResultSetSource::ReadFromStream() {
   // read would have had a sentinel resume_token, causing
   // ProcessDataFromStream to commit them.
   if (!buffered_rows_.empty()) {
+    std::cout << "BUFFERED ROWS NOT EMPTY: " << std::endl;
     return internal::InternalError("Stream ended with uncommitted rows.",
                                    GCP_ERROR_INFO());
   }
