@@ -32,8 +32,6 @@ Write-Bazel-Config
 
 $build_flags = Get-Bazel-Build-Flags "${BuildName}"
 
-Fetch-Bazel-Dependencies
-
 # All the build_flags should be set by now, so we'll copy them, and add a few
 # more test-only flags.
 $test_flags = $build_flags
