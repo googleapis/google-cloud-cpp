@@ -236,6 +236,8 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    query.cc
+    query.h
     query_row.cc
     query_row.h
     read_modify_write_rule.h
@@ -495,6 +497,7 @@ if (BUILD_TESTING)
         mutations_test.cc
         polling_policy_test.cc
         query_row_test.cc
+        query_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
         row_reader_test.cc
