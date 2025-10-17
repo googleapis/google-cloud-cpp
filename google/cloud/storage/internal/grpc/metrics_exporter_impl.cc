@@ -49,8 +49,8 @@ auto MakeReaderOptions(Options const& options) {
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
   reader_options.export_interval_millis = std::chrono::milliseconds(
       options.get<storage_experimental::GrpcMetricsPeriodOption>());
-  reader_options.export_timeout_millis =
-      std::chrono::milliseconds(std::chrono::seconds(30));
+  reader_options.export_timeout_millis = std::chrono::milliseconds(
+      options.get<storage_experimental::GrpcMetricsExportTimeoutOption>());
   return reader_options;
 }
 
