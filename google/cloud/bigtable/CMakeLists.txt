@@ -252,6 +252,8 @@ add_library(
     rpc_backoff_policy.h
     rpc_retry_policy.cc
     rpc_retry_policy.h
+    sql_statement.cc
+    sql_statement.h
     table.cc
     table.h
     table_admin.cc
@@ -494,6 +496,7 @@ if (BUILD_TESTING)
         row_test.cc
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
+        sql_statement_test.cc
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc

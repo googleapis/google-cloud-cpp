@@ -56,6 +56,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// Forward declaration of Parameter in order to declare friendship with Value.
+class Parameter;
+
 /**
  * The Value class represents a type-safe, nullable Bigtable value.
  *
@@ -697,6 +700,7 @@ class Value {
       : type_(std::move(t)), value_(std::move(v)) {}
 
   friend struct bigtable_internal::ValueInternals;
+  friend class Parameter;
 
   google::bigtable::v2::Type type_;
   google::bigtable::v2::Value value_;
