@@ -31,7 +31,14 @@ google_cloud_cpp_doxygen_targets("storage" DEPENDS cloud-docs
 include(GoogleCloudCppCommon)
 
 include(IncludeNlohmannJson)
-find_package(Crc32c)
+if (BUILD_TESTING OR absl_VERSION VERSION_LESS "20230125")
+    set(NEED_CRC32C TRUE)
+else ()
+    set(NEED_CRC32C FALSE)
+endif ()
+if (NEED_CRC32C)
+    find_package(Crc32c REQUIRED)
+endif()
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
