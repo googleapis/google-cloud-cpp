@@ -17,7 +17,6 @@
 
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/universe_domain_options.h"
@@ -47,8 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * If the `RetryPolicy` becomes exhausted or other errors are encountered, that
  * `Status` is returned.
  */
-StatusOr<Options> AddUniverseDomainOption(ExperimentalTag tag,
-                                          Options options = {});
+StatusOr<Options> AddUniverseDomainOption(Options options = {});
 
 /**
  * Interrogates the provided credentials for the universe_domain.
@@ -61,8 +59,7 @@ StatusOr<Options> AddUniverseDomainOption(ExperimentalTag tag,
  * If successful the universe_domain value is returned, otherwise a `Status`
  * indicating the error encountered is returned.
  */
-StatusOr<std::string> GetUniverseDomain(ExperimentalTag tag,
-                                        Credentials const& credentials,
+StatusOr<std::string> GetUniverseDomain(Credentials const& credentials,
                                         Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
