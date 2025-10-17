@@ -38,8 +38,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   explicit QueryPlan(CompletionQueue const& cq,
                      google::bigtable::v2::PrepareQueryResponse const& response,
                      RefreshFn const& fn)
-      : QueryPlan(PrivateConstructor{}, std::move(cq), std::move(response),
-                  std::move(fn)) {}
+      : QueryPlan(PrivateConstructor{}, cq, response, fn) {}
 
   // Calls the constructor and then Initialize.
   static std::shared_ptr<QueryPlan> Create(
