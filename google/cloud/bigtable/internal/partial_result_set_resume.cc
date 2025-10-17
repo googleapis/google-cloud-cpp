@@ -20,14 +20,14 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void PartialResultSetResume::TryCancel() { child_->TryCancel(); }
+void PartialResultSetResume::TryCancel() { reader_->TryCancel(); }
 
 bool PartialResultSetResume::Read(
     absl::optional<std::string> const& resume_token,
     UnownedPartialResultSet& result) {
   bool resumption = false;
   do {
-    if (child_->Read(resume_token, result)) {
+    if (reader_->Read(resume_token, result)) {
       // Let the caller know if we recreated the PartialResultSetReader using
       // the resume_token so that they might discard any previous results that
       // will be contained in the new stream.
@@ -49,7 +49,7 @@ bool PartialResultSetResume::Read(
     std::this_thread::sleep_for(backoff_policy_prototype_->OnCompletion());
     resumption = true;
     last_status_.reset();
-    child_ = factory_(*resume_token);
+    reader_ = factory_(*resume_token);
   } while (!retry_policy_prototype_->IsExhausted());
   return false;
 }
@@ -59,7 +59,7 @@ Status PartialResultSetResume::Finish() {
   if (last_status_.has_value()) {
     return *last_status_;
   }
-  last_status_ = child_->Finish();
+  last_status_ = reader_->Finish();
   return *last_status_;
 }
 

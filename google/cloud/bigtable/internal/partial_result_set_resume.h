@@ -62,7 +62,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   google::cloud::Idempotency idempotency_;
   std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy_prototype_;
   std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy_prototype_;
-  std::unique_ptr<PartialResultSetReader> child_;
+  std::unique_ptr<PartialResultSetReader> reader_;
   absl::optional<Status> last_status_;
 };
 
