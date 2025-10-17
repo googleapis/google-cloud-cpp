@@ -48,7 +48,7 @@ class PartialResultSetResume : public PartialResultSetReader {
         idempotency_(idempotency),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        child_(factory_(std::string{})) {}
+        reader_(factory_(std::string{})) {}
 
   ~PartialResultSetResume() override = default;
 
