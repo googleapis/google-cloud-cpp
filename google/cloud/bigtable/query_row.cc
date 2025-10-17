@@ -50,15 +50,15 @@ QueryRow::QueryRow(std::vector<Value> values,
 
 StatusOr<Value> QueryRow::get(std::size_t pos) const {
   if (pos < values_.size()) return values_[pos];
-  return internal::InvalidArgumentError("position out of range",
-                                        GCP_ERROR_INFO());
+  return google::cloud::internal::InvalidArgumentError("position out of range",
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<Value> QueryRow::get(std::string const& name) const {
   auto it = std::find(columns_->begin(), columns_->end(), name);
   if (it != columns_->end()) return get(std::distance(columns_->begin(), it));
-  return internal::InvalidArgumentError("column name not found",
-                                        GCP_ERROR_INFO());
+  return google::cloud::internal::InvalidArgumentError("column name not found",
+                                                       GCP_ERROR_INFO());
 }
 
 bool operator==(QueryRow const& a, QueryRow const& b) {

@@ -265,10 +265,12 @@ class Value {
   template <typename T>
   StatusOr<T> get() const& {
     if (!TypeProtoIs(T{}, type_))
-      return internal::UnknownError("wrong type", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("wrong type",
+                                                   GCP_ERROR_INFO());
     if (is_null()) {
       if (IsOptional<T>::value) return T{};
-      return internal::UnknownError("null value", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("null value",
+                                                   GCP_ERROR_INFO());
     }
     return GetValue(T{}, value_, type_);
   }
@@ -277,10 +279,12 @@ class Value {
   template <typename T>
   StatusOr<T> get() && {
     if (!TypeProtoIs(T{}, type_))
-      return internal::UnknownError("wrong type", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("wrong type",
+                                                   GCP_ERROR_INFO());
     if (is_null()) {
       if (IsOptional<T>::value) return T{};
-      return internal::UnknownError("null value", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("null value",
+                                                   GCP_ERROR_INFO());
     }
     auto tag = T{};  // Works around an odd msvc issue
     return GetValue(std::move(tag), std::move(value_), type_);
@@ -412,7 +416,7 @@ class Value {
     for (auto&& e : v) {
       google::bigtable::v2::Type vt = MakeTypeProto(e);
       if (t.array_type().element_type().kind_case() != vt.kind_case())
-        internal::ThrowInvalidArgument("Mismatched types");
+        google::cloud::internal::ThrowInvalidArgument("Mismatched types");
     }
     return t;
   }
@@ -566,7 +570,8 @@ class Value {
   static StatusOr<std::vector<T>> GetValue(
       std::vector<T> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
     if (!pt.has_array_type() || !pv.has_array_value()) {
-      return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("missing ARRAY",
+                                                   GCP_ERROR_INFO());
     }
     std::vector<T> v;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
@@ -583,7 +588,8 @@ class Value {
   static StatusOr<std::tuple<Ts...>> GetValue(
       std::tuple<Ts...> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
     if (!pt.has_struct_type() || !pv.has_array_value()) {
-      return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("missing STRUCT",
+                                                   GCP_ERROR_INFO());
     }
     std::tuple<Ts...> tup;
     Status status;  // OK
@@ -597,7 +603,8 @@ class Value {
       std::unordered_map<K, V> const&, PV&& pv,
       google::bigtable::v2::Type const& pt) {
     if (!pt.has_map_type() || !pv.has_array_value()) {
-      return internal::UnknownError("missing MAP", GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError("missing MAP",
+                                                   GCP_ERROR_INFO());
     }
     std::unordered_map<K, V> m;
     for (int i = 0; i < pv.array_value().values().size(); ++i) {
@@ -607,8 +614,8 @@ class Value {
       // map key-value pairs are assumed to be an array of size 2
       if (!map_value_proto.has_array_value() ||
           map_value_proto.array_value().values().size() != 2) {
-        return internal::UnknownError("malformed key-value pair",
-                                      GCP_ERROR_INFO());
+        return google::cloud::internal::UnknownError("malformed key-value pair",
+                                                     GCP_ERROR_INFO());
       }
       auto&& key_proto =
           GetProtoValueArrayElement(std::forward<ET>(map_value_proto), 0);

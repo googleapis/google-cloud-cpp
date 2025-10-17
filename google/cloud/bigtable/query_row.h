@@ -138,7 +138,8 @@ class QueryRow {
   StatusOr<Tuple> get() const& {
     if (size() != std::tuple_size<Tuple>::value) {
       auto constexpr kMsg = "Tuple has the wrong number of elements";
-      return internal::InvalidArgumentError(kMsg, GCP_ERROR_INFO());
+      return google::cloud::internal::InvalidArgumentError(kMsg,
+                                                           GCP_ERROR_INFO());
     }
     Tuple tup;
     auto it = values_.begin();
@@ -439,11 +440,13 @@ auto GetSingularRow(QueryRowRange range)
   auto const e = range.end();
   auto it = range.begin();
   if (it == e) {
-    return internal::InvalidArgumentError("no rows", GCP_ERROR_INFO());
+    return google::cloud::internal::InvalidArgumentError("no rows",
+                                                         GCP_ERROR_INFO());
   }
   auto row = std::move(*it);
   if (++it != e) {
-    return internal::InvalidArgumentError("too many rows", GCP_ERROR_INFO());
+    return google::cloud::internal::InvalidArgumentError("too many rows",
+                                                         GCP_ERROR_INFO());
   }
   return row;
 }
