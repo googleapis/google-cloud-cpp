@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/value.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
@@ -165,7 +166,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
     rows_.insert(rows_.end(), buffered_rows_.begin(), buffered_rows_.end());
     buffered_rows_.clear();
     read_buffer_.clear();
-    resume_token_ = result.resume_token();
+    resume_token_ = bigtable::AsString(result.resume_token());
   }
   return {};  // OK
 }

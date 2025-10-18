@@ -26,30 +26,31 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
 // Some Bigtable proto fields use Cord internally and string externally.
 template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type* = nullptr>
+                          std::is_same<T, std::string>::value>::type*>
 std::string AsString(T const& s) {
   return s;
 }
 template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type* = nullptr>
+                          std::is_same<T, std::string>::value>::type*>
 std::string AsString(T&& s) {
   return std::move(s);  // NOLINT(bugprone-move-forwarding-reference)
 }
-template <typename T, typename std::enable_if<
-                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
+template <typename T,
+          typename std::enable_if<std::is_same<T, absl::Cord>::value>::type*>
 std::string AsString(T const& s) {
   return std::string(s);
 }
-template <typename T, typename std::enable_if<
-                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
+template <typename T,
+          typename std::enable_if<std::is_same<T, absl::Cord>::value>::type*>
 std::string AsString(T&& s) {
   return std::string(
       std::move(s));  // NOLINT(bugprone-move-forwarding-reference)
 }
+
+namespace {
 
 // Forward declarations for mutually recursive functions.
 bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
