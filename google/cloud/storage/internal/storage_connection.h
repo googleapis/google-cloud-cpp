@@ -27,6 +27,7 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/oauth2/credentials.h"
@@ -127,6 +128,8 @@ class StorageConnection {
   }
   virtual StatusOr<ObjectMetadata> ExecuteParallelUploadFile(
       std::vector<std::thread>, std::vector<ParallelUploadFileShard>, bool);
+  virtual StatusOr<ObjectWriteStreamParams> SetupObjectWriteStream(
+      ResumableUploadRequest const&);
   ///@}
 
   ///@{
