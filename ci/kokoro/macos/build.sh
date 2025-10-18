@@ -84,6 +84,7 @@ io::log_h2 "Brew packages"
 export HOMEBREW_CURL_RETRIES=3
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_INSTALL_FROM_API=1
 brew list --versions --formula || io::log_yellow \
   "brew list --formula failed. Trusting Homebrew's fallback and continuing."
 brew list --versions --cask || io::log_yellow \
