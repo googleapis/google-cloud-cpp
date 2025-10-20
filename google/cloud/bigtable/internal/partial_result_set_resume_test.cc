@@ -71,10 +71,9 @@ auto constexpr kResultMetadataText = R"pb(
   }
 )pb";
 
-google::bigtable::v2::PartialResultSet MakeResponse(
-    std::vector<std::string> const& values,
-    absl::optional<std::string> resume_token, bool reset) {
-  google::bigtable::v2::PartialResultSet response;
+void MakeResponse(google::bigtable::v2::PartialResultSet& response,
+                  std::vector<std::string> const& values,
+                  absl::optional<std::string> resume_token, bool reset) {
   google::bigtable::v2::ProtoRows proto_rows;
   for (auto const& v : values) {
     proto_rows.add_values()->set_string_value(v);
@@ -93,13 +92,7 @@ google::bigtable::v2::PartialResultSet MakeResponse(
       resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
                    : "",
       reset ? "reset: true," : "");
-  EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
-  return response;
-}
-
-google::bigtable::v2::PartialResultSet MakeResponse(
-    std::vector<std::string> const& values, std::string const& resume_token) {
-  return MakeResponse(values, resume_token, true);
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &response));
 }
 
 // Helper function for MockPartialResultSetReader::Read to return true and
@@ -163,8 +156,11 @@ TEST(PartialResultSetResume, Success) {
 }
 
 TEST(PartialResultSetResume, SuccessWithRestart) {
-  auto r12 = MakeResponse({"value-1", "value-2"}, "resume-after-2");
-  auto r34 = MakeResponse({"value-3", "value-4"}, "resume-after-4");
+  google::bigtable::v2::PartialResultSet r12;
+  google::bigtable::v2::PartialResultSet r34;
+
+  MakeResponse(r12, {"value-1", "value-2"}, "resume-after-2", true);
+  MakeResponse(r34, {"value-3", "value-4"}, "resume-after-4", true);
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -212,7 +208,8 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
 }
 
 TEST(PartialResultSetResume, PermanentError) {
-  auto r12 = MakeResponse({"value-1", "value-2"}, "resume-after-2");
+  google::bigtable::v2::PartialResultSet r12;
+  MakeResponse(r12, {"value-1", "value-2"}, "resume-after-2", true);
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -250,7 +247,8 @@ TEST(PartialResultSetResume, PermanentError) {
 }
 
 TEST(PartialResultSetResume, TransientNonIdempotent) {
-  auto r12 = MakeResponse({"value-1", "value-2"}, "resume-after-2");
+  google::bigtable::v2::PartialResultSet r12;
+  MakeResponse(r12, {"value-1", "value-2"}, "resume-after-2", true);
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -309,11 +307,15 @@ TEST(PartialResultSetResume, ResumptionStart) {
   ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
 
   std::vector<google::bigtable::v2::PartialResultSet> response;
-  response.push_back(MakeResponse({"value-1", "value-2"}, absl::nullopt, true));
-  response.push_back(
-      MakeResponse({"value-3", "value-4"}, absl::nullopt, false));
-  response.push_back(
-      MakeResponse({"value-5", "value-6"}, "end-of-stream", false));
+  google::bigtable::v2::PartialResultSet r12;
+  google::bigtable::v2::PartialResultSet r34;
+  google::bigtable::v2::PartialResultSet r56;
+  MakeResponse(r12, {"value-1", "value-2"}, absl::nullopt, true);
+  MakeResponse(r34, {"value-3", "value-4"}, absl::nullopt, false);
+  MakeResponse(r56, {"value-5", "value-6"}, "end-of-stream", false);
+  response.push_back(r12);
+  response.push_back(r34);
+  response.push_back(r56);
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -368,11 +370,15 @@ TEST(PartialResultSetResume, ResumptionMidway) {
   ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
 
   std::vector<google::bigtable::v2::PartialResultSet> response;
-  response.push_back(MakeResponse({"value-1", "value-2"}, absl::nullopt, true));
-  response.push_back(
-      MakeResponse({"value-3", "value-4"}, "resume-after-4", false));
-  response.push_back(
-      MakeResponse({"value-5", "value-6"}, "end-of-stream", false));
+  google::bigtable::v2::PartialResultSet r12;
+  google::bigtable::v2::PartialResultSet r34;
+  google::bigtable::v2::PartialResultSet r56;
+  MakeResponse(r12, {"value-1", "value-2"}, absl::nullopt, true);
+  MakeResponse(r34, {"value-3", "value-4"}, "resume-after-4", false);
+  MakeResponse(r56, {"value-5", "value-6"}, "end-of-stream", false);
+  response.push_back(r12);
+  response.push_back(r34);
+  response.push_back(r56);
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
