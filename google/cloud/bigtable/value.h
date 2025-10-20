@@ -61,23 +61,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Forward declaration of Parameter in order to declare friendship with Value.
 class Parameter;
 
-// Some Bigtable proto fields use Cord internally and string externally.
-template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type* = nullptr>
-std::string AsString(T const& s);
-
-template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type* = nullptr>
-std::string AsString(T&& s);
-
-template <typename T, typename std::enable_if<
-                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
-std::string AsString(T const& s);
-
-template <typename T, typename std::enable_if<
-                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
-std::string AsString(T&& s);
-
 /**
  * The Value class represents a type-safe, nullable Bigtable value.
  *
