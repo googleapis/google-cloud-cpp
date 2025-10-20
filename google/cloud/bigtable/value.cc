@@ -28,13 +28,13 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Some Bigtable proto fields use Cord internally and string externally.
-template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type*>
+template <typename T,
+          typename std::enable_if<std::is_same<T, std::string>::value>::type*>
 std::string AsString(T const& s) {
   return s;
 }
-template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type*>
+template <typename T,
+          typename std::enable_if<std::is_same<T, std::string>::value>::type*>
 std::string AsString(T&& s) {
   return std::move(s);  // NOLINT(bugprone-move-forwarding-reference)
 }
