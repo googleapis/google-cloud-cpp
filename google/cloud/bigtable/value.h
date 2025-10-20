@@ -23,8 +23,6 @@
 #include <google/bigtable/v2/data.pb.h>
 #include <google/bigtable/v2/types.pb.h>
 #include <cmath>
-#include <string>
-#include <type_traits>
 #include <vector>
 
 namespace google {
