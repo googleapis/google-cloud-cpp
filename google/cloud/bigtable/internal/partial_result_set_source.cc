@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/cord.h"
 #include "absl/types/optional.h"
 
 namespace google {
@@ -33,21 +34,10 @@ std::string AsString(T const& s) {
 }
 
 template <typename T, typename std::enable_if<
-                          std::is_same<T, std::string>::value>::type* = nullptr>
-std::string AsString(T&& s) {
-  return std::move(s);
-}
-
-template <typename T, typename std::enable_if<
                           std::is_same<T, absl::Cord>::value>::type* = nullptr>
 std::string AsString(T const& s) {
-  return std::string(s);
-}
-
-template <typename T, typename std::enable_if<
-                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
-std::string AsString(T&& s) {
-  return absl::StrCat(s);
+  // Add the missing include: #include "absl/strings/cord.h"
+  return std::string(s);  // Convert a const absl::Cord
 }
 }  // namespace
 
