@@ -333,6 +333,190 @@ TEST(PartialResultSetResume, TooManyTransients) {
               StatusIs(StatusCode::kUnavailable, HasSubstr("Try again")));
 }
 
+TEST(PartialResultSetResume, ResumptionStart) {
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "TestColumn"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+  auto make_response = [](std::vector<std::string> const& values,
+                          absl::optional<std::string> resume_token,
+                          bool reset) {
+    google::bigtable::v2::PartialResultSet response;
+    google::bigtable::v2::ProtoRows proto_rows;
+    for (auto const& v : values) {
+      proto_rows.add_values()->set_string_value(v);
+    }
+    std::string binary_batch_data = proto_rows.SerializeAsString();
+    auto text = absl::Substitute(
+        R"pb(
+          proto_rows_batch: {
+            batch_data: "$0",
+          },
+              $1 $2
+          estimated_batch_size: 31,
+          batch_checksum: 123456
+        )pb",
+        binary_batch_data,
+        resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
+                     : "",
+        reset ? "reset: true," : "");
+    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
+    return response;
+  };
+
+  std::vector<google::bigtable::v2::PartialResultSet> response;
+  response.push_back(
+      make_response({"value-1", "value-2"}, absl::nullopt, true));
+  response.push_back(
+      make_response({"value-3", "value-4"}, absl::nullopt, false));
+  response.push_back(
+      make_response({"value-5", "value-6"}, "end-of-stream", false));
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, MakeReader)
+      .WillOnce([&response](std::string const& token) {
+        EXPECT_TRUE(token.empty());
+        auto mock = std::make_unique<MockPartialResultSetReader>();
+        EXPECT_CALL(*mock, Read(_, _))
+            .WillOnce(ReadAction(response[0], false))
+            .WillOnce(ReadAction(response[1], false))
+            .WillOnce(Return(false));
+        EXPECT_CALL(*mock, TryCancel()).Times(0);
+        EXPECT_CALL(*mock, Finish())
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "Try again")));
+        return mock;
+      })
+      .WillOnce([&response](std::string const& token) {
+        EXPECT_TRUE(token.empty());
+        auto mock = std::make_unique<MockPartialResultSetReader>();
+        EXPECT_CALL(*mock, Read(_, _))
+            .WillOnce(ReadAction(response[0], false))
+            .WillOnce(ReadAction(response[1], false))
+            .WillOnce(ReadAction(response[2], false))
+            .WillOnce(Return(false));
+        EXPECT_CALL(*mock, TryCancel()).Times(0);
+        EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
+        return mock;
+      });
+
+  auto factory = [&mock_factory](std::string const& token) {
+    return mock_factory.MakeReader(token);
+  };
+  auto grpc_reader = MakeTestResume(factory, Idempotency::kIdempotent);
+  auto reader =
+      PartialResultSetSource::Create(metadata, std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+
+  // Verify the returned rows are correct, despite the resumption from the
+  // beginning of the stream after the transient error.
+  for (auto const* s :
+       {"value-1", "value-2", "value-3", "value-4", "value-5", "value-6"}) {
+    auto row = (*reader)->NextRow();
+    EXPECT_THAT(row, IsValidAndEquals(bigtable_mocks::MakeQueryRow(
+                         {{"TestColumn", bigtable::Value(s)}})));
+  }
+
+  auto row = (*reader)->NextRow();
+  EXPECT_THAT(row, IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+TEST(PartialResultSetResume, ResumptionMidway) {
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "TestColumn"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+  auto make_response = [](std::vector<std::string> const& values,
+                          absl::optional<std::string> resume_token,
+                          bool reset) {
+    google::bigtable::v2::PartialResultSet response;
+    google::bigtable::v2::ProtoRows proto_rows;
+    for (auto const& v : values) {
+      proto_rows.add_values()->set_string_value(v);
+    }
+    std::string binary_batch_data = proto_rows.SerializeAsString();
+    auto text = absl::Substitute(
+        R"pb(
+          proto_rows_batch: {
+            batch_data: "$0",
+          },
+              $1 $2
+          estimated_batch_size: 31,
+          batch_checksum: 123456
+        )pb",
+        binary_batch_data,
+        resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
+                     : "",
+        reset ? "reset: true," : "");
+    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
+    return response;
+  };
+
+  std::vector<google::bigtable::v2::PartialResultSet> response;
+  response.push_back(
+      make_response({"value-1", "value-2"}, absl::nullopt, true));
+  response.push_back(
+      make_response({"value-3", "value-4"}, "resume-after-4", false));
+  response.push_back(
+      make_response({"value-5", "value-6"}, "end-of-stream", false));
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, MakeReader)
+      .WillOnce([&response](std::string const& token) {
+        EXPECT_TRUE(token.empty());
+        auto mock = std::make_unique<MockPartialResultSetReader>();
+        EXPECT_CALL(*mock, Read(_, _))
+            .WillOnce(ReadAction(response[0], false))
+            .WillOnce(ReadAction(response[1], false))
+            .WillOnce(Return(false));
+        EXPECT_CALL(*mock, TryCancel()).Times(0);
+        EXPECT_CALL(*mock, Finish())
+            .WillOnce(Return(Status(StatusCode::kUnavailable, "Try again")));
+        return mock;
+      })
+      .WillOnce([&response](std::string const& token) {
+        EXPECT_EQ("resume-after-4", token);
+        auto mock = std::make_unique<MockPartialResultSetReader>();
+        EXPECT_CALL(*mock, Read(_, _))
+            .WillOnce(ReadAction(response[2], false))
+            .WillOnce(Return(false));
+        EXPECT_CALL(*mock, TryCancel()).Times(0);
+        EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
+        return mock;
+      });
+
+  auto factory = [&mock_factory](std::string const& token) {
+    return mock_factory.MakeReader(token);
+  };
+  auto grpc_reader = MakeTestResume(factory, Idempotency::kIdempotent);
+  auto reader =
+      PartialResultSetSource::Create(metadata, std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+
+  // Verify the returned rows are correct, despite the resumption from a
+  // midway point in the stream after the transient error.
+  for (auto const* s :
+       {"value-1", "value-2", "value-3", "value-4", "value-5", "value-6"}) {
+    auto row = (*reader)->NextRow();
+    EXPECT_THAT(row, IsValidAndEquals(bigtable_mocks::MakeQueryRow(
+                         {{"TestColumn", bigtable::Value(s)}})));
+  }
+
+  auto row = (*reader)->NextRow();
+  EXPECT_THAT(row, IsValidAndEquals(bigtable::QueryRow{}));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
