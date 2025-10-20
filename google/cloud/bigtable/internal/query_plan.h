@@ -33,17 +33,12 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   // DataConnection pointer necessary to call the PrepareQuery RPC.
   using RefreshFn = std::function<google::bigtable::v2::PrepareQueryResponse()>;
 
-  explicit QueryPlan(CompletionQueue const& cq,
-                     google::bigtable::v2::PrepareQueryResponse const& response,
-                     RefreshFn const& fn)
-      : QueryPlan(PrivateConstructor{}, cq, response, fn) {}
-
   // Calls the constructor and then Initialize.
   static std::shared_ptr<QueryPlan> Create(
-      CompletionQueue const& cq,
-      google::bigtable::v2::PrepareQueryResponse const& response,
-      RefreshFn const& fn) {
-    return std::make_shared<QueryPlan>(cq, response, fn);
+      CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
+      RefreshFn fn) {
+    return std::shared_ptr<QueryPlan>(
+        new QueryPlan(std::move(cq), std::move(response), std::move(fn)));
   }
 
   // Accessor for the prepared_query field in response_.
@@ -53,8 +48,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   google::bigtable::v2::ResultSetMetadata const& metadata() const;
 
  private:
-  struct PrivateConstructor {};
-  QueryPlan(PrivateConstructor, CompletionQueue cq,
+  QueryPlan(CompletionQueue cq,
             google::bigtable::v2::PrepareQueryResponse response, RefreshFn fn)
       : cq_(std::move(cq)),
         response_(std::move(response)),
