@@ -13,9 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/query_plan.h"
-#include "google/cloud/completion_queue.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
@@ -23,15 +28,58 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-/// @test Basic test to confirm compilation and dummy behavior.
-/// Remove this after implementing QueryPlan.
-TEST(QueryPlanTest, TestDummyMethods) {
-  auto cq = CompletionQueue();
-  auto response = google::bigtable::v2::PrepareQueryResponse();
-  auto fn = QueryPlan::RefreshFn();
-  auto created = QueryPlan::Create(cq, response, fn);
-  ASSERT_EQ("", (*created).prepared_query());
-  ASSERT_EQ(0, created->metadata().ByteSizeLong());
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::protobuf::TextFormat;
+using ::google::protobuf::util::TimeUtil;
+using ::testing::IsEmpty;
+using ::testing::Not;
+
+TEST(QueryPlanTest, Accessors) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("test-query");
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kResultMetadataText,
+                                                            &metadata));
+  *response.mutable_metadata() = metadata;
+  *response.mutable_valid_until() =
+      TimeUtil::GetCurrentTime() + TimeUtil::SecondsToDuration(300);
+
+  auto plan = QueryPlan::Create(cq, response, [] {
+    return google::bigtable::v2::PrepareQueryResponse{};
+  });
+
+  EXPECT_EQ(plan->prepared_query(), "test-query");
+  EXPECT_EQ(plan->metadata().DebugString(), metadata.DebugString());
+}
+
+TEST(QueryPlanTest, Expired) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("test-query");
+  *response.mutable_metadata() = google::bigtable::v2::ResultSetMetadata{};
+
+  // Set the expiration time to the past.
+  *response.mutable_valid_until() =
+      TimeUtil::GetCurrentTime() - TimeUtil::SecondsToDuration(1);
+
+  auto plan = QueryPlan::Create(cq, response, [] {
+    return google::bigtable::v2::PrepareQueryResponse{};
+  });
+
+  EXPECT_THAT(plan->prepared_query(), IsEmpty());
+  EXPECT_EQ(plan->metadata().DebugString(),
+            google::bigtable::v2::ResultSetMetadata{}.DebugString());
 }
 
 }  // namespace

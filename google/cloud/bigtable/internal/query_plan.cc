@@ -22,11 +22,27 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string const& QueryPlan::prepared_query() const {
-  return response_.prepared_query();
+  std::lock_guard<std::mutex> lock(mu_);
+  auto valid_until = std::chrono::system_clock::time_point(
+      std::chrono::seconds(response_.valid_until().seconds()) +
+      std::chrono::nanoseconds(response_.valid_until().nanos()));
+  if (valid_until > std::chrono::system_clock::now()) {
+    return response_.prepared_query();
+  }
+  static std::string const kEmpty;
+  return kEmpty;
 }
 
 google::bigtable::v2::ResultSetMetadata const& QueryPlan::metadata() const {
-  return response_.metadata();
+  std::lock_guard<std::mutex> lock(mu_);
+  auto valid_until = std::chrono::system_clock::time_point(
+      std::chrono::seconds(response_.valid_until().seconds()) +
+      std::chrono::nanoseconds(response_.valid_until().nanos()));
+  if (valid_until > std::chrono::system_clock::now()) {
+    return response_.metadata();
+  }
+  static google::bigtable::v2::ResultSetMetadata const kEmpty;
+  return kEmpty;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
