@@ -62,6 +62,46 @@ MATCHER_P(IsValidAndEquals, expected,
   return arg && *arg == expected;
 }
 
+auto constexpr kResultMetadataText = R"pb(
+  proto_schema {
+    columns {
+      name: "TestColumn"
+      type { string_type {} }
+    }
+  }
+)pb";
+
+google::bigtable::v2::PartialResultSet MakeResponse(
+    std::vector<std::string> const& values,
+    absl::optional<std::string> resume_token, bool reset) {
+  google::bigtable::v2::PartialResultSet response;
+  google::bigtable::v2::ProtoRows proto_rows;
+  for (auto const& v : values) {
+    proto_rows.add_values()->set_string_value(v);
+  }
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  auto text = absl::Substitute(
+      R"pb(
+        proto_rows_batch: {
+          batch_data: "$0",
+        },
+            $1 $2
+        estimated_batch_size: 31,
+        batch_checksum: 123456
+      )pb",
+      binary_batch_data,
+      resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
+                   : "",
+      reset ? "reset: true," : "");
+  EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
+  return response;
+}
+
+google::bigtable::v2::PartialResultSet MakeResponse(
+    std::vector<std::string> const& values, std::string const& resume_token) {
+  return MakeResponse(values, resume_token, true);
+}
+
 // Helper function for MockPartialResultSetReader::Read to return true and
 // populate result
 auto ReadAction(google::bigtable::v2::PartialResultSet& response_proto,
@@ -123,31 +163,8 @@ TEST(PartialResultSetResume, Success) {
 }
 
 TEST(PartialResultSetResume, SuccessWithRestart) {
-  auto make_response = [](std::vector<std::string> const& values,
-                          std::string const& resume_token) {
-    google::bigtable::v2::PartialResultSet response;
-    google::bigtable::v2::ProtoRows proto_rows;
-    for (auto const& v : values) {
-      proto_rows.add_values()->set_string_value(v);
-    }
-    std::string binary_batch_data = proto_rows.SerializeAsString();
-    auto text = absl::Substitute(
-        R"pb(
-          proto_rows_batch: {
-            batch_data: "$0",
-          },
-          resume_token: "$1",
-          reset: true,
-          estimated_batch_size: 31,
-          batch_checksum: 123456
-        )pb",
-        binary_batch_data, resume_token);
-    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
-    return response;
-  };
-
-  auto r12 = make_response({"value-1", "value-2"}, "resume-after-2");
-  auto r34 = make_response({"value-3", "value-4"}, "resume-after-4");
+  auto r12 = MakeResponse({"value-1", "value-2"}, "resume-after-2");
+  auto r34 = MakeResponse({"value-3", "value-4"}, "resume-after-4");
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -195,30 +212,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
 }
 
 TEST(PartialResultSetResume, PermanentError) {
-  auto make_response = [](std::vector<std::string> const& values,
-                          std::string const& resume_token) {
-    google::bigtable::v2::PartialResultSet response;
-    google::bigtable::v2::ProtoRows proto_rows;
-    for (auto const& v : values) {
-      proto_rows.add_values()->set_string_value(v);
-    }
-    std::string binary_batch_data = proto_rows.SerializeAsString();
-    auto text = absl::Substitute(
-        R"pb(
-          proto_rows_batch: {
-            batch_data: "$0",
-          },
-          resume_token: "$1",
-          reset: true,
-          estimated_batch_size: 31,
-          batch_checksum: 123456
-        )pb",
-        binary_batch_data, resume_token);
-    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
-    return response;
-  };
-
-  auto r12 = make_response({"value-1", "value-2"}, "resume-after-2");
+  auto r12 = MakeResponse({"value-1", "value-2"}, "resume-after-2");
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -256,30 +250,7 @@ TEST(PartialResultSetResume, PermanentError) {
 }
 
 TEST(PartialResultSetResume, TransientNonIdempotent) {
-  auto make_response = [](std::vector<std::string> const& values,
-                          std::string const& resume_token) {
-    google::bigtable::v2::PartialResultSet response;
-    google::bigtable::v2::ProtoRows proto_rows;
-    for (auto const& v : values) {
-      proto_rows.add_values()->set_string_value(v);
-    }
-    std::string binary_batch_data = proto_rows.SerializeAsString();
-    auto text = absl::Substitute(
-        R"pb(
-          proto_rows_batch: {
-            batch_data: "$0",
-          },
-          resume_token: "$1",
-          reset: true,
-          estimated_batch_size: 31,
-          batch_checksum: 123456
-        )pb",
-        binary_batch_data, resume_token);
-    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
-    return response;
-  };
-
-  auto r12 = make_response({"value-1", "value-2"}, "resume-after-2");
+  auto r12 = MakeResponse({"value-1", "value-2"}, "resume-after-2");
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -334,49 +305,15 @@ TEST(PartialResultSetResume, TooManyTransients) {
 }
 
 TEST(PartialResultSetResume, ResumptionStart) {
-  auto constexpr kResultMetadataText = R"pb(
-    proto_schema {
-      columns {
-        name: "TestColumn"
-        type { string_type {} }
-      }
-    }
-  )pb";
   google::bigtable::v2::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
-  auto make_response = [](std::vector<std::string> const& values,
-                          absl::optional<std::string> resume_token,
-                          bool reset) {
-    google::bigtable::v2::PartialResultSet response;
-    google::bigtable::v2::ProtoRows proto_rows;
-    for (auto const& v : values) {
-      proto_rows.add_values()->set_string_value(v);
-    }
-    std::string binary_batch_data = proto_rows.SerializeAsString();
-    auto text = absl::Substitute(
-        R"pb(
-          proto_rows_batch: {
-            batch_data: "$0",
-          },
-              $1 $2
-          estimated_batch_size: 31,
-          batch_checksum: 123456
-        )pb",
-        binary_batch_data,
-        resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
-                     : "",
-        reset ? "reset: true," : "");
-    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
-    return response;
-  };
 
   std::vector<google::bigtable::v2::PartialResultSet> response;
+  response.push_back(MakeResponse({"value-1", "value-2"}, absl::nullopt, true));
   response.push_back(
-      make_response({"value-1", "value-2"}, absl::nullopt, true));
+      MakeResponse({"value-3", "value-4"}, absl::nullopt, false));
   response.push_back(
-      make_response({"value-3", "value-4"}, absl::nullopt, false));
-  response.push_back(
-      make_response({"value-5", "value-6"}, "end-of-stream", false));
+      MakeResponse({"value-5", "value-6"}, "end-of-stream", false));
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
@@ -427,49 +364,15 @@ TEST(PartialResultSetResume, ResumptionStart) {
 }
 
 TEST(PartialResultSetResume, ResumptionMidway) {
-  auto constexpr kResultMetadataText = R"pb(
-    proto_schema {
-      columns {
-        name: "TestColumn"
-        type { string_type {} }
-      }
-    }
-  )pb";
   google::bigtable::v2::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
-  auto make_response = [](std::vector<std::string> const& values,
-                          absl::optional<std::string> resume_token,
-                          bool reset) {
-    google::bigtable::v2::PartialResultSet response;
-    google::bigtable::v2::ProtoRows proto_rows;
-    for (auto const& v : values) {
-      proto_rows.add_values()->set_string_value(v);
-    }
-    std::string binary_batch_data = proto_rows.SerializeAsString();
-    auto text = absl::Substitute(
-        R"pb(
-          proto_rows_batch: {
-            batch_data: "$0",
-          },
-              $1 $2
-          estimated_batch_size: 31,
-          batch_checksum: 123456
-        )pb",
-        binary_batch_data,
-        resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
-                     : "",
-        reset ? "reset: true," : "");
-    EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
-    return response;
-  };
 
   std::vector<google::bigtable::v2::PartialResultSet> response;
+  response.push_back(MakeResponse({"value-1", "value-2"}, absl::nullopt, true));
   response.push_back(
-      make_response({"value-1", "value-2"}, absl::nullopt, true));
+      MakeResponse({"value-3", "value-4"}, "resume-after-4", false));
   response.push_back(
-      make_response({"value-3", "value-4"}, "resume-after-4", false));
-  response.push_back(
-      make_response({"value-5", "value-6"}, "end-of-stream", false));
+      MakeResponse({"value-5", "value-6"}, "end-of-stream", false));
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader)
