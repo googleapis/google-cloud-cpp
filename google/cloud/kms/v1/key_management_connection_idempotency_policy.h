@@ -122,6 +122,9 @@ class KeyManagementServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency MacVerify(
       google::cloud::kms::v1::MacVerifyRequest const& request);
 
+  virtual google::cloud::Idempotency Decapsulate(
+      google::cloud::kms::v1::DecapsulateRequest const& request);
+
   virtual google::cloud::Idempotency GenerateRandomBytes(
       google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
 

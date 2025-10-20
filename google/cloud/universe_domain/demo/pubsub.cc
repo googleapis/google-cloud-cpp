@@ -28,8 +28,7 @@ int main(int argc, char* argv[]) try {
   // Create a namespace alias to make the code easier to read.
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
 
-  auto options =
-      google::cloud::AddUniverseDomainOption(google::cloud::ExperimentalTag{});
+  auto options = google::cloud::AddUniverseDomainOption();
   if (!options.ok()) throw std::move(options).status();
 
   // Override retry policy to quickly exit if there's a failure.

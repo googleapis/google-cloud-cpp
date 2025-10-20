@@ -205,8 +205,15 @@ add_library(
     internal/operation_context.h
     internal/operation_context_factory.cc
     internal/operation_context_factory.h
+    internal/partial_result_set_reader.h
+    internal/partial_result_set_resume.cc
+    internal/partial_result_set_resume.h
+    internal/partial_result_set_source.cc
+    internal/partial_result_set_source.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
+    internal/query_plan.cc
+    internal/query_plan.h
     internal/rate_limiter.cc
     internal/rate_limiter.h
     internal/readrowsparser.cc
@@ -229,9 +236,12 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    query_row.cc
+    query_row.h
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
+    results.h
     retry_policy.h
     row.h
     row_key.h
@@ -246,6 +256,8 @@ add_library(
     rpc_backoff_policy.h
     rpc_retry_policy.cc
     rpc_retry_policy.h
+    sql_statement.cc
+    sql_statement.h
     table.cc
     table.h
     table_admin.cc
@@ -254,6 +266,8 @@ add_library(
     table_config.h
     table_resource.cc
     table_resource.h
+    timestamp.cc
+    timestamp.h
     value.cc
     value.h
     version.cc
@@ -346,6 +360,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         admin/mocks/mock_bigtable_instance_admin_connection.h
         admin/mocks/mock_bigtable_table_admin_connection.h
         mocks/mock_data_connection.h
+        mocks/mock_query_row.h
         mocks/mock_row_reader.cc
         mocks/mock_row_reader.h)
     target_link_libraries(
@@ -383,6 +398,7 @@ if (BUILD_TESTING)
         testing/mock_data_client.h
         testing/mock_mutate_rows_limiter.h
         testing/mock_mutate_rows_reader.h
+        testing/mock_partial_result_set_reader.h
         testing/mock_policies.h
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
@@ -464,7 +480,10 @@ if (BUILD_TESTING)
         internal/mutate_rows_limiter_test.cc
         internal/operation_context_factory_test.cc
         internal/operation_context_test.cc
+        internal/partial_result_set_resume_test.cc
+        internal/partial_result_set_source_test.cc
         internal/prefix_range_end_test.cc
+        internal/query_plan_test.cc
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
@@ -475,6 +494,7 @@ if (BUILD_TESTING)
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc
+        query_row_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
         row_reader_test.cc
@@ -482,6 +502,7 @@ if (BUILD_TESTING)
         row_test.cc
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
+        sql_statement_test.cc
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
@@ -495,6 +516,7 @@ if (BUILD_TESTING)
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
+        timestamp_test.cc
         value_test.cc
         wait_for_consistency_test.cc)
 

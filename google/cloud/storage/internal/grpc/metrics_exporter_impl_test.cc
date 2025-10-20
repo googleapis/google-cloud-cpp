@@ -110,6 +110,52 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
             std::chrono::milliseconds(0));
 }
 
+TEST(GrpcMetricsExporter, DefaultExportTime) {
+  auto config = MakeMeterProviderConfig(FullResource(), TestOptions());
+  ASSERT_TRUE(config.has_value());
+  EXPECT_EQ(config->project, Project("project-id-resource"));
+  EXPECT_EQ(config->reader_options.export_interval_millis,
+            std::chrono::seconds(60));
+  EXPECT_EQ(config->reader_options.export_timeout_millis,
+            std::chrono::seconds(30));
+}
+
+TEST(GrpcMetricsExporter, CustomExportTime) {
+  auto config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<storage_experimental::GrpcMetricsPeriodOption>(
+              std::chrono::seconds(10))
+          .set<storage_experimental::GrpcMetricsExportTimeoutOption>(
+              std::chrono::seconds(2)));
+  ASSERT_TRUE(config.has_value());
+  EXPECT_EQ(config->project, Project("project-id-resource"));
+  EXPECT_EQ(config->reader_options.export_interval_millis,
+            std::chrono::seconds(10));
+  EXPECT_EQ(config->reader_options.export_timeout_millis,
+            std::chrono::seconds(2));
+}
+
+TEST(GrpcMetricsExporter, ReaderOptionsAreSetFromConfig) {
+  auto const expected_interval = std::chrono::seconds(45);
+  auto const expected_timeout = std::chrono::seconds(25);
+
+  auto config = MakeMeterProviderConfig(
+      FullResource(),
+      TestOptions()
+          .set<storage_experimental::GrpcMetricsPeriodOption>(expected_interval)
+          .set<storage_experimental::GrpcMetricsExportTimeoutOption>(
+              expected_timeout));
+
+  ASSERT_TRUE(config.has_value());
+
+  // Verify the conversion from seconds to milliseconds happens correctly.
+  EXPECT_EQ(config->reader_options.export_interval_millis,
+            std::chrono::milliseconds(expected_interval));
+  EXPECT_EQ(config->reader_options.export_timeout_millis,
+            std::chrono::milliseconds(expected_timeout));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

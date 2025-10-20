@@ -374,6 +374,24 @@ Status CatalogServiceConnection::CancelMetadataJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnection::CreateEntryLink(
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnection::DeleteEntryLink(
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnection::GetEntryLink(
+    google::cloud::dataplex::v1::GetEntryLinkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceConnection::ListLocations(
     google::cloud::location::

@@ -4,7 +4,21 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.43.0 - TBD
+## v2.44.0 - TBD
+
+## v2.43.0 - 2025-10
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): fixing flushing and finalization in buffered upload of async client ([#15572](https://github.com/googleapis/google-cloud-cpp/pull/15572))
+- feat(storage): Add samples related to AppendableObject and OpenObject ([#15563](https://github.com/googleapis/google-cloud-cpp/pull/15563))
+- feat(storage): Expose Flush() in AsyncWriter ([#15555](https://github.com/googleapis/google-cloud-cpp/pull/15555))
+- fix(storage): Fix Resume() to use append_object_spec instead of write_object_spec for resumed appendable uploads ([#15558](https://github.com/googleapis/google-cloud-cpp/pull/15558))
+- fix(storage): Increase AsyncWriter default MinLwmValue to avoid frequent flushes ([#15552](https://github.com/googleapis/google-cloud-cpp/pull/15552))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-10-03T13:49:30-07:00](https://github.com/googleapis/googleapis/tree/2193a2bfcecb92b92aad7a4d81baa428cafd7dfd)
 
 ## v2.42.0 - 2025-09
 

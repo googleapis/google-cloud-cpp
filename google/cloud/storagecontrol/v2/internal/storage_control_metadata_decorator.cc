@@ -627,6 +627,101 @@ StorageControlMetadata::UpdateOrganizationIntelligenceConfig(
                                                       request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageControlMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::GetIamPolicyRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::GetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::GetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> StorageControlMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::SetIamPolicyRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::SetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::SetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageControlMetadata::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::TestIamPermissionsRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::TestIamPermissionsRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/managedFolders/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::TestIamPermissionsRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/objects/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::TestIamPermissionsRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->TestIamPermissions(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

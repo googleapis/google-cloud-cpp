@@ -101,6 +101,9 @@ class AsyncWriter {
    * application should send the remaining data to upload, starting from this
    * point.
    *
+   * In the case of an appendable object, this variant will be populated
+   * with a `google::storage::v2::Object` on the first response.
+   *
    * @note
    * Calling this function on a default-constructed or moved-from `AsyncWriter`
    * results in undefined behavior.
