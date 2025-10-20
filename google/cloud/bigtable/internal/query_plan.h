@@ -16,8 +16,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_QUERY_PLAN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_QUERY_PLAN_H
 
-#include "google/cloud/bigtable/instance_resource.h"
-#include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
 #include <google/bigtable/v2/bigtable.pb.h>

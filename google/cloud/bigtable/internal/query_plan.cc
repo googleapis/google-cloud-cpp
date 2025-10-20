@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/query_plan.h"
-#include "google/cloud/bigtable/options.h"
 #include "google/cloud/completion_queue.h"
 #include <google/bigtable/v2/data.pb.h>
-#include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {

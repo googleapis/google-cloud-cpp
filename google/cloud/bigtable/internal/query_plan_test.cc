@@ -14,14 +14,8 @@
 
 #include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/completion_queue.h"
-#include "absl/strings/substitute.h"
 #include <google/bigtable/v2/data.pb.h>
-#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
-#include <grpcpp/grpcpp.h>
-#include <array>
-#include <cstdint>
-#include <string>
 
 namespace google {
 namespace cloud {
