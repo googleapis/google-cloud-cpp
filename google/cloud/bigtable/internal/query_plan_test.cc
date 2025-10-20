@@ -59,7 +59,8 @@ TEST(QueryPlanTest, Accessors) {
   });
 
   EXPECT_EQ(plan->prepared_query(), "test-query");
-  EXPECT_EQ(plan->metadata().DebugString(), metadata.DebugString());
+  EXPECT_THAT(plan->metadata(),
+              google::cloud::testing_util::IsProtoEqual(metadata));
 }
 
 TEST(QueryPlanTest, Expired) {
@@ -78,8 +79,8 @@ TEST(QueryPlanTest, Expired) {
   });
 
   EXPECT_THAT(plan->prepared_query(), IsEmpty());
-  EXPECT_EQ(plan->metadata().DebugString(),
-            google::bigtable::v2::ResultSetMetadata{}.DebugString());
+  EXPECT_THAT(plan->metadata(), google::cloud::testing_util::IsProtoEqual(
+                                    google::bigtable::v2::ResultSetMetadata{}));
 }
 
 }  // namespace
