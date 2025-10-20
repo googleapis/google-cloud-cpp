@@ -36,8 +36,7 @@ std::string AsString(T const& s) {
 template <typename T, typename std::enable_if<
                           std::is_same<T, absl::Cord>::value>::type* = nullptr>
 std::string AsString(T const& s) {
-  // Add the missing include: #include "absl/strings/cord.h"
-  return std::string(s);  // Convert a const absl::Cord
+  return std::string(s);
 }
 }  // namespace
 
