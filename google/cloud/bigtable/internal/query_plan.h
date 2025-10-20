@@ -37,8 +37,10 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   static std::shared_ptr<QueryPlan> Create(
       CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
       RefreshFn fn) {
-    return std::shared_ptr<QueryPlan>(
+    auto plan = std::shared_ptr<QueryPlan>(
         new QueryPlan(std::move(cq), std::move(response), std::move(fn)));
+    plan->Initialize();
+    return plan;
   }
 
   // Accessor for the prepared_query field in response_.
