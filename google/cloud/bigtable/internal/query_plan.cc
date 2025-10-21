@@ -21,28 +21,29 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string const& QueryPlan::prepared_query() const {
-  std::lock_guard<std::mutex> lock(mu_);
+bool QueryPlan::IsExpired() const {
   auto valid_until = std::chrono::system_clock::time_point(
       std::chrono::seconds(response_.valid_until().seconds()) +
       std::chrono::nanoseconds(response_.valid_until().nanos()));
-  if (valid_until > std::chrono::system_clock::now()) {
-    return response_.prepared_query();
+  return valid_until <= std::chrono::system_clock::now();
+}
+
+std::string const& QueryPlan::prepared_query() const {
+  std::lock_guard<std::mutex> lock(mu_);
+  if (IsExpired()) {
+    static std::string const kEmpty;
+    return kEmpty;
   }
-  static std::string const kEmpty;
-  return kEmpty;
+  return response_.prepared_query();
 }
 
 google::bigtable::v2::ResultSetMetadata const& QueryPlan::metadata() const {
   std::lock_guard<std::mutex> lock(mu_);
-  auto valid_until = std::chrono::system_clock::time_point(
-      std::chrono::seconds(response_.valid_until().seconds()) +
-      std::chrono::nanoseconds(response_.valid_until().nanos()));
-  if (valid_until > std::chrono::system_clock::now()) {
-    return response_.metadata();
+  if (IsExpired()) {
+    static google::bigtable::v2::ResultSetMetadata const kEmpty;
+    return kEmpty;
   }
-  static google::bigtable::v2::ResultSetMetadata const kEmpty;
-  return kEmpty;
+  return response_.metadata();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
