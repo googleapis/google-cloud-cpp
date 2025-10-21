@@ -29,10 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
-using ::google::protobuf::TextFormat;
 using ::google::protobuf::util::TimeUtil;
 using ::testing::IsEmpty;
-using ::testing::Not;
 
 TEST(QueryPlanTest, Accessors) {
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
