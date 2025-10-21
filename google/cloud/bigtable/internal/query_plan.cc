@@ -22,9 +22,11 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bool QueryPlan::IsExpired() const {
-  auto valid_until = std::chrono::system_clock::time_point(
+  auto total_duration =
       std::chrono::seconds(response_.valid_until().seconds()) +
-      std::chrono::nanoseconds(response_.valid_until().nanos()));
+      std::chrono::nanoseconds(response_.valid_until().nanos());
+
+  auto valid_until = std::chrono::system_clock::time_point() + total_duration;
   return valid_until <= std::chrono::system_clock::now();
 }
 
