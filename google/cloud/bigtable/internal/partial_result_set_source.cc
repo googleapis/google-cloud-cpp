@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/cord.h"
 #include "absl/types/optional.h"
 
 namespace google {
@@ -24,6 +25,20 @@ namespace cloud {
 namespace bigtable_internal {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+// Some Bigtable proto fields use Cord internally and string externally.
+template <typename T, typename std::enable_if<
+                          std::is_same<T, std::string>::value>::type* = nullptr>
+std::string AsString(T const& s) {
+  return s;
+}
+
+template <typename T, typename std::enable_if<
+                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
+std::string AsString(T const& s) {
+  return std::string(s);
+}
+}  // namespace
 
 StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 PartialResultSetSource::Create(
@@ -163,7 +178,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
     rows_.insert(rows_.end(), buffered_rows_.begin(), buffered_rows_.end());
     buffered_rows_.clear();
     read_buffer_.clear();
-    resume_token_ = result.resume_token();
+    resume_token_ = AsString(result.resume_token());
   }
   return {};  // OK
 }
