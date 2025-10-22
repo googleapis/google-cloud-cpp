@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/results.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
@@ -616,6 +617,22 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
       std::move(operation_context));
   return handler->GetFuture();
 }
+
+StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
+    bigtable::PrepareQueryParams params) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
+    bigtable::PrepareQueryParams p) {
+  return make_ready_future<StatusOr<bigtable::PreparedQuery>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
+    bigtable::ExecuteQueryParams params) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

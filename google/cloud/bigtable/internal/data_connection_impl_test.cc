@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -2720,6 +2721,22 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, ExecuteQuery) {
+  auto conn = TestConnection(std::make_shared<MockBigtableStub>());
+  internal::OptionsSpan span(CallOptions());
+  EXPECT_THAT(conn->ExecuteQuery(bigtable::ExecuteQueryParams{}),
+              StatusIs(StatusCode::kUnimplemented));
+}
+
+TEST_F(DataConnectionTest, PrepareQuery) {
+  auto conn = TestConnection(std::make_shared<MockBigtableStub>());
+  internal::OptionsSpan span(CallOptions());
+  EXPECT_THAT(conn->PrepareQuery(bigtable::PrepareQueryParams{
+                  bigtable::InstanceResource(google::cloud::Project(""), ""),
+                  bigtable::SqlStatement("")}),
+              StatusIs(StatusCode::kUnimplemented));
 }
 
 }  // namespace

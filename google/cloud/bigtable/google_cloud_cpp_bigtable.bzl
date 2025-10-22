@@ -121,6 +121,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "mutations.h",
     "options.h",
     "polling_policy.h",
+    "prepared_query.h",
     "query_row.h",
     "read_modify_write_rule.h",
     "resource_names.h",

@@ -143,6 +143,7 @@ add_library(
     instance_resource.h
     instance_update_config.cc
     instance_update_config.h
+    prepared_query.h
     internal/admin_client_params.cc
     internal/admin_client_params.h
     internal/async_bulk_apply.cc
