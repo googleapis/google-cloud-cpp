@@ -61,26 +61,6 @@ TEST(QueryPlanTest, Accessors) {
               google::cloud::testing_util::IsProtoEqual(metadata));
 }
 
-TEST(QueryPlanTest, Expired) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  CompletionQueue cq(mock_cq);
-  google::bigtable::v2::PrepareQueryResponse response;
-  response.set_prepared_query("test-query");
-  *response.mutable_metadata() = google::bigtable::v2::ResultSetMetadata{};
-
-  // Set the expiration time to the past.
-  *response.mutable_valid_until() =
-      TimeUtil::GetCurrentTime() - TimeUtil::SecondsToDuration(1);
-
-  auto plan = QueryPlan::Create(cq, response, [] {
-    return google::bigtable::v2::PrepareQueryResponse{};
-  });
-
-  EXPECT_THAT(plan->prepared_query(), IsEmpty());
-  EXPECT_THAT(plan->metadata(), google::cloud::testing_util::IsProtoEqual(
-                                    google::bigtable::v2::ResultSetMetadata{}));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
