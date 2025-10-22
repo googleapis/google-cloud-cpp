@@ -20,10 +20,10 @@
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
-#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
