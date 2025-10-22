@@ -109,6 +109,8 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bound_query.cc
+    bound_query.h
     bytes.cc
     bytes.h
     cell.h
@@ -236,8 +238,9 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    prepared_query.cc
+    prepared_query.h
     query.cc
-    query.h
     query_row.cc
     query_row.h
     read_modify_write_rule.h

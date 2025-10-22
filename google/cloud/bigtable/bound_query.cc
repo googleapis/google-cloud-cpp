@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/query.h"
-#include "google/cloud/bigtable/sql_statement.h"
+#include "google/cloud/bigtable/bound_query.h"
 
 namespace google {
 namespace cloud {
@@ -47,16 +46,6 @@ google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() {
   }
   *result.mutable_params() = parameters;
   return result;
-}
-
-BoundQuery PreparedQuery::BindParameters(
-    std::unordered_map<std::string, Value> params) const {
-  return BoundQuery(instance_, query_plan_, std::move(params));
-}
-
-InstanceResource const& PreparedQuery::instance() const { return instance_; }
-SqlStatement const& PreparedQuery::sql_statement() const {
-  return sql_statement_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

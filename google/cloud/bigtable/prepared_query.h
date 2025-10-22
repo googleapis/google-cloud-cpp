@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_PREPARED_QUERY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_PREPARED_QUERY_H
 
+#include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
-#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
@@ -29,42 +29,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Move only type representing a PreparedQuery with parameter values.
- * Created by calling PreparedQuery::BindParameters.
- */
-class BoundQuery {
- public:
-  // Copy and move.
-  BoundQuery(BoundQuery const&) = delete;
-  BoundQuery(BoundQuery&&) = default;
-  BoundQuery& operator=(BoundQuery const&) = delete;
-  BoundQuery& operator=(BoundQuery&&) = default;
-
-  // Accessors
-  std::string const& prepared_query() const;
-  google::bigtable::v2::ResultSetMetadata const& metadata() const;
-  std::unordered_map<std::string, Value> const& parameters() const;
-  InstanceResource const& instance() const;
-
-  google::bigtable::v2::ExecuteQueryRequest ToRequestProto();
-
- private:
-  friend class PreparedQuery;
-  BoundQuery(InstanceResource instance,
-             std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
-             std::unordered_map<std::string, Value> parameters)
-      : instance_(std::move(instance)),
-        query_plan_(std::move(query_plan)),
-        parameters_(std::move(parameters)) {}
-
-  InstanceResource instance_;
-  // Copy of the query_plan_ contained by the PreparedQuery that created
-  // this BoundQuery.
-  std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
-  std::unordered_map<std::string, Value> parameters_;
-};
 
 // Represents a long-lived query execution plan.
 // Query plans can expire and are refreshed as a background task.
@@ -107,4 +71,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_PREPARED_QUERY_H

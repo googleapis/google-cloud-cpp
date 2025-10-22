@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/query.h"
+#include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <algorithm>
@@ -23,19 +23,6 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ::google::bigtable::v2::PrepareQueryResponse;
-
-TEST(PreparedQuery, DefaultConstructor) {
-  CompletionQueue cq;
-  Project p("dummy-project");
-  InstanceResource instance(p, "dummy-instance");
-  std::string statement_contents(
-      "SELECT * FROM my_table WHERE col1 = @val1 and col2 = @val2;");
-  SqlStatement sql_statement(statement_contents);
-  PrepareQueryResponse response;
-  PreparedQuery q(cq, instance, sql_statement, response);
-  EXPECT_EQ(instance.FullName(), q.instance().FullName());
-  EXPECT_EQ(statement_contents, q.sql_statement().sql());
-}
 
 TEST(BoundQuery, FromPreparedQuery) {
   CompletionQueue cq;
