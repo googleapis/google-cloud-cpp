@@ -158,17 +158,17 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
 }
 
 StatusOr<bigtable::PreparedQuery> DataConnection::PrepareQuery(
-    bigtable::PrepareQueryParams) {
+    bigtable::PrepareQueryParams const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 future<StatusOr<bigtable::PreparedQuery>> DataConnection::AsyncPrepareQuery(
-    bigtable::PrepareQueryParams) {
+    bigtable::PrepareQueryParams const&) {
   return make_ready_future<StatusOr<PreparedQuery>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<bigtable::RowStream> DataConnection::ExecuteQuery(
-    bigtable::ExecuteQueryParams) {
+    bigtable::ExecuteQueryParams const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

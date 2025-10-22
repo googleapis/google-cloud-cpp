@@ -104,11 +104,11 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::Filter filter) override;
 
   StatusOr<bigtable::PreparedQuery> PrepareQuery(
-      bigtable::PrepareQueryParams p) override;
+      bigtable::PrepareQueryParams const& p) override;
   future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
-      bigtable::PrepareQueryParams p) override;
+      bigtable::PrepareQueryParams const& p) override;
   StatusOr<bigtable::RowStream> ExecuteQuery(
-      bigtable::ExecuteQueryParams p) override;
+      bigtable::ExecuteQueryParams const& p) override;
 
  private:
   void AsyncReadRowsHelper(std::string const& table_name,
