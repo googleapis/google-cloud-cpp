@@ -28,6 +28,7 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::protobuf::util::TimeUtil;
 using ::testing::IsEmpty;
@@ -56,9 +57,12 @@ TEST(QueryPlanTest, Accessors) {
     return google::bigtable::v2::PrepareQueryResponse{};
   });
 
-  EXPECT_EQ(plan->prepared_query(), "test-query");
-  EXPECT_THAT(plan->metadata(),
-              google::cloud::testing_util::IsProtoEqual(metadata));
+  auto prepared_query = plan->prepared_query();
+  ASSERT_STATUS_OK(prepared_query);
+  EXPECT_EQ(*prepared_query, "test-query");
+  auto actual_metadata = plan->metadata();
+  ASSERT_STATUS_OK(actual_metadata);
+  EXPECT_THAT(*actual_metadata, IsProtoEqual(metadata));
 }
 
 }  // namespace
