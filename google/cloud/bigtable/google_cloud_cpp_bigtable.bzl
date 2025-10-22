@@ -231,7 +231,6 @@ google_cloud_cpp_bigtable_srcs = [
     "mutations.cc",
     "polling_policy.cc",
     "prepared_query.cc",
-    "query.cc",
     "query_row.cc",
     "resource_names.cc",
     "row_range.cc",

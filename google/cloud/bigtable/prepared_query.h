@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/bound_query.h"
+#include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <algorithm>
