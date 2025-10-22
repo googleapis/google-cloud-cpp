@@ -30,7 +30,7 @@ std::shared_ptr<QueryPlan> QueryPlan::Create(
   return plan;
 }
 
-bool QueryPlan::IsExpired() const { return false; }
+bool QueryPlan::IsExpired() { return false; }
 
 StatusOr<std::string> QueryPlan::prepared_query() const {
   std::lock_guard<std::mutex> lock(mu_);

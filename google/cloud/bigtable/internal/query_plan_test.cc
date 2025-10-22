@@ -31,7 +31,6 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::protobuf::util::TimeUtil;
-using ::testing::IsEmpty;
 
 TEST(QueryPlanTest, Accessors) {
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();

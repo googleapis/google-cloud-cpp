@@ -50,7 +50,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
       : cq_(std::move(cq)),
         response_(std::move(response)),
         fn_(std::move(fn)) {}
-  bool IsExpired() const;
+  static bool IsExpired();
 
   // Performs the first call to ScheduleRefresh and any other initialization not
   // possible in the constructor.
