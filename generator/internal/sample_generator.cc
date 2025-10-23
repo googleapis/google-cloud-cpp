@@ -109,12 +109,11 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   // in the provided Options for the Universe Domain associated with the
   // credentials and adds it to the set of Options.
   // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
-  ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
+  auto ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::$product_namespace$::$client_class_name$(
-      google::cloud::$product_namespace$::Make$connection_class_name$(ud_options));
-
+      google::cloud::$product_namespace$::Make$connection_class_name$(*ud_options));
   //! [set-client-universe-domain]
 }
 )""");
@@ -137,6 +136,7 @@ Status SampleGenerator::GenerateHeader() {
       vars("idempotency_policy_header_path"),
       "google/cloud/common_options.h",
       "google/cloud/credentials.h",
+      "google/cloud/universe_domain.h",
       HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
       "google/cloud/internal/getenv.h",
       "google/cloud/testing_util/example_driver.h",
@@ -374,6 +374,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   HeaderPrint(R"""(
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
+
+  std::cout << "\nRunning SetClientUniverseDomain() example" << std::endl;
+  SetClientUniverseDomain({});
 }
 
 }  // namespace
@@ -388,6 +391,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
     )""");
   }
   HeaderPrint(R"""(      {"with-service-account", WithServiceAccount},
+      {"set-client-universe-domain", SetClientUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
