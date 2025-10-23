@@ -69,6 +69,7 @@ readonly STORAGE_SHARD=(
 readonly TOOLS_SHARD=(
   generator
   docfx
+  universe_domain
 )
 
 function shard::cmake_features() {

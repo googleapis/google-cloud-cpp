@@ -38,6 +38,7 @@ operations = [":google_cloud_cpp_compute_" + d.replace("/v1/", "") for d in oper
     tags = ["integration-test"],
     deps = [
         ":google_cloud_cpp_compute_" + sample[0:sample.find("/v")],
+        "//:experimental-universe_domain",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob([d + "samples/*.cc" for d in service_dirs + operation_service_dirs])]

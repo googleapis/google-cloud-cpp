@@ -65,6 +65,7 @@ function features::_internal_extra() {
   local list=(
     experimental-bigquery_rest
     opentelemetry
+    universe_domain
   )
   printf "%s\n" "${list[@]}"
 }
