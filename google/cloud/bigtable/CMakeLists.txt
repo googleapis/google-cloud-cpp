@@ -109,6 +109,8 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bound_query.cc
+    bound_query.h
     bytes.cc
     bytes.h
     cell.h
@@ -236,6 +238,8 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    prepared_query.cc
+    prepared_query.h
     query_row.cc
     query_row.h
     read_modify_write_rule.h
@@ -437,6 +441,7 @@ if (BUILD_TESTING)
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
+        bound_query_test.cc
         bytes_test.cc
         cell_test.cc
         client_options_test.cc
@@ -494,6 +499,7 @@ if (BUILD_TESTING)
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc
+        prepared_query_test.cc
         query_row_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
