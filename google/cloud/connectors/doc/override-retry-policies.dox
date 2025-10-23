@@ -1,5 +1,4 @@
 /*!
-
 @page connectors-override-retry Override Retry, Backoff, and Idempotency Policies
 
 When it is safe to do so, the library automatically retries requests that fail
