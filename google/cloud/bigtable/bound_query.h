@@ -42,8 +42,8 @@ class BoundQuery {
   BoundQuery& operator=(BoundQuery&&) = default;
 
   // Accessors
-  std::string const& prepared_query() const;
-  google::bigtable::v2::ResultSetMetadata const& metadata() const;
+  StatusOr<std::string> prepared_query() const;
+  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
   std::unordered_map<std::string, Value> const& parameters() const;
   InstanceResource const& instance() const;
 

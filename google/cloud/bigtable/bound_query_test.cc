@@ -50,11 +50,13 @@ TEST(BoundQuery, FromPreparedQuery) {
   PreparedQuery pq(cq, instance, sql_statement, response);
   auto bq = pq.BindParameters(parameters);
   EXPECT_EQ(instance.FullName(), bq.instance().FullName());
-  EXPECT_EQ(statement_contents, bq.prepared_query());
+  EXPECT_STATUS_OK(bq.prepared_query());
+  EXPECT_EQ(statement_contents, bq.prepared_query().value());
   EXPECT_EQ(parameters, bq.parameters());
-  EXPECT_TRUE(bq.metadata().has_proto_schema());
-  EXPECT_EQ(1, bq.metadata().proto_schema().columns_size());
-  EXPECT_EQ("col1", bq.metadata().proto_schema().columns()[0].name());
+  EXPECT_STATUS_OK(bq.metadata());
+  EXPECT_TRUE(bq.metadata().value().has_proto_schema());
+  EXPECT_EQ(1, bq.metadata().value().proto_schema().columns_size());
+  EXPECT_EQ("col1", bq.metadata().value().proto_schema().columns()[0].name());
 }
 
 TEST(BoundQuery, ToRequestProto) {
