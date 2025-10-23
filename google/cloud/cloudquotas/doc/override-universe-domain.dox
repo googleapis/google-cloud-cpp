@@ -1,0 +1,25 @@
+/*!
+@page cloudquotas-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `cloudquotas_v1::CloudQuotasClient`:
+
+@snippet cloud_quotas_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page cloudquotas_v1::CloudQuotasClient-universe-domain-snippet Override cloudquotas_v1::CloudQuotasClient Universe Domain
+
+@snippet google/cloud/cloudquotas/v1/samples/cloud_quotas_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

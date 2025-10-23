@@ -1,0 +1,211 @@
+/*!
+@page aiplatform-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `aiplatform_v1::DatasetServiceClient`:
+
+@snippet dataset_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref aiplatform_v1::DeploymentResourcePoolServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::EvaluationServiceClient](@ref aiplatform_v1::EvaluationServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::FeatureRegistryServiceClient](@ref aiplatform_v1::FeatureRegistryServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::GenAiTuningServiceClient](@ref aiplatform_v1::GenAiTuningServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::LlmUtilityServiceClient](@ref aiplatform_v1::LlmUtilityServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::MatchServiceClient](@ref aiplatform_v1::MatchServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::MetadataServiceClient](@ref aiplatform_v1::MetadataServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::NotebookServiceClient](@ref aiplatform_v1::NotebookServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::PersistentResourceServiceClient](@ref aiplatform_v1::PersistentResourceServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::ScheduleServiceClient](@ref aiplatform_v1::ScheduleServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::SpecialistPoolServiceClient](@ref aiplatform_v1::SpecialistPoolServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::TensorboardServiceClient](@ref aiplatform_v1::TensorboardServiceClient-universe-domain-snippet)
+- [\c aiplatform_v1::VizierServiceClient](@ref aiplatform_v1::VizierServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page aiplatform_v1::DatasetServiceClient-universe-domain-snippet Override aiplatform_v1::DatasetServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::DeploymentResourcePoolServiceClient-universe-domain-snippet Override aiplatform_v1::DeploymentResourcePoolServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/deployment_resource_pool_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::EndpointServiceClient-universe-domain-snippet Override aiplatform_v1::EndpointServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::EvaluationServiceClient-universe-domain-snippet Override aiplatform_v1::EvaluationServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/evaluation_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::FeatureOnlineStoreAdminServiceClient-universe-domain-snippet Override aiplatform_v1::FeatureOnlineStoreAdminServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/feature_online_store_admin_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::FeatureOnlineStoreServiceClient-universe-domain-snippet Override aiplatform_v1::FeatureOnlineStoreServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/feature_online_store_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::FeatureRegistryServiceClient-universe-domain-snippet Override aiplatform_v1::FeatureRegistryServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/feature_registry_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreServiceClient-universe-domain-snippet Override aiplatform_v1::FeaturestoreServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreOnlineServingServiceClient-universe-domain-snippet Override aiplatform_v1::FeaturestoreOnlineServingServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_online_serving_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::GenAiTuningServiceClient-universe-domain-snippet Override aiplatform_v1::GenAiTuningServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/gen_ai_tuning_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::IndexServiceClient-universe-domain-snippet Override aiplatform_v1::IndexServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/index_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::IndexEndpointServiceClient-universe-domain-snippet Override aiplatform_v1::IndexEndpointServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/index_endpoint_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::JobServiceClient-universe-domain-snippet Override aiplatform_v1::JobServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::LlmUtilityServiceClient-universe-domain-snippet Override aiplatform_v1::LlmUtilityServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/llm_utility_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::MatchServiceClient-universe-domain-snippet Override aiplatform_v1::MatchServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/match_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::MetadataServiceClient-universe-domain-snippet Override aiplatform_v1::MetadataServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/metadata_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::MigrationServiceClient-universe-domain-snippet Override aiplatform_v1::MigrationServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/migration_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::ModelServiceClient-universe-domain-snippet Override aiplatform_v1::ModelServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/model_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::ModelGardenServiceClient-universe-domain-snippet Override aiplatform_v1::ModelGardenServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::NotebookServiceClient-universe-domain-snippet Override aiplatform_v1::NotebookServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/notebook_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::PersistentResourceServiceClient-universe-domain-snippet Override aiplatform_v1::PersistentResourceServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/persistent_resource_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::PipelineServiceClient-universe-domain-snippet Override aiplatform_v1::PipelineServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/pipeline_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::PredictionServiceClient-universe-domain-snippet Override aiplatform_v1::PredictionServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::ScheduleServiceClient-universe-domain-snippet Override aiplatform_v1::ScheduleServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/schedule_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::SpecialistPoolServiceClient-universe-domain-snippet Override aiplatform_v1::SpecialistPoolServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/specialist_pool_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::TensorboardServiceClient-universe-domain-snippet Override aiplatform_v1::TensorboardServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/tensorboard_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page aiplatform_v1::VizierServiceClient-universe-domain-snippet Override aiplatform_v1::VizierServiceClient Universe Domain
+
+@snippet google/cloud/aiplatform/v1/samples/vizier_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

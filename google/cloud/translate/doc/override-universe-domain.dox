@@ -1,0 +1,25 @@
+/*!
+@page translate-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `translate_v3::TranslationServiceClient`:
+
+@snippet translation_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page translate_v3::TranslationServiceClient-universe-domain-snippet Override translate_v3::TranslationServiceClient Universe Domain
+
+@snippet google/cloud/translate/v3/samples/translation_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
