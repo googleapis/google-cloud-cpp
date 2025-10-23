@@ -24,6 +24,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/universe_domain.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -61,13 +62,12 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   // in the provided Options for the Universe Domain associated with the
   // credentials and adds it to the set of Options.
   // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
-  ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
+  auto ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::discoveryengine_v1::DocumentServiceClient(
       google::cloud::discoveryengine_v1::MakeDocumentServiceConnection(
-          ud_options));
-
+          *ud_options));
   //! [set-client-universe-domain]
 }
 
@@ -211,6 +211,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
   SetRetryPolicy({});
 
+  std::cout << "\nRunning SetClientUniverseDomain() example" << std::endl;
+  SetClientUniverseDomain({});
+
   std::cout << "\nRunning SetPollingPolicy() example" << std::endl;
   SetPollingPolicy({});
 
@@ -226,6 +229,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"set-retry-policy", SetRetryPolicy},
       {"set-polling-policy", SetPollingPolicy},
       {"with-service-account", WithServiceAccount},
+      {"set-client-universe-domain", SetClientUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
