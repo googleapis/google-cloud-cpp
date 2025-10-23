@@ -49,6 +49,26 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //! [set-client-endpoint]
 }
 
+void SetClientUniverseDomain(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-universe-domain"};
+  }
+  //! [set-client-universe-domain]
+  google::cloud::Options options;
+
+  // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if set,
+  // in the provided Options for the Universe Domain associated with the
+  // credentials and adds it to the set of Options.
+  // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+  ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
+
+  if (!ud_options.ok()) throw std::move(ud_options).status();
+  auto ud_client = google::cloud::dataplex_v1::DataplexServiceClient(
+      google::cloud::dataplex_v1::MakeDataplexServiceConnection(ud_options));
+
+  //! [set-client-universe-domain]
+}
+
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy : public google::cloud::dataplex_v1::
                                     DataplexServiceConnectionIdempotencyPolicy {
