@@ -36,11 +36,13 @@ readonly DEFAULT_SHARD=(
   bigtable
   spanner
   logging
+  universe_domain
 )
 
 readonly BIGQUERY_SHARD=(
   bigquery
   experimental-bigquery_rest
+  universe_domain
 )
 
 readonly PUBSUB_SHARD=(
@@ -51,6 +53,7 @@ readonly PUBSUB_SHARD=(
   # IAM is included because it has hand-crafted tests and/or examples and is
   # required by Pub/Sub
   iam
+  universe_domain
 )
 
 readonly STORAGE_SHARD=(
