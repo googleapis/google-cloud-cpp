@@ -172,11 +172,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
   SetRetryPolicy({});
 
-  std::cout << "\nRunning SetClientUniverseDomain() example" << std::endl;
-  SetClientUniverseDomain({});
-
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
+
+  std::cout << "\nRunning SetClientUniverseDomain() example" << std::endl;
+  SetClientUniverseDomain({});
 }
 
 }  // namespace

@@ -23,6 +23,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/universe_domain.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -58,12 +59,11 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   // in the provided Options for the Universe Domain associated with the
   // credentials and adds it to the set of Options.
   // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
-  ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
+  auto ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::golden_v1::GoldenKitchenSinkClient(
-      google::cloud::golden_v1::MakeGoldenKitchenSinkConnection(ud_options));
-
+      google::cloud::golden_v1::MakeGoldenKitchenSinkConnection(*ud_options));
   //! [set-client-universe-domain]
 }
 
@@ -150,6 +150,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
+
+  std::cout << "\nRunning SetClientUniverseDomain() example" << std::endl;
+  SetClientUniverseDomain({});
 }
 
 }  // namespace
@@ -159,6 +162,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"set-client-endpoint", SetClientEndpoint},
       {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
+      {"set-client-universe-domain", SetClientUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
