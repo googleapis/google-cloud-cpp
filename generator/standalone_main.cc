@@ -233,6 +233,13 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       GenerateScaffold(scaffold_vars, generator_args.scaffold_templates_path,
                        generator_args.output_path, service);
     } else {
+      // Bigtable, pubsub, and spanner, have their admin services generated but
+      // their data services handwritten. The dox files for these are also
+      // handwritten, so we don't want to overwrite them with generated ones.
+      //
+      // Compute is a special case that has almost a hundred generated services,
+      // but the dox files are not per service, but are all under the compute
+      // umbrella which has one set of dox files intended to cover all of them.
       static constexpr std::array<char const*, 4> kOmittedDocDirs = {
           "google/cloud/bigtable", "google/cloud/compute",
           "google/cloud/pubsub", "google/cloud/spanner"};
