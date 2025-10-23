@@ -36,16 +36,13 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   // Calls the constructor and then Initialize.
   static std::shared_ptr<QueryPlan> Create(
       CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
-      RefreshFn fn) {
-    return std::shared_ptr<QueryPlan>(
-        new QueryPlan(std::move(cq), std::move(response), std::move(fn)));
-  }
+      RefreshFn fn);
 
   // Accessor for the prepared_query field in response_.
-  std::string const& prepared_query() const;
+  StatusOr<std::string> prepared_query() const;
 
   // Accessor for the metadata field in  response_.
-  google::bigtable::v2::ResultSetMetadata const& metadata() const;
+  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
 
  private:
   QueryPlan(CompletionQueue cq,
@@ -53,6 +50,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
       : cq_(std::move(cq)),
         response_(std::move(response)),
         fn_(std::move(fn)) {}
+  static bool IsExpired();
 
   // Performs the first call to ScheduleRefresh and any other initialization not
   // possible in the constructor.
