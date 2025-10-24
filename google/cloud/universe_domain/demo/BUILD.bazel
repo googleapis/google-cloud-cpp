@@ -31,6 +31,6 @@ service_demos = [
     ],
     deps = [
         "@google_cloud_cpp//:" + demo,
-        "@google_cloud_cpp//:experimental-universe_domain",
+        "@google_cloud_cpp//:universe_domain",
     ],
 ) for demo in service_demos]
