@@ -97,6 +97,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
 }
 
 void SampleGenerator::GenerateSetClientUniverseDomainSample() {
+  auto endpoint_location_style = EndpointLocationStyle();
   HeaderPrint(R"""(
 void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   if (!argv.empty()) {
@@ -119,6 +120,15 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   } else {
     HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
+  }
+  if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+      HeaderPrint(R"""("unused", )""");
+      break;
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    default:
+      break;
   }
   HeaderPrint(R"""(*ud_options));
   //! [set-client-universe-domain]
