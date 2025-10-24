@@ -82,7 +82,7 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
         tags = ["integration-test"],
         deps = [
             "//:" + name,
-            "//:experimental-universe_domain",
+            "//:universe_domain",
             "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         ],
     ) for sample in native.glob([d + "samples/*_samples.cc" for d in service_dirs])]
