@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_instant_snapshots_v1::InstantSnapshotsClient(
           google::cloud::compute_instant_snapshots_v1::
-              MakeInstantSnapshotsConnection(*ud_options));
+              MakeInstantSnapshotsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

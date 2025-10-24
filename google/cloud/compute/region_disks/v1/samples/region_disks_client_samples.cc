@@ -66,7 +66,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_region_disks_v1::RegionDisksClient(
-      google::cloud::compute_region_disks_v1::MakeRegionDisksConnection(
+      google::cloud::compute_region_disks_v1::MakeRegionDisksConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

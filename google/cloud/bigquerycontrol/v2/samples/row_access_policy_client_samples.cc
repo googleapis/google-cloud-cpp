@@ -67,7 +67,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::bigquerycontrol_v2::RowAccessPolicyServiceClient(
           google::cloud::bigquerycontrol_v2::
-              MakeRowAccessPolicyServiceConnection(*ud_options));
+              MakeRowAccessPolicyServiceConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

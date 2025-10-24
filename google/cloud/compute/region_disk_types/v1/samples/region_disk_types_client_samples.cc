@@ -67,7 +67,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_region_disk_types_v1::RegionDiskTypesClient(
           google::cloud::compute_region_disk_types_v1::
-              MakeRegionDiskTypesConnection(*ud_options));
+              MakeRegionDiskTypesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

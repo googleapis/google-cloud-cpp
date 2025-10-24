@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_public_advertised_prefixes_v1::
       PublicAdvertisedPrefixesClient(
           google::cloud::compute_public_advertised_prefixes_v1::
-              MakePublicAdvertisedPrefixesConnection(*ud_options));
+              MakePublicAdvertisedPrefixesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

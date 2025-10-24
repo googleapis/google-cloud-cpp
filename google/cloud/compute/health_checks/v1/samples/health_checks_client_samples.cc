@@ -66,7 +66,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_health_checks_v1::HealthChecksClient(
-      google::cloud::compute_health_checks_v1::MakeHealthChecksConnection(
+      google::cloud::compute_health_checks_v1::MakeHealthChecksConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

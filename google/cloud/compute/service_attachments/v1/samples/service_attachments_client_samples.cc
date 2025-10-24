@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_service_attachments_v1::ServiceAttachmentsClient(
           google::cloud::compute_service_attachments_v1::
-              MakeServiceAttachmentsConnection(*ud_options));
+              MakeServiceAttachmentsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

@@ -67,7 +67,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_accelerator_types_v1::AcceleratorTypesClient(
           google::cloud::compute_accelerator_types_v1::
-              MakeAcceleratorTypesConnection(*ud_options));
+              MakeAcceleratorTypesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

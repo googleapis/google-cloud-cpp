@@ -64,7 +64,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::bigquerycontrol_v2::RoutineServiceClient(
-      google::cloud::bigquerycontrol_v2::MakeRoutineServiceConnection(
+      google::cloud::bigquerycontrol_v2::MakeRoutineServiceConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

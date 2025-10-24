@@ -68,7 +68,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_reservation_sub_blocks_v1::
       ReservationSubBlocksClient(
           google::cloud::compute_reservation_sub_blocks_v1::
-              MakeReservationSubBlocksConnection(*ud_options));
+              MakeReservationSubBlocksConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

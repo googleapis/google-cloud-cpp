@@ -67,7 +67,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_storage_pool_types_v1::StoragePoolTypesClient(
           google::cloud::compute_storage_pool_types_v1::
-              MakeStoragePoolTypesConnection(*ud_options));
+              MakeStoragePoolTypesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

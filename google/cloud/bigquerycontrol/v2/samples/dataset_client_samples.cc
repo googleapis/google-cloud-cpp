@@ -64,7 +64,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::bigquerycontrol_v2::DatasetServiceClient(
-      google::cloud::bigquerycontrol_v2::MakeDatasetServiceConnection(
+      google::cloud::bigquerycontrol_v2::MakeDatasetServiceConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

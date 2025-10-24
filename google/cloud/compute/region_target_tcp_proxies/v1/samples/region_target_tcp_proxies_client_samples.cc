@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_region_target_tcp_proxies_v1::
       RegionTargetTcpProxiesClient(
           google::cloud::compute_region_target_tcp_proxies_v1::
-              MakeRegionTargetTcpProxiesConnection(*ud_options));
+              MakeRegionTargetTcpProxiesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

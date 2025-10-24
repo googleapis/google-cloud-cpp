@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient(
           google::cloud::compute_region_url_maps_v1::
-              MakeRegionUrlMapsConnection(*ud_options));
+              MakeRegionUrlMapsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

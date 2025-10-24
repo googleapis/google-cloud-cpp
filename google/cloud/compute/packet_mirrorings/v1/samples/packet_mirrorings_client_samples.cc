@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_packet_mirrorings_v1::PacketMirroringsClient(
           google::cloud::compute_packet_mirrorings_v1::
-              MakePacketMirroringsConnection(*ud_options));
+              MakePacketMirroringsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

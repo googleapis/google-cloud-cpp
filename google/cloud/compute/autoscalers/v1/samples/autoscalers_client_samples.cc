@@ -66,7 +66,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_autoscalers_v1::AutoscalersClient(
-      google::cloud::compute_autoscalers_v1::MakeAutoscalersConnection(
+      google::cloud::compute_autoscalers_v1::MakeAutoscalersConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

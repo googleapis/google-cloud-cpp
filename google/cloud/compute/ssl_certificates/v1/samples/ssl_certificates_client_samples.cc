@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_ssl_certificates_v1::SslCertificatesClient(
           google::cloud::compute_ssl_certificates_v1::
-              MakeSslCertificatesConnection(*ud_options));
+              MakeSslCertificatesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

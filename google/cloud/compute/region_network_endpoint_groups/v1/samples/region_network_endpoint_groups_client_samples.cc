@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_region_network_endpoint_groups_v1::
       RegionNetworkEndpointGroupsClient(
           google::cloud::compute_region_network_endpoint_groups_v1::
-              MakeRegionNetworkEndpointGroupsConnection(*ud_options));
+              MakeRegionNetworkEndpointGroupsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

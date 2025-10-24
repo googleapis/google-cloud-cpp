@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_interconnect_groups_v1::InterconnectGroupsClient(
           google::cloud::compute_interconnect_groups_v1::
-              MakeInterconnectGroupsConnection(*ud_options));
+              MakeInterconnectGroupsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

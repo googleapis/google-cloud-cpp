@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_global_addresses_v1::GlobalAddressesClient(
           google::cloud::compute_global_addresses_v1::
-              MakeGlobalAddressesConnection(*ud_options));
+              MakeGlobalAddressesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

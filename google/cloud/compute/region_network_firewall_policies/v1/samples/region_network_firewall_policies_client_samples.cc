@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_region_network_firewall_policies_v1::
       RegionNetworkFirewallPoliciesClient(
           google::cloud::compute_region_network_firewall_policies_v1::
-              MakeRegionNetworkFirewallPoliciesConnection(*ud_options));
+              MakeRegionNetworkFirewallPoliciesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_region_health_check_services_v1::
       RegionHealthCheckServicesClient(
           google::cloud::compute_region_health_check_services_v1::
-              MakeRegionHealthCheckServicesConnection(*ud_options));
+              MakeRegionHealthCheckServicesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

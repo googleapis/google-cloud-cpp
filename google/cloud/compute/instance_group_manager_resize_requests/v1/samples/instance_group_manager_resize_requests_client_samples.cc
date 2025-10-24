@@ -73,7 +73,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
       google::cloud::compute_instance_group_manager_resize_requests_v1::
           InstanceGroupManagerResizeRequestsClient(
               google::cloud::compute_instance_group_manager_resize_requests_v1::
-                  MakeInstanceGroupManagerResizeRequestsConnection(
+                  MakeInstanceGroupManagerResizeRequestsConnectionRest(
                       *ud_options));
   //! [set-client-universe-domain]
 }

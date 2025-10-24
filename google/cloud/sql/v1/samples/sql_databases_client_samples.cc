@@ -63,7 +63,8 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::sql_v1::SqlDatabasesServiceClient(
-      google::cloud::sql_v1::MakeSqlDatabasesServiceConnection(*ud_options));
+      google::cloud::sql_v1::MakeSqlDatabasesServiceConnectionRest(
+          *ud_options));
   //! [set-client-universe-domain]
 }
 

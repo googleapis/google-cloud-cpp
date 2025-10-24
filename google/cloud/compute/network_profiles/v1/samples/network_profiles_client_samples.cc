@@ -67,7 +67,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
           google::cloud::compute_network_profiles_v1::
-              MakeNetworkProfilesConnection(*ud_options));
+              MakeNetworkProfilesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

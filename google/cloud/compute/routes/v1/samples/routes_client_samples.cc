@@ -65,7 +65,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_routes_v1::RoutesClient(
-      google::cloud::compute_routes_v1::MakeRoutesConnection(*ud_options));
+      google::cloud::compute_routes_v1::MakeRoutesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_region_ssl_policies_v1::RegionSslPoliciesClient(
           google::cloud::compute_region_ssl_policies_v1::
-              MakeRegionSslPoliciesConnection(*ud_options));
+              MakeRegionSslPoliciesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

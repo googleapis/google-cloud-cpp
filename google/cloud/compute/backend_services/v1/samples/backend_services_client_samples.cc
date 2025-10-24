@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_backend_services_v1::BackendServicesClient(
           google::cloud::compute_backend_services_v1::
-              MakeBackendServicesConnection(*ud_options));
+              MakeBackendServicesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

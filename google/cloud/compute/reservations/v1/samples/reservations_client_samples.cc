@@ -66,7 +66,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_reservations_v1::ReservationsClient(
-      google::cloud::compute_reservations_v1::MakeReservationsConnection(
+      google::cloud::compute_reservations_v1::MakeReservationsConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

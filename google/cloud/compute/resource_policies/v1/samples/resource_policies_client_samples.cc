@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_resource_policies_v1::ResourcePoliciesClient(
           google::cloud::compute_resource_policies_v1::
-              MakeResourcePoliciesConnection(*ud_options));
+              MakeResourcePoliciesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

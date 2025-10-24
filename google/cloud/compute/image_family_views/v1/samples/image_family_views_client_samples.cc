@@ -67,7 +67,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::compute_image_family_views_v1::ImageFamilyViewsClient(
           google::cloud::compute_image_family_views_v1::
-              MakeImageFamilyViewsConnection(*ud_options));
+              MakeImageFamilyViewsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

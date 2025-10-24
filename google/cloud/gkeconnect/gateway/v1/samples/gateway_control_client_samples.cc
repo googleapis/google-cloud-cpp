@@ -64,7 +64,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::gkeconnect_gateway_v1::GatewayControlClient(
-      google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnection(
+      google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

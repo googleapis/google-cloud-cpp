@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::golden_v1::GoldenRestOnlyClient(
-      google::cloud::golden_v1::MakeGoldenRestOnlyConnection(*ud_options));
+      google::cloud::golden_v1::MakeGoldenRestOnlyConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

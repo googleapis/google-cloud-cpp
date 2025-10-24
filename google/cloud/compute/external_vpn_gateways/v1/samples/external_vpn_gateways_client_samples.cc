@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_external_vpn_gateways_v1::
       ExternalVpnGatewaysClient(
           google::cloud::compute_external_vpn_gateways_v1::
-              MakeExternalVpnGatewaysConnection(*ud_options));
+              MakeExternalVpnGatewaysConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

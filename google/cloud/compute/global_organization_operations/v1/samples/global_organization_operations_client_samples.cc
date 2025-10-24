@@ -68,7 +68,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_global_organization_operations_v1::
       GlobalOrganizationOperationsClient(
           google::cloud::compute_global_organization_operations_v1::
-              MakeGlobalOrganizationOperationsConnection(*ud_options));
+              MakeGlobalOrganizationOperationsConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

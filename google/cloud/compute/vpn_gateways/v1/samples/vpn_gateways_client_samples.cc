@@ -66,7 +66,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_vpn_gateways_v1::VpnGatewaysClient(
-      google::cloud::compute_vpn_gateways_v1::MakeVpnGatewaysConnection(
+      google::cloud::compute_vpn_gateways_v1::MakeVpnGatewaysConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

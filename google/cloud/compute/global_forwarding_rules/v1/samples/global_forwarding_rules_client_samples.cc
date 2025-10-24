@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_global_forwarding_rules_v1::
       GlobalForwardingRulesClient(
           google::cloud::compute_global_forwarding_rules_v1::
-              MakeGlobalForwardingRulesConnection(*ud_options));
+              MakeGlobalForwardingRulesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

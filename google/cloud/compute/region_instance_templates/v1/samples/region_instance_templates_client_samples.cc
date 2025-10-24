@@ -70,7 +70,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client = google::cloud::compute_region_instance_templates_v1::
       RegionInstanceTemplatesClient(
           google::cloud::compute_region_instance_templates_v1::
-              MakeRegionInstanceTemplatesConnection(*ud_options));
+              MakeRegionInstanceTemplatesConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 

@@ -66,7 +66,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::compute_ssl_policies_v1::SslPoliciesClient(
-      google::cloud::compute_ssl_policies_v1::MakeSslPoliciesConnection(
+      google::cloud::compute_ssl_policies_v1::MakeSslPoliciesConnectionRest(
           *ud_options));
   //! [set-client-universe-domain]
 }

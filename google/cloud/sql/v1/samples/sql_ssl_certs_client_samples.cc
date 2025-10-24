@@ -63,7 +63,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::sql_v1::SqlSslCertsServiceClient(
-      google::cloud::sql_v1::MakeSqlSslCertsServiceConnection(*ud_options));
+      google::cloud::sql_v1::MakeSqlSslCertsServiceConnectionRest(*ud_options));
   //! [set-client-universe-domain]
 }
 
