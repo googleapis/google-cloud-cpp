@@ -65,7 +65,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::aiplatform_v1::PredictionServiceClient(
       google::cloud::aiplatform_v1::MakePredictionServiceConnection(
-          *ud_options));
+          "unused", *ud_options));
   //! [set-client-universe-domain]
 }
 

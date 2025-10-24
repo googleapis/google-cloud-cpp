@@ -69,7 +69,8 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::aiplatform_v1::DeploymentResourcePoolServiceClient(
           google::cloud::aiplatform_v1::
-              MakeDeploymentResourcePoolServiceConnection(*ud_options));
+              MakeDeploymentResourcePoolServiceConnection("unused",
+                                                          *ud_options));
   //! [set-client-universe-domain]
 }
 

@@ -69,7 +69,7 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::aiplatform_v1::PersistentResourceServiceClient(
           google::cloud::aiplatform_v1::MakePersistentResourceServiceConnection(
-              *ud_options));
+              "unused", *ud_options));
   //! [set-client-universe-domain]
 }
 

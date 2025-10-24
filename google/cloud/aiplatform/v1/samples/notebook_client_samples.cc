@@ -66,7 +66,8 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::aiplatform_v1::NotebookServiceClient(
-      google::cloud::aiplatform_v1::MakeNotebookServiceConnection(*ud_options));
+      google::cloud::aiplatform_v1::MakeNotebookServiceConnection("unused",
+                                                                  *ud_options));
   //! [set-client-universe-domain]
 }
 

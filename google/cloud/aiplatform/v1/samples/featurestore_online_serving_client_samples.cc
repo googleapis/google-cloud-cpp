@@ -68,7 +68,8 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_client =
       google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
           google::cloud::aiplatform_v1::
-              MakeFeaturestoreOnlineServingServiceConnection(*ud_options));
+              MakeFeaturestoreOnlineServingServiceConnection("unused",
+                                                             *ud_options));
   //! [set-client-universe-domain]
 }
 

@@ -66,7 +66,8 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::dataproc_v1::SessionControllerClient(
-      google::cloud::dataproc_v1::MakeSessionControllerConnection(*ud_options));
+      google::cloud::dataproc_v1::MakeSessionControllerConnection("unused",
+                                                                  *ud_options));
   //! [set-client-universe-domain]
 }
 

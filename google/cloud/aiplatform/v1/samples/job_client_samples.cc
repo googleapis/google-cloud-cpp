@@ -66,7 +66,8 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
   auto ud_client = google::cloud::aiplatform_v1::JobServiceClient(
-      google::cloud::aiplatform_v1::MakeJobServiceConnection(*ud_options));
+      google::cloud::aiplatform_v1::MakeJobServiceConnection("unused",
+                                                             *ud_options));
   //! [set-client-universe-domain]
 }
 
