@@ -112,8 +112,15 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
   auto ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
 
   if (!ud_options.ok()) throw std::move(ud_options).status();
-  auto ud_client = google::cloud::$product_namespace$::$client_class_name$(
-      google::cloud::$product_namespace$::Make$connection_class_name$(*ud_options));
+  auto ud_client = google::cloud::$product_namespace$::$client_class_name$()""");
+  if (HasGenerateGrpcTransport()) {
+    HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$()""");
+  } else {
+    HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
+  }
+  HeaderPrint(R"""(*ud_options));
   //! [set-client-universe-domain]
 }
 )""");
