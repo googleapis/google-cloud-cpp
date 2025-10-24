@@ -42,6 +42,8 @@ function features::always_build() {
     opentelemetry
     # Enable storage_grpc in most builds.
     storage_grpc
+    # Samples require universe domain support.
+    universe_domain
   )
   printf "%s\n" "${list[@]}" | sort -u
 }
@@ -63,6 +65,7 @@ function features::_internal_extra() {
   local list=(
     experimental-bigquery_rest
     opentelemetry
+    universe_domain
   )
   printf "%s\n" "${list[@]}"
 }
