@@ -132,12 +132,16 @@ function (google_cloud_cpp_add_samples_relative library path)
         google_cloud_cpp_add_executable(target "${library}" "${source}")
         if (TARGET google-cloud-cpp::${library})
             target_link_libraries(
-                "${target}" PRIVATE google-cloud-cpp::${library}
-                                    google_cloud_cpp_testing)
+                "${target}"
+                PRIVATE google-cloud-cpp::${library}
+                        google-cloud-cpp::universe_domain
+                        google_cloud_cpp_testing)
         elseif (TARGET google-cloud-cpp::experimental-${library})
             target_link_libraries(
-                "${target}" PRIVATE google-cloud-cpp::experimental-${library}
-                                    google_cloud_cpp_testing)
+                "${target}"
+                PRIVATE google-cloud-cpp::experimental-${library}
+                        google-cloud-cpp::universe_domain
+                        google_cloud_cpp_testing)
         endif ()
         google_cloud_cpp_add_common_options("${target}")
         add_test(NAME "${target}" COMMAND "${target}")
