@@ -1,0 +1,64 @@
+/*!
+@page kms-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `kms_inventory_v1::KeyDashboardServiceClient`:
+
+@snippet key_dashboard_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-universe-domain-snippet)
+- [\c kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-universe-domain-snippet)
+- [\c kms_v1::AutokeyAdminClient](@ref kms_v1::AutokeyAdminClient-universe-domain-snippet)
+- [\c kms_v1::AutokeyClient](@ref kms_v1::AutokeyClient-universe-domain-snippet)
+- [\c kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-universe-domain-snippet)
+- [\c kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page kms_inventory_v1::KeyDashboardServiceClient-universe-domain-snippet Override kms_inventory_v1::KeyDashboardServiceClient Universe Domain
+
+@snippet google/cloud/kms/inventory/v1/samples/key_dashboard_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page kms_inventory_v1::KeyTrackingServiceClient-universe-domain-snippet Override kms_inventory_v1::KeyTrackingServiceClient Universe Domain
+
+@snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page kms_v1::AutokeyAdminClient-universe-domain-snippet Override kms_v1::AutokeyAdminClient Universe Domain
+
+@snippet google/cloud/kms/v1/samples/autokey_admin_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page kms_v1::AutokeyClient-universe-domain-snippet Override kms_v1::AutokeyClient Universe Domain
+
+@snippet google/cloud/kms/v1/samples/autokey_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page kms_v1::EkmServiceClient-universe-domain-snippet Override kms_v1::EkmServiceClient Universe Domain
+
+@snippet google/cloud/kms/v1/samples/ekm_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page kms_v1::KeyManagementServiceClient-universe-domain-snippet Override kms_v1::KeyManagementServiceClient Universe Domain
+
+@snippet google/cloud/kms/v1/samples/key_management_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

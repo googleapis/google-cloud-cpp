@@ -1,0 +1,43 @@
+/*!
+@page osconfig-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `osconfig_agentendpoint_v1::AgentEndpointServiceClient`:
+
+@snippet agent_endpoint_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref osconfig_agentendpoint_v1::AgentEndpointServiceClient-universe-domain-snippet)
+- [\c osconfig_v1::OsConfigServiceClient](@ref osconfig_v1::OsConfigServiceClient-universe-domain-snippet)
+- [\c osconfig_v1::OsConfigZonalServiceClient](@ref osconfig_v1::OsConfigZonalServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page osconfig_agentendpoint_v1::AgentEndpointServiceClient-universe-domain-snippet Override osconfig_agentendpoint_v1::AgentEndpointServiceClient Universe Domain
+
+@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page osconfig_v1::OsConfigServiceClient-universe-domain-snippet Override osconfig_v1::OsConfigServiceClient Universe Domain
+
+@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page osconfig_v1::OsConfigZonalServiceClient-universe-domain-snippet Override osconfig_v1::OsConfigZonalServiceClient Universe Domain
+
+@snippet google/cloud/osconfig/v1/samples/os_config_zonal_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
