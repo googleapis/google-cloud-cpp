@@ -347,6 +347,8 @@ void GenerateScaffold(
         {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
         {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
         {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
+        {"doc/override-universe-domain.dox",
+         GenerateOverrideUniverseDomainPage},
         {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
         {"doc/options.dox", GenerateDoxygenOptionsPage},
     };
@@ -360,6 +362,8 @@ void GenerateScaffold(
         {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
         {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
         {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
+        {"doc/override-universe-domain.dox",
+         GenerateOverrideUniverseDomainPage},
         {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
         {"doc/options.dox", GenerateDoxygenOptionsPage},
         {"quickstart/README.md", GenerateQuickstartReadme},
@@ -545,6 +549,7 @@ which should give you a taste of the $title$ C++ client library API.
   policies.
 - @ref $library$-env - describes environment variables that can configure the
   behavior of the library.
+- @ref $library$-override-universe-domain - describes how to override the default universe domain.
 
 )""";
 
@@ -664,6 +669,29 @@ client library to change this default.
 
 // <!-- inject-endpoint-pages-start -->
 // <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateOverrideUniverseDomainPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+@page $library$-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+// <!-- inject-universe-domain-pages-end -->
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
