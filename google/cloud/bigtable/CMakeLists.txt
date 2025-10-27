@@ -448,7 +448,6 @@ if (BUILD_TESTING)
         cell_test.cc
         client_options_test.cc
         client_test.cc
-        client_test.h
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
