@@ -21,11 +21,30 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string const& QueryPlan::prepared_query() const {
+std::shared_ptr<QueryPlan> QueryPlan::Create(
+    CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
+    RefreshFn fn) {
+  auto plan = std::shared_ptr<QueryPlan>(
+      new QueryPlan(std::move(cq), std::move(response), std::move(fn)));
+  plan->Initialize();
+  return plan;
+}
+
+bool QueryPlan::IsExpired() { return false; }
+
+StatusOr<std::string> QueryPlan::prepared_query() const {
+  std::lock_guard<std::mutex> lock(mu_);
+  if (IsExpired()) {
+    return Status(StatusCode::kUnavailable, "Query plan has expired");
+  }
   return response_.prepared_query();
 }
 
-google::bigtable::v2::ResultSetMetadata const& QueryPlan::metadata() const {
+StatusOr<google::bigtable::v2::ResultSetMetadata> QueryPlan::metadata() const {
+  std::lock_guard<std::mutex> lock(mu_);
+  if (IsExpired()) {
+    return Status(StatusCode::kUnavailable, "Query plan has expired");
+  }
   return response_.metadata();
 }
 

@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/cord.h"
 #include "absl/types/optional.h"
 
 namespace google {
@@ -24,6 +25,20 @@ namespace cloud {
 namespace bigtable_internal {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+// Some Bigtable proto fields use Cord internally and string externally.
+template <typename T, typename std::enable_if<
+                          std::is_same<T, std::string>::value>::type* = nullptr>
+std::string AsString(T const& s) {
+  return s;
+}
+
+template <typename T, typename std::enable_if<
+                          std::is_same<T, absl::Cord>::value>::type* = nullptr>
+std::string AsString(T const& s) {
+  return std::string(s);
+}
+}  // namespace
 
 StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 PartialResultSetSource::Create(
@@ -94,13 +109,11 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 
 Status PartialResultSetSource::ReadFromStream() {
   if (state_ == State::kFinished) {
-    std::cout << "HELLO FINISHED: " << std::endl;
     return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());
   }
   // The application should consume rows_ before calling ReadFromStream again.
   if (!rows_.empty()) {
-    std::cout << "HELLO row not empty: " << std::endl;
     return internal::InternalError("PartialResultSetSource has unconsumed rows",
                                    GCP_ERROR_INFO());
   }
@@ -121,7 +134,6 @@ Status PartialResultSetSource::ReadFromStream() {
   // read would have had a sentinel resume_token, causing
   // ProcessDataFromStream to commit them.
   if (!buffered_rows_.empty()) {
-    std::cout << "BUFFERED ROWS NOT EMPTY: " << std::endl;
     return internal::InternalError("Stream ended with uncommitted rows.",
                                    GCP_ERROR_INFO());
   }
@@ -151,6 +163,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
     if (proto_rows_.ParseFromString(read_buffer_)) {
       auto status = BufferProtoRows();
       proto_rows_.Clear();
+      read_buffer_.clear();
       if (!status.ok()) return status;
     } else {
       read_buffer_.clear();
@@ -165,7 +178,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
     rows_.insert(rows_.end(), buffered_rows_.begin(), buffered_rows_.end());
     buffered_rows_.clear();
     read_buffer_.clear();
-    resume_token_ = result.resume_token();
+    resume_token_ = AsString(result.resume_token());
   }
   return {};  // OK
 }

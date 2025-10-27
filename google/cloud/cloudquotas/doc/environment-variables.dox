@@ -1,5 +1,4 @@
 /*!
-
 @page cloudquotas-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
@@ -46,12 +45,5 @@ environment variable.
 
 `GOOGLE_CLOUD_PROJECT=...`: is used in examples and integration tests to
 configure the GCP project. This has no effect in the library.
-
-@section cloudquotas-env-quota-project Setting the Quota Project
-`GOOGLE_CLOUD_CPP_USER_PROJECT=...`: can be used to set the quota project when
-using Application Default Credentials. See see [Troubleshoot your ADC setup][cloud-adc-user-creds]
-for more details.
-
-[cloud-adc-user-creds]: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds
 
 */
