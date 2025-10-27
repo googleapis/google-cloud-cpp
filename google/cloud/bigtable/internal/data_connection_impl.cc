@@ -622,20 +622,27 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
     bigtable::PrepareQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::PrepareQueryRequest request;
-  request.set_instance_name(params.instance.FullName());
+  auto const& instance_full_name = params.instance.FullName();
+  request.set_instance_name(instance_full_name);
   request.set_app_profile_id(app_profile_id(*current));
   request.set_query(params.sql_statement.sql());
   for (auto const& p : params.sql_statement.params()) {
     (*request.mutable_param_types())[p.first] = p.second.type();
   }
+  auto operation_context =
+      operation_context_factory_->PrepareQueryAttemptLatency(instance_full_name, app_profile_id(*current));
   auto response = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       Idempotency::kNonIdempotent,
-      [this](grpc::ClientContext& context, Options const& options,
+      [this, operation_context](grpc::ClientContext& context, Options const& options,
              google::bigtable::v2::PrepareQueryRequest const& request) {
-        return stub_->PrepareQuery(context, options, request);
+        operation_context->PreCall(context);
+        auto const& result = stub_->PrepareQuery(context, options, request);
+        operation_context->PostCall(context, result.status());
+        return result;
       },
       *current, request, __func__);
+  operation_context->OnDone(response.status());
   if (!response) {
     return std::move(response).status();
   }

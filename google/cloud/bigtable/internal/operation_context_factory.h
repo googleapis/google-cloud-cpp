@@ -54,6 +54,10 @@ class OperationContextFactory {
       std::string const& name, std::string const& app_profile);
   virtual std::shared_ptr<OperationContext> ReadModifyWriteRow(
       std::string const& name, std::string const& app_profile);
+  virtual std::shared_ptr<OperationContext> PrepareQuery(
+      std::string const& instance_name, std::string const& app_profile);
+  virtual std::shared_ptr<OperationContext> ExecuteQuery(
+      std::string const& instance_name, std::string const& app_profile);
 };
 
 class SimpleOperationContextFactory : public OperationContextFactory {
@@ -72,6 +76,10 @@ class SimpleOperationContextFactory : public OperationContextFactory {
       std::string const& name, std::string const& app_profile) override;
   std::shared_ptr<OperationContext> ReadModifyWriteRow(
       std::string const& name, std::string const& app_profile) override;
+  std::shared_ptr<OperationContext> PrepareQuery(
+      std::string const& instance_name, std::string const& app_profile) override;
+  std::shared_ptr<OperationContext> ExecuteQuery(
+      std::string const& instance_name, std::string const& app_profile) override;
 };
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -113,7 +121,12 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& table_name, std::string const& app_profile) override;
 
   std::shared_ptr<OperationContext> ReadModifyWriteRow(
-      std::string const& table_name, std::string const& app_profile) override;
+      std::string const& instance_name, std::string const& app_profile) override;
+
+  std::shared_ptr<OperationContext> PrepareQuery(
+      std::string const& instance_name, std::string const& app_profile) override;
+  std::shared_ptr<OperationContext> ExecuteQuery(
+      std::string const& instance_name, std::string const& app_profile) override;
 
  private:
   void InitializeProvider(
@@ -137,6 +150,8 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   MetricHolder check_and_mutate_row_metrics_;
   MetricHolder sample_row_keys_metrics_;
   MetricHolder read_modify_write_row_metrics_;
+  MetricHolder prepare_query_;
+  MetricHolder execute_query_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
