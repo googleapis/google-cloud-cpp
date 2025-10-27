@@ -114,6 +114,8 @@ add_library(
     bytes.cc
     bytes.h
     cell.h
+    client.cc
+    client.h
     client_options.cc
     client_options.h
     cluster_config.cc
@@ -445,6 +447,8 @@ if (BUILD_TESTING)
         bytes_test.cc
         cell_test.cc
         client_options_test.cc
+        client_test.cc
+        client_test.h
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc

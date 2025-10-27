@@ -60,7 +60,9 @@ struct PrepareQueryParams {
   bigtable::SqlStatement sql_statement;
 };
 
-struct ExecuteQueryParams {};
+struct ExecuteQueryParams {
+  bigtable::BoundQuery const& bound_query;
+};
 
 /**
  * A connection to the Cloud Bigtable Data API.
