@@ -619,21 +619,18 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
 }
 
 StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
-    bigtable::PrepareQueryParams const& params) {
-  (void)params;  // Suppresses the unused param warning/check.
+    bigtable::PrepareQueryParams const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
-    bigtable::PrepareQueryParams const& p) {
-  (void)p;  // Suppresses the unused param warning/check.
+    bigtable::PrepareQueryParams const&) {
   return make_ready_future<StatusOr<bigtable::PreparedQuery>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
-    bigtable::ExecuteQueryParams const& params) {
-  (void)params;  // Suppresses the unused param warning/check.
+    bigtable::ExecuteQueryParams const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 };
 
