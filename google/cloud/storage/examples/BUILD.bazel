@@ -58,6 +58,7 @@ cc_library(
         ":storage_examples_common",
         "//:common",
         "//:storage",
+        "//:universe_domain",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for test in storage_examples]

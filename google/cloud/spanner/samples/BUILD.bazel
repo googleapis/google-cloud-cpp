@@ -31,6 +31,7 @@ licenses(["notice"])  # Apache 2.0
     deps = [
         "//:common",
         "//:spanner",
+        "//:universe_domain",
         "//google/cloud/spanner:spanner_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos:system_includes",

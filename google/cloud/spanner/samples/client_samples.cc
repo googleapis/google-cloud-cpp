@@ -21,6 +21,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/universe_domain.h"
 #include <fstream>
 #include <string>
 #include <vector>
@@ -68,6 +69,32 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+void SetClientUniverseDomain(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw google::cloud::testing_util::Usage{
+        "set-client-universe-domain <project-id> <instance-id> <database-id>"};
+  }
+  //! [set-client-universe-domain]
+  namespace spanner = ::google::cloud::spanner;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& database_id) {
+    google::cloud::Options options;
+
+    // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if
+    // set, in the provided Options for the Universe Domain associated with the
+    // credentials and adds it to the set of Options.
+    // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+    auto ud_options =
+        google::cloud::AddUniverseDomainOption(std::move(options));
+
+    if (!ud_options.ok()) throw std::move(ud_options).status();
+    return spanner::Client(spanner::MakeConnection(
+        spanner::Database(project_id, instance_id, database_id), *ud_options));
+  }
+  //! [set-client-universe-domain]
+  (argv.at(0), argv.at(1), argv.at(2));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   using ::google::cloud::internal::GetEnv;
   namespace examples = ::google::cloud::testing_util;
@@ -108,6 +135,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
       {"with-service-account", WithServiceAccount},
+      {"set-client-universe-domain", SetClientUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

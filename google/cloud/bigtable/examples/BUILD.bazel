@@ -75,6 +75,7 @@ cc_test(
         "//:bigtable",
         "//:common",
         "//:grpc_utils",
+        "//:universe_domain",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
