@@ -40,5 +40,6 @@ application.
 - @ref websecurityscanner-override-retry - describes how to change the default retry
   policies.
 - @ref websecurityscanner-env - describes environment variables that can configure the behavior of the library.
+- @ref websecurityscanner-override-universe-domain - describes how to override the default universe domain.
 
 */

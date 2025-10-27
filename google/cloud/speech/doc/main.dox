@@ -45,6 +45,7 @@ application.
 - @ref speech-override-retry - describes how to change the default retry
   policies.
 - @ref speech-env - describes environment variables that can configure the behavior of the library.
+- @ref speech-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/speech
 
