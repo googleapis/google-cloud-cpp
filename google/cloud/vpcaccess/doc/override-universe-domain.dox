@@ -1,0 +1,25 @@
+/*!
+@page vpcaccess-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `vpcaccess_v1::VpcAccessServiceClient`:
+
+@snippet vpc_access_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page vpcaccess_v1::VpcAccessServiceClient-universe-domain-snippet Override vpcaccess_v1::VpcAccessServiceClient Universe Domain
+
+@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

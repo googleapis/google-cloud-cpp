@@ -1,0 +1,25 @@
+/*!
+@page websecurityscanner-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `websecurityscanner_v1::WebSecurityScannerClient`:
+
+@snippet web_security_scanner_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page websecurityscanner_v1::WebSecurityScannerClient-universe-domain-snippet Override websecurityscanner_v1::WebSecurityScannerClient Universe Domain
+
+@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

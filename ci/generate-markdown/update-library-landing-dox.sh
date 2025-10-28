@@ -39,6 +39,7 @@ readonly EXPECTED=(
   "override-authentication.dox"
   "override-endpoint.dox"
   "override-retry-policies.dox"
+  "override-universe-domain.dox"
 )
 for file in "${EXPECTED[@]}"; do
   if [[ ! -r "${DOCDIR}/${file}" ]]; then
@@ -50,6 +51,7 @@ readonly MAIN_DOX="${DOCDIR}/main.dox"
 readonly ENVIRONMENT_DOX="${DOCDIR}/environment-variables.dox"
 readonly OVERRIDE_AUTHENTICATION_DOX="${DOCDIR}/override-authentication.dox"
 readonly OVERRIDE_ENDPOINT_DOX="${DOCDIR}/override-endpoint.dox"
+readonly OVERRIDE_UNIVERSE_DOMAIN_DOX="${DOCDIR}/override-universe-domain.dox"
 readonly OVERRIDE_RETRY_POLICIES_DOX="${DOCDIR}/override-retry-policies.dox"
 
 inject_start="<!-- inject-endpoint-env-vars-start -->"
@@ -195,6 +197,39 @@ _EOF_
   done
   sed -n '/<!-- inject-endpoint-pages-end -->/,$p' "${OVERRIDE_ENDPOINT_DOX}"
 ) | sponge "${OVERRIDE_ENDPOINT_DOX}"
+
+(
+  sed '/<!-- inject-universe-domain-snippet-start -->/q' "${OVERRIDE_UNIVERSE_DOMAIN_DOX}"
+  if [[ ${#samples_cc[@]} -gt 0 ]]; then
+    sample_cc="${samples_cc[0]}"
+    client_name="${clients[${sample_cc}]}"
+    echo 'For example, this will override the default universe domain for `'"${client_name}"'`:'
+    echo
+    echo "@snippet $(basename "${sample_cc}") set-client-universe-domain"
+    if [[ ${#samples_cc[@]} -gt 1 ]]; then
+      echo
+      echo "Follow these links to find examples for other \\c *Client classes:"
+      echo
+      for sample_cc in "${samples_cc[@]}"; do
+        client_name="${clients[${sample_cc}]}"
+        # shellcheck disable=SC2016
+        printf -- '- [\c %s](@ref %s-universe-domain-snippet)\n' "${client_name}" "${client_name}"
+      done
+    fi
+  fi
+  echo
+  sed -n '/<!-- inject-universe-domain-snippet-end -->/,$p' "${OVERRIDE_UNIVERSE_DOMAIN_DOX}"
+) | sponge "${OVERRIDE_UNIVERSE_DOMAIN_DOX}"
+
+(
+  sed '/<!-- inject-universe-domain-pages-start -->/q' "${OVERRIDE_UNIVERSE_DOMAIN_DOX}"
+  for sample_cc in "${samples_cc[@]}"; do
+    client_name="${clients[${sample_cc}]}"
+    printf '\n/*! @page %s-universe-domain-snippet Override %s Universe Domain\n\n@snippet %s set-client-universe-domain\n\n*/\n' \
+      "${client_name}" "${client_name}" "${sample_cc}"
+  done
+  sed -n '/<!-- inject-universe-domain-pages-end -->/,$p' "${OVERRIDE_UNIVERSE_DOMAIN_DOX}"
+) | sponge "${OVERRIDE_UNIVERSE_DOMAIN_DOX}"
 
 (
   sed '/<!-- inject-retry-snippet-start -->/q' "${OVERRIDE_RETRY_POLICIES_DOX}"

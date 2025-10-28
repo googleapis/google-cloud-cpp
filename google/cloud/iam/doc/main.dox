@@ -48,6 +48,7 @@ application.
 - @ref iam-override-retry - describes how to change the default retry
   policies.
 - @ref iam-env - describes environment variables that can configure the behavior of the library.
+- @ref iam-override-universe-domain - describes how to override the default universe domain.
 - @ref iam-mock
 - @ref iam-credentials-mock
 

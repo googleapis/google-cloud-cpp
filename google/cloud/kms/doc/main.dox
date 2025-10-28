@@ -50,5 +50,6 @@ application.
 - @ref kms-override-retry - describes how to change the default retry
   policies.
 - @ref kms-env - describes environment variables that can configure the behavior of the library.
+- @ref kms-override-universe-domain - describes how to override the default universe domain.
 
 */

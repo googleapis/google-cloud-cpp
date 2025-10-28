@@ -1,0 +1,36 @@
+/*!
+@page securitycenter-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `securitycenter_v1::SecurityCenterClient`:
+
+@snippet security_center_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c securitycenter_v1::SecurityCenterClient](@ref securitycenter_v1::SecurityCenterClient-universe-domain-snippet)
+- [\c securitycenter_v2::SecurityCenterClient](@ref securitycenter_v2::SecurityCenterClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page securitycenter_v1::SecurityCenterClient-universe-domain-snippet Override securitycenter_v1::SecurityCenterClient Universe Domain
+
+@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page securitycenter_v2::SecurityCenterClient-universe-domain-snippet Override securitycenter_v2::SecurityCenterClient Universe Domain
+
+@snippet google/cloud/securitycenter/v2/samples/security_center_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
