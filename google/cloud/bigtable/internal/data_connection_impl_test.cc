@@ -2730,13 +2730,45 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
               StatusIs(StatusCode::kUnimplemented));
 }
 
-TEST_F(DataConnectionTest, PrepareQuery) {
-  auto conn = TestConnection(std::make_shared<MockBigtableStub>());
+TEST_F(DataConnectionTest, PrepareQuerySuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::PrepareQueryRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ("projects/the-project/instances/the-instance",
+                  request.instance_name());
+        EXPECT_EQ("SELECT * FROM the-table", request.query());
+        v2::PrepareQueryResponse response;
+        return response;
+      });
+
+  auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(CallOptions());
-  EXPECT_THAT(conn->PrepareQuery(bigtable::PrepareQueryParams{
-                  bigtable::InstanceResource(google::cloud::Project(""), ""),
-                  bigtable::SqlStatement("")}),
-              StatusIs(StatusCode::kUnimplemented));
+  auto params = bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  auto prepared_query = conn->PrepareQuery(params);
+  ASSERT_STATUS_OK(prepared_query);
+  EXPECT_EQ(prepared_query->instance(), params.instance);
+  EXPECT_EQ(prepared_query->sql_statement(), params.sql_statement);
+}
+
+TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             v2::PrepareQueryRequest const&) { return PermanentError(); });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto result = conn->PrepareQuery(bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")});
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace
