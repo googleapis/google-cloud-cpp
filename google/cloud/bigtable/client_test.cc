@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/client.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "mocks/mock_data_connection.h"
 
 namespace google {
 namespace cloud {
@@ -25,13 +26,22 @@ using ::google::bigtable::v2::PrepareQueryResponse;
 using ::google::cloud::testing_util::StatusIs;
 
 TEST(Client, PrepareQuery) {
-  auto conn = MakeDataConnection();
-  Client client(conn);
-  InstanceResource instance(Project("test-project"), "test-instance");
-  SqlStatement sql("SELECT * FROM `test-table`");
+  auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
+  InstanceResource instance(Project("the-project"), "the-instance");
+  SqlStatement sql("SELECT * FROM the-table");
+  EXPECT_CALL(*conn_mock, PrepareQuery)
+      .WillOnce([](PrepareQueryParams const& params) {
+        EXPECT_EQ("projects/the-project/instances/the-instance",
+                  params.instance.FullName());
+        EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
+        PreparedQuery q(CompletionQueue{}, params.instance,
+                        params.sql_statement, PrepareQueryResponse{});
+        return q;
+      });
+
+  Client client(std::move(conn_mock));
   auto prepared_query = client.PrepareQuery(instance, sql);
-  EXPECT_THAT(prepared_query.status(),
-              StatusIs(StatusCode::kUnimplemented, "not implemented"));
+  ASSERT_STATUS_OK(prepared_query);
 }
 
 TEST(Client, AsyncPrepareQuery) {

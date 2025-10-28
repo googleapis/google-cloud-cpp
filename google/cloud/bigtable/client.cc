@@ -35,6 +35,7 @@ future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
   return conn_->AsyncPrepareQuery(std::move(params));
 }
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options) {
   ExecuteQueryParams params{std::move(bound_query)};
   auto row_stream = conn_->ExecuteQuery(params);
