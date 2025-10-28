@@ -27,6 +27,7 @@ library.
 - @ref pubsub-endpoint-example
 - @ref pubsub-auth-example
 - @ref pubsub-override-retry
+- @ref pubsub-universe-domain-example
 - @ref publisher-mock shows how to write tests mocking [Publisher]
 - @ref subscriber-mock shows how to write tests mocking [Subscriber]
 - The [Setting up your development environment] guide describes how to set up
@@ -108,6 +109,25 @@ Follow these links to find examples for other `*Client` classes:
 [Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 */
 
+/**
+@page pubsub-universe-domain-example Override the default universe domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the [AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption)
+when initializing the client library to change this default.
+
+@snippet client_samples.cc publisher-set-universe-domain
+
+Follow these links to find examples for other `*Client` classes:
+
+- [`Subscriber`](@ref Subscriber-universe-domain-snippet)
+- [`BlockingPublisher`](@ref BlockingPublisher-universe-domain-snippet)
+- [`TopicAdminClient`](@ref TopicAdminClient-universe-domain-snippet)
+- [`SubscriptionAdminClient`](@ref SubscriptionAdminClient-universe-domain-snippet)
+- [`SchemaServiceClient`](@ref SchemaServiceClient-universe-domain-snippet)
+- [`Publisher`](@ref Publisher-universe-domain-snippet)
+*/
+
 /*! @page Publisher-endpoint-snippet Override @c Publisher Default Endpoint
 
 @snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-endpoint
@@ -177,5 +197,40 @@ Follow these links to find examples for other `*Client` classes:
 /*! @page SchemaServiceClient-service-account-snippet Override @c SchemaServiceClient Default Authentication
 
 @snippet google/cloud/pubsub/samples/schema_client_samples.cc with-service-account
+
+*/
+
+/*! @page Publisher-universe-domain-snippet Override @c Publisher Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-universe-domain
+
+*/
+
+/*! @page Subscriber-universe-domain-snippet Override @c Subscriber Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-set-universe-domain
+
+*/
+
+/*! @page BlockingPublisher-universe-domain-snippet Override @c BlockingPublisher Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-set-universe-domain
+
+*/
+
+/*! @page TopicAdminClient-universe-domain-snippet Override @c TopicAdminClient Default Endpoint
+
+@snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc set-client-universe-domain
+*/
+
+/*! @page SubscriptionAdminClient-universe-domain-snippet Override @c SubscriptionAdminClient Default Endpoint
+
+@snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page SchemaServiceClient-universe-domain-snippet Override @c SchemaServiceClient Default Endpoint
+
+@snippet google/cloud/pubsub/samples/schema_client_samples.cc set-client-universe-domain
 
 */
