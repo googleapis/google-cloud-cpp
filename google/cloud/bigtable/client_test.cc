@@ -57,7 +57,7 @@ TEST(Client, ExecuteQuery) {
   // this is not implemented.
   for (auto const& row : row_stream) {
     EXPECT_THAT(row.status(),
-              StatusIs(StatusCode::kUnimplemented, "not implemented"));
+                StatusIs(StatusCode::kUnimplemented, "not implemented"));
   }
   EXPECT_EQ(1, std::distance(row_stream.begin(), row_stream.end()));
 }

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
-
 #include "internal/partial_result_set_source.h"
 
 namespace google {
@@ -21,26 +20,28 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
-                                             SqlStatement const& statement,
-                                             Options) {
+StatusOr<PreparedQuery> Client::PrepareQuery(
+    InstanceResource const& instance, SqlStatement const& statement,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    Options) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->PrepareQuery(std::move(params));
 }
 
-
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     InstanceResource const& instance, SqlStatement const& statement, Options) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->AsyncPrepareQuery(std::move(params));
 }
 
-RowStream Client::ExecuteQuery(BoundQuery&& bound_query,
-                                         Options const&) {
+RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options const&) {
   ExecuteQueryParams params{std::move(bound_query)};
   auto row_stream = conn_->ExecuteQuery(params);
   if (!row_stream.ok()) {
-    return RowStream(std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(row_stream.status()));
+    return RowStream(
+        std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(
+            row_stream.status()));
   }
   return std::move(row_stream.value());
 }

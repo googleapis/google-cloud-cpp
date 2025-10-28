@@ -102,17 +102,17 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
  * When iterated over, it will produce a single StatusOr<>.
  */
 class StatusOnlyResultSetSource : public bigtable::ResultSourceInterface {
-  public:
-    explicit StatusOnlyResultSetSource(Status status)
-        : status_(std::move(status)) {}
+ public:
+  explicit StatusOnlyResultSetSource(Status status)
+      : status_(std::move(status)) {}
 
-    StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
-    absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
-      return {};
-    }
+  StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
+  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    return {};
+  }
 
-  private:
-    Status status_;
+ private:
+  Status status_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

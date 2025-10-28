@@ -127,8 +127,7 @@ class Client {
    * @param opts Overrides the client-level options for this call.
    * @return A `RowStream` that can be used to iterate over the result rows.
    */
-  RowStream ExecuteQuery(BoundQuery&& bound_query,
-                                   Options const& opts = {});
+  RowStream ExecuteQuery(BoundQuery&& bound_query, Options const& opts = {});
 
  private:
   std::shared_ptr<DataConnection> conn_;
