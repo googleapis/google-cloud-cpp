@@ -626,7 +626,7 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   request.set_app_profile_id(app_profile_id(*current));
   request.set_query(params.sql_statement.sql());
   for (auto const& p : params.sql_statement.params()) {
-    request.mutable_param_types()->emplace(p.first, p.second.type());
+    (*request.mutable_param_types())[p.first] = p.second.type();
   }
   auto response = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
