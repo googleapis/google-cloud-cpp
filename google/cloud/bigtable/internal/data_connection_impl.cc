@@ -619,7 +619,7 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
 }
 
 StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
-    bigtable::PrepareQueryParams params) {
+    bigtable::PrepareQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::PrepareQueryRequest request;
   request.set_instance_name(params.instance.FullName());
