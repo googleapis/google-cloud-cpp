@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/client.h"
 
+#include "internal/partial_result_set_source.h"
+
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -26,21 +28,20 @@ StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource instance,
   return conn_->PrepareQuery(std::move(params));
 }
 
-// Creates a PreparedQuery containing the id of the execution plan created
-// by the service but returns a future.
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
     InstanceResource instance, SqlStatement statement, Options const&) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->AsyncPrepareQuery(std::move(params));
 }
 
-// Calls ExecuteQuery and returns a RowStream that provides a forward iterator
-// for consuming query result rows. Takes the BoundQuery by rvalue reference to
-// promote thread safety.
-StatusOr<RowStream> Client::ExecuteQuery(BoundQuery&& bound_query,
+RowStream Client::ExecuteQuery(BoundQuery&& bound_query,
                                          Options const&) {
   ExecuteQueryParams params{std::move(bound_query)};
-  return conn_->ExecuteQuery(params);
+  auto row_stream = conn_->ExecuteQuery(params);
+  if (!row_stream.ok()) {
+    return RowStream(std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(row_stream.status()));
+  }
+  return std::move(row_stream.value());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

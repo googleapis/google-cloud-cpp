@@ -53,8 +53,13 @@ TEST(Client, ExecuteQuery) {
       PreparedQuery(CompletionQueue{}, instance, sql, PrepareQueryResponse{});
   auto bound_query = prepared_query.BindParameters({});
   auto row_stream = client.ExecuteQuery(std::move(bound_query));
-  EXPECT_THAT(row_stream.status(),
+  // We expect a row stream with a single unimplemented status row while
+  // this is not implemented.
+  for (auto const& row : row_stream) {
+    EXPECT_THAT(row.status(),
               StatusIs(StatusCode::kUnimplemented, "not implemented"));
+  }
+  EXPECT_EQ(1, std::distance(row_stream.begin(), row_stream.end()));
 }
 
 }  // namespace

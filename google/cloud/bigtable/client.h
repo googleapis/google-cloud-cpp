@@ -64,9 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   auto bound_query = prepared_query->BindParameters(
  *       {{"key", cbt::Value("row-key-2")}});
  *
- *   google::cloud::StatusOr<cbt::RowStream> results =
+ *   RowStream results =
  *       client.ExecuteQuery(std::move(bound_query));
- *   if (!results) throw std::move(results).status();
  *
  *   ... // process rows
  * }
@@ -126,11 +125,9 @@ class Client {
    *
    * @param bound_query The bound query to execute.
    * @param opts Overrides the client-level options for this call.
-   * @return A `StatusOr` containing a `RowStream` on success. The stream can
-   *     be used to iterate over the result rows. On failure, the `Status`
-   *     contains error details.
+   * @return A `RowStream` that can be used to iterate over the result rows.
    */
-  StatusOr<RowStream> ExecuteQuery(BoundQuery&& bound_query,
+  RowStream ExecuteQuery(BoundQuery&& bound_query,
                                    Options const& opts = {});
 
  private:
