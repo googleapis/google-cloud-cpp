@@ -61,7 +61,7 @@ struct PrepareQueryParams {
 };
 
 struct ExecuteQueryParams {
-  bigtable::BoundQuery const& bound_query;
+  bigtable::BoundQuery bound_query;
 };
 
 /**
