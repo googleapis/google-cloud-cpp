@@ -98,7 +98,7 @@ class Client {
    */
   StatusOr<PreparedQuery> PrepareQuery(InstanceResource instance,
                                        SqlStatement statement,
-                                       Options const& opts = {}) const;
+                                       Options const& opts = {});
 
   /**
    * Asynchronously prepares a query for future execution.
@@ -115,7 +115,7 @@ class Client {
    */
   future<StatusOr<PreparedQuery>> AsyncPrepareQuery(
       InstanceResource instance, SqlStatement statement,
-      Options const& opts = {}) const;
+      Options const& opts = {});
 
   /**
    * Executes a bound query with concrete parameters.
@@ -131,7 +131,7 @@ class Client {
    *     contains error details.
    */
   StatusOr<RowStream> ExecuteQuery(BoundQuery&& bound_query,
-                                   Options const& opts = {}) const;
+                                   Options const& opts = {});
 
  private:
   std::shared_ptr<DataConnection> conn_;
