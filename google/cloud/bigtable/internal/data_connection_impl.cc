@@ -29,7 +29,6 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
-#include <iostream>
 #include <memory>
 #include <string>
 

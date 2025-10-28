@@ -157,9 +157,9 @@ class DataConnection {
   virtual StatusOr<bigtable::PreparedQuery> PrepareQuery(
       bigtable::PrepareQueryParams p);
   virtual future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
-      bigtable::PrepareQueryParams const&);
+      bigtable::PrepareQueryParams const& p);
   virtual StatusOr<bigtable::RowStream> ExecuteQuery(
-      bigtable::ExecuteQueryParams const&);
+      bigtable::ExecuteQueryParams const& p);
 };
 
 /**
