@@ -21,15 +21,16 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource instance,
-                                             SqlStatement statement,
-                                             Options const&) {
+StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
+                                             SqlStatement const& statement,
+                                             Options) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->PrepareQuery(std::move(params));
 }
 
+
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
-    InstanceResource instance, SqlStatement statement, Options const&) {
+    InstanceResource const& instance, SqlStatement const& statement, Options) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->AsyncPrepareQuery(std::move(params));
 }
