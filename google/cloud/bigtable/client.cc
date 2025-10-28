@@ -21,7 +21,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource instance,
                                              SqlStatement statement,
-                                             Options const&) const {
+                                             Options const&) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->PrepareQuery(std::move(params));
 }
@@ -29,7 +29,7 @@ StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource instance,
 // Creates a PreparedQuery containing the id of the execution plan created
 // by the service but returns a future.
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
-    InstanceResource instance, SqlStatement statement, Options const&) const {
+    InstanceResource instance, SqlStatement statement, Options const&) {
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->AsyncPrepareQuery(std::move(params));
 }
@@ -38,7 +38,7 @@ future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
 // for consuming query result rows. Takes the BoundQuery by rvalue reference to
 // promote thread safety.
 StatusOr<RowStream> Client::ExecuteQuery(BoundQuery&& bound_query,
-                                         Options const&) const {
+                                         Options const&) {
   ExecuteQueryParams params{std::move(bound_query)};
   return conn_->ExecuteQuery(params);
 }
