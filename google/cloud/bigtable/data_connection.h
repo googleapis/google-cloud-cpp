@@ -155,11 +155,11 @@ class DataConnection {
       std::string const& table_name, std::string row_key, Filter filter);
 
   virtual StatusOr<bigtable::PreparedQuery> PrepareQuery(
-      bigtable::PrepareQueryParams const& p);
+      bigtable::PrepareQueryParams p);
   virtual future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
-      bigtable::PrepareQueryParams const& p);
+      bigtable::PrepareQueryParams const&);
   virtual StatusOr<bigtable::RowStream> ExecuteQuery(
-      bigtable::ExecuteQueryParams const& p);
+      bigtable::ExecuteQueryParams const&);
 };
 
 /**

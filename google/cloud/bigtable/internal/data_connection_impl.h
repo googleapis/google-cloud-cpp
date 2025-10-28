@@ -104,7 +104,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::Filter filter) override;
 
   StatusOr<bigtable::PreparedQuery> PrepareQuery(
-      bigtable::PrepareQueryParams const& p) override;
+      bigtable::PrepareQueryParams p) override;
   future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
       bigtable::PrepareQueryParams const& p) override;
   StatusOr<bigtable::RowStream> ExecuteQuery(

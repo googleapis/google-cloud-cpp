@@ -29,6 +29,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
+#include <iostream>
 #include <memory>
 #include <string>
 
@@ -619,8 +620,30 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
 }
 
 StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
-    bigtable::PrepareQueryParams const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    bigtable::PrepareQueryParams params) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  google::bigtable::v2::PrepareQueryRequest request;
+  request.set_instance_name(params.instance.FullName());
+  request.set_app_profile_id(app_profile_id(*current));
+  request.set_query(params.sql_statement.sql());
+  for (auto const& p : params.sql_statement.params()) {
+    request.mutable_param_types()->insert(
+        std::make_pair(p.first, p.second.type()));
+  }
+  auto response = google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      Idempotency::kNonIdempotent,
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::v2::PrepareQueryRequest const& request) {
+        return stub_->PrepareQuery(context, options, request);
+      },
+      *current, request, __func__);
+  if (!response) {
+    return std::move(response).status();
+  }
+  return bigtable::PreparedQuery(background_->cq(), params.instance,
+                                 std::move(params.sql_statement),
+                                 *std::move(response));
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
