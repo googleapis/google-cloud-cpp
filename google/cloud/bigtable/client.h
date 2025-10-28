@@ -95,9 +95,9 @@ class Client {
    * @return A `StatusOr` containing the prepared query on success. On
    *     failure, the `Status` contains error details.
    */
-  StatusOr<PreparedQuery> PrepareQuery(InstanceResource instance,
-                                       SqlStatement statement,
-                                       Options const& opts = {});
+  StatusOr<PreparedQuery> PrepareQuery(InstanceResource const& instance,
+                                       SqlStatement const& statement,
+                                       Options opts = {});
 
   /**
    * Asynchronously prepares a query for future execution.
@@ -113,8 +113,8 @@ class Client {
    *     error details.
    */
   future<StatusOr<PreparedQuery>> AsyncPrepareQuery(
-      InstanceResource instance, SqlStatement statement,
-      Options const& opts = {});
+      InstanceResource const& instance, SqlStatement const& statement,
+      Options opts = {});
 
   /**
    * Executes a bound query with concrete parameters.
