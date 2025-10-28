@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/client.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "mocks/mock_data_connection.h"
 
 namespace google {
 namespace cloud {
