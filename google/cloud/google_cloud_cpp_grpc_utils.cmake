@@ -78,6 +78,8 @@ add_library(
     internal/grpc_async_access_token_cache.h
     internal/grpc_channel_credentials_authentication.cc
     internal/grpc_channel_credentials_authentication.h
+    internal/grpc_compute_engine_authentication.cc
+    internal/grpc_compute_engine_authentication.h
     internal/grpc_impersonate_service_account.cc
     internal/grpc_impersonate_service_account.h
     internal/grpc_metadata_view.h
@@ -261,6 +263,7 @@ if (BUILD_TESTING)
         internal/grpc_api_key_authentication_test.cc
         internal/grpc_async_access_token_cache_test.cc
         internal/grpc_channel_credentials_authentication_test.cc
+        internal/grpc_compute_engine_authentication_test.cc
         internal/grpc_opentelemetry_test.cc
         internal/grpc_request_metadata_test.cc
         internal/grpc_service_account_authentication_test.cc

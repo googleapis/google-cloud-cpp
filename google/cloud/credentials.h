@@ -371,6 +371,31 @@ std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
                                                    Options opts = {});
 
 /**
+ * Creates credentials for the VM's specified service account.
+ *
+ * When your application is deployed to a GCP environment such as GCE, GKE, or
+ * Cloud Run, each of these deployment environments provides a default service
+ * account to the application [aip/4115]. These environments offer mechanisms to
+ * change the default service account, and thus the credentials based on that
+ * service account, without any code changes to your application.
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
+ * [aip/4115]: https://google.aip.dev/auth/4115
+ *
+ * @ingroup guac
+ *
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
+ */
+std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts = {});
+
+/**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
  *
  * @ingroup options
