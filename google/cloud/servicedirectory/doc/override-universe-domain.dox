@@ -1,0 +1,36 @@
+/*!
+@page servicedirectory-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `servicedirectory_v1::LookupServiceClient`:
+
+@snippet lookup_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c servicedirectory_v1::LookupServiceClient](@ref servicedirectory_v1::LookupServiceClient-universe-domain-snippet)
+- [\c servicedirectory_v1::RegistrationServiceClient](@ref servicedirectory_v1::RegistrationServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page servicedirectory_v1::LookupServiceClient-universe-domain-snippet Override servicedirectory_v1::LookupServiceClient Universe Domain
+
+@snippet google/cloud/servicedirectory/v1/samples/lookup_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page servicedirectory_v1::RegistrationServiceClient-universe-domain-snippet Override servicedirectory_v1::RegistrationServiceClient Universe Domain
+
+@snippet google/cloud/servicedirectory/v1/samples/registration_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

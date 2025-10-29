@@ -46,6 +46,7 @@ application.
 - @ref notebooks-override-retry - describes how to change the default retry
   policies.
 - @ref notebooks-env - describes environment variables that can configure the behavior of the library.
+- @ref notebooks-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/vertex-ai/docs/workbench
 [Vertex AI Workbench]: https://cloud.google.com/vertex-ai-workbench

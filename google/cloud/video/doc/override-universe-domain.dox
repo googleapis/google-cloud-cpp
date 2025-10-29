@@ -1,0 +1,43 @@
+/*!
+@page video-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `video_livestream_v1::LivestreamServiceClient`:
+
+@snippet livestream_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-universe-domain-snippet)
+- [\c video_stitcher_v1::VideoStitcherServiceClient](@ref video_stitcher_v1::VideoStitcherServiceClient-universe-domain-snippet)
+- [\c video_transcoder_v1::TranscoderServiceClient](@ref video_transcoder_v1::TranscoderServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page video_livestream_v1::LivestreamServiceClient-universe-domain-snippet Override video_livestream_v1::LivestreamServiceClient Universe Domain
+
+@snippet google/cloud/video/livestream/v1/samples/livestream_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page video_stitcher_v1::VideoStitcherServiceClient-universe-domain-snippet Override video_stitcher_v1::VideoStitcherServiceClient Universe Domain
+
+@snippet google/cloud/video/stitcher/v1/samples/video_stitcher_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page video_transcoder_v1::TranscoderServiceClient-universe-domain-snippet Override video_transcoder_v1::TranscoderServiceClient Universe Domain
+
+@snippet google/cloud/video/transcoder/v1/samples/transcoder_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
