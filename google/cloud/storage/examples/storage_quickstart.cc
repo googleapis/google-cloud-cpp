@@ -74,13 +74,10 @@ void RunAll(std::vector<std::string> const& argv) {
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
-}  // namespace
+}  // namespace 
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
-  examples::Example example({
-      {"storage-quickstart", StorageQuickstartCommand},
-      {"auto", RunAll},
-  });
-  return example.Run(argc, argv);
+  StorageQuickstart("vaibhav-test-009");
+  return 1;
 }
