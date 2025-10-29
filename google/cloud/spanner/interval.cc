@@ -353,14 +353,14 @@ StatusOr<Interval> Interval::ParseISO8601Interval(absl::string_view str) {
   auto const* units = std::begin(kISO8601DateUnitFactories);
   auto const* units_end = std::end(kISO8601DateUnitFactories);
   enum { kValue, kUnit, kNothing } expecting = kValue;
-  bool seen_T = false;
+  bool seen_time_designator = false;
 
   for (;;) {
-    if (!seen_T && absl::ConsumePrefix(&s, "T")) {
+    if (!seen_time_designator && absl::ConsumePrefix(&s, "T")) {
       units = std::begin(kISO8601TimeUnitFactories);
       units_end = std::end(kISO8601TimeUnitFactories);
       expecting = kValue;
-      seen_T = true;
+      seen_time_designator = true;
     }
     if (units == units_end) break;
     double vf;
