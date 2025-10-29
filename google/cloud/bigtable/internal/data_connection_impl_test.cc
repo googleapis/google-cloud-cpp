@@ -2769,7 +2769,6 @@ TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
                                  "the-instance"),
       bigtable::SqlStatement("SELECT * FROM the-table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
-<<<<<<< HEAD
 }
 
 TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
@@ -2813,8 +2812,6 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
   auto future = conn->AsyncPrepareQuery(params);
   auto result = future.get();
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
-=======
->>>>>>> 717cc7b290ff2536005f702c921da601b400f96a
 }
 
 }  // namespace
