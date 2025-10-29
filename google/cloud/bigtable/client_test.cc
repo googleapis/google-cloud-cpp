@@ -45,13 +45,21 @@ TEST(Client, PrepareQuery) {
 }
 
 TEST(Client, AsyncPrepareQuery) {
-  auto conn = MakeDataConnection();
-  Client client(conn);
-  InstanceResource instance(Project("test-project"), "test-instance");
-  SqlStatement sql("SELECT * FROM `test-table`");
+  auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
+  InstanceResource instance(Project("the-project"), "the-instance");
+  SqlStatement sql("SELECT * FROM the-table");
+  EXPECT_CALL(*conn_mock, AsyncPrepareQuery)
+      .WillOnce([](PrepareQueryParams const& params) {
+        EXPECT_EQ("projects/the-project/instances/the-instance",
+                  params.instance.FullName());
+        EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
+        PreparedQuery q(CompletionQueue{}, params.instance,
+                        params.sql_statement, PrepareQueryResponse{});
+        return make_ready_future(make_status_or(std::move(q)));
+      });
+  Client client(std::move(conn_mock));
   auto prepared_query = client.AsyncPrepareQuery(instance, sql);
-  EXPECT_THAT(prepared_query.get().status(),
-              StatusIs(StatusCode::kUnimplemented, "not implemented"));
+  ASSERT_STATUS_OK(prepared_query.get());
 }
 
 TEST(Client, ExecuteQuery) {
