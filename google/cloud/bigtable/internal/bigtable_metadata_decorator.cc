@@ -703,6 +703,7 @@ BigtableMetadata::AsyncPrepareQuery(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request) {
+  std::cout << "ASYNC PREPARE QUERY" << std::endl;
   std::vector<std::string> params;
   params.reserve(2);
 

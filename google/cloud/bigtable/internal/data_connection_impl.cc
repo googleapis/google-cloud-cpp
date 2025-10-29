@@ -645,9 +645,39 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
-    bigtable::PrepareQueryParams const&) {
-  return make_ready_future<StatusOr<bigtable::PreparedQuery>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    bigtable::PrepareQueryParams const& params) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  google::bigtable::v2::PrepareQueryRequest request;
+  request.set_instance_name(params.instance.FullName());
+  request.set_app_profile_id(app_profile_id(*current));
+  request.set_query(params.sql_statement.sql());
+  for (auto const& p : params.sql_statement.params()) {
+    (*request.mutable_param_types())[p.first] = p.second.type();
+  }
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  return google::cloud::internal::AsyncRetryLoop(
+             std::move(retry), std::move(backoff), Idempotency::kNonIdempotent,
+             background_->cq(),
+             [this](CompletionQueue& cq,
+                    std::shared_ptr<grpc::ClientContext> context,
+                    google::cloud::internal::ImmutableOptions options,
+                    google::bigtable::v2::PrepareQueryRequest const& request) {
+               return stub_->AsyncPrepareQuery(cq, std::move(context),
+                                               std::move(options), request);
+             },
+             std::move(current), request, __func__)
+      .then([this, params = std::move(params)](
+                future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+                    future) -> StatusOr<bigtable::PreparedQuery> {
+        auto response = future.get();
+        if (!response) {
+          return std::move(response).status();
+        }
+        return bigtable::PreparedQuery(background_->cq(), params.instance,
+                                       params.sql_statement,
+                                       *std::move(response));
+      });
 }
 
 StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
