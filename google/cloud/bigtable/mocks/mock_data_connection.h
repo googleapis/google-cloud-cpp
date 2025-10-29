@@ -125,6 +125,9 @@ class MockDataConnection : public bigtable::DataConnection {
 
   MOCK_METHOD(StatusOr<bigtable::PreparedQuery>, PrepareQuery,
               (bigtable::PrepareQueryParams const& params), (override));
+
+  MOCK_METHOD(future<StatusOr<bigtable::PreparedQuery>>, AsyncPrepareQuery,
+              (bigtable::PrepareQueryParams const& params), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
