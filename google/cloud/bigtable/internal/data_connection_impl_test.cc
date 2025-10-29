@@ -2771,6 +2771,49 @@ TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce([](CompletionQueue const&, auto, auto,
+                   v2::PrepareQueryRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ("projects/the-project/instances/the-instance",
+                  request.instance_name());
+        EXPECT_EQ("SELECT * FROM the-table", request.query());
+        return make_ready_future(make_status_or(v2::PrepareQueryResponse{}));
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto params = bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  auto future = conn->AsyncPrepareQuery(params);
+  auto result = future.get();
+  ASSERT_STATUS_OK(result);
+}
+
+TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [](CompletionQueue&, auto, auto, v2::PrepareQueryRequest const&) {
+            return make_ready_future<StatusOr<v2::PrepareQueryResponse>>(
+                PermanentError());
+          });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto params = bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  auto future = conn->AsyncPrepareQuery(params);
+  auto result = future.get();
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
