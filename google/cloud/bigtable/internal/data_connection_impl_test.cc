@@ -19,7 +19,9 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/prepared_query.h"
 #include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
@@ -2726,8 +2728,15 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
 TEST_F(DataConnectionTest, ExecuteQuery) {
   auto conn = TestConnection(std::make_shared<MockBigtableStub>());
   internal::OptionsSpan span(CallOptions());
-  EXPECT_THAT(conn->ExecuteQuery(bigtable::ExecuteQueryParams{}),
-              StatusIs(StatusCode::kUnimplemented));
+  bigtable::InstanceResource instance(Project("test-project"), "test-instance");
+  bigtable::SqlStatement sql("SELECT * FROM `test-table`");
+  auto prepared_query =
+      bigtable::PreparedQuery(CompletionQueue{}, instance, sql,
+                              google::bigtable::v2::PrepareQueryResponse{});
+  auto bound_query = prepared_query.BindParameters({});
+  EXPECT_THAT(
+      conn->ExecuteQuery(bigtable::ExecuteQueryParams{std::move(bound_query)}),
+      StatusIs(StatusCode::kUnimplemented));
 }
 
 TEST_F(DataConnectionTest, PrepareQuerySuccess) {

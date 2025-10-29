@@ -25,6 +25,7 @@ bigtable_client_unit_tests = [
     "bytes_test.cc",
     "cell_test.cc",
     "client_options_test.cc",
+    "client_test.cc",
     "cluster_config_test.cc",
     "column_family_test.cc",
     "data_client_test.cc",
