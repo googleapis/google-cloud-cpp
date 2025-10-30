@@ -121,7 +121,7 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& table_name, std::string const& app_profile) override;
 
   std::shared_ptr<OperationContext> ReadModifyWriteRow(
-      std::string const& instance_name, std::string const& app_profile) override;
+      std::string const& table_name, std::string const& app_profile) override;
 
   std::shared_ptr<OperationContext> PrepareQuery(
       std::string const& instance_name, std::string const& app_profile) override;
