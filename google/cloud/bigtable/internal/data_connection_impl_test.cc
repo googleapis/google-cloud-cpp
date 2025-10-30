@@ -354,6 +354,16 @@ class FakeOperationContextFactory : public OperationContextFactory {
     return Helper(name, app_profile);
   }
 
+  std::shared_ptr<OperationContext> PrepareQuery(
+        std::string const& name, std::string const& app_profile) override {
+    return Helper("", app_profile);
+  }
+
+  std::shared_ptr<OperationContext> ExecuteQuery(
+          std::string const& name, std::string const& app_profile) override {
+    return Helper("", app_profile);
+  }
+
  private:
   std::shared_ptr<OperationContext> Helper(std::string const& name,
                                            std::string const& app_profile) {
@@ -2740,6 +2750,20 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
 }
 
 TEST_F(DataConnectionTest, PrepareQuerySuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, PrepareQuery)
       .WillOnce([](grpc::ClientContext&, Options const&,
@@ -2752,7 +2776,7 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
         return response;
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto params = bigtable::PrepareQueryParams{
       bigtable::InstanceResource(google::cloud::Project("the-project"),
@@ -2765,13 +2789,27 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
 }
 
 TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, PrepareQuery)
       .WillOnce(
           [](grpc::ClientContext&, Options const&,
              v2::PrepareQueryRequest const&) { return PermanentError(); });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto result = conn->PrepareQuery(bigtable::PrepareQueryParams{
       bigtable::InstanceResource(google::cloud::Project("the-project"),
@@ -2781,6 +2819,20 @@ TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
 }
 
 TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncPrepareQuery)
       .WillOnce([](CompletionQueue const&, auto, auto,
@@ -2792,7 +2844,7 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
         return make_ready_future(make_status_or(v2::PrepareQueryResponse{}));
       });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto params = bigtable::PrepareQueryParams{
       bigtable::InstanceResource(google::cloud::Project("the-project"),
@@ -2804,6 +2856,20 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
 }
 
 TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(1);
+  EXPECT_CALL(*mock_metric, PostCall).Times(1);
+  EXPECT_CALL(*mock_metric, OnDone).Times(1);
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  auto factory = std::make_unique<FakeOperationContextFactory>(
+      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+#else
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+#endif
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncPrepareQuery)
       .WillOnce(
@@ -2812,7 +2878,7 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
                 PermanentError());
           });
 
-  auto conn = TestConnection(std::move(mock));
+  auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto params = bigtable::PrepareQueryParams{
       bigtable::InstanceResource(google::cloud::Project("the-project"),

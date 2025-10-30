@@ -655,7 +655,8 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
     bigtable::PrepareQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::PrepareQueryRequest request;
-  request.set_instance_name(params.instance.FullName());
+  auto const& instance_full_name = params.instance.FullName();
+  request.set_instance_name(instance_full_name);
   request.set_app_profile_id(app_profile_id(*current));
   request.set_query(params.sql_statement.sql());
   for (auto const& p : params.sql_statement.params()) {
@@ -663,21 +664,31 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
   }
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
+  auto operation_context =
+      operation_context_factory_->PrepareQuery(instance_full_name, app_profile_id(*current));
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kNonIdempotent,
              background_->cq(),
-             [this](CompletionQueue& cq,
+             [this, operation_context](CompletionQueue& cq,
                     std::shared_ptr<grpc::ClientContext> context,
                     google::cloud::internal::ImmutableOptions options,
                     google::bigtable::v2::PrepareQueryRequest const& request) {
-               return stub_->AsyncPrepareQuery(cq, std::move(context),
-                                               std::move(options), request);
+               operation_context->PreCall(*context);
+               auto f = stub_->AsyncPrepareQuery(cq, context, std::move(options),
+                                             request);
+               return f.then(
+                   [operation_context, context = std::move(context)](auto f) {
+                     auto s = f.get();
+                     operation_context->PostCall(*context, s.status());
+                     return s;
+                   });
              },
              std::move(current), request, __func__)
-      .then([this, params = std::move(params)](
+      .then([this, operation_context, params = std::move(params)](
                 future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
-                    future) -> StatusOr<bigtable::PreparedQuery> {
+                    future) -> StatusOr<bigtable::PreparedQuery> {;
         auto response = future.get();
+        operation_context->OnDone(response.status());
         if (!response) {
           return std::move(response).status();
         }
