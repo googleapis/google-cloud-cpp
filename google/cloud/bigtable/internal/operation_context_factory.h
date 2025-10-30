@@ -150,8 +150,8 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   MetricHolder check_and_mutate_row_metrics_;
   MetricHolder sample_row_keys_metrics_;
   MetricHolder read_modify_write_row_metrics_;
-  MetricHolder prepare_query_;
-  MetricHolder execute_query_;
+  MetricHolder prepare_query_metrics_;
+  MetricHolder execute_query_metrics_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
