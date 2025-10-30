@@ -170,21 +170,16 @@ TEST(MetricsOperationContextFactoryTest, PrepareQuery) {
   std::string instance_full_name = "projects/my-project/instances/my-instance";
 
   auto mock_metric = std::make_shared<MockMetric const>();
-  std::cout << "0" << std::endl;
   EXPECT_CALL(*mock_metric, clone)
       .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        std::cout << "2" << std::endl;
         EXPECT_THAT(data_labels.method, Eq("PrepareQuery"));
         EXPECT_THAT(data_labels.streaming, Eq("false"));
-        std::cout << "3" << std::endl;
         return std::make_unique<MockMetric>();
       });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  std::cout << "1" << std::endl;
   auto operation_context =
       factory.PrepareQuery(instance_full_name, app_profile);
-  std::cout << "-1" << std::endl;
 }
 
 TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {

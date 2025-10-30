@@ -42,7 +42,6 @@ cc_library(
     name = "google_cloud_cpp_bigtable",
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
-    defines = ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
     local_defines = select({
         ":metrics_enabled": ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
         "//conditions:default": [],
@@ -114,7 +113,6 @@ cc_library(
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    defines = ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
     local_defines = select({
         ":metrics_enabled": ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
         "//conditions:default": [],
