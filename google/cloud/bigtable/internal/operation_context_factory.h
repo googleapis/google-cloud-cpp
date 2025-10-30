@@ -77,9 +77,11 @@ class SimpleOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<OperationContext> ReadModifyWriteRow(
       std::string const& name, std::string const& app_profile) override;
   std::shared_ptr<OperationContext> PrepareQuery(
-      std::string const& instance_name, std::string const& app_profile) override;
+      std::string const& instance_name,
+      std::string const& app_profile) override;
   std::shared_ptr<OperationContext> ExecuteQuery(
-      std::string const& instance_name, std::string const& app_profile) override;
+      std::string const& instance_name,
+      std::string const& app_profile) override;
 };
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -124,9 +126,11 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& table_name, std::string const& app_profile) override;
 
   std::shared_ptr<OperationContext> PrepareQuery(
-      std::string const& instance_name, std::string const& app_profile) override;
+      std::string const& instance_name,
+      std::string const& app_profile) override;
   std::shared_ptr<OperationContext> ExecuteQuery(
-      std::string const& instance_name, std::string const& app_profile) override;
+      std::string const& instance_name,
+      std::string const& app_profile) override;
 
  private:
   void InitializeProvider(

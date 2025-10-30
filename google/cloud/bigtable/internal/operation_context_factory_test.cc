@@ -167,8 +167,7 @@ TEST(MetricsOperationContextFactoryTest, ReadModifyWriteRow) {
 
 TEST(MetricsOperationContextFactoryTest, PrepareQuery) {
   std::string app_profile = "my-app-profile";
-  std::string instance_full_name =
-      "projects/my-project/instances/my-instance";
+  std::string instance_full_name = "projects/my-project/instances/my-instance";
 
   auto mock_metric = std::make_shared<MockMetric const>();
   std::cout << "0" << std::endl;
@@ -190,8 +189,7 @@ TEST(MetricsOperationContextFactoryTest, PrepareQuery) {
 
 TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {
   std::string app_profile = "my-app-profile";
-  std::string instance_full_name =
-      "projects/my-project/instances/my-instance";
+  std::string instance_full_name = "projects/my-project/instances/my-instance";
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
