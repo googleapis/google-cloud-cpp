@@ -355,12 +355,12 @@ class FakeOperationContextFactory : public OperationContextFactory {
   }
 
   std::shared_ptr<OperationContext> PrepareQuery(
-        std::string const&, std::string const& app_profile) override {
+      std::string const&, std::string const& app_profile) override {
     return Helper("", app_profile);
   }
 
   std::shared_ptr<OperationContext> ExecuteQuery(
-          std::string const&, std::string const& app_profile) override {
+      std::string const&, std::string const& app_profile) override {
     return Helper("", app_profile);
   }
 

@@ -629,13 +629,14 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   for (auto const& p : params.sql_statement.params()) {
     (*request.mutable_param_types())[p.first] = p.second.type();
   }
-  auto operation_context =
-      operation_context_factory_->PrepareQuery(instance_full_name, app_profile_id(*current));
+  auto operation_context = operation_context_factory_->PrepareQuery(
+      instance_full_name, app_profile_id(*current));
   auto response = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       Idempotency::kNonIdempotent,
-      [this, operation_context](grpc::ClientContext& context, Options const& options,
-             google::bigtable::v2::PrepareQueryRequest const& request) {
+      [this, operation_context](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::v2::PrepareQueryRequest const& request) {
         operation_context->PreCall(context);
         auto const& result = stub_->PrepareQuery(context, options, request);
         operation_context->PostCall(context, result.status());
@@ -664,18 +665,19 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
   }
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
-  auto operation_context =
-      operation_context_factory_->PrepareQuery(instance_full_name, app_profile_id(*current));
+  auto operation_context = operation_context_factory_->PrepareQuery(
+      instance_full_name, app_profile_id(*current));
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kNonIdempotent,
              background_->cq(),
-             [this, operation_context](CompletionQueue& cq,
-                    std::shared_ptr<grpc::ClientContext> context,
-                    google::cloud::internal::ImmutableOptions options,
-                    google::bigtable::v2::PrepareQueryRequest const& request) {
+             [this, operation_context](
+                 CompletionQueue& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options,
+                 google::bigtable::v2::PrepareQueryRequest const& request) {
                operation_context->PreCall(*context);
-               auto f = stub_->AsyncPrepareQuery(cq, context, std::move(options),
-                                             request);
+               auto f = stub_->AsyncPrepareQuery(cq, context,
+                                                 std::move(options), request);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -686,7 +688,8 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
              std::move(current), request, __func__)
       .then([this, operation_context, params = std::move(params)](
                 future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
-                    future) -> StatusOr<bigtable::PreparedQuery> {;
+                    future) -> StatusOr<bigtable::PreparedQuery> {
+        ;
         auto response = future.get();
         operation_context->OnDone(response.status());
         if (!response) {
