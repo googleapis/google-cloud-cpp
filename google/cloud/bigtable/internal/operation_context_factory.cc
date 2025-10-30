@@ -93,6 +93,16 @@ std::shared_ptr<OperationContext> OperationContextFactory::ReadModifyWriteRow(
   return std::make_shared<OperationContext>();
 }
 
+std::shared_ptr<OperationContext> OperationContextFactory::PrepareQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> OperationContextFactory::ExecuteQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
 std::shared_ptr<OperationContext> SimpleOperationContextFactory::ReadRow(
     std::string const&, std::string const&) {
   return std::make_shared<OperationContext>();
@@ -123,52 +133,16 @@ SimpleOperationContextFactory::ReadModifyWriteRow(std::string const&,
                                                   std::string const&) {
   return std::make_shared<OperationContext>();
 }
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQueryAttemptLatency(
-    std::string const& name, std::string const& app_profile) {
+
+std::shared_ptr<OperationContext>
+SimpleOperationContextFactory::PrepareQuery(std::string const&,
+                                                  std::string const&) {
   return std::make_shared<OperationContext>();
 }
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQueryOperationLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQueryRetryCount(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQueryServerLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQueryNetworkConnectivityErrorCount(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryAttemptLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryOperationLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryRetryCount(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryFirstResponseLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryApplicationBlockingLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryServerLatency(
-    std::string const& name, std::string const& app_profile) {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQueryNetworkConnectivityErrorCount(
-    std::string const& name, std::string const& app_profile) {
+
+std::shared_ptr<OperationContext>
+SimpleOperationContextFactory::ExecuteQuery(std::string const&,
+                                                  std::string const&) {
   return std::make_shared<OperationContext>();
 }
 
@@ -212,6 +186,12 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
   });
   absl::call_once(read_modify_write_row_metrics_.once, [this, metric]() {
     read_modify_write_row_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(prepare_query_metrics_.once, [this, metric]() {
+    prepare_query_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(execute_query_metrics_.once, [this, metric]() {
+    execute_query_metrics_.metrics.push_back(metric);
   });
 }
 
@@ -487,16 +467,14 @@ std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::PrepareQuery(
     std::string const& instance_name, std::string const& app_profile) {
   auto constexpr kRpc = "PrepareQuery";
-  absl::call_once(prepare_query_.once, [this, kRpc]() {
+  absl::call_once(prepare_query_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
-    v.emplace_back(
-        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    swap(prepare_query_.metrics, v);
+    swap(prepare_query_metrics_.metrics, v);
   });
 
   auto resource_labels = ResourceLabelsFromInstanceName(instance_name);
@@ -508,7 +486,7 @@ MetricsOperationContextFactory::PrepareQuery(
                             "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, prepare_query_.metrics,
+      resource_labels, data_labels, prepare_query_metrics_.metrics,
       clock_);
 }
 
@@ -516,28 +494,30 @@ std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::ExecuteQuery(
     std::string const& instance_name, std::string const& app_profile) {
   auto constexpr kRpc = "ExecuteQuery";
-  absl::call_once(execute_query_.once, [this, kRpc]() {
+  absl::call_once(execute_query_metrics_.once, [this, kRpc]() {
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
+    v.emplace_back(
+        std::make_shared<FirstResponseLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
-    swap(execute_query_.metrics, v);
+    swap(execute_query_metrics_.metrics, v);
   });
 
   auto resource_labels = ResourceLabelsFromInstanceName(instance_name);
   DataLabels data_labels = {kRpc,
-                            "false", /*=streaming*/
+                            "true", /*=streaming*/
                             "cpp.Bigtable/" + version_string(),
                             client_uid_,
                             app_profile,
                             "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, execute_query_.metrics,
+      resource_labels, data_labels, execute_query_metrics_.metrics,
       clock_);
 }
 

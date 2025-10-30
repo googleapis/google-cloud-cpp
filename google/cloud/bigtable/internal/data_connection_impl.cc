@@ -630,7 +630,7 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
     (*request.mutable_param_types())[p.first] = p.second.type();
   }
   auto operation_context =
-      operation_context_factory_->PrepareQueryAttemptLatency(instance_full_name, app_profile_id(*current));
+      operation_context_factory_->PrepareQuery(instance_full_name, app_profile_id(*current));
   auto response = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       Idempotency::kNonIdempotent,
