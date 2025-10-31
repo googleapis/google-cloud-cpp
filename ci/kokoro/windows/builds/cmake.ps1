@@ -42,6 +42,18 @@ if ($missing.count -ge 1) {
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" ""
+
+# Force the build to use the version of Ninja downloaded by vcpkg. This
+# works around a problem where the version of Ninja bundled with Visual
+# Studio is found first, but fails to run correctly.
+$ninja_dir = (Get-ChildItem -Path "${vcpkg_root}/downloads/tools" -Recurse -Directory -Filter "ninja-*-windows").FullName | Select-Object -First 1
+if ($ninja_dir) {
+    Write-Host "Found vcpkg ninja at ${ninja_dir}. Prepending to PATH."
+    $env:PATH = "${ninja_dir};${env:PATH}"
+} else {
+    Write-Host -ForegroundColor Yellow "Could not find vcpkg-downloaded ninja, relying on PATH."
+}
+
 $binary_dir="cmake-out/${BuildName}"
 # Install all dependencies from the vcpkg.json manifest file.
 # This mirrors the behavior of our GHA builds.
