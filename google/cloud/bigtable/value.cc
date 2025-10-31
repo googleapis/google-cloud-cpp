@@ -20,6 +20,7 @@
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 #include <google/type/date.pb.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -68,6 +69,12 @@ bool StructEqual(  // NOLINT(misc-no-recursion)
     google::bigtable::v2::Type const& pt2,
     google::bigtable::v2::Value const& pv2);
 
+bool MapEqual(  // NOLINT(misc-no-recursion)
+    google::bigtable::v2::Type const& pt1,
+    google::bigtable::v2::Value const& pv1,
+    google::bigtable::v2::Type const& pt2,
+    google::bigtable::v2::Value const& pv2);
+
 // Compares two sets of Type and Value protos for equality. This method calls
 // itself recursively to compare subtypes and subvalues.
 bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
@@ -105,6 +112,9 @@ bool Equal(google::bigtable::v2::Type const& pt1,  // NOLINT(misc-no-recursion)
   }
   if (pt1.has_struct_type()) {
     return StructEqual(pt1, pv1, pt2, pv2);
+  }
+  if (pt1.has_map_type()) {
+    return MapEqual(pt1, pv1, pt2, pv2);
   }
   return false;
 }
@@ -158,6 +168,44 @@ bool StructEqual(  // NOLINT(misc-no-recursion)
   return true;
 }
 
+// Compares two sets of Type and Value protos that represent a MAP for
+// equality.
+bool MapEqual(  // NOLINT(misc-no-recursion)
+    google::bigtable::v2::Type const& pt1,
+    google::bigtable::v2::Value const& pv1,
+    google::bigtable::v2::Type const& pt2,
+    google::bigtable::v2::Value const& pv2) {
+  auto const& kt1 = pt1.map_type().key_type();
+  auto const& kt2 = pt2.map_type().key_type();
+  auto const& vt1 = pt1.map_type().value_type();
+  auto const& vt2 = pt2.map_type().value_type();
+  if (kt1.kind_case() != kt2.kind_case()) return false;
+  if (vt1.kind_case() != vt2.kind_case()) return false;
+
+  auto const& mv1 = pv1.array_value().values();
+  auto const& mv2 = pv2.array_value().values();
+  if (mv1.size() != mv2.size()) return false;
+  // We double-check that all subarrays are of size 2;
+  for (int i = 0; i < mv1.size(); ++i) {
+    auto const& f1 = mv1.Get(i);
+    auto const& f2 = mv2.Get(i);
+    if (f1.array_value().values_size() != 2) return false;
+    if (f2.array_value().values_size() != 2) return false;
+  }
+  // NOLINTNEXTLINE(misc-no-recursion)
+  auto comparison_function = [&kt1, &kt2, &vt1, &vt2](
+                                 google::bigtable::v2::Value const& f1,
+                                 google::bigtable::v2::Value const& f2) {
+    auto const& k1 = f1.array_value().values(0);
+    auto const& k2 = f2.array_value().values(0);
+    auto const& v1 = f1.array_value().values(1);
+    auto const& v2 = f2.array_value().values(1);
+    return Equal(kt1, k1, kt2, k2) && Equal(vt1, v1, vt2, v2);
+  };
+  return std::is_permutation(mv1.begin(), mv1.end(), mv2.begin(), mv2.end(),
+                             comparison_function);
+}
+
 // From the proto description, `NULL` values are represented by having a kind
 // equal to KIND_NOT_SET
 bool IsNullValue(google::bigtable::v2::Value const& value) {
@@ -180,6 +228,11 @@ std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
 // format themselves differently in each case.
 enum class StreamMode { kScalar, kAggregate };
 
+std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
+                              google::bigtable::v2::Value const& v,
+                              google::bigtable::v2::Type const& t,
+                              StreamMode mode);
+
 std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
                            google::bigtable::v2::Type const& t,
@@ -188,17 +241,16 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     return os << "NULL";
   }
 
-  if (t.kind_case() == google::bigtable::v2::Type::kBoolType) {
+  if (t.has_bool_type()) {
     return os << v.bool_value();
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kInt64Type) {
+  if (t.has_int64_type()) {
     return os << v.int_value();
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kFloat32Type ||
-      t.kind_case() == google::bigtable::v2::Type::kFloat64Type) {
+  if (t.has_float32_type() || t.has_float64_type()) {
     return os << v.float_value();
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kStringType) {
+  if (t.has_string_type()) {
     switch (mode) {
       case StreamMode::kScalar:
         return os << v.string_value();
@@ -209,23 +261,23 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
     return os;  // Unreachable, but quiets warning.
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kBytesType) {
+  if (t.has_bytes_type()) {
     return os << Bytes(AsString(v.bytes_value()));
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kTimestampType) {
+  if (t.has_timestamp_type()) {
     auto ts = MakeTimestamp(v.timestamp_value());
     if (!ts) {
       internal::ThrowStatus(ts.status());
     }
     return os << ts.value();
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kDateType) {
+  if (t.has_date_type()) {
     auto date =
         bigtable_internal::FromProto(t, v).get<absl::CivilDay>().value();
     return os << date;
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kArrayType) {
-    char const* delimiter = "";
+  if (t.has_array_type()) {
+    auto const* delimiter = "";
     os << '[';
     for (auto&& val : v.array_value().values()) {
       os << delimiter;
@@ -235,8 +287,8 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
     return os << ']';
   }
-  if (t.kind_case() == google::bigtable::v2::Type::kStructType) {
-    char const* delimiter = "";
+  if (t.has_struct_type()) {
+    auto const* delimiter = "";
     os << '(';
     for (int i = 0; i < v.array_value().values_size(); ++i) {
       os << delimiter;
@@ -251,8 +303,35 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
     return os << ')';
   }
+  if (t.has_map_type()) {
+    return MapStreamHelper(os, v, t, mode);
+  }
   // this should include type name
   return os << "Error: unknown value type code " << t.kind_case();
+}
+std::ostream& MapStreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
+                              google::bigtable::v2::Value const& v,
+                              google::bigtable::v2::Type const& t, StreamMode) {
+  auto const* delimiter = "";
+  os << '{';
+  for (int i = 0; i < v.array_value().values_size(); ++i) {
+    os << delimiter;
+    os << "{";
+    auto const& kv = v.array_value().values(i);
+    if (!kv.has_array_value() || kv.array_value().values_size() != 2) {
+      os << "malformed key-value pair";
+      delimiter = ", ";
+      continue;
+    }
+    StreamHelper(os, kv.array_value().values(0), t.map_type().key_type(),
+                 StreamMode::kAggregate);
+    os << " : ";
+    StreamHelper(os, kv.array_value().values(1), t.map_type().value_type(),
+                 StreamMode::kAggregate);
+    os << "}";
+    delimiter = ", ";
+  }
+  return os << '}';
 }
 }  // namespace
 

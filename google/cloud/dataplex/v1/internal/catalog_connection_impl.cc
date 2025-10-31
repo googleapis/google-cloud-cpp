@@ -1324,6 +1324,50 @@ Status CatalogServiceConnectionImpl::CancelMetadataJob(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnectionImpl::CreateEntryLink(
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEntryLink(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+        return stub_->CreateEntryLink(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnectionImpl::DeleteEntryLink(
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEntryLink(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+        return stub_->DeleteEntryLink(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnectionImpl::GetEntryLink(
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEntryLink(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+        return stub_->GetEntryLink(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

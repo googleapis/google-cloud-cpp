@@ -361,6 +361,18 @@ DefaultKeyManagementServiceStub::MacVerify(
   return response;
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+DefaultKeyManagementServiceStub::Decapsulate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  google::cloud::kms::v1::DecapsulateResponse response;
+  auto status = grpc_stub_->Decapsulate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 DefaultKeyManagementServiceStub::GenerateRandomBytes(
     grpc::ClientContext& context, Options const&,

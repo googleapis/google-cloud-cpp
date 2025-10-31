@@ -1,0 +1,25 @@
+/*!
+@page workstations-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `workstations_v1::WorkstationsClient`:
+
+@snippet workstations_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page workstations_v1::WorkstationsClient-universe-domain-snippet Override workstations_v1::WorkstationsClient Universe Domain
+
+@snippet google/cloud/workstations/v1/samples/workstations_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

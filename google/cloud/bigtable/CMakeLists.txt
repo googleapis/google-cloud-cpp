@@ -109,9 +109,13 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bound_query.cc
+    bound_query.h
     bytes.cc
     bytes.h
     cell.h
+    client.cc
+    client.h
     client_options.cc
     client_options.h
     cluster_config.cc
@@ -205,8 +209,15 @@ add_library(
     internal/operation_context.h
     internal/operation_context_factory.cc
     internal/operation_context_factory.h
+    internal/partial_result_set_reader.h
+    internal/partial_result_set_resume.cc
+    internal/partial_result_set_resume.h
+    internal/partial_result_set_source.cc
+    internal/partial_result_set_source.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
+    internal/query_plan.cc
+    internal/query_plan.h
     internal/rate_limiter.cc
     internal/rate_limiter.h
     internal/readrowsparser.cc
@@ -229,6 +240,8 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    prepared_query.cc
+    prepared_query.h
     query_row.cc
     query_row.h
     read_modify_write_rule.h
@@ -249,6 +262,8 @@ add_library(
     rpc_backoff_policy.h
     rpc_retry_policy.cc
     rpc_retry_policy.h
+    sql_statement.cc
+    sql_statement.h
     table.cc
     table.h
     table_admin.cc
@@ -389,6 +404,7 @@ if (BUILD_TESTING)
         testing/mock_data_client.h
         testing/mock_mutate_rows_limiter.h
         testing/mock_mutate_rows_reader.h
+        testing/mock_partial_result_set_reader.h
         testing/mock_policies.h
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
@@ -427,9 +443,11 @@ if (BUILD_TESTING)
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
+        bound_query_test.cc
         bytes_test.cc
         cell_test.cc
         client_options_test.cc
+        client_test.cc
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
@@ -470,7 +488,10 @@ if (BUILD_TESTING)
         internal/mutate_rows_limiter_test.cc
         internal/operation_context_factory_test.cc
         internal/operation_context_test.cc
+        internal/partial_result_set_resume_test.cc
+        internal/partial_result_set_source_test.cc
         internal/prefix_range_end_test.cc
+        internal/query_plan_test.cc
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
@@ -481,6 +502,7 @@ if (BUILD_TESTING)
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc
+        prepared_query_test.cc
         query_row_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
@@ -489,6 +511,7 @@ if (BUILD_TESTING)
         row_test.cc
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
+        sql_statement_test.cc
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc

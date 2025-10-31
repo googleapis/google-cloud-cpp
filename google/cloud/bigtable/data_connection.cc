@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/results.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -154,6 +155,21 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
     std::string const&, std::string, Filter) {
   return make_ready_future<StatusOr<std::pair<bool, Row>>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<bigtable::PreparedQuery> DataConnection::PrepareQuery(
+    bigtable::PrepareQueryParams const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+future<StatusOr<bigtable::PreparedQuery>> DataConnection::AsyncPrepareQuery(
+    bigtable::PrepareQueryParams const&) {
+  return make_ready_future<StatusOr<PreparedQuery>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<bigtable::RowStream> DataConnection::ExecuteQuery(
+    bigtable::ExecuteQueryParams const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {

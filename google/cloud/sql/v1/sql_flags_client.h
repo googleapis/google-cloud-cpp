@@ -108,8 +108,8 @@ class SqlFlagsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.FlagsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L54}
-  /// [google.cloud.sql.v1.SqlFlagsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L47}
+  /// [google.cloud.sql.v1.FlagsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L52}
+  /// [google.cloud.sql.v1.SqlFlagsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::FlagsListResponse> List(

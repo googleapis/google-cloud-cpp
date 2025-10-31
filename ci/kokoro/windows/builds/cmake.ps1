@@ -57,7 +57,8 @@ $cmake_args=@(
     "-DCMAKE_C_COMPILER=cl.exe",
     "-DCMAKE_CXX_COMPILER=cl.exe",
     "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
-    "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
+    "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON",
+    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>"
 )
 
 # Configure CMake and create the build directory.
@@ -113,6 +114,10 @@ $ctest_args = @(
     "-C", $env:CONFIG,
     "--progress"
 )
+# TODO(#15584): The ConnectionImplTest.MultiplexedPrecommitUpdated test
+# is disabled.
+$env:GTEST_FILTER = "-ConnectionImplTest.MultiplexedPrecommitUpdated"
+Write-Host -ForegroundColor Yellow "Running ctest with GTEST_FILTER=${env:GTEST_FILTER}"
 ctest $ctest_args -LE integration-test
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"

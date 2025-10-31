@@ -161,6 +161,10 @@ class KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::MacVerifyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::DecapsulateRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(
       grpc::ClientContext& context, Options const& options,
@@ -325,6 +329,10 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::MacVerifyRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::DecapsulateRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(grpc::ClientContext& context, Options const& options,

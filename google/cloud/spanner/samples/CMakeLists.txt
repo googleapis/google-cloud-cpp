@@ -34,8 +34,9 @@ function (spanner_client_define_samples)
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
-            ${target} PRIVATE spanner_client_testing google_cloud_cpp_testing
-                              google-cloud-cpp::spanner)
+            ${target}
+            PRIVATE spanner_client_testing google_cloud_cpp_testing
+                    google-cloud-cpp::spanner google-cloud-cpp::universe_domain)
     endforeach ()
 
     # Generate a target for each unit test.

@@ -326,28 +326,13 @@ void GenerateMetadata(
 void GenerateScaffold(
     std::map<std::string, std::string> const& vars,
     std::string const& scaffold_templates_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service) {
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    ScaffoldFiles scaffold_files) {
   using Generator = std::function<void(
       std::ostream&, std::map<std::string, std::string> const&)>;
   struct Destination {
     std::string name;
     Generator generator;
-  } files[] = {
-      {"README.md", GenerateReadme},
-      {"BUILD.bazel", GenerateBuild},
-      {"CMakeLists.txt", GenerateCMakeLists},
-      {"doc/main.dox", GenerateDoxygenMainPage},
-      {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
-      {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
-      {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
-      {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
-      {"doc/options.dox", GenerateDoxygenOptionsPage},
-      {"quickstart/README.md", GenerateQuickstartReadme},
-      {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
-      {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
-      {"quickstart/Makefile", GenerateQuickstartMakefile},
-      {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
-      {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
 
   MakeDirectory(output_path + "/");
@@ -355,15 +340,49 @@ void GenerateScaffold(
       output_path + "/" + LibraryPath(service.product_path());
   MakeDirectory(destination);
   MakeDirectory(destination + "doc/");
-  MakeDirectory(destination + "quickstart/");
+
+  std::vector<Destination> files;
+  if (scaffold_files == ScaffoldFiles::kDocDir) {
+    files = {
+        {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
+        {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
+        {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
+        {"doc/override-universe-domain.dox",
+         GenerateOverrideUniverseDomainPage},
+        {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
+        {"doc/options.dox", GenerateDoxygenOptionsPage},
+    };
+  } else {
+    MakeDirectory(destination + "quickstart/");
+    files = {
+        {"README.md", GenerateReadme},
+        {"BUILD.bazel", GenerateBuild},
+        {"CMakeLists.txt", GenerateCMakeLists},
+        {"doc/main.dox", GenerateDoxygenMainPage},
+        {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
+        {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
+        {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
+        {"doc/override-universe-domain.dox",
+         GenerateOverrideUniverseDomainPage},
+        {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
+        {"doc/options.dox", GenerateDoxygenOptionsPage},
+        {"quickstart/README.md", GenerateQuickstartReadme},
+        {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
+        {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
+        {"quickstart/Makefile", GenerateQuickstartMakefile},
+        {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
+        {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
+    };
+    std::ifstream is(scaffold_templates_path + kWorkspaceTemplate);
+    auto const contents = std::string{std::istreambuf_iterator<char>(is), {}};
+    std::ofstream os(destination + "quickstart/WORKSPACE.bazel");
+    GenerateQuickstartWorkspace(os, vars, contents);
+  }
+
   for (auto const& f : files) {
     std::ofstream os(destination + f.name);
     f.generator(os, vars);
   }
-  std::ifstream is(scaffold_templates_path + kWorkspaceTemplate);
-  auto const contents = std::string{std::istreambuf_iterator<char>(is), {}};
-  std::ofstream os(destination + "quickstart/WORKSPACE.bazel");
-  GenerateQuickstartWorkspace(os, vars, contents);
 }
 
 void GenerateReadme(std::ostream& os,
@@ -530,6 +549,7 @@ which should give you a taste of the $title$ C++ client library API.
   policies.
 - @ref $library$-env - describes environment variables that can configure the
   behavior of the library.
+- @ref $library$-override-universe-domain - describes how to override the default universe domain.
 
 )""";
 
@@ -547,7 +567,6 @@ which should give you a taste of the $title$ C++ client library API.
 void GenerateDoxygenEnvironmentPage(
     std::ostream& os, std::map<std::string, std::string> const& variables) {
   auto constexpr kText = R"""(/*!
-
 @page $library$-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
@@ -650,6 +669,29 @@ client library to change this default.
 
 // <!-- inject-endpoint-pages-start -->
 // <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateOverrideUniverseDomainPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+@page $library$-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+// <!-- inject-universe-domain-pages-end -->
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

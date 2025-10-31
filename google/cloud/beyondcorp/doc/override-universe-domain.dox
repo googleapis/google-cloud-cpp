@@ -1,0 +1,43 @@
+/*!
+@page beyondcorp-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `beyondcorp_appconnections_v1::AppConnectionsServiceClient`:
+
+@snippet app_connections_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-universe-domain-snippet)
+- [\c beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-universe-domain-snippet)
+- [\c beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page beyondcorp_appconnections_v1::AppConnectionsServiceClient-universe-domain-snippet Override beyondcorp_appconnections_v1::AppConnectionsServiceClient Universe Domain
+
+@snippet google/cloud/beyondcorp/appconnections/v1/samples/app_connections_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page beyondcorp_appconnectors_v1::AppConnectorsServiceClient-universe-domain-snippet Override beyondcorp_appconnectors_v1::AppConnectorsServiceClient Universe Domain
+
+@snippet google/cloud/beyondcorp/appconnectors/v1/samples/app_connectors_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page beyondcorp_appgateways_v1::AppGatewaysServiceClient-universe-domain-snippet Override beyondcorp_appgateways_v1::AppGatewaysServiceClient Universe Domain
+
+@snippet google/cloud/beyondcorp/appgateways/v1/samples/app_gateways_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -493,6 +493,42 @@ Status CatalogServiceTracingStub::CancelMetadataJob(
       context, *span, child_->CancelMetadataJob(context, options, request));
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingStub::CreateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateEntryLink(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingStub::DeleteEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "DeleteEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEntryLink(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingStub::GetEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "GetEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetEntryLink(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

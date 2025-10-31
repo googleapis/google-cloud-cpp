@@ -102,6 +102,35 @@ struct GrpcMetricsPeriodOption {
   using Type = std::chrono::seconds;
 };
 
+/**
+ * gRPC telemetry export timeout.
+ *
+ * When `EnableGrpcMetrics` is enabled, this option controls the maximum time
+ * to wait for metrics to be exported to [Google Cloud Monitoring]. The default
+ * is 30 seconds.
+ *
+ * This timeout is particularly important for short-lived programs. Setting a
+ * lower timeout ensures metrics are flushed before the program exits. For
+ * long-running services, the default value is appropriate.
+ *
+ * @par Example: Configure for short-lived programs
+ * @code
+ * namespace gcs_ex = google::cloud::storage_experimental;
+ * auto client = google::cloud::storage::MakeGrpcClient(
+ *     google::cloud::Options{}
+ *         .set<gcs_ex::EnableGrpcMetricsOption>(true)
+ *         .set<gcs_ex::GrpcMetricsPeriodOption>(
+ *             std::chrono::seconds(5))
+ *         .set<gcs_ex::GrpcMetricsExportTimeoutOption>(
+ *             std::chrono::seconds(2)));
+ * @endcode
+ *
+ * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
+ */
+struct GrpcMetricsExportTimeoutOption {
+  using Type = std::chrono::seconds;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

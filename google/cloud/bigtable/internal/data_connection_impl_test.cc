@@ -19,7 +19,10 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
@@ -2720,6 +2723,104 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, ExecuteQuery) {
+  auto conn = TestConnection(std::make_shared<MockBigtableStub>());
+  internal::OptionsSpan span(CallOptions());
+  bigtable::InstanceResource instance(Project("test-project"), "test-instance");
+  bigtable::SqlStatement sql("SELECT * FROM `test-table`");
+  auto prepared_query =
+      bigtable::PreparedQuery(CompletionQueue{}, instance, sql,
+                              google::bigtable::v2::PrepareQueryResponse{});
+  auto bound_query = prepared_query.BindParameters({});
+  EXPECT_THAT(
+      conn->ExecuteQuery(bigtable::ExecuteQueryParams{std::move(bound_query)}),
+      StatusIs(StatusCode::kUnimplemented));
+}
+
+TEST_F(DataConnectionTest, PrepareQuerySuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::PrepareQueryRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ("projects/the-project/instances/the-instance",
+                  request.instance_name());
+        EXPECT_EQ("SELECT * FROM the-table", request.query());
+        v2::PrepareQueryResponse response;
+        return response;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto params = bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  auto prepared_query = conn->PrepareQuery(params);
+  ASSERT_STATUS_OK(prepared_query);
+  EXPECT_EQ(prepared_query->instance(), params.instance);
+  EXPECT_EQ(prepared_query->sql_statement(), params.sql_statement);
+}
+
+TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PrepareQuery)
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             v2::PrepareQueryRequest const&) { return PermanentError(); });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto result = conn->PrepareQuery(bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")});
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce([](CompletionQueue const&, auto, auto,
+                   v2::PrepareQueryRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ("projects/the-project/instances/the-instance",
+                  request.instance_name());
+        EXPECT_EQ("SELECT * FROM the-table", request.query());
+        return make_ready_future(make_status_or(v2::PrepareQueryResponse{}));
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto params = bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  auto future = conn->AsyncPrepareQuery(params);
+  auto result = future.get();
+  ASSERT_STATUS_OK(result);
+}
+
+TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncPrepareQuery)
+      .WillOnce(
+          [](CompletionQueue&, auto, auto, v2::PrepareQueryRequest const&) {
+            return make_ready_future<StatusOr<v2::PrepareQueryResponse>>(
+                PermanentError());
+          });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto params = bigtable::PrepareQueryParams{
+      bigtable::InstanceResource(google::cloud::Project("the-project"),
+                                 "the-instance"),
+      bigtable::SqlStatement("SELECT * FROM the-table")};
+  auto future = conn->AsyncPrepareQuery(params);
+  auto result = future.get();
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

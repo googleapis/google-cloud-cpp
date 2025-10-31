@@ -156,6 +156,10 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::MacVerifyRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::DecapsulateRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(grpc::ClientContext& context, Options const& options,
                       google::cloud::kms::v1::GenerateRandomBytesRequest const&

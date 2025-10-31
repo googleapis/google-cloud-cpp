@@ -105,8 +105,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L489}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L491}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
@@ -135,8 +135,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L489}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L491}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
@@ -170,8 +170,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L500}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L502}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
@@ -209,8 +209,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L500}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L502}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
@@ -244,8 +244,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L547}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L549}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
@@ -299,8 +299,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L547}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L549}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
@@ -365,8 +365,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
-  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L568}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
+  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L570}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
@@ -420,8 +420,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
-  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L568}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
+  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L570}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
@@ -483,8 +483,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L587}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L589}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
@@ -535,8 +535,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L587}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L589}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L55}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
@@ -590,7 +590,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L610}
+  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L612}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
@@ -620,7 +620,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L610}
+  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L612}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
@@ -655,7 +655,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L621}
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L623}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
@@ -694,7 +694,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L621}
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L623}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
@@ -729,7 +729,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L663}
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L665}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
@@ -784,7 +784,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L663}
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L665}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
@@ -848,7 +848,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L684}
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L686}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
@@ -901,7 +901,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L684}
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L686}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
@@ -962,7 +962,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L699}
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L701}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
@@ -1013,7 +1013,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L699}
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L701}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
@@ -1066,7 +1066,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L714}
+  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L716}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1096,7 +1096,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L714}
+  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L716}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1131,7 +1131,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L725}
+  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L727}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1170,7 +1170,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L725}
+  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L727}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1197,7 +1197,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L768}
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L770}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
@@ -1227,7 +1227,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L768}
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L770}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
@@ -1262,7 +1262,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L779}
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L781}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
@@ -1301,7 +1301,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L779}
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L781}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
@@ -1337,7 +1337,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L817}
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L819}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1393,7 +1393,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L817}
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L819}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1458,7 +1458,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L835}
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L837}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1509,7 +1509,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L835}
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L837}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1550,7 +1550,9 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// Get a GoogleChannelConfig
+  /// Get a GoogleChannelConfig.
+  /// The name of the GoogleChannelConfig in the response is ALWAYS coded with
+  /// projectID.
   ///
   /// @param name  Required. The name of the config to get.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1566,7 +1568,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L858}
+  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L860}
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
   ///
   // clang-format on
@@ -1575,7 +1577,9 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// Get a GoogleChannelConfig
+  /// Get a GoogleChannelConfig.
+  /// The name of the GoogleChannelConfig in the response is ALWAYS coded with
+  /// projectID.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1596,7 +1600,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L858}
+  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L860}
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
   ///
   // clang-format on
@@ -1627,7 +1631,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
-  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L846}
+  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L848}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -1660,7 +1664,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
-  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L846}
+  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L848}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -1687,7 +1691,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L869}
+  /// [google.cloud.eventarc.v1.GetMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L871}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -1717,7 +1721,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L869}
+  /// [google.cloud.eventarc.v1.GetMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L871}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -1729,7 +1733,7 @@ class EventarcClient {
   ///
   /// List message buses.
   ///
-  /// @param parent  Required. The parent collection to list triggers on.
+  /// @param parent  Required. The parent collection to list message buses on.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1752,7 +1756,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListMessageBusesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L880}
+  /// [google.cloud.eventarc.v1.ListMessageBusesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L882}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -1791,7 +1795,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListMessageBusesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L880}
+  /// [google.cloud.eventarc.v1.ListMessageBusesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L882}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -1817,8 +1821,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L926}
-  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L949}
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L928}
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L951}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
@@ -1847,8 +1851,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L926}
-  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L949}
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L928}
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L951}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
@@ -1864,7 +1868,7 @@ class EventarcClient {
   /// @param parent  Required. The parent collection in which to add this message bus.
   /// @param message_bus  Required. The message bus to create.
   /// @param message_bus_id  Required. The user-provided ID to be assigned to the MessageBus. It should
-  ///  match the format (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$)
+  ///  match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1885,7 +1889,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L962}
+  /// [google.cloud.eventarc.v1.CreateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L964}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -1940,7 +1944,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L962}
+  /// [google.cloud.eventarc.v1.CreateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L964}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -2005,7 +2009,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
-  /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L984}
+  /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L986}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
@@ -2058,7 +2062,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
-  /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L984}
+  /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L986}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
@@ -2120,7 +2124,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1004}
+  /// [google.cloud.eventarc.v1.DeleteMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1006}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -2172,7 +2176,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1004}
+  /// [google.cloud.eventarc.v1.DeleteMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1006}
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
@@ -2227,7 +2231,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
-  /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1027}
+  /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1029}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
@@ -2257,7 +2261,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
-  /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1027}
+  /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1029}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
@@ -2292,7 +2296,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
-  /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1038}
+  /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1040}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
@@ -2331,7 +2335,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
-  /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1038}
+  /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1040}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
@@ -2345,7 +2349,7 @@ class EventarcClient {
   /// @param parent  Required. The parent collection in which to add this enrollment.
   /// @param enrollment  Required. The enrollment to create.
   /// @param enrollment_id  Required. The user-provided ID to be assigned to the Enrollment. It should
-  ///  match the format (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  ///  match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2366,7 +2370,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1084}
+  /// [google.cloud.eventarc.v1.CreateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1086}
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
@@ -2421,7 +2425,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1084}
+  /// [google.cloud.eventarc.v1.CreateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1086}
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
@@ -2486,7 +2490,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
-  /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1106}
+  /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1108}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
@@ -2539,7 +2543,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
-  /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1106}
+  /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1108}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
@@ -2601,7 +2605,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1126}
+  /// [google.cloud.eventarc.v1.DeleteEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1128}
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
@@ -2653,7 +2657,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1126}
+  /// [google.cloud.eventarc.v1.DeleteEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1128}
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
@@ -2707,7 +2711,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetPipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1149}
+  /// [google.cloud.eventarc.v1.GetPipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1151}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -2737,7 +2741,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetPipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1149}
+  /// [google.cloud.eventarc.v1.GetPipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1151}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -2772,7 +2776,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListPipelinesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1160}
+  /// [google.cloud.eventarc.v1.ListPipelinesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1162}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -2811,7 +2815,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListPipelinesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1160}
+  /// [google.cloud.eventarc.v1.ListPipelinesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1162}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -2825,7 +2829,8 @@ class EventarcClient {
   ///
   /// @param parent  Required. The parent collection in which to add this pipeline.
   /// @param pipeline  Required. The pipeline to create.
-  /// @param pipeline_id  Required. The user-provided ID to be assigned to the Pipeline.
+  /// @param pipeline_id  Required. The user-provided ID to be assigned to the Pipeline. It should
+  ///  match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2846,7 +2851,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1206}
+  /// [google.cloud.eventarc.v1.CreatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1208}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -2901,7 +2906,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1206}
+  /// [google.cloud.eventarc.v1.CreatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1208}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -2966,7 +2971,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
-  /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1227}
+  /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
@@ -3019,7 +3024,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
-  /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1227}
+  /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
@@ -3081,7 +3086,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeletePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1247}
+  /// [google.cloud.eventarc.v1.DeletePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1250}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -3133,7 +3138,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeletePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1247}
+  /// [google.cloud.eventarc.v1.DeletePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1250}
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
@@ -3187,7 +3192,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1270}
+  /// [google.cloud.eventarc.v1.GetGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1273}
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
@@ -3217,7 +3222,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1270}
+  /// [google.cloud.eventarc.v1.GetGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1273}
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
@@ -3253,7 +3258,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
-  /// [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1281}
+  /// [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1284}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
@@ -3292,7 +3297,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
-  /// [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1281}
+  /// [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1284}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
@@ -3307,7 +3312,7 @@ class EventarcClient {
   /// @param parent  Required. The parent collection in which to add this google api source.
   /// @param google_api_source  Required. The google api source to create.
   /// @param google_api_source_id  Required. The user-provided ID to be assigned to the GoogleApiSource. It
-  ///  should match the format (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  ///  should match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -3328,7 +3333,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1327}
+  /// [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1330}
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
@@ -3384,7 +3389,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1327}
+  /// [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1330}
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
@@ -3451,7 +3456,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
-  /// [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1350}
+  /// [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1353}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
@@ -3506,7 +3511,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
-  /// [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1350}
+  /// [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1353}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
@@ -3570,7 +3575,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1372}
+  /// [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1375}
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
@@ -3623,7 +3628,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1372}
+  /// [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1375}
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on

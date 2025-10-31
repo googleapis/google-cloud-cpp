@@ -45,6 +45,7 @@ application.
 - @ref tpu-override-retry - describes how to change the default retry
   policies.
 - @ref tpu-env - describes environment variables that can configure the behavior of the library.
+- @ref tpu-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service]: https://cloud.google.com/tpu
 

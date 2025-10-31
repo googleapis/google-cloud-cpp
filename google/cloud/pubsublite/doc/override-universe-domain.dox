@@ -1,0 +1,36 @@
+/*!
+@page pubsublite-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the client
+library. Use the
+[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
+client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `pubsublite::AdminServiceClient`:
+
+@snippet admin_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-universe-domain-snippet)
+- [\c pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page pubsublite::AdminServiceClient-universe-domain-snippet Override pubsublite::AdminServiceClient Universe Domain
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page pubsublite::TopicStatsServiceClient-universe-domain-snippet Override pubsublite::TopicStatsServiceClient Universe Domain
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

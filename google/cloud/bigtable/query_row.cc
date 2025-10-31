@@ -50,15 +50,15 @@ QueryRow::QueryRow(std::vector<Value> values,
 
 StatusOr<Value> QueryRow::get(std::size_t pos) const {
   if (pos < values_.size()) return values_[pos];
-  return internal::InvalidArgumentError("position out of range",
-                                        GCP_ERROR_INFO());
+  return google::cloud::internal::InvalidArgumentError("position out of range",
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<Value> QueryRow::get(std::string const& name) const {
   auto it = std::find(columns_->begin(), columns_->end(), name);
   if (it != columns_->end()) return get(std::distance(columns_->begin(), it));
-  return internal::InvalidArgumentError("column name not found",
-                                        GCP_ERROR_INFO());
+  return google::cloud::internal::InvalidArgumentError("column name not found",
+                                                       GCP_ERROR_INFO());
 }
 
 bool operator==(QueryRow const& a, QueryRow const& b) {
@@ -66,17 +66,17 @@ bool operator==(QueryRow const& a, QueryRow const& b) {
 }
 
 //
-// QueryRowStreamIterator
+// RowStreamIterator
 //
 
-QueryRowStreamIterator::QueryRowStreamIterator() = default;
+RowStreamIterator::RowStreamIterator() = default;
 
-QueryRowStreamIterator::QueryRowStreamIterator(Source source)
+RowStreamIterator::RowStreamIterator(Source source)
     : source_(std::move(source)) {
   ++*this;
 }
 
-QueryRowStreamIterator& QueryRowStreamIterator::operator++() {
+RowStreamIterator& RowStreamIterator::operator++() {
   if (!row_ok_) {
     source_ = nullptr;  // Last row was an error; become "end"
     return *this;
@@ -90,14 +90,13 @@ QueryRowStreamIterator& QueryRowStreamIterator::operator++() {
   return *this;
 }
 
-QueryRowStreamIterator QueryRowStreamIterator::operator++(int) {
+RowStreamIterator RowStreamIterator::operator++(int) {
   auto old = *this;
   ++*this;
   return old;
 }
 
-bool operator==(QueryRowStreamIterator const& a,
-                QueryRowStreamIterator const& b) {
+bool operator==(RowStreamIterator const& a, RowStreamIterator const& b) {
   // Input iterators may only be compared to (copies of) themselves and end.
   // See https://en.cppreference.com/w/cpp/named_req/InputIterator. Therefore,
   // by definition, all input iterators are equal unless one is end and the
@@ -105,8 +104,7 @@ bool operator==(QueryRowStreamIterator const& a,
   return !a.source_ == !b.source_;
 }
 
-bool operator!=(QueryRowStreamIterator const& a,
-                QueryRowStreamIterator const& b) {
+bool operator!=(RowStreamIterator const& a, RowStreamIterator const& b) {
   return !(a == b);
 }
 

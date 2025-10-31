@@ -70,6 +70,7 @@ if (BUILD_TESTING)
                     google-cloud-cpp::bigtable_protos
                     google-cloud-cpp::common
                     google-cloud-cpp::grpc_utils
+                    google-cloud-cpp::universe_domain
                     absl::time
                     GTest::gmock_main
                     GTest::gmock
@@ -91,6 +92,7 @@ if (BUILD_TESTING)
                     google-cloud-cpp::bigtable_protos
                     google-cloud-cpp::common
                     google-cloud-cpp::grpc_utils
+                    google-cloud-cpp::universe_domain
                     absl::time
                     gRPC::grpc++
                     gRPC::grpc

@@ -717,7 +717,7 @@ void CreateAndWriteAppendableObject(
                                 gcs_ex::BucketName(std::move(bucket_name)),
                                 std::move(object_name)))
                                .value();
-    std::cout << "Appendable upload started for object " << object_name "\n";
+    std::cout << "Appendable upload started for object " << object_name << "\n";
 
     token = (co_await writer.Write(std::move(token),
                                    gcs_ex::WritePayload("Some data\n")))
@@ -882,7 +882,7 @@ void ReadAppendableObjectTail(
         bytes_read += buffer.size();
       }
       // In a real application you would wait here, e.g. with a timer.
-      co_await google::cloud::sleep_for(std::chrono::seconds(1));
+      std::this_thread::sleep_for(std::chrono::seconds(1));
     }
   };
   // [END storage_read_appendable_object_tail]
@@ -1033,7 +1033,7 @@ std::string SuspendBufferedUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
   std::cerr
-      << "AsyncClient::StartBufferedUpload() example requires coroutines\n";
+      << "AsyncClient::SuspendBufferedUpload() example requires coroutines\n";
   return {};
 }
 
@@ -1053,7 +1053,7 @@ std::string SuspendUnbufferedUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
   std::cerr
-      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
+      << "AsyncClient::SuspendUnbufferedUpload() example requires coroutines\n";
   return {};
 }
 
@@ -1337,7 +1337,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     auto upload_id = SuspendBufferedUpload(client, {bucket_name, object_name});
 
     std::cout << "Running the ResumeBufferedUpload() example" << std::endl;
-    ResumeUnbufferedUpload(client, {upload_id});
+    ResumeBufferedUpload(client, {upload_id});
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
 
@@ -1512,7 +1512,7 @@ int main(int argc, char* argv[]) try {
       make_resume_entry("resume-buffered-upload", {}, ResumeBufferedUpload),
 
       make_entry("start-unbuffered-upload", {"<filename>"},
-                 StartBufferedUpload),
+                 StartUnbufferedUpload),
       make_entry("suspend-unbuffered-upload", {}, SuspendUnbufferedUpload),
       make_resume_entry("resume-unbuffered-upload", {"<filename>"},
                         ResumeUnbufferedUpload),

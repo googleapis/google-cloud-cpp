@@ -16,12 +16,12 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.43.0-rc",  # Updated by CMake
+    version = "2.44.0-rc",  # Updated by CMake
     compatibility_level = 2,  # Updated by CMake
 )
 
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "bazel_skylib", version = "1.8.1")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
 bazel_dep(name = "rules_cc", version = "0.1.4")
 bazel_dep(name = "abseil-cpp", version = "20240722.1", repo_name = "com_google_absl")
 bazel_dep(name = "protobuf", version = "29.4", repo_name = "com_google_protobuf")
@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-gobULUZq7kyqE4kf7kK2bDIIBpznl710RSdYhLjUfAI=",
+    integrity = "sha256-PeOhmUAO6np2YJGuuWxLhMhiZq0fkz+ZM7u3w1nnJ/4=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-46403a9acec0719c130b33eb38b2ee62a45f9f6c",
+    strip_prefix = "googleapis-2193a2bfcecb92b92aad7a4d81baa428cafd7dfd",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/46403a9acec0719c130b33eb38b2ee62a45f9f6c.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/2193a2bfcecb92b92aad7a4d81baa428cafd7dfd.tar.gz",
     ],
 )
 
