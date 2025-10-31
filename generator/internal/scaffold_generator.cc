@@ -680,10 +680,9 @@ void GenerateOverrideUniverseDomainPage(
   auto constexpr kText = R"""(/*!
 @page $library$-override-universe-domain How to Override the Default Universe Domain
 
-In some cases, you may need to override the default universe domain used by the client
-library. Use the
-[AddUniverseDomainOption](@ref google::cloud::AddUniverseDomainOption) when initializing the
-client library to change this default.
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
 
 <!-- inject-universe-domain-snippet-start -->
 <!-- inject-universe-domain-snippet-end -->
