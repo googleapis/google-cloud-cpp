@@ -622,7 +622,7 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
     bigtable::PrepareQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::PrepareQueryRequest request;
-  auto const& instance_full_name = params.instance.FullName();
+  auto instance_full_name = params.instance.FullName();
   request.set_instance_name(instance_full_name);
   request.set_app_profile_id(app_profile_id(*current));
   request.set_query(params.sql_statement.sql());
@@ -656,7 +656,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
     bigtable::PrepareQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::PrepareQueryRequest request;
-  auto const& instance_full_name = params.instance.FullName();
+  auto instance_full_name = params.instance.FullName();
   request.set_instance_name(instance_full_name);
   request.set_app_profile_id(app_profile_id(*current));
   request.set_query(params.sql_statement.sql());
@@ -689,7 +689,6 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
       .then([this, operation_context, params = std::move(params)](
                 future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
                     future) -> StatusOr<bigtable::PreparedQuery> {
-        ;
         auto response = future.get();
         operation_context->OnDone(response.status());
         if (!response) {
