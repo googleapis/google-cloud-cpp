@@ -81,6 +81,7 @@ cmake_flags=(
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE=universe_domain"
 )
 
 # The downloads can fail, therefore require a retry loop.
