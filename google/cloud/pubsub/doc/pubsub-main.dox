@@ -198,36 +198,36 @@ Follow these links to find examples for other `*Client` classes:
 
 */
 
-/*! @page Publisher-universe-domain-snippet Override Publisher Default Endpoint
+/*! @page Publisher-universe-domain-snippet Override Publisher Default Universe Domain
 
 @snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-universe-domain
 
 */
 
-/*! @page Subscriber-universe-domain-snippet Override Subscriber Default Endpoint
+/*! @page Subscriber-universe-domain-snippet Override Subscriber Default Universe Domain
 
 @snippet google/cloud/pubsub/samples/client_samples.cc subscriber-set-universe-domain
 
 */
 
-/*! @page BlockingPublisher-universe-domain-snippet Override BlockingPublisher Default Endpoint
+/*! @page BlockingPublisher-universe-domain-snippet Override BlockingPublisher Default Universe Domain
 
 @snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-set-universe-domain
 
 */
 
-/*! @page TopicAdminClient-universe-domain-snippet Override TopicAdminClient Default Endpoint
+/*! @page TopicAdminClient-universe-domain-snippet Override TopicAdminClient Default Universe Domain
 
 @snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc set-client-universe-domain
 */
 
-/*! @page SubscriptionAdminClient-universe-domain-snippet Override SubscriptionAdminClient Default Endpoint
+/*! @page SubscriptionAdminClient-universe-domain-snippet Override SubscriptionAdminClient Default Universe Domain
 
 @snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc set-client-universe-domain
 
 */
 
-/*! @page SchemaServiceClient-universe-domain-snippet Override SchemaServiceClient Default Endpoint
+/*! @page SchemaServiceClient-universe-domain-snippet Override SchemaServiceClient Default Universe Domain
 
 @snippet google/cloud/pubsub/samples/schema_client_samples.cc set-client-universe-domain
 
