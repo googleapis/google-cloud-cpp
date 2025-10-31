@@ -88,9 +88,9 @@ TEST(ParseImpersonatedServiceAccountCredentials, MalformedScopes) {
   auto json = nlohmann::json::parse(kFullValidConfig);
   json["scopes"] = "not-an-array";
   auto actual = ParseImpersonatedServiceAccountCredentials(json.dump(), "");
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
-                               AllOf(HasSubstr("Malformed"),
-                                     HasSubstr("scopes"))));
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("Malformed"), HasSubstr("scopes"))));
 }
 
 TEST(ParseImpersonatedServiceAccountCredentials, Success) {
