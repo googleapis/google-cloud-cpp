@@ -647,9 +647,26 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   if (!response) {
     return std::move(response).status();
   }
-  return bigtable::PreparedQuery(background_->cq(), params.instance,
-                                 std::move(params.sql_statement),
-                                 *std::move(response));
+  auto const* func = __func__;
+  auto refresh_fn = [this, request, current, func]() mutable {
+    auto retry = retry_policy(*current);
+    auto backoff = backoff_policy(*current);
+    return google::cloud::internal::AsyncRetryLoop(
+        std::move(retry), std::move(backoff), Idempotency::kIdempotent,
+        background_->cq(),
+        [this](CompletionQueue& cq,
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options,
+               google::bigtable::v2::PrepareQueryRequest const& request) {
+          return stub_->AsyncPrepareQuery(cq, std::move(context),
+                                          std::move(options), request);
+        },
+        std::move(current), request, func);
+  };
+  auto query_plan = QueryPlan::Create(background_->cq(), *std::move(response),
+                                      std::move(refresh_fn));
+  return bigtable::PreparedQuery(
+      params.instance, std::move(params.sql_statement), std::move(query_plan));
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
@@ -667,6 +684,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
   auto backoff = backoff_policy(*current);
   auto operation_context = operation_context_factory_->PrepareQuery(
       instance_full_name, app_profile_id(*current));
+  auto const* func = __func__;
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kIdempotent,
              background_->cq(),
@@ -685,18 +703,37 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                      return s;
                    });
              },
-             std::move(current), request, __func__)
-      .then([this, operation_context, params = std::move(params)](
-                future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
-                    future) -> StatusOr<bigtable::PreparedQuery> {
+             current, request, func)
+      .then([this, request, operation_context, current,
+             params = std::move(params),
+             func](future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+                       future) -> StatusOr<bigtable::PreparedQuery> {
         auto response = future.get();
         operation_context->OnDone(response.status());
         if (!response) {
           return std::move(response).status();
         }
-        return bigtable::PreparedQuery(background_->cq(), params.instance,
-                                       params.sql_statement,
-                                       *std::move(response));
+
+        auto refresh_fn = [this, request, current, func]() mutable {
+          auto retry = retry_policy(*current);
+          auto backoff = backoff_policy(*current);
+          return google::cloud::internal::AsyncRetryLoop(
+              std::move(retry), std::move(backoff), Idempotency::kIdempotent,
+              background_->cq(),
+              [this](CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::bigtable::v2::PrepareQueryRequest const& request) {
+                return stub_->AsyncPrepareQuery(cq, std::move(context),
+                                                std::move(options), request);
+              },
+              std::move(current), request, func);
+        };
+
+        auto query_plan = QueryPlan::Create(background_->cq(),
+                                            *std::move(response), refresh_fn);
+        return bigtable::PreparedQuery(params.instance, params.sql_statement,
+                                       std::move(query_plan));
       });
 }
 

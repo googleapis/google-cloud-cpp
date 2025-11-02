@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/prepared_query.h"
 #include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/value.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <algorithm>
 
@@ -27,7 +28,7 @@ namespace {
 using ::google::bigtable::v2::PrepareQueryResponse;
 
 TEST(BoundQuery, FromPreparedQuery) {
-  CompletionQueue cq;
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   Project p("dummy-project");
   InstanceResource instance(p, "dummy-instance");
   std::string statement_contents(
@@ -47,7 +48,8 @@ TEST(BoundQuery, FromPreparedQuery) {
   metadata->set_allocated_proto_schema(schema.release());
   response.set_allocated_metadata(metadata.release());
 
-  PreparedQuery pq(cq, instance, sql_statement, response);
+  PreparedQuery pq(CompletionQueue(fake_cq_impl), instance, sql_statement,
+                   response);
   auto bq = pq.BindParameters(parameters);
   EXPECT_EQ(instance.FullName(), bq.instance().FullName());
   EXPECT_STATUS_OK(bq.prepared_query());
@@ -57,10 +59,13 @@ TEST(BoundQuery, FromPreparedQuery) {
   EXPECT_TRUE(bq.metadata().value().has_proto_schema());
   EXPECT_EQ(1, bq.metadata().value().proto_schema().columns_size());
   EXPECT_EQ("col1", bq.metadata().value().proto_schema().columns()[0].name());
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST(BoundQuery, ToRequestProto) {
-  CompletionQueue cq;
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   Project p("dummy-project");
   InstanceResource instance(p, "dummy-instance");
   std::string statement_contents(
@@ -70,7 +75,8 @@ TEST(BoundQuery, ToRequestProto) {
   std::unordered_map<std::string, Value> parameters = {{"val1", Value(true)},
                                                        {"val2", Value(2.0)}};
 
-  PreparedQuery pq(cq, instance, sql_statement, response);
+  PreparedQuery pq(CompletionQueue(fake_cq_impl), instance, sql_statement,
+                   response);
   auto bq = pq.BindParameters(parameters);
   google::bigtable::v2::ExecuteQueryRequest proto = bq.ToRequestProto();
   EXPECT_EQ(instance.FullName(), proto.instance_name());
@@ -90,6 +96,9 @@ TEST(BoundQuery, ToRequestProto) {
   auto val2 = proto.params().find("val2")->second;
   EXPECT_TRUE(val2.has_float_value());
   EXPECT_EQ(2.0, val2.float_value());
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

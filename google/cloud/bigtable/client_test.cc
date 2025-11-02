@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "mocks/mock_data_connection.h"
 
@@ -26,15 +27,16 @@ using ::google::bigtable::v2::PrepareQueryResponse;
 using ::google::cloud::testing_util::StatusIs;
 
 TEST(Client, PrepareQuery) {
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
   InstanceResource instance(Project("the-project"), "the-instance");
   SqlStatement sql("SELECT * FROM the-table");
   EXPECT_CALL(*conn_mock, PrepareQuery)
-      .WillOnce([](PrepareQueryParams const& params) {
+      .WillOnce([&](PrepareQueryParams const& params) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
         EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
-        PreparedQuery q(CompletionQueue{}, params.instance,
+        PreparedQuery q(CompletionQueue{fake_cq_impl}, params.instance,
                         params.sql_statement, PrepareQueryResponse{});
         return q;
       });
@@ -42,33 +44,41 @@ TEST(Client, PrepareQuery) {
   Client client(std::move(conn_mock));
   auto prepared_query = client.PrepareQuery(instance, sql);
   ASSERT_STATUS_OK(prepared_query);
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST(Client, AsyncPrepareQuery) {
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
   InstanceResource instance(Project("the-project"), "the-instance");
   SqlStatement sql("SELECT * FROM the-table");
   EXPECT_CALL(*conn_mock, AsyncPrepareQuery)
-      .WillOnce([](PrepareQueryParams const& params) {
+      .WillOnce([&](PrepareQueryParams const& params) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
         EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
-        PreparedQuery q(CompletionQueue{}, params.instance,
+        PreparedQuery q(CompletionQueue{fake_cq_impl}, params.instance,
                         params.sql_statement, PrepareQueryResponse{});
         return make_ready_future(make_status_or(std::move(q)));
       });
   Client client(std::move(conn_mock));
   auto prepared_query = client.AsyncPrepareQuery(instance, sql);
   ASSERT_STATUS_OK(prepared_query.get());
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST(Client, ExecuteQuery) {
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   auto conn = MakeDataConnection();
   Client client(conn);
   InstanceResource instance(Project("test-project"), "test-instance");
   SqlStatement sql("SELECT * FROM `test-table`");
-  auto prepared_query =
-      PreparedQuery(CompletionQueue{}, instance, sql, PrepareQueryResponse{});
+  auto prepared_query = PreparedQuery(CompletionQueue{fake_cq_impl}, instance,
+                                      sql, PrepareQueryResponse{});
   auto bound_query = prepared_query.BindParameters({});
   auto row_stream = client.ExecuteQuery(std::move(bound_query));
   // We expect a row stream with a single unimplemented status row while
@@ -78,6 +88,9 @@ TEST(Client, ExecuteQuery) {
                 StatusIs(StatusCode::kUnimplemented, "not implemented"));
   }
   EXPECT_EQ(1, std::distance(row_stream.begin(), row_stream.end()));
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 }  // namespace
