@@ -65,10 +65,10 @@ TEST(QueryPlanTest, ResponseDataWithOriginalValidQueryPlan) {
         make_status_or(google::bigtable::v2::PrepareQueryResponse{}));
   });
 
-  auto response_data = plan->response_data();
+  auto response_data = plan->response();
   ASSERT_STATUS_OK(response_data);
-  EXPECT_EQ(response_data->prepared_query, "test-query");
-  EXPECT_THAT(response_data->metadata, IsProtoEqual(metadata));
+  EXPECT_EQ(response_data->prepared_query(), "test-query");
+  EXPECT_THAT(response_data->metadata(), IsProtoEqual(metadata));
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
@@ -94,16 +94,16 @@ TEST(QueryPlanTest, RefreshExpiredPlan) {
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
 
-  auto data = query_plan->response_data();
+  auto data = query_plan->response();
   ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query, "original-query-plan");
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
   fake_clock->AdvanceTime(std::chrono::seconds(500));
   fake_cq_impl->SimulateCompletion(true);
 
-  data = query_plan->response_data();
+  data = query_plan->response();
   ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query, "refreshed-query-plan");
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
@@ -129,14 +129,14 @@ TEST(QueryPlanTest, FailedRefreshExpiredPlan) {
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
 
-  auto data = query_plan->response_data();
+  auto data = query_plan->response();
   ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query, "original-query-plan");
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
   fake_clock->AdvanceTime(std::chrono::seconds(500));
   fake_cq_impl->SimulateCompletion(true);
 
-  data = query_plan->response_data();
+  data = query_plan->response();
   EXPECT_THAT(data.status(), StatusIs(StatusCode::kInternal, "oops!"));
 
   // Cancel all pending operations, satisfying any remaining futures.
@@ -163,16 +163,16 @@ TEST(QueryPlanTest, RefreshInvalidatedPlan) {
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
 
-  auto data = query_plan->response_data();
+  auto data = query_plan->response();
   ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query, "original-query-plan");
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
   auto invalid_status = internal::InternalError("oops!");
-  query_plan->Invalidate(invalid_status, data->prepared_query);
+  query_plan->Invalidate(invalid_status, data->prepared_query());
 
-  data = query_plan->response_data();
+  data = query_plan->response();
   ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query, "refreshed-query-plan");
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
@@ -198,14 +198,14 @@ TEST(QueryPlanTest, FailedRefreshInvalidatedPlan) {
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
 
-  auto data = query_plan->response_data();
+  auto data = query_plan->response();
   ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query, "original-query-plan");
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
   auto invalid_status = internal::InternalError("oops!");
-  query_plan->Invalidate(invalid_status, data->prepared_query);
+  query_plan->Invalidate(invalid_status, data->prepared_query());
 
-  data = query_plan->response_data();
+  data = query_plan->response();
   EXPECT_THAT(data.status(), StatusIs(StatusCode::kInternal, "oops again!"));
 
   // Cancel all pending operations, satisfying any remaining futures.

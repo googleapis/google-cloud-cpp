@@ -45,19 +45,14 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   // Invalidates the current QueryPlan and triggers a refresh.
   void Invalidate(Status status, std::string const& invalid_query_plan_id);
 
-  struct ResponseData {
-    std::string prepared_query;
-    google::bigtable::v2::ResultSetMetadata metadata;
-  };
-
   // Accessor for the prepared_query and metadata fields in response_.
   // Triggers a refresh if needed.
-  StatusOr<ResponseData> response_data();
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> response();
 
-  GOOGLE_CLOUD_CPP_DEPRECATED("Use response_data() instead")
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use response() instead")
   StatusOr<std::string> prepared_query();
 
-  GOOGLE_CLOUD_CPP_DEPRECATED("Use response_data() instead")
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use response() instead")
   StatusOr<google::bigtable::v2::ResultSetMetadata> metadata();
 
  private:
@@ -90,6 +85,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   // State machine where the only valid transitions are:
   //   kDone -> kBegin
   //   kBegin -> kPending
+  //   kPending -> kBegin
   //   kPending -> kDone
   // When refreshing the same previous query plan.
   enum class RefreshState {

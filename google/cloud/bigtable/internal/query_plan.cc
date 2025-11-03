@@ -140,12 +140,11 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
   }
 }
 
-StatusOr<QueryPlan::ResponseData> QueryPlan::response_data() {
+StatusOr<google::bigtable::v2::PrepareQueryResponse> QueryPlan::response() {
   std::unique_lock<std::mutex> lock(mu_);
   if (IsRefreshing(lock)) {
     if (response_.ok()) {
-      return QueryPlan::ResponseData{response_->prepared_query(),
-                                     response_->metadata()};
+      return response_;
     }
     lock.unlock();
     RefreshQueryPlan(RefreshMode::kAlreadyRefreshing);
@@ -156,20 +155,19 @@ StatusOr<QueryPlan::ResponseData> QueryPlan::response_data() {
     return response_.status();
   }
 
-  return QueryPlan::ResponseData{response_->prepared_query(),
-                                 response_->metadata()};
+  return response_;
 }
 
 StatusOr<std::string> QueryPlan::prepared_query() {
-  auto data = response_data();
-  if (!data.ok()) return std::move(data.status());
-  return std::move(data->prepared_query);
+  auto data = response();
+  if (!data.ok()) return data.status();
+  return response_->prepared_query();
 }
 
 StatusOr<google::bigtable::v2::ResultSetMetadata> QueryPlan::metadata() {
-  auto data = response_data();
-  if (!data.ok()) return std::move(data.status());
-  return std::move(data->metadata);
+  auto data = response();
+  if (!data.ok()) return data.status();
+  return response_->metadata();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
