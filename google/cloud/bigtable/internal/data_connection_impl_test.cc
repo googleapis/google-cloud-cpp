@@ -30,6 +30,8 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -58,6 +60,7 @@ using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
@@ -218,6 +221,17 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
 }
 
 std::shared_ptr<DataConnectionImpl> TestConnection(
+    std::unique_ptr<BackgroundThreads> background,
+    std::shared_ptr<BigtableStub> stub,
+    std::unique_ptr<OperationContextFactory> operation_context_factory,
+    std::shared_ptr<MutateRowsLimiter> limiter =
+        std::make_shared<NoopMutateRowsLimiter>()) {
+  return std::make_shared<DataConnectionImpl>(
+      std::move(background), std::move(stub),
+      std::move(operation_context_factory), std::move(limiter), Options{});
+}
+
+std::shared_ptr<DataConnectionImpl> TestConnection(
     std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<OperationContextFactory> operation_context_factory,
     std::shared_ptr<MutateRowsLimiter> limiter =
@@ -265,6 +279,11 @@ TEST(TransformReadModifyWriteRowResponse, Basic) {
   EXPECT_THAT(row.cells(), ElementsAre(MatchCell(c1), MatchCell(c2),
                                        MatchCell(c3), MatchCell(c4)));
 }
+
+class MockBackgroundThreads : public BackgroundThreads {
+ public:
+  MOCK_METHOD(CompletionQueue, cq, (), (const, override));
+};
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
@@ -2736,17 +2755,40 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
 }
 
 TEST_F(DataConnectionTest, ExecuteQuery) {
-  auto conn = TestConnection(std::make_shared<MockBigtableStub>());
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  auto refresh_fn = []() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+            Status{StatusCode::kUnimplemented, "not implemented"}));
+  };
+
+  v2::PrepareQueryResponse response;
+  *response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(3600));
+
+  auto query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(response),
+                        std::move(refresh_fn));
+
+  auto mock_stub = std::make_shared<MockBigtableStub>();
+  auto conn = TestConnection(std::move(mock_stub));
   internal::OptionsSpan span(CallOptions());
   bigtable::InstanceResource instance(Project("test-project"), "test-instance");
   bigtable::SqlStatement sql("SELECT * FROM `test-table`");
   auto prepared_query =
-      bigtable::PreparedQuery(CompletionQueue{}, instance, sql,
-                              google::bigtable::v2::PrepareQueryResponse{});
+      bigtable::PreparedQuery(instance, sql, std::move(query_plan));
   auto bound_query = prepared_query.BindParameters({});
   EXPECT_THAT(
       conn->ExecuteQuery(bigtable::ExecuteQueryParams{std::move(bound_query)}),
       StatusIs(StatusCode::kUnimplemented));
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST_F(DataConnectionTest, PrepareQuerySuccess) {
@@ -2773,10 +2815,19 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
                   request.instance_name());
         EXPECT_EQ("SELECT * FROM the-table", request.query());
         v2::PrepareQueryResponse response;
+        *response.mutable_valid_until() = internal::ToProtoTimestamp(
+            std::chrono::system_clock::now() + std::chrono::seconds(3600));
         return response;
       });
 
-  auto conn = TestConnection(std::move(mock), std::move(factory));
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  auto conn =
+      TestConnection(std::move(mock_bg), std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto params = bigtable::PrepareQueryParams{
       bigtable::InstanceResource(google::cloud::Project("the-project"),
@@ -2786,6 +2837,9 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
   ASSERT_STATUS_OK(prepared_query);
   EXPECT_EQ(prepared_query->instance(), params.instance);
   EXPECT_EQ(prepared_query->sql_statement(), params.sql_statement);
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
@@ -2844,7 +2898,14 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
         return make_ready_future(make_status_or(v2::PrepareQueryResponse{}));
       });
 
-  auto conn = TestConnection(std::move(mock), std::move(factory));
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+
+  auto conn =
+      TestConnection(std::move(mock_bg), std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
   auto params = bigtable::PrepareQueryParams{
       bigtable::InstanceResource(google::cloud::Project("the-project"),
@@ -2853,6 +2914,9 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
   auto future = conn->AsyncPrepareQuery(params);
   auto result = future.get();
   ASSERT_STATUS_OK(result);
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
