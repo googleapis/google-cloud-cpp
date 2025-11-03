@@ -31,12 +31,10 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::ToProtoTimestamp;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::FakeSystemClock;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::protobuf::util::TimeUtil;
 
 TEST(QueryPlanTest, ResponseDataWithOriginalValidQueryPlan) {
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
