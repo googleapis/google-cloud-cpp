@@ -18,7 +18,6 @@
 #include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <google/protobuf/text_format.h>
@@ -57,8 +56,6 @@ TEST(QueryPlanTest, ResponseDataWithOriginalValidQueryPlan) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kResultMetadataText,
                                                             &metadata));
   *response.mutable_metadata() = metadata;
-  *response.mutable_valid_until() =
-      TimeUtil::GetCurrentTime() + TimeUtil::SecondsToDuration(300);
 
   auto plan = QueryPlan::Create(cq, response, [] {
     return make_ready_future(
@@ -88,8 +85,6 @@ TEST(QueryPlanTest, RefreshExpiredPlan) {
 
   google::bigtable::v2::PrepareQueryResponse response;
   response.set_prepared_query("original-query-plan");
-  *response.mutable_valid_until() =
-      ToProtoTimestamp(now + std::chrono::seconds(10));
 
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
@@ -98,7 +93,6 @@ TEST(QueryPlanTest, RefreshExpiredPlan) {
   ASSERT_STATUS_OK(data);
   EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
-  fake_clock->AdvanceTime(std::chrono::milliseconds(950));
   fake_cq_impl->SimulateCompletion(true);
 
   data = query_plan->response();
@@ -123,8 +117,6 @@ TEST(QueryPlanTest, FailedRefreshExpiredPlan) {
 
   google::bigtable::v2::PrepareQueryResponse response;
   response.set_prepared_query("original-query-plan");
-  *response.mutable_valid_until() =
-      ToProtoTimestamp(now + std::chrono::seconds(10));
 
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
@@ -133,7 +125,6 @@ TEST(QueryPlanTest, FailedRefreshExpiredPlan) {
   ASSERT_STATUS_OK(data);
   EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
-  fake_clock->AdvanceTime(std::chrono::milliseconds(950));
   fake_cq_impl->SimulateCompletion(true);
 
   data = query_plan->response();
@@ -157,8 +148,6 @@ TEST(QueryPlanTest, RefreshInvalidatedPlan) {
 
   google::bigtable::v2::PrepareQueryResponse response;
   response.set_prepared_query("original-query-plan");
-  *response.mutable_valid_until() =
-      ToProtoTimestamp(now + std::chrono::seconds(10));
 
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
@@ -192,8 +181,6 @@ TEST(QueryPlanTest, FailedRefreshInvalidatedPlan) {
 
   google::bigtable::v2::PrepareQueryResponse response;
   response.set_prepared_query("original-query-plan");
-  *response.mutable_valid_until() =
-      ToProtoTimestamp(now + std::chrono::seconds(10));
 
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
