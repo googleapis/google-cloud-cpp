@@ -24,6 +24,11 @@ if ($args.count -ne 1) {
 }
 $BuildName = $args[0]
 
+# Prepend the Chocolatey bin directory to the PATH to ensure we use the
+# choco-installed ninja, not one that might be bundled with Visual Studio.
+$env:PATH = "C:\ProgramData\chocolatey\bin;${env:PATH}"
+Write-Host "Updated PATH to prioritize Chocolatey tools."
+
 # Load the functions to configure and use vcpkg.
 . ci/kokoro/windows/lib/vcpkg.ps1
 
