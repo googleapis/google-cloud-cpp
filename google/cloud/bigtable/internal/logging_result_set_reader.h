@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_LOGGING_RESULT_SET_READER_H
 
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
-#include "google/cloud/tracing_options.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/tracing_options.h"
 #include "absl/types/optional.h"
 #include <memory>
 

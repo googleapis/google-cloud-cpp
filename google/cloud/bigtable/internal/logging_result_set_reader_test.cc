@@ -14,10 +14,10 @@
 
 #include "google/cloud/bigtable/internal/logging_result_set_reader.h"
 #include "google/cloud/bigtable/testing/mock_partial_result_set_reader.h"
-#include "google/cloud/tracing_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/tracing_options.h"
 #include <gmock/gmock.h>
 
 namespace google {
