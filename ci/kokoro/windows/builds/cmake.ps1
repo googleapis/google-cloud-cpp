@@ -45,7 +45,39 @@ $vcpkg_root = Install-Vcpkg "${project_root}" ""
 $binary_dir="cmake-out/${BuildName}"
 # Install all dependencies from the vcpkg.json manifest file.
 # This mirrors the behavior of our GHA builds.
+Write-Host -ForegroundColor Yellow "Attempting vcpkg install..."
 & "${vcpkg_root}/vcpkg.exe" install --triplet "${env:VCPKG_TRIPLET}"
+
+# Manually check the exit code. vcpkg might not be throwing a terminating error.
+if ($LastExitCode -ne 0) {
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+    Write-Host -ForegroundColor Red "vcpkg install FAILED with exit code $LastExitCode."
+    Write-Host -ForegroundColor Red "Dumping vcpkg buildtree logs for crc32c..."
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+
+    # Define the log files based on the error message
+    $log1 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-out.log"
+    $log2 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-dbg-CMakeCache.txt.log"
+    $log3 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-rel-CMakeCache.txt.log"
+
+    foreach ($logFile in @($log1, $log2, $log3)) {
+        if (Test-Path $logFile) {
+            Write-Host -ForegroundColor Red "========= Contents of $logFile ========="
+            Get-Content $logFile
+            Write-Host -ForegroundColor Red "========= End of $logFile ========="
+        } else {
+            Write-Host -ForegroundColor Yellow "Log file not found, skipping: $logFile"
+        }
+    }
+
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+    Write-Host -ForegroundColor Red "Dumping complete. Forcing build failure."
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+    # Manually fail the build with the exit code from vcpkg
+    exit $LastExitCode
+}
+
+Write-Host -ForegroundColor Green "vcpkg install SUCCEEDED."
 
 $cmake_args=@(
     "-G$env:GENERATOR",
