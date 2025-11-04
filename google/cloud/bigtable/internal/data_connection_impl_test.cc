@@ -3073,7 +3073,6 @@ TEST_F(DataConnectionTest, ExecuteQueryFailure) {
   bigtable::SqlStatement statement("SELECT key, val FROM t");
   bigtable::InstanceResource instance(p, "test-instance");
   std::unordered_map<std::string, bigtable::Value> parameters;
-  v2::PrepareQueryResponse response;
   bigtable::PreparedQuery pq(instance, statement, std::move(query_plan));
   auto bq = pq.BindParameters(parameters);
 
