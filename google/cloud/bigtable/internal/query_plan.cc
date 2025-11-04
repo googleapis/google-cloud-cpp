@@ -26,8 +26,9 @@ auto constexpr kRefreshDeadlineOffsetMs = 1000;
 }  // namespace
 
 std::shared_ptr<QueryPlan> QueryPlan::Create(
-    CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
-    RefreshFn fn, std::shared_ptr<Clock> clock) {
+    CompletionQueue cq,
+    StatusOr<google::bigtable::v2::PrepareQueryResponse> response, RefreshFn fn,
+    std::shared_ptr<Clock> clock) {
   auto plan = std::shared_ptr<QueryPlan>(new QueryPlan(
       std::move(cq), std::move(clock), std::move(fn), std::move(response)));
   plan->Initialize();
@@ -36,7 +37,7 @@ std::shared_ptr<QueryPlan> QueryPlan::Create(
 
 void QueryPlan::Initialize() {
   std::unique_lock<std::mutex> lock(mu_);
-  ScheduleRefresh(lock);
+  if (state_ == RefreshState::kDone) ScheduleRefresh(lock);
 }
 
 // ScheduleRefresh should only be called after updating response_.
@@ -71,7 +72,7 @@ void QueryPlan::ExpiredRefresh() {
       state_ = RefreshState::kBegin;
     }
   }
-  RefreshQueryPlan(RefreshMode::kExpired);
+  RefreshQueryPlan();
 }
 
 void QueryPlan::Invalidate(Status status,
@@ -82,26 +83,17 @@ void QueryPlan::Invalidate(Status status,
     // query plan, so we track what the previous plan id was.
     if (!IsRefreshing(lock) && old_query_plan_id_ != invalid_query_plan_id) {
       old_query_plan_id_ = invalid_query_plan_id;
+      response_ = std::move(status);
       state_ = RefreshState::kBegin;
     }
   }
-  RefreshQueryPlan(RefreshMode::kInvalidated, std::move(status));
 }
 
-void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
+void QueryPlan::RefreshQueryPlan() {
   {
     std::unique_lock<std::mutex> lock_1(mu_);
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT
-    assert(waiting_threads_ >= 0);
-#endif
-    ++waiting_threads_;
     cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
-    --waiting_threads_;
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT
-    assert(waiting_threads_ >= 0);
-#endif
     if (state_ == RefreshState::kDone) return;
-    if (mode == RefreshMode::kInvalidated) response_ = std::move(error);
     state_ = RefreshState::kPending;
   }
   auto response = refresh_fn_().get();
@@ -114,7 +106,7 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
       done = true;
       // If we have to refresh an invalidated query plan, cancel any existing
       // timer before starting a new one.
-      refresh_timer_.cancel();
+      if (refresh_timer_.valid()) refresh_timer_.cancel();
       ScheduleRefresh(lock_2);
     } else {
       // If there are no waiting threads that could call the refresh_fn, then
@@ -124,13 +116,7 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
       // If there are waiting threads, then we want to try again to get a
       // refreshed query plan, but we want to avoid a stampede of refresh RPCs
       // so we only notify one of the waiting threads.
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT
-      assert(waiting_threads_ >= 0);
-#endif
-      if (waiting_threads_ == 0) {
-        state_ = RefreshState::kDone;
-        done = true;
-      }
+      state_ = RefreshState::kBegin;
     }
   }
   if (done) {
@@ -147,7 +133,7 @@ StatusOr<google::bigtable::v2::PrepareQueryResponse> QueryPlan::response() {
       return response_;
     }
     lock.unlock();
-    RefreshQueryPlan(RefreshMode::kAlreadyRefreshing);
+    RefreshQueryPlan();
     lock.lock();
   }
 

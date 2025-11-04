@@ -33,6 +33,8 @@ TEST(TransactionOptions, Construction) {
   Transaction::ReadOnlyOptions exact_dur(staleness);
 
   Transaction::ReadWriteOptions none;
+  Transaction::ReadWriteOptions rw_with_read_lock(
+      Transaction::ReadLockMode::kOptimistic);
 
   Transaction::SingleUseOptions su_strong(strong);
   Transaction::SingleUseOptions su_exact_ts(exact_ts);
@@ -165,6 +167,47 @@ TEST(Transaction, MultiplexedPreviousTransactionId) {
         EXPECT_EQ(ctx.tag, "app=cart,env=dev");
         return 0;
       });
+}
+
+TEST(Transaction, ReadWriteOptionsWithTag) {
+  auto opts = Transaction::ReadWriteOptions().WithTag("test-tag");
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [&](spanner_internal::SessionHolder& /*session*/,
+               StatusOr<google::spanner::v1::TransactionSelector>& s,
+               spanner_internal::TransactionContext const& ctx) {
+        EXPECT_TRUE(s->has_begin());
+        EXPECT_TRUE(s->begin().has_read_write());
+        EXPECT_EQ(ctx.tag, "test-tag");
+        return 0;
+      });
+}
+
+TEST(Transaction, ReadWriteOptionsWithReadLockMode) {
+  auto check_lock_mode =
+      [](Transaction::ReadLockMode mode,
+         google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode
+             expected_proto_mode) {
+        auto opts = Transaction::ReadWriteOptions(mode);
+        Transaction txn = MakeReadWriteTransaction(opts);
+        spanner_internal::Visit(
+            txn, [&](spanner_internal::SessionHolder& /*session*/,
+                     StatusOr<google::spanner::v1::TransactionSelector>& s,
+                     spanner_internal::TransactionContext const& /*ctx*/) {
+              EXPECT_TRUE(s->has_begin());
+              EXPECT_TRUE(s->begin().has_read_write());
+              EXPECT_EQ(s->begin().read_write().read_lock_mode(),
+                        expected_proto_mode);
+              return 0;
+            });
+      };
+
+  check_lock_mode(
+      Transaction::ReadLockMode::kPessimistic,
+      google::spanner::v1::TransactionOptions_ReadWrite::PESSIMISTIC);
+  check_lock_mode(
+      Transaction::ReadLockMode::kOptimistic,
+      google::spanner::v1::TransactionOptions_ReadWrite::OPTIMISTIC);
 }
 
 }  // namespace
