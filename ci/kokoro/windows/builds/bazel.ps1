@@ -84,8 +84,14 @@ function Invoke-gRPC-Quickstart {
 if (Test-Integration-Enabled) {
     Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
     Install-Roots-Pem
-    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
-    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    $env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = "$env:KOKORO_GFILE_DIR/roots.pem"
+    $env:CURL_CA_BUNDLE = "$env:KOKORO_GFILE_DIR/roots.pem"
+    $env:GOOGLE_APPLICATION_CREDENTIALS = "$env:KOKORO_GFILE_DIR/kokoro-run-key.json"
+    # Troubleshooting output
+    Write-Host "GOOGLE_APPLICATION_CREDENTIALS=$env:GOOGLE_APPLICATION_CREDENTIALS"
+    Write-Host "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"
+    Write-Host "CURL_CA_BUNDLE=$env:CURL_CA_BUNDLE"
+    Get-Content "$env:KOKORO_GFILE_DIR/roots.pem" -TotalCount 5
     Invoke-REST-Quickstart
     Invoke-gRPC-Quickstart
 }
