@@ -807,8 +807,7 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
       MakeReadWriteTransaction(Transaction::ReadWriteOptions(read_lock_mode));
   auto tx_a_read_result = client_->Read(
       tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
-  for (auto const& row :
-       StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
+  for (auto const& row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
     EXPECT_STATUS_OK(row);
   }
   tx_a = MakeReadWriteTransaction(
