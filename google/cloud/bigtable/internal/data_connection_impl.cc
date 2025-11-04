@@ -116,6 +116,7 @@ class DefaultPartialResultSetReader
 
       // Ignore metadata from the stream because PartialResultSetSource already
       // has it set (in ExecuteQuery).
+      // TODO(#15701): Investigate expected behavior for processing metadata.
       if (response.has_metadata()) {
         continue;
       }
