@@ -16,8 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PARTIAL_RESULT_SET_RESUME_H
 
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
-#include "google/cloud/bigtable/rpc_backoff_policy.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "absl/types/optional.h"
@@ -42,8 +41,8 @@ class PartialResultSetResume : public PartialResultSetReader {
   PartialResultSetResume(
       PartialResultSetReaderFactory factory,
       google::cloud::Idempotency idempotency,
-      std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy,
-      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy)
+      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
         idempotency_(idempotency),
         retry_policy_prototype_(std::move(retry_policy)),
@@ -60,8 +59,8 @@ class PartialResultSetResume : public PartialResultSetReader {
  private:
   PartialResultSetReaderFactory factory_;
   google::cloud::Idempotency idempotency_;
-  std::unique_ptr<bigtable::RPCRetryPolicy> retry_policy_prototype_;
-  std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy_prototype_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
   std::unique_ptr<PartialResultSetReader> reader_;
   absl::optional<Status> last_status_;
 };

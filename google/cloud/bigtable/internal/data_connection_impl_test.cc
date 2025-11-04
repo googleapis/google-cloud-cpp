@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
+#include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/prepared_query.h"
@@ -26,13 +27,17 @@
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/bigtable/value.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/strings/substitute.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
@@ -53,11 +58,13 @@ using ::google::cloud::bigtable::IdempotentMutationPolicyOption;
 using ::google::cloud::bigtable::ReverseScanOption;
 using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::bigtable::testing::MockExecuteQueryStream;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
 using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
@@ -196,6 +203,30 @@ DataLimitedErrorCountRetryPolicy TestRetryPolicy() {
 
 ExponentialBackoffPolicy TestBackoffPolicy() {
   return ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
+}
+
+void MakeResponse(google::bigtable::v2::PartialResultSet& response,
+                  std::vector<std::string> const& values,
+                  absl::optional<std::string> resume_token, bool reset) {
+  google::bigtable::v2::ProtoRows proto_rows;
+  for (auto const& v : values) {
+    proto_rows.add_values()->set_string_value(v);
+  }
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  auto text = absl::Substitute(
+      R"pb(
+        proto_rows_batch: {
+          batch_data: "$0",
+        },
+            $1 $2
+        estimated_batch_size: 31,
+        batch_checksum: 123456
+      )pb",
+      binary_batch_data,
+      resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
+                   : "",
+      reset ? "reset: true," : "");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(text, &response));
 }
 
 // For tests that need to manually interact with the client/server metadata in a
@@ -2725,20 +2756,6 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST_F(DataConnectionTest, ExecuteQuery) {
-  auto conn = TestConnection(std::make_shared<MockBigtableStub>());
-  internal::OptionsSpan span(CallOptions());
-  bigtable::InstanceResource instance(Project("test-project"), "test-instance");
-  bigtable::SqlStatement sql("SELECT * FROM `test-table`");
-  auto prepared_query =
-      bigtable::PreparedQuery(CompletionQueue{}, instance, sql,
-                              google::bigtable::v2::PrepareQueryResponse{});
-  auto bound_query = prepared_query.BindParameters({});
-  EXPECT_THAT(
-      conn->ExecuteQuery(bigtable::ExecuteQueryParams{std::move(bound_query)}),
-      StatusIs(StatusCode::kUnimplemented));
-}
-
 TEST_F(DataConnectionTest, PrepareQuerySuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, PrepareQuery)
@@ -2821,6 +2838,117 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
   auto future = conn->AsyncPrepareQuery(params);
   auto result = future.get();
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, ExecuteQuery) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto constexpr kResultMetadataTextTwo = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+      columns {
+        name: "value"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse pq_response;
+  pq_response.set_prepared_query("test-pq-id-54321");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataTextTwo, pq_response.mutable_metadata()));
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.app_profile_id(), kAppProfile);
+        EXPECT_EQ(request.instance_name(),
+                  "projects/test-project/instances/test-instance");
+
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              *r->mutable_metadata() = pq_response.metadata();
+              return absl::nullopt;
+            })
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
+                           false);
+              return absl::nullopt;
+            })
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              MakeResponse(*r->mutable_results(), {"r2", "v2"},
+                           "sentinel-token", false);
+              return absl::nullopt;
+            })
+            // End of stream
+            .WillOnce(Return(google::cloud::Status()));
+
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  CompletionQueue cq;
+  Project p("test-project");
+  bigtable::SqlStatement statement("SELECT * FROM the-table");
+  bigtable::InstanceResource instance(p, "test-instance");
+  std::unordered_map<std::string, bigtable::Value> parameters;
+  bigtable::PreparedQuery pq(cq, instance, statement, std::move(pq_response));
+  auto bq = pq.BindParameters(parameters);
+  bigtable::ExecuteQueryParams params{std::move(bq)};
+  auto row_stream = conn->ExecuteQuery(params);
+  std::vector<StatusOr<bigtable::QueryRow>> rows;
+  for (auto const& row : *std::move(row_stream)) {
+    rows.push_back(row);
+  }
+
+  ASSERT_EQ(rows.size(), 2);
+  ASSERT_STATUS_OK(rows[0]);
+  auto const& row1 = *rows[0];
+  EXPECT_EQ(row1.columns().at(0), "row_key");
+  EXPECT_EQ(row1.columns().at(1), "value");
+  EXPECT_THAT(row1.values().at(0).get<std::string>(), IsOkAndHolds("r1"));
+  EXPECT_THAT(row1.values().at(1).get<std::string>(), IsOkAndHolds("v1"));
+  auto const& row2 = *rows[1];
+  EXPECT_THAT(row2.values().at(0).get<std::string>(), IsOkAndHolds("r2"));
+  EXPECT_THAT(row2.values().at(1).get<std::string>(), IsOkAndHolds("v2"));
+}
+
+TEST_F(DataConnectionTest, ExecuteQueryFailure) {
+  auto mock = std::make_shared<MockBigtableStub>();
+
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.app_profile_id(), kAppProfile);
+        EXPECT_EQ(request.instance_name(),
+                  "projects/test-project/instances/test-instance");
+
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  CompletionQueue cq;
+  Project p("test-project");
+  bigtable::SqlStatement statement("SELECT key, val FROM t");
+  bigtable::InstanceResource instance(p, "test-instance");
+  std::unordered_map<std::string, bigtable::Value> parameters;
+  v2::PrepareQueryResponse response;
+  bigtable::PreparedQuery pq(cq, instance, statement, response);
+  auto bq = pq.BindParameters(parameters);
+
+  bigtable::ExecuteQueryParams params{std::move(bq)};
+  auto row_stream = conn->ExecuteQuery(params);
+
+  auto it = row_stream->begin();
+  ASSERT_NE(it, row_stream->end());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, row_stream->end());
 }
 
 }  // namespace

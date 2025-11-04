@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/partial_result_set_resume.h"
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/mocks/mock_query_row.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -50,10 +51,12 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
     PartialResultSetReaderFactory factory, Idempotency idempotency) {
   return std::make_unique<PartialResultSetResume>(
       std::move(factory), idempotency,
-      bigtable::LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
-      bigtable::ExponentialBackoffPolicy(
+      bigtable::DataLimitedErrorCountRetryPolicy(/*maximum_failures=*/2)
+          .clone(),
+      google::cloud::ExponentialBackoffPolicy(
           /*initial_delay=*/std::chrono::microseconds(1),
-          /*maximum_delay=*/std::chrono::microseconds(1))
+          /*maximum_delay=*/std::chrono::microseconds(1),
+          /*scaling=*/2.0)
           .clone());
 }
 

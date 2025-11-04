@@ -168,7 +168,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnection::AsyncPrepareQuery(
 }
 
 StatusOr<bigtable::RowStream> DataConnection::ExecuteQuery(
-    bigtable::ExecuteQueryParams const&) {
+    bigtable::ExecuteQueryParams&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
