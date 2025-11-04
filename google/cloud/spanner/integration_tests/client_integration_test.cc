@@ -38,7 +38,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::AnyOf;
-using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::Ge;
 using ::testing::HasSubstr;
@@ -789,8 +788,6 @@ void CheckExecuteQueryWithSingleUseOptions(
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
-/// @test Verify the `ReadLockMode` option is sent.
-/// This only confirms that the service accepts this option.
 TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   auto const singer_id = 101;
   auto mutation_helper = [singer_id](std::string const& new_name) {
@@ -813,8 +810,6 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   tx_a = MakeReadWriteTransaction(
       tx_a, Transaction::ReadWriteOptions(read_lock_mode));
 
-  // Depending on the read lock mode, the result of the next write operation
-  // in tx "A" will vary.
   auto optimistic_result =
       client_->Commit(tx_a, mutation_helper("SecondModifiedName"));
 
