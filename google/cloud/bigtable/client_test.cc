@@ -95,9 +95,7 @@ TEST(ClientTest, ExecuteQuery) {
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
   PrepareQueryResponse pq_response;
-  auto query_plan = bigtable_internal::QueryPlan::Create(
-      CompletionQueue(fake_cq_impl), std::move(pq_response),
-      std::move(refresh_fn));
+  pq_response.set_prepared_query("test-pq-id-54321");
   auto constexpr kResultMetadataText = R"pb(
     proto_schema {
       columns {
@@ -110,7 +108,6 @@ TEST(ClientTest, ExecuteQuery) {
       }
     }
   )pb";
-  pq_response.set_prepared_query("test-pq-id-54321");
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       kResultMetadataText, pq_response.mutable_metadata()));
   EXPECT_CALL(*conn_mock, ExecuteQuery)
@@ -140,6 +137,9 @@ TEST(ClientTest, ExecuteQuery) {
   Client client(conn_mock);
   InstanceResource instance(Project("test-project"), "test-instance");
   SqlStatement sql("SELECT * FROM `test-table`");
+  auto query_plan = bigtable_internal::QueryPlan::Create(
+      CompletionQueue(fake_cq_impl), std::move(pq_response),
+      std::move(refresh_fn));
   auto prepared_query = PreparedQuery(instance, sql, std::move(query_plan));
   auto bound_query = prepared_query.BindParameters({});
   RowStream row_stream = client.ExecuteQuery(std::move(bound_query));

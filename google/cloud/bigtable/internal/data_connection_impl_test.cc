@@ -2978,9 +2978,6 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
         StatusOr<google::bigtable::v2::PrepareQueryResponse>(
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
-  auto query_plan =
-      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
-                        std::move(refresh_fn));
   EXPECT_CALL(*mock, ExecuteQuery)
       .WillOnce([&](auto, auto const&,
                     google::bigtable::v2::ExecuteQueryRequest const& request) {
@@ -2989,7 +2986,6 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
                   "projects/test-project/instances/test-instance");
 
         auto stream = std::make_unique<MockExecuteQueryStream>();
-
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
               *r->mutable_metadata() = pq_response.metadata();
@@ -3017,6 +3013,9 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
   bigtable::SqlStatement statement("SELECT * FROM the-table");
   bigtable::InstanceResource instance(p, "test-instance");
   std::unordered_map<std::string, bigtable::Value> parameters;
+  auto query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
+                        std::move(refresh_fn));
   auto prepared_query =
       bigtable::PreparedQuery(instance, statement, std::move(query_plan));
   auto bq = prepared_query.BindParameters(parameters);
