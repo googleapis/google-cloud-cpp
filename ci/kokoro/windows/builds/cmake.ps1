@@ -42,6 +42,22 @@ if ($missing.count -ge 1) {
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" ""
+
+# The crc32c portfile (1.1.2#2) in this vcpkg checkout has a CMakeLists.txt
+# that is too old for the CMake version on the CI. The error log suggests
+# this fix. We will patch the portfile on the fly before running install.
+Write-Host -ForegroundColor Cyan "Patching crc32c portfile for CMake policy..."
+$crc32c_portfile = "${vcpkg_root}/ports/crc32c/portfile.cmake"
+if (Test-Path $crc32c_portfile) {
+    $content = Get-Content -Raw -Path $crc32c_portfile
+    # Add our policy fix to the vcpkg_cmake_configure call
+    $content = $content -replace "vcpkg_cmake_configure(", "vcpkg_cmake_configure( OPTIONS -DCMAKE_POLICY_VERSION_MINIMUM=3.5 "
+    Set-Content -Path $crc32c_portfile -Value $content
+    Write-Host -ForegroundColor Cyan "Patch applied to $crc32c_portfile."
+} else {
+    Write-Host -ForegroundColor Red "Could not find crc32c portfile at $crc32c_portfile. Skipping patch (build will likely fail)."
+}
+
 $binary_dir="cmake-out/${BuildName}"
 # Install all dependencies from the vcpkg.json manifest file.
 # This mirrors the behavior of our GHA builds.
@@ -90,7 +106,8 @@ $cmake_args=@(
     "-DCMAKE_CXX_COMPILER=cl.exe",
     "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
     "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON",
-    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>"
+    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>",
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 )
 
 # Configure CMake and create the build directory.
