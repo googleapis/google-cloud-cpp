@@ -14,10 +14,30 @@
 
 //! [all]
 #include "google/cloud/storage/client.h"
+#include <curl/curl.h> // Required for version info
+#include <cstdlib>
 #include <iostream>
 #include <string>
 
 int main(int argc, char* argv[]) {
+  // --- DEBUG START ---
+  std::cout << "--- BINARY DEBUG START ---\n";
+  
+  // 1. Check SSL Backend
+  auto* vinfo = curl_version_info(CURLVERSION_NOW);
+  std::cout << "Libcurl Version: " << vinfo->version << "\n";
+  std::cout << "SSL Backend: " << vinfo->ssl_version << "\n";
+
+  // 2. Check Environment Variable
+  const char* env_p = std::getenv("CURL_CA_BUNDLE");
+  if (env_p) {
+      std::cout << "CURL_CA_BUNDLE is set to: [" << env_p << "]\n";
+  } else {
+      std::cout << "FAIL: CURL_CA_BUNDLE is NOT set.\n";
+  }
+  std::cout << "--- BINARY DEBUG END ---\n";
+  // --- DEBUG END ---
+
   if (argc != 2) {
     std::cerr << "Missing bucket name.\n";
     std::cerr << "Usage: quickstart <bucket-name>\n";
@@ -25,16 +45,13 @@ int main(int argc, char* argv[]) {
   }
   std::string const bucket_name = argv[1];
 
-  // Create a client to communicate with Google Cloud Storage. This client
-  // uses the default configuration for authentication and project id.
   auto client = google::cloud::storage::Client();
 
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
   writer.Close();
   if (!writer.metadata()) {
-    std::cerr << "Error creating object: " << writer.metadata().status()
-              << "\n";
+    std::cerr << "Error creating object: " << writer.metadata().status() << "\n";
     return 1;
   }
   std::cout << "Successfully created object: " << *writer.metadata() << "\n";
