@@ -169,7 +169,7 @@ TEST(Transaction, MultiplexedPreviousTransactionId) {
       });
 }
 
-TEST(Transaction, ReadWriteOptions_WithTag) {
+TEST(Transaction, ReadWriteOptionsWithTag) {
   auto opts = Transaction::ReadWriteOptions().WithTag("test-tag");
   Transaction txn = MakeReadWriteTransaction(opts);
   spanner_internal::Visit(
@@ -183,7 +183,7 @@ TEST(Transaction, ReadWriteOptions_WithTag) {
       });
 }
 
-TEST(Transaction, ReadWriteOptions_WithReadLockMode) {
+TEST(Transaction, ReadWriteOptionsWithReadLockMode) {
   auto check_lock_mode =
       [](Transaction::ReadLockMode mode,
          google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode
