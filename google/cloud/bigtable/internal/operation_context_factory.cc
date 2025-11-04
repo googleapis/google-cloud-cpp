@@ -48,6 +48,19 @@ ResourceLabels ResourceLabelsFromTableName(std::string const& table_name) {
   return resource_labels;
 }
 
+ResourceLabels ResourceLabelsFromInstanceName(
+    std::string const& instance_name) {
+  // split instance_name into component pieces
+  // projects/<project>/instances/<instance>
+  std::vector<absl::string_view> name_parts =
+      absl::StrSplit(instance_name, '/');
+  if (name_parts.size() < 4) return {};
+  ResourceLabels resource_labels = {std::string(name_parts[1]),
+                                    std::string(name_parts[3]), "",
+                                    "" /*=cluster*/, "" /*=zone*/};
+  return resource_labels;
+}
+
 }  // namespace
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
@@ -82,6 +95,16 @@ std::shared_ptr<OperationContext> OperationContextFactory::ReadModifyWriteRow(
   return std::make_shared<OperationContext>();
 }
 
+std::shared_ptr<OperationContext> OperationContextFactory::PrepareQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> OperationContextFactory::ExecuteQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
 std::shared_ptr<OperationContext> SimpleOperationContextFactory::ReadRow(
     std::string const&, std::string const&) {
   return std::make_shared<OperationContext>();
@@ -110,6 +133,16 @@ std::shared_ptr<OperationContext> SimpleOperationContextFactory::SampleRowKeys(
 std::shared_ptr<OperationContext>
 SimpleOperationContextFactory::ReadModifyWriteRow(std::string const&,
                                                   std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQuery(
+    std::string const&, std::string const&) {
   return std::make_shared<OperationContext>();
 }
 
@@ -153,6 +186,12 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
   });
   absl::call_once(read_modify_write_row_metrics_.once, [this, metric]() {
     read_modify_write_row_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(prepare_query_metrics_.once, [this, metric]() {
+    prepare_query_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(execute_query_metrics_.once, [this, metric]() {
+    execute_query_metrics_.metrics.push_back(metric);
   });
 }
 
@@ -422,6 +461,57 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
   return std::make_shared<OperationContext>(
       resource_labels, data_labels, read_modify_write_row_metrics_.metrics,
       clock_);
+}
+
+std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
+    std::string const& instance_name, std::string const& app_profile) {
+  auto constexpr kRpc = "PrepareQuery";
+  absl::call_once(prepare_query_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    swap(prepare_query_metrics_.metrics, v);
+  });
+
+  auto resource_labels = ResourceLabelsFromInstanceName(instance_name);
+  DataLabels data_labels = {kRpc,
+                            "false", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
+
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, prepare_query_metrics_.metrics, clock_);
+}
+
+std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
+    std::string const& instance_name, std::string const& app_profile) {
+  auto constexpr kRpc = "ExecuteQuery";
+  absl::call_once(execute_query_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    swap(execute_query_metrics_.metrics, v);
+  });
+
+  auto resource_labels = ResourceLabelsFromInstanceName(instance_name);
+  DataLabels data_labels = {kRpc,
+                            "true", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
+
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, execute_query_metrics_.metrics, clock_);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

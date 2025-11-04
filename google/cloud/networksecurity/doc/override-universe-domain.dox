@@ -1,0 +1,24 @@
+/*!
+@page networksecurity-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `networksecurity_v1::NetworkSecurityClient`:
+
+@snippet network_security_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page networksecurity_v1::NetworkSecurityClient-universe-domain-snippet Override networksecurity_v1::NetworkSecurityClient Universe Domain
+
+@snippet google/cloud/networksecurity/v1/samples/network_security_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

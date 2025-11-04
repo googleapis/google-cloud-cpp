@@ -1,0 +1,42 @@
+/*!
+@page gkemulticloud-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `gkemulticloud_v1::AttachedClustersClient`:
+
+@snippet attached_clusters_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c gkemulticloud_v1::AttachedClustersClient](@ref gkemulticloud_v1::AttachedClustersClient-universe-domain-snippet)
+- [\c gkemulticloud_v1::AwsClustersClient](@ref gkemulticloud_v1::AwsClustersClient-universe-domain-snippet)
+- [\c gkemulticloud_v1::AzureClustersClient](@ref gkemulticloud_v1::AzureClustersClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page gkemulticloud_v1::AttachedClustersClient-universe-domain-snippet Override gkemulticloud_v1::AttachedClustersClient Universe Domain
+
+@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page gkemulticloud_v1::AwsClustersClient-universe-domain-snippet Override gkemulticloud_v1::AwsClustersClient Universe Domain
+
+@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page gkemulticloud_v1::AzureClustersClient-universe-domain-snippet Override gkemulticloud_v1::AzureClustersClient Universe Domain
+
+@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

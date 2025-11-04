@@ -1,0 +1,24 @@
+/*!
+@page texttospeech-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `texttospeech_v1::TextToSpeechClient`:
+
+@snippet text_to_speech_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page texttospeech_v1::TextToSpeechClient-universe-domain-snippet Override texttospeech_v1::TextToSpeechClient Universe Domain
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

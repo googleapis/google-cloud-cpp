@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/universe_domain.h"
 #include <fstream>
 #include <string>
 #include <vector>
@@ -79,6 +80,32 @@ void PublisherServiceAccountKey(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
+void PublisherSetUniverseDomain(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "publisher-set-universe-domain <project-id> <topic-id>"};
+  }
+  //! [publisher-set-universe-domain]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](std::string const& project_id, std::string const& topic_id) {
+    google::cloud::Options options;
+
+    // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if
+    // set, in the provided Options for the Universe Domain associated with the
+    // credentials and adds it to the set of Options.
+    // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+    auto ud_options =
+        google::cloud::AddUniverseDomainOption(std::move(options));
+
+    if (!ud_options.ok()) throw std::move(ud_options).status();
+    auto pub = pubsub::Publisher(pubsub::MakePublisherConnection(
+        "europe-central2", pubsub::Topic(project_id, topic_id), *ud_options));
+  }
+  //! [publisher-set-universe-domain]
+  (argv.at(0), argv.at(1));
+}
+
 void SubscriberSetEndpoint(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -131,6 +158,33 @@ void SubscriberServiceAccountKey(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
+void SubscriberSetUniverseDomain(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "subscriber-set-universe-domain <project-id> <subscription-id>"};
+  }
+  //! [subscriber-set-universe-domain]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](std::string const& project_id, std::string const& subscription_id) {
+    google::cloud::Options options;
+
+    // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if
+    // set, in the provided Options for the Universe Domain associated with the
+    // credentials and adds it to the set of Options.
+    // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+    auto ud_options =
+        google::cloud::AddUniverseDomainOption(std::move(options));
+
+    if (!ud_options.ok()) throw std::move(ud_options).status();
+    auto sub = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        "europe-central2", pubsub::Subscription(project_id, subscription_id),
+        *ud_options));
+  }
+  //! [subscriber-set-universe-domain]
+  (argv.at(0), argv.at(1));
+}
+
 void BlockingPublisherSetEndpoint(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (!argv.empty()) {
@@ -177,6 +231,32 @@ void BlockingPublisherServiceAccountKey(std::vector<std::string> const& argv) {
   (argv.at(0));
 }
 
+void BlockingPublisherSetUniverseDomain(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (!argv.empty()) {
+    throw examples::Usage{"blocking-publisher-set-universe-domain"};
+  }
+  //! [blocking-publisher-set-universe-domain]
+  namespace pubsub = ::google::cloud::pubsub;
+  []() {
+    google::cloud::Options options;
+
+    // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if
+    // set, in the provided Options for the Universe Domain associated with the
+    // credentials and adds it to the set of Options.
+    // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+    auto ud_options =
+        google::cloud::AddUniverseDomainOption(std::move(options));
+
+    if (!ud_options.ok()) throw std::move(ud_options).status();
+    auto pub =
+        pubsub::BlockingPublisher(pubsub::MakeBlockingPublisherConnection(
+            "europe-central2", *ud_options));
+  }
+  //! [blocking-publisher-set-universe-domain]
+  ();
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -199,11 +279,17 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning PublisherServiceAccountKey() sample" << std::endl;
   PublisherServiceAccountKey({project_id, topic_id, keyfile});
 
+  std::cout << "\nRunning PublisherSetUniverseDomain() sample" << std::endl;
+  PublisherSetUniverseDomain({project_id, topic_id});
+
   std::cout << "\nRunning SubscriberSetEndpoint() sample" << std::endl;
   SubscriberSetEndpoint({project_id, subscription_id});
 
   std::cout << "\nRunning SubscriberServiceAccountKey() sample" << std::endl;
   SubscriberServiceAccountKey({project_id, subscription_id, keyfile});
+
+  std::cout << "\nRunning SubscriberSetUniverseDomain() sample" << std::endl;
+  SubscriberSetUniverseDomain({project_id, subscription_id});
 
   std::cout << "\nRunning BlockingPublisherSetEndpoint() sample" << std::endl;
   BlockingPublisherSetEndpoint({});
@@ -211,6 +297,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning BlockingPublisherServiceAccountKey() sample"
             << std::endl;
   BlockingPublisherServiceAccountKey({keyfile});
+
+  std::cout << "\nRunning BlockingPublisherSetUniverseDomain() sample"
+            << std::endl;
+  BlockingPublisherSetUniverseDomain({});
 
   std::cout << "\nAutoRun done" << std::endl;
 }
@@ -221,11 +311,15 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"publisher-set-endpoint", PublisherSetEndpoint},
       {"publisher-service-account-key", PublisherServiceAccountKey},
+      {"publisher-set-universe-domain", PublisherSetUniverseDomain},
       {"subscriber-set-endpoint", SubscriberSetEndpoint},
       {"subscriber-service-account-key", SubscriberServiceAccountKey},
+      {"subscriber-set-universe-domain", SubscriberSetUniverseDomain},
       {"blocking-publisher-set-endpoint", BlockingPublisherSetEndpoint},
       {"blocking-publisher-service-account-key",
        BlockingPublisherServiceAccountKey},
+      {"blocking-publisher-set-universe-domain",
+       BlockingPublisherSetUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

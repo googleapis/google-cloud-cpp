@@ -1,0 +1,35 @@
+/*!
+@page functions-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `functions_v1::CloudFunctionsServiceClient`:
+
+@snippet cloud_functions_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c functions_v1::CloudFunctionsServiceClient](@ref functions_v1::CloudFunctionsServiceClient-universe-domain-snippet)
+- [\c functions_v2::FunctionServiceClient](@ref functions_v2::FunctionServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page functions_v1::CloudFunctionsServiceClient-universe-domain-snippet Override functions_v1::CloudFunctionsServiceClient Universe Domain
+
+@snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page functions_v2::FunctionServiceClient-universe-domain-snippet Override functions_v2::FunctionServiceClient Universe Domain
+
+@snippet google/cloud/functions/v2/samples/function_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

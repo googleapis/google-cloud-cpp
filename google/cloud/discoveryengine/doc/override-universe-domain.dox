@@ -1,0 +1,119 @@
+/*!
+@page discoveryengine-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `discoveryengine_v1::CompletionServiceClient`:
+
+@snippet completion_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::ControlServiceClient](@ref discoveryengine_v1::ControlServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::GroundedGenerationServiceClient](@ref discoveryengine_v1::GroundedGenerationServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::ProjectServiceClient](@ref discoveryengine_v1::ProjectServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::RankServiceClient](@ref discoveryengine_v1::RankServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::RecommendationServiceClient](@ref discoveryengine_v1::RecommendationServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::SiteSearchEngineServiceClient](@ref discoveryengine_v1::SiteSearchEngineServiceClient-universe-domain-snippet)
+- [\c discoveryengine_v1::UserEventServiceClient](@ref discoveryengine_v1::UserEventServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page discoveryengine_v1::CompletionServiceClient-universe-domain-snippet Override discoveryengine_v1::CompletionServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/completion_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::ControlServiceClient-universe-domain-snippet Override discoveryengine_v1::ControlServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/control_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::ConversationalSearchServiceClient-universe-domain-snippet Override discoveryengine_v1::ConversationalSearchServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/conversational_search_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::DataStoreServiceClient-universe-domain-snippet Override discoveryengine_v1::DataStoreServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/data_store_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::DocumentServiceClient-universe-domain-snippet Override discoveryengine_v1::DocumentServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/document_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::EngineServiceClient-universe-domain-snippet Override discoveryengine_v1::EngineServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::GroundedGenerationServiceClient-universe-domain-snippet Override discoveryengine_v1::GroundedGenerationServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/grounded_generation_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::ProjectServiceClient-universe-domain-snippet Override discoveryengine_v1::ProjectServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/project_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::RankServiceClient-universe-domain-snippet Override discoveryengine_v1::RankServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/rank_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::RecommendationServiceClient-universe-domain-snippet Override discoveryengine_v1::RecommendationServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/recommendation_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::SchemaServiceClient-universe-domain-snippet Override discoveryengine_v1::SchemaServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/schema_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::SearchServiceClient-universe-domain-snippet Override discoveryengine_v1::SearchServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/search_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::SiteSearchEngineServiceClient-universe-domain-snippet Override discoveryengine_v1::SiteSearchEngineServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/site_search_engine_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page discoveryengine_v1::UserEventServiceClient-universe-domain-snippet Override discoveryengine_v1::UserEventServiceClient Universe Domain
+
+@snippet google/cloud/discoveryengine/v1/samples/user_event_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

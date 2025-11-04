@@ -76,6 +76,7 @@ cc_proto_library(
         ":samples_cc_proto",
         "//:common",
         "//:pubsub",
+        "//:universe_domain",
     ] + (["//:iam"] if test == "iam_samples.cc" else []),
 ) for test in pubsub_client_integration_samples]
 

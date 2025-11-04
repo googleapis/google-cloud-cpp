@@ -38,6 +38,7 @@ library.
 - @ref bigtable-endpoint-example
 - @ref bigtable-auth-example
 - @ref bigtable-override-retry
+- @ref bigtable-universe-domain-example
 - @ref bigtable-mocking "Mocking the Cloud Bigtable C++ client"
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
@@ -110,6 +111,22 @@ guide for more details.
 
 */
 
+/**
+@page bigtable-universe-domain-example Override the default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use the `google::cloud::AddUniverseDomainOption` when
+initializing the client library to change this default.
+
+@snippet client_samples.cc table-set-universe-domain
+
+Changing the default universe domain for other `*Client` classes is very similar, as
+shown in these examples:
+
+- [`BigtableTableAdminClient`](@ref BigtableTableAdminClient-set-universe-domain-snippet)
+- [`InstanceTableAdminClient`](@ref BigtableInstanceAdminClient-set-universe-domain-snippet)
+*/
+
 /*! @page Table-set-endpoint-snippet Override Table Default Endpoint
 
 @snippet google/cloud/bigtable/examples/client_samples.cc table-set-endpoint
@@ -118,6 +135,11 @@ guide for more details.
 /*! @page Table-with-service-account-snippet Override Table Default Authentication
 
 @snippet google/cloud/bigtable/examples/client_samples.cc table-with-service-account
+*/
+
+/*! @page Table-set-universe-domain-snippet Override Table Default Universe Domain
+
+@snippet google/cloud/bigtable/examples/client_samples.cc table-set-universe-domain
 */
 
 /*! @page BigtableTableAdminClient-set-endpoint-snippet Override BigtableTableAdminClient Default Endpoint
@@ -130,6 +152,11 @@ guide for more details.
 @snippet google/cloud/bigtable/admin/samples/bigtable_table_admin_client_samples.cc with-service-account
 */
 
+/*! @page BigtableTableAdminClient-set-universe-domain-snippet Override BigtableTableAdminClient Default Universe Domain
+
+@snippet google/cloud/bigtable/admin/samples/bigtable_table_admin_client_samples.cc set-client-universe-domain
+*/
+
 /*! @page BigtableInstanceAdminClient-set-endpoint-snippet Override BigtableInstanceAdminClient Default Endpoint
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc set-client-endpoint
@@ -138,4 +165,9 @@ guide for more details.
 /*! @page BigtableInstanceAdminClient-with-service-account-snippet Override BigtableInstanceAdminClient Default Authentication
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc with-service-account
+*/
+
+/*! @page BigtableInstanceAdminClient-set-universe-domain-snippet Override BigtableInstanceAdminClient Default Universe Domain
+
+@snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc set-client-universe-domain
 */

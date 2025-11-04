@@ -1,0 +1,24 @@
+/*!
+@page rapidmigrationassessment-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `rapidmigrationassessment_v1::RapidMigrationAssessmentClient`:
+
+@snippet rapid_migration_assessment_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page rapidmigrationassessment_v1::RapidMigrationAssessmentClient-universe-domain-snippet Override rapidmigrationassessment_v1::RapidMigrationAssessmentClient Universe Domain
+
+@snippet google/cloud/rapidmigrationassessment/v1/samples/rapid_migration_assessment_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

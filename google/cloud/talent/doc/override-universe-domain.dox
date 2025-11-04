@@ -1,0 +1,56 @@
+/*!
+@page talent-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `talent_v4::CompanyServiceClient`:
+
+@snippet company_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-universe-domain-snippet)
+- [\c talent_v4::CompletionClient](@ref talent_v4::CompletionClient-universe-domain-snippet)
+- [\c talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-universe-domain-snippet)
+- [\c talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-universe-domain-snippet)
+- [\c talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page talent_v4::CompanyServiceClient-universe-domain-snippet Override talent_v4::CompanyServiceClient Universe Domain
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page talent_v4::CompletionClient-universe-domain-snippet Override talent_v4::CompletionClient Universe Domain
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page talent_v4::EventServiceClient-universe-domain-snippet Override talent_v4::EventServiceClient Universe Domain
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page talent_v4::JobServiceClient-universe-domain-snippet Override talent_v4::JobServiceClient Universe Domain
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page talent_v4::TenantServiceClient-universe-domain-snippet Override talent_v4::TenantServiceClient Universe Domain
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

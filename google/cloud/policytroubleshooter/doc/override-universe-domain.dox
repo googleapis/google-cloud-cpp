@@ -1,0 +1,35 @@
+/*!
+@page policytroubleshooter-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `policytroubleshooter_iam_v3::PolicyTroubleshooterClient`:
+
+@snippet policy_troubleshooter_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c policytroubleshooter_iam_v3::PolicyTroubleshooterClient](@ref policytroubleshooter_iam_v3::PolicyTroubleshooterClient-universe-domain-snippet)
+- [\c policytroubleshooter_v1::IamCheckerClient](@ref policytroubleshooter_v1::IamCheckerClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page policytroubleshooter_iam_v3::PolicyTroubleshooterClient-universe-domain-snippet Override policytroubleshooter_iam_v3::PolicyTroubleshooterClient Universe Domain
+
+@snippet google/cloud/policytroubleshooter/iam/v3/samples/policy_troubleshooter_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page policytroubleshooter_v1::IamCheckerClient-universe-domain-snippet Override policytroubleshooter_v1::IamCheckerClient Universe Domain
+
+@snippet google/cloud/policytroubleshooter/v1/samples/iam_checker_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

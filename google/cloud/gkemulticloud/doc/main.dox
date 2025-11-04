@@ -52,6 +52,7 @@ application.
 - @ref gkemulticloud-override-retry - describes how to change the default retry
   policies.
 - @ref gkemulticloud-env - describes environment variables that can configure the behavior of the library.
+- @ref gkemulticloud-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/anthos/clusters/docs/multi-cloud
 

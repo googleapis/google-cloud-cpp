@@ -80,6 +80,13 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
       delegates.push_back(std::move(delegate));
     }
 
+    auto& scopes = opts.lookup<ScopesOption>();
+    if (scopes.empty()) {
+      for (auto& scope : info->scopes) {
+        scopes.push_back(std::move(scope));
+      }
+    }
+
     internal::ImpersonateServiceAccountConfig config(
         // The base credentials (GUAC) are used to create the IAM REST Stub. We
         // are going to override them by supplying our own IAM REST Stub,

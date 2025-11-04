@@ -16,9 +16,11 @@ licenses(["notice"])  # Apache 2.0
 
 service_demos = [
     "bigquery",
+    "bigtable",
     "compute",
     "kms",
     "pubsub",
+    "spanner",
     "storage",
 ]
 
@@ -29,6 +31,6 @@ service_demos = [
     ],
     deps = [
         "@google_cloud_cpp//:" + demo,
-        "@google_cloud_cpp//:experimental-universe_domain",
+        "@google_cloud_cpp//:universe_domain",
     ],
 ) for demo in service_demos]

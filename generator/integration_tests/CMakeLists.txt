@@ -131,7 +131,9 @@ foreach (fname IN LISTS samples_cc)
     target_link_libraries(
         ${target}
         PRIVATE google_cloud_cpp_generator_golden_testing
-                google_cloud_cpp_generator_golden google_cloud_cpp_testing
+                google_cloud_cpp_generator_golden
+                google_cloud_cpp_universe_domain
+                google_cloud_cpp_testing
                 google_cloud_cpp_testing_grpc)
     google_cloud_cpp_add_common_options(${target})
     add_test(NAME ${target} COMMAND ${target})

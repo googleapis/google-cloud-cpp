@@ -27,6 +27,7 @@ library.
 - @ref pubsub-endpoint-example
 - @ref pubsub-auth-example
 - @ref pubsub-override-retry
+- @ref pubsub-universe-domain-example
 - @ref publisher-mock shows how to write tests mocking [Publisher]
 - @ref subscriber-mock shows how to write tests mocking [Subscriber]
 - The [Setting up your development environment] guide describes how to set up
@@ -108,74 +109,126 @@ Follow these links to find examples for other `*Client` classes:
 [Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 */
 
-/*! @page Publisher-endpoint-snippet Override @c Publisher Default Endpoint
+/**
+@page pubsub-universe-domain-example Override the default universe domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use the `google::cloud::AddUniverseDomainOption` when
+initializing the client library to change this default.
+
+@snippet client_samples.cc publisher-set-universe-domain
+
+Follow these links to find examples for other `*Client` classes:
+
+- [`Subscriber`](@ref Subscriber-universe-domain-snippet)
+- [`BlockingPublisher`](@ref BlockingPublisher-universe-domain-snippet)
+- [`TopicAdminClient`](@ref TopicAdminClient-universe-domain-snippet)
+- [`SubscriptionAdminClient`](@ref SubscriptionAdminClient-universe-domain-snippet)
+- [`SchemaServiceClient`](@ref SchemaServiceClient-universe-domain-snippet)
+- [`Publisher`](@ref Publisher-universe-domain-snippet)
+*/
+
+/*! @page Publisher-endpoint-snippet Override Publisher Default Endpoint
 
 @snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-endpoint
 
 */
 
-/*! @page Subscriber-endpoint-snippet Override @c Subscriber Default Endpoint
+/*! @page Subscriber-endpoint-snippet Override Subscriber Default Endpoint
 
 @snippet google/cloud/pubsub/samples/client_samples.cc subscriber-set-endpoint
 
 */
 
-/*! @page BlockingPublisher-endpoint-snippet Override @c BlockingPublisher Default Endpoint
+/*! @page BlockingPublisher-endpoint-snippet Override BlockingPublisher Default Endpoint
 
 @snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-set-endpoint
 
 */
 
-/*! @page TopicAdminClient-endpoint-snippet Override @c TopicAdminClient Default Endpoint
+/*! @page TopicAdminClient-endpoint-snippet Override TopicAdminClient Default Endpoint
 
 @snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc set-client-endpoint
 */
 
-/*! @page SubscriptionAdminClient-endpoint-snippet Override @c SubscriptionAdminClient Default Endpoint
+/*! @page SubscriptionAdminClient-endpoint-snippet Override SubscriptionAdminClient Default Endpoint
 
 @snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SchemaServiceClient-endpoint-snippet Override @c SchemaServiceClient Default Endpoint
+/*! @page SchemaServiceClient-endpoint-snippet Override SchemaServiceClient Default Endpoint
 
 @snippet google/cloud/pubsub/samples/schema_client_samples.cc set-client-endpoint
 
 */
 
-
-
-/*! @page Publisher-service-account-snippet Override @c Publisher Default Authentication
+/*! @page Publisher-service-account-snippet Override Publisher Default Authentication
 
 @snippet google/cloud/pubsub/samples/client_samples.cc publisher-service-account
 
 */
 
-/*! @page Subscriber-service-account-snippet Override @c Subscriber Default Authentication
+/*! @page Subscriber-service-account-snippet Override Subscriber Default Authentication
 
 @snippet google/cloud/pubsub/samples/client_samples.cc subscriber-service-account
 
 */
 
-/*! @page BlockingPublisher-service-account-snippet Override @c BlockingPublisher Default Authentication
+/*! @page BlockingPublisher-service-account-snippet Override BlockingPublisher Default Authentication
 
 @snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-service-account
 
 */
 
-/*! @page TopicAdminClient-service-account-snippet Override @c TopicAdminClient Default Authentication
+/*! @page TopicAdminClient-service-account-snippet Override TopicAdminClient Default Authentication
 
 @snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc with-service-account
 */
 
-/*! @page SubscriptionAdminClient-service-account-snippet Override @c SubscriptionAdminClient Default Authentication
+/*! @page SubscriptionAdminClient-service-account-snippet Override SubscriptionAdminClient Default Authentication
 
 @snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc with-service-account
 
 */
 
-/*! @page SchemaServiceClient-service-account-snippet Override @c SchemaServiceClient Default Authentication
+/*! @page SchemaServiceClient-service-account-snippet Override SchemaServiceClient Default Authentication
 
 @snippet google/cloud/pubsub/samples/schema_client_samples.cc with-service-account
+
+*/
+
+/*! @page Publisher-universe-domain-snippet Override Publisher Default Universe Domain
+
+@snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-universe-domain
+
+*/
+
+/*! @page Subscriber-universe-domain-snippet Override Subscriber Default Universe Domain
+
+@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-set-universe-domain
+
+*/
+
+/*! @page BlockingPublisher-universe-domain-snippet Override BlockingPublisher Default Universe Domain
+
+@snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-set-universe-domain
+
+*/
+
+/*! @page TopicAdminClient-universe-domain-snippet Override TopicAdminClient Default Universe Domain
+
+@snippet google/cloud/pubsub/admin/samples/topic_admin_client_samples.cc set-client-universe-domain
+*/
+
+/*! @page SubscriptionAdminClient-universe-domain-snippet Override SubscriptionAdminClient Default Universe Domain
+
+@snippet google/cloud/pubsub/admin/samples/subscription_admin_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page SchemaServiceClient-universe-domain-snippet Override SchemaServiceClient Default Universe Domain
+
+@snippet google/cloud/pubsub/samples/schema_client_samples.cc set-client-universe-domain
 
 */

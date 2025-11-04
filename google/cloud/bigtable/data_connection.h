@@ -19,10 +19,13 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/results.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/row_set.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -50,6 +53,15 @@ struct ReadRowsParams {
   std::int64_t rows_limit;
   Filter filter = Filter::PassAllFilter();
   bool reverse = false;
+};
+
+struct PrepareQueryParams {
+  bigtable::InstanceResource instance;
+  bigtable::SqlStatement sql_statement;
+};
+
+struct ExecuteQueryParams {
+  bigtable::BoundQuery bound_query;
 };
 
 /**
@@ -143,6 +155,13 @@ class DataConnection {
 
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key, Filter filter);
+
+  virtual StatusOr<bigtable::PreparedQuery> PrepareQuery(
+      bigtable::PrepareQueryParams const& p);
+  virtual future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
+      bigtable::PrepareQueryParams const& p);
+  virtual StatusOr<bigtable::RowStream> ExecuteQuery(
+      bigtable::ExecuteQueryParams const& p);
 };
 
 /**

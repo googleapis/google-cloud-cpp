@@ -1,0 +1,24 @@
+/*!
+@page dlp-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `dlp_v2::DlpServiceClient`:
+
+@snippet dlp_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page dlp_v2::DlpServiceClient-universe-domain-snippet Override dlp_v2::DlpServiceClient Universe Domain
+
+@snippet google/cloud/dlp/v2/samples/dlp_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

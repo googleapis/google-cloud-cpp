@@ -32,6 +32,7 @@ into your project.
   policies used by the library.
 - @ref spanner-endpoint-example
 - @ref spanner-auth-example
+- @ref spanner-universe-domain-example
 - @ref spanner-mocking
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
@@ -85,6 +86,21 @@ Follow these links to find examples for other `*Client` classes:
 
 */
 
+/**
+@page spanner-universe-domain-example Override the default universe domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use the `google::cloud::AddUniverseDomainOption` when
+initializing the client library to change this default.
+
+@snippet client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other `*Client` classes:
+
+- [`DatabaseAdminClient`](@ref DatabaseAdminClient-set-universe-domain-snippet)
+- [`InstanceAdminClient`](@ref InstanceAdminClient-set-universe-domain-snippet)
+
+*/
 
 /*! @page Client-set-endpoint-snippet Override Client Default Endpoint
 
@@ -95,6 +111,12 @@ Follow these links to find examples for other `*Client` classes:
 /*! @page Client-with-service-account-snippet Override Client Default Authentication
 
 @snippet google/cloud/spanner/samples/client_samples.cc with-service-account
+
+*/
+
+/*! @page Client-set-universe-domain-snippet Override Client Default Universe Domain
+
+@snippet google/cloud/spanner/samples/client_samples.cc set-client-universe-domain
 
 */
 
@@ -110,6 +132,12 @@ Follow these links to find examples for other `*Client` classes:
 
 */
 
+/*! @page DatabaseAdminClient-set-universe-domain-snippet Override DatabaseAdminClient Default Universe Domain
+
+@snippet google/cloud/spanner/admin/samples/database_admin_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page InstanceAdminClient-set-endpoint-snippet Override InstanceAdminClient Default Endpoint
 
 @snippet google/cloud/spanner/admin/samples/instance_admin_client_samples.cc set-client-endpoint
@@ -119,5 +147,11 @@ Follow these links to find examples for other `*Client` classes:
 /*! @page InstanceAdminClient-with-service-account-snippet Override InstanceAdminClient Default Authentication
 
 @snippet google/cloud/spanner/admin/samples/instance_admin_client_samples.cc with-service-account
+
+*/
+
+/*! @page InstanceAdminClient-set-universe-domain-snippet Override InstanceAdminClient Default Universe Domain
+
+@snippet google/cloud/spanner/admin/samples/instance_admin_client_samples.cc set-client-universe-domain
 
 */

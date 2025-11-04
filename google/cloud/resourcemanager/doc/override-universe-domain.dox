@@ -1,0 +1,70 @@
+/*!
+@page resourcemanager-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `resourcemanager_v3::FoldersClient`:
+
+@snippet folders_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-universe-domain-snippet)
+- [\c resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-universe-domain-snippet)
+- [\c resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-universe-domain-snippet)
+- [\c resourcemanager_v3::TagBindingsClient](@ref resourcemanager_v3::TagBindingsClient-universe-domain-snippet)
+- [\c resourcemanager_v3::TagHoldsClient](@ref resourcemanager_v3::TagHoldsClient-universe-domain-snippet)
+- [\c resourcemanager_v3::TagKeysClient](@ref resourcemanager_v3::TagKeysClient-universe-domain-snippet)
+- [\c resourcemanager_v3::TagValuesClient](@ref resourcemanager_v3::TagValuesClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page resourcemanager_v3::FoldersClient-universe-domain-snippet Override resourcemanager_v3::FoldersClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/folders_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page resourcemanager_v3::OrganizationsClient-universe-domain-snippet Override resourcemanager_v3::OrganizationsClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/organizations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page resourcemanager_v3::ProjectsClient-universe-domain-snippet Override resourcemanager_v3::ProjectsClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page resourcemanager_v3::TagBindingsClient-universe-domain-snippet Override resourcemanager_v3::TagBindingsClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_bindings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page resourcemanager_v3::TagHoldsClient-universe-domain-snippet Override resourcemanager_v3::TagHoldsClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_holds_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page resourcemanager_v3::TagKeysClient-universe-domain-snippet Override resourcemanager_v3::TagKeysClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_keys_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page resourcemanager_v3::TagValuesClient-universe-domain-snippet Override resourcemanager_v3::TagValuesClient Universe Domain
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_values_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

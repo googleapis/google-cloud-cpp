@@ -1,0 +1,24 @@
+/*!
+@page privilegedaccessmanager-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `privilegedaccessmanager_v1::PrivilegedAccessManagerClient`:
+
+@snippet privileged_access_manager_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page privilegedaccessmanager_v1::PrivilegedAccessManagerClient-universe-domain-snippet Override privilegedaccessmanager_v1::PrivilegedAccessManagerClient Universe Domain
+
+@snippet google/cloud/privilegedaccessmanager/v1/samples/privileged_access_manager_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -1,0 +1,35 @@
+/*!
+@page eventarc-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `eventarc_publishing_v1::PublisherClient`:
+
+@snippet publisher_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c eventarc_publishing_v1::PublisherClient](@ref eventarc_publishing_v1::PublisherClient-universe-domain-snippet)
+- [\c eventarc_v1::EventarcClient](@ref eventarc_v1::EventarcClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page eventarc_publishing_v1::PublisherClient-universe-domain-snippet Override eventarc_publishing_v1::PublisherClient Universe Domain
+
+@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page eventarc_v1::EventarcClient-universe-domain-snippet Override eventarc_v1::EventarcClient Universe Domain
+
+@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

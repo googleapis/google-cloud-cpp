@@ -1,0 +1,63 @@
+/*!
+@page dataplex-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `dataplex_v1::CatalogServiceClient`:
+
+@snippet catalog_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataplex_v1::CatalogServiceClient](@ref dataplex_v1::CatalogServiceClient-universe-domain-snippet)
+- [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-universe-domain-snippet)
+- [\c dataplex_v1::DataScanServiceClient](@ref dataplex_v1::DataScanServiceClient-universe-domain-snippet)
+- [\c dataplex_v1::DataTaxonomyServiceClient](@ref dataplex_v1::DataTaxonomyServiceClient-universe-domain-snippet)
+- [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-universe-domain-snippet)
+- [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page dataplex_v1::CatalogServiceClient-universe-domain-snippet Override dataplex_v1::CatalogServiceClient Universe Domain
+
+@snippet google/cloud/dataplex/v1/samples/catalog_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataplex_v1::ContentServiceClient-universe-domain-snippet Override dataplex_v1::ContentServiceClient Universe Domain
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataplex_v1::DataScanServiceClient-universe-domain-snippet Override dataplex_v1::DataScanServiceClient Universe Domain
+
+@snippet google/cloud/dataplex/v1/samples/data_scan_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataplex_v1::DataTaxonomyServiceClient-universe-domain-snippet Override dataplex_v1::DataTaxonomyServiceClient Universe Domain
+
+@snippet google/cloud/dataplex/v1/samples/data_taxonomy_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataplex_v1::DataplexServiceClient-universe-domain-snippet Override dataplex_v1::DataplexServiceClient Universe Domain
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataplex_v1::MetadataServiceClient-universe-domain-snippet Override dataplex_v1::MetadataServiceClient Universe Domain
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

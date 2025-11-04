@@ -1,0 +1,35 @@
+/*!
+@page containeranalysis-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+ client library. Use the `google::cloud::AddUniverseDomainOption` when
+ initializing the client library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `containeranalysis_v1::ContainerAnalysisClient`:
+
+@snippet container_analysis_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c containeranalysis_v1::ContainerAnalysisClient](@ref containeranalysis_v1::ContainerAnalysisClient-universe-domain-snippet)
+- [\c containeranalysis_v1::GrafeasClient](@ref containeranalysis_v1::GrafeasClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page containeranalysis_v1::ContainerAnalysisClient-universe-domain-snippet Override containeranalysis_v1::ContainerAnalysisClient Universe Domain
+
+@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page containeranalysis_v1::GrafeasClient-universe-domain-snippet Override containeranalysis_v1::GrafeasClient Universe Domain
+
+@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
