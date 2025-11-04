@@ -145,6 +145,8 @@ CURL_WIN_COPTS = [
     "/DCURL_DISABLE_PROXY",
     "/DHAVE_LIBZ",
     "/DHAVE_ZLIB_H",
+    "/DUSE_OPENSSL",    # UPDATED: Enable OpenSSL interface
+    "/DHAVE_BORINGSSL", # UPDATED: Explicitly define BoringSSL
     # Defining _USING_V110_SDK71_ is hackery to defeat curl's incorrect
     # detection of what OS releases we can build on with VC 2012. This
     # may not be needed (or may have to change) if the WINVER setting
@@ -157,8 +159,7 @@ CURL_WIN_SRCS = [
     "lib/inet_ntop.c",
     "lib/system_win32.c",
     "lib/x509asn1.c",
-    "lib/vtls/schannel.c",
-    "lib/vtls/schannel_verify.c",
+    "lib/vtls/openssl.c", # UPDATED: Use OpenSSL/BoringSSL impl
     "lib/idn_win32.c",
 ]
 
@@ -455,12 +456,8 @@ cc_library(
         ":define-ca-bundle-location",
         "@com_github_cares_cares//:ares",
         "@zlib",
-    ] + select({
-        ":windows": [],
-        "//conditions:default": [
-            "@boringssl//:ssl",
-        ],
-    }),
+        "@boringssl//:ssl", # UPDATED: Always link BoringSSL (even on Windows)
+    ],
 )
 
 write_file(
@@ -484,7 +481,6 @@ write_file(
         "#  define BUILDING_LIBCURL 1",
         "#  define CURL_DISABLE_CRYPTO_AUTH 1",
         "#  define CURL_DISABLE_DICT 1",
-        "#  define CURL_DISABLE_FILE 1",
         "#  define CURL_DISABLE_GOPHER 1",
         "#  define CURL_DISABLE_IMAP 1",
         "#  define CURL_DISABLE_LDAP 1",
@@ -495,9 +491,15 @@ write_file(
         "#  define CURL_DISABLE_TELNET 1",
         "#  define CURL_DISABLE_TFTP 1",
         "#  define CURL_PULL_WS2TCPIP_H 1",
-        "#  define USE_WINDOWS_SSPI 1",
+        "#  define USE_OPENSSL 1",          // UPDATED: Added
+        "#  define HAVE_BORINGSSL 1",       // UPDATED: Added
+        "#  define HAVE_LIBSSL 1",          // UPDATED: Added
+        "#  define HAVE_OPENSSL_SSL_H 1",   // UPDATED: Added
+        "#  define HAVE_OPENSSL_CRYPTO_H 1",// UPDATED: Added
+        "#  define HAVE_OPENSSL_PEM_H 1",   // UPDATED: Added
+        "#  define HAVE_OPENSSL_X509_H 1",  // UPDATED: Added
+        "#  define HAVE_OPENSSL_ERR_H 1",   // UPDATED: Added
         "#  define USE_WIN32_IDN 1",
-        "#  define USE_SCHANNEL 1",
         "#  define WANT_IDN_PROTOTYPES 1",
         "#elif defined(__APPLE__)",
         "#  define HAVE_FSETXATTR_6 1",
@@ -543,7 +545,6 @@ write_file(
         "",
         "#if !defined(_WIN32)",
         "#  define CURL_DISABLE_DICT 1",
-        "#  define CURL_DISABLE_FILE 1",
         "#  define CURL_DISABLE_GOPHER 1",
         "#  define CURL_DISABLE_IMAP 1",
         "#  define CURL_DISABLE_LDAP 1",
