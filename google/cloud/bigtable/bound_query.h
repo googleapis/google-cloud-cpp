@@ -47,7 +47,7 @@ class BoundQuery {
   std::unordered_map<std::string, Value> const& parameters() const;
   InstanceResource const& instance() const;
 
-  google::bigtable::v2::ExecuteQueryRequest ToRequestProto();
+  google::bigtable::v2::ExecuteQueryRequest ToRequestProto() const;
 
  private:
   friend class PreparedQuery;

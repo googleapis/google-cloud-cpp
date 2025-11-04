@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
+#include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/prepared_query.h"
@@ -26,15 +27,19 @@
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/bigtable/value.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/strings/substitute.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
@@ -55,12 +60,14 @@ using ::google::cloud::bigtable::IdempotentMutationPolicyOption;
 using ::google::cloud::bigtable::ReverseScanOption;
 using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::bigtable::testing::MockExecuteQueryStream;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
 using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::bigtable::testing::MockSampleRowKeysStream;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
@@ -199,6 +206,30 @@ DataLimitedErrorCountRetryPolicy TestRetryPolicy() {
 
 ExponentialBackoffPolicy TestBackoffPolicy() {
   return ExponentialBackoffPolicy(ms(0), ms(0), 2.0);
+}
+
+void MakeResponse(google::bigtable::v2::PartialResultSet& response,
+                  std::vector<std::string> const& values,
+                  absl::optional<std::string> resume_token, bool reset) {
+  google::bigtable::v2::ProtoRows proto_rows;
+  for (auto const& v : values) {
+    proto_rows.add_values()->set_string_value(v);
+  }
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  auto text = absl::Substitute(
+      R"pb(
+        proto_rows_batch: {
+          batch_data: "$0",
+        },
+            $1 $2
+        estimated_batch_size: 31,
+        batch_checksum: 123456
+      )pb",
+      binary_batch_data,
+      resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
+                   : "",
+      reset ? "reset: true," : "");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(text, &response));
 }
 
 // For tests that need to manually interact with the client/server metadata in a
@@ -2754,43 +2785,6 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST_F(DataConnectionTest, ExecuteQuery) {
-  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
-  auto mock_bg = std::make_unique<MockBackgroundThreads>();
-  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
-    return CompletionQueue{fake_cq_impl};
-  });
-
-  auto refresh_fn = []() {
-    return make_ready_future(
-        StatusOr<google::bigtable::v2::PrepareQueryResponse>(
-            Status{StatusCode::kUnimplemented, "not implemented"}));
-  };
-
-  v2::PrepareQueryResponse response;
-  *response.mutable_valid_until() = internal::ToProtoTimestamp(
-      std::chrono::system_clock::now() + std::chrono::seconds(3600));
-
-  auto query_plan =
-      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(response),
-                        std::move(refresh_fn));
-
-  auto mock_stub = std::make_shared<MockBigtableStub>();
-  auto conn = TestConnection(std::move(mock_stub));
-  internal::OptionsSpan span(CallOptions());
-  bigtable::InstanceResource instance(Project("test-project"), "test-instance");
-  bigtable::SqlStatement sql("SELECT * FROM `test-table`");
-  auto prepared_query =
-      bigtable::PreparedQuery(instance, sql, std::move(query_plan));
-  auto bound_query = prepared_query.BindParameters({});
-  EXPECT_THAT(
-      conn->ExecuteQuery(bigtable::ExecuteQueryParams{std::move(bound_query)}),
-      StatusIs(StatusCode::kUnimplemented));
-
-  // Cancel all pending operations, satisfying any remaining futures.
-  fake_cq_impl->SimulateCompletion(false);
-}
-
 TEST_F(DataConnectionTest, PrepareQuerySuccess) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto mock_metric = std::make_unique<MockMetric>();
@@ -2951,6 +2945,145 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
   auto future = conn->AsyncPrepareQuery(params);
   auto result = future.get();
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(DataConnectionTest, ExecuteQuery) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+      columns {
+        name: "value"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse pq_response;
+  pq_response.set_prepared_query("test-pq-id-54321");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataText, pq_response.mutable_metadata()));
+  *pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(3600));
+
+  auto refresh_fn = []() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+            Status{StatusCode::kUnimplemented, "not implemented"}));
+  };
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.app_profile_id(), kAppProfile);
+        EXPECT_EQ(request.instance_name(),
+                  "projects/test-project/instances/test-instance");
+
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              *r->mutable_metadata() = pq_response.metadata();
+              return absl::nullopt;
+            })
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
+                           false);
+              return absl::nullopt;
+            })
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              MakeResponse(*r->mutable_results(), {"r2", "v2"},
+                           "sentinel-token", false);
+              return absl::nullopt;
+            })
+            // End of stream
+            .WillOnce(Return(google::cloud::Status()));
+
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  Project p("test-project");
+  bigtable::SqlStatement statement("SELECT * FROM the-table");
+  bigtable::InstanceResource instance(p, "test-instance");
+  std::unordered_map<std::string, bigtable::Value> parameters;
+  auto query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
+                        std::move(refresh_fn));
+  auto prepared_query =
+      bigtable::PreparedQuery(instance, statement, std::move(query_plan));
+  auto bq = prepared_query.BindParameters(parameters);
+  bigtable::ExecuteQueryParams params{std::move(bq)};
+  auto row_stream = conn->ExecuteQuery(std::move(params));
+  std::vector<StatusOr<bigtable::QueryRow>> rows;
+  for (auto const& row : *std::move(row_stream)) {
+    rows.push_back(row);
+  }
+
+  ASSERT_EQ(rows.size(), 2);
+  ASSERT_STATUS_OK(rows[0]);
+  auto const& row1 = *rows[0];
+  EXPECT_EQ(row1.columns().at(0), "row_key");
+  EXPECT_EQ(row1.columns().at(1), "value");
+  EXPECT_THAT(row1.values().at(0).get<std::string>(), IsOkAndHolds("r1"));
+  EXPECT_THAT(row1.values().at(1).get<std::string>(), IsOkAndHolds("v1"));
+  auto const& row2 = *rows[1];
+  EXPECT_THAT(row2.values().at(0).get<std::string>(), IsOkAndHolds("r2"));
+  EXPECT_THAT(row2.values().at(1).get<std::string>(), IsOkAndHolds("v2"));
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST_F(DataConnectionTest, ExecuteQueryFailure) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+  auto refresh_fn = []() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+            Status{StatusCode::kUnimplemented, "not implemented"}));
+  };
+  v2::PrepareQueryResponse pq_response;
+  auto query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
+                        std::move(refresh_fn));
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.app_profile_id(), kAppProfile);
+        EXPECT_EQ(request.instance_name(),
+                  "projects/test-project/instances/test-instance");
+
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  Project p("test-project");
+  bigtable::SqlStatement statement("SELECT key, val FROM t");
+  bigtable::InstanceResource instance(p, "test-instance");
+  std::unordered_map<std::string, bigtable::Value> parameters;
+  bigtable::PreparedQuery pq(instance, statement, std::move(query_plan));
+  auto bq = pq.BindParameters(parameters);
+
+  bigtable::ExecuteQueryParams params{std::move(bq)};
+  auto row_stream = conn->ExecuteQuery(params);
+
+  auto it = row_stream->begin();
+  ASSERT_NE(it, row_stream->end());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, row_stream->end());
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 }  // namespace

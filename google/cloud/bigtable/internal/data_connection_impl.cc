@@ -20,6 +20,9 @@
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
+#include "google/cloud/bigtable/internal/partial_result_set_reader.h"
+#include "google/cloud/bigtable/internal/partial_result_set_resume.h"
+#include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/results.h"
 #include "google/cloud/background_threads.h"
@@ -29,6 +32,8 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
+#include "absl/functional/bind_front.h"
 #include <memory>
 #include <string>
 
@@ -75,6 +80,83 @@ bigtable::RowReader ReadRowsHelper(
       params.reverse, retry_policy(*current), backoff_policy(*current),
       enable_server_retries(*current), std::move(operation_context));
   return MakeRowReader(std::move(impl));
+}
+
+class DefaultPartialResultSetReader
+    : public bigtable_internal::PartialResultSetReader {
+ public:
+  DefaultPartialResultSetReader(std::shared_ptr<grpc::ClientContext> context,
+                                std::unique_ptr<internal::StreamingReadRpc<
+                                    google::bigtable::v2::ExecuteQueryResponse>>
+                                    reader)
+      : context_(std::move(context)), reader_(std::move(reader)) {}
+
+  ~DefaultPartialResultSetReader() override = default;
+
+  void TryCancel() override { context_->TryCancel(); }
+
+  bool Read(absl::optional<std::string> const&,
+            bigtable_internal::UnownedPartialResultSet& result_set) override {
+    while (true) {
+      google::bigtable::v2::ExecuteQueryResponse response;
+      absl::optional<google::cloud::Status> status = reader_->Read(&response);
+
+      if (status.has_value()) {
+        // Stream has ended or an error occurred.
+        final_status_ = *std::move(status);
+        return false;
+      }
+
+      // Message successfully read into response.
+      if (response.has_results()) {
+        result_set.result = std::move(*response.mutable_results());
+        result_set.resumption = false;
+        return true;
+      }
+
+      // Ignore metadata from the stream because PartialResultSetSource already
+      // has it set (in ExecuteQuery).
+      // TODO(#15701): Investigate expected behavior for processing metadata.
+      if (response.has_metadata()) {
+        continue;
+      }
+
+      final_status_ = google::cloud::Status(
+          google::cloud::StatusCode::kInternal,
+          "Empty ExecuteQueryResponse received from stream");
+      return false;
+    }
+  }
+
+  Status Finish() override { return final_status_; }
+
+ private:
+  std::shared_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<
+      internal::StreamingReadRpc<google::bigtable::v2::ExecuteQueryResponse>>
+      reader_;
+  Status final_status_;
+};
+
+class StatusOnlyResultSetSource : public bigtable::ResultSourceInterface {
+ public:
+  explicit StatusOnlyResultSetSource(google::cloud::Status status)
+      : status_(std::move(status)) {}
+  ~StatusOnlyResultSetSource() override = default;
+
+  StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
+  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    return {};
+  }
+
+ private:
+  google::cloud::Status status_;
+};
+
+template <typename ResultType>
+ResultType MakeStatusOnlyResult(Status status) {
+  return ResultType(
+      std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
 }  // namespace
@@ -737,9 +819,60 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
       });
 }
 
+std::unique_ptr<PartialResultSetReader>
+DataConnectionImpl::CreateResumableReader(
+    google::bigtable::v2::ExecuteQueryRequest request,
+    std::string const& resume_token) {
+  if (!resume_token.empty()) {
+    request.set_resume_token(resume_token);
+  }
+  auto context = std::make_shared<grpc::ClientContext>();
+  auto const& options = google::cloud::internal::CurrentOptions();
+
+  google::cloud::internal::ConfigureContext(*context, options);
+  auto stream = stub_->ExecuteQuery(context, options, request);
+
+  return std::make_unique<DefaultPartialResultSetReader>(std::move(context),
+                                                         std::move(stream));
+}
+
 StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
-    bigtable::ExecuteQueryParams const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    bigtable::ExecuteQueryParams const& params) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  StatusOr<google::bigtable::v2::ResultSetMetadata> status_or_metadata =
+      params.bound_query.metadata();
+  google::bigtable::v2::ExecuteQueryRequest request =
+      params.bound_query.ToRequestProto();
+  request.set_app_profile_id(app_profile_id(*current));
+  if (!status_or_metadata) {
+    return status_or_metadata.status();
+  }
+  google::bigtable::v2::ResultSetMetadata metadata =
+      *std::move(status_or_metadata);
+
+  auto retry_resume_fn =
+      [this, retry_policy_prototype = retry_policy(*current),
+       backoff_policy_prototype = backoff_policy(*current)](
+          google::bigtable::v2::ResultSetMetadata metadata,
+          google::bigtable::v2::ExecuteQueryRequest const& initial_request)
+      -> StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> {
+    auto factory = absl::bind_front(&DataConnectionImpl::CreateResumableReader,
+                                    this, initial_request);
+
+    auto resume_reader = std::make_unique<PartialResultSetResume>(
+        std::move(factory), Idempotency::kIdempotent,
+        retry_policy_prototype->clone(), backoff_policy_prototype->clone());
+
+    return PartialResultSetSource::Create(std::move(metadata),
+                                          std::move(resume_reader));
+  };
+
+  auto response = retry_resume_fn(metadata, request);
+  if (!response) {
+    auto status = std::move(response).status();
+    return MakeStatusOnlyResult<bigtable::RowStream>(std::move(status));
+  }
+  return bigtable::RowStream(*std::move(response));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
