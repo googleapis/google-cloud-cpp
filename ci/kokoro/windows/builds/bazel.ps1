@@ -62,32 +62,76 @@ if ($LastExitCode) {
 . ci/kokoro/windows/lib/integration.ps1
 
 function Invoke-REST-Quickstart {
-    bazelisk $common_flags run $build_flags `
-      //google/cloud/storage/quickstart:quickstart -- `
-      "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "bazel run (storage/quickstart) failed with exit code ${LastExitCode}."
-        Exit ${LastExitCode}
+    param($bazel_bin)
+    try {
+        $executable = Join-Path $bazel_bin "google/cloud/storage/quickstart/quickstart.exe"
+        Write-Host "Running REST Quickstart, attempting to run: $executable"
+        if (-not (Test-Path $executable)) {
+          Write-Host -ForegroundColor Red "Executable not found at the specified path."
+          Exit 1
+        }
+        & $executable "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+        if ($LastExitCode) {
+            Write-Host -ForegroundColor Red "Execution of (storage/quickstart) failed with exit code ${LastExitCode}."
+            Exit ${LastExitCode}
+        }
+    } catch {
+        Write-Host -ForegroundColor Red "Caught exception while trying to run storage/quickstart: $_"
+        Exit 1
     }
 }
 
 function Invoke-gRPC-Quickstart {
-    bazelisk $common_flags run $build_flags `
-      //google/cloud/pubsub/quickstart:quickstart -- `
-      "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "bazel run (pubsub/quickstart) failed with exit code ${LastExitCode}."
-        Exit ${LastExitCode}
+    param($bazel_bin)
+    try {
+        $executable = Join-Path $bazel_bin "google/cloud/pubsub/quickstart/quickstart.exe"
+        Write-Host "Running gRPC Quickstart, attempting to run: $executable"
+        if (-not (Test-Path $executable)) {
+          Write-Host -ForegroundColor Red "Executable not found at the specified path."
+          Exit 1
+        }
+        & $executable "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
+        if ($LastExitCode) {
+            Write-Host -ForegroundColor Red "Execution of (pubsub/quickstart) failed with exit code ${LastExitCode}."
+            Exit ${LastExitCode}
+        }
+    } catch {
+        Write-Host -ForegroundColor Red "Caught exception while trying to run pubsub/quickstart: $_"
+        Exit 1
     }
 }
 
 if (Test-Integration-Enabled) {
     Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
     Install-Roots-Pem
-    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
-    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
-    Invoke-REST-Quickstart
-    Invoke-gRPC-Quickstart
+    $env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = Join-Path $env:KOKORO_GFILE_DIR "roots.pem"
+    $env:CURL_CA_BUNDLE = Join-Path $env:KOKORO_GFILE_DIR "roots.pem"
+    $env:GOOGLE_APPLICATION_CREDENTIALS = Join-Path $env:KOKORO_GFILE_DIR "kokoro-run-key.json"
+    # Troubleshooting output
+    Write-Host "GOOGLE_APPLICATION_CREDENTIALS=$env:GOOGLE_APPLICATION_CREDENTIALS"
+    Write-Host "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"
+    Write-Host "CURL_CA_BUNDLE=$env:CURL_CA_BUNDLE"
+    Get-Content (Join-Path $env:KOKORO_GFILE_DIR "roots.pem") -TotalCount 5
+
+    bazelisk $common_flags build $build_flags `
+        //google/cloud/storage/quickstart:quickstart `
+        //google/cloud/pubsub/quickstart:quickstart
+
+    $bazel_bin = (bazelisk $common_flags info $build_flags bazel-bin).Trim()
+    $bazel_bin = $bazel_bin.Replace('/', '\')
+    Write-Host "bazel-bin directory: $bazel_bin"
+
+    # DEBUG START: List all quickstart.exe files found in the output directory
+    Write-Host "DEBUG: Searching for 'quickstart.exe' in $bazel_bin..."
+    try {
+        Get-ChildItem -Path $bazel_bin -Filter "quickstart.exe" -Recurse -ErrorAction SilentlyContinue | ForEach-Object { Write-Host "Found: $($_.FullName)" }
+    } catch {
+        Write-Host "DEBUG: Failed to list contents of $bazel_bin"
+    }
+    # DEBUG END
+
+    Invoke-REST-Quickstart $bazel_bin
+    Invoke-gRPC-Quickstart $bazel_bin
 }
 
 # Shutdown the Bazel server to release any locks
