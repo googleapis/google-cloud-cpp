@@ -45,7 +45,34 @@ $vcpkg_root = Install-Vcpkg "${project_root}" ""
 $binary_dir="cmake-out/${BuildName}"
 # Install all dependencies from the vcpkg.json manifest file.
 # This mirrors the behavior of our GHA builds.
-& "${vcpkg_root}/vcpkg.exe" install --triplet "${env:VCPKG_TRIPLET}"
+Write-Host -ForegroundColor Yellow "Attempting vcpkg install..."
+try {
+    & "${vcpkg_root}/vcpkg.exe" install --triplet "${env:VCPKG_TRIPLET}"
+} catch {
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+    Write-Host -ForegroundColor Red "vcpkg install FAILED. Dumping vcpkg buildtree logs for crc32c..."
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+
+    # Define the log files based on the error message
+    $log1 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-out.log"
+    $log2 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-dbg-CMakeCache.txt.log"
+    $log3 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-rel-CMakeCache.txt.log"
+
+    foreach ($logFile in @($log1, $log2, $log3)) {
+        if (Test-Path $logFile) {
+            Write-Host -ForegroundColor Red "========= Contents of $logFile ========="
+            Get-Content $logFile
+            Write-Host -ForegroundColor Red "========= End of $logFile ========="
+        } else {
+            Write-Host -ForegroundColor Yellow "Log file not found, skipping: $logFile"
+        }
+    }
+
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+    Write-Host -ForegroundColor Red "Dumping complete. Rethrowing error to fail the build."
+    Write-Host -ForegroundColor Red "----------------------------------------------------------------"
+    throw $_ # Re-throw the original error
+}
 
 $cmake_args=@(
     "-G$env:GENERATOR",
