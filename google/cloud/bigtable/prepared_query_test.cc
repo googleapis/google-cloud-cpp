@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/prepared_query.h"
 #include "google/cloud/bigtable/sql_statement.h"
-#include "google/cloud/bigtable/value.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <algorithm>
 
@@ -26,16 +26,20 @@ namespace {
 using ::google::bigtable::v2::PrepareQueryResponse;
 
 TEST(PreparedQuery, DefaultConstructor) {
-  CompletionQueue cq;
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   Project p("dummy-project");
   InstanceResource instance(p, "dummy-instance");
   std::string statement_contents(
       "SELECT * FROM my_table WHERE col1 = @val1 and col2 = @val2;");
   SqlStatement sql_statement(statement_contents);
   PrepareQueryResponse response;
-  PreparedQuery q(cq, instance, sql_statement, response);
+  PreparedQuery q(CompletionQueue(fake_cq_impl), instance, sql_statement,
+                  response);
   EXPECT_EQ(instance.FullName(), q.instance().FullName());
   EXPECT_EQ(statement_contents, q.sql_statement().sql());
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 }  // namespace
