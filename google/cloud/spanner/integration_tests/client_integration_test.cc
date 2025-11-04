@@ -817,11 +817,12 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
          StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
       EXPECT_STATUS_OK(row);
     }
-
     // Now a separate tx "B" will perform a write operation before tx "A" is
     // finished.
     auto tx_b = client_->Commit(mutation_helper("FirstModifiedName"));
     EXPECT_STATUS_OK(tx_b);
+
+    tx_a = MakeReadWriteTransaction(tx_a, Transaction::ReadWriteOptions(read_lock_mode));
 
     // Depending on the read lock mode, the result of the next write operation
     // in tx "A" will vary.
