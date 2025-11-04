@@ -28,11 +28,11 @@ function Test-Integration-Enabled {
 
 function Install-Roots-Pem {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "Downloading roots.pem [$_]"
+        "Downloading roots.pem"
     ForEach($attempt in (1, 2, 3)) {
         try {
             (New-Object System.Net.WebClient).Downloadfile(
-                    'https://pki.google.com/roots.pem',
+		    'https://curl.se/ca/cacert.pem',
                     "${env:KOKORO_GFILE_DIR}/roots.pem")
             return
         } catch {
