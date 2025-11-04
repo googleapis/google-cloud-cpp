@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "mocks/mock_data_connection.h"
+#include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {
