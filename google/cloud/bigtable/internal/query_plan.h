@@ -39,7 +39,8 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
 
   // Calls the constructor and then Initialize.
   static std::shared_ptr<QueryPlan> Create(
-      CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
+      CompletionQueue cq,
+      StatusOr<google::bigtable::v2::PrepareQueryResponse> response,
       RefreshFn fn, std::shared_ptr<Clock> clock = std::make_shared<Clock>());
 
   // Invalidates the current QueryPlan and triggers a refresh.
@@ -57,8 +58,9 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
 
  private:
   QueryPlan(CompletionQueue cq, std::shared_ptr<Clock> clock, RefreshFn fn,
-            google::bigtable::v2::PrepareQueryResponse response)
-      : cq_(std::move(cq)),
+            StatusOr<google::bigtable::v2::PrepareQueryResponse> response)
+      : state_(response.ok() ? RefreshState::kDone : RefreshState::kBegin),
+        cq_(std::move(cq)),
         clock_(std::move(clock)),
         refresh_fn_(std::move(fn)),
         response_(std::move(response)) {}
@@ -73,12 +75,9 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   // capturing a std::weak_ptr to this that calls RefreshQueryPlan.
   void ScheduleRefresh(std::unique_lock<std::mutex> const&);
 
-  enum class RefreshMode { kExpired, kInvalidated, kAlreadyRefreshing };
   // Performs the synchronization around calling RefreshFn and updating
   // response_.
-  //  void RefreshQueryPlan();
-
-  void RefreshQueryPlan(RefreshMode mode, Status error = {});
+  void RefreshQueryPlan();
 
   void ExpiredRefresh();
 
@@ -93,7 +92,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
     kPending,  // waiting for an active thread to refresh response_
     kDone,     // response_ has been refreshed
   };
-  RefreshState state_ = RefreshState::kDone;
+  RefreshState state_;
 
   CompletionQueue cq_;
   std::shared_ptr<Clock> clock_;
@@ -101,9 +100,6 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   future<void> refresh_timer_;
   mutable std::mutex mu_;
   std::condition_variable cond_;
-  // waiting_threads_ is only a snapshot, but it helps us reduce the number of
-  // RPCs in flight to refresh the same query plan.
-  int waiting_threads_ = 0;
   std::string old_query_plan_id_;
   StatusOr<google::bigtable::v2::PrepareQueryResponse>
       response_;  // GUARDED_BY(mu_)
