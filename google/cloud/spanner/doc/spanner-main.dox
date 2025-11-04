@@ -90,8 +90,8 @@ Follow these links to find examples for other `*Client` classes:
 @page spanner-universe-domain-example Override the default universe domain
 
 In some cases, you may need to override the default universe domain used by the
-client library. Use the `google::cloud::AddUniverseDomainOption` when
-initializing the client library to change this default.
+client library. Use the `AddUniverseDomainOption` when initializing the client
+library to change this default.
 
 @snippet client_samples.cc set-client-universe-domain
 
