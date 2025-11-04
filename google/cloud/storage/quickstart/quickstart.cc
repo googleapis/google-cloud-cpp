@@ -18,6 +18,27 @@
 #include <string>
 
 int main(int argc, char* argv[]) {
+  // --- DEBUG START ---
+  std::cout << "--- BINARY DEBUG START ---\n";
+  const char* env_p = std::getenv("CURL_CA_BUNDLE");
+  if (env_p) {
+      std::cout << "CURL_CA_BUNDLE is set to: [" << env_p << "]\n";
+      std::ifstream f(env_p);
+      if (f.good()) {
+          std::cout << "PASS: C++ std::ifstream can successfully open this path.\n";
+          // Optional: Print first line to prove we are reading the right file
+          std::string line;
+          std::getline(f, line);
+          std::cout << "First line of file: " << line << "\n";
+      } else {
+          std::cout << "FAIL: C++ std::ifstream FAILED to open this path.\n";
+      }
+  } else {
+      std::cout << "FAIL: CURL_CA_BUNDLE is NOT set in the environment.\n";
+  }
+  std::cout << "--- BINARY DEBUG END ---\n";
+  // --- DEBUG END ---
+
   if (argc != 2) {
     std::cerr << "Missing bucket name.\n";
     std::cerr << "Usage: quickstart <bucket-name>\n";
