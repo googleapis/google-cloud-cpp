@@ -201,6 +201,8 @@ add_library(
     internal/legacy_row_reader.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
+    internal/logging_result_set_reader.cc
+    internal/logging_result_set_reader.h
     internal/metrics.cc
     internal/metrics.h
     internal/mutate_rows_limiter.cc
@@ -484,6 +486,7 @@ if (BUILD_TESTING)
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
+        internal/logging_result_set_reader_test.cc
         internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
         internal/operation_context_factory_test.cc
