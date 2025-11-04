@@ -95,12 +95,9 @@ class DefaultPartialResultSetReader
 
   void TryCancel() override { context_->TryCancel(); }
 
-  // Corrected Read method signature and implementation
   bool Read(absl::optional<std::string> const&,
             bigtable_internal::UnownedPartialResultSet& result_set) override {
-    google::bigtable::v2::ExecuteQueryResponse
-        response;  // Destination for the read message
-    // This Read call returns absl::optional<Status>
+    google::bigtable::v2::ExecuteQueryResponse response;
     absl::optional<google::cloud::Status> status = reader_->Read(&response);
 
     if (status.has_value()) {
@@ -112,16 +109,14 @@ class DefaultPartialResultSetReader
     // Message successfully read into response.
     if (response.has_results()) {
       result_set.result = std::move(*response.mutable_results());
-      result_set.resumption = false;  // Adjust if needed based on tokens
-      return true;                    // Data is available in result_set
-    }
-
-    if (response.has_metadata()) {
-      // Metadata received. Caller should call Read() again to get data.
+      result_set.resumption = false;
       return true;
     }
 
-    // ExecuteQueryResponse was empty, which is unusual for a successful read.
+    if (response.has_metadata()) {
+      return true;
+    }
+
     final_status_ = google::cloud::Status(
         google::cloud::StatusCode::kInternal,
         "Empty ExecuteQueryResponse received from stream");
@@ -828,10 +823,7 @@ DataConnectionImpl::CreateResumableReader(
   }
   auto context = std::make_shared<grpc::ClientContext>();
   auto const& options = google::cloud::internal::CurrentOptions();
-
   google::cloud::internal::ConfigureContext(*context, options);
-
-  // stub_ is assumed to be a member of DataConnectionImpl
   auto stream = stub_->ExecuteQuery(context, options, request);
 
   return std::make_unique<DefaultPartialResultSetReader>(std::move(context),
