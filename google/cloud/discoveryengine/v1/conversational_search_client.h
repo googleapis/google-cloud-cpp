@@ -645,7 +645,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1052}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
@@ -680,7 +680,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1052}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
@@ -708,7 +708,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1082}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   Status DeleteSession(std::string const& name, Options opts = {});
@@ -738,7 +738,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1082}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   Status DeleteSession(
@@ -774,8 +774,8 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
-  /// [google.cloud.discoveryengine.v1.Session.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L89}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
+  /// [google.cloud.discoveryengine.v1.Session.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L99}
   /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1067}
   ///
   // clang-format on
@@ -810,7 +810,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1067}
   ///
   // clang-format on
@@ -838,7 +838,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1094}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
@@ -868,7 +868,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1094}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
@@ -905,7 +905,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1110}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
@@ -945,7 +945,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1110}
-  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
@@ -1114,7 +1114,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -1153,7 +1153,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}

@@ -58,6 +58,9 @@ class PredictionServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GenerateContent(
       google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 
+  virtual google::cloud::Idempotency EmbedContent(
+      google::cloud::aiplatform::v1::EmbedContentRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

@@ -289,6 +289,20 @@ BackupDRTracingStub::ListBackups(
                            child_->ListBackups(context, options, request));
 }
 
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRTracingStub::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "FetchBackupsForResourceType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchBackupsForResourceType(context, options, request));
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRTracingStub::GetBackup(
     grpc::ClientContext& context, Options const& options,
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
@@ -673,6 +687,20 @@ BackupDRTracingStub::GetDataSourceReference(
   return internal::EndSpan(
       context, *span,
       child_->GetDataSourceReference(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRTracingStub::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListDataSourceReferences");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListDataSourceReferences(context, options, request));
 }
 
 StatusOr<google::cloud::backupdr::v1::

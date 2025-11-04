@@ -72,6 +72,20 @@ DefaultFeatureOnlineStoreServiceStub::AsyncFeatureViewDirectWrite(
       });
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+DefaultFeatureOnlineStoreServiceStub::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse response;
+  auto status =
+      grpc_stub_->GenerateFetchAccessToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultFeatureOnlineStoreServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

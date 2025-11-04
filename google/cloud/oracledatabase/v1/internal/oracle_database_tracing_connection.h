@@ -131,6 +131,10 @@ class OracleDatabaseTracingConnection
       google::cloud::oracledatabase::v1::ListGiVersionsRequest request)
       override;
 
+  StreamRange<google::cloud::oracledatabase::v1::MinorVersion>
+  ListMinorVersions(google::cloud::oracledatabase::v1::ListMinorVersionsRequest
+                        request) override;
+
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
   ListDbSystemShapes(
       google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request)
@@ -158,6 +162,20 @@ class OracleDatabaseTracingConnection
 
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
   CreateAutonomousDatabase(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  UpdateAutonomousDatabase(
+      google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  UpdateAutonomousDatabase(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -250,6 +268,267 @@ class OracleDatabaseTracingConnection
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
   RestartAutonomousDatabase(
       google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  SwitchoverAutonomousDatabase(
+      google::cloud::oracledatabase::v1::
+          SwitchoverAutonomousDatabaseRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> SwitchoverAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          SwitchoverAutonomousDatabaseRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  SwitchoverAutonomousDatabase(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  FailoverAutonomousDatabase(
+      google::cloud::oracledatabase::v1::
+          FailoverAutonomousDatabaseRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> FailoverAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          FailoverAutonomousDatabaseRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  FailoverAutonomousDatabase(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::OdbNetwork> ListOdbNetworks(
+      google::cloud::oracledatabase::v1::ListOdbNetworksRequest request)
+      override;
+
+  StatusOr<google::cloud::oracledatabase::v1::OdbNetwork> GetOdbNetwork(
+      google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+  CreateOdbNetwork(
+      google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateOdbNetwork(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+  CreateOdbNetwork(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbNetwork(
+      google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteOdbNetwork(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbNetwork(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::OdbSubnet> ListOdbSubnets(
+      google::cloud::oracledatabase::v1::ListOdbSubnetsRequest request)
+      override;
+
+  StatusOr<google::cloud::oracledatabase::v1::OdbSubnet> GetOdbSubnet(
+      google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+  CreateOdbSubnet(
+      google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateOdbSubnet(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+  CreateOdbSubnet(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbSubnet(
+      google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteOdbSubnet(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbSubnet(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
+  ListExadbVmClusters(
+      google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request)
+      override;
+
+  StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
+      google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  CreateExadbVmCluster(
+      google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  CreateExadbVmCluster(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExadbVmCluster(
+      google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExadbVmCluster(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  UpdateExadbVmCluster(
+      google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  UpdateExadbVmCluster(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  RemoveVirtualMachineExadbVmCluster(
+      google::cloud::oracledatabase::v1::
+          RemoveVirtualMachineExadbVmClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RemoveVirtualMachineExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          RemoveVirtualMachineExadbVmClusterRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  RemoveVirtualMachineExadbVmCluster(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+  ListExascaleDbStorageVaults(
+      google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest
+          request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+  GetExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+  CreateExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::
+          CreateExascaleDbStorageVaultRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateExascaleDbStorageVault(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateExascaleDbStorageVaultRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+  CreateExascaleDbStorageVault(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::
+          DeleteExascaleDbStorageVaultRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteExascaleDbStorageVault(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteExascaleDbStorageVaultRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExascaleDbStorageVault(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+  ListDbSystemInitialStorageSizes(
+      google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesRequest
+          request) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::Database> ListDatabases(
+      google::cloud::oracledatabase::v1::ListDatabasesRequest request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::Database> GetDatabase(
+      google::cloud::oracledatabase::v1::GetDatabaseRequest const& request)
+      override;
+
+  StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>
+  ListPluggableDatabases(
+      google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest request)
+      override;
+
+  StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+  GetPluggableDatabase(
+      google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+          request) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::DbSystem> ListDbSystems(
+      google::cloud::oracledatabase::v1::ListDbSystemsRequest request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::DbSystem> GetDbSystem(
+      google::cloud::oracledatabase::v1::GetDbSystemRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>> CreateDbSystem(
+      google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDbSystem(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>> CreateDbSystem(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteDbSystem(google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&
+                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDbSystem(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteDbSystem(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::DbVersion> ListDbVersions(
+      google::cloud::oracledatabase::v1::ListDbVersionsRequest request)
+      override;
+
+  StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+  ListDatabaseCharacterSets(
+      google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
+          request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

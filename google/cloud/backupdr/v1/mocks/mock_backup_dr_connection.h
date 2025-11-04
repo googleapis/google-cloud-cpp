@@ -322,6 +322,12 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
               (google::cloud::backupdr::v1::ListBackupsRequest request),
               (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::backupdr::v1::Backup>),
+      FetchBackupsForResourceType,
+      (google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::Backup>, GetBackup,
               (google::cloud::backupdr::v1::GetBackupRequest const& request),
               (override));
@@ -771,6 +777,12 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
               (google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::backupdr::v1::DataSourceReference>),
+      ListDataSourceReferences,
+      (google::cloud::backupdr::v1::ListDataSourceReferencesRequest request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::DataSourceReference>),
               FetchDataSourceReferencesForResourceType,

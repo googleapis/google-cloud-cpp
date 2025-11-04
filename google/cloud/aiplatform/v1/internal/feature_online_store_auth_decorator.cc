@@ -70,6 +70,16 @@ FeatureOnlineStoreServiceAuth::AsyncFeatureViewDirectWrite(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceAuth::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateFetchAccessToken(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureOnlineStoreServiceAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,
