@@ -17,6 +17,10 @@
 @REM Change PATH to include the google cloud CLI (formerly SDK)
 @set "PATH=%ProgramFiles(x86)%\Google\Cloud SDK\google-cloud-sdk\bin;%PATH%"
 
+@REM Prepend the Chocolatey bin directory to the PATH to ensure we use the
+@REM choco-installed ninja, not one that might be bundled with Visual Studio.
+@set "PATH=C:\ProgramData\chocolatey\bin;%PATH%"
+
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
 set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
