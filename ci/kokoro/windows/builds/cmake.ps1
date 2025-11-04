@@ -42,6 +42,34 @@ if ($missing.count -ge 1) {
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" ""
+
+Write-Host -ForegroundColor Cyan "Patching crc32c portfile for CMake policy..."
+$crc32c_portfile = "${vcpkg_root}/ports/crc32c/portfile.cmake"
+if (Test-Path $crc32c_portfile) {
+    # --- DEBUG LOGGING (BEFORE) ---
+    Write-Host -ForegroundColor Yellow "========= CONTENTS of $crc32c_portfile BEFORE patch ========="
+    Get-Content $crc32c_portfile
+    Write-Host -ForegroundColor Yellow "============================================================"
+    # --- END DEBUG LOGGING ---
+
+    $content = Get-Content -Raw -Path $crc32c_portfile
+
+    # Add our policy fix to the vcpkg_cmake_configure call
+    # Use the .Replace() method for a literal string replacement, not regex
+    $new_content = $content.Replace("vcpkg_cmake_configure(", "vcpkg_cmake_configure( OPTIONS -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ")
+
+    # --- DEBUG LOGGING (AFTER) ---
+    Write-Host -ForegroundColor Yellow "========= CONTENTS of $crc32c_portfile AFTER patch ========="
+    Write-Host $new_content
+    Write-Host -ForegroundColor Yellow "==========================================================="
+    # --- END DEBUG LOGGING ---
+
+    Set-Content -Path $crc32c_portfile -Value $new_content
+    Write-Host -ForegroundColor Cyan "Patch applied to $crc32c_portfile."
+} else {
+    Write-Host -ForegroundColor Red "Could not find crc32c portfile at $crc32c_portfile. Skipping patch (build will likely fail)."
+}
+
 $binary_dir="cmake-out/${BuildName}"
 # Install all dependencies from the vcpkg.json manifest file.
 # This mirrors the behavior of our GHA builds.
@@ -90,7 +118,8 @@ $cmake_args=@(
     "-DCMAKE_CXX_COMPILER=cl.exe",
     "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
     "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON",
-    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>"
+    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>",
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 )
 
 # Configure CMake and create the build directory.
