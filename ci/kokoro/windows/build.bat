@@ -17,6 +17,11 @@
 @REM Change PATH to include the google cloud CLI (formerly SDK)
 @set "PATH=%ProgramFiles(x86)%\Google\Cloud SDK\google-cloud-sdk\bin;%PATH%"
 
+@REM The Visual Studio installation includes a ninja.exe that can conflict with
+@REM the version needed by vcpkg. To avoid this, we simply delete it. A
+@REM working version will be available via Chocolatey later in the PATH.
+del /q "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja\ninja.exe"
+
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 call "%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
 set "BAZEL_VC=%ProgramFiles(x86)%\Microsoft Visual Studio\%MSVC_VERSION%\BuildTools\VC"
