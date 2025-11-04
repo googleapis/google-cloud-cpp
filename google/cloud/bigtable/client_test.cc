@@ -29,7 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::bigtable::v2::PrepareQueryResponse;
-using ::google::cloud::bigtable::Row;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
@@ -80,7 +79,6 @@ class MockQueryRowSource : public ResultSourceInterface {
 
 TEST(ClientTest, ExecuteQuery) {
   auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
-  std::string const kAppProfile = "";
   auto constexpr kResultMetadataText = R"pb(
     proto_schema {
       columns {
@@ -98,30 +96,28 @@ TEST(ClientTest, ExecuteQuery) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       kResultMetadataText, pq_response.mutable_metadata()));
   EXPECT_CALL(*conn_mock, ExecuteQuery)
-      .WillOnce(
-          [&](bigtable::ExecuteQueryParams& params) -> StatusOr<RowStream> {
-            auto mock_source = std::make_unique<MockQueryRowSource>();
-            EXPECT_CALL(*mock_source, Metadata)
-                .WillRepeatedly(Return(pq_response.metadata()));
+      .WillOnce([&](bigtable::ExecuteQueryParams&) -> StatusOr<RowStream> {
+        auto mock_source = std::make_unique<MockQueryRowSource>();
+        EXPECT_CALL(*mock_source, Metadata)
+            .WillRepeatedly(Return(pq_response.metadata()));
 
-            testing::InSequence s;
-            EXPECT_CALL(*mock_source, NextRow)
-                .WillOnce(Return(bigtable_mocks::MakeQueryRow(
-                    {{"key", bigtable::Value("r1")},
-                     {"val", bigtable::Value("v1")}})));
-            EXPECT_CALL(*mock_source, NextRow)
-                .WillOnce(Return(bigtable_mocks::MakeQueryRow(
-                    {{"key", bigtable::Value("r2")},
-                     {"val", bigtable::Value("v2")}})));
-            EXPECT_CALL(*mock_source, NextRow)
-                // Signal end of stream
-                .WillOnce(
-                    Return(Status(StatusCode::kOutOfRange, "End of stream")));
+        testing::InSequence s;
+        EXPECT_CALL(*mock_source, NextRow)
+            .WillOnce(Return(bigtable_mocks::MakeQueryRow(
+                {{"key", bigtable::Value("r1")},
+                 {"val", bigtable::Value("v1")}})));
+        EXPECT_CALL(*mock_source, NextRow)
+            .WillOnce(Return(bigtable_mocks::MakeQueryRow(
+                {{"key", bigtable::Value("r2")},
+                 {"val", bigtable::Value("v2")}})));
+        EXPECT_CALL(*mock_source, NextRow)
+            // Signal end of stream
+            .WillOnce(Return(Status(StatusCode::kOutOfRange, "End of stream")));
 
-            // Create RowStream with the mock result source
-            RowStream row_stream(std::move(mock_source));
-            return StatusOr<RowStream>(std::move(row_stream));
-          });
+        // Create RowStream with the mock result source
+        RowStream row_stream(std::move(mock_source));
+        return StatusOr<RowStream>(std::move(row_stream));
+      });
 
   Client client(conn_mock);
   auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
