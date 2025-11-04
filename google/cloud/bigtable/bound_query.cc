@@ -33,7 +33,7 @@ std::unordered_map<std::string, Value> const& BoundQuery::parameters() const {
 
 InstanceResource const& BoundQuery::instance() const { return instance_; }
 
-google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() {
+google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() const {
   google::bigtable::v2::ExecuteQueryRequest result;
   *result.mutable_instance_name() = instance_.FullName();
   auto prepared_query = query_plan_->prepared_query();

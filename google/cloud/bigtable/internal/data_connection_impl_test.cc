@@ -2954,7 +2954,7 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
   EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
     return CompletionQueue{fake_cq_impl};
   });
-  auto constexpr kResultMetadataTextTwo = R"pb(
+  auto constexpr kResultMetadataText = R"pb(
     proto_schema {
       columns {
         name: "row_key"
@@ -2969,7 +2969,7 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
   v2::PrepareQueryResponse pq_response;
   pq_response.set_prepared_query("test-pq-id-54321");
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      kResultMetadataTextTwo, pq_response.mutable_metadata()));
+      kResultMetadataText, pq_response.mutable_metadata()));
   *pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
       std::chrono::system_clock::now() + std::chrono::seconds(3600));
 
@@ -3020,7 +3020,7 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
       bigtable::PreparedQuery(instance, statement, std::move(query_plan));
   auto bq = prepared_query.BindParameters(parameters);
   bigtable::ExecuteQueryParams params{std::move(bq)};
-  auto row_stream = conn->ExecuteQuery(params);
+  auto row_stream = conn->ExecuteQuery(std::move(params));
   std::vector<StatusOr<bigtable::QueryRow>> rows;
   for (auto const& row : *std::move(row_stream)) {
     rows.push_back(row);

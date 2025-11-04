@@ -97,30 +97,34 @@ class DefaultPartialResultSetReader
 
   bool Read(absl::optional<std::string> const&,
             bigtable_internal::UnownedPartialResultSet& result_set) override {
-    google::bigtable::v2::ExecuteQueryResponse response;
-    absl::optional<google::cloud::Status> status = reader_->Read(&response);
+    while (true) {
+      google::bigtable::v2::ExecuteQueryResponse response;
+      absl::optional<google::cloud::Status> status = reader_->Read(&response);
 
-    if (status.has_value()) {
-      // Stream has ended or an error occurred.
-      final_status_ = *std::move(status);
+      if (status.has_value()) {
+        // Stream has ended or an error occurred.
+        final_status_ = *std::move(status);
+        return false;
+      }
+
+      // Message successfully read into response.
+      if (response.has_results()) {
+        result_set.result = std::move(*response.mutable_results());
+        result_set.resumption = false;
+        return true;
+      }
+
+      // Ignore metadata from the stream because PartialResultSetSource already
+      // has it set (in ExecuteQuery).
+      if (response.has_metadata()) {
+        continue;
+      }
+
+      final_status_ = google::cloud::Status(
+          google::cloud::StatusCode::kInternal,
+          "Empty ExecuteQueryResponse received from stream");
       return false;
     }
-
-    // Message successfully read into response.
-    if (response.has_results()) {
-      result_set.result = std::move(*response.mutable_results());
-      result_set.resumption = false;
-      return true;
-    }
-
-    if (response.has_metadata()) {
-      return true;
-    }
-
-    final_status_ = google::cloud::Status(
-        google::cloud::StatusCode::kInternal,
-        "Empty ExecuteQueryResponse received from stream");
-    return false;
   }
 
   Status Finish() override { return final_status_; }
@@ -823,6 +827,7 @@ DataConnectionImpl::CreateResumableReader(
   }
   auto context = std::make_shared<grpc::ClientContext>();
   auto const& options = google::cloud::internal::CurrentOptions();
+
   google::cloud::internal::ConfigureContext(*context, options);
   auto stream = stub_->ExecuteQuery(context, options, request);
 
@@ -831,7 +836,7 @@ DataConnectionImpl::CreateResumableReader(
 }
 
 StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
-    bigtable::ExecuteQueryParams& params) {
+    bigtable::ExecuteQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   StatusOr<google::bigtable::v2::ResultSetMetadata> status_or_metadata =
       params.bound_query.metadata();
