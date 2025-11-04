@@ -162,7 +162,7 @@ TEST(ClientTest, ExecuteQuery) {
   EXPECT_THAT(row2.values()[1].get<std::string>(), IsOkAndHolds("v2"));
 
   EXPECT_THAT(rows[2], StatusIs(StatusCode::kOutOfRange, "End of stream"));
-  
+
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
 }
