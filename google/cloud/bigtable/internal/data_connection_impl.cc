@@ -853,11 +853,12 @@ StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
     auto factory = absl::bind_front(&DataConnectionImpl::CreateResumableReader,
                                     this, initial_request);
 
-    auto rpc = std::make_unique<PartialResultSetResume>(
+    auto resume_reader = std::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
-    return PartialResultSetSource::Create(std::move(metadata), std::move(rpc));
+    return PartialResultSetSource::Create(std::move(metadata),
+                                          std::move(resume_reader));
   };
 
   auto response = retry_resume_fn(metadata, request);
