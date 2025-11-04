@@ -62,30 +62,59 @@ if ($LastExitCode) {
 . ci/kokoro/windows/lib/integration.ps1
 
 function Invoke-REST-Quickstart {
-    bazelisk $common_flags run $build_flags `
-      //google/cloud/storage/quickstart:quickstart -- `
-      "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "bazel run (storage/quickstart) failed with exit code ${LastExitCode}."
-        Exit ${LastExitCode}
+    try {
+        $executable = "bazel-bin/google/cloud/storage/quickstart/quickstart.exe"
+        Write-Host "Running REST Quickstart, executable found at: $executable"
+        # bazel-bin is a symlink, and PowerShell does not automatically resolve it
+        # when running executables.
+        $resolved_executable = Resolve-Path $executable
+        Write-Host "Resolved executable path: $resolved_executable"
+        & $resolved_executable "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+        if ($LastExitCode) {
+            Write-Host -ForegroundColor Red "bazel run (storage/quickstart) failed with exit code ${LastExitCode}."
+            Exit ${LastExitCode}
+        }
+    } catch {
+        Write-Host -ForegroundColor Red "Caught exception while trying to run storage/quickstart: $_"
+        Exit 1
     }
 }
 
 function Invoke-gRPC-Quickstart {
-    bazelisk $common_flags run $build_flags `
-      //google/cloud/pubsub/quickstart:quickstart -- `
-      "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "bazel run (pubsub/quickstart) failed with exit code ${LastExitCode}."
-        Exit ${LastExitCode}
+    try {
+        $executable = "bazel-bin/google/cloud/pubsub/quickstart/quickstart.exe"
+        Write-Host "Running gRPC Quickstart, executable found at: $executable"
+        # bazel-bin is a symlink, and PowerShell does not automatically resolve it
+        # when running executables.
+        $resolved_executable = Resolve-Path $executable
+        Write-Host "Resolved executable path: $resolved_executable"
+        & $resolved_executable "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
+        if ($LastExitCode) {
+            Write-Host -ForegroundColor Red "bazel run (pubsub/quickstart) failed with exit code ${LastExitCode}."
+            Exit ${LastExitCode}
+        }
+    } catch {
+        Write-Host -ForegroundColor Red "Caught exception while trying to run pubsub/quickstart: $_"
+        Exit 1
     }
 }
 
 if (Test-Integration-Enabled) {
     Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
     Install-Roots-Pem
-    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
-    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    $env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = "$env:KOKORO_GFILE_DIR/roots.pem"
+    $env:CURL_CA_BUNDLE = "$env:KOKORO_GFILE_DIR/roots.pem"
+    $env:GOOGLE_APPLICATION_CREDENTIALS = "$env:KOKORO_GFILE_DIR/kokoro-run-key.json"
+    # Troubleshooting output
+    Write-Host "GOOGLE_APPLICATION_CREDENTIALS=$env:GOOGLE_APPLICATION_CREDENTIALS"
+    Write-Host "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"
+    Write-Host "CURL_CA_BUNDLE=$env:CURL_CA_BUNDLE"
+    Get-Content "$env:KOKORO_GFILE_DIR/roots.pem" -TotalCount 5
+
+    bazelisk $common_flags build $build_flags `
+        //google/cloud/storage/quickstart:quickstart `
+        //google/cloud/pubsub/quickstart:quickstart
+
     Invoke-REST-Quickstart
     Invoke-gRPC-Quickstart
 }
