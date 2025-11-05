@@ -1009,7 +1009,6 @@ class OracleDatabaseClient {
   ///
   /// @param parent  Required. The parent value for database node in the following format:
   ///  projects/{project}/locations/{location}/cloudVmClusters/{cloudVmCluster}.
-  ///  .
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

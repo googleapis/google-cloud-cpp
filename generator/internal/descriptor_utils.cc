@@ -322,6 +322,10 @@ ParameterCommentSubstitution substitutions[] = {
     {"\n", "\n  /// "},
 };
 
+char const* bad_suffixes[] = {
+    // Doxygen interprets this as an unpaired formatting character.
+    "\n ."};
+
 // Very long parameters need different formatting.
 auto constexpr kShortParamFormat = "  /// @param %s %s\n";
 auto constexpr kLongParamFormat = R"""(  /// @param %s %s
@@ -349,6 +353,9 @@ std::string FormattedCommentsForParameter(
   if (std::count(comment.begin(), comment.end(), '\n') > kTooManyLines) {
     std::vector<absl::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
     auto brief = std::string{paragraphs.front()};
+    for (auto const& suffix : bad_suffixes) {
+      brief = std::string{absl::StripSuffix(brief, suffix)};
+    }
     for (auto& sub : substitutions) {
       sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &brief);
     }
@@ -357,6 +364,9 @@ std::string FormattedCommentsForParameter(
                            method.input_type()->full_name());
   }
 
+  for (auto const& suffix : bad_suffixes) {
+    comment = std::string{absl::StripSuffix(comment, suffix)};
+  }
   for (auto& sub : substitutions) {
     sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
   }
