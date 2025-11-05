@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
+#include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
@@ -42,7 +43,7 @@ class BoundQuery {
   BoundQuery& operator=(BoundQuery&&) = default;
 
   // Accessors
-  StatusOr<std::string> prepared_query() const;
+  std::string prepared_query() const;
   StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
   std::unordered_map<std::string, Value> const& parameters() const;
   InstanceResource const& instance() const;
@@ -53,16 +54,19 @@ class BoundQuery {
   friend class PreparedQuery;
   BoundQuery(InstanceResource instance,
              std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
-             std::unordered_map<std::string, Value> parameters)
+             std::unordered_map<std::string, Value> parameters,
+             std::shared_ptr<SqlStatement> sql_statement)
       : instance_(std::move(instance)),
         query_plan_(std::move(query_plan)),
-        parameters_(std::move(parameters)) {}
+        parameters_(std::move(parameters)),
+        sql_statement_(std::move(sql_statement)) {}
 
   InstanceResource instance_;
   // Copy of the query_plan_ contained by the PreparedQuery that created
   // this BoundQuery.
   std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
   std::unordered_map<std::string, Value> parameters_;
+  std::shared_ptr<SqlStatement> sql_statement_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

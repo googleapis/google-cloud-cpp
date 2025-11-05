@@ -22,12 +22,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BoundQuery PreparedQuery::BindParameters(
     std::unordered_map<std::string, Value> params) const {
-  return BoundQuery(instance_, query_plan_, std::move(params));
+  return BoundQuery(instance_, query_plan_, std::move(params), sql_statement_);
 }
 
 InstanceResource const& PreparedQuery::instance() const { return instance_; }
 SqlStatement const& PreparedQuery::sql_statement() const {
-  return sql_statement_;
+  return *sql_statement_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

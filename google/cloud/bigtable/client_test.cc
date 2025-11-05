@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/mocks/mock_data_connection.h"
 #include "google/cloud/bigtable/mocks/mock_query_row.h"
 #include "google/cloud/bigtable/mocks/mock_row_reader.h"
@@ -44,9 +45,18 @@ TEST(Client, PrepareQuery) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
         EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
-        PreparedQuery q(CompletionQueue{fake_cq_impl}, params.instance,
-                        params.sql_statement, PrepareQueryResponse{});
-        return q;
+
+        std::unordered_map<std::string, bigtable::Value> parameters;
+        google::bigtable::v2::PrepareQueryResponse pq_response;
+        auto refresh_fn = [&pq_response]() {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+                  pq_response));
+        };
+        auto query_plan = bigtable_internal::QueryPlan::Create(
+            CompletionQueue(fake_cq_impl), std::move(pq_response),
+            std::move(refresh_fn));
+        return bigtable::PreparedQuery(instance, sql, std::move(query_plan));
       });
 
   Client client(std::move(conn_mock));
@@ -62,14 +72,23 @@ TEST(Client, AsyncPrepareQuery) {
   auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
   InstanceResource instance(Project("the-project"), "the-instance");
   SqlStatement sql("SELECT * FROM the-table");
-  EXPECT_CALL(*conn_mock, AsyncPrepareQuery)
+  EXPECT_CALL(*conn_mock, PrepareQuery)
       .WillOnce([&](PrepareQueryParams const& params) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
         EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
-        PreparedQuery q(CompletionQueue{fake_cq_impl}, params.instance,
-                        params.sql_statement, PrepareQueryResponse{});
-        return make_ready_future(make_status_or(std::move(q)));
+
+        std::unordered_map<std::string, bigtable::Value> parameters;
+        google::bigtable::v2::PrepareQueryResponse pq_response;
+        auto refresh_fn = [&pq_response]() {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+                  pq_response));
+        };
+        auto query_plan = bigtable_internal::QueryPlan::Create(
+            CompletionQueue(fake_cq_impl), std::move(pq_response),
+            std::move(refresh_fn));
+        return bigtable::PreparedQuery(instance, sql, std::move(query_plan));
       });
   Client client(std::move(conn_mock));
   auto prepared_query = client.AsyncPrepareQuery(instance, sql);

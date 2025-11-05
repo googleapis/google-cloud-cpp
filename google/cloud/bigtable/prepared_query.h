@@ -44,36 +44,16 @@ class PreparedQuery {
   InstanceResource const& instance() const;
   SqlStatement const& sql_statement() const;
 
-  // While we work on the Bigtable GoogleSQL functionality, we will keep this
-  // constructor as public, but this will be converted to private as
-  // originally intended once other classes that orchestrate PreparedQuery
-  // are implemented.
-  GOOGLE_CLOUD_CPP_DEPRECATED("use the other constructor")
-  PreparedQuery(CompletionQueue cq, InstanceResource instance,
-                SqlStatement sql_statement,
-                google::bigtable::v2::PrepareQueryResponse response)
-      : instance_(std::move(instance)),
-        sql_statement_(std::move(sql_statement)) {
-    *response.mutable_prepared_query() = sql_statement_.sql();
-
-    // For now, the refresh function has no effect, and we simply return a new
-    // prepared query response.
-    query_plan_ = bigtable_internal::QueryPlan::Create(
-        std::move(cq), std::move(response), [] {
-          return make_ready_future(
-              StatusOr<google::bigtable::v2::PrepareQueryResponse>{});
-        });
-  }
-
   PreparedQuery(InstanceResource instance, SqlStatement sql_statement,
                 std::shared_ptr<bigtable_internal::QueryPlan> query_plan)
       : instance_(std::move(instance)),
-        sql_statement_(std::move(sql_statement)),
+        sql_statement_(
+            std::make_shared<SqlStatement>(std::move(sql_statement))),
         query_plan_(std::move(query_plan)) {}
 
  private:
   InstanceResource instance_;
-  SqlStatement sql_statement_;
+  std::shared_ptr<SqlStatement> sql_statement_;
   std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
 };
 

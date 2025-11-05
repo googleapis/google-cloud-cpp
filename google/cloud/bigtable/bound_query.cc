@@ -19,12 +19,14 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<std::string> BoundQuery::prepared_query() const {
-  return query_plan_->prepared_query();
-}
+std::string BoundQuery::prepared_query() const { return sql_statement_->sql(); }
 
 StatusOr<google::bigtable::v2::ResultSetMetadata> BoundQuery::metadata() const {
-  return query_plan_->metadata();
+  auto response = query_plan_->response();
+  if (response.ok()) {
+    return response->metadata();
+  }
+  return response.status();
 }
 
 std::unordered_map<std::string, Value> const& BoundQuery::parameters() const {
@@ -36,9 +38,9 @@ InstanceResource const& BoundQuery::instance() const { return instance_; }
 google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() const {
   google::bigtable::v2::ExecuteQueryRequest result;
   *result.mutable_instance_name() = instance_.FullName();
-  auto prepared_query = query_plan_->prepared_query();
-  if (prepared_query.ok()) {
-    *result.mutable_prepared_query() = query_plan_->prepared_query().value();
+  auto response = query_plan_->response();
+  if (response.ok()) {
+    *result.mutable_prepared_query() = sql_statement_->sql();
   }
 
   google::protobuf::Map<std::string, google::bigtable::v2::Value> parameters;
