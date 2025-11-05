@@ -160,7 +160,6 @@ DefaultGoldenKitchenSinkRestStub::ListOperations(
   query_params.push_back({"filter", request.filter()});
   query_params.push_back({"page_size", std::to_string(request.page_size())});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success", (request.has_return_partial_success() ? (request.return_partial_success() ? "1" : "0") : "")});
   query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::longrunning::ListOperationsResponse>(
       *service_, rest_context, request, false,
