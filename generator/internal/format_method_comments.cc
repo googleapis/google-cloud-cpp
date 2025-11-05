@@ -184,6 +184,10 @@ MethodCommentSubstitution substitutions[] = {
     {R"""(Gets a view on a log bucket..)""",
      R"""(Gets a view on a log bucket.)"""},
 
+    // From google/cloud/cloudsecuritycompliance/v1/deployment.proto
+    {R"""(Lists the cloud conrol deployments)""",
+     R"""(Lists the cloud control deployments)"""},
+
     // From google/dialogflow/v2/conversation.proto
     {kDialogflowEsConversationsProto, kDialogflowEsConversationsCpp},
 
