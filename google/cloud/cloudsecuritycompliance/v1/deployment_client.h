@@ -542,7 +542,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Lists the cloud conrol deployments in a given parent resource.
+  /// Lists the cloud control deployments in a given parent resource.
   ///
   /// @param parent  Required. The parent resource for the cloud control deployment, in the
   ///  format `organizations/{organization}/locations/{location}`. The only
@@ -579,7 +579,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Lists the cloud conrol deployments in a given parent resource.
+  /// Lists the cloud control deployments in a given parent resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
