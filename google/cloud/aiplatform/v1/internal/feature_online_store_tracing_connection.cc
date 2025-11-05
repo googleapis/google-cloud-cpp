@@ -62,6 +62,17 @@ FeatureOnlineStoreServiceTracingConnection::AsyncFeatureViewDirectWrite() {
   return child_->AsyncFeatureViewDirectWrite();
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceTracingConnection::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreServiceConnection::"
+      "GenerateFetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateFetchAccessToken(request));
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

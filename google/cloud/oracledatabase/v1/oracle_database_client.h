@@ -117,7 +117,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L334}
+  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L722}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -156,7 +156,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L334}
+  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L722}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -186,7 +186,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L363}
+  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L757}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -216,7 +216,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L363}
+  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L757}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -257,7 +257,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L376}
+  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L770}
   ///
   // clang-format on
   future<
@@ -316,7 +316,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L376}
+  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L770}
   ///
   // clang-format on
   future<
@@ -384,8 +384,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L412}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L697}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L806}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -435,8 +435,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L412}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L697}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L806}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -503,8 +503,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L34}
-  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L443}
+  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
+  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L837}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
@@ -542,8 +542,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L34}
-  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L443}
+  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
+  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L837}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
@@ -570,8 +570,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L34}
-  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L475}
+  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
+  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L869}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
@@ -600,8 +600,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L34}
-  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L475}
+  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
+  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L869}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
@@ -640,8 +640,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L34}
-  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L487}
+  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
+  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L881}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
@@ -696,8 +696,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L34}
-  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L487}
+  /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
+  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L881}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
@@ -762,8 +762,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L521}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L697}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L915}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -813,8 +813,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L521}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L697}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L915}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -882,7 +882,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Entitlement]: @googleapis_reference_link{google/cloud/oracledatabase/v1/entitlement.proto#L31}
-  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L551}
+  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L945}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
@@ -921,7 +921,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Entitlement]: @googleapis_reference_link{google/cloud/oracledatabase/v1/entitlement.proto#L31}
-  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L551}
+  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L945}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
@@ -957,7 +957,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbServer]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_server.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L580}
+  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L974}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
@@ -996,7 +996,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbServer]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_server.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L580}
+  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L974}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
@@ -1031,8 +1031,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L609}
+  /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L33}
+  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1003}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
@@ -1070,8 +1070,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L609}
+  /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L33}
+  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1003}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
@@ -1108,7 +1108,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.GiVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/gi_version.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L638}
+  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1033}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
@@ -1148,11 +1148,89 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.GiVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/gi_version.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L638}
+  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1033}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
       google::cloud::oracledatabase::v1::ListGiVersionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the valid minor versions for the given
+  /// project, location, gi version and shape family.
+  ///
+  /// @param parent  Required. The parent value for the MinorVersion resource with the format:
+  ///  projects/{project}/locations/{location}/giVersions/{gi_version}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.MinorVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListMinorVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/minor_version.proto#L52}
+  /// [google.cloud.oracledatabase.v1.MinorVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/minor_version.proto#L32}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::MinorVersion>
+  ListMinorVersions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the valid minor versions for the given
+  /// project, location, gi version and shape family.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListMinorVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.MinorVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListMinorVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/minor_version.proto#L52}
+  /// [google.cloud.oracledatabase.v1.MinorVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/minor_version.proto#L32}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::MinorVersion>
+  ListMinorVersions(
+      google::cloud::oracledatabase::v1::ListMinorVersionsRequest request,
       Options opts = {});
 
   // clang-format off
@@ -1184,7 +1262,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystemShape]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_shape.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L668}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1068}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
@@ -1223,7 +1301,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystemShape]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_shape.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L668}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1068}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
@@ -1260,7 +1338,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L731}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1136}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1299,7 +1377,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L731}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1136}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1327,7 +1405,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L766}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1171}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1357,7 +1435,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L766}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1171}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1398,7 +1476,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L778}
+  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1183}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1456,7 +1534,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L778}
+  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1183}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1497,6 +1575,133 @@ class OracleDatabaseClient {
 
   // clang-format off
   ///
+  /// Updates the parameters of a single Autonomous Database.
+  ///
+  /// @param autonomous_database  Required. The resource being updated
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  Exadata resource by the update. The fields specified in the update_mask are
+  ///  relative to the resource, not the full request. A field will be overwritten
+  ///  if it is in the mask. If the user does not provide a mask then all fields
+  ///  will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.AutonomousDatabase] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
+  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1218}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  UpdateAutonomousDatabase(
+      google::cloud::oracledatabase::v1::AutonomousDatabase const&
+          autonomous_database,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAutonomousDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::AutonomousDatabase const&
+          autonomous_database,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single Autonomous Database.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.AutonomousDatabase] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
+  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1218}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  UpdateAutonomousDatabase(
+      google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAutonomousDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAutonomousDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  UpdateAutonomousDatabase(google::longrunning::Operation const& operation,
+                           Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes a single Autonomous Database.
   ///
   /// @param name  Required. The name of the resource in the following format:
@@ -1521,8 +1726,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L813}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L697}
+  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1246}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1572,8 +1777,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L813}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L697}
+  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1246}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1640,7 +1845,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L838}
+  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1694,7 +1899,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L838}
+  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1758,8 +1963,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L890}
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L914}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1363}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1387}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::
@@ -1792,8 +1997,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L890}
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L914}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1363}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1387}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::
@@ -1833,7 +2038,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_version.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L920}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1393}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
@@ -1873,7 +2078,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_version.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L920}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1393}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
@@ -1911,7 +2116,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database_character_set.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L949}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1422}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
@@ -1951,7 +2156,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database_character_set.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L949}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1422}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
@@ -1989,7 +2194,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseBackup]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_backup.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L985}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1458}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
@@ -2028,7 +2233,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseBackup]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_backup.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L985}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1458}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
@@ -2064,7 +2269,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L854}
+  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2115,7 +2320,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L854}
+  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2181,7 +2386,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L866}
+  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1299}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2232,7 +2437,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L866}
+  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1299}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2298,7 +2503,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L878}
+  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2349,7 +2554,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L878}
+  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2387,6 +2592,2877 @@ class OracleDatabaseClient {
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
   RestartAutonomousDatabase(google::longrunning::Operation const& operation,
                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates a switchover of specified autonomous database to the associated
+  /// peer database.
+  ///
+  /// @param name  Required. The name of the Autonomous Database in the following format:
+  ///  projects/{project}/locations/{location}/autonomousDatabases/{autonomous_database}.
+  /// @param peer_autonomous_database  Required. The peer database name to switch over to.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.AutonomousDatabase] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
+  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1323}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  SwitchoverAutonomousDatabase(std::string const& name,
+                               std::string const& peer_autonomous_database,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief SwitchoverAutonomousDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> SwitchoverAutonomousDatabase(
+      NoAwaitTag, std::string const& name,
+      std::string const& peer_autonomous_database, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates a switchover of specified autonomous database to the associated
+  /// peer database.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.AutonomousDatabase] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
+  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1323}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  SwitchoverAutonomousDatabase(
+      google::cloud::oracledatabase::v1::
+          SwitchoverAutonomousDatabaseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief SwitchoverAutonomousDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> SwitchoverAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          SwitchoverAutonomousDatabaseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief SwitchoverAutonomousDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  SwitchoverAutonomousDatabase(google::longrunning::Operation const& operation,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates a failover to target autonomous database from the associated
+  /// primary database.
+  ///
+  /// @param name  Required. The name of the Autonomous Database in the following format:
+  ///  projects/{project}/locations/{location}/autonomousDatabases/{autonomous_database}.
+  /// @param peer_autonomous_database  Required. The peer database name to fail over to.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.AutonomousDatabase] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
+  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1343}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  FailoverAutonomousDatabase(std::string const& name,
+                             std::string const& peer_autonomous_database,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief FailoverAutonomousDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> FailoverAutonomousDatabase(
+      NoAwaitTag, std::string const& name,
+      std::string const& peer_autonomous_database, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates a failover to target autonomous database from the associated
+  /// primary database.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.AutonomousDatabase] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
+  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1343}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  FailoverAutonomousDatabase(
+      google::cloud::oracledatabase::v1::
+          FailoverAutonomousDatabaseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief FailoverAutonomousDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> FailoverAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          FailoverAutonomousDatabaseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief FailoverAutonomousDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  FailoverAutonomousDatabase(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the ODB Networks in a given project and location.
+  ///
+  /// @param parent  Required. The parent value for the ODB Network in the following format:
+  ///  projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.OdbNetwork], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListOdbNetworksRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L150}
+  /// [google.cloud.oracledatabase.v1.OdbNetwork]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::OdbNetwork> ListOdbNetworks(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the ODB Networks in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListOdbNetworksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.OdbNetwork], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListOdbNetworksRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L150}
+  /// [google.cloud.oracledatabase.v1.OdbNetwork]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::OdbNetwork> ListOdbNetworks(
+      google::cloud::oracledatabase::v1::ListOdbNetworksRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ODB Network.
+  ///
+  /// @param name  Required. The name of the OdbNetwork in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.OdbNetwork])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L189}
+  /// [google.cloud.oracledatabase.v1.OdbNetwork]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::OdbNetwork> GetOdbNetwork(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ODB Network.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetOdbNetworkRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.OdbNetwork])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L189}
+  /// [google.cloud.oracledatabase.v1.OdbNetwork]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::OdbNetwork> GetOdbNetwork(
+      google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ODB Network in a given project and location.
+  ///
+  /// @param parent  Required. The parent value for the OdbNetwork in the following format:
+  ///  projects/{project}/locations/{location}.
+  /// @param odb_network  Required. Details of the OdbNetwork instance to create.
+  /// @param odb_network_id  Required. The ID of the OdbNetwork to create. This value is restricted
+  ///  to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63
+  ///  characters in length. The value must start with a letter and end with
+  ///  a letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OdbNetwork] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L91}
+  /// [google.cloud.oracledatabase.v1.OdbNetwork]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+  CreateOdbNetwork(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::OdbNetwork const& odb_network,
+      std::string const& odb_network_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateOdbNetwork(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::OdbNetwork const& odb_network,
+      std::string const& odb_network_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ODB Network in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateOdbNetworkRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OdbNetwork] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L91}
+  /// [google.cloud.oracledatabase.v1.OdbNetwork]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+  CreateOdbNetwork(
+      google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateOdbNetwork(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbNetwork
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+  CreateOdbNetwork(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ODB Network.
+  ///
+  /// @param name  Required. The name of the resource in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L125}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbNetwork(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteOdbNetwork(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ODB Network.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L125}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbNetwork(
+      google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteOdbNetwork(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbNetwork
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbNetwork(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the ODB Subnets in a given ODB Network.
+  ///
+  /// @param parent  Required. The parent value for the OdbSubnet in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.OdbSubnet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListOdbSubnetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L152}
+  /// [google.cloud.oracledatabase.v1.OdbSubnet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::OdbSubnet> ListOdbSubnets(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the ODB Subnets in a given ODB Network.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListOdbSubnetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.OdbSubnet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListOdbSubnetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L152}
+  /// [google.cloud.oracledatabase.v1.OdbSubnet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::OdbSubnet> ListOdbSubnets(
+      google::cloud::oracledatabase::v1::ListOdbSubnetsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ODB Subnet.
+  ///
+  /// @param name  Required. The name of the OdbSubnet in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.OdbSubnet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L191}
+  /// [google.cloud.oracledatabase.v1.OdbSubnet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::OdbSubnet> GetOdbSubnet(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ODB Subnet.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetOdbSubnetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.OdbSubnet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L191}
+  /// [google.cloud.oracledatabase.v1.OdbSubnet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::OdbSubnet> GetOdbSubnet(
+      google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ODB Subnet in a given ODB Network.
+  ///
+  /// @param parent  Required. The parent value for the OdbSubnet in the following format:
+  ///  projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+  /// @param odb_subnet  Required. Details of the OdbSubnet instance to create.
+  /// @param odb_subnet_id  Required. The ID of the OdbSubnet to create. This value is restricted
+  ///  to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63
+  ///  characters in length. The value must start with a letter and end with
+  ///  a letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OdbSubnet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L93}
+  /// [google.cloud.oracledatabase.v1.OdbSubnet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+  CreateOdbSubnet(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::OdbSubnet const& odb_subnet,
+      std::string const& odb_subnet_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbSubnet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateOdbSubnet(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::OdbSubnet const& odb_subnet,
+      std::string const& odb_subnet_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ODB Subnet in a given ODB Network.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateOdbSubnetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OdbSubnet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L93}
+  /// [google.cloud.oracledatabase.v1.OdbSubnet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+  CreateOdbSubnet(
+      google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbSubnet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateOdbSubnet(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateOdbSubnet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+  CreateOdbSubnet(google::longrunning::Operation const& operation,
+                  Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ODB Subnet.
+  ///
+  /// @param name  Required. The name of the resource in the following format:
+  ///  projects/{project}/locations/{region}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L127}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbSubnet(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbSubnet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteOdbSubnet(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ODB Subnet.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L127}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbSubnet(
+      google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbSubnet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteOdbSubnet(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteOdbSubnet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteOdbSubnet(google::longrunning::Operation const& operation,
+                  Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the Exadb (Exascale) VM Clusters for the given project and
+  /// location.
+  ///
+  /// @param parent  Required. The parent value for ExadbVmClusters in the following format:
+  ///  projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1572}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
+  ListExadbVmClusters(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the Exadb (Exascale) VM Clusters for the given project and
+  /// location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1572}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
+  ListExadbVmClusters(
+      google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single Exadb (Exascale) VM Cluster.
+  ///
+  /// @param name  Required. The name of the ExadbVmCluster in the following format:
+  ///  projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.ExadbVmCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1560}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single Exadb (Exascale) VM Cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.ExadbVmCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1560}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
+      google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new Exadb (Exascale) VM Cluster resource.
+  ///
+  /// @param parent  Required. The value for parent of the ExadbVmCluster in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param exadb_vm_cluster  Required. The resource being created.
+  /// @param exadb_vm_cluster_id  Required. The ID of the ExadbVmCluster to create. This value is
+  ///  restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of
+  ///  63 characters in length. The value must start with a letter and end with a
+  ///  letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1496}
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  CreateExadbVmCluster(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::ExadbVmCluster const& exadb_vm_cluster,
+      std::string const& exadb_vm_cluster_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateExadbVmCluster(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::ExadbVmCluster const& exadb_vm_cluster,
+      std::string const& exadb_vm_cluster_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new Exadb (Exascale) VM Cluster resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1496}
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  CreateExadbVmCluster(
+      google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateExadbVmCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  CreateExadbVmCluster(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single Exadb (Exascale) VM Cluster.
+  ///
+  /// @param name  Required. The name of the ExadbVmCluster in the following format:
+  ///  projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1535}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExadbVmCluster(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteExadbVmCluster(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single Exadb (Exascale) VM Cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1535}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExadbVmCluster(
+      google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteExadbVmCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExadbVmCluster(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a single Exadb (Exascale) VM Cluster. To add virtual machines to
+  /// existing exadb vm cluster, only pass the node count.
+  ///
+  /// @param exadb_vm_cluster  Required. The resource being updated.
+  /// @param update_mask  Optional. A mask specifying which fields in th VM Cluster should be
+  ///  updated. A field specified in the mask is overwritten. If a mask isn't
+  ///  provided then all the fields in the VM Cluster are overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1609}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  UpdateExadbVmCluster(
+      google::cloud::oracledatabase::v1::ExadbVmCluster const& exadb_vm_cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::ExadbVmCluster const& exadb_vm_cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a single Exadb (Exascale) VM Cluster. To add virtual machines to
+  /// existing exadb vm cluster, only pass the node count.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1609}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  UpdateExadbVmCluster(
+      google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateExadbVmCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  UpdateExadbVmCluster(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Removes virtual machines from an existing exadb vm cluster.
+  ///
+  /// @param name  Required. The name of the ExadbVmCluster in the following format:
+  ///  projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+  /// @param hostnames  Required. The list of host names of db nodes to be removed from the
+  ///  ExadbVmCluster.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1634}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  RemoveVirtualMachineExadbVmCluster(std::string const& name,
+                                     std::vector<std::string> const& hostnames,
+                                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RemoveVirtualMachineExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RemoveVirtualMachineExadbVmCluster(
+      NoAwaitTag, std::string const& name,
+      std::vector<std::string> const& hostnames, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Removes virtual machines from an existing exadb vm cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExadbVmCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
+  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1634}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  RemoveVirtualMachineExadbVmCluster(
+      google::cloud::oracledatabase::v1::
+          RemoveVirtualMachineExadbVmClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RemoveVirtualMachineExadbVmCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RemoveVirtualMachineExadbVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          RemoveVirtualMachineExadbVmClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RemoveVirtualMachineExadbVmCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+  RemoveVirtualMachineExadbVmCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the ExascaleDB Storage Vaults for the given project and
+  /// location.
+  ///
+  /// @param parent  Required. The parent value for ExascaleDbStorageVault in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.ExascaleDbStorageVault], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
+  /// [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L183}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+  ListExascaleDbStorageVaults(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the ExascaleDB Storage Vaults for the given project and
+  /// location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.ExascaleDbStorageVault], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
+  /// [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L183}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+  ListExascaleDbStorageVaults(
+      google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ExascaleDB Storage Vault.
+  ///
+  /// @param name  Required. The name of the ExascaleDbStorageVault in the following format:
+  ///  projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.ExascaleDbStorageVault])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
+  /// [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L171}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+  GetExascaleDbStorageVault(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single ExascaleDB Storage Vault.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.ExascaleDbStorageVault])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
+  /// [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L171}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+  GetExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ExascaleDB Storage Vault resource.
+  ///
+  /// @param parent  Required. The value for parent of the ExascaleDbStorageVault in the
+  ///  following format: projects/{project}/locations/{location}.
+  /// @param exascale_db_storage_vault  Required. The resource being created.
+  /// @param exascale_db_storage_vault_id  Required. The ID of the ExascaleDbStorageVault to create. This value is
+  ///  restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of
+  ///  63 characters in length. The value must start with a letter and end with a
+  ///  letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExascaleDbStorageVault] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L223}
+  /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+  CreateExascaleDbStorageVault(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::ExascaleDbStorageVault const&
+          exascale_db_storage_vault,
+      std::string const& exascale_db_storage_vault_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateExascaleDbStorageVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateExascaleDbStorageVault(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::ExascaleDbStorageVault const&
+          exascale_db_storage_vault,
+      std::string const& exascale_db_storage_vault_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new ExascaleDB Storage Vault resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.ExascaleDbStorageVault] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L223}
+  /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+  CreateExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::
+          CreateExascaleDbStorageVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateExascaleDbStorageVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateExascaleDbStorageVault(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateExascaleDbStorageVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateExascaleDbStorageVault
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+  CreateExascaleDbStorageVault(google::longrunning::Operation const& operation,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ExascaleDB Storage Vault.
+  ///
+  /// @param name  Required. The name of the ExascaleDbStorageVault in the following format:
+  ///  projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L264}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExascaleDbStorageVault(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteExascaleDbStorageVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteExascaleDbStorageVault(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single ExascaleDB Storage Vault.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L264}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::
+          DeleteExascaleDbStorageVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteExascaleDbStorageVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteExascaleDbStorageVault(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteExascaleDbStorageVaultRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteExascaleDbStorageVault
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteExascaleDbStorageVault(google::longrunning::Operation const& operation,
+                               Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the DbSystemInitialStorageSizes for the given project and
+  /// location.
+  ///
+  /// @param parent  Required. The parent value for the DbSystemInitialStorageSize resource with
+  ///  the format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DbSystemInitialStorageSize], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbSystemInitialStorageSize]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_initial_storage_size.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemInitialStorageSizesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_initial_storage_size.proto#L102}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+  ListDbSystemInitialStorageSizes(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the DbSystemInitialStorageSizes for the given project and
+  /// location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListDbSystemInitialStorageSizesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DbSystemInitialStorageSize], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbSystemInitialStorageSize]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_initial_storage_size.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemInitialStorageSizesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_initial_storage_size.proto#L102}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+  ListDbSystemInitialStorageSizes(
+      google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the Databases for the given project, location and DbSystem.
+  ///
+  /// @param parent  Required. The parent resource name in the following format:
+  ///  projects/{project}/locations/{region}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.Database], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
+  /// [google.cloud.oracledatabase.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L301}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::Database> ListDatabases(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the Databases for the given project, location and DbSystem.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListDatabasesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.Database], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
+  /// [google.cloud.oracledatabase.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L301}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::Database> ListDatabases(
+      google::cloud::oracledatabase::v1::ListDatabasesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single Database.
+  ///
+  /// @param name  Required. The name of the Database resource in the following format:
+  ///  projects/{project}/locations/{region}/databases/{database}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.Database])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
+  /// [google.cloud.oracledatabase.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L289}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::Database> GetDatabase(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single Database.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetDatabaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.Database])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
+  /// [google.cloud.oracledatabase.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L289}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::Database> GetDatabase(
+      google::cloud::oracledatabase::v1::GetDatabaseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the PluggableDatabases for the given project, location and
+  /// Container Database.
+  ///
+  /// @param parent  Required. The parent, which owns this collection of PluggableDatabases.
+  ///  Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.PluggableDatabase], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListPluggableDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L301}
+  /// [google.cloud.oracledatabase.v1.PluggableDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>
+  ListPluggableDatabases(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the PluggableDatabases for the given project, location and
+  /// Container Database.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListPluggableDatabasesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.PluggableDatabase], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.ListPluggableDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L301}
+  /// [google.cloud.oracledatabase.v1.PluggableDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>
+  ListPluggableDatabases(
+      google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single PluggableDatabase.
+  ///
+  /// @param name  Required. The name of the PluggableDatabase resource in the following
+  ///  format:
+  ///  projects/{project}/locations/{region}/pluggableDatabases/{pluggable_database}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.PluggableDatabase])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetPluggableDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L288}
+  /// [google.cloud.oracledatabase.v1.PluggableDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+  GetPluggableDatabase(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single PluggableDatabase.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetPluggableDatabaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.PluggableDatabase])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetPluggableDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L288}
+  /// [google.cloud.oracledatabase.v1.PluggableDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/pluggable_database.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+  GetPluggableDatabase(
+      google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the DbSystems for the given project and location.
+  ///
+  /// @param parent  Required. The parent value for DbSystems in the following format:
+  ///  projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DbSystem], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L367}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DbSystem> ListDbSystems(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the DbSystems for the given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListDbSystemsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DbSystem], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L367}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DbSystem> ListDbSystems(
+      google::cloud::oracledatabase::v1::ListDbSystemsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single DbSystem.
+  ///
+  /// @param name  Required. The name of the DbSystem in the following format:
+  ///  projects/{project}/locations/{location}/dbSystems/{db_system}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.DbSystem])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
+  /// [google.cloud.oracledatabase.v1.GetDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L355}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::DbSystem> GetDbSystem(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single DbSystem.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetDbSystemRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.DbSystem])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
+  /// [google.cloud.oracledatabase.v1.GetDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L355}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::DbSystem> GetDbSystem(
+      google::cloud::oracledatabase::v1::GetDbSystemRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new DbSystem in a given project and location.
+  ///
+  /// @param parent  Required. The value for parent of the DbSystem in the following format:
+  ///  projects/{project}/locations/{location}.
+  /// @param db_system  Required. The resource being created.
+  /// @param db_system_id  Required. The ID of the DbSystem to create. This value is
+  ///  restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of
+  ///  63 characters in length. The value must start with a letter and end with a
+  ///  letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.DbSystem] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L291}
+  /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>> CreateDbSystem(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::DbSystem const& db_system,
+      std::string const& db_system_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDbSystem
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDbSystem(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::DbSystem const& db_system,
+      std::string const& db_system_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new DbSystem in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateDbSystemRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.DbSystem] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L291}
+  /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>> CreateDbSystem(
+      google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDbSystem
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDbSystem(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDbSystem
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>> CreateDbSystem(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single DbSystem.
+  ///
+  /// @param name  Required. The name of the DbSystem in the following format:
+  ///  projects/{project}/locations/{location}/dbSystems/{db_system}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L330}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteDbSystem(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDbSystem
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDbSystem(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single DbSystem.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteDbSystemRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L330}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteDbSystem(
+      google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDbSystem
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDbSystem(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDbSystem
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteDbSystem(google::longrunning::Operation const& operation,
+                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// List DbVersions for the given project and location.
+  ///
+  /// @param parent  Required. The parent value for the DbVersion resource with the
+  ///  format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DbVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_version.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_version.proto#L72}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DbVersion> ListDbVersions(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List DbVersions for the given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListDbVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DbVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_version.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_version.proto#L72}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DbVersion> ListDbVersions(
+      google::cloud::oracledatabase::v1::ListDbVersionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List DatabaseCharacterSets for the given project and location.
+  ///
+  /// @param parent  Required. The parent value for DatabaseCharacterSets in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DatabaseCharacterSet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database_character_set.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database_character_set.proto#L66}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+  ListDatabaseCharacterSets(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List DatabaseCharacterSets for the given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListDatabaseCharacterSetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.DatabaseCharacterSet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database_character_set.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database_character_set.proto#L66}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+  ListDatabaseCharacterSets(
+      google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2613,7 +5689,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -2642,7 +5718,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -2675,7 +5751,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -2714,7 +5790,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}

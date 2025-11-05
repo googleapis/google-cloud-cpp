@@ -118,6 +118,11 @@ class PredictionServiceLogging : public PredictionServiceStub {
       google::cloud::aiplatform::v1::GenerateContentRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse> EmbedContent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::EmbedContentRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

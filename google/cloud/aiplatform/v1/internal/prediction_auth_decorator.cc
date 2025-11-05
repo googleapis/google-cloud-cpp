@@ -197,6 +197,15 @@ PredictionServiceAuth::StreamGenerateContent(
   return child_->StreamGenerateContent(std::move(context), options, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceAuth::EmbedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->EmbedContent(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 PredictionServiceAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

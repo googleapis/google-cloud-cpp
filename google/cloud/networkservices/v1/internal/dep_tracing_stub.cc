@@ -265,6 +265,119 @@ DepServiceTracingStub::DeleteLbRouteExtension(
       child_->DeleteLbRouteExtension(context, options, request));
 }
 
+StatusOr<google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+DepServiceTracingStub::ListLbEdgeExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "ListLbEdgeExtensions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListLbEdgeExtensions(context, options, request));
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceTracingStub::GetLbEdgeExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "GetLbEdgeExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetLbEdgeExtension(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceTracingStub::AsyncCreateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "CreateLbEdgeExtension");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateLbEdgeExtension(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingStub::CreateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "CreateLbEdgeExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateLbEdgeExtension(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceTracingStub::AsyncUpdateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "UpdateLbEdgeExtension");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateLbEdgeExtension(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingStub::UpdateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "UpdateLbEdgeExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateLbEdgeExtension(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceTracingStub::AsyncDeleteLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "DeleteLbEdgeExtension");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteLbEdgeExtension(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingStub::DeleteLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.DepService", "DeleteLbEdgeExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteLbEdgeExtension(context, options, request));
+}
+
 StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
 DepServiceTracingStub::ListAuthzExtensions(
     grpc::ClientContext& context, Options const& options,
