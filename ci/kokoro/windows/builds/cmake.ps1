@@ -43,30 +43,66 @@ if ($missing.count -ge 1) {
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" ""
 $binary_dir="cmake-out/${BuildName}"
-# Install all dependencies from the vcpkg.json manifest file.
-# This mirrors the behavior of our GHA builds.
+
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+Write-Host -ForegroundColor Cyan "Dumping environment and config before vcpkg install..."
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+
+Write-Host -ForegroundColor Yellow "========= Dumping relevant environment variables ========="
+Get-ChildItem env: | Where-Object { $_.Name -like "VCPKG_*" -or $_.Name -like "CMAKE_*" } | Format-List
+Write-Host -ForegroundColor Yellow "=========================================================="
+
+$triplet_file = "${project_root}/ci/kokoro/windows/triplets/x64-windows-static.cmake"
+Write-Host -ForegroundColor Yellow "========= Dumping triplet file ($triplet_file) ========="
+if (Test-Path $triplet_file) {
+    Get-Content $triplet_file
+} else {
+    Write-Host -ForegroundColor Red "Triplet file not found at $triplet_file"
+}
+Write-Host -ForegroundColor Yellow "=========================================================="
+
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+Write-Host -ForegroundColor Cyan "Unsetting toxic VCPKG_ROOT and VCPKG_OVERLAY_TRIPLETS env vars..."
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+# The VCPKG_ROOT env var is mismatched with the vcpkg we are running,
+# which causes vcpkg to ignore other env vars.
+# We'll unset them both and pass the overlay-triplets path manually.
+Remove-Item env:VCPKG_ROOT -ErrorAction SilentlyContinue
+Remove-Item env:VCPKG_OVERLAY_TRIPLETS -ErrorAction SilentlyContinue
+
+# Define the correct path to our custom triplets, which your debug log confirmed
+$overlay_triplets_path = "${project_root}/ci/kokoro/windows/triplets"
+
 Write-Host -ForegroundColor Yellow "Attempting vcpkg install..."
-& "${vcpkg_root}/vcpkg.exe" install --triplet "${env:VCPKG_TRIPLET}"
+Write-Host -ForegroundColor Yellow "Explicitly setting --overlay-triplets=$overlay_triplets_path"
+
+# Install all dependencies, now passing the overlay path on the command line
+& "${vcpkg_root}/vcpkg.exe" install --triplet "${env:VCPKG_TRIPLET}" --overlay-triplets="${overlay_triplets_path}"
 
 # Manually check the exit code. vcpkg might not be throwing a terminating error.
 if ($LastExitCode -ne 0) {
     Write-Host -ForegroundColor Red "----------------------------------------------------------------"
     Write-Host -ForegroundColor Red "vcpkg install FAILED with exit code $LastExitCode."
-    Write-Host -ForegroundColor Red "Dumping vcpkg buildtree logs for crc32c..."
+    Write-Host -ForegroundColor Red "Dumping vcpkg buildtree logs for known failing packages..."
     Write-Host -ForegroundColor Red "----------------------------------------------------------------"
 
-    # Define the log files based on the error message
-    $log1 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-out.log"
-    $log2 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-dbg-CMakeCache.txt.log"
-    $log3 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-rel-CMakeCache.txt.log"
+    # We'll check logs for *all* known problematic packages
+    $problem_packages = @("crc32c", "yaml-cpp")
 
-    foreach ($logFile in @($log1, $log2, $log3)) {
-        if (Test-Path $logFile) {
-            Write-Host -ForegroundColor Red "========= Contents of $logFile ========="
-            Get-Content $logFile
-            Write-Host -ForegroundColor Red "========= End of $logFile ========="
-        } else {
-            Write-Host -ForegroundColor Yellow "Log file not found, skipping: $logFile"
+    foreach ($pkg in $problem_packages) {
+        Write-Host -ForegroundColor Magenta "--- Checking logs for $pkg ---"
+        $log1 = "${vcpkg_root}/buildtrees/${pkg}/config-x64-windows-static-out.log"
+        $log2 = "${vcpkg_root}/buildtrees/${pkg}/config-x64-windows-static-dbg-CMakeCache.txt.log"
+        $log3 = "${vcpkg_root}/buildtrees/${pkg}/config-x64-windows-static-rel-CMakeCache.txt.log"
+
+        foreach ($logFile in @($log1, $log2, $log3)) {
+            if (Test-Path $logFile) {
+                Write-Host -ForegroundColor Red "========= Contents of $logFile ========="
+                Get-Content $logFile
+                Write-Host -ForegroundColor Red "========= End of $logFile ========="
+            } else {
+                Write-Host -ForegroundColor Yellow "Log file not found, skipping: $logFile"
+            }
         }
     }
 
@@ -86,6 +122,7 @@ $cmake_args=@(
     "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
     "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
     "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
+    "-DVCPKG_OVERLAY_TRIPLETS=${project_root}/ci/kokoro/windows/triplets",
     "-DCMAKE_C_COMPILER=cl.exe",
     "-DCMAKE_CXX_COMPILER=cl.exe",
     "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
@@ -95,6 +132,17 @@ $cmake_args=@(
 
 # Configure CMake and create the build directory.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_args"
+
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+Write-Host -ForegroundColor Cyan "Dumping VCPKG_ROOT before removal..."
+Get-ChildItem env:VCPKG_ROOT -ErrorAction SilentlyContinue | Format-List
+# Unset the toxic env var *again* just before the main cmake call
+Write-Host -ForegroundColor Cyan "Removing VCPKG_ROOT..."
+Remove-Item env:VCPKG_ROOT -ErrorAction SilentlyContinue
+Write-Host -ForegroundColor Cyan "Dumping VCPKG_ROOT after removal..."
+Get-ChildItem env:VCPKG_ROOT -ErrorAction SilentlyContinue | Format-List
+Write-Host -ForegroundColor Cyan "--- END DEBUG LOGGING (VCPKG_ROOT) ---"
+
 cmake $cmake_args
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "cmake config failed with exit code $LastExitCode"
