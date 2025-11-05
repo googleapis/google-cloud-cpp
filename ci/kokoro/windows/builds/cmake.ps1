@@ -43,6 +43,24 @@ if ($missing.count -ge 1) {
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"
 $vcpkg_root = Install-Vcpkg "${project_root}" ""
 $binary_dir="cmake-out/${BuildName}"
+
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+Write-Host -ForegroundColor Cyan "Dumping environment and config before vcpkg install..."
+Write-Host -ForegroundColor Cyan "----------------------------------------------------------------"
+
+Write-Host -ForegroundColor Yellow "========= Dumping relevant environment variables ========="
+Get-ChildItem env: | Where-Object { $_.Name -like "VCPKG_*" -or $_.Name -like "CMAKE_*" } | Format-List
+Write-Host -ForegroundColor Yellow "=========================================================="
+
+$triplet_file = "${project_root}/ci/kokoro/windows/triplets/x64-windows-static.cmake"
+Write-Host -ForegroundColor Yellow "========= Dumping triplet file ($triplet_file) ========="
+if (Test-Path $triplet_file) {
+    Get-Content $triplet_file
+} else {
+    Write-Host -ForegroundColor Red "Triplet file not found at $triplet_file"
+}
+Write-Host -ForegroundColor Yellow "=========================================================="
+
 # Install all dependencies from the vcpkg.json manifest file.
 # This mirrors the behavior of our GHA builds.
 Write-Host -ForegroundColor Yellow "Attempting vcpkg install..."
@@ -52,21 +70,26 @@ Write-Host -ForegroundColor Yellow "Attempting vcpkg install..."
 if ($LastExitCode -ne 0) {
     Write-Host -ForegroundColor Red "----------------------------------------------------------------"
     Write-Host -ForegroundColor Red "vcpkg install FAILED with exit code $LastExitCode."
-    Write-Host -ForegroundColor Red "Dumping vcpkg buildtree logs for crc32c..."
+    Write-Host -ForegroundColor Red "Dumping vcpkg buildtree logs for known failing packages..."
     Write-Host -ForegroundColor Red "----------------------------------------------------------------"
 
-    # Define the log files based on the error message
-    $log1 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-out.log"
-    $log2 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-dbg-CMakeCache.txt.log"
-    $log3 = "${vcpkg_root}/buildtrees/crc32c/config-x64-windows-static-rel-CMakeCache.txt.log"
+    # We'll check logs for *all* known problematic packages
+    $problem_packages = @("crc32c", "yaml-cpp")
 
-    foreach ($logFile in @($log1, $log2, $log3)) {
-        if (Test-Path $logFile) {
-            Write-Host -ForegroundColor Red "========= Contents of $logFile ========="
-            Get-Content $logFile
-            Write-Host -ForegroundColor Red "========= End of $logFile ========="
-        } else {
-            Write-Host -ForegroundColor Yellow "Log file not found, skipping: $logFile"
+    foreach ($pkg in $problem_packages) {
+        Write-Host -ForegroundColor Magenta "--- Checking logs for $pkg ---"
+        $log1 = "${vcpkg_root}/buildtrees/${pkg}/config-x64-windows-static-out.log"
+        $log2 = "${vcpkg_root}/buildtrees/${pkg}/config-x64-windows-static-dbg-CMakeCache.txt.log"
+        $log3 = "${vcpkg_root}/buildtrees/${pkg}/config-x64-windows-static-rel-CMakeCache.txt.log"
+
+        foreach ($logFile in @($log1, $log2, $log3)) {
+            if (Test-Path $logFile) {
+                Write-Host -ForegroundColor Red "========= Contents of $logFile ========="
+                Get-Content $logFile
+                Write-Host -ForegroundColor Red "========= End of $logFile ========="
+            } else {
+                Write-Host -ForegroundColor Yellow "Log file not found, skipping: $logFile"
+            }
         }
     }
 
