@@ -230,6 +230,99 @@ DepServiceMetadata::DeleteLbRouteExtension(
   return child_->DeleteLbRouteExtension(context, options, request);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+DepServiceMetadata::ListLbEdgeExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListLbEdgeExtensions(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceMetadata::GetLbEdgeExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetLbEdgeExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncCreateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateLbEdgeExtension(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::CreateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLbEdgeExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncUpdateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("lb_edge_extension.name=",
+                   internal::UrlEncode(request.lb_edge_extension().name())));
+  return child_->AsyncUpdateLbEdgeExtension(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::UpdateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("lb_edge_extension.name=",
+                   internal::UrlEncode(request.lb_edge_extension().name())));
+  return child_->UpdateLbEdgeExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncDeleteLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteLbEdgeExtension(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::DeleteLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLbEdgeExtension(context, options, request);
+}
+
 StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
 DepServiceMetadata::ListAuthzExtensions(
     grpc::ClientContext& context, Options const& options,

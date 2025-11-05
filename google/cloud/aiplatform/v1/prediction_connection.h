@@ -237,6 +237,10 @@ class PredictionServiceConnection {
   StreamGenerateContent(
       google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 
+  virtual StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+  EmbedContent(
+      google::cloud::aiplatform::v1::EmbedContentRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

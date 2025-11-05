@@ -82,6 +82,9 @@ class OracleDatabaseConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListGiVersions(
       google::cloud::oracledatabase::v1::ListGiVersionsRequest request);
 
+  virtual google::cloud::Idempotency ListMinorVersions(
+      google::cloud::oracledatabase::v1::ListMinorVersionsRequest request);
+
   virtual google::cloud::Idempotency ListDbSystemShapes(
       google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request);
 
@@ -95,6 +98,10 @@ class OracleDatabaseConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CreateAutonomousDatabase(
       google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateAutonomousDatabase(
+      google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
           request);
 
   virtual google::cloud::Idempotency DeleteAutonomousDatabase(
@@ -131,6 +138,115 @@ class OracleDatabaseConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency RestartAutonomousDatabase(
       google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request);
+
+  virtual google::cloud::Idempotency SwitchoverAutonomousDatabase(
+      google::cloud::oracledatabase::v1::
+          SwitchoverAutonomousDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency FailoverAutonomousDatabase(
+      google::cloud::oracledatabase::v1::
+          FailoverAutonomousDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency ListOdbNetworks(
+      google::cloud::oracledatabase::v1::ListOdbNetworksRequest request);
+
+  virtual google::cloud::Idempotency GetOdbNetwork(
+      google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request);
+
+  virtual google::cloud::Idempotency CreateOdbNetwork(
+      google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteOdbNetwork(
+      google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListOdbSubnets(
+      google::cloud::oracledatabase::v1::ListOdbSubnetsRequest request);
+
+  virtual google::cloud::Idempotency GetOdbSubnet(
+      google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request);
+
+  virtual google::cloud::Idempotency CreateOdbSubnet(
+      google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteOdbSubnet(
+      google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request);
+
+  virtual google::cloud::Idempotency ListExadbVmClusters(
+      google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request);
+
+  virtual google::cloud::Idempotency GetExadbVmCluster(
+      google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateExadbVmCluster(
+      google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteExadbVmCluster(
+      google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateExadbVmCluster(
+      google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RemoveVirtualMachineExadbVmCluster(
+      google::cloud::oracledatabase::v1::
+          RemoveVirtualMachineExadbVmClusterRequest const& request);
+
+  virtual google::cloud::Idempotency ListExascaleDbStorageVaults(
+      google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::
+          CreateExascaleDbStorageVaultRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteExascaleDbStorageVault(
+      google::cloud::oracledatabase::v1::
+          DeleteExascaleDbStorageVaultRequest const& request);
+
+  virtual google::cloud::Idempotency ListDbSystemInitialStorageSizes(
+      google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesRequest
+          request);
+
+  virtual google::cloud::Idempotency ListDatabases(
+      google::cloud::oracledatabase::v1::ListDatabasesRequest request);
+
+  virtual google::cloud::Idempotency GetDatabase(
+      google::cloud::oracledatabase::v1::GetDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency ListPluggableDatabases(
+      google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest request);
+
+  virtual google::cloud::Idempotency GetPluggableDatabase(
+      google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListDbSystems(
+      google::cloud::oracledatabase::v1::ListDbSystemsRequest request);
+
+  virtual google::cloud::Idempotency GetDbSystem(
+      google::cloud::oracledatabase::v1::GetDbSystemRequest const& request);
+
+  virtual google::cloud::Idempotency CreateDbSystem(
+      google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteDbSystem(
+      google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request);
+
+  virtual google::cloud::Idempotency ListDbVersions(
+      google::cloud::oracledatabase::v1::ListDbVersionsRequest request);
+
+  virtual google::cloud::Idempotency ListDatabaseCharacterSets(
+      google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
           request);
 
   virtual google::cloud::Idempotency ListLocations(

@@ -398,6 +398,188 @@ DepServiceClient::DeleteLbRouteExtension(
   return connection_->DeleteLbRouteExtension(operation);
 }
 
+StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceClient::ListLbEdgeExtensions(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListLbEdgeExtensions(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceClient::ListLbEdgeExtensions(
+    google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLbEdgeExtensions(std::move(request));
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceClient::GetLbEdgeExtension(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetLbEdgeExtensionRequest request;
+  request.set_name(name);
+  return connection_->GetLbEdgeExtension(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceClient::GetLbEdgeExtension(
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLbEdgeExtension(request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceClient::CreateLbEdgeExtension(
+    std::string const& parent,
+    google::cloud::networkservices::v1::LbEdgeExtension const&
+        lb_edge_extension,
+    std::string const& lb_edge_extension_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest request;
+  request.set_parent(parent);
+  *request.mutable_lb_edge_extension() = lb_edge_extension;
+  request.set_lb_edge_extension_id(lb_edge_extension_id);
+  return connection_->CreateLbEdgeExtension(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceClient::CreateLbEdgeExtension(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkservices::v1::LbEdgeExtension const&
+        lb_edge_extension,
+    std::string const& lb_edge_extension_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest request;
+  request.set_parent(parent);
+  *request.mutable_lb_edge_extension() = lb_edge_extension;
+  request.set_lb_edge_extension_id(lb_edge_extension_id);
+  return connection_->CreateLbEdgeExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceClient::CreateLbEdgeExtension(
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLbEdgeExtension(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceClient::CreateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLbEdgeExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceClient::CreateLbEdgeExtension(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLbEdgeExtension(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceClient::UpdateLbEdgeExtension(
+    google::cloud::networkservices::v1::LbEdgeExtension const&
+        lb_edge_extension,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest request;
+  *request.mutable_lb_edge_extension() = lb_edge_extension;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateLbEdgeExtension(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceClient::UpdateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::LbEdgeExtension const&
+        lb_edge_extension,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest request;
+  *request.mutable_lb_edge_extension() = lb_edge_extension;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateLbEdgeExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceClient::UpdateLbEdgeExtension(
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLbEdgeExtension(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceClient::UpdateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLbEdgeExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceClient::UpdateLbEdgeExtension(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLbEdgeExtension(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceClient::DeleteLbEdgeExtension(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest request;
+  request.set_name(name);
+  return connection_->DeleteLbEdgeExtension(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceClient::DeleteLbEdgeExtension(NoAwaitTag, std::string const& name,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest request;
+  request.set_name(name);
+  return connection_->DeleteLbEdgeExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceClient::DeleteLbEdgeExtension(
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLbEdgeExtension(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceClient::DeleteLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLbEdgeExtension(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceClient::DeleteLbEdgeExtension(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLbEdgeExtension(operation);
+}
+
 StreamRange<google::cloud::networkservices::v1::AuthzExtension>
 DepServiceClient::ListAuthzExtensions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

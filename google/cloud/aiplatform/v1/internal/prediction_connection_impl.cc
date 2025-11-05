@@ -279,6 +279,21 @@ PredictionServiceConnectionImpl::StreamGenerateContent(
       });
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceConnectionImpl::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EmbedContent(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+        return stub_->EmbedContent(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 PredictionServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

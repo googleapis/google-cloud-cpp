@@ -69,6 +69,15 @@ FeatureOnlineStoreServiceClient::AsyncFeatureViewDirectWrite(Options opts) {
   return connection_->AsyncFeatureViewDirectWrite();
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceClient::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateFetchAccessToken(request);
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

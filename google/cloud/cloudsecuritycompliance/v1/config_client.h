@@ -87,13 +87,14 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Lists all Frameworks (both Built-in and Custom) available within a given
-  /// parent resource. This method supports pagination.
-  /// The latest major version of each Framework is returned.
+  /// Lists the frameworks (both built-in and custom) that are available within
+  /// the parent resource. The latest major version of each framework is
+  /// returned.
+  /// This method supports pagination.
   ///
   /// @param parent  Required. The parent resource name, in the format
   ///  `organizations/{organization}/locations/{location}`.
-  ///  Only global location is supported.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -116,8 +117,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L184}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L187}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -125,9 +126,10 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Lists all Frameworks (both Built-in and Custom) available within a given
-  /// parent resource. This method supports pagination.
-  /// The latest major version of each Framework is returned.
+  /// Lists the frameworks (both built-in and custom) that are available within
+  /// the parent resource. The latest major version of each framework is
+  /// returned.
+  /// This method supports pagination.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,8 +159,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L184}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L187}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -168,17 +170,15 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Gets details of a single Framework.
-  /// This method retrieves a Framework resource, which can be either Built-in or
-  /// Custom, identified by its name.
+  /// Gets details about a framework.
+  /// This method retrieves the latest major version of the framework.
   ///
-  /// By default, the latest major version of the Framework is returned.
-  /// A specific major version can be retrieved by specifying the
-  /// `major_revision_id` in the request.
+  /// To retrieve a specific major version, include `major_revision_id` in
+  /// the request.
   ///
-  /// @param name  Required. The name of the framework to retrieve.
-  ///  Format:
-  ///  organizations/{organization}/locations/{location}/frameworks/{framework_id}
+  /// @param name  Required. The name of the framework to retrieve, in the format
+  ///  `organizations/{organization}/locations/{location}/frameworks/{framework_id}`
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -192,8 +192,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L219}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L222}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework> GetFramework(
@@ -201,13 +201,11 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Gets details of a single Framework.
-  /// This method retrieves a Framework resource, which can be either Built-in or
-  /// Custom, identified by its name.
+  /// Gets details about a framework.
+  /// This method retrieves the latest major version of the framework.
   ///
-  /// By default, the latest major version of the Framework is returned.
-  /// A specific major version can be retrieved by specifying the
-  /// `major_revision_id` in the request.
+  /// To retrieve a specific major version, include `major_revision_id` in
+  /// the request.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -228,8 +226,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L219}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L222}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework> GetFramework(
@@ -239,16 +237,16 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Creates a new Framework with type `Custom` under a given parent resource.
-  /// Frameworks with type `Built-in` are managed by Google and cannot be created
-  /// through this API.
+  /// Creates a custom framework in a given parent resource.
+  /// You can't create built-in frameworks because those are managed by
+  /// Google.
   ///
   /// @param parent  Required. The parent resource name, in the format
   ///  `organizations/{organization}/locations/{location}`.
-  /// @param framework  Required. The resource being created
-  /// @param framework_id  Required. ID of the framework.
-  ///  This is not the full name of the framework.
-  ///  This is the last part of the full name of the framework.
+  ///  The only supported location is `global`.
+  /// @param framework  Required. The resource being created.
+  /// @param framework_id  Required. The identifier (ID) of the framework. The ID is not the full name
+  ///  of the framework; it's the last part of the full name of the framework.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -262,8 +260,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -274,9 +272,9 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Creates a new Framework with type `Custom` under a given parent resource.
-  /// Frameworks with type `Built-in` are managed by Google and cannot be created
-  /// through this API.
+  /// Creates a custom framework in a given parent resource.
+  /// You can't create built-in frameworks because those are managed by
+  /// Google.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -297,8 +295,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -309,25 +307,25 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Updates a single Framework.
-  /// This method allows for partial updates of a Framework resource. The fields
-  /// to be updated are specified using the `update_mask`.
+  /// Updates a custom framework.
+  /// This method allows for partial updates of a framework. Use the
+  /// `update_mask` to specify which fields to update. Consider the following:
   ///
-  /// - If an `update_mask` is provided, only the fields specified in the mask
-  /// will be updated.
-  /// - If no `update_mask` is provided, all fields present in the request's
-  /// `framework` body will be used to overwrite the existing resource.
+  /// - If you provide an `update_mask`, only the fields that are specified
+  /// in the mask are updated.
+  /// - If you don't provide an `update_mask`, all the fields that are present
+  /// in the request's `framework` body are used to overwrite the existing
+  /// resource.
   ///
-  /// This operation can only be performed on Frameworks with type `CUSTOM`.
-  /// A successful update will result in a new version of the Framework.
+  /// You can only update frameworks with the `CUSTOM` type.
+  /// A successful update creates a new version of the framework.
   ///
-  /// @param framework  Required. The resource being updated
-  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
-  ///  Framework resource by the update.
-  ///  The fields specified in the update_mask are relative to the resource, not
-  ///  the full request. A field will be overwritten if it is in the mask. If the
-  ///  user does not provide a mask then all fields present in the request will be
-  ///  overwritten.
+  /// @param framework  Required. The resource that is being updated.
+  /// @param update_mask  Optional. A field mask is used to specify the fields to be overwritten in
+  ///  the framework resource by the update. The fields specified in the
+  ///  `update_mask` are relative to the resource, not the full request. A field
+  ///  is overwritten if it is in the mask. If you don't provide a mask then all
+  ///  fields present in the request will be overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -341,8 +339,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L256}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L259}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -352,17 +350,18 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Updates a single Framework.
-  /// This method allows for partial updates of a Framework resource. The fields
-  /// to be updated are specified using the `update_mask`.
+  /// Updates a custom framework.
+  /// This method allows for partial updates of a framework. Use the
+  /// `update_mask` to specify which fields to update. Consider the following:
   ///
-  /// - If an `update_mask` is provided, only the fields specified in the mask
-  /// will be updated.
-  /// - If no `update_mask` is provided, all fields present in the request's
-  /// `framework` body will be used to overwrite the existing resource.
+  /// - If you provide an `update_mask`, only the fields that are specified
+  /// in the mask are updated.
+  /// - If you don't provide an `update_mask`, all the fields that are present
+  /// in the request's `framework` body are used to overwrite the existing
+  /// resource.
   ///
-  /// This operation can only be performed on Frameworks with type `CUSTOM`.
-  /// A successful update will result in a new version of the Framework.
+  /// You can only update frameworks with the `CUSTOM` type.
+  /// A successful update creates a new version of the framework.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -383,8 +382,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L236}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L256}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L259}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -395,17 +394,17 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Deletes a single Custom Framework, including all its minor and
-  /// minor revisions.
+  /// Deletes a custom framework, including all its major and
+  /// minor revisions. Consider the following:
   ///
-  /// - This operation can only be performed on Frameworks with type `CUSTOM`.
-  ///   Built-in Frameworks cannot be deleted.
-  /// - The Framework cannot be deleted if it is currently deployed on any
-  ///   resource.
-  /// - This action is permanent and cannot be undone.
+  /// - You can't delete built-in frameworks. You can only delete frameworks
+  ///   with type `CUSTOM`.
+  /// - You can't delete frameworks that are deployed to a resource.
+  /// - You can't restore a deleted framework. This action is permanent.
   ///
-  /// @param name  Required. Name of the resource, in the format
+  /// @param name  Required. The name of the resource, in the format
   ///  `organizations/{organization}/locations/{location}/frameworks/{framework}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -417,21 +416,20 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L274}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L276}
   ///
   // clang-format on
   Status DeleteFramework(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
-  /// Deletes a single Custom Framework, including all its minor and
-  /// minor revisions.
+  /// Deletes a custom framework, including all its major and
+  /// minor revisions. Consider the following:
   ///
-  /// - This operation can only be performed on Frameworks with type `CUSTOM`.
-  ///   Built-in Frameworks cannot be deleted.
-  /// - The Framework cannot be deleted if it is currently deployed on any
-  ///   resource.
-  /// - This action is permanent and cannot be undone.
+  /// - You can't delete built-in frameworks. You can only delete frameworks
+  ///   with type `CUSTOM`.
+  /// - You can't delete frameworks that are deployed to a resource.
+  /// - You can't restore a deleted framework. This action is permanent.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -450,7 +448,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L274}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L276}
   ///
   // clang-format on
   Status DeleteFramework(
@@ -460,12 +458,14 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Lists all CloudControls (both Built-in and Custom) available within a given
-  /// parent resource. This method supports pagination.
-  /// The latest major version of each CloudControl is returned.
+  /// Lists the cloud controls (both built-in and custom) that are available
+  /// in a given parent resource. The latest major version of each cloud control
+  /// is returned.
+  /// This method supports pagination.
   ///
   /// @param parent  Required. The parent resource name, in the format
   ///  `organizations/{organization}/locations/{location}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -488,8 +488,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L286}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L289}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -497,9 +497,10 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Lists all CloudControls (both Built-in and Custom) available within a given
-  /// parent resource. This method supports pagination.
-  /// The latest major version of each CloudControl is returned.
+  /// Lists the cloud controls (both built-in and custom) that are available
+  /// in a given parent resource. The latest major version of each cloud control
+  /// is returned.
+  /// This method supports pagination.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -529,8 +530,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L286}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L289}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -541,16 +542,17 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Gets details of a single CloudControl.
-  /// This method retrieves a CloudControl resource, which can be either Built-in
-  /// or Custom, identified by its name.
+  /// Gets details about a cloud control.
+  /// This method retrieves the latest major version of a cloud control that
+  /// you identify by name.
   ///
-  /// By default, the latest major version of the CloudControl is returned.
-  /// A specific major version can be retrieved by specifying the
-  /// `major_revision_id` in the request.
+  /// By default, the latest major version of the cloud control is returned.
+  /// To retrieve a specific major version, include `major_revision_id` in
+  /// the request.
   ///
-  /// @param name  Required. The name of the cloudcontrol to retrieve in the format:
-  ///  organizations/{organization}/locations/{location}/cloudControls/{cloud_control}
+  /// @param name  Required. The name of the cloud control to retrieve, in the format
+  ///  `organizations/{organization}/locations/{location}/cloudControls/{cloud_control}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -564,8 +566,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L323}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L328}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -573,13 +575,13 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Gets details of a single CloudControl.
-  /// This method retrieves a CloudControl resource, which can be either Built-in
-  /// or Custom, identified by its name.
+  /// Gets details about a cloud control.
+  /// This method retrieves the latest major version of a cloud control that
+  /// you identify by name.
   ///
-  /// By default, the latest major version of the CloudControl is returned.
-  /// A specific major version can be retrieved by specifying the
-  /// `major_revision_id` in the request.
+  /// By default, the latest major version of the cloud control is returned.
+  /// To retrieve a specific major version, include `major_revision_id` in
+  /// the request.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -600,8 +602,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L323}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L328}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -612,16 +614,18 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Creates a new CloudControl with type `Custom` under a given parent
-  /// resource. `Built-in` CloudControls are managed by Google and cannot be
-  /// created through this API.
+  /// Creates a custom cloud control in a given parent
+  /// resource.
+  /// You can't create built-in cloud controls because those are managed by
+  /// Google.
   ///
   /// @param parent  Required. The parent resource name, in the format
   ///  `organizations/{organization}/locations/{location}`.
-  /// @param cloud_control  Required. The resource being created
-  /// @param cloud_control_id  Required. ID of the CloudControl.
-  ///  This is the last segment of the CloudControl resource name.
-  ///  Format: `^[a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]$`.
+  ///  The only supported location is `global`.
+  /// @param cloud_control  Required. The cloud control that's being created.
+  /// @param cloud_control_id  Required. The identifier for the cloud control, which is the last segment
+  ///  of the cloud control name. The format is
+  ///  `^[a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]$`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -635,8 +639,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L335}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L345}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -648,9 +652,10 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Creates a new CloudControl with type `Custom` under a given parent
-  /// resource. `Built-in` CloudControls are managed by Google and cannot be
-  /// created through this API.
+  /// Creates a custom cloud control in a given parent
+  /// resource.
+  /// You can't create built-in cloud controls because those are managed by
+  /// Google.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -671,8 +676,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L335}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L345}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -682,29 +687,34 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Updates a single CloudControl.
-  /// This method allows for partial updates of a Custom CloudControl resource.
-  /// Built-in CloudControls cannot be updated.
+  /// Updates a custom cloud control.
+  /// This method allows for partial updates of a cloud control. Use the
+  /// `update_mask` to specify which fields to update. Consider the following:
   ///
-  /// - If an `update_mask` is provided, only the fields specified in the mask
-  /// will be updated.
-  /// - If no `update_mask` is provided, all fields present in the request's
-  /// `cloud_control` body will be used to overwrite the existing resource.
+  /// - If you provide an `update_mask`, only the fields that are specified
+  /// in the mask are updated.
+  /// - If you don't provide an `update_mask`, all the fields that are present
+  /// in the request's `cloud_control` body are used to overwrite the existing
+  /// resource.
   ///
-  /// A successful update will result in a new version of the CloudControl.
+  /// You can only update cloud controls with the `CUSTOM` type.
+  /// A successful update creates a new version of the cloud control.
   ///
-  /// @param cloud_control  Required. The resource being updated
-  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
-  ///  CloudControl resource by the update.
-  ///  The fields specified in the update_mask are relative to the resource, not
-  ///  the full request. A field will be overwritten if it is in the mask. If the
-  ///  user does not provide a mask then all fields present in the request will be
-  ///  overwritten. The fields that can be updated are:
-  ///  1. Display_name
-  ///  2. Description
-  ///  3. Parameters
-  ///  4. Rules
-  ///  5. ParameterSpec.
+  /// @param cloud_control  Required. The cloud control that you're updating.
+  /// @param update_mask  Optional. Use a field mask to specify the fields to be overwritten in the
+  ///  cloud control during the update.
+  ///  The fields that you specify in the `update_mask` are relative to the
+  ///  cloud control, not the full request. A field is overwritten if it is in
+  ///  the mask. If you don't provide a mask, all fields in the request
+  ///  are updated.
+  ///  @n
+  ///  You can update the following fields:
+  ///  @n
+  ///  - Display name
+  ///  - Description
+  ///  - Parameters
+  ///  - Rules
+  ///  - Parameter specification
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -718,8 +728,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L355}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L366}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -730,16 +740,18 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Updates a single CloudControl.
-  /// This method allows for partial updates of a Custom CloudControl resource.
-  /// Built-in CloudControls cannot be updated.
+  /// Updates a custom cloud control.
+  /// This method allows for partial updates of a cloud control. Use the
+  /// `update_mask` to specify which fields to update. Consider the following:
   ///
-  /// - If an `update_mask` is provided, only the fields specified in the mask
-  /// will be updated.
-  /// - If no `update_mask` is provided, all fields present in the request's
-  /// `cloud_control` body will be used to overwrite the existing resource.
+  /// - If you provide an `update_mask`, only the fields that are specified
+  /// in the mask are updated.
+  /// - If you don't provide an `update_mask`, all the fields that are present
+  /// in the request's `cloud_control` body are used to overwrite the existing
+  /// resource.
   ///
-  /// A successful update will result in a new version of the CloudControl.
+  /// You can only update cloud controls with the `CUSTOM` type.
+  /// A successful update creates a new version of the cloud control.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -760,8 +772,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L345}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L355}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L366}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -771,17 +783,18 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// Deletes a single Custom CloudControl, including all its
-  /// major and minor revisions.
+  /// Deletes a custom cloud control, including all its
+  /// major and minor revisions. Consider the following:
   ///
-  /// - This operation can only be performed on CloudControls with type `CUSTOM`.
-  ///   Built-in CloudControls cannot be deleted.
-  /// - The CloudControl cannot be deleted if any of its revisions are currently
-  ///   referenced by any Framework.
-  /// - This action is permanent and cannot be undone.
+  /// - You can't delete built-in cloud controls. You can only delete cloud
+  ///   controls with type `CUSTOM`.
+  /// - You can't delete cloud controls if any of the versions are referenced
+  ///   by a framework.
+  /// - You can't restore a deleted cloud control. This action is permanent.
   ///
-  /// @param name  Required. Name of the resource, in the format
+  /// @param name  Required. The name of the cloud control to delete, in the format
   ///  `organizations/{organization}/locations/{location}/CloudControls/{CloudControl}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -793,21 +806,21 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L375}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L389}
   ///
   // clang-format on
   Status DeleteCloudControl(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
-  /// Deletes a single Custom CloudControl, including all its
-  /// major and minor revisions.
+  /// Deletes a custom cloud control, including all its
+  /// major and minor revisions. Consider the following:
   ///
-  /// - This operation can only be performed on CloudControls with type `CUSTOM`.
-  ///   Built-in CloudControls cannot be deleted.
-  /// - The CloudControl cannot be deleted if any of its revisions are currently
-  ///   referenced by any Framework.
-  /// - This action is permanent and cannot be undone.
+  /// - You can't delete built-in cloud controls. You can only delete cloud
+  ///   controls with type `CUSTOM`.
+  /// - You can't delete cloud controls if any of the versions are referenced
+  ///   by a framework.
+  /// - You can't restore a deleted cloud control. This action is permanent.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -826,7 +839,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L375}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L389}
   ///
   // clang-format on
   Status DeleteCloudControl(google::cloud::cloudsecuritycompliance::v1::
@@ -1058,7 +1071,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1087,7 +1100,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1120,7 +1133,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -1159,7 +1172,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
