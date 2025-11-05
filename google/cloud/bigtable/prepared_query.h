@@ -47,13 +47,12 @@ class PreparedQuery {
   PreparedQuery(InstanceResource instance, SqlStatement sql_statement,
                 std::shared_ptr<bigtable_internal::QueryPlan> query_plan)
       : instance_(std::move(instance)),
-        sql_statement_(
-            std::make_shared<SqlStatement>(std::move(sql_statement))),
+        sql_statement_(std::move(sql_statement)),
         query_plan_(std::move(query_plan)) {}
 
  private:
   InstanceResource instance_;
-  std::shared_ptr<SqlStatement> sql_statement_;
+  SqlStatement sql_statement_;
   std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
 };
 

@@ -43,8 +43,7 @@ class BoundQuery {
   BoundQuery& operator=(BoundQuery&&) = default;
 
   // Accessors
-  std::string prepared_query() const;
-  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> response() const;
   std::unordered_map<std::string, Value> const& parameters() const;
   InstanceResource const& instance() const;
 
@@ -54,19 +53,16 @@ class BoundQuery {
   friend class PreparedQuery;
   BoundQuery(InstanceResource instance,
              std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
-             std::unordered_map<std::string, Value> parameters,
-             std::shared_ptr<SqlStatement> sql_statement)
+             std::unordered_map<std::string, Value> parameters)
       : instance_(std::move(instance)),
         query_plan_(std::move(query_plan)),
-        parameters_(std::move(parameters)),
-        sql_statement_(std::move(sql_statement)) {}
+        parameters_(std::move(parameters)) {}
 
   InstanceResource instance_;
   // Copy of the query_plan_ contained by the PreparedQuery that created
   // this BoundQuery.
   std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
   std::unordered_map<std::string, Value> parameters_;
-  std::shared_ptr<SqlStatement> sql_statement_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
