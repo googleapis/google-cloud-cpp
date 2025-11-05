@@ -72,7 +72,7 @@ TEST(Client, AsyncPrepareQuery) {
   auto conn_mock = std::make_shared<bigtable_mocks::MockDataConnection>();
   InstanceResource instance(Project("the-project"), "the-instance");
   SqlStatement sql("SELECT * FROM the-table");
-  EXPECT_CALL(*conn_mock, PrepareQuery)
+  EXPECT_CALL(*conn_mock, AsyncPrepareQuery)
       .WillOnce([&](PrepareQueryParams const& params) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
@@ -88,7 +88,9 @@ TEST(Client, AsyncPrepareQuery) {
         auto query_plan = bigtable_internal::QueryPlan::Create(
             CompletionQueue(fake_cq_impl), std::move(pq_response),
             std::move(refresh_fn));
-        return bigtable::PreparedQuery(instance, sql, std::move(query_plan));
+        StatusOr<bigtable::PreparedQuery> result =
+            bigtable::PreparedQuery(instance, sql, std::move(query_plan));
+        return make_ready_future(result);
       });
   Client client(std::move(conn_mock));
   auto prepared_query = client.AsyncPrepareQuery(instance, sql);
