@@ -218,6 +218,13 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
       param_info = QueryParameterInfo{
           field.cpp_type(), absl::StrCat("request.", field.name(), "()"),
           false};
+      // TODO(#15707): Most services will error if this is set at all. Skip it
+      //  until a service we generate using REST transport requires it.
+      if (field.name() == "return_partial_success" &&
+          field.containing_type()->full_name() ==
+              "google.longrunning.ListOperationsRequest") {
+        param_info->check_presence = true;
+      }
     } else {
       // But also consider protobuf well known types that wrap simple types.
       auto iter = kSupportedWellKnownValueTypes->find(
