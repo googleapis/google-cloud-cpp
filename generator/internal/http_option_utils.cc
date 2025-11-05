@@ -220,7 +220,8 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
         field.containing_type()->full_name() ==
             "google.longrunning.ListOperationsRequest") {
       return param_info;
-    } else if (field.cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+    }
+    if (field.cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
       param_info = QueryParameterInfo{
           field.cpp_type(), absl::StrCat("request.", field.name(), "()"),
           false};
