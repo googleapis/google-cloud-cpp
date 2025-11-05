@@ -14,8 +14,9 @@ the project itself, [git][git-docs], [GitHub][github-guides], and
 
 First, ensure that our release includes a `googleapis` commit that adheres to
 our [update policy][googleapis-sha-update-policy]. This generally means aiming
-for a commit that is 5-7 days old. You may need to run the `renovate.sh` script
-with a specific `COMMIT` and `COMMIT_DATE` to select the desired commit.
+for a commit that is 5-7 days old. You may need to run the `external/googleapis/renovate.sh` 
+script with a specific `COMMIT` and `COMMIT_DATE` to select the desired commit. By default, 
+this script uses the latest commit.
 
 Once the `googleapis` commit has been updated in our repository and the change
 is merged, run the `release/publish-bcr.sh` script using the same selected
