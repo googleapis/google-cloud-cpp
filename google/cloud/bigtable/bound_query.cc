@@ -23,6 +23,10 @@ StatusOr<std::string> BoundQuery::prepared_query() const {
   return query_plan_->prepared_query();
 }
 
+StatusOr<google::bigtable::v2::PrepareQueryResponse> BoundQuery::response() {
+  return query_plan_->response();
+}
+
 StatusOr<google::bigtable::v2::ResultSetMetadata> BoundQuery::metadata() const {
   return query_plan_->metadata();
 }

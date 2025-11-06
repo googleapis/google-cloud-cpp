@@ -96,6 +96,11 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "fail");
 }
 
+Status QueryPlanError() {
+  return Status(StatusCode::kFailedPrecondition,
+                "oops! PREPARED_QUERY_EXPIRED");
+}
+
 bigtable::SingleRowMutation IdempotentMutation(std::string const& row_key) {
   return bigtable::SingleRowMutation(
       row_key, {bigtable::SetCell("fam", "col", ms(0), "val")});
@@ -2947,7 +2952,7 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST_F(DataConnectionTest, ExecuteQuery) {
+TEST_F(DataConnectionTest, ExecuteQuerySuccessWithTransientErrors) {
   auto mock = std::make_shared<MockBigtableStub>();
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
   auto mock_bg = std::make_unique<MockBackgroundThreads>();
@@ -2979,6 +2984,18 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
   EXPECT_CALL(*mock, ExecuteQuery)
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const&) {
+        auto error_stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*error_stream, Read).WillOnce(Return(TransientError()));
+        return error_stream;
+      })
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const&) {
+        auto error_stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*error_stream, Read).WillOnce(Return(TransientError()));
+        return error_stream;
+      })
       .WillOnce([&](auto, auto const&,
                     google::bigtable::v2::ExecuteQueryRequest const& request) {
         EXPECT_EQ(request.app_profile_id(), kAppProfile);
@@ -3012,17 +3029,17 @@ TEST_F(DataConnectionTest, ExecuteQuery) {
   Project p("test-project");
   bigtable::SqlStatement statement("SELECT * FROM the-table");
   bigtable::InstanceResource instance(p, "test-instance");
-  std::unordered_map<std::string, bigtable::Value> parameters;
   auto query_plan =
       QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
                         std::move(refresh_fn));
   auto prepared_query =
       bigtable::PreparedQuery(instance, statement, std::move(query_plan));
-  auto bq = prepared_query.BindParameters(parameters);
+  auto bq = prepared_query.BindParameters({});
   bigtable::ExecuteQueryParams params{std::move(bq)};
   auto row_stream = conn->ExecuteQuery(std::move(params));
   std::vector<StatusOr<bigtable::QueryRow>> rows;
-  for (auto const& row : *std::move(row_stream)) {
+  for (auto const& row : row_stream) {
+    ASSERT_STATUS_OK(row);
     rows.push_back(row);
   }
 
@@ -3055,13 +3072,9 @@ TEST_F(DataConnectionTest, ExecuteQueryFailure) {
   auto query_plan =
       QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
                         std::move(refresh_fn));
-  EXPECT_CALL(*mock, ExecuteQuery)
-      .WillOnce([&](auto, auto const&,
-                    google::bigtable::v2::ExecuteQueryRequest const& request) {
-        EXPECT_EQ(request.app_profile_id(), kAppProfile);
-        EXPECT_EQ(request.instance_name(),
-                  "projects/test-project/instances/test-instance");
 
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .WillOnce([&](auto, auto const&, auto const&) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
         return stream;
@@ -3072,17 +3085,52 @@ TEST_F(DataConnectionTest, ExecuteQueryFailure) {
   Project p("test-project");
   bigtable::SqlStatement statement("SELECT key, val FROM t");
   bigtable::InstanceResource instance(p, "test-instance");
-  std::unordered_map<std::string, bigtable::Value> parameters;
   bigtable::PreparedQuery pq(instance, statement, std::move(query_plan));
-  auto bq = pq.BindParameters(parameters);
+  auto bq = pq.BindParameters({});
 
-  bigtable::ExecuteQueryParams params{std::move(bq)};
-  auto row_stream = conn->ExecuteQuery(params);
+  auto row_stream = conn->ExecuteQuery({std::move(bq)});
+  for (auto row : row_stream) {
+    EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+  }
+  fake_cq_impl->SimulateCompletion(false);
+}
 
-  auto it = row_stream->begin();
-  ASSERT_NE(it, row_stream->end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
-  EXPECT_EQ(++it, row_stream->end());
+TEST_F(DataConnectionTest, ExecuteQueryOperationRetryExhausted) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+  auto refresh_fn = []() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+            Status{StatusCode::kUnimplemented, "not implemented"}));
+  };
+  v2::PrepareQueryResponse pq_response;
+  auto query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
+                        std::move(refresh_fn));
+
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .WillRepeatedly([&](auto, auto const&, auto const&) {
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(TransientError()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  Project p("test-project");
+  bigtable::SqlStatement statement("SELECT key, val FROM t");
+  bigtable::InstanceResource instance(p, "test-instance");
+  bigtable::PreparedQuery pq(instance, statement, std::move(query_plan));
+  auto bq = pq.BindParameters({});
+
+  auto row_stream = conn->ExecuteQuery({std::move(bq)});
+  for (auto row : row_stream) {
+    EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
+  }
   fake_cq_impl->SimulateCompletion(false);
 }
 
