@@ -127,7 +127,8 @@ $cmake_args=@(
     "-DCMAKE_CXX_COMPILER=cl.exe",
     "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
     "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON",
-    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>"
+    "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>",
+    "-DGOOGLE_CLOUD_CPP_ENABLE=universe_domain"
 )
 
 # Configure CMake and create the build directory.
