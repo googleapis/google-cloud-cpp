@@ -19,8 +19,7 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<google::bigtable::v2::PrepareQueryResponse> BoundQuery::response()
-    const {
+StatusOr<google::bigtable::v2::PrepareQueryResponse> BoundQuery::response() {
   return query_plan_->response();
 }
 

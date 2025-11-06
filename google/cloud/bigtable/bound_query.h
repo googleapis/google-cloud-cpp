@@ -48,7 +48,7 @@ class BoundQuery {
   BoundQuery& operator=(BoundQuery&&) = default;
 
   // Accessors
-  StatusOr<google::bigtable::v2::PrepareQueryResponse> response() const;
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> response();
   std::unordered_map<std::string, Value> const& parameters() const;
   InstanceResource const& instance() const;
 
