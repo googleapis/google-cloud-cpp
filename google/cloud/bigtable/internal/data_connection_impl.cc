@@ -840,7 +840,7 @@ StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
     bigtable::ExecuteQueryParams const& params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   StatusOr<google::bigtable::v2::ResultSetMetadata> status_or_metadata =
-      params.bound_query.metadata();
+      params.bound_query.response()->metadata();
   google::bigtable::v2::ExecuteQueryRequest request =
       params.bound_query.ToRequestProto();
   request.set_app_profile_id(app_profile_id(*current));

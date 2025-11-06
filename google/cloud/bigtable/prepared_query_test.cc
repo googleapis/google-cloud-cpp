@@ -33,8 +33,14 @@ TEST(PreparedQuery, DefaultConstructor) {
       "SELECT * FROM my_table WHERE col1 = @val1 and col2 = @val2;");
   SqlStatement sql_statement(statement_contents);
   PrepareQueryResponse response;
-  PreparedQuery q(CompletionQueue(fake_cq_impl), instance, sql_statement,
-                  response);
+  auto refresh_fn = [&response]() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(response));
+  };
+  auto query_plan = bigtable_internal::QueryPlan::Create(
+      CompletionQueue(fake_cq_impl), std::move(response),
+      std::move(refresh_fn));
+  PreparedQuery q(instance, sql_statement, query_plan);
   EXPECT_EQ(instance.FullName(), q.instance().FullName());
   EXPECT_EQ(statement_contents, q.sql_statement().sql());
 

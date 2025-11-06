@@ -26,6 +26,7 @@ BoundQuery PreparedQuery::BindParameters(
 }
 
 InstanceResource const& PreparedQuery::instance() const { return instance_; }
+
 SqlStatement const& PreparedQuery::sql_statement() const {
   return sql_statement_;
 }
