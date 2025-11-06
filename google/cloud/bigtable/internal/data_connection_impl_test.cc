@@ -96,11 +96,6 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "fail");
 }
 
-Status QueryPlanError() {
-  return Status(StatusCode::kFailedPrecondition,
-                "oops! PREPARED_QUERY_EXPIRED");
-}
-
 bigtable::SingleRowMutation IdempotentMutation(std::string const& row_key) {
   return bigtable::SingleRowMutation(
       row_key, {bigtable::SetCell("fam", "col", ms(0), "val")});
