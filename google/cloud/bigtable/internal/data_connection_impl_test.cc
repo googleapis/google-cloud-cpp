@@ -3084,7 +3084,7 @@ TEST_F(DataConnectionTest, ExecuteQueryFailure) {
   auto bq = pq.BindParameters({});
 
   auto row_stream = conn->ExecuteQuery({std::move(bq)});
-  for (auto row : row_stream) {
+  for (auto const& row : row_stream) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
   }
   fake_cq_impl->SimulateCompletion(false);
@@ -3123,7 +3123,7 @@ TEST_F(DataConnectionTest, ExecuteQueryOperationRetryExhausted) {
   auto bq = pq.BindParameters({});
 
   auto row_stream = conn->ExecuteQuery({std::move(bq)});
-  for (auto row : row_stream) {
+  for (auto const& row : row_stream) {
     EXPECT_THAT(row, StatusIs(StatusCode::kUnavailable));
   }
   fake_cq_impl->SimulateCompletion(false);
