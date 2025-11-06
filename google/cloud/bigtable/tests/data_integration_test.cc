@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -184,6 +185,45 @@ TEST_P(DataIntegrationTest, TableReadRowTest) {
   std::vector<Cell> actual;
   actual.emplace_back(row_cell->second.cells().at(0));
   CheckEqualUnordered(expected, actual);
+}
+
+TEST_P(DataIntegrationTest, ClientQueryTest) {
+  auto table = GetTable(GetParam());
+  std::string const row_key = "row-key-for-client-query-test";
+  std::string const family = kFamily4;
+  std::string const column1 = "c1";
+  std::string const column2 = "c2";
+  std::string const value1 = "v1";
+  std::string const value2 = "v2";
+
+  std::vector<Cell> created{
+      {row_key, family, column1, 0, value1},
+      {row_key, family, column2, 0, value2},
+  };
+  // CreateCells(table, created);
+  BulkApply(table, created);
+
+  auto data_connection = table.connection();
+  auto client = Client(data_connection);
+   std::vector<std::string> full_table_path =
+      absl::StrSplit(table.table_name(), "/");
+  auto table_name = full_table_path.back();
+  Project project(project_id());
+  InstanceResource instance_resource(project, instance_id());
+  auto prepared_query = client.PrepareQuery(
+      instance_resource,
+      SqlStatement("SELECT " + column1 + " FROM " + table_name + " WHERE row_key = '" + row_key + "'"));
+  ASSERT_STATUS_OK(prepared_query);
+
+  auto bound_query = prepared_query->BindParameters({});
+  auto row_stream = client.ExecuteQuery(std::move(bound_query));
+
+  std::vector<StatusOr<bigtable::QueryRow>> rows;
+  for (auto const& row : std::move(row_stream)) {
+    rows.push_back(row);
+  }
+
+  ASSERT_EQ(rows.size(), 1);
 }
 
 TEST_P(DataIntegrationTest, TableReadRowNotExistTest) {

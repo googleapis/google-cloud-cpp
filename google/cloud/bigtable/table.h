@@ -1000,6 +1000,10 @@ class Table {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
 
+  std::shared_ptr<DataConnection> connection() const {
+    return connection_;
+  }
+
  private:
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
@@ -1042,6 +1046,7 @@ class Table {
   std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
     return idempotent_mutation_policy_->clone();
   }
+
 
   ///@{
   /// @name Helper functions to implement constructors with changed policies.
