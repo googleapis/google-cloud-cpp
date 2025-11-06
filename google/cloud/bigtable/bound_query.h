@@ -26,6 +26,12 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class DataConnectionImpl;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -48,8 +54,15 @@ class BoundQuery {
 
   google::bigtable::v2::ExecuteQueryRequest ToRequestProto() const;
 
+  GOOGLE_CLOUD_CPP_DEPRECATED("use response()")
+  StatusOr<std::string> prepared_query() const;
+  GOOGLE_CLOUD_CPP_DEPRECATED("use response()")
+  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
+
  private:
   friend class PreparedQuery;
+  friend class bigtable_internal::DataConnectionImpl;
+
   BoundQuery(InstanceResource instance,
              std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
              std::unordered_map<std::string, Value> parameters)

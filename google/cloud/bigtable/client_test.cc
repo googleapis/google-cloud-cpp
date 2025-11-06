@@ -132,30 +132,28 @@ TEST(ClientTest, ExecuteQuery) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       kResultMetadataText, pq_response.mutable_metadata()));
   EXPECT_CALL(*conn_mock, ExecuteQuery)
-      .WillOnce(
-          [&](bigtable::ExecuteQueryParams const&) -> StatusOr<RowStream> {
-            auto mock_source = std::make_unique<MockQueryRowSource>();
-            EXPECT_CALL(*mock_source, Metadata)
-                .WillRepeatedly(Return(pq_response.metadata()));
+      .WillOnce([&](bigtable::ExecuteQueryParams) {
+        auto mock_source = std::make_unique<MockQueryRowSource>();
+        EXPECT_CALL(*mock_source, Metadata)
+            .WillRepeatedly(Return(pq_response.metadata()));
 
-            testing::InSequence s;
-            EXPECT_CALL(*mock_source, NextRow)
-                .WillOnce(Return(bigtable_mocks::MakeQueryRow(
-                    {{"key", bigtable::Value("r1")},
-                     {"val", bigtable::Value("v1")}})));
-            EXPECT_CALL(*mock_source, NextRow)
-                .WillOnce(Return(bigtable_mocks::MakeQueryRow(
-                    {{"key", bigtable::Value("r2")},
-                     {"val", bigtable::Value("v2")}})));
-            EXPECT_CALL(*mock_source, NextRow)
-                // Signal end of stream
-                .WillOnce(
-                    Return(Status(StatusCode::kOutOfRange, "End of stream")));
+        testing::InSequence s;
+        EXPECT_CALL(*mock_source, NextRow)
+            .WillOnce(Return(bigtable_mocks::MakeQueryRow(
+                {{"key", bigtable::Value("r1")},
+                 {"val", bigtable::Value("v1")}})));
+        EXPECT_CALL(*mock_source, NextRow)
+            .WillOnce(Return(bigtable_mocks::MakeQueryRow(
+                {{"key", bigtable::Value("r2")},
+                 {"val", bigtable::Value("v2")}})));
+        EXPECT_CALL(*mock_source, NextRow)
+            // Signal end of stream
+            .WillOnce(Return(Status(StatusCode::kOutOfRange, "End of stream")));
 
-            // Create RowStream with the mock result source
-            RowStream row_stream(std::move(mock_source));
-            return StatusOr<RowStream>(std::move(row_stream));
-          });
+        // Create RowStream with the mock result source
+        RowStream row_stream(std::move(mock_source));
+        return row_stream;
+      });
 
   Client client(conn_mock);
   InstanceResource instance(Project("test-project"), "test-instance");
