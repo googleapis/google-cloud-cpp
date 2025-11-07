@@ -27,8 +27,8 @@ using ::google::cloud::internal::OptionsSpan;
 
 StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
                                              SqlStatement const& statement,
-                                             Options option) {
-  OptionsSpan span(MergeOptions(std::move(option), opts_));
+                                             Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), opts_));
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->PrepareQuery(std::move(params));
 }
@@ -40,8 +40,8 @@ future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
   return conn_->AsyncPrepareQuery(std::move(params));
 }
 
-RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options option) {
-  OptionsSpan span(MergeOptions(std::move(option), opts_));
+RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteQuery({std::move(bound_query)});
 }
 
