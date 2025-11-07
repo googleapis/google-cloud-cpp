@@ -42,14 +42,7 @@ future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
 
 RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options option) {
   OptionsSpan span(MergeOptions(std::move(option), opts_));
-  ExecuteQueryParams params{std::move(bound_query)};
-  auto row_stream = conn_->ExecuteQuery(params);
-  if (!row_stream.ok()) {
-    return RowStream(
-        std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(
-            row_stream.status()));
-  }
-  return std::move(row_stream.value());
+  return conn_->ExecuteQuery({std::move(bound_query)});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
