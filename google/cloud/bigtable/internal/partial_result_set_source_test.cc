@@ -18,6 +18,10 @@
 #include "google/cloud/bigtable/query_row.h"
 #include "google/cloud/bigtable/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/bigtable/value.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/testing_util/fake_clock.h"
+#endif
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -36,6 +40,7 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
@@ -56,11 +61,13 @@ struct StringOption {
 StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 CreatePartialResultSetSource(
     absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader, Options opts = {}) {
   internal::OptionsSpan span(internal::MergeOptions(
       std::move(opts.set<StringOption>(CurrentTestName())),
       internal::CurrentOptions()));
-  return PartialResultSetSource::Create(std::move(metadata), std::move(reader));
+  return PartialResultSetSource::Create(
+      std::move(metadata), std::move(operation_context), std::move(reader));
 }
 
 // Returns a functor that will return the argument after expecting that the
@@ -79,8 +86,70 @@ MATCHER_P(IsValidAndEquals, expected,
   return arg && *arg == expected;
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+class MockMetric : public Metric {
+ public:
+  MOCK_METHOD(void, PreCall,
+              (opentelemetry::context::Context const&, PreCallParams const&),
+              (override));
+  MOCK_METHOD(void, PostCall,
+              (opentelemetry::context::Context const&,
+               grpc::ClientContext const&, PostCallParams const&),
+              (override));
+  MOCK_METHOD(void, OnDone,
+              (opentelemetry::context::Context const&, OnDoneParams const&),
+              (override));
+  MOCK_METHOD(void, ElementRequest,
+              (opentelemetry::context::Context const&,
+               ElementRequestParams const&),
+              (override));
+  MOCK_METHOD(void, ElementDelivery,
+              (opentelemetry::context::Context const&,
+               ElementDeliveryParams const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+              (ResourceLabels resource_labels, DataLabels data_labels),
+              (const, override));
+};
+
+// This class is a vehicle to get a MockMetric into the OperationContext object.
+class CloningMetric : public Metric {
+ public:
+  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
+      : metric_(std::move(metric)) {}
+  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+    return std::move(metric_);
+  }
+
+ private:
+  mutable std::unique_ptr<MockMetric> metric_;
+};
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone)
+      .WillOnce([](opentelemetry::context::Context const&,
+                   OnDoneParams const& p) -> void {
+        EXPECT_THAT(p.operation_status, StatusIs(StatusCode::kInvalidArgument));
+      });
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(0);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(0);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
@@ -91,8 +160,8 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader =
-      CreatePartialResultSetSource(absl::nullopt, std::move(grpc_reader));
+  auto reader = CreatePartialResultSetSource(
+      absl::nullopt, std::move(operation_context), std::move(grpc_reader));
   EXPECT_THAT(reader, StatusIs(StatusCode::kInvalidArgument, "invalid"));
 }
 
@@ -100,6 +169,28 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
  * @test Verify the behavior when the response does not contain data.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone)
+      .WillOnce([](opentelemetry::context::Context const&,
+                   OnDoneParams const& p) -> void {
+        EXPECT_THAT(p.operation_status, IsOk());
+      });
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(1);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(1);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto constexpr kText = R"pb(
     proto_rows_batch: {}
   )pb";
@@ -118,15 +209,43 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .Times(2)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(
-      google::bigtable::v2::ResultSetMetadata{}, std::move(grpc_reader));
+      google::bigtable::v2::ResultSetMetadata{}, std::move(operation_context),
+      std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
 }
 
 /// @test Verify a single response is handled correctly.
 TEST(PartialResultSetSourceTest, SingleResponse) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone)
+      .WillOnce([](opentelemetry::context::Context const&,
+                   OnDoneParams const& p) -> void {
+        EXPECT_THAT(p.operation_status, IsOk());
+      });
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(2);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(2);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto constexpr kResultMetadataText = R"pb(
     proto_schema {
       columns {
@@ -179,7 +298,13 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
       .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
-  auto reader = CreatePartialResultSetSource(metadata, std::move(grpc_reader));
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .Times(4)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
+  auto reader = CreatePartialResultSetSource(
+      metadata, std::move(operation_context), std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   auto row = (*reader)->NextRow();
   ASSERT_STATUS_OK(row);
@@ -196,6 +321,28 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
  * @test Verify the behavior when we get an incomplete Row.
  */
 TEST(PartialResultSetSourceTest, MultipleResponses) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone)
+      .WillOnce([](opentelemetry::context::Context const&,
+                   OnDoneParams const& p) -> void {
+        EXPECT_THAT(p.operation_status, IsOk());
+      });
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(4);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(4);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto constexpr kResultMetadataText = R"pb(
     proto_schema {
       columns {
@@ -276,8 +423,13 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
       .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .Times(8)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
 
-  auto reader = CreatePartialResultSetSource(metadata, std::move(grpc_reader));
+  auto reader = CreatePartialResultSetSource(
+      metadata, std::move(operation_context), std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
   auto row0 = (*reader)->NextRow();
@@ -308,6 +460,28 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
  * @test Verify the behavior when we get an incomplete Row.
  */
 TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  auto mock_metric = std::make_unique<MockMetric>();
+  EXPECT_CALL(*mock_metric, PreCall).Times(0);
+  EXPECT_CALL(*mock_metric, PostCall).Times(0);
+  EXPECT_CALL(*mock_metric, OnDone)
+      .WillOnce([](opentelemetry::context::Context const&,
+                   OnDoneParams const& p) -> void {
+        EXPECT_THAT(p.operation_status, IsOk());
+      });
+  EXPECT_CALL(*mock_metric, ElementRequest).Times(2);
+  EXPECT_CALL(*mock_metric, ElementDelivery).Times(2);
+  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
+  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
+  // Normally std::make_shared would be used here, but some weird type deduction
+  // is preventing it.
+  // NOLINTNEXTLINE(modernize-make-shared)
+  auto operation_context = std::shared_ptr<OperationContext>(
+      new OperationContext({}, {}, {fake_metric}, clock));
+#else
+  auto operation_context = std::make_shared<OperationContext>();
+#endif
+
   auto constexpr kResultMetadataText = R"pb(
     proto_schema {
       columns {
@@ -371,8 +545,14 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
       .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .Times(4)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(metadata, std::move(grpc_reader));
+  auto reader = CreatePartialResultSetSource(
+      metadata, std::move(operation_context), std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
   // Verify the returned row is correct.
