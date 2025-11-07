@@ -678,10 +678,20 @@ TEST(ConnectionRefresh, Frequent) {
 
 TEST_P(DataIntegrationTest, ClientQueryTest) {
   auto const table_id = testing::TableTestEnvironment::table_id();
-  auto conn = MakeDataConnection(Options{}.set<DataRetryPolicyOption>(
-      DataLimitedErrorCountRetryPolicy(0).clone()));
-  auto table = Table(std::move(conn),
-                     TableResource(project_id(), instance_id(), table_id));
+  auto table = Table(
+      MakeDataConnection(
+          Options{}
+              .set<DataRetryPolicyOption>(
+                  DataLimitedErrorCountRetryPolicy(0).clone())
+              .set<DataBackoffPolicyOption>(
+                  google::cloud::internal::ExponentialBackoffPolicy(ms(0),
+                                                                    ms(0), 2.0)
+                      .clone())
+              .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+                  bigtable::experimental::
+                      QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+                          .clone())),
+      TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-client-query-test";
   std::string const family = kFamily4;
   std::string const column1 = "c1";
@@ -694,20 +704,7 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
       {row_key, family, column2, 0, value2},
   };
   BulkApply(table, created);
-  auto data_connection = table.connection();
-  auto client = Client(
-      data_connection,
-      Options{}
-          .set<DataRetryPolicyOption>(
-              DataLimitedErrorCountRetryPolicy(0).clone())
-          .set<DataBackoffPolicyOption>(
-              google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0),
-                                                                2.0)
-                  .clone())
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
-              bigtable::experimental::
-                  QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-                      .clone()));
+  auto client = Client(table.connection());
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
