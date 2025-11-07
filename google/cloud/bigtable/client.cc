@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
-#include "internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/options.h"
+#include "internal/partial_result_set_source.h"
 
 namespace google {
 namespace cloud {

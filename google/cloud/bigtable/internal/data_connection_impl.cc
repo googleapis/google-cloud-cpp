@@ -722,8 +722,7 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   auto backoff = backoff_policy(*current);
 
   auto response = google::cloud::internal::RetryLoop(
-      std::move(retry), std::move(backoff),
-      Idempotency::kIdempotent,
+      std::move(retry), std::move(backoff), Idempotency::kIdempotent,
       [this, operation_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::PrepareQueryRequest const& request) {
@@ -914,7 +913,6 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
       std::make_unique<StatusOnlyResultSetSource>(internal::RetryLoopError(
           last_status, __func__, query_plan_retry_policy->IsExhausted())));
 }
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
