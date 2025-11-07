@@ -19,12 +19,16 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/logging_result_set_reader.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
 #include "google/cloud/bigtable/internal/partial_result_set_resume.h"
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
+#include "google/cloud/bigtable/internal/retry_traits.h"
+#include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/results.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
@@ -52,6 +56,13 @@ inline std::unique_ptr<bigtable::DataRetryPolicy> retry_policy(
   return options.get<bigtable::DataRetryPolicyOption>()->clone();
 }
 
+inline std::unique_ptr<bigtable::DataRetryPolicy>
+query_plan_refresh_retry_policy(Options const& options) {
+  return options
+      .get<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>()
+      ->clone();
+}
+
 inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<bigtable::DataBackoffPolicyOption>()->clone();
 }
@@ -63,6 +74,15 @@ inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
 
 inline bool enable_server_retries(Options const& options) {
   return options.get<EnableServerRetriesOption>();
+}
+
+inline bool RpcStreamTracingEnabled() {
+  return internal::Contains(
+      internal::CurrentOptions().get<LoggingComponentsOption>(), "rpc-streams");
+}
+
+inline TracingOptions const& RpcTracingOptions() {
+  return internal::CurrentOptions().get<GrpcTracingOptionsOption>();
 }
 
 // This function allows for ReadRow and ReadRowsFull to provide an instance of
@@ -136,21 +156,6 @@ class DefaultPartialResultSetReader
       internal::StreamingReadRpc<google::bigtable::v2::ExecuteQueryResponse>>
       reader_;
   Status final_status_;
-};
-
-class StatusOnlyResultSetSource : public bigtable::ResultSourceInterface {
- public:
-  explicit StatusOnlyResultSetSource(google::cloud::Status status)
-      : status_(std::move(status)) {}
-  ~StatusOnlyResultSetSource() override = default;
-
-  StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
-  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
-    return {};
-  }
-
- private:
-  google::cloud::Status status_;
 };
 
 template <typename ResultType>
@@ -823,61 +828,92 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
       });
 }
 
-std::unique_ptr<PartialResultSetReader>
-DataConnectionImpl::CreateResumableReader(
-    google::bigtable::v2::ExecuteQueryRequest request,
-    std::string const& resume_token) {
-  if (!resume_token.empty()) {
-    request.set_resume_token(resume_token);
-  }
-  auto context = std::make_shared<grpc::ClientContext>();
-  auto const& options = google::cloud::internal::CurrentOptions();
-
-  google::cloud::internal::ConfigureContext(*context, options);
-  auto stream = stub_->ExecuteQuery(context, options, request);
-
-  return std::make_unique<DefaultPartialResultSetReader>(std::move(context),
-                                                         std::move(stream));
-}
-
-StatusOr<bigtable::RowStream> DataConnectionImpl::ExecuteQuery(
-    bigtable::ExecuteQueryParams const& params) {
+bigtable::RowStream DataConnectionImpl::ExecuteQuery(
+    bigtable::ExecuteQueryParams params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  StatusOr<google::bigtable::v2::ResultSetMetadata> status_or_metadata =
-      params.bound_query.metadata();
   google::bigtable::v2::ExecuteQueryRequest request =
       params.bound_query.ToRequestProto();
   request.set_app_profile_id(app_profile_id(*current));
-  if (!status_or_metadata) {
-    return status_or_metadata.status();
-  }
-  google::bigtable::v2::ResultSetMetadata metadata =
-      *std::move(status_or_metadata);
+
+  auto const tracing_enabled = RpcStreamTracingEnabled();
+  auto const& tracing_options = RpcTracingOptions();
 
   auto retry_resume_fn =
-      [this, retry_policy_prototype = retry_policy(*current),
-       backoff_policy_prototype = backoff_policy(*current)](
+      [stub = stub_, tracing_enabled, tracing_options](
+          google::bigtable::v2::ExecuteQueryRequest& request,
           google::bigtable::v2::ResultSetMetadata metadata,
-          google::bigtable::v2::ExecuteQueryRequest const& initial_request)
+          std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_prototype,
+          std::unique_ptr<BackoffPolicy> backoff_policy_prototype,
+          std::shared_ptr<OperationContext> const&) mutable
       -> StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> {
-    auto factory = absl::bind_front(&DataConnectionImpl::CreateResumableReader,
-                                    this, initial_request);
+    auto factory = [stub, request, tracing_enabled,
+                    tracing_options](std::string const& resume_token) mutable {
+      if (!resume_token.empty()) request.set_resume_token(resume_token);
+      auto context = std::make_shared<grpc::ClientContext>();
+      auto const& options = internal::CurrentOptions();
+      internal::ConfigureContext(*context, options);
+      auto stream = stub->ExecuteQuery(context, options, request);
+      std::unique_ptr<PartialResultSetReader> reader =
+          std::make_unique<DefaultPartialResultSetReader>(std::move(context),
+                                                          std::move(stream));
+      if (tracing_enabled) {
+        reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                          tracing_options);
+      }
+      return reader;
+    };
 
-    auto resume_reader = std::make_unique<PartialResultSetResume>(
+    auto rpc = std::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
-    return PartialResultSetSource::Create(std::move(metadata),
-                                          std::move(resume_reader));
+    return PartialResultSetSource::Create(std::move(metadata), std::move(rpc));
   };
 
-  auto response = retry_resume_fn(metadata, request);
-  if (!response) {
-    auto status = std::move(response).status();
-    return MakeStatusOnlyResult<bigtable::RowStream>(std::move(status));
+  auto operation_context = std::make_shared<OperationContext>();
+
+  auto query_plan = params.bound_query.query_plan_;
+  auto query_plan_retry_policy = query_plan_refresh_retry_policy(*current);
+  auto query_plan_backoff_policy = backoff_policy(*current);
+  Status last_status;
+
+  // TODO(sdhart): OperationContext needs to be plumbed through the QueryPlan
+  // refresh_fn so that it's shared with the ExecuteQuery attempts.
+  while (!query_plan_retry_policy->IsExhausted()) {
+    // Snapshot query_plan data.
+    // This access could cause a query plan refresh to occur.
+    StatusOr<google::bigtable::v2::PrepareQueryResponse> query_plan_data =
+        query_plan->response();
+
+    if (query_plan_data.ok()) {
+      request.set_prepared_query(query_plan_data->prepared_query());
+      auto reader = retry_resume_fn(
+          request, query_plan_data->metadata(), retry_policy(*current),
+          backoff_policy(*current), operation_context);
+      if (reader.ok()) {
+        return bigtable::RowStream(*std::move(reader));
+      }
+      if (SafeGrpcRetryAllowingQueryPlanRefresh::IsQueryPlanExpired(
+              reader.status())) {
+        query_plan->Invalidate(reader.status(),
+                               query_plan_data->prepared_query());
+      }
+      last_status = reader.status();
+    } else {
+      last_status = query_plan_data.status();
+    }
+
+    auto delay =
+        internal::Backoff(last_status, __func__, *query_plan_retry_policy,
+                          *query_plan_backoff_policy, Idempotency::kIdempotent,
+                          false /* enable_server_retries */);
+    if (!delay) break;
+    std::this_thread::sleep_for(*delay);
   }
-  return bigtable::RowStream(*std::move(response));
-};
+  return bigtable::RowStream(
+      std::make_unique<StatusOnlyResultSetSource>(internal::RetryLoopError(
+          last_status, __func__, query_plan_retry_policy->IsExhausted())));
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

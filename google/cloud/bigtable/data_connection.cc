@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/data_tracing_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
+#include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/results.h"
@@ -167,9 +168,10 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnection::AsyncPrepareQuery(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<bigtable::RowStream> DataConnection::ExecuteQuery(
-    bigtable::ExecuteQueryParams const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+bigtable::RowStream DataConnection::ExecuteQuery(bigtable::ExecuteQueryParams) {
+  return RowStream(
+      std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(
+          Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {

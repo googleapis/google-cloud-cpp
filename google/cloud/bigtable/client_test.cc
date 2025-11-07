@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/mocks/mock_data_connection.h"
 #include "google/cloud/bigtable/mocks/mock_query_row.h"
 #include "google/cloud/bigtable/mocks/mock_row_reader.h"
@@ -44,9 +45,18 @@ TEST(Client, PrepareQuery) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
         EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
-        PreparedQuery q(CompletionQueue{fake_cq_impl}, params.instance,
-                        params.sql_statement, PrepareQueryResponse{});
-        return q;
+
+        std::unordered_map<std::string, bigtable::Value> parameters;
+        google::bigtable::v2::PrepareQueryResponse pq_response;
+        auto refresh_fn = [&pq_response]() {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+                  pq_response));
+        };
+        auto query_plan = bigtable_internal::QueryPlan::Create(
+            CompletionQueue(fake_cq_impl), std::move(pq_response),
+            std::move(refresh_fn));
+        return bigtable::PreparedQuery(instance, sql, std::move(query_plan));
       });
 
   Client client(std::move(conn_mock));
@@ -67,9 +77,20 @@ TEST(Client, AsyncPrepareQuery) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   params.instance.FullName());
         EXPECT_EQ("SELECT * FROM the-table", params.sql_statement.sql());
-        PreparedQuery q(CompletionQueue{fake_cq_impl}, params.instance,
-                        params.sql_statement, PrepareQueryResponse{});
-        return make_ready_future(make_status_or(std::move(q)));
+
+        std::unordered_map<std::string, bigtable::Value> parameters;
+        google::bigtable::v2::PrepareQueryResponse pq_response;
+        auto refresh_fn = [&pq_response]() {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+                  pq_response));
+        };
+        auto query_plan = bigtable_internal::QueryPlan::Create(
+            CompletionQueue(fake_cq_impl), std::move(pq_response),
+            std::move(refresh_fn));
+        StatusOr<bigtable::PreparedQuery> result =
+            bigtable::PreparedQuery(instance, sql, std::move(query_plan));
+        return make_ready_future(result);
       });
   Client client(std::move(conn_mock));
   auto prepared_query = client.AsyncPrepareQuery(instance, sql);
@@ -111,30 +132,28 @@ TEST(ClientTest, ExecuteQuery) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       kResultMetadataText, pq_response.mutable_metadata()));
   EXPECT_CALL(*conn_mock, ExecuteQuery)
-      .WillOnce(
-          [&](bigtable::ExecuteQueryParams const&) -> StatusOr<RowStream> {
-            auto mock_source = std::make_unique<MockQueryRowSource>();
-            EXPECT_CALL(*mock_source, Metadata)
-                .WillRepeatedly(Return(pq_response.metadata()));
+      .WillOnce([&](bigtable::ExecuteQueryParams) {
+        auto mock_source = std::make_unique<MockQueryRowSource>();
+        EXPECT_CALL(*mock_source, Metadata)
+            .WillRepeatedly(Return(pq_response.metadata()));
 
-            testing::InSequence s;
-            EXPECT_CALL(*mock_source, NextRow)
-                .WillOnce(Return(bigtable_mocks::MakeQueryRow(
-                    {{"key", bigtable::Value("r1")},
-                     {"val", bigtable::Value("v1")}})));
-            EXPECT_CALL(*mock_source, NextRow)
-                .WillOnce(Return(bigtable_mocks::MakeQueryRow(
-                    {{"key", bigtable::Value("r2")},
-                     {"val", bigtable::Value("v2")}})));
-            EXPECT_CALL(*mock_source, NextRow)
-                // Signal end of stream
-                .WillOnce(
-                    Return(Status(StatusCode::kOutOfRange, "End of stream")));
+        testing::InSequence s;
+        EXPECT_CALL(*mock_source, NextRow)
+            .WillOnce(Return(bigtable_mocks::MakeQueryRow(
+                {{"key", bigtable::Value("r1")},
+                 {"val", bigtable::Value("v1")}})));
+        EXPECT_CALL(*mock_source, NextRow)
+            .WillOnce(Return(bigtable_mocks::MakeQueryRow(
+                {{"key", bigtable::Value("r2")},
+                 {"val", bigtable::Value("v2")}})));
+        EXPECT_CALL(*mock_source, NextRow)
+            // Signal end of stream
+            .WillOnce(Return(Status(StatusCode::kOutOfRange, "End of stream")));
 
-            // Create RowStream with the mock result source
-            RowStream row_stream(std::move(mock_source));
-            return StatusOr<RowStream>(std::move(row_stream));
-          });
+        // Create RowStream with the mock result source
+        RowStream row_stream(std::move(mock_source));
+        return row_stream;
+      });
 
   Client client(conn_mock);
   InstanceResource instance(Project("test-project"), "test-instance");
