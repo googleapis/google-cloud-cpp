@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -31,12 +31,14 @@ namespace {
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ms = std::chrono::milliseconds;
 
 class DataIntegrationTest : public TableIntegrationTest,
                             public ::testing::WithParamInterface<std::string> {
@@ -188,7 +190,11 @@ TEST_P(DataIntegrationTest, TableReadRowTest) {
 }
 
 TEST_P(DataIntegrationTest, ClientQueryTest) {
-  auto table = GetTable(GetParam());
+  auto const table_id = testing::TableTestEnvironment::table_id();
+  auto conn = MakeDataConnection(Options{}.set<DataRetryPolicyOption>(
+      DataLimitedErrorCountRetryPolicy(0).clone()));
+  auto table = Table(std::move(conn),
+                     TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-client-query-test";
   std::string const family = kFamily4;
   std::string const column1 = "c1";
@@ -200,19 +206,27 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
       {row_key, family, column1, 0, value1},
       {row_key, family, column2, 0, value2},
   };
-  // CreateCells(table, created);
   BulkApply(table, created);
-
   auto data_connection = table.connection();
-  auto client = Client(data_connection);
-   std::vector<std::string> full_table_path =
+  auto client =
+      Client(data_connection,
+             Options{}
+                 .set<DataRetryPolicyOption>(
+                     DataLimitedErrorCountRetryPolicy(0).clone())
+                 .set<DataBackoffPolicyOption>(
+                     google::cloud::internal::ExponentialBackoffPolicy(
+                         ms(0), ms(0), 2.0)
+                         .clone()));
+  std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), "/");
   auto table_name = full_table_path.back();
+  std::string quoted_table_name = "`" + table_name + "`";
   Project project(project_id());
   InstanceResource instance_resource(project, instance_id());
   auto prepared_query = client.PrepareQuery(
       instance_resource,
-      SqlStatement("SELECT " + column1 + " FROM " + table_name + " WHERE row_key = '" + row_key + "'"));
+      SqlStatement("SELECT CAST(family4['c0'] AS STRING) AS c0  FROM " +
+                   quoted_table_name + " WHERE _key = '" + row_key + "'"));
   ASSERT_STATUS_OK(prepared_query);
 
   auto bound_query = prepared_query->BindParameters({});
@@ -224,6 +238,9 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
   }
 
   ASSERT_EQ(rows.size(), 1);
+  ASSERT_STATUS_OK(rows[0]);
+  auto const& row1 = *rows[0];
+  EXPECT_THAT(row1.columns().at(0), "c0");
 }
 
 TEST_P(DataIntegrationTest, TableReadRowNotExistTest) {

@@ -14,16 +14,21 @@
 
 #include "google/cloud/bigtable/client.h"
 #include "internal/partial_result_set_source.h"
+#include "google/cloud/bigtable/internal/unary_client_utils.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<PreparedQuery> Client::PrepareQuery(
-    InstanceResource const& instance, SqlStatement const& statement,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    Options) {
+using ::google::cloud::internal::MergeOptions;
+using ::google::cloud::internal::OptionsSpan;
+
+StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
+                                             SqlStatement const& statement,
+                                             Options option) {
+  OptionsSpan span(MergeOptions(std::move(option), opts_));
   PrepareQueryParams params{std::move(instance), std::move(statement)};
   return conn_->PrepareQuery(std::move(params));
 }
@@ -35,8 +40,8 @@ future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
   return conn_->AsyncPrepareQuery(std::move(params));
 }
 
-// NOLINTNEXTLINE(performance-unnecessary-value-param)
-RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options) {
+RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options option) {
+  OptionsSpan span(MergeOptions(std::move(option), opts_));
   ExecuteQueryParams params{std::move(bound_query)};
   auto row_stream = conn_->ExecuteQuery(params);
   if (!row_stream.ok()) {
