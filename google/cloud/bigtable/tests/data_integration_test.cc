@@ -31,7 +31,6 @@ namespace {
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
-using ::google::cloud::testing_util::IsOkAndHolds;
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
@@ -705,7 +704,7 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
                          ms(0), ms(0), 2.0)
                          .clone()));
   std::vector<std::string> full_table_path =
-      absl::StrSplit(table.table_name(), "/");
+      absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
   std::string quoted_table_name = "`" + table_name + "`";
   Project project(project_id());
