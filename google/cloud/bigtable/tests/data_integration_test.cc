@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -694,15 +695,19 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
   };
   BulkApply(table, created);
   auto data_connection = table.connection();
-  auto client =
-      Client(data_connection,
-             Options{}
-                 .set<DataRetryPolicyOption>(
-                     DataLimitedErrorCountRetryPolicy(0).clone())
-                 .set<DataBackoffPolicyOption>(
-                     google::cloud::internal::ExponentialBackoffPolicy(
-                         ms(0), ms(0), 2.0)
-                         .clone()));
+  auto client = Client(
+      data_connection,
+      Options{}
+          .set<DataRetryPolicyOption>(
+              DataLimitedErrorCountRetryPolicy(0).clone())
+          .set<DataBackoffPolicyOption>(
+              google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0),
+                                                                2.0)
+                  .clone())
+          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+              bigtable::experimental::
+                  QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+                      .clone()));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
