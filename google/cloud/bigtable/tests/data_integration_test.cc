@@ -610,6 +610,55 @@ TEST_P(DataIntegrationTest, TableApplyWithLogging) {
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
 
+TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
+  auto const& table_id = testing::TableTestEnvironment::table_id();
+  auto conn = MakeDataConnection(Options{}.set<DataRetryPolicyOption>(
+      DataLimitedErrorCountRetryPolicy(0).clone()));
+  auto table = Table(std::move(conn),
+                     TableResource(project_id(), instance_id(), table_id));
+  std::string const row_key = "row-key-for-client-query-test";
+  std::string const family = kFamily4;
+  std::string const column1 = "c1";
+  std::string const column2 = "c2";
+  std::string const value1 = "v1";
+  std::string const value2 = "v2";
+
+  std::vector<Cell> created{
+      {row_key, family, column1, 0, value1},
+      {row_key, family, column2, 0, value2},
+  };
+  BulkApply(table, created);
+  auto data_connection = table.connection();
+  auto client = Client(data_connection, Options{});
+  std::vector<std::string> full_table_path =
+      absl::StrSplit(table.table_name(), '/');
+  auto const& table_name = full_table_path.back();
+  std::string quoted_table_name = "`" + table_name + "`";
+  Project project(project_id());
+  InstanceResource instance_resource(project, instance_id());
+  auto prepared_query = client.PrepareQuery(
+      instance_resource,
+      SqlStatement("SELECT family4 AS c0  FROM " + quoted_table_name +
+                   " WHERE _key = '" + row_key + "'"));
+  ASSERT_STATUS_OK(prepared_query);
+
+  auto bound_query = prepared_query->BindParameters({});
+  auto row_stream = client.ExecuteQuery(std::move(bound_query));
+
+  std::vector<StatusOr<bigtable::QueryRow>> rows;
+  for (auto const& row : std::move(row_stream)) {
+    rows.push_back(row);
+  }
+
+  ASSERT_EQ(rows.size(), 1);
+  ASSERT_STATUS_OK(rows[0]);
+  auto const& row1 = *rows[0];
+  ASSERT_EQ(row1.columns().at(0), column1);
+  ASSERT_EQ(row1.columns().at(1), column2);
+  ASSERT_EQ(row1.values().at(0), Value(value1));
+  ASSERT_EQ(row1.values().at(1), Value(value2));
+}
+
 // TODO(#8800) - remove after deprecation is complete
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
