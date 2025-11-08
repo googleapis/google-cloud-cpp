@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/partial_result_set_resume.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include <thread>
 
 namespace google {
@@ -43,15 +44,24 @@ bool PartialResultSetResume::Read(
       return false;
     }
     if (idempotency_ == google::cloud::Idempotency::kNonIdempotent ||
-        !retry_policy_prototype_->OnFailure(status)) {
+        !retry_policy_->OnFailure(status)) {
+      if (retry_policy_->IsExhausted()) break;
       return false;
     }
-    std::this_thread::sleep_for(backoff_policy_prototype_->OnCompletion());
+    std::this_thread::sleep_for(backoff_policy_->OnCompletion());
     resumption = true;
     last_status_.reset();
     reader_ = factory_(*resume_token);
-  } while (!retry_policy_prototype_->IsExhausted());
+  } while (!retry_policy_->IsExhausted());
+  if (last_status_) {
+    last_status_ = internal::RetryLoopError(*last_status_, __func__,
+                                            retry_policy_->IsExhausted());
+  }
   return false;
+}
+
+grpc::ClientContext const& PartialResultSetResume::context() const {
+  return reader_->context();
 }
 
 Status PartialResultSetResume::Finish() {

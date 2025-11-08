@@ -43,9 +43,10 @@ std::string AsString(T const& s) {
 StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 PartialResultSetSource::Create(
     absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader) {
-  std::unique_ptr<PartialResultSetSource> source(
-      new PartialResultSetSource(std::move(metadata), std::move(reader)));
+  std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
+      std::move(metadata), std::move(operation_context), std::move(reader)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
@@ -59,9 +60,11 @@ PartialResultSetSource::Create(
 
 PartialResultSetSource::PartialResultSetSource(
     absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
+      operation_context_(std::move(operation_context)),
       metadata_(std::move(metadata)) {
   if (metadata_.has_value()) {
     columns_ = std::make_shared<std::vector<std::string>>();
@@ -91,19 +94,27 @@ PartialResultSetSource::~PartialResultSetSource() {
     }
     state_ = State::kFinished;
   }
+
+  operation_context_->OnDone(last_status_);
 }
 
 StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
+  operation_context_->ElementRequest(reader_->context());
   while (rows_.empty()) {
-    if (state_ == State::kFinished) return bigtable::QueryRow();
+    if (state_ == State::kFinished) {
+      operation_context_->ElementDelivery(reader_->context());
+      return bigtable::QueryRow();
+    }
     internal::OptionsSpan span(options_);
     // Continue fetching if there are more rows in the stream.
     auto status = ReadFromStream();
+    last_status_ = status;
     if (!status.ok()) return status;
   }
   // Returns the row at the front of the queue
   auto row = std::move(rows_.front());
   rows_.pop_front();
+  operation_context_->ElementDelivery(reader_->context());
   return row;
 }
 
@@ -137,7 +148,8 @@ Status PartialResultSetSource::ReadFromStream() {
     return internal::InternalError("Stream ended with uncommitted rows.",
                                    GCP_ERROR_INFO());
   }
-  return reader_->Finish();
+  last_status_ = reader_->Finish();
+  return last_status_;
 }
 
 Status PartialResultSetSource::ProcessDataFromStream(
