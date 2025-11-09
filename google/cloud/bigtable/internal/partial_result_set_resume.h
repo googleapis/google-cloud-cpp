@@ -45,8 +45,8 @@ class PartialResultSetResume : public PartialResultSetReader {
       std::unique_ptr<BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
         idempotency_(idempotency),
-        retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)),
         reader_(factory_(std::string{})) {}
 
   ~PartialResultSetResume() override = default;
@@ -54,13 +54,14 @@ class PartialResultSetResume : public PartialResultSetReader {
   void TryCancel() override;
   bool Read(absl::optional<std::string> const& resume_token,
             UnownedPartialResultSet& result) override;
+  grpc::ClientContext const& context() const override;
   Status Finish() override;
 
  private:
   PartialResultSetReaderFactory factory_;
   google::cloud::Idempotency idempotency_;
-  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::unique_ptr<PartialResultSetReader> reader_;
   absl::optional<Status> last_status_;
 };

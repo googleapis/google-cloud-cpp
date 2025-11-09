@@ -148,7 +148,12 @@ class DefaultPartialResultSetReader
     }
   }
 
-  Status Finish() override { return final_status_; }
+  grpc::ClientContext const& context() const override { return *context_; }
+
+  Status Finish() override {
+    //    operation_context_->OnDone(final_status_);
+    return final_status_;
+  }
 
  private:
   std::shared_ptr<grpc::ClientContext> context_;
@@ -843,30 +848,32 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           google::bigtable::v2::ResultSetMetadata metadata,
           std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_prototype,
           std::unique_ptr<BackoffPolicy> backoff_policy_prototype,
-          std::shared_ptr<OperationContext> const&) mutable
+          std::shared_ptr<OperationContext> const& operation_context) mutable
       -> StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> {
-    auto factory = [stub, request, tracing_enabled,
-                    tracing_options](std::string const& resume_token) mutable {
-      if (!resume_token.empty()) request.set_resume_token(resume_token);
-      auto context = std::make_shared<grpc::ClientContext>();
-      auto const& options = internal::CurrentOptions();
-      internal::ConfigureContext(*context, options);
-      auto stream = stub->ExecuteQuery(context, options, request);
-      std::unique_ptr<PartialResultSetReader> reader =
-          std::make_unique<DefaultPartialResultSetReader>(std::move(context),
-                                                          std::move(stream));
-      if (tracing_enabled) {
-        reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
-                                                          tracing_options);
-      }
-      return reader;
-    };
+    auto factory =
+        [stub, request, tracing_enabled, tracing_options,
+         operation_context](std::string const& resume_token) mutable {
+          if (!resume_token.empty()) request.set_resume_token(resume_token);
+          auto context = std::make_shared<grpc::ClientContext>();
+          auto const& options = internal::CurrentOptions();
+          internal::ConfigureContext(*context, options);
+          auto stream = stub->ExecuteQuery(context, options, request);
+          std::unique_ptr<PartialResultSetReader> reader =
+              std::make_unique<DefaultPartialResultSetReader>(
+                  std::move(context), std::move(stream));
+          if (tracing_enabled) {
+            reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                              tracing_options);
+          }
+          return reader;
+        };
 
     auto rpc = std::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
-    return PartialResultSetSource::Create(std::move(metadata), std::move(rpc));
+    return PartialResultSetSource::Create(std::move(metadata),
+                                          operation_context, std::move(rpc));
   };
 
   auto operation_context = std::make_shared<OperationContext>();
