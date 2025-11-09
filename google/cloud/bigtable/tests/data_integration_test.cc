@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_format.h"
 #include <thread>
 
 namespace google {
@@ -763,7 +764,7 @@ TEST_P(DataIntegrationTest, SingleColumnQueryWithHistory) {
   std::string const value_old = "v1_old";
   std::string const value_new = "v2_new";
 
-  // Get current time in microseconds
+  // Get times in microseconds
   auto now_sys = std::chrono::system_clock::now();
   auto current_time = std::chrono::duration_cast<std::chrono::microseconds>(
                           now_sys.time_since_epoch())
@@ -788,7 +789,7 @@ TEST_P(DataIntegrationTest, SingleColumnQueryWithHistory) {
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
-  std::string quoted_table_name = absl::StrCat("`", table_name, "`");
+  std::string quoted_table_name = "`" + table_name + "`";
   Project project(project_id());
   InstanceResource instance_resource(project, instance_id());
   std::string query_string = absl::StrFormat(
