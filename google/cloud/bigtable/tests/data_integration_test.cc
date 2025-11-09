@@ -677,7 +677,7 @@ TEST(ConnectionRefresh, Frequent) {
   Apply(table, row_key, created);
 }
 
-TEST_P(DataIntegrationTest, ClientQueryTest) {
+TEST_P(DataIntegrationTest, SingleColumnQuery) {
   if (UsingCloudBigtableEmulator()) GTEST_SKIP();
   auto const table_id = testing::TableTestEnvironment::table_id();
   auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
@@ -717,7 +717,7 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
   InstanceResource instance_resource(project, instance_id());
   auto prepared_query = client.PrepareQuery(
       instance_resource,
-      SqlStatement("SELECT CAST(family4['c0'] AS STRING) AS c0  FROM " +
+      SqlStatement("SELECT CAST(family4['c1'] AS STRING) AS c1  FROM " +
                    quoted_table_name + " WHERE _key = '" + row_key + "'"));
   ASSERT_STATUS_OK(prepared_query);
 
@@ -732,7 +732,11 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
   ASSERT_EQ(rows.size(), 1);
   ASSERT_STATUS_OK(rows[0]);
   auto const& row1 = *rows[0];
-  ASSERT_EQ(row1.columns().at(0), "c0");
+  ASSERT_EQ(row1.columns().size(), 1);
+  EXPECT_EQ(row1.columns().at(0), "c1");
+  auto value = row1.get<std::string>("c1");
+  ASSERT_STATUS_OK(value);
+  EXPECT_EQ(*value, value1);
 }
 
 // TODO(#8800) - remove after deprecation is complete
