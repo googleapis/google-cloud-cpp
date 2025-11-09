@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
-#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
@@ -32,7 +32,8 @@ namespace {
 
 using ::google::cloud::bigtable::experimental::
     QueryPlanRefreshLimitedErrorCountRetryPolicy;
-using ::google::cloud::bigtable::experimental::QueryPlanRefreshRetryPolicyOption;
+using ::google::cloud::bigtable::experimental::
+    QueryPlanRefreshRetryPolicyOption;
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
