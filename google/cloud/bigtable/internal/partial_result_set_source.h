@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H
 
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
 #include "google/cloud/bigtable/results.h"
 #include "google/cloud/bigtable/value.h"
@@ -43,6 +44,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> Create(
       absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+      std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<PartialResultSetReader> reader);
 
   ~PartialResultSetSource() override;
@@ -56,6 +58,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
  private:
   explicit PartialResultSetSource(
       absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+      std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<PartialResultSetReader> reader);
 
   Status ReadFromStream();
@@ -68,7 +71,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
 
   Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
-
+  std::shared_ptr<OperationContext> operation_context_;
   // The ResultSetMetadata is received in the first response. It is received
   // from ExecuteQueryResponse
   absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_;
@@ -84,6 +87,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
   // see a new token.
   absl::optional<std::string> resume_token_ = "";
 
+  Status last_status_;
   // The state of our PartialResultSetReader.
   enum class State {
     // `Read()` has yet to return nullopt.
