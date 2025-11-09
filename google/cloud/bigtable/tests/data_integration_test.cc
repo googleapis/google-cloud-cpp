@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
@@ -29,6 +30,9 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::bigtable::experimental::
+    QueryPlanRefreshLimitedErrorCountRetryPolicy;
+using ::google::cloud::bigtable::experimental::QueryPlanRefreshRetryPolicyOption;
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
@@ -678,20 +682,22 @@ TEST(ConnectionRefresh, Frequent) {
 
 TEST_P(DataIntegrationTest, ClientQueryTest) {
   auto const table_id = testing::TableTestEnvironment::table_id();
-  auto table = Table(
-      MakeDataConnection(
-          Options{}
-              .set<DataRetryPolicyOption>(
-                  DataLimitedErrorCountRetryPolicy(0).clone())
-              .set<DataBackoffPolicyOption>(
-                  google::cloud::internal::ExponentialBackoffPolicy(ms(0),
-                                                                    ms(0), 2.0)
-                      .clone())
-              .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
-                  bigtable::experimental::
-                      QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-                          .clone())),
-      TableResource(project_id(), instance_id(), table_id));
+  auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
+  auto backoff_policy_option =
+      google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
+          .clone();
+  auto query_refresh_option =
+      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+          .clone();
+  auto opts =
+      Options{}
+          .set<DataRetryPolicyOption>(std::move(retry_policy_option))
+          .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
+          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+              std::move(query_refresh_option));
+  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto table =
+      Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-client-query-test";
   std::string const family = kFamily4;
   std::string const column1 = "c1";
@@ -704,7 +710,7 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
       {row_key, family, column2, 0, value2},
   };
   BulkApply(table, created);
-  auto client = Client(table.connection());
+  auto client = Client(table.connection(), opts);
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -728,7 +734,7 @@ TEST_P(DataIntegrationTest, ClientQueryTest) {
   ASSERT_EQ(rows.size(), 1);
   ASSERT_STATUS_OK(rows[0]);
   auto const& row1 = *rows[0];
-  EXPECT_THAT(row1.columns().at(0), "c0");
+  ASSERT_EQ(row1.columns().at(0), "c0");
 }
 
 // TODO(#8800) - remove after deprecation is complete
