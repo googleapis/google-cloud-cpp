@@ -30,10 +30,6 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::bigtable::experimental::
-    QueryPlanRefreshLimitedErrorCountRetryPolicy;
-using ::google::cloud::bigtable::experimental::
-    QueryPlanRefreshRetryPolicyOption;
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator""_ms;
@@ -682,6 +678,7 @@ TEST(ConnectionRefresh, Frequent) {
 }
 
 TEST_P(DataIntegrationTest, ClientQueryTest) {
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
   auto const table_id = testing::TableTestEnvironment::table_id();
   auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
   auto backoff_policy_option =
