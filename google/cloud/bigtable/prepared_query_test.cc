@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -25,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ::google::bigtable::v2::PrepareQueryResponse;
 
-TEST(PreparedQuery, DefaultConstructor) {
+TEST(PreparedQueryTest, DefaultConstructor) {
   auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   Project p("dummy-project");
   InstanceResource instance(p, "dummy-instance");

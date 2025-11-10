@@ -25,12 +25,6 @@ BoundQuery PreparedQuery::BindParameters(
   return BoundQuery(instance_, query_plan_, std::move(params));
 }
 
-InstanceResource const& PreparedQuery::instance() const { return instance_; }
-
-SqlStatement const& PreparedQuery::sql_statement() const {
-  return sql_statement_;
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud

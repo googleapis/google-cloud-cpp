@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/bound_query.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 
 namespace google {
 namespace cloud {
@@ -22,12 +23,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StatusOr<google::bigtable::v2::PrepareQueryResponse> BoundQuery::response() {
   return query_plan_->response();
 }
-
-std::unordered_map<std::string, Value> const& BoundQuery::parameters() const {
-  return parameters_;
-}
-
-InstanceResource const& BoundQuery::instance() const { return instance_; }
 
 google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() const {
   google::bigtable::v2::ExecuteQueryRequest result;
