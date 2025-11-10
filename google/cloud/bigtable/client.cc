@@ -32,8 +32,9 @@ StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
 }
 
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    InstanceResource const& instance, SqlStatement const& statement, Options) {
+    InstanceResource const& instance, SqlStatement const& statement,
+    Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), opts_));
   return conn_->AsyncPrepareQuery({std::move(instance), std::move(statement)});
 }
 
