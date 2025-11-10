@@ -917,6 +917,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
       std::make_unique<StatusOnlyResultSetSource>(internal::RetryLoopError(
           last_status, __func__, query_plan_retry_policy->IsExhausted())));
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
