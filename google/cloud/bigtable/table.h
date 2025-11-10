@@ -1000,8 +1000,6 @@ class Table {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
 
-  std::shared_ptr<DataConnection> connection() const { return connection_; }
-
  private:
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back

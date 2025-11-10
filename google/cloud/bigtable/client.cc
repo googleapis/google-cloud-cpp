@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
-#include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/options.h"
 #include "internal/partial_result_set_source.h"
 
@@ -29,15 +28,13 @@ StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
                                              SqlStatement const& statement,
                                              Options opts) {
   OptionsSpan span(MergeOptions(std::move(opts), opts_));
-  PrepareQueryParams params{std::move(instance), std::move(statement)};
-  return conn_->PrepareQuery(std::move(params));
+  return conn_->PrepareQuery({std::move(instance), std::move(statement)});
 }
 
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     InstanceResource const& instance, SqlStatement const& statement, Options) {
-  PrepareQueryParams params{std::move(instance), std::move(statement)};
-  return conn_->AsyncPrepareQuery(std::move(params));
+  return conn_->AsyncPrepareQuery({std::move(instance), std::move(statement)});
 }
 
 RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options opts) {

@@ -723,11 +723,9 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   }
   auto operation_context = operation_context_factory_->PrepareQuery(
       instance_full_name, app_profile_id(*current));
-  auto retry = retry_policy(*current);
-  auto backoff = backoff_policy(*current);
-
   auto response = google::cloud::internal::RetryLoop(
-      std::move(retry), std::move(backoff), Idempotency::kIdempotent,
+      retry_policy(*current), backoff_policy(*current),
+      Idempotency::kIdempotent,
       [this, operation_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::PrepareQueryRequest const& request) {
@@ -759,7 +757,6 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   };
   auto query_plan = QueryPlan::Create(background_->cq(), *std::move(response),
                                       std::move(refresh_fn));
-
   return bigtable::PreparedQuery(
       params.instance, std::move(params.sql_statement), std::move(query_plan));
 }
