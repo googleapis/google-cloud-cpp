@@ -763,8 +763,8 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   Value const& bigtable_val = *value_hist;
   using HistoryEntry = std::tuple<Timestamp, std::string>;
   auto history_map =
-      bigtable_val.get<std::map<std::string, std::vector<HistoryEntry>>>();
-  ASSERT_TRUE(history_map.ok()) << history_array.status().message();
+      bigtable_val.get<std::unordered_map<std::string, std::vector<HistoryEntry>>>();
+  ASSERT_TRUE(history_map.ok()) << history_map.status().message();
   ASSERT_EQ(history_map->size(), 2);
 
   // Verify cells returned ordered from newest to oldest.
