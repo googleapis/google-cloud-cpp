@@ -649,7 +649,6 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   Project project(project_id());
   InstanceResource instance_resource(project, instance_id());
 
-
   auto prepared_query = client.PrepareQuery(
       instance_resource,
       SqlStatement("SELECT family4 AS c0  FROM " + quoted_table_name +
@@ -763,13 +762,15 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   ASSERT_TRUE(value_hist.ok()) << value_hist.status().message();
   Value const& bigtable_val = *value_hist;
   using HistoryEntry = std::tuple<Timestamp, std::string>;
-  auto history_map = bigtable_val.get<std::map<std::string, std::vector<HistoryEntry>>>();
+  auto history_map =
+      bigtable_val.get<std::map<std::string, std::vector<HistoryEntry>>>();
   ASSERT_TRUE(history_map.ok()) << history_array.status().message();
   ASSERT_EQ(history_map->size(), 2);
 
   // Verify cells returned ordered from newest to oldest.
   auto const& c1_entry0 = (*history_map)["c1"][0];
-  auto ts_new = std::get<0>(c1_entry0).get<sys_time<std::chrono::microseconds>>();
+  auto ts_new =
+      std::get<0>(c1_entry0).get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(ts_new);
   auto expected_current_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(current_time));
@@ -778,7 +779,8 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   EXPECT_EQ(std::get<1>(c1_entry0), column_1_value_new);
 
   auto const& c1_entry1 = (*history_map)["c1"][1];
-  auto ts_old = std::get<0>(c1_entry1).get<sys_time<std::chrono::microseconds>>();
+  auto ts_old =
+      std::get<0>(c1_entry1).get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(ts_old);
   auto expected_old_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(old_time));
@@ -788,7 +790,8 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
 
   // Verify cells returned ordered from newest to oldest.
   auto const& c2_entry0 = (*history_map)["c2"][0];
-  auto ts_new = std::get<0>(c2_entry0).get<sys_time<std::chrono::microseconds>>();
+  auto ts_new =
+      std::get<0>(c2_entry0).get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(ts_new);
   auto expected_current_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(current_time));
@@ -797,7 +800,8 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   EXPECT_EQ(std::get<1>(c2_entry0), column_2_value_new);
 
   auto const& c2_entry1 = (*history_map)["c2"][1];
-  auto ts_old = std::get<0>(c2_entry1).get<sys_time<std::chrono::microseconds>>();
+  auto ts_old =
+      std::get<0>(c2_entry1).get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(ts_old);
   auto expected_old_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(old_time));
