@@ -769,43 +769,43 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
 
   // Verify cells returned ordered from newest to oldest.
   auto const& c1_entry0 = (*history_map)["c1"][0];
-  auto ts_new =
+  auto c1_ts_new =
       std::get<0>(c1_entry0).get<sys_time<std::chrono::microseconds>>();
-  ASSERT_STATUS_OK(ts_new);
+  ASSERT_STATUS_OK(c1_ts_new);
   auto expected_current_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(current_time));
-  EXPECT_EQ(duration_cast<milliseconds>(ts_new->time_since_epoch()),
+  EXPECT_EQ(duration_cast<milliseconds>(c1_ts_new->time_since_epoch()),
             expected_current_time_ms);
   EXPECT_EQ(std::get<1>(c1_entry0), column_1_value_new);
 
   auto const& c1_entry1 = (*history_map)["c1"][1];
-  auto ts_old =
+  auto c1_ts_old =
       std::get<0>(c1_entry1).get<sys_time<std::chrono::microseconds>>();
-  ASSERT_STATUS_OK(ts_old);
+  ASSERT_STATUS_OK(c1_ts_old);
   auto expected_old_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(old_time));
-  EXPECT_EQ(duration_cast<milliseconds>(ts_old->time_since_epoch()),
+  EXPECT_EQ(duration_cast<milliseconds>(c1_ts_old->time_since_epoch()),
             expected_old_time_ms);
   EXPECT_EQ(std::get<1>(c1_entry1), column_1_value_old);
 
   // Verify cells returned ordered from newest to oldest.
   auto const& c2_entry0 = (*history_map)["c2"][0];
-  auto ts_new =
+  auto c2_ts_new =
       std::get<0>(c2_entry0).get<sys_time<std::chrono::microseconds>>();
-  ASSERT_STATUS_OK(ts_new);
+  ASSERT_STATUS_OK(c2_ts_new);
   auto expected_current_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(current_time));
-  EXPECT_EQ(duration_cast<milliseconds>(ts_new->time_since_epoch()),
+  EXPECT_EQ(duration_cast<milliseconds>(c2_ts_new->time_since_epoch()),
             expected_current_time_ms);
   EXPECT_EQ(std::get<1>(c2_entry0), column_2_value_new);
 
   auto const& c2_entry1 = (*history_map)["c2"][1];
-  auto ts_old =
+  auto c2_ts_old =
       std::get<0>(c2_entry1).get<sys_time<std::chrono::microseconds>>();
-  ASSERT_STATUS_OK(ts_old);
+  ASSERT_STATUS_OK(c2_ts_old);
   auto expected_old_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(old_time));
-  EXPECT_EQ(duration_cast<milliseconds>(ts_old->time_since_epoch()),
+  EXPECT_EQ(duration_cast<milliseconds>(c2_ts_old->time_since_epoch()),
             expected_old_time_ms);
   EXPECT_EQ(std::get<1>(c2_entry1), column_2_value_old);
 }
