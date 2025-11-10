@@ -709,7 +709,7 @@ TEST_P(DataIntegrationTest, SingleColumnQuery) {
       {row_key, family, column2, 0, value2},
   };
   BulkApply(table, created);
-  auto client = Client(table.connection(), opts);
+  auto client = Client(connection, opts);
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -785,7 +785,7 @@ TEST_P(DataIntegrationTest, SingleColumnQueryWithHistory) {
   ASSERT_TRUE(apply_status.ok()) << apply_status.message();
 
   // Execute query using WITH_HISTORY
-  auto client = Client(table.connection(), opts);
+  auto client = Client(connection, opts);
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
