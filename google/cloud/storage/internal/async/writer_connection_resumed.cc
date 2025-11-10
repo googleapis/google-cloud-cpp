@@ -113,7 +113,7 @@ class AsyncWriterConnectionResumedState
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk));
-    // Return the unique future associated with this finalization.
+    // Returns the unique future associated with this finalization.
     return std::move(finalized_future_);
   }
 
