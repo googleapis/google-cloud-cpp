@@ -156,6 +156,77 @@ TEST(GrpcMetricsExporter, ReaderOptionsAreSetFromConfig) {
             std::chrono::milliseconds(expected_timeout));
 }
 
+TEST(GrpcMetricsExporter, MakeFilterWithServiceName) {
+  auto excluded_labels = std::set<std::string>{"service_name"};
+  auto options =
+      TestOptions().set<storage_experimental::GrpcMetricsExcludedLabelsOption>(
+          excluded_labels);
+
+  auto config = MakeMeterProviderConfig(FullResource(), options);
+  ASSERT_TRUE(config.has_value());
+
+  // Test that filter option is set.
+  ASSERT_TRUE(config->exporter_options.has<otel::ResourceFilterDataFnOption>());
+  auto filter_fn =
+      config->exporter_options.get<otel::ResourceFilterDataFnOption>();
+  ASSERT_NE(filter_fn, nullptr);
+
+  // Test filtering behavior.
+  EXPECT_TRUE(filter_fn("service_name"));
+  EXPECT_FALSE(filter_fn("service_version"));
+}
+
+TEST(GrpcMetricsExporter, MakeFilterWithExplicitFilterFunction) {
+  auto explicit_filter = [](std::string const& key) {
+    return key == "explicit_test";
+  };
+  auto excluded_labels = std::set<std::string>{"service_name"};
+
+  // Test when explicit filter function takes precedence.
+  auto options =
+      TestOptions()
+          .set<otel::ResourceFilterDataFnOption>(explicit_filter)
+          .set<storage_experimental::GrpcMetricsExcludedLabelsOption>(
+              excluded_labels);
+  auto config = MakeMeterProviderConfig(FullResource(), options);
+  ASSERT_TRUE(config.has_value());
+
+  auto filter_fn =
+      config->exporter_options.get<otel::ResourceFilterDataFnOption>();
+  ASSERT_NE(filter_fn, nullptr);
+
+  // Explicit filter should take precedence
+  EXPECT_TRUE(filter_fn("explicit_test"));
+  EXPECT_FALSE(filter_fn("service_name"));
+}
+
+TEST(GrpcMetricsExporter, MakeFilterWithEmptyExcludedLabels) {
+  auto excluded_labels = std::set<std::string>{};
+
+  // Test when empty excluded labels returns nullptr.
+  auto options =
+      TestOptions().set<storage_experimental::GrpcMetricsExcludedLabelsOption>(
+          excluded_labels);
+  auto config = MakeMeterProviderConfig(FullResource(), options);
+  ASSERT_TRUE(config.has_value());
+
+  auto filter_fn =
+      config->exporter_options.get<otel::ResourceFilterDataFnOption>();
+  EXPECT_EQ(filter_fn, nullptr);
+}
+
+TEST(GrpcMetricsExporter, MakeFilterWithNoExcludedLabelsOption) {
+  auto options = TestOptions();
+
+  // Test when no excluded labels option returns nullptr.
+  auto config = MakeMeterProviderConfig(FullResource(), options);
+  ASSERT_TRUE(config.has_value());
+
+  auto filter_fn =
+      config->exporter_options.get<otel::ResourceFilterDataFnOption>();
+  EXPECT_EQ(filter_fn, nullptr);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

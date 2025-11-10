@@ -41,7 +41,7 @@ google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
     opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& metrics_name_formatter,
-    ResourceFilterDataFn const& resource_filter_fn);
+    otel::ResourceFilterDataFn const& resource_filter_fn);
 
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
@@ -94,8 +94,8 @@ std::unordered_map<std::string, std::vector<google::monitoring::v3::TimeSeries>>
 ToTimeSeriesWithResources(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter,
-    ResourceFilterDataFn const& resource_filter_fn,
-    MonitoredResourceFromDataFn const& resource_fn);
+    otel::ResourceFilterDataFn const& resource_filter_fn,
+    otel::MonitoredResourceFromDataFn const& resource_fn);
 
 bool IsEmptyTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data);

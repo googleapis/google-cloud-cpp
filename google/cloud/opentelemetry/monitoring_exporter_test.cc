@@ -264,6 +264,59 @@ TEST(MonitoringExporter, CustomMonitoredResource) {
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
 }
 
+TEST(MonitoringExporter, CustomMonitoredResourceFromDataFunction) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  EXPECT_CALL(*mock, CreateTimeSeries)
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(2));
+            EXPECT_THAT(request.time_series(),
+                        Each(ResourceType("test_resource")));
+            return Status();
+          });
+
+  // Define a function that maps PointDataAttributes to a MonitoredResource.
+  auto resource_fn = [](opentelemetry::sdk::metrics::PointDataAttributes const&) 
+      -> std::pair<std::string, google::api::MonitoredResource> {
+    google::api::MonitoredResource resource;
+    resource.set_type("test_resource");
+    return {"test-project", resource};
+  };
+
+  auto options = Options{}.set<MonitoredResourceFromDataFnOption>(resource_fn);
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock), options);
+  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto result = exporter->Export(data);
+  EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
+}
+
+TEST(MonitoringExporter, CustomResourceFilterDataFunction) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  EXPECT_CALL(*mock, CreateTimeSeries)
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(2));
+            return Status();
+          });
+
+  // Define a function that filters out labels starting with "internal_".
+  auto filter_fn = [](std::string const& label) -> bool {
+    return label.rfind("internal_", 0) == 0;
+  };
+
+  auto options = Options{}.set<ResourceFilterDataFnOption>(filter_fn);
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock), options);
+  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto result = exporter->Export(data);
+  EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
+}
+
 TEST(MonitoringExporter, CreateServiceTimeSeries) {
   auto mock =
       std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();

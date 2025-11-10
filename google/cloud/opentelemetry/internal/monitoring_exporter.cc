@@ -35,9 +35,8 @@ std::string FormatProjectFullName(std::string const& project) {
 
 MonitoringExporter::MonitoringExporter(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
-    otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn,
-    otel_internal::ResourceFilterDataFn resource_filter_fn,
-    Options const& options)
+    otel::MonitoredResourceFromDataFn dynamic_resource_fn,
+    otel::ResourceFilterDataFn resource_filter_fn, Options const& options)
     : client_(std::move(conn)),
       formatter_(options.get<otel::MetricNameFormatterOption>()),
       use_service_time_series_(options.get<otel::ServiceTimeSeriesOption>()),
@@ -49,7 +48,10 @@ MonitoringExporter::MonitoringExporter(
     Project project,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options const& options)
-    : MonitoringExporter(std::move(conn), nullptr, nullptr, options) {
+    : MonitoringExporter(std::move(conn),
+                         options.get<otel::MonitoredResourceFromDataFnOption>(),
+                         options.get<otel::ResourceFilterDataFnOption>(),
+                         options) {
   project_ = std::move(project);
 }
 
@@ -98,7 +100,19 @@ opentelemetry::sdk::common::ExportResult MonitoringExporter::ExportImpl(
   }
 
   std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
-  if (dynamic_resource_fn_) {
+  if (dynamic_resource_fn_ || resource_filter_fn_) {
+    // If `resource_filter_fn_` is provided, we must use
+    // `ToTimeSeriesWithResources`, which requires a dynamic resource
+    // function. If `dynamic_resource_fn_` is not provided, create a
+    // default implementation.
+    if (!dynamic_resource_fn_) {
+      auto mr = otel_internal::ToMonitoredResource(data, mr_proto_);
+      dynamic_resource_fn_ =
+          [mr, p = project_->project_id()](
+              opentelemetry::sdk::metrics::PointDataAttributes const&) {
+            return std::make_pair(p, mr);
+          };
+    }
     auto tss_map = otel_internal::ToTimeSeriesWithResources(
         data, formatter_, resource_filter_fn_, dynamic_resource_fn_);
     for (auto& tss : tss_map) {
@@ -126,8 +140,8 @@ Options DefaultOptions(Options o) {
 }
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(MonitoredResourceFromDataFn dynamic_resource_fn,
-                       ResourceFilterDataFn resource_filter_fn,
+MakeMonitoringExporter(otel::MonitoredResourceFromDataFn dynamic_resource_fn,
+                       otel::ResourceFilterDataFn resource_filter_fn,
                        Options options) {
   // TODO(#15321): Determine which options, if any, should be passed along from
   //  the options parameter to MakeMetricServiceConnection.
@@ -140,8 +154,8 @@ MakeMonitoringExporter(MonitoredResourceFromDataFn dynamic_resource_fn,
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    MonitoredResourceFromDataFn dynamic_resource_fn,
-    ResourceFilterDataFn resource_filter_fn,
+    otel::MonitoredResourceFromDataFn dynamic_resource_fn,
+    otel::ResourceFilterDataFn resource_filter_fn,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options) {
   options = DefaultOptions(std::move(options));
