@@ -611,11 +611,24 @@ TEST_P(DataIntegrationTest, TableApplyWithLogging) {
 }
 
 TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
-  auto const& table_id = testing::TableTestEnvironment::table_id();
-  auto conn = MakeDataConnection(Options{}.set<DataRetryPolicyOption>(
-      DataLimitedErrorCountRetryPolicy(0).clone()));
-  auto table = Table(std::move(conn),
-                     TableResource(project_id(), instance_id(), table_id));
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+  auto const table_id = testing::TableTestEnvironment::table_id();
+  auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
+  auto backoff_policy_option =
+      google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
+          .clone();
+  auto query_refresh_option =
+      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+          .clone();
+  auto opts =
+      Options{}
+          .set<DataRetryPolicyOption>(std::move(retry_policy_option))
+          .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
+          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+              std::move(query_refresh_option));
+  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto table =
+      Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-client-query-test";
   std::string const family = kFamily4;
   std::string const column1 = "c1";
@@ -628,18 +641,19 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
       {row_key, family, column2, 0, value2},
   };
   BulkApply(table, created);
-  auto data_connection = table.connection();
-  auto client = Client(data_connection, Options{});
+  auto client = Client(connection, opts);
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
-  auto const& table_name = full_table_path.back();
+  auto table_name = full_table_path.back();
   std::string quoted_table_name = "`" + table_name + "`";
   Project project(project_id());
   InstanceResource instance_resource(project, instance_id());
+
   auto prepared_query = client.PrepareQuery(
       instance_resource,
       SqlStatement("SELECT family4 AS c0  FROM " + quoted_table_name +
                    " WHERE _key = '" + row_key + "'"));
+
   ASSERT_STATUS_OK(prepared_query);
 
   auto bound_query = prepared_query->BindParameters({});
