@@ -134,6 +134,16 @@ TEST(ListBucketsRequestTest, OStream) {
   EXPECT_THAT(os.str(), HasSubstr("prefix=foo-bar-baz"));
 }
 
+TEST(ListBucketsRequestTest, PartialSuccess) {
+  ListBucketsRequest request("project-to-list");
+  request.set_multiple_options(ReturnPartialSuccess(true));
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("ListBucketsRequest"));
+  EXPECT_THAT(os.str(), HasSubstr("returnPartialSuccess=1"));
+}
+
 TEST(ListBucketsResponseTest, Parse) {
   std::string bucket1 = R"""({
       "kind": "storage#bucket",

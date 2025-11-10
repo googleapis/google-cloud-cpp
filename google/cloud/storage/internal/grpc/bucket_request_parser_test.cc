@@ -187,6 +187,7 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
         page_size: 123
         page_token: "test-token"
         prefix: "test-prefix"
+        return_partial_success: "true"
         read_mask { paths: [ "*" ] }
       )pb",
       &expected));
@@ -196,7 +197,8 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
   req.set_multiple_options(
       storage::MaxResults(123), storage::Prefix("test-prefix"),
       storage::Projection("full"), storage::UserProject("test-user-project"),
-      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::ReturnPartialSuccess(true));
 
   auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -214,6 +216,8 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
           name: "projects/_/buckets/test-bucket-2"
           bucket_id: "test-bucket-2"
         }
+        unreachable { "projects/_/buckets/bucket1"
+                      "projects/1234567/locations/location1" }
         next_page_token: "test-token"
       )pb",
       &input));
