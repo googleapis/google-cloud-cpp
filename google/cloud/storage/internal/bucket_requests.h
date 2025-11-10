@@ -37,7 +37,8 @@ namespace internal {
  */
 class ListBucketsRequest
     : public GenericRequest<ListBucketsRequest, MaxResults, Prefix, Projection,
-                            UserProject, OverrideDefaultProject> {
+                            UserProject, OverrideDefaultProject,
+                            ReturnPartialSuccess> {
  public:
   ListBucketsRequest() = default;
   explicit ListBucketsRequest(std::string project_id)
@@ -45,6 +46,7 @@ class ListBucketsRequest
 
   std::string const& project_id() const { return project_id_; }
   std::string const& page_token() const { return page_token_; }
+  bool const& return_partial_success() const { return return_partial_success_; }
   ListBucketsRequest& set_page_token(std::string page_token) {
     page_token_ = std::move(page_token);
     return *this;
@@ -53,9 +55,16 @@ class ListBucketsRequest
  private:
   std::string project_id_;
   std::string page_token_;
+  bool return_partial_success_;
 };
 
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);
+
+struct ListBucketsResult {
+  std::string page_token;
+  std::vector<BucketMetadata> items;
+  std::vector<std::string> unreachable;
+};
 
 struct ListBucketsResponse {
   static StatusOr<ListBucketsResponse> FromHttpResponse(
@@ -65,6 +74,7 @@ struct ListBucketsResponse {
 
   std::string next_page_token;
   std::vector<BucketMetadata> items;
+  std::vector<std::string> unreachable;
 };
 
 std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r);
