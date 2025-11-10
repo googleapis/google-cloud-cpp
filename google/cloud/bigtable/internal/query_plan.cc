@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-auto constexpr kRefreshDeadlineOffsetMs = 1000;
+auto constexpr kRefreshDeadlineOffsetMs = std::chrono::milliseconds(1000);
 }  // namespace
 
 std::shared_ptr<QueryPlan> QueryPlan::Create(
@@ -46,7 +46,7 @@ void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
   // We want to start the refresh process before the query plan expires.
   auto refresh_deadline =
       internal::ToChronoTimePoint(response_->valid_until()) -
-      std::chrono::milliseconds(kRefreshDeadlineOffsetMs);
+      kRefreshDeadlineOffsetMs;
   std::weak_ptr<QueryPlan> plan = shared_from_this();
   refresh_timer_ =
       cq_.MakeDeadlineTimer(refresh_deadline)
