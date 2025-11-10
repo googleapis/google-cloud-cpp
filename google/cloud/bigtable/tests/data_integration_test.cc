@@ -840,6 +840,87 @@ TEST_P(DataIntegrationTest, SingleColumnQueryWithHistory) {
   EXPECT_EQ(std::get<1>(entry1), value_old);
 }
 
+TEST_P(DataIntegrationTest, MultiColumnQuery) {
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+  auto const table_id = testing::TableTestEnvironment::table_id();
+  auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
+  auto backoff_policy_option =
+      google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
+          .clone();
+  auto query_refresh_option =
+      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+          .clone();
+  auto opts =
+      Options{}
+          .set<DataRetryPolicyOption>(std::move(retry_policy_option))
+          .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
+          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+              std::move(query_refresh_option));
+  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto table =
+      Table(connection, TableResource(project_id(), instance_id(), table_id));
+  std::string const row_key1 = "multi-column-query-row-1";
+  std::string const row_key2 = "multi-column-query-row-2";
+  std::string const family = kFamily4;
+  std::string const column1 = "c1";
+  std::string const column2 = "c2";
+  std::string const value11 = "v11";
+  std::string const value12 = "v12";
+  std::string const value21 = "v21";
+  std::string const value22 = "v22";
+  std::vector<Cell> created = {
+      {row_key1, family, column1, 0, value11},
+      {row_key1, family, column2, 0, value12},
+      {row_key2, family, column1, 0, value21},
+      {row_key2, family, column2, 0, value22},
+  };
+
+  BulkApply(table, created);
+  auto client = Client(connection, opts);
+  std::vector<std::string> full_table_path =
+      absl::StrSplit(table.table_name(), '/');
+  auto table_name = full_table_path.back();
+  std::string quoted_table_name = "`" + table_name + "`";
+  Project project(project_id());
+  InstanceResource instance_resource(project, instance_id());
+  auto prepared_query = client.PrepareQuery(
+      instance_resource,
+      SqlStatement("SELECT CAST(_key AS STRING) AS _key, "
+                   "CAST(family4['c1'] AS STRING) AS c1, "
+                   "CAST(family4['c2'] AS STRING) AS c2 FROM " +
+                   quoted_table_name + " WHERE _key IN ('" + row_key1 + "', '" +
+                   row_key2 + "')"));
+  ASSERT_STATUS_OK(prepared_query);
+  auto bound_query = prepared_query->BindParameters({});
+  auto row_stream = client.ExecuteQuery(std::move(bound_query));
+  std::vector<StatusOr<bigtable::QueryRow>> rows;
+
+  for (auto const& row : std::move(row_stream)) {
+    rows.push_back(row);
+  }
+
+  ASSERT_EQ(rows.size(), 2);
+  std::map<std::string, std::pair<std::string, std::string>> expected_values;
+  expected_values[row_key1] = {value11, value12};
+  expected_values[row_key2] = {value21, value22};
+  for (auto const& row_status : rows) {
+    ASSERT_STATUS_OK(row_status);
+    auto const& row = *row_status;
+    auto key = row.get<std::string>("_key");
+    ASSERT_STATUS_OK(key);
+    auto it = expected_values.find(*key);
+    ASSERT_NE(it, expected_values.end());
+    auto c1_value = row.get<std::string>("c1");
+    ASSERT_STATUS_OK(c1_value);
+    EXPECT_EQ(*c1_value, it->second.first);
+    auto c2_value = row.get<std::string>("c2");
+    ASSERT_STATUS_OK(c2_value);
+    EXPECT_EQ(*c2_value, it->second.second);
+    expected_values.erase(it);
+  }
+  EXPECT_TRUE(expected_values.empty());
+}
+
 // TODO(#8800) - remove after deprecation is complete
 #include "google/cloud/internal/diagnostics_pop.inc"
 
