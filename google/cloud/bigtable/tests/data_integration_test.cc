@@ -669,9 +669,10 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   auto const& row1 = *rows[0];
   ASSERT_EQ(row1.columns().size(), 1);
   ASSERT_EQ(row1.columns().at(0), family);
-  ASSERT_EQ(row1.values().at(0),
-            Value(std::unordered_map<std::string, std::string>{
-                {column1, value1}, {column2, value2}}));
+  ASSERT_EQ(
+      row1.values().at(0),
+      Value(std::unordered_map<std::string, std::string>{
+          {R"val(c1)val", R"val(v1)val"}, {R"val(c2)val", R"val(v2)val"}}));
 }
 
 TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
@@ -762,7 +763,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   auto value_hist = row.get("family4_history");
   ASSERT_TRUE(value_hist.ok()) << value_hist.status().message();
   Value const& bigtable_val = *value_hist;
-  using HistoryEntry = std::tuple<Timestamp, std::string>;
+  using HistoryEntry = std::unordered_map<std::string, std::string>;
   auto history_map =
       bigtable_val
           .get<std::unordered_map<std::string, std::vector<HistoryEntry>>>();
