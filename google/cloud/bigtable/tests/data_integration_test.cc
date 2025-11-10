@@ -40,6 +40,7 @@ using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::UnorderedElementsAre;
 using ms = std::chrono::milliseconds;
 
 class DataIntegrationTest : public TableIntegrationTest,
@@ -893,32 +894,16 @@ TEST_P(DataIntegrationTest, MultiColumnQuery) {
   ASSERT_STATUS_OK(prepared_query);
   auto bound_query = prepared_query->BindParameters({});
   auto row_stream = client.ExecuteQuery(std::move(bound_query));
-  std::vector<StatusOr<bigtable::QueryRow>> rows;
-
-  for (auto const& row : std::move(row_stream)) {
-    rows.push_back(row);
+  using RowType = std::tuple<std::string, std::string, std::string>;
+  std::vector<RowType> rows;
+  for (auto& row : StreamOf<RowType>(row_stream)) {
+    ASSERT_STATUS_OK(row);
+    rows.push_back(*std::move(row));
   }
 
-  ASSERT_EQ(rows.size(), 2);
-  std::map<std::string, std::pair<std::string, std::string>> expected_values;
-  expected_values[row_key1] = {value11, value12};
-  expected_values[row_key2] = {value21, value22};
-  for (auto const& row_status : rows) {
-    ASSERT_STATUS_OK(row_status);
-    auto const& row = *row_status;
-    auto key = row.get<std::string>("_key");
-    ASSERT_STATUS_OK(key);
-    auto it = expected_values.find(*key);
-    ASSERT_NE(it, expected_values.end());
-    auto c1_value = row.get<std::string>("c1");
-    ASSERT_STATUS_OK(c1_value);
-    EXPECT_EQ(*c1_value, it->second.first);
-    auto c2_value = row.get<std::string>("c2");
-    ASSERT_STATUS_OK(c2_value);
-    EXPECT_EQ(*c2_value, it->second.second);
-    expected_values.erase(it);
-  }
-  EXPECT_TRUE(expected_values.empty());
+  EXPECT_THAT(rows, UnorderedElementsAre(
+                        RowType("multi-column-query-row-1", "v11", "v12"),
+                        RowType("multi-column-query-row-2", "v21", "v22")));
 }
 
 // TODO(#8800) - remove after deprecation is complete
