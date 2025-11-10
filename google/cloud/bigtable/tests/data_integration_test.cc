@@ -649,6 +649,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   Project project(project_id());
   InstanceResource instance_resource(project, instance_id());
 
+
   auto prepared_query = client.PrepareQuery(
       instance_resource,
       SqlStatement("SELECT family4 AS c0  FROM " + quoted_table_name +
@@ -671,6 +672,138 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   ASSERT_EQ(row1.columns().at(1), column2);
   ASSERT_EQ(row1.values().at(0), Value(value1));
   ASSERT_EQ(row1.values().at(1), Value(value2));
+}
+
+TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+  auto const table_id = testing::TableTestEnvironment::table_id();
+  auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
+  auto backoff_policy_option =
+      google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
+          .clone();
+  auto query_refresh_option =
+      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+          .clone();
+  auto opts =
+      Options{}
+          .set<DataRetryPolicyOption>(std::move(retry_policy_option))
+          .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
+          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+              std::move(query_refresh_option));
+  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto table =
+      Table(connection, TableResource(project_id(), instance_id(), table_id));
+  std::string const row_key = "row-key-for-history-test";
+  std::string const family = kFamily4;
+  std::string const column1 = "c1";
+  std::string const column2 = "c2";
+  std::string const column_1_value_old = "c1_v1_old";
+  std::string const column_1_value_new = "c1_v2_new";
+  std::string const column_2_value_old = "c2_v1_old";
+  std::string const column_2_value_new = "c2_v2_new";
+
+  // Get times in microseconds
+  auto now_sys = std::chrono::system_clock::now();
+  auto current_time = std::chrono::duration_cast<std::chrono::microseconds>(
+                          now_sys.time_since_epoch())
+                          .count();
+  auto old_time = current_time - 5000000;  // 5 seconds older
+
+  // Apply mutations with specific timestamps
+  SingleRowMutation mutation(row_key);
+  mutation.emplace_back(
+      SetCell(family, column1,
+              duration_cast<milliseconds>(std::chrono::microseconds(old_time)),
+              column_1_value_old));
+  mutation.emplace_back(SetCell(
+      family, column1,
+      duration_cast<milliseconds>(std::chrono::microseconds(current_time)),
+      column_1_value_new));
+  mutation.emplace_back(
+      SetCell(family, column2,
+              duration_cast<milliseconds>(std::chrono::microseconds(old_time)),
+              column_2_value_old));
+  mutation.emplace_back(SetCell(
+      family, column2,
+      duration_cast<milliseconds>(std::chrono::microseconds(current_time)),
+      column_2_value_new));
+  auto apply_status = table.Apply(std::move(mutation));
+  ASSERT_TRUE(apply_status.ok()) << apply_status.message();
+
+  // Execute query using WITH_HISTORY
+  auto client = Client(connection, opts);
+  std::vector<std::string> full_table_path =
+      absl::StrSplit(table.table_name(), '/');
+  auto table_name = full_table_path.back();
+  std::string quoted_table_name = "`" + table_name + "`";
+  Project project(project_id());
+  InstanceResource instance_resource(project, instance_id());
+  std::string query_string = absl::StrFormat(
+      R"sql(SELECT family4 AS family4_history
+             FROM %s(WITH_HISTORY => TRUE)
+             WHERE _key = '%s')sql",
+      quoted_table_name, row_key);
+  auto prepared_query =
+      client.PrepareQuery(instance_resource, SqlStatement(query_string));
+  ASSERT_TRUE(prepared_query.ok()) << prepared_query.status().message();
+
+  auto bound_query = (*prepared_query).BindParameters({});
+  auto row_stream = client.ExecuteQuery(std::move(bound_query));
+  std::vector<StatusOr<QueryRow>> rows;
+  for (auto const& row : std::move(row_stream)) {
+    rows.push_back(row);
+  }
+  ASSERT_EQ(rows.size(), 1);
+  ASSERT_TRUE(rows[0].ok()) << rows[0].status().message();
+  auto const& row = *rows[0];
+  ASSERT_EQ(row.columns().size(), 2);
+  EXPECT_EQ(row.columns().at(0), "family4_history");
+
+  auto value_hist = row.get("family4_history");
+  ASSERT_TRUE(value_hist.ok()) << value_hist.status().message();
+  Value const& bigtable_val = *value_hist;
+  using HistoryEntry = std::tuple<Timestamp, std::string>;
+  auto history_map = bigtable_val.get<std::map<std::string, std::vector<HistoryEntry>>>();
+  ASSERT_TRUE(history_map.ok()) << history_array.status().message();
+  ASSERT_EQ(history_map->size(), 2);
+
+  // Verify cells returned ordered from newest to oldest.
+  auto const& c1_entry0 = (*history_map)["c1"][0];
+  auto ts_new = std::get<0>(c1_entry0).get<sys_time<std::chrono::microseconds>>();
+  ASSERT_STATUS_OK(ts_new);
+  auto expected_current_time_ms =
+      duration_cast<milliseconds>(std::chrono::microseconds(current_time));
+  EXPECT_EQ(duration_cast<milliseconds>(ts_new->time_since_epoch()),
+            expected_current_time_ms);
+  EXPECT_EQ(std::get<1>(c1_entry0), column_1_value_new);
+
+  auto const& c1_entry1 = (*history_map)["c1"][1];
+  auto ts_old = std::get<0>(c1_entry1).get<sys_time<std::chrono::microseconds>>();
+  ASSERT_STATUS_OK(ts_old);
+  auto expected_old_time_ms =
+      duration_cast<milliseconds>(std::chrono::microseconds(old_time));
+  EXPECT_EQ(duration_cast<milliseconds>(ts_old->time_since_epoch()),
+            expected_old_time_ms);
+  EXPECT_EQ(std::get<1>(c1_entry1), column_1_value_old);
+
+  // Verify cells returned ordered from newest to oldest.
+  auto const& c2_entry0 = (*history_map)["c2"][0];
+  auto ts_new = std::get<0>(c2_entry0).get<sys_time<std::chrono::microseconds>>();
+  ASSERT_STATUS_OK(ts_new);
+  auto expected_current_time_ms =
+      duration_cast<milliseconds>(std::chrono::microseconds(current_time));
+  EXPECT_EQ(duration_cast<milliseconds>(ts_new->time_since_epoch()),
+            expected_current_time_ms);
+  EXPECT_EQ(std::get<1>(c2_entry0), column_2_value_new);
+
+  auto const& c2_entry1 = (*history_map)["c2"][1];
+  auto ts_old = std::get<0>(c2_entry1).get<sys_time<std::chrono::microseconds>>();
+  ASSERT_STATUS_OK(ts_old);
+  auto expected_old_time_ms =
+      duration_cast<milliseconds>(std::chrono::microseconds(old_time));
+  EXPECT_EQ(duration_cast<milliseconds>(ts_old->time_since_epoch()),
+            expected_old_time_ms);
+  EXPECT_EQ(std::get<1>(c2_entry1), column_2_value_old);
 }
 
 // TODO(#8800) - remove after deprecation is complete
