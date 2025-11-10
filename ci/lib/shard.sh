@@ -92,6 +92,7 @@ function shard::cmake_features() {
     compute)
       echo "compute"
       echo "opentelemetry"
+      echo "universe_domain"
       ;;
     # If we decided to compile all libraries with clang-tidy we would need
     # to enable shards such as:

@@ -104,6 +104,12 @@ Idempotency BackupDRConnectionIdempotencyPolicy::ListBackups(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BackupDRConnectionIdempotencyPolicy::FetchBackupsForResourceType(
+    google::cloud::backupdr::v1::
+        FetchBackupsForResourceTypeRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackupDRConnectionIdempotencyPolicy::GetBackup(
     google::cloud::backupdr::v1::GetBackupRequest const&) {
   return Idempotency::kIdempotent;
@@ -198,6 +204,11 @@ Idempotency BackupDRConnectionIdempotencyPolicy::TriggerBackup(
 
 Idempotency BackupDRConnectionIdempotencyPolicy::GetDataSourceReference(
     google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupDRConnectionIdempotencyPolicy::ListDataSourceReferences(
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

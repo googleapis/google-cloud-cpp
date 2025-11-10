@@ -212,6 +212,12 @@ class FeatureOnlineStoreServiceConnection {
       google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
   AsyncFeatureViewDirectWrite();
 
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

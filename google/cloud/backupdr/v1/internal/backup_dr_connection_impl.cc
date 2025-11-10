@@ -836,6 +836,43 @@ BackupDRConnectionImpl::ListBackups(
       });
 }
 
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRConnectionImpl::FetchBackupsForResourceType(
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->FetchBackupsForResourceType(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::backupdr::v1::Backup>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::backupdr::v1::
+                       FetchBackupsForResourceTypeRequest const& request) {
+              return stub->FetchBackupsForResourceType(context, options,
+                                                       request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse r) {
+        std::vector<google::cloud::backupdr::v1::Backup> result(
+            r.backups().size());
+        auto& messages = *r.mutable_backups();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRConnectionImpl::GetBackup(
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1975,6 +2012,42 @@ BackupDRConnectionImpl::GetDataSourceReference(
         return stub_->GetDataSourceReference(context, options, request);
       },
       *current, request, __func__);
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRConnectionImpl::ListDataSourceReferences(
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDataSourceReferences(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::backupdr::v1::DataSourceReference>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::backupdr::v1::
+                       ListDataSourceReferencesRequest const& request) {
+              return stub->ListDataSourceReferences(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::backupdr::v1::ListDataSourceReferencesResponse r) {
+        std::vector<google::cloud::backupdr::v1::DataSourceReference> result(
+            r.data_source_references().size());
+        auto& messages = *r.mutable_data_source_references();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StreamRange<google::cloud::backupdr::v1::DataSourceReference>

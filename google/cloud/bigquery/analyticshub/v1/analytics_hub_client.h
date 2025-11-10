@@ -124,7 +124,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1257}
+  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1282}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -163,7 +163,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1257}
+  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1282}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -202,7 +202,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1287}
+  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1312}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -242,7 +242,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1287}
+  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1312}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -271,7 +271,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1312}
+  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1337}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -301,7 +301,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1312}
+  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1337}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -330,7 +330,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1324}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1349}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
   ///
   // clang-format on
@@ -364,7 +364,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1324}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1349}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
   ///
   // clang-format on
@@ -395,7 +395,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1344}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1369}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -428,7 +428,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L415}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1344}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1369}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -453,7 +453,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1356}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1381}
   ///
   // clang-format on
   Status DeleteDataExchange(std::string const& name, Options opts = {});
@@ -479,7 +479,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1356}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1381}
   ///
   // clang-format on
   Status DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::
@@ -514,7 +514,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1368}
+  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1393}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
@@ -553,7 +553,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1368}
+  /// [google.cloud.bigquery.analyticshub.v1.ListListingsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1393}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
@@ -580,7 +580,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1397}
+  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1422}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
@@ -610,7 +610,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1397}
+  /// [google.cloud.bigquery.analyticshub.v1.GetListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1422}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
@@ -639,7 +639,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1409}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1434}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
@@ -671,7 +671,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1409}
+  /// [google.cloud.bigquery.analyticshub.v1.CreateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1434}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
   ///
   // clang-format on
@@ -702,7 +702,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1429}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1454}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
@@ -733,7 +733,7 @@ class AnalyticsHubServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L783}
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1429}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1454}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
@@ -758,7 +758,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1441}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1466}
   ///
   // clang-format on
   Status DeleteListing(std::string const& name, Options opts = {});
@@ -784,7 +784,7 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1441}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1466}
   ///
   // clang-format on
   Status DeleteListing(
@@ -816,8 +816,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1458}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1482}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1483}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1507}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
@@ -851,8 +851,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1458}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1482}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1483}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeListingResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1507}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
@@ -890,8 +890,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1488}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1520}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1513}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1545}
   ///
   // clang-format on
   future<StatusOr<
@@ -945,8 +945,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1488}
-  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1520}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1513}
+  /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1545}
   ///
   // clang-format on
   future<StatusOr<
@@ -1014,8 +1014,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1526}
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1538}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1551}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1563}
   ///
   // clang-format on
   future<StatusOr<
@@ -1068,8 +1068,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1526}
-  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1538}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1551}
+  /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1563}
   ///
   // clang-format on
   future<StatusOr<
@@ -1128,8 +1128,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1544}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
+  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1569}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1155}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1158,8 +1158,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1544}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
+  /// [google.cloud.bigquery.analyticshub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1569}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1155}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1196,8 +1196,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1556}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1581}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1155}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1235,8 +1235,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1556}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1581}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1155}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1275,8 +1275,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1600}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1625}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1155}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1315,8 +1315,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1600}
-  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1130}
+  /// [google.cloud.bigquery.analyticshub.v1.ListSharedResourceSubscriptionsRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1625}
+  /// [google.cloud.bigquery.analyticshub.v1.Subscription]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1155}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -1344,8 +1344,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1631}
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1649}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1656}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1674}
   ///
   // clang-format on
   StatusOr<
@@ -1375,8 +1375,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1631}
-  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1649}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1656}
+  /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1674}
   ///
   // clang-format on
   StatusOr<
@@ -1411,8 +1411,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1652}
-  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1664}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1677}
+  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1689}
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
@@ -1462,8 +1462,8 @@ class AnalyticsHubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1652}
-  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1664}
+  /// [google.cloud.bigquery.analyticshub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1677}
+  /// [google.cloud.bigquery.analyticshub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1689}
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>

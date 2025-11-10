@@ -88,6 +88,21 @@ FeatureOnlineStoreServiceLogging::AsyncFeatureViewDirectWrite(
   return stream;
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceLogging::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+              request) {
+        return child_->GenerateFetchAccessToken(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureOnlineStoreServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

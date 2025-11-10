@@ -110,8 +110,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L109}
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L131}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L119}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
@@ -143,8 +143,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L109}
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L131}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L119}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
@@ -177,8 +177,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L298}
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L341}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L308}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L351}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
@@ -210,14 +210,48 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureViewDirectWriteRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L348}
-  /// [google.cloud.aiplatform.v1.FeatureViewDirectWriteResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L384}
+  /// [google.cloud.aiplatform.v1.FeatureViewDirectWriteRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L358}
+  /// [google.cloud.aiplatform.v1.FeatureViewDirectWriteResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L394}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
       google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
   AsyncFeatureViewDirectWrite(Options opts = {});
+
+  // clang-format off
+  ///
+  /// RPC to generate an access token for the given feature view. FeatureViews
+  /// under the same FeatureOnlineStore share the same access token.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.GenerateFetchAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.aiplatform.v1.GenerateFetchAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.GenerateFetchAccessTokenRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L430}
+  /// [google.cloud.aiplatform.v1.GenerateFetchAccessTokenResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L440}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -546,7 +580,7 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -575,7 +609,7 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -608,7 +642,7 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -647,7 +681,7 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -689,7 +723,7 @@ class FeatureOnlineStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
+  /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L226}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> WaitOperation(

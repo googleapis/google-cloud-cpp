@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/options.h"
 #include "internal/partial_result_set_source.h"
 
 namespace google {
@@ -20,31 +21,25 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<PreparedQuery> Client::PrepareQuery(
-    InstanceResource const& instance, SqlStatement const& statement,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    Options) {
-  PrepareQueryParams params{std::move(instance), std::move(statement)};
-  return conn_->PrepareQuery(std::move(params));
+using ::google::cloud::internal::MergeOptions;
+using ::google::cloud::internal::OptionsSpan;
+
+StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
+                                             SqlStatement const& statement,
+                                             Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), opts_));
+  return conn_->PrepareQuery({std::move(instance), std::move(statement)});
 }
 
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     InstanceResource const& instance, SqlStatement const& statement, Options) {
-  PrepareQueryParams params{std::move(instance), std::move(statement)};
-  return conn_->AsyncPrepareQuery(std::move(params));
+  return conn_->AsyncPrepareQuery({std::move(instance), std::move(statement)});
 }
 
-// NOLINTNEXTLINE(performance-unnecessary-value-param)
-RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options) {
-  ExecuteQueryParams params{std::move(bound_query)};
-  auto row_stream = conn_->ExecuteQuery(params);
-  if (!row_stream.ok()) {
-    return RowStream(
-        std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(
-            row_stream.status()));
-  }
-  return std::move(row_stream.value());
+RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), opts_));
+  return conn_->ExecuteQuery({std::move(bound_query)});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

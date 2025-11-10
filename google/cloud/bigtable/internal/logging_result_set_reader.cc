@@ -43,6 +43,9 @@ bool LoggingResultSetReader::Read(
   }
   return success;
 }
+grpc::ClientContext const& LoggingResultSetReader::context() const {
+  return impl_->context();
+}
 
 Status LoggingResultSetReader::Finish() { return impl_->Finish(); }
 

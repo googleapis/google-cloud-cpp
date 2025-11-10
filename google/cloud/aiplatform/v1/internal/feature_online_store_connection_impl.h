@@ -66,6 +66,11 @@ class FeatureOnlineStoreServiceConnectionImpl
       google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
   AsyncFeatureViewDirectWrite() override;
 
+  StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

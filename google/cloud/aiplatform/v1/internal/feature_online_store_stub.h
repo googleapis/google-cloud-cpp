@@ -60,6 +60,13 @@ class FeatureOnlineStoreServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) = 0;
 
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -139,6 +146,12 @@ class DefaultFeatureOnlineStoreServiceStub
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) override;
+
+  StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

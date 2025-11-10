@@ -326,6 +326,21 @@ BackupDRLogging::ListBackups(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRLogging::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+              request) {
+        return child_->FetchBackupsForResourceType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRLogging::GetBackup(
     grpc::ClientContext& context, Options const& options,
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
@@ -761,6 +776,20 @@ BackupDRLogging::GetDataSourceReference(
              google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
                  request) {
         return child_->GetDataSourceReference(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRLogging::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+                 request) {
+        return child_->ListDataSourceReferences(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
