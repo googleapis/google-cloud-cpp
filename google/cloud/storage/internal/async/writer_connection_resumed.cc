@@ -184,7 +184,7 @@ class AsyncWriterConnectionResumedState
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
-    std::cout << "Hey this is a test statement of new branch.\n";
+    std::cerr << "Hey this is a test statement of new branch.\n";
     // Determine if there's data left to write *before* potentially finalizing.
     writing_ = write_offset_ < resend_buffer_.size();
 
