@@ -651,7 +651,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
 
   auto prepared_query = client.PrepareQuery(
       instance_resource,
-      SqlStatement("SELECT family4 AS c0  FROM " + quoted_table_name +
+      SqlStatement("SELECT family4 AS family4  FROM " + quoted_table_name +
                    " WHERE _key = '" + row_key + "'"));
 
   ASSERT_STATUS_OK(prepared_query);
@@ -667,10 +667,11 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   ASSERT_EQ(rows.size(), 1);
   ASSERT_STATUS_OK(rows[0]);
   auto const& row1 = *rows[0];
-  ASSERT_EQ(row1.columns().at(0), column1);
-  ASSERT_EQ(row1.columns().at(1), column2);
-  ASSERT_EQ(row1.values().at(0), Value(value1));
-  ASSERT_EQ(row1.values().at(1), Value(value2));
+  ASSERT_EQ(row1.columns().size(), 1);
+  ASSERT_EQ(row1.columns().at(0), family);
+  ASSERT_EQ(row1.values().at(0),
+            Value(std::unordered_map<std::string, std::string>{
+                {column1, value1}, {column2, value2}}));
 }
 
 TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
@@ -755,7 +756,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   ASSERT_EQ(rows.size(), 1);
   ASSERT_TRUE(rows[0].ok()) << rows[0].status().message();
   auto const& row = *rows[0];
-  ASSERT_EQ(row.columns().size(), 2);
+  ASSERT_EQ(row.columns().size(), 1);
   EXPECT_EQ(row.columns().at(0), "family4_history");
 
   auto value_hist = row.get("family4_history");
