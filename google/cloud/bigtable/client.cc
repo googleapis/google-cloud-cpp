@@ -28,13 +28,14 @@ StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
                                              SqlStatement const& statement,
                                              Options opts) {
   OptionsSpan span(MergeOptions(std::move(opts), opts_));
-  return conn_->PrepareQuery({std::move(instance), std::move(statement)});
+  return conn_->PrepareQuery({instance, statement});
 }
 
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    InstanceResource const& instance, SqlStatement const& statement, Options) {
-  return conn_->AsyncPrepareQuery({std::move(instance), std::move(statement)});
+    InstanceResource const& instance, SqlStatement const& statement,
+    Options opts) {
+  OptionsSpan span(MergeOptions(std::move(opts), opts_));
+  return conn_->AsyncPrepareQuery({instance, statement});
 }
 
 RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options opts) {

@@ -798,7 +798,8 @@ TEST_P(DataIntegrationTest, SingleColumnQueryWithHistory) {
              WHERE _key = '%s')sql",
       quoted_table_name, row_key);
   auto prepared_query =
-      client.PrepareQuery(instance_resource, SqlStatement(query_string));
+      client.AsyncPrepareQuery(instance_resource, SqlStatement(query_string))
+          .get();
   ASSERT_TRUE(prepared_query.ok()) << prepared_query.status().message();
 
   auto bound_query = (*prepared_query).BindParameters({});
