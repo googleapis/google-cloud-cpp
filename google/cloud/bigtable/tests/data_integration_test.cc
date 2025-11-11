@@ -771,46 +771,54 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   ASSERT_EQ(history_map->size(), 2);
 
   // Verify cells returned ordered from newest to oldest.
-  auto const& c1_entry0 = (*history_map)["c1"][0];
+  auto c1_entry0 = (*history_map)["c1"][0];
   auto c1_ts_new =
-      std::get<0>(c1_entry0).get<sys_time<std::chrono::microseconds>>();
+      bigtable_internal::TimestampFromRFC3339(c1_entry0["timestamp"])
+          .value()
+          .get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c1_ts_new);
   auto c1_expected_current_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(current_time));
   EXPECT_EQ(duration_cast<milliseconds>(c1_ts_new->time_since_epoch()),
             c1_expected_current_time_ms);
-  EXPECT_EQ(std::get<1>(c1_entry0), column_1_value_new);
+  EXPECT_EQ(c1_entry0["value"], column_1_value_new);
 
-  auto const& c1_entry1 = (*history_map)["c1"][1];
+  auto c1_entry1 = (*history_map)["c1"][1];
   auto c1_ts_old =
-      std::get<0>(c1_entry1).get<sys_time<std::chrono::microseconds>>();
+      bigtable_internal::TimestampFromRFC3339(c1_entry1["timestamp"])
+          .value()
+          .get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c1_ts_old);
   auto c1_expected_old_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(old_time));
   EXPECT_EQ(duration_cast<milliseconds>(c1_ts_old->time_since_epoch()),
             c1_expected_old_time_ms);
-  EXPECT_EQ(std::get<1>(c1_entry1), column_1_value_old);
+  EXPECT_EQ(c1_entry1["value"], column_1_value_old);
 
   // Verify cells returned ordered from newest to oldest.
-  auto const& c2_entry0 = (*history_map)["c2"][0];
+  auto c2_entry0 = (*history_map)["c2"][0];
   auto c2_ts_new =
-      std::get<0>(c2_entry0).get<sys_time<std::chrono::microseconds>>();
+      bigtable_internal::TimestampFromRFC3339(c2_entry0["timestamp"])
+          .value()
+          .get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c2_ts_new);
   auto c2_expected_current_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(current_time));
   EXPECT_EQ(duration_cast<milliseconds>(c2_ts_new->time_since_epoch()),
             c2_expected_current_time_ms);
-  EXPECT_EQ(std::get<1>(c2_entry0), column_2_value_new);
+  EXPECT_EQ(c2_entry0["value"], column_2_value_new);
 
-  auto const& c2_entry1 = (*history_map)["c2"][1];
+  auto c2_entry1 = (*history_map)["c2"][1];
   auto c2_ts_old =
-      std::get<0>(c2_entry1).get<sys_time<std::chrono::microseconds>>();
+      bigtable_internal::TimestampFromRFC3339(c2_entry1["timestamp"])
+          .value()
+          .get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c2_ts_old);
   auto c2_expected_old_time_ms =
       duration_cast<milliseconds>(std::chrono::microseconds(old_time));
   EXPECT_EQ(duration_cast<milliseconds>(c2_ts_old->time_since_epoch()),
             c2_expected_old_time_ms);
-  EXPECT_EQ(std::get<1>(c2_entry1), column_2_value_old);
+  EXPECT_EQ(c2_entry1["value"], column_2_value_old);
 }
 
 // TODO(#8800) - remove after deprecation is complete
