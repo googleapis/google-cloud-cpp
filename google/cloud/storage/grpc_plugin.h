@@ -136,7 +136,7 @@ struct GrpcMetricsExportTimeoutOption {
  *
  * A set of OpenTelemetry resource attribute keys to exclude from metric labels
  * when exporting gRPC telemetry. For example, to exclude the `service.name`
- * label, configure the option with `{"service.name"}`.
+ * label, configure the option with `{"service_name"}`.
  *
  * @par Example: Exclude specific labels from telemetry
  * @code

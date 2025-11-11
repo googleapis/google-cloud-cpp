@@ -51,7 +51,8 @@ class MonitoringExporter final
   MonitoringExporter(
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
       otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn,
-      otel_internal::ResourceFilterDataFn resource_filter_fn, Options const& options);
+      otel_internal::ResourceFilterDataFn resource_filter_fn,
+      Options const& options);
 
   MonitoringExporter(
       Project project,

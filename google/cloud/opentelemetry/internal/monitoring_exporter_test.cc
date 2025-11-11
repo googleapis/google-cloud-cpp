@@ -159,6 +159,39 @@ TEST(MonitoringExporter, ExportSuccess) {
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
 }
 
+TEST(MonitoringExporterTest, MakeFilterNoOption) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  Options options;
+
+  auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
+                                                       mock, options);
+  EXPECT_NE(exporter, nullptr);
+}
+
+TEST(MonitoringExporterTest, MakeFilterEmptySet) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  Options options;
+  options.set<otel::ResourceFilterDataFnOption>(std::set<std::string>{});
+
+  auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
+                                                       mock, options);
+  EXPECT_NE(exporter, nullptr);
+}
+
+TEST(MonitoringExporterTest, MakeFilterWithExcludedKeys) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  Options options;
+  std::set<std::string> excluded{"service_name", "service_version"};
+  options.set<otel::ResourceFilterDataFnOption>(excluded);
+
+  auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
+                                                       mock, options);
+  EXPECT_NE(exporter, nullptr);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

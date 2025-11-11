@@ -36,7 +36,7 @@ otel_internal::ResourceFilterDataFn MakeFilter(Options const& options) {
     return nullptr;
   }
 
-  // Get the excluded labels list.
+  // Get the metric labels set to be excluded.
   auto const& excluded = options.get<otel::ResourceFilterDataFnOption>();
   if (excluded.empty()) return nullptr;
 
