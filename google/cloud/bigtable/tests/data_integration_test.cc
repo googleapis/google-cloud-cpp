@@ -669,10 +669,9 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   auto const& row1 = *rows[0];
   ASSERT_EQ(row1.columns().size(), 1);
   ASSERT_EQ(row1.columns().at(0), family);
-  ASSERT_EQ(
-      row1.values().at(0),
-      Value(std::unordered_map<std::string, std::string>{
-          {R"val(c1)val", R"val(v1)val"}, {R"val(c2)val", R"val(v2)val"}}));
+  ASSERT_EQ(row1.values().at(0), Value(std::unordered_map<Bytes, Bytes>{
+                                     {Bytes(column1), Bytes(value1)},
+                                     {Bytes(column2), Bytes(value2)}}));
 }
 
 TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
@@ -763,7 +762,6 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   auto value_hist = row.get("family4_history");
   ASSERT_TRUE(value_hist.ok()) << value_hist.status().message();
   Value const& bigtable_val = *value_hist;
-  std::cout << bigtable_val << std::endl;
   using HistoryEntry = std::tuple<std::pair<std::string, Timestamp>,
                                   std::pair<std::string, Bytes>>;
   auto history_map =
@@ -772,7 +770,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   ASSERT_EQ(history_map->size(), 2);
 
   // Verify the new version of "c1"
-  auto c1_entry0 = (*history_map)[Bytes("c1")][0];
+  auto c1_entry0 = (*history_map)[Bytes(column1)][0];
   auto c1_ts_new =
       std::get<0>(c1_entry0).second.get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c1_ts_new);
@@ -784,7 +782,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
             column_1_value_new);
 
   // Verify the old version of "c1"
-  auto c1_entry1 = (*history_map)[Bytes("c1")][1];
+  auto c1_entry1 = (*history_map)[Bytes(column1)][1];
   auto c1_ts_old =
       std::get<0>(c1_entry1).second.get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c1_ts_old);
@@ -796,7 +794,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
             column_1_value_new);
 
   // Verify the new version of "c2"
-  auto c2_entry0 = (*history_map)[Bytes("c2")][0];
+  auto c2_entry0 = (*history_map)[Bytes(column2)][0];
   auto c2_ts_new =
       std::get<0>(c2_entry0).second.get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c2_ts_new);
@@ -808,7 +806,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
             column_2_value_new);
 
   // Verify the old version of "c2"
-  auto c2_entry1 = (*history_map)[Bytes("c2")][1];
+  auto c2_entry1 = (*history_map)[Bytes(column2)][1];
   auto c2_ts_old =
       std::get<0>(c2_entry1).second.get<sys_time<std::chrono::microseconds>>();
   ASSERT_STATUS_OK(c2_ts_old);
@@ -817,7 +815,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   EXPECT_EQ(duration_cast<milliseconds>(c2_ts_old->time_since_epoch()),
             c2_expected_old_time_ms);
   EXPECT_EQ(std::get<1>(c2_entry1).second.get<std::string>(),
-            column_2_value_new);
+            column_2_value_old);
 }
 
 // TODO(#8800) - remove after deprecation is complete
