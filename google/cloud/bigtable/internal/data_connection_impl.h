@@ -21,7 +21,7 @@
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
 #include "google/cloud/bigtable/prepared_query.h"
-#include "google/cloud/bigtable/results.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
