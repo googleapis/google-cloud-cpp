@@ -791,7 +791,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   EXPECT_EQ(duration_cast<milliseconds>(c1_ts_old->time_since_epoch()),
             c1_expected_old_time_ms);
   EXPECT_EQ(std::get<1>(c1_entry1).second.get<std::string>(),
-            column_1_value_new);
+            column_1_value_old);
 
   // Verify the new version of "c2"
   auto c2_entry0 = (*history_map)[Bytes(column2)][0];
