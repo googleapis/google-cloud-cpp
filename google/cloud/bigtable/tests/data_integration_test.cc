@@ -763,6 +763,7 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   auto value_hist = row.get("family4_history");
   ASSERT_TRUE(value_hist.ok()) << value_hist.status().message();
   Value const& bigtable_val = *value_hist;
+	std::cout << bigtable_val << std::endl;
   using HistoryEntry = std::unordered_map<std::string, std::string>;
   auto history_map =
       bigtable_val
