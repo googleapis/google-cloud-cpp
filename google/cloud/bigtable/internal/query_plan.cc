@@ -50,8 +50,14 @@ void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
   std::weak_ptr<QueryPlan> plan = shared_from_this();
   refresh_timer_ =
       cq_.MakeDeadlineTimer(refresh_deadline)
-          .then([plan](future<StatusOr<std::chrono::system_clock::time_point>>
-                           result) {
+          .then([plan, current = internal::SaveCurrentOptions()](
+                    future<StatusOr<std::chrono::system_clock::time_point>>
+                        result) {
+            // Options are stored in a thread_local variable. When this timer
+            // expires and this lambda is executed we need to restore the
+            // Options that were saved in the capture group as a different
+            // thread may be used.
+            internal::OptionsSpan options_span(current);
             if (result.get().ok()) {
               if (auto p = plan.lock()) {
                 p->ExpiredRefresh();
