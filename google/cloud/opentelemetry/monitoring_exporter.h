@@ -19,7 +19,6 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <functional>
 #include <memory>
@@ -29,18 +28,6 @@ namespace google {
 namespace cloud {
 namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// For use with dynamic monitored resources, this function constructs the
-// correct MonitoredResource from the PointDataAttributes passed in. This
-// function is called in ToTimeSeriesWithResources.
-using MonitoredResourceFromDataFn =
-    std::function<std::pair<std::string, google::api::MonitoredResource>(
-        opentelemetry::sdk::metrics::PointDataAttributes const&)>;
-
-// For use with dynamic monitored resources, this function is used in ToMetric
-// to indicate which labels should be skipped when populating the labels field
-// of the google::api::Metric proto.
-using ResourceFilterDataFn = std::function<bool(std::string const&)>;
 
 /**
  * Change formatting for metric names.
@@ -89,23 +76,13 @@ struct MonitoredResourceOption {
 };
 
 /**
- * Override the monitored resource builder.
- *
- * This option is primarily relevant to Google applications and libraries. It
- * can be ignored by external developers.
- */
-struct MonitoredResourceFromDataFnOption {
-  using Type = MonitoredResourceFromDataFn;
-};
-
-/**
  * Filter resource labels.
  *
  * This option is primarily relevant to Google applications and libraries. It
  * can be ignored by external developers.
  */
 struct ResourceFilterDataFnOption {
-  using Type = ResourceFilterDataFn;
+  using Type = std::set<std::string>;
 };
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>

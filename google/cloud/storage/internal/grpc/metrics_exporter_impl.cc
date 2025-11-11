@@ -79,26 +79,6 @@ class ExporterRegistry {
   std::mutex mu_;
 };
 
-otel::ResourceFilterDataFn MakeFilter(Options const& options) {
-  // Check for explicit filter function first.
-  if (options.has<otel::ResourceFilterDataFnOption>()) {
-    return options.get<otel::ResourceFilterDataFnOption>();
-  }
-
-  // Check for excluded labels list.
-  if (!options.has<storage_experimental::GrpcMetricsExcludedLabelsOption>()) {
-    return nullptr;
-  }
-  auto const& excluded =
-      options.get<storage_experimental::GrpcMetricsExcludedLabelsOption>();
-  if (excluded.empty()) return nullptr;
-
-  // Capture by value to avoid dangling reference in the lambda.
-  return [excluded](std::string const& key) -> bool {
-    return excluded.count(key) > 0;
-  };
-}
-
 }  // namespace
 
 absl::optional<ExporterConfig> MakeMeterProviderConfig(
@@ -111,7 +91,10 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
   if (!project) return absl::nullopt;
 
   auto exporter_options = MetricsExporterOptions(*project, resource);
-  exporter_options.set<otel::ResourceFilterDataFnOption>(MakeFilter(options));
+  if (options.has<storage_experimental::GrpcMetricsExcludedLabelsOption>()) {
+    exporter_options.set<otel::ResourceFilterDataFnOption>(
+        options.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());
+  }
 
   auto exporter_connection_options = MetricsExporterConnectionOptions(options);
   return ExporterConfig{std::move(*project), std::move(exporter_options),

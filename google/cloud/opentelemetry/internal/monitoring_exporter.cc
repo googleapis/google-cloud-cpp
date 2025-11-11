@@ -31,12 +31,28 @@ std::string FormatProjectFullName(std::string const& project) {
   return absl::StrCat("projects/", project);
 }
 
+otel_internal::ResourceFilterDataFn MakeFilter(Options const& options) {
+  if (!options.has<otel::ResourceFilterDataFnOption>()) {
+    return nullptr;
+  }
+
+  // Get the excluded labels list.
+  auto const& excluded = options.get<otel::ResourceFilterDataFnOption>();
+  if (excluded.empty()) return nullptr;
+
+  // Capture by value to avoid dangling reference in the lambda.
+  return [excluded = std::move(excluded)](std::string const& key) -> bool {
+    return excluded.count(key) > 0;
+  };
+}
+
 }  // namespace
 
 MonitoringExporter::MonitoringExporter(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
-    otel::MonitoredResourceFromDataFn dynamic_resource_fn,
-    otel::ResourceFilterDataFn resource_filter_fn, Options const& options)
+    otel_internal::MonitoredResourceFromDataFn dynamic_resource_fn,
+    otel_internal::ResourceFilterDataFn resource_filter_fn,
+    Options const& options)
     : client_(std::move(conn)),
       formatter_(options.get<otel::MetricNameFormatterOption>()),
       use_service_time_series_(options.get<otel::ServiceTimeSeriesOption>()),
@@ -48,9 +64,7 @@ MonitoringExporter::MonitoringExporter(
     Project project,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options const& options)
-    : MonitoringExporter(std::move(conn),
-                         options.get<otel::MonitoredResourceFromDataFnOption>(),
-                         options.get<otel::ResourceFilterDataFnOption>(),
+    : MonitoringExporter(std::move(conn), nullptr, MakeFilter(options),
                          options) {
   project_ = std::move(project);
 }
@@ -140,8 +154,8 @@ Options DefaultOptions(Options o) {
 }
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(otel::MonitoredResourceFromDataFn dynamic_resource_fn,
-                       otel::ResourceFilterDataFn resource_filter_fn,
+MakeMonitoringExporter(MonitoredResourceFromDataFn dynamic_resource_fn,
+                       ResourceFilterDataFn resource_filter_fn,
                        Options options) {
   // TODO(#15321): Determine which options, if any, should be passed along from
   //  the options parameter to MakeMetricServiceConnection.
@@ -154,8 +168,8 @@ MakeMonitoringExporter(otel::MonitoredResourceFromDataFn dynamic_resource_fn,
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    otel::MonitoredResourceFromDataFn dynamic_resource_fn,
-    otel::ResourceFilterDataFn resource_filter_fn,
+    MonitoredResourceFromDataFn dynamic_resource_fn,
+    ResourceFilterDataFn resource_filter_fn,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options) {
   options = DefaultOptions(std::move(options));

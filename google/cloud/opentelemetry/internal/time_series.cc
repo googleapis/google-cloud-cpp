@@ -133,7 +133,7 @@ google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
     opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& name_formatter,
-    otel::ResourceFilterDataFn const& resource_filter_fn) {
+    ResourceFilterDataFn const& resource_filter_fn) {
   auto add_label = [&resource_filter_fn](auto& labels, auto key,
                                          auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
@@ -304,8 +304,8 @@ std::unordered_map<std::string, std::vector<google::monitoring::v3::TimeSeries>>
 ToTimeSeriesWithResources(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter,
-    otel::ResourceFilterDataFn const& resource_filter_fn,
-    otel::MonitoredResourceFromDataFn const& dynamic_resource_fn) {
+    ResourceFilterDataFn const& resource_filter_fn,
+    MonitoredResourceFromDataFn const& dynamic_resource_fn) {
   std::unordered_map<std::string,
                      std::vector<google::monitoring::v3::TimeSeries>>
       tss_map;
