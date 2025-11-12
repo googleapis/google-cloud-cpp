@@ -1850,7 +1850,7 @@ class CatalogServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L743}
-  /// [google.cloud.dataplex.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1349}
+  /// [google.cloud.dataplex.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1353}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(std::string const& name,
@@ -1885,7 +1885,7 @@ class CatalogServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L743}
-  /// [google.cloud.dataplex.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1349}
+  /// [google.cloud.dataplex.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1353}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(
@@ -1921,7 +1921,7 @@ class CatalogServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L743}
-  /// [google.cloud.dataplex.v1.LookupEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1371}
+  /// [google.cloud.dataplex.v1.LookupEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1375}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
@@ -1959,8 +1959,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.SearchEntriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1396}
-  /// [google.cloud.dataplex.v1.SearchEntriesResult]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1440}
+  /// [google.cloud.dataplex.v1.SearchEntriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1400}
+  /// [google.cloud.dataplex.v1.SearchEntriesResult]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1444}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
@@ -1998,8 +1998,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.SearchEntriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1396}
-  /// [google.cloud.dataplex.v1.SearchEntriesResult]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1440}
+  /// [google.cloud.dataplex.v1.SearchEntriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1400}
+  /// [google.cloud.dataplex.v1.SearchEntriesResult]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1444}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
@@ -2036,8 +2036,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1538}
-  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1636}
+  /// [google.cloud.dataplex.v1.CreateMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1542}
+  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
@@ -2092,8 +2092,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1538}
-  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1636}
+  /// [google.cloud.dataplex.v1.CreateMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1542}
+  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
@@ -2147,8 +2147,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1561}
-  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1636}
+  /// [google.cloud.dataplex.v1.GetMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1565}
+  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1640}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
@@ -2177,8 +2177,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1561}
-  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1636}
+  /// [google.cloud.dataplex.v1.GetMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1565}
+  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1640}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
@@ -2213,8 +2213,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListMetadataJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1573}
-  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1636}
+  /// [google.cloud.dataplex.v1.ListMetadataJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1577}
+  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1640}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::MetadataJob> ListMetadataJobs(
@@ -2252,8 +2252,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListMetadataJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1573}
-  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1636}
+  /// [google.cloud.dataplex.v1.ListMetadataJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1577}
+  /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1640}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::MetadataJob> ListMetadataJobs(
@@ -2282,7 +2282,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CancelMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1624}
+  /// [google.cloud.dataplex.v1.CancelMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1628}
   ///
   // clang-format on
   Status CancelMetadataJob(std::string const& name, Options opts = {});
@@ -2313,7 +2313,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CancelMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1624}
+  /// [google.cloud.dataplex.v1.CancelMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1628}
   ///
   // clang-format on
   Status CancelMetadataJob(
@@ -2346,8 +2346,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2203}
-  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2119}
+  /// [google.cloud.dataplex.v1.CreateEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2207}
+  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2123}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
@@ -2378,8 +2378,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2203}
-  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2119}
+  /// [google.cloud.dataplex.v1.CreateEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2207}
+  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2123}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
@@ -2405,8 +2405,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2226}
-  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2119}
+  /// [google.cloud.dataplex.v1.DeleteEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2230}
+  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2123}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
@@ -2435,8 +2435,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2226}
-  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2119}
+  /// [google.cloud.dataplex.v1.DeleteEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2230}
+  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2123}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
@@ -2462,8 +2462,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2119}
-  /// [google.cloud.dataplex.v1.GetEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2238}
+  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2123}
+  /// [google.cloud.dataplex.v1.GetEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2242}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
@@ -2492,8 +2492,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2119}
-  /// [google.cloud.dataplex.v1.GetEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2238}
+  /// [google.cloud.dataplex.v1.EntryLink]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2123}
+  /// [google.cloud.dataplex.v1.GetEntryLinkRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L2242}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
