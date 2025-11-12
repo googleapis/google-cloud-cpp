@@ -35,10 +35,12 @@ google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() const {
 
   google::protobuf::Map<std::string, google::bigtable::v2::Value> parameters;
   for (auto const& kv : parameters_) {
-    parameters[kv.first] =
-        bigtable_internal::ValueInternals::ToProto(kv.second).second;
+    auto type_value = bigtable_internal::ValueInternals::ToProto(kv.second);
+    google::bigtable::v2::Value v = std::move(type_value.second);
+    *v.mutable_type() = std::move(type_value.first);
+    parameters[kv.first] = std::move(v);
   }
-  *result.mutable_params() = parameters;
+  *result.mutable_params() = std::move(parameters);
   return result;
 }
 
