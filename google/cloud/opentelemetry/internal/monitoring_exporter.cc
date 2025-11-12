@@ -32,12 +32,13 @@ std::string FormatProjectFullName(std::string const& project) {
 }
 
 otel_internal::ResourceFilterDataFn MakeFilter(Options const& options) {
-  if (!options.has<otel::ResourceFilterDataFnOption>()) {
+  if (!options.has<otel_internal::ResourceFilterDataFnOption>()) {
     return nullptr;
   }
 
   // Get the metric labels set to be excluded.
-  auto const& excluded = options.get<otel::ResourceFilterDataFnOption>();
+  auto const& excluded =
+      options.get<otel_internal::ResourceFilterDataFnOption>();
   if (excluded.empty()) return nullptr;
 
   // Capture by value to avoid dangling reference in the lambda.

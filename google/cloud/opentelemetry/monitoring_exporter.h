@@ -75,16 +75,6 @@ struct MonitoredResourceOption {
   using Type = google::api::MonitoredResource;
 };
 
-/**
- * Filter resource labels.
- *
- * This option is primarily relevant to Google applications and libraries. It
- * can be ignored by external developers.
- */
-struct ResourceFilterDataFnOption {
-  using Type = std::set<std::string>;
-};
-
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,

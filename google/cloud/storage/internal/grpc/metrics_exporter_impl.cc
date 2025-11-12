@@ -16,7 +16,7 @@
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
-#include "google/cloud/opentelemetry/monitoring_exporter.h"
+#include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
@@ -92,7 +92,7 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
 
   auto exporter_options = MetricsExporterOptions(*project, resource);
   if (options.has<storage_experimental::GrpcMetricsExcludedLabelsOption>()) {
-    exporter_options.set<otel::ResourceFilterDataFnOption>(
+    exporter_options.set<otel_internal::ResourceFilterDataFnOption>(
         options.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());
   }
 

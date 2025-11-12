@@ -173,7 +173,8 @@ TEST(MonitoringExporterTest, MakeFilterEmptySet) {
   auto mock =
       std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
   Options options;
-  options.set<otel::ResourceFilterDataFnOption>(std::set<std::string>{});
+  options.set<otel_internal::ResourceFilterDataFnOption>(
+      std::set<std::string>{});
 
   auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
                                                        mock, options);
@@ -185,7 +186,7 @@ TEST(MonitoringExporterTest, MakeFilterWithExcludedKeys) {
       std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
   Options options;
   std::set<std::string> excluded{"service_name", "service_version"};
-  options.set<otel::ResourceFilterDataFnOption>(excluded);
+  options.set<otel_internal::ResourceFilterDataFnOption>(excluded);
 
   auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
                                                        mock, options);
