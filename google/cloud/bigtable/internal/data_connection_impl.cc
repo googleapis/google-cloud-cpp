@@ -149,7 +149,8 @@ class DefaultPartialResultSetReader
         return true;
       }
 
-      // A metadata message after the first one indicates a schema change.
+      // Throw an error when there is a schema difference between
+      // ExecuteQueryResponse and PrepareQueryResponse.
       if (response.has_metadata()) {
         std::string initial_metadata_str, response_metadata_str;
         if (response.metadata().ByteSizeLong() == 0 ||
