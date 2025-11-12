@@ -660,8 +660,8 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
   auto row_stream = client.ExecuteQuery(std::move(bound_query));
 
   std::vector<StatusOr<bigtable::QueryRow>> rows;
-  for (auto const& row : std::move(row_stream)) {
-    rows.push_back(row);
+  for (auto& row : row_stream) {
+    rows.push_back(std::move(row));
   }
 
   ASSERT_EQ(rows.size(), 1);
@@ -748,24 +748,22 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   ASSERT_TRUE(prepared_query.ok()) << prepared_query.status().message();
 
   auto bound_query = (*prepared_query).BindParameters({});
-  auto row_stream = client.ExecuteQuery(std::move(bound_query));
-  std::vector<StatusOr<QueryRow>> rows;
-  for (auto const& row : std::move(row_stream)) {
-    rows.push_back(row);
+  RowStream row_stream = client.ExecuteQuery(std::move(bound_query));
+  using HistoryEntry = std::tuple<std::pair<std::string, Timestamp>,
+                                  std::pair<std::string, Bytes>>;
+  using RowType = std::unordered_map<Bytes, std::vector<HistoryEntry>>;
+  std::vector<StatusOr<RowType>> rows;
+  for (auto& row : StreamOf<std::tuple<RowType>>(row_stream)) {
+    ASSERT_STATUS_OK(row);
+    rows.emplace_back(std::move(std::get<0>(*row)));
   }
   ASSERT_EQ(rows.size(), 1);
   ASSERT_TRUE(rows[0].ok()) << rows[0].status().message();
-  auto const& row = *rows[0];
-  ASSERT_EQ(row.columns().size(), 1);
-  EXPECT_EQ(row.columns().at(0), "family4_history");
+  auto const& value_hist = rows[0];
 
-  auto value_hist = row.get("family4_history");
   ASSERT_TRUE(value_hist.ok()) << value_hist.status().message();
-  Value const& bigtable_val = *value_hist;
-  using HistoryEntry = std::tuple<std::pair<std::string, Timestamp>,
-                                  std::pair<std::string, Bytes>>;
-  auto history_map =
-      bigtable_val.get<std::unordered_map<Bytes, std::vector<HistoryEntry>>>();
+  Value const& bigtable_val = Value(value_hist.value());
+  auto history_map = bigtable_val.get<RowType>();
   ASSERT_TRUE(history_map.ok()) << history_map.status().message();
   ASSERT_EQ(history_map->size(), 2);
 
