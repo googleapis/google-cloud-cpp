@@ -912,10 +912,11 @@ void RunDataExamples(
   std::cout << "Running ReadModifyWrite() example [3]" << std::endl;
   ReadModifyWrite(table, {"read-modify-write"});
 
-  auto client = cbt::Client(cbt::MakeDataConnection());
-  std::cout << "Running PrepareAndExecuteQuery() example" << std::endl;
-  PrepareAndExecuteQuery(client, {project_id, instance_id, table_id});
-
+  if (!google::cloud::bigtable::examples::UsingEmulator()) {
+    auto client = cbt::Client(cbt::MakeDataConnection());
+    std::cout << "Running PrepareAndExecuteQuery() example" << std::endl;
+    PrepareAndExecuteQuery(client, {project_id, instance_id, table_id});
+  }
   admin.DeleteTable(schema->name());
 }
 
