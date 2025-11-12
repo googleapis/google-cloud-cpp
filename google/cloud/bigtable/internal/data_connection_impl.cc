@@ -905,25 +905,25 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           std::unique_ptr<BackoffPolicy> backoff_policy_prototype,
           std::shared_ptr<OperationContext> const& operation_context) mutable
       -> StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> {
-    auto factory =
-        [stub, request, tracing_enabled, tracing_options, operation_context,
-         metadata](std::string const& resume_token) mutable {
-          if (!resume_token.empty()) request.set_resume_token(resume_token);
-          auto context = std::make_shared<grpc::ClientContext>();
-          auto const& options = internal::CurrentOptions();
-          internal::ConfigureContext(*context, options);
-          operation_context->PreCall(*context);
-          auto stream = stub->ExecuteQuery(context, options, request);
-          std::unique_ptr<PartialResultSetReader> reader =
-              std::make_unique<DefaultPartialResultSetReader>(
-                  std::move(context), operation_context, std::move(stream),
-                  metadata);
-          if (tracing_enabled) {
-            reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
-                                                              tracing_options);
-          }
-          return reader;
-        };
+    auto factory = [stub, request, tracing_enabled, tracing_options,
+                    operation_context,
+                    metadata](std::string const& resume_token) mutable {
+      if (!resume_token.empty()) request.set_resume_token(resume_token);
+      auto context = std::make_shared<grpc::ClientContext>();
+      auto const& options = internal::CurrentOptions();
+      internal::ConfigureContext(*context, options);
+      operation_context->PreCall(*context);
+      auto stream = stub->ExecuteQuery(context, options, request);
+      std::unique_ptr<PartialResultSetReader> reader =
+          std::make_unique<DefaultPartialResultSetReader>(
+              std::move(context), operation_context, std::move(stream),
+              metadata);
+      if (tracing_enabled) {
+        reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                          tracing_options);
+      }
+      return reader;
+    };
 
     auto resume = std::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent,
