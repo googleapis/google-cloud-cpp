@@ -133,7 +133,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       ClientCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
-    auto constexpr kFixedArguments = 1;
+    auto constexpr kFixedArguments = 0;
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
