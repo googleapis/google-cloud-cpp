@@ -13,13 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_stream.h"
-#include "google/cloud/internal/make_status.h"
-#include "google/cloud/log.h"
-#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <algorithm>
-#include <iterator>
-#include <utility>
 
 namespace google {
 namespace cloud {

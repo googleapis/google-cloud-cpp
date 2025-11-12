@@ -18,8 +18,12 @@
 #include "google/cloud/bigtable/query_row.h"
 #include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
+#include <functional>
+#include <iterator>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
