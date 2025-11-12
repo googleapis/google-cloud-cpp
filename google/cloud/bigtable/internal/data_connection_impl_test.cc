@@ -3743,7 +3743,6 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
         StatusOr<google::bigtable::v2::PrepareQueryResponse>(
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
-  //  EXPECT_CALL(*mock, ExecuteQuery)
   EXPECT_CALL(*mock, ExecuteQuery)
       .Times(3)
       .WillRepeatedly(
