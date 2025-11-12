@@ -152,7 +152,8 @@ class DefaultPartialResultSetReader
       // Throw an error when there is a schema difference between
       // ExecuteQueryResponse and PrepareQueryResponse.
       if (response.has_metadata()) {
-        std::string initial_metadata_str, response_metadata_str;
+        std::string initial_metadata_str;
+        std::string response_metadata_str;
         if (response.metadata().ByteSizeLong() == 0 ||
             (initial_metadata_.SerializeToString(&initial_metadata_str) &&
              response.metadata().SerializeToString(&response_metadata_str) &&
