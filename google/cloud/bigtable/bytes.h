@@ -44,6 +44,9 @@ class Bytes {
   /// An empty sequence.
   Bytes() = default;
 
+  /// Strips the null-terminator character from input bytes.
+  explicit Bytes(char const* bytes) : bytes_(bytes) {}
+
   /// @name Construction from a sequence of octets.
   ///@{
   template <typename InputIt>
