@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULTS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULTS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULT_SOURCE_INTERFACE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULT_SOURCE_INTERFACE_H
 
 #include "google/cloud/bigtable/query_row.h"
 #include "google/cloud/bigtable/version.h"
@@ -55,36 +55,9 @@ class ResultSourceInterface {
   Metadata() = 0;
 };
 
-/**
- * Represents the stream of `QueryRows` returned from
- * `bigtable::Client::ExecuteQuery`.
- *
- */
-class RowStream {
- public:
-  RowStream() = default;
-  explicit RowStream(std::unique_ptr<ResultSourceInterface> source)
-      : source_(std::move(source)) {}
-
-  // This class is movable but not copyable.
-  RowStream(RowStream&&) = default;
-  RowStream& operator=(RowStream&&) = default;
-
-  /// Returns a `RowStreamIterator` defining the beginning of this range.
-  RowStreamIterator begin() {
-    return RowStreamIterator([this]() mutable { return source_->NextRow(); });
-  }
-
-  /// Returns a `RowStreamIterator` defining the end of this range.
-  static RowStreamIterator end() { return {}; }
-
- private:
-  std::unique_ptr<ResultSourceInterface> source_;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULTS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RESULT_SOURCE_INTERFACE_H
