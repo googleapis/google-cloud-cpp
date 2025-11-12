@@ -87,6 +87,7 @@ bigtable_client_unit_tests = [
     "row_range_test.cc",
     "row_reader_test.cc",
     "row_set_test.cc",
+    "row_stream_test.cc",
     "row_test.cc",
     "rpc_backoff_policy_test.cc",
     "rpc_retry_policy_test.cc",

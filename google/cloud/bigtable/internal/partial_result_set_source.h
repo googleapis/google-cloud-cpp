@@ -17,7 +17,7 @@
 
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
-#include "google/cloud/bigtable/results.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/options.h"

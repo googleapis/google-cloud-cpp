@@ -97,12 +97,14 @@ TEST(BoundQuery, ToRequestProto) {
   auto val1 = proto.params().find("val1")->second;
   EXPECT_TRUE(val1.has_bool_value());
   EXPECT_EQ(true, val1.bool_value());
+  EXPECT_TRUE(val1.type().has_bool_type());
 
   // The second parameter is a double.
   EXPECT_TRUE(proto.params().contains("val2"));
   auto val2 = proto.params().find("val2")->second;
   EXPECT_TRUE(val2.has_float_value());
   EXPECT_EQ(2.0, val2.float_value());
+  EXPECT_TRUE(val2.type().has_float64_type());
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
