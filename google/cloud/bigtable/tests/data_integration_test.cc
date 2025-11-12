@@ -931,11 +931,14 @@ TEST_P(DataIntegrationTest, QueryWithNulls) {
   std::string const row_key3 = "query-with-nulls-row-3";
   std::string const family = kFamily4;
   std::string const column1 = "c1";
+  std::string const column2 = "c2";
   std::string const value1 = "v1";
   std::string const value3 = "v3";
 
+  // Create row_key2 with no value for column 1.
   std::vector<Cell> created = {
       {row_key1, family, column1, 0, value1},
+      {row_key2, family, column2, 0, ""},
       {row_key3, family, column1, 0, value3},
   };
   BulkApply(table, created);
@@ -963,11 +966,12 @@ TEST_P(DataIntegrationTest, QueryWithNulls) {
     ASSERT_STATUS_OK(row);
     actual_rows.push_back(*std::move(row));
   }
-  EXPECT_EQ(actual_rows.size(), 2);
+  EXPECT_EQ(actual_rows.size(), 3);
   EXPECT_THAT(
       actual_rows,
       UnorderedElementsAre(
           std::make_tuple(row_key1, absl::optional<std::string>(value1)),
+          std::make_tuple(row_key2, absl::optional<std::string>(absl::nullopt)),
           std::make_tuple(row_key3, absl::optional<std::string>(value3))));
 }
 
