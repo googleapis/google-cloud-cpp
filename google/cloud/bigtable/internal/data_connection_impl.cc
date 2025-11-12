@@ -752,7 +752,8 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
     return std::move(response).status();
   }
   auto const* func = __func__;
-  auto refresh_fn = [this, request, current, func]() mutable {
+  auto refresh_fn = [this, request, func]() mutable {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     auto retry = retry_policy(*current);
     auto backoff = backoff_policy(*current);
     auto operation_context = operation_context_factory_->PrepareQuery(
@@ -834,7 +835,8 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
           return std::move(response).status();
         }
 
-        auto refresh_fn = [this, request, current, func]() mutable {
+        auto refresh_fn = [this, request, func]() mutable {
+          auto current = google::cloud::internal::SaveCurrentOptions();
           auto retry = retry_policy(*current);
           auto backoff = backoff_policy(*current);
           auto operation_context = operation_context_factory_->PrepareQuery(
