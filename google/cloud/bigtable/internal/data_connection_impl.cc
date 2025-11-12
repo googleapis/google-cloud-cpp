@@ -27,7 +27,7 @@
 #include "google/cloud/bigtable/internal/retry_traits.h"
 #include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/options.h"
-#include "google/cloud/bigtable/results.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/grpc_options.h"

@@ -21,7 +21,7 @@
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/options.h"
-#include "google/cloud/bigtable/results.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
