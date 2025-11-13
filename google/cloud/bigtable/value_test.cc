@@ -224,6 +224,33 @@ TEST(Value, ArrayValueBasedEquality) {
   }
 }
 
+// We test that a proto with duplicate map keys will produce a Value with
+// the last key-value taking precedence
+TEST(Value, GetValueDuplicateKeysMap) {
+  // We create a Value from a simple unordered map and then add a same-key value
+  // to its proto value.
+  auto v = Value(std::unordered_map<std::string, std::string>{{"foo", "foo"}});
+  auto proto = bigtable_internal::ToProto(v);
+  EXPECT_EQ(proto.second.array_value().values_size(), 1);
+
+  auto&& key_proto = bigtable_internal::ToProto(Value("foo"));
+  auto&& value_proto = bigtable_internal::ToProto(Value("bar"));
+
+  google::bigtable::v2::Value item;
+  *item.mutable_array_value()->add_values() = key_proto.second;
+  *item.mutable_array_value()->add_values() = value_proto.second;
+  *proto.second.mutable_array_value()->add_values() = std::move(item);
+
+  EXPECT_EQ(proto.second.array_value().values_size(), 2);
+
+  // Now we convert the proto back to a Value and confirm that the value is "bar"
+  Value from_proto = bigtable_internal::FromProto(proto.first, proto.second);
+  using MapType = std::unordered_map<std::string, std::string>;
+  ASSERT_STATUS_OK(from_proto.get<MapType>());
+  MapType map = *from_proto.get<MapType>();
+  EXPECT_EQ(map["foo"], "bar");
+}
+
 TEST(Value, UnsortedKeysMapEquality) {
   std::vector<std::pair<Value, Value>> const test_cases = {
       {

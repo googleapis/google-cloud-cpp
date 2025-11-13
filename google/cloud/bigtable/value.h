@@ -630,12 +630,6 @@ class Value {
       if (!key) return std::move(key).status();
       if (!value) return std::move(value).status();
 
-      // the documented behavior indicates that the last value will take
-      // precedence for a given key.
-      auto const& pos = m.find(key.value());
-      if (pos != m.end()) {
-        m.erase(pos);
-      }
       m.insert(std::make_pair(*std::move(key), *std::move(value)));
     }
     return m;
@@ -692,6 +686,31 @@ class Value {
     return std::move(*pv.mutable_array_value()->mutable_values(pos));
   }
 
+  /**
+  * This method removes duplicate keys from a map Value proto.
+  * Although we represent maps with unordered_maps, in this case we use an
+  * ordered map to preserve the order of the array_value().
+  */
+  static void ValidateMapValue(google::bigtable::v2::Type& t, google::bigtable::v2::Value& v) {
+    if (!t.has_map_type()) return;
+    std::map<std::string, google::bigtable::v2::Value> m;
+    for (auto const& kv : v.array_value().values()) {
+      auto key = kv.array_value().values()[0];
+      // the documented behavior indicates that the last value will take
+      // precedence for a given key.
+      auto pos = m.find(key.raw_value());
+      if (pos != m.end()) {
+        m.erase(pos);
+      }
+      m.insert(std::make_pair(key.raw_value(), std::move(kv)));
+    }
+    auto new_array_value = google::bigtable::v2::ArrayValue();
+    for (auto const& kv : m) {
+      *new_array_value.add_values() = kv.second;
+    }
+    *v.mutable_array_value() = new_array_value;
+  }
+
   // A private templated constructor that is called by all the public
   // constructors to set the type_ and value_ members. The `PrivateConstructor`
   // type is used so that this overload is never chosen for
@@ -704,7 +723,9 @@ class Value {
       : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
 
   Value(google::bigtable::v2::Type t, google::bigtable::v2::Value v)
-      : type_(std::move(t)), value_(std::move(v)) {}
+      : type_(std::move(t)), value_(std::move(v)) {
+    ValidateMapValue(type_, value_);
+  }
 
   friend struct bigtable_internal::ValueInternals;
   friend class Parameter;
