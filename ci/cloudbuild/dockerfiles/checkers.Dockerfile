@@ -23,7 +23,6 @@ ARG ARCH=amd64
 
 RUN dnf makecache && \
     dnf install -y \
-        cargo \
         cmake \
         clang-tools-extra \
         diffutils \
@@ -35,7 +34,9 @@ RUN dnf makecache && \
         python-pip \
         ShellCheck
 
-RUN which cargo
+RUN dnf makecache && \
+    dnf install -y \
+    cargo
 
 RUN cargo install typos-cli --locked --version 1.24.1 --root /usr/local
 
