@@ -31,9 +31,21 @@ std::shared_ptr<DatasetRestStub> CreateDefaultDatasetRestStub(
     local_opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
 
-  auto curl_rest_client = rest_internal::MakePooledRestClient(
-      opts.get<EndpointOption>(), local_opts);
+ std::string endpoint = local_opts.get<EndpointOption>();
+  auto psc_uris = std::getenv("PrivateServiceConnectUris"); 
+  if (psc_uris) {
+      std::string psc_prefix = "BIGQUERY=";
+      auto pos = std::string(psc_uris).find(psc_prefix);
+      if (pos != std::string::npos) {
+          auto start = pos + psc_prefix.size();
+          auto end = std::string(psc_uris).find(',', start);
+          endpoint = std::string(psc_uris).substr(start, end - start);
+      }
+  }
 
+  auto curl_rest_client = rest_internal::MakePooledRestClient(
+      endpoint, local_opts);
+  
   std::shared_ptr<DatasetRestStub> stub =
       std::make_shared<DefaultDatasetRestStub>(std::move(curl_rest_client));
 
