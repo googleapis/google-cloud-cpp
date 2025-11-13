@@ -25,6 +25,8 @@
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
 
+#include "google/cloud/bigtable/client.h"
+
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -33,6 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 namespace v2 = ::google::bigtable::v2;
 namespace testpb = ::google::bigtable::testproxy;
+
+using ms = std::chrono::milliseconds;
 
 // Convert `Status` to `grpc::Status`, discarding any `details`.
 ::grpc::Status ToGrpcStatus(Status const& status) {
@@ -357,6 +361,66 @@ grpc::Status CbtTestProxy::ReadModifyWriteRow(
   *response->mutable_status() = ToRpcStatus(row.status());
   if (!row.ok()) return grpc::Status();
   *response->mutable_row() = ConvertRowToV2(*row);
+  return grpc::Status();
+}
+
+
+grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
+    const google::bigtable::testproxy::ExecuteQueryRequest* request,
+    google::bigtable::testproxy::ExecuteQueryResult* response) {
+  // Client options
+  auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
+  auto backoff_policy_option =
+      google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
+          .clone();
+  auto query_refresh_option =
+      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+          .clone();
+  auto opts =
+      Options{}
+  .set<DataRetryPolicyOption>(std::move(retry_policy_option))
+  .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
+  .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+      std::move(query_refresh_option));
+
+  // Retrieve connection
+  auto const& conn = GetConnection(request->client_id());
+  if (!conn.ok()) return ToGrpcStatus(std::move(conn).status());
+  auto client = bigtable::Client(*conn, opts);
+  auto request_proto = request->request();
+
+  // Call prepare query
+  auto instance = MakeInstanceResource(request_proto.instance_name());
+  bigtable::SqlStatement sql_statement{request_proto.query()};
+  auto prepared_query = client.PrepareQuery(*std::move(instance), sql_statement);
+  if (!prepared_query.ok()) return ToGrpcStatus(std::move(prepared_query).status());
+
+  // Bind parameters
+  std::unordered_map<std::string, Value> params;
+  for (auto const& param : request_proto.params()) {
+    auto value = bigtable_internal::FromProto(param.second.type(), param.second);
+    params.insert(std::make_pair(param.first, std::move(value)));
+  }
+  auto bound_query = prepared_query->BindParameters(params);
+  RowStream result = client.ExecuteQuery(std::move(bound_query), {});
+
+  Status status;
+  for (auto const& row : result) {
+    if (!row.ok()) {
+      status = row.status();
+      GCP_LOG(INFO) << "Error reading row: " << row.status();
+      continue;
+    }
+    google::bigtable::testproxy::SqlRow proxy_row;
+    for (auto const& value : row->values()) {
+      *proxy_row.add_values() = bigtable_internal::ToProto(value).second;
+    }
+    *response->add_rows() = std::move(proxy_row);
+  }
+
+  // TODO: we need to set response->mutable_metadata()
+
+  *response->mutable_status() = ToRpcStatus(status);
   return grpc::Status();
 }
 

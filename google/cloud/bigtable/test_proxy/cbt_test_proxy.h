@@ -91,13 +91,18 @@ class CbtTestProxy final
       ::google::bigtable::testproxy::ReadModifyWriteRowRequest const* request,
       ::google::bigtable::testproxy::RowResult* response) override;
 
- private:
+  grpc::Status ExecuteQuery(grpc::ServerContext* context,
+      const google::bigtable::testproxy::ExecuteQueryRequest* request,
+      google::bigtable::testproxy::ExecuteQueryResult* response) override;
+
+    private:
   StatusOr<std::shared_ptr<DataConnection>> GetConnection(
       std::string const& client_id);
 
   StatusOr<Table> GetTableFromRequest(std::string const& client_id,
                                       std::string const& table_name);
 
+private:
   std::unordered_map<std::string, std::shared_ptr<DataConnection>> connections_;
   std::mutex mu_;
 };
