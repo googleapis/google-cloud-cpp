@@ -781,7 +781,7 @@ void RunWriteExamples(
 
 void PrepareAndExecuteQuery(google::cloud::bigtable::Client client,
                             std::vector<std::string> const& args) {
-  // [prepare-and-execute-query]
+  // [prepare-and-execute-query] [START bigtable_api_execute_query]
   namespace cbt = ::google::cloud::bigtable;
   [](cbt::Client client, std::string const& project_id,
      std::string const& instance_id, std::string const& table_id) {
@@ -807,7 +807,7 @@ void PrepareAndExecuteQuery(google::cloud::bigtable::Client client,
       std::cout << std::get<0>(*row) << "; " << (v ? *v : "null") << std::endl;
     }
   }
-  // [prepare-and-execute-query]
+  // [prepare-and-execute-query] [END bigtable_api_execute_query]
   (std::move(client), args.at(0), args.at(1), args.at(2));
 }
 
