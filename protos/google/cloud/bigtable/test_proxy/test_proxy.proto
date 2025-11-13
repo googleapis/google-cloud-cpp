@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Copied from https://github.com/googleapis/cndb-client-testing-protos/blob/16a532ea8a56164b921e5f015f04d39e531f8d4d/google/bigtable/testproxy/test_proxy.proto
+// Copied from
+// https://github.com/googleapis/cndb-client-testing-protos/blob/16a532ea8a56164b921e5f015f04d39e531f8d4d/google/bigtable/testproxy/test_proxy.proto
 
 syntax = "proto3";
 

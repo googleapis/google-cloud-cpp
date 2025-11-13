@@ -687,12 +687,14 @@ class Value {
   }
 
   /**
-  * This method removes duplicate keys from a map Value proto.
-  * Although we represent maps with unordered_maps, in this case we use an
-  * ordered map to preserve the order of the array_value().
-  */
-  static void ValidateMapValue(google::bigtable::v2::Type& t, google::bigtable::v2::Value& v) {
-    if (!t.has_map_type()) return;
+   * This method removes duplicate keys from a map Value proto.
+   * Although we represent maps with unordered_maps, in this case we use an
+   * ordered map to preserve the order of the array_value().
+   */
+  static void ValidateMapValue(google::bigtable::v2::Type& t,
+                               google::bigtable::v2::Value& v) {
+    return;
+    if (!t.has_map_type() || v.array_value().values().size() == 0) return;
     std::map<std::string, google::bigtable::v2::Value> m;
     for (auto const& kv : v.array_value().values()) {
       auto key = kv.array_value().values()[0];

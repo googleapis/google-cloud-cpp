@@ -243,7 +243,8 @@ TEST(Value, GetValueDuplicateKeysMap) {
 
   EXPECT_EQ(proto.second.array_value().values_size(), 2);
 
-  // Now we convert the proto back to a Value and confirm that the value is "bar"
+  // Now we convert the proto back to a Value and confirm that the value is
+  // "bar"
   Value from_proto = bigtable_internal::FromProto(proto.first, proto.second);
   using MapType = std::unordered_map<std::string, std::string>;
   ASSERT_STATUS_OK(from_proto.get<MapType>());

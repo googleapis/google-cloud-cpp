@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/test_proxy/cbt_test_proxy.h"
 #include "google/cloud/bigtable/cell.h"
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
@@ -24,8 +25,6 @@
 #include "absl/time/time.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
-
-#include "google/cloud/bigtable/client.h"
 
 namespace google {
 namespace cloud {
@@ -364,9 +363,9 @@ grpc::Status CbtTestProxy::ReadModifyWriteRow(
   return grpc::Status();
 }
 
-
-grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
-    const google::bigtable::testproxy::ExecuteQueryRequest* request,
+grpc::Status CbtTestProxy::ExecuteQuery(
+    grpc::ServerContext*,
+    google::bigtable::testproxy::ExecuteQueryRequest const* request,
     google::bigtable::testproxy::ExecuteQueryResult* response) {
   // Client options
   auto retry_policy_option = DataLimitedErrorCountRetryPolicy(0).clone();
@@ -378,10 +377,10 @@ grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
           .clone();
   auto opts =
       Options{}
-  .set<DataRetryPolicyOption>(std::move(retry_policy_option))
-  .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-  .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
-      std::move(query_refresh_option));
+          .set<DataRetryPolicyOption>(std::move(retry_policy_option))
+          .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
+          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+              std::move(query_refresh_option));
 
   // Retrieve connection
   auto const& conn = GetConnection(request->client_id());
@@ -393,13 +392,16 @@ grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
   auto instance = MakeInstanceResource(request_proto.instance_name());
   // NOLINTNEXTLINE(deprecated-declarations)
   bigtable::SqlStatement sql_statement{request_proto.query()};
-  auto prepared_query = client.PrepareQuery(*std::move(instance), sql_statement);
-  if (!prepared_query.ok()) return ToGrpcStatus(std::move(prepared_query).status());
+  auto prepared_query =
+      client.PrepareQuery(*std::move(instance), sql_statement);
+  if (!prepared_query.ok())
+    return ToGrpcStatus(std::move(prepared_query).status());
 
   // Bind parameters
   std::unordered_map<std::string, Value> params;
   for (auto const& param : request_proto.params()) {
-    auto value = bigtable_internal::FromProto(param.second.type(), param.second);
+    auto value =
+        bigtable_internal::FromProto(param.second.type(), param.second);
     params.insert(std::make_pair(param.first, std::move(value)));
   }
   auto bound_query = prepared_query->BindParameters(params);
