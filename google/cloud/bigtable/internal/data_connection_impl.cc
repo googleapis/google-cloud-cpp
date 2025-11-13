@@ -119,10 +119,12 @@ class DefaultPartialResultSetReader
       std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<internal::StreamingReadRpc<
           google::bigtable::v2::ExecuteQueryResponse>>
-          reader)
+          reader,
+      google::bigtable::v2::ResultSetMetadata initial_metadata)
       : context_(std::move(context)),
         operation_context_(std::move(operation_context)),
-        reader_(std::move(reader)) {}
+        reader_(std::move(reader)),
+        initial_metadata_(std::move(initial_metadata)) {}
 
   ~DefaultPartialResultSetReader() override = default;
 
@@ -148,10 +150,22 @@ class DefaultPartialResultSetReader
         return true;
       }
 
-      // Ignore metadata from the stream because PartialResultSetSource already
-      // has it set (in ExecuteQuery).
-      // TODO(#15701): Investigate expected behavior for processing metadata.
+      // Throw an error when there is a schema difference between
+      // ExecuteQueryResponse and PrepareQueryResponse.
       if (response.has_metadata()) {
+        std::string initial_metadata_str;
+        std::string response_metadata_str;
+        bool metadata_matched =
+            initial_metadata_.SerializeToString(&initial_metadata_str) &&
+            response.metadata().SerializeToString(&response_metadata_str) &&
+            initial_metadata_str == response_metadata_str;
+        if (response.metadata().ByteSizeLong() > 0 && !metadata_matched) {
+          final_status_ = google::cloud::Status(
+              google::cloud::StatusCode::kAborted,
+              "Schema changed during ExecuteQuery operation");
+          operation_context_->PostCall(*context_, final_status_);
+          return false;
+        }
         continue;
       }
 
@@ -173,6 +187,7 @@ class DefaultPartialResultSetReader
   std::unique_ptr<
       internal::StreamingReadRpc<google::bigtable::v2::ExecuteQueryResponse>>
       reader_;
+  google::bigtable::v2::ResultSetMetadata initial_metadata_;
   Status final_status_;
 };
 
@@ -896,8 +911,8 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           std::shared_ptr<OperationContext> const& operation_context) mutable
       -> StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> {
     auto factory =
-        [stub, request, tracing_enabled, tracing_options,
-         operation_context](std::string const& resume_token) mutable {
+        [stub, request, tracing_enabled, tracing_options, operation_context,
+         initial_metadata = metadata](std::string const& resume_token) mutable {
           if (!resume_token.empty()) request.set_resume_token(resume_token);
           auto context = std::make_shared<grpc::ClientContext>();
           auto const& options = internal::CurrentOptions();
@@ -906,7 +921,8 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           auto stream = stub->ExecuteQuery(context, options, request);
           std::unique_ptr<PartialResultSetReader> reader =
               std::make_unique<DefaultPartialResultSetReader>(
-                  std::move(context), operation_context, std::move(stream));
+                  std::move(context), operation_context, std::move(stream),
+                  std::move(initial_metadata));
           if (tracing_enabled) {
             reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
                                                               tracing_options);
