@@ -696,14 +696,30 @@ class Value {
     if (!t.has_map_type() || v.array_value().values().empty()) return;
     std::map<std::string, google::bigtable::v2::Value> m;
     for (auto const& kv : v.array_value().values()) {
-      auto key = kv.array_value().values()[0];
+      auto key_proto = kv.array_value().values()[0];
+      std::string key;
+      switch (key_proto.kind_case()) {
+        case google::bigtable::v2::Value::kStringValue:
+          key = key_proto.string_value();
+          break;
+        case google::bigtable::v2::Value::kBytesValue:
+          key = key_proto.bytes_value();
+          break;
+        case google::bigtable::v2::Value::kIntValue:
+          key = std::to_string(key_proto.int_value());
+          break;
+        default:
+          // Undefined behavior for malformed proto. We leave it as is and
+          // return.
+          return;
+      }
       // the documented behavior indicates that the last value will take
       // precedence for a given key.
-      auto pos = m.find(key.raw_value());
+      auto pos = m.find(key);
       if (pos != m.end()) {
         m.erase(pos);
       }
-      m.insert(std::make_pair(key.raw_value(), std::move(kv)));
+      m.insert(std::make_pair(key, std::move(kv)));
     }
     auto new_array_value = google::bigtable::v2::ArrayValue();
     for (auto const& kv : m) {
