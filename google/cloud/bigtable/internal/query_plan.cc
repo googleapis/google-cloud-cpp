@@ -35,6 +35,10 @@ std::shared_ptr<QueryPlan> QueryPlan::Create(
   return plan;
 }
 
+QueryPlan::~QueryPlan() {
+  if (refresh_timer_.valid()) refresh_timer_.cancel();
+}
+
 void QueryPlan::Initialize() {
   std::unique_lock<std::mutex> lock(mu_);
   if (state_ == RefreshState::kDone) ScheduleRefresh(lock);
