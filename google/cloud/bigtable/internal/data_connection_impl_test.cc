@@ -76,6 +76,7 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::Matcher;
 using ::testing::MockFunction;
 using ::testing::Pair;
@@ -3774,7 +3775,8 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
   bigtable::ExecuteQueryParams params{std::move(bq)};
   auto row_stream = conn->ExecuteQuery(std::move(params));
   for (auto const& row : row_stream) {
-    EXPECT_THAT(row, StatusIs(StatusCode::kAborted));
+    EXPECT_THAT(row,
+                StatusIs(StatusCode::kAborted, HasSubstr("Schema changed")));
   }
   fake_cq_impl->SimulateCompletion(false);
 }
