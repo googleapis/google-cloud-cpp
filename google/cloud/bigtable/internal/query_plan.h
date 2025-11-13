@@ -43,6 +43,8 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
       StatusOr<google::bigtable::v2::PrepareQueryResponse> response,
       RefreshFn fn, std::shared_ptr<Clock> clock = std::make_shared<Clock>());
 
+  ~QueryPlan();
+
   // Invalidates the current QueryPlan and triggers a refresh.
   void Invalidate(Status status, std::string const& invalid_query_plan_id);
 
