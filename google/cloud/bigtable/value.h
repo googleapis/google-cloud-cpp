@@ -693,8 +693,7 @@ class Value {
    */
   static void ValidateMapValue(google::bigtable::v2::Type& t,
                                google::bigtable::v2::Value& v) {
-    return;
-    if (!t.has_map_type() || v.array_value().values().size() == 0) return;
+    if (!t.has_map_type() || v.array_value().values().empty()) return;
     std::map<std::string, google::bigtable::v2::Value> m;
     for (auto const& kv : v.array_value().values()) {
       auto key = kv.array_value().values()[0];
