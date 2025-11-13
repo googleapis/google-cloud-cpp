@@ -386,7 +386,7 @@ grpc::Status CbtTestProxy::ExecuteQuery(
   auto const& conn = GetConnection(request->client_id());
   if (!conn.ok()) return ToGrpcStatus(std::move(conn).status());
   auto client = bigtable::Client(*conn, opts);
-  auto request_proto = request->request();
+  auto const& request_proto = request->request();
 
   // Call prepare query
   auto instance = MakeInstanceResource(request_proto.instance_name());
@@ -394,8 +394,10 @@ grpc::Status CbtTestProxy::ExecuteQuery(
   bigtable::SqlStatement sql_statement{request_proto.query()};
   auto prepared_query =
       client.PrepareQuery(*std::move(instance), sql_statement);
-  if (!prepared_query.ok())
-    return ToGrpcStatus(std::move(prepared_query).status());
+  if (!prepared_query.ok()) {
+    *response->mutable_status() = ToRpcStatus(prepared_query.status());
+    return ::grpc::Status();
+  }
 
   // Bind parameters
   std::unordered_map<std::string, Value> params;

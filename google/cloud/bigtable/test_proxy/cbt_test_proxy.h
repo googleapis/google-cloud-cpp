@@ -103,7 +103,6 @@ class CbtTestProxy final
   StatusOr<Table> GetTableFromRequest(std::string const& client_id,
                                       std::string const& table_name);
 
- private:
   std::unordered_map<std::string, std::shared_ptr<DataConnection>> connections_;
   std::mutex mu_;
 };

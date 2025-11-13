@@ -148,11 +148,14 @@ class DefaultPartialResultSetReader
         return true;
       }
 
-      // Ignore metadata from the stream because PartialResultSetSource already
-      // has it set (in ExecuteQuery).
-      // TODO(#15701): Investigate expected behavior for processing metadata.
       if (response.has_metadata()) {
-        continue;
+        // ExecuteQuery should not return metadata
+        auto result_status =
+            Status(StatusCode::kInternal,
+                   "Expected results response, but received: METADATA");
+        operation_context_->PostCall(*context_, result_status);
+        final_status_ = std::move(result_status);
+        return false;
       }
 
       final_status_ = google::cloud::Status(
@@ -785,6 +788,11 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
           return response;
         });
   };
+  if (!response->metadata().has_proto_schema() ||
+      response->metadata().proto_schema().columns().empty()) {
+    return Status(StatusCode::kInternal,
+                  "Invalid empty ResultSetMetadata received");
+  }
   auto query_plan = QueryPlan::Create(background_->cq(), *std::move(response),
                                       std::move(refresh_fn));
   return bigtable::PreparedQuery(
@@ -869,6 +877,10 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                 return response;
               });
         };
+        if (!response->metadata().has_proto_schema() ||
+            response->metadata().proto_schema().columns().empty()) {
+          return Status(StatusCode::kInternal, "missing metadata");
+        }
 
         auto query_plan = QueryPlan::Create(background_->cq(),
                                             *std::move(response), refresh_fn);
