@@ -921,7 +921,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           std::unique_ptr<PartialResultSetReader> reader =
               std::make_unique<DefaultPartialResultSetReader>(
                   std::move(context), operation_context, std::move(stream),
-                  initial_metadata);
+                  std::move(initial_metadata));
           if (tracing_enabled) {
             reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
                                                               tracing_options);
