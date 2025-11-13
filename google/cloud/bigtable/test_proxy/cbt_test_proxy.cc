@@ -391,6 +391,7 @@ grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
 
   // Call prepare query
   auto instance = MakeInstanceResource(request_proto.instance_name());
+  // NOLINTNEXTLINE(deprecated-declarations)
   bigtable::SqlStatement sql_statement{request_proto.query()};
   auto prepared_query = client.PrepareQuery(*std::move(instance), sql_statement);
   if (!prepared_query.ok()) return ToGrpcStatus(std::move(prepared_query).status());
@@ -402,6 +403,7 @@ grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
     params.insert(std::make_pair(param.first, std::move(value)));
   }
   auto bound_query = prepared_query->BindParameters(params);
+  auto bound_query_metadata = bound_query.response()->metadata();
   RowStream result = client.ExecuteQuery(std::move(bound_query), {});
 
   Status status;
@@ -418,7 +420,12 @@ grpc::Status CbtTestProxy::ExecuteQuery(grpc::ServerContext*,
     *response->add_rows() = std::move(proxy_row);
   }
 
-  // TODO: we need to set response->mutable_metadata()
+  // populate metadata
+  google::bigtable::testproxy::ResultSetMetadata metadata;
+  for (auto const& column : bound_query_metadata.proto_schema().columns()) {
+    *metadata.add_columns() = column;
+  }
+  *response->mutable_metadata() = metadata;
 
   *response->mutable_status() = ToRpcStatus(status);
   return grpc::Status();
