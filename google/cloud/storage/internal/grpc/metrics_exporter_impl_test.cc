@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
+#include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
@@ -154,6 +155,64 @@ TEST(GrpcMetricsExporter, ReaderOptionsAreSetFromConfig) {
             std::chrono::milliseconds(expected_interval));
   EXPECT_EQ(config->reader_options.export_timeout_millis,
             std::chrono::milliseconds(expected_timeout));
+}
+
+TEST(MakeMeterProviderConfigTest, NoExcludedLabels) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create(
+      {{"service.name", "test-service"}, {"service.version", "1.0.0"}});
+
+  Options options;
+  options.set<storage_experimental::EnableGrpcMetricsOption>(true);
+  options.set<storage::ProjectIdOption>("test-project");
+
+  auto config = MakeMeterProviderConfig(resource, options);
+
+  ASSERT_TRUE(config.has_value());
+  EXPECT_FALSE(config->exporter_options
+                   .has<otel_internal::ResourceFilterDataFnOption>());
+}
+
+TEST(MakeMeterProviderConfigTest, WithExcludedLabels) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create(
+      {{"service.name", "test-service"}, {"service.version", "1.0.0"}});
+
+  std::set<std::string> excluded_labels{"service_name", "service_version"};
+  Options options;
+  options.set<storage_experimental::EnableGrpcMetricsOption>(true);
+  options.set<storage::ProjectIdOption>("test-project");
+  options.set<storage_experimental::GrpcMetricsExcludedLabelsOption>(
+      excluded_labels);
+
+  auto config = MakeMeterProviderConfig(resource, options);
+
+  ASSERT_TRUE(config.has_value());
+  EXPECT_TRUE(config->exporter_options
+                  .has<otel_internal::ResourceFilterDataFnOption>());
+
+  auto actual_excluded =
+      config->exporter_options.get<otel_internal::ResourceFilterDataFnOption>();
+  EXPECT_EQ(excluded_labels, actual_excluded);
+}
+
+TEST(MakeMeterProviderConfigTest, EmptyExcludedLabels) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create(
+      {{"service.name", "test-service"}});
+
+  Options options;
+  options.set<storage_experimental::EnableGrpcMetricsOption>(true);
+  options.set<storage::ProjectIdOption>("test-project");
+  options.set<storage_experimental::GrpcMetricsExcludedLabelsOption>(
+      std::set<std::string>{});
+
+  auto config = MakeMeterProviderConfig(resource, options);
+
+  ASSERT_TRUE(config.has_value());
+  EXPECT_TRUE(config->exporter_options
+                  .has<otel_internal::ResourceFilterDataFnOption>());
+
+  auto actual_excluded =
+      config->exporter_options.get<otel_internal::ResourceFilterDataFnOption>();
+  EXPECT_TRUE(actual_excluded.empty());
 }
 
 }  // namespace
