@@ -31,7 +31,8 @@ std::string FormatProjectFullName(std::string const& project) {
   return absl::StrCat("projects/", project);
 }
 
-otel_internal::ResourceFilterDataFn MakeFilter(Options const& options) {
+otel_internal::ResourceFilterDataFn MakeResourceFilterFn(
+    Options const& options) {
   if (!options.has<otel_internal::ResourceFilterDataFnOption>()) {
     return nullptr;
   }
@@ -44,6 +45,24 @@ otel_internal::ResourceFilterDataFn MakeFilter(Options const& options) {
   // Capture by value to avoid dangling reference in the lambda.
   return [excluded = std::move(excluded)](std::string const& key) -> bool {
     return excluded.count(key) > 0;
+  };
+}
+
+otel_internal::MonitoredResourceFromDataFn MakeDynamicResourceFn(
+    Options const& options, absl::optional<Project> const& project,
+    absl::optional<google::api::MonitoredResource> const& mr_proto) {
+  if (!options.has<otel_internal::ResourceFilterDataFnOption>()) {
+    return nullptr;
+  }
+
+  // `resource_filter_fn_` and `dynamic_resource_fn_` are meant to be used as a
+  // pair. Here we have a filter but no dynamic function, create a default one
+  // that returns the same project and monitored resource for all data points.
+  auto project_id = project->project_id();
+  auto monitored_resource = mr_proto.value_or(google::api::MonitoredResource{});
+  return [project_id, monitored_resource](
+             opentelemetry::sdk::metrics::PointDataAttributes const&) {
+    return std::make_pair(project_id, monitored_resource);
   };
 }
 
@@ -65,9 +84,10 @@ MonitoringExporter::MonitoringExporter(
     Project project,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options const& options)
-    : MonitoringExporter(std::move(conn), nullptr, MakeFilter(options),
-                         options) {
+    : MonitoringExporter(std::move(conn), nullptr, nullptr, options) {
   project_ = std::move(project);
+  resource_filter_fn_ = MakeResourceFilterFn(options);
+  dynamic_resource_fn_ = MakeDynamicResourceFn(options, project_, mr_proto_);
 }
 
 opentelemetry::sdk::common::ExportResult MonitoringExporter::Export(
@@ -115,19 +135,7 @@ opentelemetry::sdk::common::ExportResult MonitoringExporter::ExportImpl(
   }
 
   std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
-  if (dynamic_resource_fn_ || resource_filter_fn_) {
-    // If `resource_filter_fn_` is provided, we must use
-    // `ToTimeSeriesWithResources`, which requires a dynamic resource
-    // function. If `dynamic_resource_fn_` is not provided, create a
-    // default implementation.
-    if (!dynamic_resource_fn_) {
-      auto mr = otel_internal::ToMonitoredResource(data, mr_proto_);
-      dynamic_resource_fn_ =
-          [mr, p = project_->project_id()](
-              opentelemetry::sdk::metrics::PointDataAttributes const&) {
-            return std::make_pair(p, mr);
-          };
-    }
+  if (dynamic_resource_fn_) {
     auto tss_map = otel_internal::ToTimeSeriesWithResources(
         data, formatter_, resource_filter_fn_, dynamic_resource_fn_);
     for (auto& tss : tss_map) {
