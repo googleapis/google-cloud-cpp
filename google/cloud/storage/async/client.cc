@@ -52,6 +52,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncClient::InsertObject(
 future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
     BucketName const& bucket_name, std::string object_name, Options opts) {
   auto spec = google::storage::v2::BidiReadObjectSpec{};
+  std::cerr << "Hey this is a test statement of new branch.\n";
   spec.set_bucket(bucket_name.FullName());
   spec.set_object(std::move(object_name));
   return Open(std::move(spec), std::move(opts));
@@ -59,7 +60,8 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
 
 future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
     google::storage::v2::BidiReadObjectSpec spec, Options opts) {
-  return connection_
+  std::cerr << "Hey this is a test statement of new branch.\n";
+      return connection_
       ->Open({std::move(spec),
               internal::MergeOptions(std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<ObjectDescriptor> {
@@ -116,7 +118,8 @@ future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::StartAppendableObjectUpload(BucketName const& bucket_name,
                                          std::string object_name,
                                          Options opts) {
-  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  std::cerr << "Hey this is a test statement of new branch.\n";
+                                          auto request = google::storage::v2::BidiWriteObjectRequest{};
   auto& resource = *request.mutable_write_object_spec()->mutable_resource();
 
   resource.set_bucket(BucketName(bucket_name).FullName());
@@ -129,7 +132,8 @@ AsyncClient::StartAppendableObjectUpload(BucketName const& bucket_name,
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::StartAppendableObjectUpload(
     google::storage::v2::BidiWriteObjectRequest request, Options opts) {
-  return connection_
+      std::cerr << "Hey this is a test statement of new branch.\n";
+      return connection_
       ->StartAppendableObjectUpload(
           {std::move(request),
            internal::MergeOptions(std::move(opts), connection_->options())})
