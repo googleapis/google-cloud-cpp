@@ -249,7 +249,7 @@ add_library(
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
-    results.h
+    result_source_interface.h
     retry_policy.h
     row.h
     row_key.h
@@ -260,6 +260,8 @@ add_library(
     row_reader.h
     row_set.cc
     row_set.h
+    row_stream.cc
+    row_stream.h
     rpc_backoff_policy.cc
     rpc_backoff_policy.h
     rpc_retry_policy.cc
@@ -511,6 +513,7 @@ if (BUILD_TESTING)
         row_range_test.cc
         row_reader_test.cc
         row_set_test.cc
+        row_stream_test.cc
         row_test.cc
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc

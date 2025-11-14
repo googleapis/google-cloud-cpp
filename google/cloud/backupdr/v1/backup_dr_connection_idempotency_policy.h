@@ -83,6 +83,9 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListBackups(
       google::cloud::backupdr::v1::ListBackupsRequest request);
 
+  virtual google::cloud::Idempotency FetchBackupsForResourceType(
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request);
+
   virtual google::cloud::Idempotency GetBackup(
       google::cloud::backupdr::v1::GetBackupRequest const& request);
 
@@ -145,6 +148,9 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetDataSourceReference(
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListDataSourceReferences(
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest request);
 
   virtual google::cloud::Idempotency FetchDataSourceReferencesForResourceType(
       google::cloud::backupdr::v1::

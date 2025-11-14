@@ -303,6 +303,9 @@ TEST(PartialResultSetResume, TooManyTransients) {
   auto status = reader->Finish();
   EXPECT_THAT(status,
               StatusIs(StatusCode::kUnavailable, HasSubstr("Try again")));
+  EXPECT_THAT(status.error_info().metadata(),
+              ::testing::Contains(::testing::Pair("gcloud-cpp.retry.reason",
+                                                  "retry-policy-exhausted")));
 }
 
 TEST(PartialResultSetResume, ResumptionStart) {
@@ -321,8 +324,9 @@ TEST(PartialResultSetResume, ResumptionStart) {
   response.push_back(r56);
 
   MockFactory mock_factory;
+  grpc::ClientContext context;
   EXPECT_CALL(mock_factory, MakeReader)
-      .WillOnce([&response](std::string const& token) {
+      .WillOnce([&](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = std::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read(_, _))
@@ -332,9 +336,13 @@ TEST(PartialResultSetResume, ResumptionStart) {
         EXPECT_CALL(*mock, TryCancel()).Times(0);
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "Try again")));
+        EXPECT_CALL(*mock, context)
+            .Times(1)
+            .WillRepeatedly(
+                [&]() -> grpc::ClientContext const& { return context; });
         return mock;
       })
-      .WillOnce([&response](std::string const& token) {
+      .WillOnce([&](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = std::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read(_, _))
@@ -344,6 +352,10 @@ TEST(PartialResultSetResume, ResumptionStart) {
             .WillOnce(Return(false));
         EXPECT_CALL(*mock, TryCancel()).Times(0);
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
+        EXPECT_CALL(*mock, context)
+            .Times(13)
+            .WillRepeatedly(
+                [&]() -> grpc::ClientContext const& { return context; });
         return mock;
       });
 
@@ -351,8 +363,8 @@ TEST(PartialResultSetResume, ResumptionStart) {
     return mock_factory.MakeReader(token);
   };
   auto grpc_reader = MakeTestResume(factory, Idempotency::kIdempotent);
-  auto reader =
-      PartialResultSetSource::Create(metadata, std::move(grpc_reader));
+  auto reader = PartialResultSetSource::Create(
+      metadata, std::make_shared<OperationContext>(), std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
   // Verify the returned rows are correct, despite the resumption from the
@@ -384,8 +396,9 @@ TEST(PartialResultSetResume, ResumptionMidway) {
   response.push_back(r56);
 
   MockFactory mock_factory;
+  grpc::ClientContext context;
   EXPECT_CALL(mock_factory, MakeReader)
-      .WillOnce([&response](std::string const& token) {
+      .WillOnce([&](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = std::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read(_, _))
@@ -395,9 +408,13 @@ TEST(PartialResultSetResume, ResumptionMidway) {
         EXPECT_CALL(*mock, TryCancel()).Times(0);
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "Try again")));
+        EXPECT_CALL(*mock, context)
+            .Times(9)
+            .WillRepeatedly(
+                [&]() -> grpc::ClientContext const& { return context; });
         return mock;
       })
-      .WillOnce([&response](std::string const& token) {
+      .WillOnce([&](std::string const& token) {
         EXPECT_EQ("resume-after-4", token);
         auto mock = std::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read(_, _))
@@ -405,6 +422,10 @@ TEST(PartialResultSetResume, ResumptionMidway) {
             .WillOnce(Return(false));
         EXPECT_CALL(*mock, TryCancel()).Times(0);
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
+        EXPECT_CALL(*mock, context)
+            .Times(5)
+            .WillRepeatedly(
+                [&]() -> grpc::ClientContext const& { return context; });
         return mock;
       });
 
@@ -412,8 +433,8 @@ TEST(PartialResultSetResume, ResumptionMidway) {
     return mock_factory.MakeReader(token);
   };
   auto grpc_reader = MakeTestResume(factory, Idempotency::kIdempotent);
-  auto reader =
-      PartialResultSetSource::Create(metadata, std::move(grpc_reader));
+  auto reader = PartialResultSetSource::Create(
+      metadata, std::make_shared<OperationContext>(), std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
 
   // Verify the returned rows are correct, despite the resumption from a

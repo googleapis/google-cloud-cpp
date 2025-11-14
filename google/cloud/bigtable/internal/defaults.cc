@@ -251,6 +251,12 @@ Options DefaultDataOptions(Options opts) {
             kBigtableLimits.maximum_retry_period)
             .clone());
   }
+  if (!opts.has<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>()) {
+    opts.set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+        bigtable::experimental::QueryPlanRefreshLimitedTimeRetryPolicy(
+            kBigtableLimits.maximum_retry_period)
+            .clone());
+  }
   if (!opts.has<bigtable::DataBackoffPolicyOption>()) {
     opts.set<bigtable::DataBackoffPolicyOption>(
         ExponentialBackoffPolicy(kBigtableLimits.initial_delay / 2,

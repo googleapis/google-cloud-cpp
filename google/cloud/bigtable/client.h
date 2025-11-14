@@ -15,7 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_H
 
+#include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/sql_statement.h"
+#include "google/cloud/bigtable/version.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -81,7 +90,9 @@ class Client {
    * @param opts Unused for now
    */
   explicit Client(std::shared_ptr<DataConnection> conn, Options opts = {})
-      : conn_(std::move(conn)), opts_(std::move(opts)) {}
+      : conn_(std::move(conn)),
+        opts_(google::cloud::internal::MergeOptions(std::move(opts),
+                                                    conn_->options())) {}
 
   /**
    * Prepares a query for future execution.

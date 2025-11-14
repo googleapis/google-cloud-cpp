@@ -17,6 +17,7 @@
 
 #include "google/cloud/status.h"
 #include <google/bigtable/v2/data.pb.h>
+#include <grpcpp/client_context.h>
 
 namespace google {
 namespace cloud {
@@ -55,6 +56,7 @@ class PartialResultSetReader {
   virtual void TryCancel() = 0;
   virtual bool Read(absl::optional<std::string> const& resume_token,
                     UnownedPartialResultSet& result) = 0;
+  virtual grpc::ClientContext const& context() const = 0;
   virtual Status Finish() = 0;
 };
 

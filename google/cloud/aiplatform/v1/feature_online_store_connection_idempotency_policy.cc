@@ -47,6 +47,12 @@ FeatureOnlineStoreServiceConnectionIdempotencyPolicy::SearchNearestEntities(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+FeatureOnlineStoreServiceConnectionIdempotencyPolicy::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency FeatureOnlineStoreServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

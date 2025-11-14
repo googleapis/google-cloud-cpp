@@ -243,6 +243,16 @@ BackupDRMetadata::ListBackups(
   return child_->ListBackups(context, options, request);
 }
 
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRMetadata::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->FetchBackupsForResourceType(context, options, request);
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRMetadata::GetBackup(
     grpc::ClientContext& context, Options const& options,
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
@@ -544,6 +554,16 @@ BackupDRMetadata::GetDataSourceReference(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataSourceReference(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRMetadata::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDataSourceReferences(context, options, request);
 }
 
 StatusOr<google::cloud::backupdr::v1::

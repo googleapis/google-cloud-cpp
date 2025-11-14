@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-auto constexpr kRefreshDeadlineOffsetMs = 1000;
+auto constexpr kRefreshDeadlineOffsetMs = std::chrono::milliseconds(1000);
 }  // namespace
 
 std::shared_ptr<QueryPlan> QueryPlan::Create(
@@ -33,6 +33,10 @@ std::shared_ptr<QueryPlan> QueryPlan::Create(
       std::move(cq), std::move(clock), std::move(fn), std::move(response)));
   plan->Initialize();
   return plan;
+}
+
+QueryPlan::~QueryPlan() {
+  if (refresh_timer_.valid()) refresh_timer_.cancel();
 }
 
 void QueryPlan::Initialize() {
@@ -46,12 +50,18 @@ void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
   // We want to start the refresh process before the query plan expires.
   auto refresh_deadline =
       internal::ToChronoTimePoint(response_->valid_until()) -
-      std::chrono::milliseconds(kRefreshDeadlineOffsetMs);
+      kRefreshDeadlineOffsetMs;
   std::weak_ptr<QueryPlan> plan = shared_from_this();
   refresh_timer_ =
       cq_.MakeDeadlineTimer(refresh_deadline)
-          .then([plan](future<StatusOr<std::chrono::system_clock::time_point>>
-                           result) {
+          .then([plan, current = internal::SaveCurrentOptions()](
+                    future<StatusOr<std::chrono::system_clock::time_point>>
+                        result) {
+            // Options are stored in a thread_local variable. When this timer
+            // expires and this lambda is executed we need to restore the
+            // Options that were saved in the capture group as a different
+            // thread may be used.
+            internal::OptionsSpan options_span(current);
             if (result.get().ok()) {
               if (auto p = plan.lock()) {
                 p->ExpiredRefresh();

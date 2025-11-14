@@ -77,6 +77,17 @@ FeatureOnlineStoreServiceMetadata::AsyncFeatureViewDirectWrite(
                                              std::move(options));
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceMetadata::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("feature_view=",
+                           internal::UrlEncode(request.feature_view())));
+  return child_->GenerateFetchAccessToken(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureOnlineStoreServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

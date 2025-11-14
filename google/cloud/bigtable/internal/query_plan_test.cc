@@ -229,10 +229,11 @@ TEST(QueryPlanTest, CreateFailedPlanAndRefresh) {
 }
 
 // TODO(#15695): For reasons not yet understood, the fedora m32 CI build has
-//  failures not seen in m64 builds when the number of threads is "too" high.
+//   failures not seen in m64 builds when the number of threads is "too" high.
+//  These failures occur while trying to create more than 500 threads.
 constexpr int LimitNumThreadsOn32Bit(int num_threads) {
 #if INTPTR_MAX == INT32_MAX
-  return std::min(num_threads, 500);
+  return std::min(num_threads, 200);
 #else
   return num_threads;
 #endif
@@ -267,18 +268,23 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlan) {
 
   constexpr int kNumThreads = LimitNumThreadsOn32Bit(1000);
   std::vector<std::thread> threads(kNumThreads);
-  std::array<StatusOr<PrepareQueryResponse>, kNumThreads> data_responses;
+  std::array<promise<StatusOr<PrepareQueryResponse>>, kNumThreads>
+      data_responses;
+  std::array<future<StatusOr<PrepareQueryResponse>>, kNumThreads>
+      data_response_futures;
+  for (auto i = 0; i < kNumThreads; ++i) {
+    data_responses[i] = promise<StatusOr<PrepareQueryResponse>>();
+    data_response_futures[i] = data_responses[i].get_future();
+  }
 
   auto barrier = std::make_shared<absl::Barrier>(kNumThreads + 1);
-  auto thread_fn = [barrier,
-                    query_plan](StatusOr<PrepareQueryResponse>* thread_data) {
+  auto thread_fn = [barrier, query_plan](
+                       promise<StatusOr<PrepareQueryResponse>>* thread_data) {
     barrier->Block();
-    *thread_data = query_plan->response();
+    thread_data->set_value(query_plan->response());
   };
 
   for (int i = 0; i < kNumThreads; ++i) {
-    data_responses[i] = StatusOr<PrepareQueryResponse>(
-        Status(StatusCode::kNotFound, "not found"));
     threads.emplace_back(thread_fn, &(data_responses[i]));
   }
 
@@ -286,15 +292,16 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlan) {
   query_plan->Invalidate(invalid_status, data->prepared_query());
   barrier->Block();
 
-  for (auto& t : threads) {
-    if (t.joinable()) t.join();
-  }
-
-  EXPECT_EQ(calls_to_refresh_fn, 1);
-  for (auto const& r : data_responses) {
+  for (auto& f : data_response_futures) {
+    auto r = f.get();
     ASSERT_STATUS_OK(r);
     EXPECT_EQ(r->prepared_query(), "refreshed-query-plan");
   }
+
+  for (auto& t : threads) {
+    if (t.joinable()) t.join();
+  }
+  EXPECT_EQ(calls_to_refresh_fn, 1);
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
@@ -333,22 +340,28 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanTransientFailures) {
 
   constexpr int kNumThreads = LimitNumThreadsOn32Bit(1000);
   std::vector<std::thread> threads(kNumThreads);
-  std::array<StatusOr<PrepareQueryResponse>, kNumThreads> data_responses;
+  std::array<promise<StatusOr<PrepareQueryResponse>>, kNumThreads>
+      data_responses;
+  std::array<future<StatusOr<PrepareQueryResponse>>, kNumThreads>
+      data_response_futures;
+  for (auto i = 0; i < kNumThreads; ++i) {
+    data_responses[i] = promise<StatusOr<PrepareQueryResponse>>();
+    data_response_futures[i] = data_responses[i].get_future();
+  }
 
   auto barrier = std::make_shared<absl::Barrier>(kNumThreads + 1);
-  auto thread_fn = [barrier,
-                    query_plan](StatusOr<PrepareQueryResponse>* thread_data) {
+  auto thread_fn = [barrier, query_plan](
+                       promise<StatusOr<PrepareQueryResponse>>* thread_data) {
     barrier->Block();
-    *thread_data = query_plan->response();
-    while (!thread_data->ok()) {
+    auto response = query_plan->response();
+    while (!response.ok()) {
       std::this_thread::yield();
-      *thread_data = query_plan->response();
+      response = query_plan->response();
     }
+    thread_data->set_value(response);
   };
 
   for (int i = 0; i < kNumThreads; ++i) {
-    data_responses[i] = StatusOr<PrepareQueryResponse>(
-        Status(StatusCode::kNotFound, "not found"));
     threads.emplace_back(thread_fn, &(data_responses[i]));
   }
 
@@ -356,15 +369,17 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanTransientFailures) {
   query_plan->Invalidate(invalid_status, data->prepared_query());
   barrier->Block();
 
+  for (auto& f : data_response_futures) {
+    auto r = f.get();
+    ASSERT_STATUS_OK(r);
+    EXPECT_EQ(r->prepared_query(), "refreshed-query-plan");
+  }
+
   for (auto& t : threads) {
     if (t.joinable()) t.join();
   }
 
   EXPECT_EQ(calls_to_refresh_fn, 4);
-  for (auto const& r : data_responses) {
-    ASSERT_STATUS_OK(r);
-    EXPECT_EQ(r->prepared_query(), "refreshed-query-plan");
-  }
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
@@ -439,32 +454,38 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanAfterFailedRefresh) {
   // it to complete.
   constexpr int kNumThreads = LimitNumThreadsOn32Bit(1000);
   std::vector<std::thread> threads(kNumThreads);
-  std::array<StatusOr<PrepareQueryResponse>, kNumThreads> data_responses;
+  std::array<promise<StatusOr<PrepareQueryResponse>>, kNumThreads>
+      data_responses;
+  std::array<future<StatusOr<PrepareQueryResponse>>, kNumThreads>
+      data_response_futures;
+  for (auto i = 0; i < kNumThreads; ++i) {
+    data_responses[i] = promise<StatusOr<PrepareQueryResponse>>();
+    data_response_futures[i] = data_responses[i].get_future();
+  }
 
   auto barrier = std::make_shared<absl::Barrier>(kNumThreads + 1);
-  auto thread_fn = [barrier,
-                    query_plan](StatusOr<PrepareQueryResponse>* thread_data) {
+  auto thread_fn = [barrier, query_plan](
+                       promise<StatusOr<PrepareQueryResponse>>* thread_data) {
     barrier->Block();
-    *thread_data = query_plan->response();
+    thread_data->set_value(query_plan->response());
   };
 
   for (int i = 0; i < kNumThreads; ++i) {
-    data_responses[i] = StatusOr<PrepareQueryResponse>(
-        Status(StatusCode::kNotFound, "not found"));
     threads.emplace_back(thread_fn, &(data_responses[i]));
   }
 
   barrier->Block();
 
-  for (auto& t : threads) {
-    if (t.joinable()) t.join();
-  }
-
-  EXPECT_EQ(calls_to_refresh_fn, kNumFailingThreads + 1);
-  for (auto const& r : data_responses) {
+  for (auto& f : data_response_futures) {
+    auto r = f.get();
     ASSERT_STATUS_OK(r);
     EXPECT_EQ(r->prepared_query(), "refreshed-query-plan");
   }
+
+  for (auto& t : threads) {
+    if (t.joinable()) t.join();
+  }
+  EXPECT_EQ(calls_to_refresh_fn, kNumFailingThreads + 1);
 
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);

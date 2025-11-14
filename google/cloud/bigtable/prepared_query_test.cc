@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -25,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ::google::bigtable::v2::PrepareQueryResponse;
 
-TEST(PreparedQuery, DefaultConstructor) {
+TEST(PreparedQueryTest, DefaultConstructor) {
   auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
   Project p("dummy-project");
   InstanceResource instance(p, "dummy-instance");
@@ -33,8 +34,14 @@ TEST(PreparedQuery, DefaultConstructor) {
       "SELECT * FROM my_table WHERE col1 = @val1 and col2 = @val2;");
   SqlStatement sql_statement(statement_contents);
   PrepareQueryResponse response;
-  PreparedQuery q(CompletionQueue(fake_cq_impl), instance, sql_statement,
-                  response);
+  auto refresh_fn = [&response]() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(response));
+  };
+  auto query_plan = bigtable_internal::QueryPlan::Create(
+      CompletionQueue(fake_cq_impl), std::move(response),
+      std::move(refresh_fn));
+  PreparedQuery q(instance, sql_statement, query_plan);
   EXPECT_EQ(instance.FullName(), q.instance().FullName());
   EXPECT_EQ(statement_contents, q.sql_statement().sql());
 

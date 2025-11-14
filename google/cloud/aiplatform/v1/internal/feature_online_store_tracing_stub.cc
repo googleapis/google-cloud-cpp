@@ -79,6 +79,21 @@ FeatureOnlineStoreServiceTracingStub::AsyncFeatureViewDirectWrite(
       std::move(context), std::move(stream), std::move(span));
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceTracingStub::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "GenerateFetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateFetchAccessToken(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureOnlineStoreServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

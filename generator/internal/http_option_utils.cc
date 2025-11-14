@@ -214,6 +214,13 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
   absl::optional<QueryParameterInfo> param_info;
   // Only attempt to make non-repeated, simple fields query parameters.
   if (!field.is_repeated() && !field.options().deprecated()) {
+    // TODO(#15707): Most services will error if this is set at all. Skip it
+    //  until a service we generate using REST transport requires it.
+    if (field.name() == "return_partial_success" &&
+        field.containing_type()->full_name() ==
+            "google.longrunning.ListOperationsRequest") {
+      return param_info;
+    }
     if (field.cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
       param_info = QueryParameterInfo{
           field.cpp_type(), absl::StrCat("request.", field.name(), "()"),

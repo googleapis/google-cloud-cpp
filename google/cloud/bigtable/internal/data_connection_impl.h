@@ -21,7 +21,7 @@
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
 #include "google/cloud/bigtable/prepared_query.h"
-#include "google/cloud/bigtable/results.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -108,8 +108,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::PrepareQueryParams const& p) override;
   future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
       bigtable::PrepareQueryParams const& p) override;
-  StatusOr<bigtable::RowStream> ExecuteQuery(
-      bigtable::ExecuteQueryParams const& p) override;
+  bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
 
  private:
   void AsyncReadRowsHelper(std::string const& table_name,
@@ -119,9 +118,6 @@ class DataConnectionImpl : public bigtable::DataConnection {
                            bigtable::Filter filter,
                            internal::ImmutableOptions const& current,
                            std::shared_ptr<OperationContext> operation_context);
-  std::unique_ptr<PartialResultSetReader> CreateResumableReader(
-      google::bigtable::v2::ExecuteQueryRequest request,
-      std::string const& resume_token);
 
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;

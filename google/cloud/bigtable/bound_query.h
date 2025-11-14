@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BOUND_QUERY_H
 
 #include "google/cloud/bigtable/instance_resource.h"
-#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
@@ -26,6 +25,13 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class DataConnectionImpl;
+class QueryPlan;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -42,15 +48,18 @@ class BoundQuery {
   BoundQuery& operator=(BoundQuery&&) = default;
 
   // Accessors
-  StatusOr<std::string> prepared_query() const;
-  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
-  std::unordered_map<std::string, Value> const& parameters() const;
-  InstanceResource const& instance() const;
+  InstanceResource const& instance() const { return instance_; }
+  std::unordered_map<std::string, Value> const& parameters() const {
+    return parameters_;
+  }
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> response();
 
   google::bigtable::v2::ExecuteQueryRequest ToRequestProto() const;
 
  private:
   friend class PreparedQuery;
+  friend class bigtable_internal::DataConnectionImpl;
+
   BoundQuery(InstanceResource instance,
              std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
              std::unordered_map<std::string, Value> parameters)
