@@ -268,8 +268,7 @@ TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
       "test-object");
 
   google::storage::v2::BidiWriteObjectResponse first_response;
-  google::storage::v2::BidiWriteHandle write_handle;
-  first_response.mutable_write_handle()->CopyFrom(write_handle);
+  first_response.mutable_write_handle();
   first_response.mutable_resource()->set_generation(12345);
 
   EXPECT_CALL(*mock, PersistedState)
@@ -336,7 +335,6 @@ TEST(WriteConnectionResumed, ResumeUsesAppendObjectSpecFromInitialRequest) {
   initial_request.mutable_append_object_spec()->set_object("test-object");
 
   google::storage::v2::BidiWriteObjectResponse first_response;
-  first_response.clear_write_handle();
   first_response.mutable_resource()->set_generation(12345);
 
   EXPECT_CALL(*mock, PersistedState)
