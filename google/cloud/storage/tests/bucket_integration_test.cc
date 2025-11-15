@@ -682,6 +682,30 @@ TEST_F(BucketIntegrationTest, ListFailure) {
   EXPECT_THAT(metadata, Not(IsOk())) << "value=" << metadata.value();
 }
 
+TEST_F(BucketIntegrationTest, ListPartialSuccess) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+
+  auto meta =
+      client.CreateBucketForProject(bucket_name, project_id_, BucketMetadata{});
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto list_buckets_result = [&client] {
+    std::vector<std::string> names;
+    for (auto& r : client.ListBucketsPartial()) {
+      EXPECT_STATUS_OK(r);
+      if (!r) break;
+      for (auto const& b : r->buckets) {
+        names.push_back(b.name());
+      }
+    }
+    return names;
+  };
+
+  ASSERT_THAT(list_buckets_result(), Contains(bucket_name));
+}
+
 TEST_F(BucketIntegrationTest, CreateFailure) {
   auto client = MakeBucketIntegrationTestClient();
 

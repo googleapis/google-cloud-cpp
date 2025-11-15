@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/examples/storage_examples_common.h"
+#include "google/cloud/storage/list_buckets_partial_reader.h"
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
@@ -45,6 +46,34 @@ void ListBuckets(google::cloud::storage::Client client,
     }
   }
   //! [list buckets] [END storage_list_buckets]
+  (std::move(client));
+}
+
+void ListBucketsPartial(google::cloud::storage::Client client,
+                        std::vector<std::string> const& /*argv*/) {
+  //! [list buckets partial result] [START list_buckets_partial]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client) {
+    int count = 0;
+    gcs::ListBucketsPartialReader bucket_list = client.ListBucketsPartial();
+    for (auto&& result : bucket_list) {
+      if (!result) throw std::move(result).status();
+
+      for (auto const& bucket_metadata : result->buckets) {
+        std::cout << bucket_metadata.name() << "\n";
+        ++count;
+      }
+      for (auto const& unreachable : result->unreachable) {
+        std::cout << "Unreachable location: " << unreachable << "\n";
+      }
+    }
+
+    if (count == 0) {
+      std::cout << "No buckets in default project\n";
+    }
+  }
+  //! [list buckets partial result] [END list_buckets_partial]
   (std::move(client));
 }
 
@@ -683,6 +712,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ListBuckets() example" << std::endl;
   ListBuckets(client, {});
 
+  std::cout << "\nRunning ListBucketsPartial() example" << std::endl;
+  ListBucketsPartial(client, {});
+
   std::cout << "\nRunning CreateBucket() example" << std::endl;
   CreateBucket(client, {bucket_name});
 
@@ -726,6 +758,8 @@ int main(int argc, char* argv[]) {
 
   examples::Example example({
       examples::CreateCommandEntry("list-buckets", {}, ListBuckets),
+      examples::CreateCommandEntry("list-buckets-partial", {},
+                                   ListBucketsPartial),
       examples::CreateCommandEntry("list-buckets-for-project", {"<project-id>"},
                                    ListBucketsForProject),
       make_entry("create-bucket", {}, CreateBucket),
