@@ -3364,7 +3364,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSourceReference]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L34}
-  /// [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L186}
+  /// [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L189}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSourceReference>
@@ -3405,7 +3405,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.DataSourceReference]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L34}
-  /// [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L186}
+  /// [google.cloud.backupdr.v1.FetchDataSourceReferencesForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/datasourcereference.proto#L189}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSourceReference>

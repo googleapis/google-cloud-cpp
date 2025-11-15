@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 //! [bigtable includes]
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/table.h"
 //! [bigtable includes]
 #include "google/cloud/internal/getenv.h"
@@ -778,6 +779,38 @@ void RunWriteExamples(
   admin.DeleteTable(schema->name());
 }
 
+void PrepareAndExecuteQuery(google::cloud::bigtable::Client client,
+                            std::vector<std::string> const& args) {
+  // [prepare-and-execute-query] [START bigtable_api_execute_query]
+  namespace cbt = ::google::cloud::bigtable;
+  [](cbt::Client client, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    cbt::InstanceResource instance(google::cloud::Project(project_id),
+                                   instance_id);
+    cbt::SqlStatement statement(
+        "SELECT _key, CAST(fam['column0'] AS STRING) as value0 FROM `" +
+            table_id + "` WHERE _key=@key",
+        {{"key", cbt::Parameter(cbt::Bytes())}});
+
+    auto prepared_query = client.PrepareQuery(instance, statement);
+    if (!prepared_query) throw std::move(prepared_query).status();
+
+    auto bound_query = prepared_query->BindParameters(
+        {{"key", cbt::Value(cbt::Bytes("test-key-for-apply"))}});
+
+    auto results = client.ExecuteQuery(std::move(bound_query));
+
+    using RowType = std::tuple<cbt::Bytes, absl::optional<std::string>>;
+    for (auto& row : cbt::StreamOf<RowType>(results)) {
+      if (!row.ok()) throw std::move(row.status());
+      auto v = std::get<1>(*row);
+      std::cout << std::get<0>(*row) << "; " << (v ? *v : "null") << std::endl;
+    }
+  }
+  // [prepare-and-execute-query] [END bigtable_api_execute_query]
+  (std::move(client), args.at(0), args.at(1), args.at(2));
+}
+
 void RunDataExamples(
     google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     google::cloud::internal::DefaultPRNG& generator,
@@ -879,6 +912,11 @@ void RunDataExamples(
   std::cout << "Running ReadModifyWrite() example [3]" << std::endl;
   ReadModifyWrite(table, {"read-modify-write"});
 
+  if (!google::cloud::bigtable::examples::UsingEmulator()) {
+    auto client = cbt::Client(cbt::MakeDataConnection());
+    std::cout << "Running PrepareAndExecuteQuery() example" << std::endl;
+    PrepareAndExecuteQuery(client, {project_id, instance_id, table_id});
+  }
   admin.DeleteTable(schema->name());
 }
 
@@ -946,6 +984,9 @@ int main(int argc, char* argv[]) try {
       MakeCommandEntry("write-batch", {}, WriteBatch),
       MakeCommandEntry("write-increment", {}, WriteIncrement),
       MakeCommandEntry("write-conditional", {}, WriteConditionally),
+      MakeCommandEntry("prepare-and-execute-query",
+                       {"<project_id>", "<instance_id>", "<table_id>"},
+                       PrepareAndExecuteQuery),
       {"auto", RunAll},
   };
 

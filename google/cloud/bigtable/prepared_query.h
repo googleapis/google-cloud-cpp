@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/instance_resource.h"
-#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
@@ -28,6 +27,11 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class QueryPlan;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -35,41 +39,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Query plans can expire and are refreshed as a background task.
 class PreparedQuery {
  public:
-  // Creates an instance of BoundQuery using the query plan ID from the
-  // response.
-  BoundQuery BindParameters(
-      std::unordered_map<std::string, Value> params) const;
-
-  // Accessors
-  InstanceResource const& instance() const;
-  SqlStatement const& sql_statement() const;
-
-  // While we work on the Bigtable GoogleSQL functionality, we will keep this
-  // constructor as public, but this will be converted to private as
-  // originally intended once other classes that orchestrate PreparedQuery
-  // are implemented.
-  GOOGLE_CLOUD_CPP_DEPRECATED("use the other constructor")
-  PreparedQuery(CompletionQueue cq, InstanceResource instance,
-                SqlStatement sql_statement,
-                google::bigtable::v2::PrepareQueryResponse response)
-      : instance_(std::move(instance)),
-        sql_statement_(std::move(sql_statement)) {
-    *response.mutable_prepared_query() = sql_statement_.sql();
-
-    // For now, the refresh function has no effect, and we simply return a new
-    // prepared query response.
-    query_plan_ = bigtable_internal::QueryPlan::Create(
-        std::move(cq), std::move(response), [] {
-          return make_ready_future(
-              StatusOr<google::bigtable::v2::PrepareQueryResponse>{});
-        });
-  }
-
   PreparedQuery(InstanceResource instance, SqlStatement sql_statement,
                 std::shared_ptr<bigtable_internal::QueryPlan> query_plan)
       : instance_(std::move(instance)),
         sql_statement_(std::move(sql_statement)),
         query_plan_(std::move(query_plan)) {}
+
+  // Accessors
+  InstanceResource const& instance() const { return instance_; }
+  SqlStatement const& sql_statement() const { return sql_statement_; }
+
+  // Creates an instance of BoundQuery using the query plan ID from the
+  // response.
+  BoundQuery BindParameters(
+      std::unordered_map<std::string, Value> params) const;
 
  private:
   InstanceResource instance_;

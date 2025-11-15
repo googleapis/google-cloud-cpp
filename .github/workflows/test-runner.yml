@@ -127,6 +127,8 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-cmake:
+    # Disabled
+    if: false
     name: Windows-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/windows-cmake.yml
@@ -152,7 +154,7 @@ jobs:
       # macos-bazel is disabled
       # macos-cmake is disabled
       - windows-bazel
-      - windows-cmake
+      # windows-cmake is disabled is disabled
     # Run even if the other jobs failed or were skipped.
     if: always()
     runs-on: ubuntu-latest

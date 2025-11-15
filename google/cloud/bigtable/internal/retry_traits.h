@@ -19,6 +19,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/status.h"
+#include "absl/strings/match.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -32,6 +33,33 @@ struct SafeGrpcRetry {
   static bool IsTransientFailure(Status const& status) {
     auto const code = status.code();
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
+           google::cloud::internal::IsTransientInternalError(status);
+  }
+  static bool IsPermanentFailure(Status const& status) {
+    return !IsOk(status) && !IsTransientFailure(status);
+  }
+
+  // TODO(#2344) - remove ::grpc::Status version.
+  static bool IsOk(grpc::Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(grpc::Status const& status) {
+    return IsTransientFailure(MakeStatusFromRpcError(status));
+  }
+  static bool IsPermanentFailure(grpc::Status const& status) {
+    return !IsOk(status) && !IsTransientFailure(status);
+  }
+};
+
+struct SafeGrpcRetryAllowingQueryPlanRefresh {
+  static bool IsQueryPlanExpired(Status const& s) {
+    return (s.code() == StatusCode::kFailedPrecondition &&
+            absl::StrContains(s.message(), "PREPARED_QUERY_EXPIRED"));
+  }
+
+  static bool IsOk(Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(Status const& status) {
+    auto const code = status.code();
+    return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
+           IsQueryPlanExpired(status) ||
            google::cloud::internal::IsTransientInternalError(status);
   }
   static bool IsPermanentFailure(Status const& status) {

@@ -7,6 +7,7 @@
 @com_google_googleapis//google/bigtable/v2:bigtable.proto
 @com_google_googleapis//google/bigtable/v2:data.proto
 @com_google_googleapis//google/bigtable/v2:feature_flags.proto
+@com_google_googleapis//google/bigtable/v2:peer_info.proto
 @com_google_googleapis//google/bigtable/v2:request_stats.proto
 @com_google_googleapis//google/bigtable/v2:response_params.proto
 @com_google_googleapis//google/bigtable/v2:types.proto

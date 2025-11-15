@@ -129,6 +129,24 @@ Commands::value_type MakeCommandEntry(std::string const& name,
   return Commands::value_type{name, std::move(adapter)};
 }
 
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      ClientCommandType const& function) {
+  auto command = [=](std::vector<std::string> argv) {
+    auto constexpr kFixedArguments = 0;
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != args.size() + kFixedArguments) {
+      std::ostringstream os;
+      os << name;
+      if (!args.empty()) os << " " << absl::StrJoin(args, " ");
+      throw Usage{std::move(os).str()};
+    }
+    auto client = bigtable::Client(bigtable::MakeDataConnection());
+    function(client, argv);
+  };
+  return {name, command};
+}
+
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud

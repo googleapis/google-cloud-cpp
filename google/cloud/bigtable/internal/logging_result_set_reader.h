@@ -41,6 +41,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
   void TryCancel() override;
   bool Read(absl::optional<std::string> const& resume_token,
             UnownedPartialResultSet& result) override;
+  grpc::ClientContext const& context() const override;
   Status Finish() override;
 
  private:

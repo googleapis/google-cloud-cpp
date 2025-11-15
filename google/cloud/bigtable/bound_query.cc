@@ -13,40 +13,29 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/bound_query.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<std::string> BoundQuery::prepared_query() const {
-  return query_plan_->prepared_query();
+StatusOr<google::bigtable::v2::PrepareQueryResponse> BoundQuery::response() {
+  return query_plan_->response();
 }
-
-StatusOr<google::bigtable::v2::ResultSetMetadata> BoundQuery::metadata() const {
-  return query_plan_->metadata();
-}
-
-std::unordered_map<std::string, Value> const& BoundQuery::parameters() const {
-  return parameters_;
-}
-
-InstanceResource const& BoundQuery::instance() const { return instance_; }
 
 google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() const {
   google::bigtable::v2::ExecuteQueryRequest result;
   *result.mutable_instance_name() = instance_.FullName();
-  auto prepared_query = query_plan_->prepared_query();
-  if (prepared_query.ok()) {
-    *result.mutable_prepared_query() = query_plan_->prepared_query().value();
-  }
 
   google::protobuf::Map<std::string, google::bigtable::v2::Value> parameters;
   for (auto const& kv : parameters_) {
-    parameters[kv.first] =
-        bigtable_internal::ValueInternals::ToProto(kv.second).second;
+    auto type_value = bigtable_internal::ValueInternals::ToProto(kv.second);
+    google::bigtable::v2::Value v = std::move(type_value.second);
+    *v.mutable_type() = std::move(type_value.first);
+    parameters[kv.first] = std::move(v);
   }
-  *result.mutable_params() = parameters;
+  *result.mutable_params() = std::move(parameters);
   return result;
 }
 

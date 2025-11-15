@@ -15,7 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_H
 
+#include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/sql_statement.h"
+#include "google/cloud/bigtable/version.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -40,36 +49,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * For this reason, it is recommended to reuse `Client` objects when possible.
  *
  * @par Example
- * @code
- * #include "google/cloud/bigtable/client.h"
- * #include "google/cloud/project.h"
- * #include <iostream>
- *
- * int main() {
- *   namespace cbt = google::cloud::bigtable;
- *   cbt::Client client(cbt::MakeDataConnection());
- *   cbt::InstanceResource instance(google::cloud::Project("my-project"),
- * "my-instance");
- *
- *   // Declare a parameter with a type, but no value.
- *   cbt::SqlStatement statement(
- *       "SELECT _key, CAST(family['qual'] AS STRING) AS value "
- *       "FROM my-table WHERE _key = @key",
- *       {{"key", cbt::Value(cbt::Bytes())}});
- *
- *   google::cloud::StatusOr<cbt::PreparedQuery> prepared_query =
- *       client.PrepareQuery(instance, statement);
- *   if (!prepared_query) throw std::move(prepared_query).status();
- *
- *   auto bound_query = prepared_query->BindParameters(
- *       {{"key", cbt::Value("row-key-2")}});
- *
- *   RowStream results =
- *       client.ExecuteQuery(std::move(bound_query));
- *
- *   ... // process rows
- * }
- * @endcode
+ * @snippet data_snippets.cc prepare-and-execute-query
  */
 class Client {
  public:
@@ -81,7 +61,9 @@ class Client {
    * @param opts Unused for now
    */
   explicit Client(std::shared_ptr<DataConnection> conn, Options opts = {})
-      : conn_(std::move(conn)), opts_(std::move(opts)) {}
+      : conn_(std::move(conn)),
+        opts_(google::cloud::internal::MergeOptions(std::move(opts),
+                                                    conn_->options())) {}
 
   /**
    * Prepares a query for future execution.
