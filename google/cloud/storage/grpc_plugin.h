@@ -131,6 +131,27 @@ struct GrpcMetricsExportTimeoutOption {
   using Type = std::chrono::seconds;
 };
 
+/**
+ * gRPC telemetry excluded labels.
+ *
+ * A set of OpenTelemetry resource attribute keys to exclude from metric labels
+ * when exporting gRPC telemetry. For example, to exclude the `service.name`
+ * label, configure the option with `{"service_name"}`.
+ *
+ * @par Example: Exclude specific labels from telemetry
+ * @code
+ * namespace gcs_ex = google::cloud::storage_experimental;
+ * auto client = google::cloud::storage::MakeGrpcClient(
+ *     google::cloud::Options{}
+ *         .set<gcs_ex::EnableGrpcMetricsOption>(true)
+ *         .set<gcs_ex::GrpcMetricsExcludedLabelsOption>(
+ *             std::set<std::string>{"service_name", "service_version"}));
+ * @endcode
+ */
+struct GrpcMetricsExcludedLabelsOption {
+  using Type = std::set<std::string>;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

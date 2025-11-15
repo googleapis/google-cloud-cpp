@@ -77,6 +77,7 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::Matcher;
 using ::testing::MockFunction;
 using ::testing::Pair;
@@ -3693,6 +3694,92 @@ TEST_F(DataConnectionTest,
   auto const& row2 = *rows[1];
   EXPECT_THAT(row2.values().at(0).get<std::string>(), IsOkAndHolds("r2"));
   EXPECT_THAT(row2.values().at(1).get<std::string>(), IsOkAndHolds("v2"));
+}
+
+TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
+  auto factory = std::make_unique<SimpleOperationContextFactory>();
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto mock_bg = std::make_unique<MockBackgroundThreads>();
+  EXPECT_CALL(*mock_bg, cq).WillRepeatedly([&]() {
+    return CompletionQueue{fake_cq_impl};
+  });
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+      columns {
+        name: "value"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse pq_response;
+  pq_response.set_prepared_query("test-pq-id-54321");
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataText, pq_response.mutable_metadata()));
+  *pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(3600));
+
+  auto constexpr kExecuteQueryResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+      columns {
+        name: "different_value"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::ExecuteQueryResponse eq_response;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kExecuteQueryResultMetadataText, eq_response.mutable_metadata()));
+
+  auto refresh_fn = []() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(
+            Status{StatusCode::kUnimplemented, "not implemented"}));
+  };
+  EXPECT_CALL(*mock, ExecuteQuery)
+      .Times(3)
+      .WillRepeatedly(
+          [&](auto, auto const&,
+              google::bigtable::v2::ExecuteQueryRequest const& request) {
+            EXPECT_EQ(request.app_profile_id(), kAppProfile);
+            EXPECT_EQ(request.instance_name(),
+                      "projects/test-project/instances/test-instance");
+            auto stream = std::make_unique<MockExecuteQueryStream>();
+            EXPECT_CALL(*stream, Read)
+                .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+                  *r = eq_response;
+                  return absl::nullopt;
+                });
+            return stream;
+          });
+
+  auto conn = TestConnection(std::move(mock), std::move(factory));
+  internal::OptionsSpan span(CallOptions());
+  Project p("test-project");
+  bigtable::SqlStatement statement("SELECT * FROM the-table");
+  bigtable::InstanceResource instance(p, "test-instance");
+  auto query_plan =
+      QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
+                        std::move(refresh_fn));
+  auto prepared_query =
+      bigtable::PreparedQuery(instance, statement, std::move(query_plan));
+  auto bq = prepared_query.BindParameters({});
+  bigtable::ExecuteQueryParams params{std::move(bq)};
+  auto row_stream = conn->ExecuteQuery(std::move(params));
+  for (auto const& row : row_stream) {
+    EXPECT_THAT(row,
+                StatusIs(StatusCode::kAborted, HasSubstr("Schema changed")));
+  }
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 }  // namespace

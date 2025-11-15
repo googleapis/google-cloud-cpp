@@ -45,6 +45,12 @@ using MonitoredResourceFromDataFn =
 // of the google::api::Metric proto.
 using ResourceFilterDataFn = std::function<bool(std::string const&)>;
 
+// Filter resource labels. A set of OpenTelemetry resource attribute keys to
+// exclude from metric labels when exporting metrics.
+struct ResourceFilterDataFnOption {
+  using Type = std::set<std::string>;
+};
+
 class MonitoringExporter final
     : public opentelemetry::sdk::metrics::PushMetricExporter {
  public:

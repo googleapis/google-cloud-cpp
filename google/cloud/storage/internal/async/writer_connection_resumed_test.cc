@@ -268,6 +268,7 @@ TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
       "test-object");
 
   google::storage::v2::BidiWriteObjectResponse first_response;
+  first_response.mutable_write_handle();
   first_response.mutable_resource()->set_generation(12345);
 
   EXPECT_CALL(*mock, PersistedState)
@@ -318,6 +319,7 @@ TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
 
   EXPECT_FALSE(captured_request.has_write_object_spec());
   EXPECT_TRUE(captured_request.has_append_object_spec());
+  EXPECT_TRUE(captured_request.append_object_spec().has_write_handle());
   EXPECT_EQ(captured_request.append_object_spec().generation(), 12345);
   EXPECT_EQ(captured_request.append_object_spec().object(), "test-object");
   EXPECT_EQ(captured_request.append_object_spec().bucket(),
@@ -383,6 +385,7 @@ TEST(WriteConnectionResumed, ResumeUsesAppendObjectSpecFromInitialRequest) {
 
   EXPECT_FALSE(captured_request.has_write_object_spec());
   EXPECT_TRUE(captured_request.has_append_object_spec());
+  EXPECT_FALSE(captured_request.append_object_spec().has_write_handle());
   EXPECT_EQ(captured_request.append_object_spec().generation(), 12345);
   EXPECT_EQ(captured_request.append_object_spec().object(), "test-object");
   EXPECT_EQ(captured_request.append_object_spec().bucket(),

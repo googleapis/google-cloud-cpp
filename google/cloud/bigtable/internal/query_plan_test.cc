@@ -229,10 +229,11 @@ TEST(QueryPlanTest, CreateFailedPlanAndRefresh) {
 }
 
 // TODO(#15695): For reasons not yet understood, the fedora m32 CI build has
-//  failures not seen in m64 builds when the number of threads is "too" high.
+//   failures not seen in m64 builds when the number of threads is "too" high.
+//  These failures occur while trying to create more than 500 threads.
 constexpr int LimitNumThreadsOn32Bit(int num_threads) {
 #if INTPTR_MAX == INT32_MAX
-  return std::min(num_threads, 500);
+  return std::min(num_threads, 200);
 #else
   return num_threads;
 #endif
