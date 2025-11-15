@@ -67,7 +67,7 @@ corresponding changes in these files manually.
 To update the [`CHANGELOG.md`] file, first change the "TBD" placeholder in the
 latest release header to the current YYYY-MM.
 
-Then run the script
+Then run the script:
 
 ```bash
 git fetch upstream
