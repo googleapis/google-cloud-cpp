@@ -334,6 +334,12 @@ class AsyncWriterConnectionResumedState
       append_object_spec.set_bucket(spec.bucket());
       append_object_spec.set_object(spec.object());
     }
+    // Include write_handle to enable fast resume instead of slow
+    // takeover. Without handle, server performs full state validation.
+    if (first_response_.has_write_handle()) {
+      *append_object_spec.mutable_write_handle() =
+          first_response_.write_handle();
+    }
     append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
 
