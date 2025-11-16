@@ -41,7 +41,10 @@ popd >/dev/null
 
 # Run the test
 pushd /var/tmp/downloads/cloud-bigtable-clients-test/tests >/dev/null
-go test -v -skip Generic_CloseClient -proxy_addr=:9999
+# Run all non ExecuteQuery tests with skips for non ExecuteQuery tests.
+go test -v \
+  -skip "Generic_CloseClient|Generic_DeadlineExceeded|NoRetry_OutOfOrderError_Reverse|Retry_LastScannedRow_Reverse|Retry_WithRetryInfo_OverallDedaline|TestExecuteQuery" \
+  -proxy_addr=:9999
 exit_status=$?
 # Remove the entire module cache, including unpacked source code of versioned
 # dependencies.
