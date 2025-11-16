@@ -629,13 +629,6 @@ class Value {
                                    pt.map_type().value_type());
       if (!key) return std::move(key).status();
       if (!value) return std::move(value).status();
-
-      // the documented behavior indicates that the last value will take
-      // precedence for a given key.
-      auto const& pos = m.find(key.value());
-      if (pos != m.end()) {
-        m.erase(pos);
-      }
       m.insert(std::make_pair(*std::move(key), *std::move(value)));
     }
     return m;
@@ -692,6 +685,8 @@ class Value {
     return std::move(*pv.mutable_array_value()->mutable_values(pos));
   }
 
+  void DedupProtoMap();
+
   // A private templated constructor that is called by all the public
   // constructors to set the type_ and value_ members. The `PrivateConstructor`
   // type is used so that this overload is never chosen for
@@ -701,10 +696,20 @@ class Value {
   struct PrivateConstructor {};
   template <typename T>
   Value(PrivateConstructor, T&& t)
-      : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
+      : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {
+    if (type_.has_map_type() && value_.has_array_value() &&
+        !value_.array_value().values().empty()) {
+      DedupProtoMap();
+    }
+  }
 
   Value(google::bigtable::v2::Type t, google::bigtable::v2::Value v)
-      : type_(std::move(t)), value_(std::move(v)) {}
+      : type_(std::move(t)), value_(std::move(v)) {
+    if (type_.has_map_type() && value_.has_array_value() &&
+        !value_.array_value().values().empty()) {
+      DedupProtoMap();
+    }
+  }
 
   friend struct bigtable_internal::ValueInternals;
   friend class Parameter;
