@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/timestamp.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/container/flat_hash_set.h"
 #include "absl/strings/cord.h"
 #include <google/bigtable/v2/types.pb.h>
 #include <google/protobuf/descriptor.h>
@@ -590,6 +591,33 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay const&,
 }
 
 bool Value::is_null() const { return IsNullValue(value_); }
+
+// We're calling this function from a constructor which we prefer to always
+// complete. Any errors encountered will be deferred, and we will report them on
+// attempts at accessing the value.
+// Any duplicates keys found in the map will be deduped to use the last value
+// specified for the key, per:
+// https://github.com/googleapis/googleapis/blob/0eeb1be5b78a9c7e006ee57cde95349834ae9f3b/google/bigtable/v2/types.proto#L357
+void Value::DedupProtoMap() {
+  google::bigtable::v2::Value dedup_value;
+  absl::flat_hash_set<std::string> keys;
+  for (int i = value_.array_value().values_size() - 1; i >= 0; --i) {
+    auto map_value_proto = GetProtoValueArrayElement(value_, i);
+    if (!map_value_proto.has_array_value() ||
+        map_value_proto.array_value().values_size() != 2) {
+      continue;
+    }
+    auto const& key = map_value_proto.array_value().values(0);
+    // TODO(#15766): Find a better way to hash these protos.
+    if (keys.insert(key.SerializeAsString()).second) {
+      *dedup_value.mutable_array_value()->add_values() =
+          std::move(map_value_proto);
+    }
+  }
+  std::reverse(dedup_value.mutable_array_value()->mutable_values()->begin(),
+               dedup_value.mutable_array_value()->mutable_values()->end());
+  value_ = std::move(dedup_value);
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
