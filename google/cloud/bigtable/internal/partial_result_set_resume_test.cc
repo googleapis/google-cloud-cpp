@@ -79,23 +79,27 @@ void MakeResponse(google::bigtable::v2::PartialResultSet& response,
                   absl::optional<std::string> resume_token, bool reset) {
   google::bigtable::v2::ProtoRows proto_rows;
   for (auto const& v : values) {
-    proto_rows.add_values()->set_string_value(v);
+    google::bigtable::v2::Value value;
+    value.set_string_value(v);
+    google::bigtable::v2::Type type;
+    *(*value.mutable_type()).mutable_string_type() =
+        std::move(google::bigtable::v2::Type_String{});
+    *proto_rows.add_values() = value;
   }
-  std::string binary_batch_data = proto_rows.SerializeAsString();
   auto text = absl::Substitute(
       R"pb(
-        proto_rows_batch: {
-          batch_data: "$0",
-        },
-            $1 $2
+        proto_rows_batch: {},
+            $0 $1
         estimated_batch_size: 31,
         batch_checksum: 123456
       )pb",
-      binary_batch_data,
       resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
                    : "",
       reset ? "reset: true," : "");
   ASSERT_TRUE(TextFormat::ParseFromString(text, &response));
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  *(*response.mutable_proto_rows_batch()).mutable_batch_data() =
+      binary_batch_data;
 }
 
 // Helper function for MockPartialResultSetReader::Read to return true and

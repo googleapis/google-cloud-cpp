@@ -51,7 +51,7 @@ exit_status=$?
 # CloseClient
 go test -v \
   -run "TestExecuteQuery" \
-  -skip "CloseClient|FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType|FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|FailsOnSuccesfulStreamWithNoToken|ChecksumMismatch|FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField|RetryTest_WithPlanRefresh|PlanRefresh" \
+  -skip "CloseClient|FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType|FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|FailsOnSuccesfulStreamWithNoToken|ChecksumMismatch|FailsOnStructMissingField|RetryTest_WithPlanRefresh|PlanRefresh" \
   -proxy_addr=:9999
 exit_status=$?
 

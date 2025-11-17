@@ -51,9 +51,8 @@ PartialResultSetSource::Create(
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
 
-  // If the initial read finished the stream, and `Finish()` failed, then
-  // creating the `PartialResultSetSource` should fail with the same error.
-  if (source->state_ == State::kFinished && !status.ok()) return status;
+  // Any error during parsing will be returned.
+  if (!status.ok()) return status;
 
   return {std::move(source)};
 }
@@ -195,6 +194,12 @@ Status PartialResultSetSource::ProcessDataFromStream(
   return {};  // OK
 }
 
+bool ColumnAndValueTypesMatch(
+    google::bigtable::v2::ColumnMetadata const& column,
+    google::bigtable::v2::Value value) {
+  return value.type().SerializeAsString() == column.type().SerializeAsString();
+}
+
 Status PartialResultSetSource::BufferProtoRows() {
   if (metadata_.has_value()) {
     auto const& proto_schema = metadata_->proto_schema();
@@ -219,6 +224,10 @@ Status PartialResultSetSource::BufferProtoRows() {
 
     while (parsed_value != proto_values.end()) {
       for (auto const& column : proto_schema.columns()) {
+        if (!ColumnAndValueTypesMatch(column, *parsed_value)) {
+          return internal::InternalError("Metadata and Value not matching.",
+                                         GCP_ERROR_INFO());
+        }
         auto value = FromProto(column.type(), *parsed_value);
         values.push_back(std::move(value));
         ++parsed_value;
