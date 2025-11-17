@@ -353,7 +353,9 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "google_cloud_cpp_bigtable_protos"
-    ${EXTRA_MODULES})
+    ${EXTRA_MODULES}
+    LIBS
+    crc32c)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
