@@ -77,7 +77,7 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
 }
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
-                           internal::ConstBufferSequence const& data,
+                           bigtable_internal::ConstBufferSequence const& data,
                            std::uint32_t /*data_crc*/) {
   return ExtendCrc32c(crc, data);
 }
