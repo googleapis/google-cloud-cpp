@@ -207,12 +207,6 @@ bool MapEqual(  // NOLINT(misc-no-recursion)
                              comparison_function);
 }
 
-// From the proto description, `NULL` values are represented by having a kind
-// equal to KIND_NOT_SET
-bool IsNullValue(google::bigtable::v2::Value const& value) {
-  return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
-}
-
 // A helper to escape all double quotes in the given string `s`. For example,
 // if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
 // wrap `s` itself in double quotes.
@@ -238,7 +232,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
                            google::bigtable::v2::Type const& t,
                            StreamMode mode) {
-  if (IsNullValue(v)) {
+  if (Value::IsNullValue(v)) {
     return os << "NULL";
   }
 

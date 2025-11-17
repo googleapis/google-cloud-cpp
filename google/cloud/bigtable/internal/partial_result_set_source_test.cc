@@ -265,33 +265,27 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   google::bigtable::v2::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
   auto constexpr kProtoRowsText = R"pb(
-    values {
-      string_value: "r1"
-      type { string_type {} }
-    }
-    values {
-      string_value: "f1"
-      type { string_type {} }
-    }
-    values {
-      string_value: "q1"
-      type { string_type {} }
-    }
+    values { string_value: "r1" }
+    values { string_value: "f1" }
+    values { string_value: "q1" }
   )pb";
   google::bigtable::v2::ProtoRows proto_rows;
   ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
 
-  std::string partial_result_set_text = R"pb(
-    proto_rows_batch: {},
-    resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
-    reset: true,
-    estimated_batch_size: 31,
-    batch_checksum: 123456
-  )pb";
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  std::string partial_result_set_text =
+      absl::Substitute(R"pb(
+                         proto_rows_batch: {
+                           batch_data: "$0",
+                         },
+                         resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+                         reset: true,
+                         estimated_batch_size: 31,
+                         batch_checksum: 123456
+                       )pb",
+                       binary_batch_data);
   google::bigtable::v2::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(partial_result_set_text, &response));
-  *(*response.mutable_proto_rows_batch()).mutable_batch_data() =
-      proto_rows.SerializeAsString();
 
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
@@ -370,46 +364,19 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
 
   std::array<char const*, 3> proto_rows_text{{
       R"pb(
-        values {
-          string_value: "a1"
-          type { string_type {} }
-        }
-        values {
-          string_value: "a2"
-          type { string_type {} }
-        }
-        values {
-          string_value: "a3"
-          type { string_type {} }
-        }
+        values { string_value: "a1" }
+        values { string_value: "a2" }
+        values { string_value: "a3" }
       )pb",
       R"pb(
-        values {
-          string_value: "b1"
-          type { string_type {} }
-        }
-        values {
-          string_value: "b2"
-          type { string_type {} }
-        }
-        values {
-          string_value: "b3"
-          type { string_type {} }
-        }
+        values { string_value: "b1" }
+        values { string_value: "b2" }
+        values { string_value: "b3" }
       )pb",
       R"pb(
-        values {
-          string_value: "c1"
-          type { string_type {} }
-        }
-        values {
-          string_value: "c2"
-          type { string_type {} }
-        }
-        values {
-          string_value: "c3"
-          type { string_type {} }
-        }
+        values { string_value: "c1" }
+        values { string_value: "c2" }
+        values { string_value: "c3" }
       )pb",
   }};
 
@@ -417,18 +384,21 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
   for (auto const* text : proto_rows_text) {
     google::bigtable::v2::ProtoRows proto_rows;
     ASSERT_TRUE(TextFormat::ParseFromString(text, &proto_rows));
-    std::string partial_result_set_text = R"pb(
-      proto_rows_batch: {},
-      resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
-      reset: true,
-      estimated_batch_size: 31,
-      batch_checksum: 123456
-    )pb";
+    std::string binary_batch_data = proto_rows.SerializeAsString();
+    std::string partial_result_set_text = absl::Substitute(
+        R"pb(
+          proto_rows_batch: {
+            batch_data: "$0",
+          },
+          resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+          reset: true,
+          estimated_batch_size: 31,
+          batch_checksum: 123456
+        )pb",
+        binary_batch_data);
     google::bigtable::v2::PartialResultSet response;
     ASSERT_TRUE(
         TextFormat::ParseFromString(partial_result_set_text, &response));
-    *(*response.mutable_proto_rows_batch()).mutable_batch_data() =
-        proto_rows.SerializeAsString();
     responses.push_back(std::move(response));
   }
 
@@ -525,10 +495,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
 
   std::array<char const*, 3> proto_rows_text{{
       R"pb(
-        values {
-          string_value: "a1"
-          type { string_type {} }
-        }
+        values { string_value: "a1" }
       )pb",
       R"pb(
       )pb",
@@ -539,18 +506,21 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   for (auto const* text : proto_rows_text) {
     google::bigtable::v2::ProtoRows proto_rows;
     ASSERT_TRUE(TextFormat::ParseFromString(text, &proto_rows));
-    std::string partial_result_set_text = R"pb(
-      proto_rows_batch: {},
-      resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
-      reset: true,
-      estimated_batch_size: 31,
-      batch_checksum: 123456
-    )pb";
+    std::string binary_batch_data = proto_rows.SerializeAsString();
+    std::string partial_result_set_text = absl::Substitute(
+        R"pb(
+          proto_rows_batch: {
+            batch_data: "$0",
+          },
+          resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+          reset: true,
+          estimated_batch_size: 31,
+          batch_checksum: 123456
+        )pb",
+        binary_batch_data);
     google::bigtable::v2::PartialResultSet response;
     ASSERT_TRUE(
         TextFormat::ParseFromString(partial_result_set_text, &response));
-    *(*response.mutable_proto_rows_batch()).mutable_batch_data() =
-        proto_rows.SerializeAsString();
     responses.push_back(std::move(response));
   }
 
