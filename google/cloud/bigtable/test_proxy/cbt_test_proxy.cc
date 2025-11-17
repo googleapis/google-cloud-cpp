@@ -416,11 +416,15 @@ grpc::Status CbtTestProxy::ExecuteQuery(
 
   // populate metadata
   google::bigtable::testproxy::ResultSetMetadata metadata;
-  for (auto const& column : bound_query_metadata.proto_schema().columns()) {
-    *metadata.add_columns() = column;
+  auto prepared_query_response = prepared_query->response();
+  if (prepared_query_response) {
+    auto prepared_query_metadata = prepared_query->response()->metadata();
+    for (auto const& column :
+         prepared_query_metadata.proto_schema().columns()) {
+      *metadata.add_columns() = column;
+    }
   }
   *response->mutable_metadata() = metadata;
-
   *response->mutable_status() = ToRpcStatus(status);
   return grpc::Status();
 }
