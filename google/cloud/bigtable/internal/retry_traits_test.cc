@@ -15,9 +15,9 @@
 #include "google/cloud/bigtable/internal/retry_traits.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/status_payload_keys.h"
+#include <gmock/gmock.h>
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
