@@ -60,6 +60,7 @@ cc_library(
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/rpc:error_details_cc_proto",
         "@com_github_google_crc32c//:crc32c",
+        "@com_google_absl//absl/strings:cord",
         "@com_github_grpc_grpc//:grpc++",
     ] + select({
         ":metrics_enabled": [
