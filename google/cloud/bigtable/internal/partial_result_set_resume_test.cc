@@ -83,7 +83,7 @@ void MakeResponse(google::bigtable::v2::PartialResultSet& response,
     value.set_string_value(v);
     *(*value.mutable_type()).mutable_string_type() =
         std::move(google::bigtable::v2::Type_String{});
-    *proto_rows.add_values() = value;
+    *proto_rows.add_values() = std::move(value);
   }
   auto text = absl::Substitute(
       R"pb(
