@@ -196,7 +196,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
 
 bool ColumnAndValueTypesMatch(
     google::bigtable::v2::ColumnMetadata const& column,
-    google::bigtable::v2::Value value) {
+    google::bigtable::v2::Value const& value) {
   return value.type().SerializeAsString() == column.type().SerializeAsString();
 }
 
