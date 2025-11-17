@@ -373,7 +373,6 @@ grpc::Status CbtTestProxy::ExecuteQuery(
 
   // Call prepare query
   auto instance = MakeInstanceResource(request_proto.instance_name());
-  // NOLINTNEXTLINE(deprecated-declarations)
   bigtable::SqlStatement sql_statement{request_proto.query()};
   auto prepared_query =
       client.PrepareQuery(*std::move(instance), sql_statement);
@@ -390,7 +389,6 @@ grpc::Status CbtTestProxy::ExecuteQuery(
     params.insert(std::make_pair(param.first, std::move(value)));
   }
   auto bound_query = prepared_query->BindParameters(params);
-  auto bound_query_metadata = bound_query.response()->metadata();
 
   RowStream result = client.ExecuteQuery(std::move(bound_query), {});
 

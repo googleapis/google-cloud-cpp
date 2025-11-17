@@ -160,18 +160,16 @@ class DefaultPartialResultSetReader
             response.metadata().SerializeToString(&response_metadata_str) &&
             initial_metadata_str == response_metadata_str;
         if (response.metadata().ByteSizeLong() > 0 && !metadata_matched) {
-          final_status_ = google::cloud::Status(
-              google::cloud::StatusCode::kAborted,
-              "Schema changed during ExecuteQuery operation");
+          final_status_ = internal::AbortedError(
+              "Schema changed during ExecuteQuery operation", GCP_ERROR_INFO());
           operation_context_->PostCall(*context_, final_status_);
           return false;
         }
         continue;
       }
 
-      final_status_ = google::cloud::Status(
-          google::cloud::StatusCode::kInternal,
-          "Empty ExecuteQueryResponse received from stream");
+      final_status_ = internal::InternalError(
+          "Empty ExecuteQueryResponse received from stream", GCP_ERROR_INFO());
       operation_context_->PostCall(*context_, final_status_);
       return false;
     }
@@ -964,8 +962,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
       }
       last_status = source.status();
 
-      if (SafeGrpcRetryAllowingQueryPlanRefresh::IsQueryPlanExpired(
-              source.status())) {
+      if (QueryPlanRefreshRetry::IsQueryPlanExpired(source.status())) {
         query_plan->Invalidate(source.status(),
                                query_plan_data->prepared_query());
       }

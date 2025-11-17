@@ -230,6 +230,7 @@ google_cloud_cpp_bigtable_srcs = [
     "internal/query_plan.cc",
     "internal/rate_limiter.cc",
     "internal/readrowsparser.cc",
+    "internal/retry_traits.cc",
     "internal/traced_row_reader.cc",
     "metadata_update_policy.cc",
     "mutation_batcher.cc",

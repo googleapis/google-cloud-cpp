@@ -19,7 +19,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/status.h"
-#include "absl/strings/match.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -49,18 +48,13 @@ struct SafeGrpcRetry {
   }
 };
 
-struct SafeGrpcRetryAllowingQueryPlanRefresh {
-  static bool IsQueryPlanExpired(Status const& s) {
-    return (s.code() == StatusCode::kFailedPrecondition &&
-            absl::StrContains(s.message(), "PREPARED_QUERY_EXPIRED"));
-  }
-
+struct QueryPlanRefreshRetry {
+  static bool IsQueryPlanExpired(Status const& s);
   static bool IsOk(Status const& status) { return status.ok(); }
   static bool IsTransientFailure(Status const& status) {
     auto const code = status.code();
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
-           IsQueryPlanExpired(status) ||
-           google::cloud::internal::IsTransientInternalError(status);
+           code == StatusCode::kInternal || IsQueryPlanExpired(status);
   }
   static bool IsPermanentFailure(Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
