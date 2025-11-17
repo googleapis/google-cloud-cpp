@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/cord.h"
+#include <google/protobuf/text_format.h>
 #include <google/type/date.pb.h>
 #include <gmock/gmock.h>
 #include <cmath>
@@ -39,6 +40,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::protobuf::TextFormat;
 using ::testing::Not;
 
 absl::Time MakeTime(std::int64_t sec, int nanos) {
@@ -169,8 +171,6 @@ TEST(Value, BasicSemantics) {
   for (auto ts : TestTimes()) {
     SCOPED_TRACE("Testing: google::cloud::bigtable::Timestamp " +
                  bigtable_internal::TimestampToRFC3339(ts));
-    std::cout << "Testing: google::cloud::bigtable::Timestamp "
-              << bigtable_internal::TimestampToRFC3339(ts) << std::endl;
     TestBasicSemantics(ts);
     std::vector<Timestamp> v(5, ts);
     TestBasicSemantics(v);
@@ -1002,6 +1002,56 @@ TEST(Value, ProtoConversionMap) {
   Value const null_struct_value(MakeNullValue<M>());
   auto const null_struct_proto = bigtable_internal::ToProto(null_struct_value);
   EXPECT_TRUE(p.first.has_map_type());
+}
+
+TEST(Value, ProtoMapWithDuplicateKeys) {
+  auto constexpr kTypeProto = R"""(
+map_type {
+  key_type {
+    bytes_type {
+    }
+  }
+  value_type {
+    string_type {
+    }
+  }
+}
+)""";
+  google::bigtable::v2::Type type_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTypeProto, &type_proto));
+
+  auto constexpr kValueProto = R"""(
+array_value {
+  values {
+    array_value {
+      values {
+        bytes_value: "foo"
+      }
+      values {
+        string_value: "foo"
+      }
+    }
+  }
+  values {
+    array_value {
+      values {
+        bytes_value: "foo"
+      }
+      values {
+        string_value: "bar"
+      }
+    }
+  }
+}
+)""";
+  google::bigtable::v2::Value value_proto;
+  ASSERT_TRUE(TextFormat::ParseFromString(kValueProto, &value_proto));
+
+  auto value = bigtable_internal::FromProto(type_proto, value_proto);
+  auto map = value.get<std::unordered_map<Bytes, std::string>>();
+  ASSERT_STATUS_OK(map);
+  EXPECT_THAT(*map, ::testing::UnorderedElementsAre(
+                        ::testing::Pair(Bytes("foo"), "bar")));
 }
 
 void SetNullProtoKind(Value& v) {

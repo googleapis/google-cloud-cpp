@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/test_proxy/cbt_test_proxy.h"
 #include "google/cloud/bigtable/cell.h"
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
@@ -357,6 +358,70 @@ grpc::Status CbtTestProxy::ReadModifyWriteRow(
   *response->mutable_status() = ToRpcStatus(row.status());
   if (!row.ok()) return grpc::Status();
   *response->mutable_row() = ConvertRowToV2(*row);
+  return grpc::Status();
+}
+
+grpc::Status CbtTestProxy::ExecuteQuery(
+    grpc::ServerContext*,
+    google::bigtable::testproxy::ExecuteQueryRequest const* request,
+    google::bigtable::testproxy::ExecuteQueryResult* response) {
+  // Retrieve connection
+  auto const& conn = GetConnection(request->client_id());
+  if (!conn.ok()) return ToGrpcStatus(std::move(conn).status());
+  auto client = bigtable::Client(*conn);
+  auto const& request_proto = request->request();
+
+  // Call prepare query
+  auto instance = MakeInstanceResource(request_proto.instance_name());
+  // NOLINTNEXTLINE(deprecated-declarations)
+  bigtable::SqlStatement sql_statement{request_proto.query()};
+  auto prepared_query =
+      client.PrepareQuery(*std::move(instance), sql_statement);
+  if (!prepared_query.ok()) {
+    *response->mutable_status() = ToRpcStatus(prepared_query.status());
+    return ::grpc::Status();
+  }
+
+  // Bind parameters
+  std::unordered_map<std::string, Value> params;
+  for (auto const& param : request_proto.params()) {
+    auto value =
+        bigtable_internal::FromProto(param.second.type(), param.second);
+    params.insert(std::make_pair(param.first, std::move(value)));
+  }
+  auto bound_query = prepared_query->BindParameters(params);
+  auto bound_query_metadata = bound_query.response()->metadata();
+
+  RowStream result = client.ExecuteQuery(std::move(bound_query), {});
+
+  Status status;
+  std::vector<google::bigtable::testproxy::SqlRow> proxy_rows;
+  for (auto& row : result) {
+    if (!row.ok()) {
+      status = row.status();
+      break;
+    }
+    google::bigtable::testproxy::SqlRow proxy_row;
+    for (auto const& v : row->values()) {
+      *proxy_row.add_values() = bigtable_internal::ToProto(v).second;
+    }
+    proxy_rows.push_back(std::move(proxy_row));
+  }
+
+  if (status.ok()) {
+    for (auto& p : proxy_rows) {
+      *response->add_rows() = std::move(p);
+    }
+  }
+
+  // populate metadata
+  google::bigtable::testproxy::ResultSetMetadata metadata;
+  for (auto const& column : bound_query_metadata.proto_schema().columns()) {
+    *metadata.add_columns() = column;
+  }
+  *response->mutable_metadata() = metadata;
+
+  *response->mutable_status() = ToRpcStatus(status);
   return grpc::Status();
 }
 

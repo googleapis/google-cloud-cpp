@@ -60,6 +60,8 @@ extend-exclude = [
     "docfx/doxygen2toc_test.cc",
     # If we're using a post-download patch file for googleapis.
     "external/googleapis.patch",
+    # Mispelled test names in Bigtable conformance tests
+    "google/cloud/bigtable/ci/run_conformance_tests_proxy_bazel.sh",
 ]
 
 [default]
