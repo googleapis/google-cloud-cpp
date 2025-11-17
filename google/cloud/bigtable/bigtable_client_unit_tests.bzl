@@ -51,6 +51,7 @@ bigtable_client_unit_tests = [
     "internal/bulk_mutator_test.cc",
     "internal/connection_refresh_state_test.cc",
     "internal/convert_policies_test.cc",
+    "internal/crc32c_test.cc",
     "internal/data_connection_impl_test.cc",
     "internal/data_tracing_connection_test.cc",
     "internal/default_row_reader_test.cc",

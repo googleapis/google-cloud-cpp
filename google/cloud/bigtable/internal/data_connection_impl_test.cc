@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/internal/crc32c.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -229,6 +230,8 @@ void MakeResponse(google::bigtable::v2::PartialResultSet& response,
     proto_rows.add_values()->set_string_value(v);
   }
   std::string binary_batch_data = proto_rows.SerializeAsString();
+  auto correct_checksum =
+      static_cast<uint32_t>(bigtable_internal::Crc32c(binary_batch_data));
   auto text = absl::Substitute(
       R"pb(
         proto_rows_batch: {
@@ -236,12 +239,12 @@ void MakeResponse(google::bigtable::v2::PartialResultSet& response,
         },
             $1 $2
         estimated_batch_size: 31,
-        batch_checksum: 123456
+        batch_checksum: $3
       )pb",
       binary_batch_data,
       resume_token ? absl::Substitute(R"(resume_token: "$0")", *resume_token)
                    : "",
-      reset ? "reset: true," : "");
+      reset ? "reset: true," : "", correct_checksum);
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(text, &response));
 }
 
