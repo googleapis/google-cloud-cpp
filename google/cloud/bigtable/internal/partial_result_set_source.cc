@@ -194,110 +194,6 @@ Status PartialResultSetSource::ProcessDataFromStream(
   return {};  // OK
 }
 
-/**
- * Checks whether the declared type in column matches the value's contents.
- * Since the received values may or may not have type() set, we check against
- * the value contents themselves
- */
-bool TypeAndValuesMatch(google::bigtable::v2::Type const& type,
-                        google::bigtable::v2::Value const& value) {
-  using google::bigtable::v2::Type;
-  bool has_matching_value;
-  switch (type.kind_case()) {
-    case Type::kArrayType: {
-      if (!value.has_array_value()) {
-        has_matching_value = value.has_array_value();
-        break;
-      }
-      has_matching_value = true;
-      for (auto const& val : value.array_value().values()) {
-        if (!TypeAndValuesMatch(type.array_type().element_type(), val)) {
-          has_matching_value = false;
-          break;
-        }
-      }
-      break;
-    }
-    case Type::kMapType: {
-      if (!value.has_array_value()) {
-        has_matching_value = value.has_array_value();
-        break;
-      }
-      has_matching_value = true;
-      auto key_type = type.map_type().key_type();
-      ;
-      auto value_type = type.map_type().value_type();
-      ;
-      for (auto const& val : value.array_value().values()) {
-        if (!val.has_array_value() || val.array_value().values_size() != 2) {
-          has_matching_value = false;
-          break;
-        }
-        auto map_key = val.array_value().values(0);
-        auto map_value = val.array_value().values(1);
-        if (!TypeAndValuesMatch(key_type, map_key) ||
-            !TypeAndValuesMatch(value_type, map_value)) {
-          has_matching_value = false;
-          break;
-        }
-      }
-      break;
-    }
-    case Type::kStructType: {
-      if (!value.has_array_value()) {
-        has_matching_value = value.has_array_value();
-        break;
-      }
-      has_matching_value = true;
-      auto fields = type.struct_type().fields();
-      auto values = value.array_value().values();
-      if (fields.size() != values.size()) {
-        has_matching_value = value.has_array_value();
-        break;
-      }
-      for (int i = 0; i < fields.size(); ++i) {
-        auto const& f1 = fields.Get(i);
-        auto const& v = values[i];
-        if (!TypeAndValuesMatch(f1.type(), v)) {
-          has_matching_value = false;
-          break;
-        }
-      }
-      break;
-    }
-    case Type::kBoolType:
-      has_matching_value = value.has_bool_value();
-      break;
-    case Type::kBytesType:
-      has_matching_value = value.has_bytes_value();
-      break;
-    case Type::kDateType:
-      has_matching_value = value.has_date_value();
-      break;
-    case Type::kEnumType:
-      has_matching_value = value.has_int_value();
-      break;
-    case Type::kFloat32Type:
-    case Type::kFloat64Type:
-      has_matching_value = value.has_float_value();
-      break;
-    case Type::kInt64Type:
-      has_matching_value = value.has_int_value();
-      break;
-    case Type::kStringType:
-      has_matching_value = value.has_string_value();
-      break;
-    case Type::kTimestampType:
-      has_matching_value = value.has_timestamp_value();
-      break;
-    default:
-      has_matching_value = false;
-      break;
-  }
-  // Nulls are allowed;
-  return has_matching_value || bigtable::Value::IsNullValue(value);
-}
-
 Status PartialResultSetSource::BufferProtoRows() {
   if (metadata_.has_value()) {
     auto const& proto_schema = metadata_->proto_schema();
@@ -322,7 +218,8 @@ Status PartialResultSetSource::BufferProtoRows() {
 
     while (parsed_value != proto_values.end()) {
       for (auto const& column : proto_schema.columns()) {
-        if (!TypeAndValuesMatch(column.type(), *parsed_value)) {
+        if (!bigtable::Value::TypeAndValuesMatch(column.type(),
+                                                 *parsed_value)) {
           return internal::InternalError("Metadata and Value not matching.",
                                          GCP_ERROR_INFO());
         }

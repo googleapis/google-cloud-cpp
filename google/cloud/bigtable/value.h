@@ -315,7 +315,18 @@ class Value {
     return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
   }
 
+  static bool TypeAndValuesMatch(google::bigtable::v2::Type const& type,
+                                 google::bigtable::v2::Value const& value);
+
  private:
+  static bool TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
+                                      google::bigtable::v2::Value const& value);
+  static bool TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
+                                    google::bigtable::v2::Value const& value);
+  static bool TypeAndStructValuesMatch(
+      google::bigtable::v2::Type const& type,
+      google::bigtable::v2::Value const& value);
+
   // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};
