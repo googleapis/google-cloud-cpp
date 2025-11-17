@@ -13,12 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/bigtable/sql_statement.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+StatusOr<google::bigtable::v2::PrepareQueryResponse> PreparedQuery::response() {
+  return query_plan_->response();
+}
 
 BoundQuery PreparedQuery::BindParameters(
     std::unordered_map<std::string, Value> params) const {

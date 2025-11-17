@@ -52,6 +52,10 @@ class BoundQuery {
   std::unordered_map<std::string, Value> const& parameters() const {
     return parameters_;
   }
+
+  // This data may change if a Query Plan Refresh is performed. If the original
+  // response data is needed for your application, consider copying the response
+  // data immediately after a successful Client::PrepareQuery.
   StatusOr<google::bigtable::v2::PrepareQueryResponse> response();
 
   google::bigtable::v2::ExecuteQueryRequest ToRequestProto() const;

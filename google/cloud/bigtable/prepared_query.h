@@ -49,6 +49,11 @@ class PreparedQuery {
   InstanceResource const& instance() const { return instance_; }
   SqlStatement const& sql_statement() const { return sql_statement_; }
 
+  // This data may change if a Query Plan Refresh is performed. If the original
+  // response data is needed for your application, consider copying the response
+  // data immediately after a successful Client::PrepareQuery.
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> response();
+
   // Creates an instance of BoundQuery using the query plan ID from the
   // response.
   BoundQuery BindParameters(
