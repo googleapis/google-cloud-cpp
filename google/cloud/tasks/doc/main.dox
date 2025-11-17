@@ -40,5 +40,6 @@ application.
 - @ref tasks-override-retry - describes how to change the default retry
   policies.
 - @ref tasks-env - describes environment variables that can configure the behavior of the library.
+- @ref tasks-override-universe-domain - describes how to override the default universe domain.
 
 */

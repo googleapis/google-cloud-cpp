@@ -109,7 +109,13 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bound_query.cc
+    bound_query.h
+    bytes.cc
+    bytes.h
     cell.h
+    client.cc
+    client.h
     client_options.cc
     client_options.h
     cluster_config.cc
@@ -195,6 +201,8 @@ add_library(
     internal/legacy_row_reader.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
+    internal/logging_result_set_reader.cc
+    internal/logging_result_set_reader.h
     internal/metrics.cc
     internal/metrics.h
     internal/mutate_rows_limiter.cc
@@ -203,8 +211,15 @@ add_library(
     internal/operation_context.h
     internal/operation_context_factory.cc
     internal/operation_context_factory.h
+    internal/partial_result_set_reader.h
+    internal/partial_result_set_resume.cc
+    internal/partial_result_set_resume.h
+    internal/partial_result_set_source.cc
+    internal/partial_result_set_source.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
+    internal/query_plan.cc
+    internal/query_plan.h
     internal/rate_limiter.cc
     internal/rate_limiter.h
     internal/readrowsparser.cc
@@ -215,6 +230,7 @@ add_library(
     internal/rpc_policy_parameters.inc
     internal/traced_row_reader.cc
     internal/traced_row_reader.h
+    internal/tuple_utils.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
     metadata_update_policy.h
@@ -226,9 +242,14 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    prepared_query.cc
+    prepared_query.h
+    query_row.cc
+    query_row.h
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
+    result_source_interface.h
     retry_policy.h
     row.h
     row_key.h
@@ -239,10 +260,14 @@ add_library(
     row_reader.h
     row_set.cc
     row_set.h
+    row_stream.cc
+    row_stream.h
     rpc_backoff_policy.cc
     rpc_backoff_policy.h
     rpc_retry_policy.cc
     rpc_retry_policy.h
+    sql_statement.cc
+    sql_statement.h
     table.cc
     table.h
     table_admin.cc
@@ -251,6 +276,10 @@ add_library(
     table_config.h
     table_resource.cc
     table_resource.h
+    timestamp.cc
+    timestamp.h
+    value.cc
+    value.h
     version.cc
     version.h
     version_info.h
@@ -341,6 +370,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         admin/mocks/mock_bigtable_instance_admin_connection.h
         admin/mocks/mock_bigtable_table_admin_connection.h
         mocks/mock_data_connection.h
+        mocks/mock_query_row.h
         mocks/mock_row_reader.cc
         mocks/mock_row_reader.h)
     target_link_libraries(
@@ -378,6 +408,7 @@ if (BUILD_TESTING)
         testing/mock_data_client.h
         testing/mock_mutate_rows_limiter.h
         testing/mock_mutate_rows_reader.h
+        testing/mock_partial_result_set_reader.h
         testing/mock_policies.h
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
@@ -416,8 +447,11 @@ if (BUILD_TESTING)
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
+        bound_query_test.cc
+        bytes_test.cc
         cell_test.cc
         client_options_test.cc
+        client_test.cc
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
@@ -454,27 +488,36 @@ if (BUILD_TESTING)
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
+        internal/logging_result_set_reader_test.cc
         internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
         internal/operation_context_factory_test.cc
         internal/operation_context_test.cc
+        internal/partial_result_set_resume_test.cc
+        internal/partial_result_set_source_test.cc
         internal/prefix_range_end_test.cc
+        internal/query_plan_test.cc
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
+        internal/tuple_utils_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
         polling_policy_test.cc
+        prepared_query_test.cc
+        query_row_test.cc
         read_modify_write_rule_test.cc
         row_range_test.cc
         row_reader_test.cc
         row_set_test.cc
+        row_stream_test.cc
         row_test.cc
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
+        sql_statement_test.cc
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
@@ -488,6 +531,8 @@ if (BUILD_TESTING)
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
+        timestamp_test.cc
+        value_test.cc
         wait_for_consistency_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.

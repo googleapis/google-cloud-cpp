@@ -1,0 +1,24 @@
+/*!
+@page apikeys-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `apikeys_v2::ApiKeysClient`:
+
+@snippet api_keys_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page apikeys_v2::ApiKeysClient-universe-domain-snippet Override apikeys_v2::ApiKeysClient Universe Domain
+
+@snippet google/cloud/apikeys/v2/samples/api_keys_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

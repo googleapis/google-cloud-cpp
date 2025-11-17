@@ -36,6 +36,7 @@ namespace {
 
 auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
 auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
+auto constexpr kDefaultMetricsExportTimeout = std::chrono::seconds(30);
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing
@@ -112,7 +113,9 @@ Options DefaultOptionsGrpc(
           .set<storage_experimental::EnableGrpcMetricsOption>(
               enable_grpc_metrics)
           .set<storage_experimental::GrpcMetricsPeriodOption>(
-              kDefaultMetricsPeriod));
+              kDefaultMetricsPeriod)
+          .set<storage_experimental::GrpcMetricsExportTimeoutOption>(
+              kDefaultMetricsExportTimeout));
   if (options.get<storage_experimental::GrpcMetricsPeriodOption>() <
       kMinMetricsPeriod) {
     options.set<storage_experimental::GrpcMetricsPeriodOption>(

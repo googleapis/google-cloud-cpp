@@ -29,13 +29,29 @@ readonly NCPU
 
 io::log_h2 "Update or install dependencies"
 # Install bash and ninja
-brew install bash ninja
+ci/retry-command.sh 3 60 brew install bash ninja
 
 # Install a specific version of CMake to match our GHA builds
 (
   cd "${HOME}"
-  curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
-  brew install cmake.rb
+  # Create a temporary local tap
+  mkdir -p user/homebrew-tap/Formula
+  cd user/homebrew-tap
+  git init
+
+  # Download the Homebrew formula for CMake==3.27.2
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 60 curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
+  mv cmake.rb ./Formula/
+
+  git add .
+  git commit -m "Add CMake formula"
+
+  # Tap the local repository
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 60 brew tap user/homebrew-tap "${HOME}/user/homebrew-tap"
+
+  # Uninstall existing CMake and install CMake from the local tap
+  brew uninstall cmake
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 60 brew install --build-from-source user/homebrew-tap/cmake
 )
 
 io::log_h2 "Using CMake version"
@@ -65,6 +81,7 @@ cmake_flags=(
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE=universe_domain"
 )
 
 # The downloads can fail, therefore require a retry loop.

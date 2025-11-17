@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -785,6 +786,34 @@ void CheckExecuteQueryWithSingleUseOptions(
   }
 
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
+}
+
+TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
+  auto const singer_id = 101;
+  auto mutation_helper = [singer_id](std::string const& new_name) {
+    return Mutations{MakeInsertOrUpdateMutation(
+        "Singers", {"SingerId", "FirstName"}, singer_id, new_name)};
+  };
+
+  // Initial insert
+  auto insert = client_->Commit(mutation_helper("InitialName"));
+  ASSERT_STATUS_OK(insert);
+
+  auto read_lock_mode = Transaction::ReadLockMode::kOptimistic;
+  auto tx_a =
+      MakeReadWriteTransaction(Transaction::ReadWriteOptions(read_lock_mode));
+  auto tx_a_read_result = client_->Read(
+      tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
+  for (auto const& row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
+    EXPECT_STATUS_OK(row);
+  }
+  tx_a = MakeReadWriteTransaction(
+      tx_a, Transaction::ReadWriteOptions(read_lock_mode));
+
+  auto optimistic_result =
+      client_->Commit(tx_a, mutation_helper("SecondModifiedName"));
+
+  EXPECT_STATUS_OK(optimistic_result);
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by a timestamp.

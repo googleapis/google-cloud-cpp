@@ -526,6 +526,20 @@ KeyManagementServiceConnectionImpl::MacVerify(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceConnectionImpl::Decapsulate(
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Decapsulate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::DecapsulateRequest const& request) {
+        return stub_->Decapsulate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceConnectionImpl::GenerateRandomBytes(
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {

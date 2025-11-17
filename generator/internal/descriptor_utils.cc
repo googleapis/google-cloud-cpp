@@ -261,6 +261,9 @@ ParameterCommentSubstitution substitutions[] = {
     // Extra quotes in asset/v1.
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
 
+    // From google/cloud/networkconnectivity/v1/data_transfer.proto
+    {R"""(`FieldMask is used)""", R"""(`FieldMask` is used)"""},
+
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
     // The workaround is to double quote these:
@@ -319,6 +322,10 @@ ParameterCommentSubstitution substitutions[] = {
     {"\n", "\n  /// "},
 };
 
+char const* bad_suffixes[] = {
+    // Doxygen interprets this as an unpaired formatting character.
+    "\n ."};
+
 // Very long parameters need different formatting.
 auto constexpr kShortParamFormat = "  /// @param %s %s\n";
 auto constexpr kLongParamFormat = R"""(  /// @param %s %s
@@ -346,6 +353,9 @@ std::string FormattedCommentsForParameter(
   if (std::count(comment.begin(), comment.end(), '\n') > kTooManyLines) {
     std::vector<absl::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
     auto brief = std::string{paragraphs.front()};
+    for (auto const& suffix : bad_suffixes) {
+      brief = std::string{absl::StripSuffix(brief, suffix)};
+    }
     for (auto& sub : substitutions) {
       sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &brief);
     }
@@ -354,6 +364,9 @@ std::string FormattedCommentsForParameter(
                            method.input_type()->full_name());
   }
 
+  for (auto const& suffix : bad_suffixes) {
+    comment = std::string{absl::StripSuffix(comment, suffix)};
+  }
   for (auto& sub : substitutions) {
     sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
   }

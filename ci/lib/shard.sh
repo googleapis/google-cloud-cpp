@@ -36,11 +36,13 @@ readonly DEFAULT_SHARD=(
   bigtable
   spanner
   logging
+  universe_domain
 )
 
 readonly BIGQUERY_SHARD=(
   bigquery
   experimental-bigquery_rest
+  universe_domain
 )
 
 readonly PUBSUB_SHARD=(
@@ -51,6 +53,7 @@ readonly PUBSUB_SHARD=(
   # IAM is included because it has hand-crafted tests and/or examples and is
   # required by Pub/Sub
   iam
+  universe_domain
 )
 
 readonly STORAGE_SHARD=(
@@ -66,6 +69,7 @@ readonly STORAGE_SHARD=(
 readonly TOOLS_SHARD=(
   generator
   docfx
+  universe_domain
 )
 
 function shard::cmake_features() {
@@ -88,6 +92,7 @@ function shard::cmake_features() {
     compute)
       echo "compute"
       echo "opentelemetry"
+      echo "universe_domain"
       ;;
     # If we decided to compile all libraries with clang-tidy we would need
     # to enable shards such as:

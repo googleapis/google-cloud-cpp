@@ -1,0 +1,24 @@
+/*!
+@page recaptchaenterprise-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `recaptchaenterprise_v1::RecaptchaEnterpriseServiceClient`:
+
+@snippet recaptcha_enterprise_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page recaptchaenterprise_v1::RecaptchaEnterpriseServiceClient-universe-domain-snippet Override recaptchaenterprise_v1::RecaptchaEnterpriseServiceClient Universe Domain
+
+@snippet google/cloud/recaptchaenterprise/v1/samples/recaptcha_enterprise_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

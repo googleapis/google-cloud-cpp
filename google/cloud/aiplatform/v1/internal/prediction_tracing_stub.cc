@@ -221,6 +221,18 @@ PredictionServiceTracingStub::StreamGenerateContent(
       std::move(context), std::move(stream), std::move(span));
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceTracingStub::EmbedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "EmbedContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->EmbedContent(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 PredictionServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

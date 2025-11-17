@@ -772,6 +772,138 @@ AnalyticsHubServiceConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnectionImpl::CreateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateQueryTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 CreateQueryTemplateRequest const& request) {
+        return stub_->CreateQueryTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnectionImpl::GetQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetQueryTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 GetQueryTemplateRequest const& request) {
+        return stub_->GetQueryTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnectionImpl::ListQueryTemplates(
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListQueryTemplates(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::bigquery::analyticshub::v1::
+                                      ListQueryTemplatesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::bigquery::analyticshub::v1::
+                       ListQueryTemplatesRequest const& request) {
+              return stub->ListQueryTemplates(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse
+             r) {
+        std::vector<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+            result(r.query_templates().size());
+        auto& messages = *r.mutable_query_templates();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnectionImpl::UpdateQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateQueryTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 UpdateQueryTemplateRequest const& request) {
+        return stub_->UpdateQueryTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status AnalyticsHubServiceConnectionImpl::DeleteQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteQueryTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 DeleteQueryTemplateRequest const& request) {
+        return stub_->DeleteQueryTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnectionImpl::SubmitQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitQueryTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 SubmitQueryTemplateRequest const& request) {
+        return stub_->SubmitQueryTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceConnectionImpl::ApproveQueryTemplate(
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ApproveQueryTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 ApproveQueryTemplateRequest const& request) {
+        return stub_->ApproveQueryTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_internal
 }  // namespace cloud

@@ -1,0 +1,24 @@
+/*!
+@page serviceusage-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `serviceusage_v1::ServiceUsageClient`:
+
+@snippet service_usage_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page serviceusage_v1::ServiceUsageClient-universe-domain-snippet Override serviceusage_v1::ServiceUsageClient Universe Domain
+
+@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

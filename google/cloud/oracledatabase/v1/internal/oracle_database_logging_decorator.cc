@@ -288,6 +288,20 @@ OracleDatabaseLogging::ListGiVersions(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListMinorVersionsResponse>
+OracleDatabaseLogging::ListMinorVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListMinorVersionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListMinorVersionsRequest const&
+                 request) {
+        return child_->ListMinorVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
 OracleDatabaseLogging::ListDbSystemShapes(
     grpc::ClientContext& context, Options const& options,
@@ -361,6 +375,40 @@ OracleDatabaseLogging::CreateAutonomousDatabase(
              google::cloud::oracledatabase::v1::
                  CreateAutonomousDatabaseRequest const& request) {
         return child_->CreateAutonomousDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncUpdateAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 UpdateAutonomousDatabaseRequest const& request) {
+        return child_->AsyncUpdateAutonomousDatabase(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::UpdateAutonomousDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 UpdateAutonomousDatabaseRequest const& request) {
+        return child_->UpdateAutonomousDatabase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -592,6 +640,706 @@ OracleDatabaseLogging::RestartAutonomousDatabase(
              google::cloud::oracledatabase::v1::
                  RestartAutonomousDatabaseRequest const& request) {
         return child_->RestartAutonomousDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncSwitchoverAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 SwitchoverAutonomousDatabaseRequest const& request) {
+        return child_->AsyncSwitchoverAutonomousDatabase(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::SwitchoverAutonomousDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 SwitchoverAutonomousDatabaseRequest const& request) {
+        return child_->SwitchoverAutonomousDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncFailoverAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 FailoverAutonomousDatabaseRequest const& request) {
+        return child_->AsyncFailoverAutonomousDatabase(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::FailoverAutonomousDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 FailoverAutonomousDatabaseRequest const& request) {
+        return child_->FailoverAutonomousDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
+OracleDatabaseLogging::ListOdbNetworks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListOdbNetworksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListOdbNetworksRequest const&
+                 request) {
+        return child_->ListOdbNetworks(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseLogging::GetOdbNetwork(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetOdbNetworkRequest const&
+                 request) {
+        return child_->GetOdbNetwork(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateOdbNetwork(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&
+                 request) {
+        return child_->AsyncCreateOdbNetwork(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateOdbNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&
+                 request) {
+        return child_->CreateOdbNetwork(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteOdbNetwork(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&
+                 request) {
+        return child_->AsyncDeleteOdbNetwork(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteOdbNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&
+                 request) {
+        return child_->DeleteOdbNetwork(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListOdbSubnetsResponse>
+OracleDatabaseLogging::ListOdbSubnets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListOdbSubnetsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListOdbSubnetsRequest const&
+                 request) {
+        return child_->ListOdbSubnets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseLogging::GetOdbSubnet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetOdbSubnetRequest const&
+                 request) {
+        return child_->GetOdbSubnet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateOdbSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&
+                 request) {
+        return child_->AsyncCreateOdbSubnet(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseLogging::CreateOdbSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&
+                 request) {
+        return child_->CreateOdbSubnet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteOdbSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&
+                 request) {
+        return child_->AsyncDeleteOdbSubnet(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseLogging::DeleteOdbSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&
+                 request) {
+        return child_->DeleteOdbSubnet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
+OracleDatabaseLogging::ListExadbVmClusters(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListExadbVmClustersRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::ListExadbVmClustersRequest const&
+              request) {
+        return child_->ListExadbVmClusters(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseLogging::GetExadbVmCluster(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+                 request) {
+        return child_->GetExadbVmCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+              request) {
+        return child_->AsyncCreateExadbVmCluster(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateExadbVmCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+              request) {
+        return child_->CreateExadbVmCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+              request) {
+        return child_->AsyncDeleteExadbVmCluster(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteExadbVmCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+              request) {
+        return child_->DeleteExadbVmCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncUpdateExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+              request) {
+        return child_->AsyncUpdateExadbVmCluster(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::UpdateExadbVmCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+              request) {
+        return child_->UpdateExadbVmCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncRemoveVirtualMachineExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 RemoveVirtualMachineExadbVmClusterRequest const& request) {
+        return child_->AsyncRemoveVirtualMachineExadbVmCluster(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::RemoveVirtualMachineExadbVmCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 RemoveVirtualMachineExadbVmClusterRequest const& request) {
+        return child_->RemoveVirtualMachineExadbVmCluster(context, options,
+                                                          request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsResponse>
+OracleDatabaseLogging::ListExascaleDbStorageVaults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListExascaleDbStorageVaultsRequest const& request) {
+        return child_->ListExascaleDbStorageVaults(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseLogging::GetExascaleDbStorageVault(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 GetExascaleDbStorageVaultRequest const& request) {
+        return child_->GetExascaleDbStorageVault(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateExascaleDbStorageVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 CreateExascaleDbStorageVaultRequest const& request) {
+        return child_->AsyncCreateExascaleDbStorageVault(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateExascaleDbStorageVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 CreateExascaleDbStorageVaultRequest const& request) {
+        return child_->CreateExascaleDbStorageVault(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteExascaleDbStorageVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 DeleteExascaleDbStorageVaultRequest const& request) {
+        return child_->AsyncDeleteExascaleDbStorageVault(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteExascaleDbStorageVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 DeleteExascaleDbStorageVaultRequest const& request) {
+        return child_->DeleteExascaleDbStorageVault(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesResponse>
+OracleDatabaseLogging::ListDbSystemInitialStorageSizes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListDbSystemInitialStorageSizesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListDbSystemInitialStorageSizesRequest const& request) {
+        return child_->ListDbSystemInitialStorageSizes(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDatabasesResponse>
+OracleDatabaseLogging::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListDatabasesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListDatabasesRequest const&
+                 request) {
+        return child_->ListDatabases(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseLogging::GetDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetDatabaseRequest const&
+                 request) {
+        return child_->GetDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListPluggableDatabasesResponse>
+OracleDatabaseLogging::ListPluggableDatabases(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListPluggableDatabasesRequest const& request) {
+        return child_->ListPluggableDatabases(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseLogging::GetPluggableDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+              request) {
+        return child_->GetPluggableDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDbSystemsResponse>
+OracleDatabaseLogging::ListDbSystems(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListDbSystemsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListDbSystemsRequest const&
+                 request) {
+        return child_->ListDbSystems(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseLogging::GetDbSystem(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetDbSystemRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetDbSystemRequest const&
+                 request) {
+        return child_->GetDbSystem(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateDbSystem(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::CreateDbSystemRequest const&
+                 request) {
+        return child_->AsyncCreateDbSystem(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseLogging::CreateDbSystem(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateDbSystemRequest const&
+                 request) {
+        return child_->CreateDbSystem(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteDbSystem(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&
+                 request) {
+        return child_->AsyncDeleteDbSystem(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> OracleDatabaseLogging::DeleteDbSystem(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&
+                 request) {
+        return child_->DeleteDbSystem(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
+OracleDatabaseLogging::ListDbVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListDbVersionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::ListDbVersionsRequest const&
+                 request) {
+        return child_->ListDbVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsResponse>
+OracleDatabaseLogging::ListDatabaseCharacterSets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListDatabaseCharacterSetsRequest const& request) {
+        return child_->ListDatabaseCharacterSets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

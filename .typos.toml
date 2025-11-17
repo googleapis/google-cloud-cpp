@@ -60,6 +60,8 @@ extend-exclude = [
     "docfx/doxygen2toc_test.cc",
     # If we're using a post-download patch file for googleapis.
     "external/googleapis.patch",
+    # Mispelled test names in Bigtable conformance tests
+    "google/cloud/bigtable/ci/run_conformance_tests_proxy_bazel.sh",
 ]
 
 [default]
@@ -70,5 +72,7 @@ extend-ignore-identifiers-re = [
   "NAM4",
   # Metadata is mispelled in this proto message name found in
   # google/cloud/aiplatform/v1/vizier_service.proto
-  "CheckTrialEarlyStoppingStateMetatdata"
+  "CheckTrialEarlyStoppingStateMetatdata",
+  # google/cloud/cloudsecuritycompliance/v1/deployment.proto
+  "conrol"
 ]

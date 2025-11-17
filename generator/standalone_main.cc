@@ -30,6 +30,7 @@
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <algorithm>
+#include <array>
 #include <fstream>
 #include <future>
 #include <iostream>
@@ -231,6 +232,33 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (generate_scaffold) {
       GenerateScaffold(scaffold_vars, generator_args.scaffold_templates_path,
                        generator_args.output_path, service);
+    } else {
+      // Bigtable, pubsub, and spanner, have their admin services generated but
+      // their data services handwritten. The dox files for these are also
+      // handwritten, so we don't want to overwrite them with generated ones.
+      //
+      // Compute is a special case that has almost a hundred generated services,
+      // but the dox files are not per service, but are all under the compute
+      // umbrella which has one set of dox files intended to cover all of them.
+      static constexpr std::array<char const*, 4> kOmittedDocDirs = {
+          "google/cloud/bigtable", "google/cloud/compute",
+          "google/cloud/pubsub", "google/cloud/spanner"};
+
+      if (!service.omit_client() &&
+          !std::any_of(kOmittedDocDirs.begin(), kOmittedDocDirs.end(),
+                       [&](auto s) {
+                         // TODO(#15652): Remove when service is turned down.
+                         if (absl::StartsWith(service.product_path(),
+                                              "google/cloud/pubsublite")) {
+                           return false;
+                         }
+                         return absl::StartsWith(service.product_path(), s);
+                       })) {
+        GenerateScaffold(
+            scaffold_vars, generator_args.scaffold_templates_path,
+            generator_args.output_path, service,
+            google::cloud::generator_internal::ScaffoldFiles::kDocDir);
+      }
     }
     if (!service.omit_repo_metadata()) {
       GenerateMetadata(scaffold_vars, generator_args.output_path, service,

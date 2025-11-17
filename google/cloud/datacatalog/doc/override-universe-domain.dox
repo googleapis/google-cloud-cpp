@@ -1,0 +1,49 @@
+/*!
+@page datacatalog-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `datacatalog_lineage_v1::LineageClient`:
+
+@snippet lineage_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-universe-domain-snippet)
+- [\c datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-universe-domain-snippet)
+- [\c datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-universe-domain-snippet)
+- [\c datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page datacatalog_lineage_v1::LineageClient-universe-domain-snippet Override datacatalog_lineage_v1::LineageClient Universe Domain
+
+@snippet google/cloud/datacatalog/lineage/v1/samples/lineage_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page datacatalog_v1::DataCatalogClient-universe-domain-snippet Override datacatalog_v1::DataCatalogClient Universe Domain
+
+@snippet google/cloud/datacatalog/v1/samples/data_catalog_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page datacatalog_v1::PolicyTagManagerClient-universe-domain-snippet Override datacatalog_v1::PolicyTagManagerClient Universe Domain
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page datacatalog_v1::PolicyTagManagerSerializationClient-universe-domain-snippet Override datacatalog_v1::PolicyTagManagerSerializationClient Universe Domain
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_serialization_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

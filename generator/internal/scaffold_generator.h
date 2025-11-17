@@ -96,11 +96,17 @@ void GenerateMetadata(
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool allow_placeholders);
 
+enum class ScaffoldFiles {
+  kAll,
+  kDocDir,  // Does not include main.dox due to all the hand edits.
+};
+
 /// Generates the build and documentation scaffold for @p service.
 void GenerateScaffold(
     std::map<std::string, std::string> const& vars,
     std::string const& scaffold_templates_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    ScaffoldFiles = ScaffoldFiles::kAll);
 
 ///@{
 /// @name Generators for each scaffold file.
@@ -119,6 +125,8 @@ void GenerateDoxygenEnvironmentPage(
 void GenerateOverrideAuthenticationPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateOverrideEndpointPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateOverrideUniverseDomainPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateOverrideRetryPoliciesPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);

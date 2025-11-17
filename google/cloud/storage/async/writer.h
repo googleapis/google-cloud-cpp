@@ -101,6 +101,9 @@ class AsyncWriter {
    * application should send the remaining data to upload, starting from this
    * point.
    *
+   * In the case of an appendable object, this variant will be populated
+   * with a `google::storage::v2::Object` on the first response.
+   *
    * @note
    * Calling this function on a default-constructed or moved-from `AsyncWriter`
    * results in undefined behavior.
@@ -121,7 +124,24 @@ class AsyncWriter {
                                                          WritePayload payload);
 
   /**
+   * Flush any buffered data to the service.
+   *
+   * For buffered uploads, this forces any data in the buffer to be sent to the
+   * service. The returned future is satisfied when the service acknowledges
+   * the flush. Note that the service may not have persisted the data, it may
+   * only be in ephemeral storage. To query the amount of persisted data use
+   * `PersistedState()` after the flush completes.
+   *
+   * @note This is not a terminal operation. The `AsyncWriter` can be used for
+   *     further `Write()` or `Finalize()` operations.
+   */
+  future<Status> Flush();
+
+  /**
    * Close the upload by flushing the remaining data in buffer.
+   *
+   * @warning This is a terminal operation. The `AsyncWriter` object is not
+   *     usable after this call.
    */
   future<Status> Close();
 

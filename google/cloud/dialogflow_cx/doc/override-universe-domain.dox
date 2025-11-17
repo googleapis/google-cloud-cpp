@@ -1,0 +1,140 @@
+/*!
+@page dialogflow_cx-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `dialogflow_cx::AgentsClient`:
+
+@snippet agents_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-universe-domain-snippet)
+- [\c dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-universe-domain-snippet)
+- [\c dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-universe-domain-snippet)
+- [\c dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-universe-domain-snippet)
+- [\c dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-universe-domain-snippet)
+- [\c dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-universe-domain-snippet)
+- [\c dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-universe-domain-snippet)
+- [\c dialogflow_cx::GeneratorsClient](@ref dialogflow_cx::GeneratorsClient-universe-domain-snippet)
+- [\c dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-universe-domain-snippet)
+- [\c dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-universe-domain-snippet)
+- [\c dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-universe-domain-snippet)
+- [\c dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-universe-domain-snippet)
+- [\c dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-universe-domain-snippet)
+- [\c dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-universe-domain-snippet)
+- [\c dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-universe-domain-snippet)
+- [\c dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-universe-domain-snippet)
+- [\c dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page dialogflow_cx::AgentsClient-universe-domain-snippet Override dialogflow_cx::AgentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::ChangelogsClient-universe-domain-snippet Override dialogflow_cx::ChangelogsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::DeploymentsClient-universe-domain-snippet Override dialogflow_cx::DeploymentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::EntityTypesClient-universe-domain-snippet Override dialogflow_cx::EntityTypesClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::EnvironmentsClient-universe-domain-snippet Override dialogflow_cx::EnvironmentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::ExperimentsClient-universe-domain-snippet Override dialogflow_cx::ExperimentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::FlowsClient-universe-domain-snippet Override dialogflow_cx::FlowsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::GeneratorsClient-universe-domain-snippet Override dialogflow_cx::GeneratorsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/generators_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::IntentsClient-universe-domain-snippet Override dialogflow_cx::IntentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::PagesClient-universe-domain-snippet Override dialogflow_cx::PagesClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-universe-domain-snippet Override dialogflow_cx::SecuritySettingsServiceClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::SessionEntityTypesClient-universe-domain-snippet Override dialogflow_cx::SessionEntityTypesClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::SessionsClient-universe-domain-snippet Override dialogflow_cx::SessionsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::TestCasesClient-universe-domain-snippet Override dialogflow_cx::TestCasesClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-universe-domain-snippet Override dialogflow_cx::TransitionRouteGroupsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::VersionsClient-universe-domain-snippet Override dialogflow_cx::VersionsClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_cx::WebhooksClient-universe-domain-snippet Override dialogflow_cx::WebhooksClient Universe Domain
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

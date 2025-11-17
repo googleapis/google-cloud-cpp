@@ -78,6 +78,25 @@ class DepServiceConnectionIdempotencyPolicy {
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListLbEdgeExtensions(
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request);
+
+  virtual google::cloud::Idempotency GetLbEdgeExtension(
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateLbEdgeExtension(
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateLbEdgeExtension(
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteLbEdgeExtension(
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListAuthzExtensions(
       google::cloud::networkservices::v1::ListAuthzExtensionsRequest request);
 

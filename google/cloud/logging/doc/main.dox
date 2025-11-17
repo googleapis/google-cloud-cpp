@@ -46,5 +46,6 @@ application.
 - @ref logging-override-retry - describes how to change the default retry
   policies.
 - @ref logging-env - describes environment variables that can configure the behavior of the library.
+- @ref logging-override-universe-domain - describes how to override the default universe domain.
 
 */

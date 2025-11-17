@@ -59,7 +59,7 @@ TEST(AddUniverseDomainOption, GoogleDefaultCredentialsAuthorizedUser) {
   std::ofstream(filename) << kAuthorizedUserCredContents;
   auto const env =
       ScopedEnvironment(oauth2_internal::GoogleAdcEnvVar(), filename.c_str());
-  auto result_options = AddUniverseDomainOption(ExperimentalTag{}, Options{});
+  auto result_options = AddUniverseDomainOption(Options{});
   (void)std::remove(filename.c_str());
 
   ASSERT_STATUS_OK(result_options);
@@ -90,7 +90,7 @@ TEST(AddUniverseDomainOption, GoogleDefaultCredentialsServiceAccount) {
   std::ofstream(filename) << kServiceAccountCredContents;
   auto const env =
       ScopedEnvironment(oauth2_internal::GoogleAdcEnvVar(), filename.c_str());
-  auto result_options = AddUniverseDomainOption(ExperimentalTag{}, Options{});
+  auto result_options = AddUniverseDomainOption(Options{});
   (void)std::remove(filename.c_str());
 
   ASSERT_STATUS_OK(result_options);
@@ -103,7 +103,7 @@ TEST(AddUniverseDomainOption, GoogleDefaultCredentialsServiceAccount) {
 TEST(AddUniverseDomainOption, CredentialsSpecified) {
   auto expected_creds = MakeInsecureCredentials();
   auto options = Options{}.set<UnifiedCredentialsOption>(expected_creds);
-  auto result_options = AddUniverseDomainOption(ExperimentalTag{}, options);
+  auto result_options = AddUniverseDomainOption(options);
 
   ASSERT_STATUS_OK(result_options);
   auto const& creds = result_options->get<UnifiedCredentialsOption>();
@@ -116,7 +116,7 @@ TEST(AddUniverseDomainOption, ErrorCredentials) {
   auto options =
       Options{}.set<UnifiedCredentialsOption>(internal::MakeErrorCredentials(
           internal::FailedPreconditionError("error")));
-  auto result_options = AddUniverseDomainOption(ExperimentalTag{}, options);
+  auto result_options = AddUniverseDomainOption(options);
   EXPECT_THAT(result_options, StatusIs(StatusCode::kFailedPrecondition));
 }
 

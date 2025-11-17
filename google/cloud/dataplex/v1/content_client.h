@@ -35,7 +35,8 @@ namespace dataplex_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// ContentService manages Notebook and SQL Scripts for Dataplex.
+/// ContentService manages Notebook and SQL Scripts for Dataplex Universal
+/// Catalog.
 ///
 /// @par Equality
 ///
@@ -107,7 +108,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.CreateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L157}
+  /// [google.cloud.dataplex.v1.CreateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L158}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
@@ -138,7 +139,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.CreateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L157}
+  /// [google.cloud.dataplex.v1.CreateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L158}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
@@ -166,7 +167,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.UpdateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L174}
+  /// [google.cloud.dataplex.v1.UpdateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L175}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
@@ -197,7 +198,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.UpdateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L174}
+  /// [google.cloud.dataplex.v1.UpdateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L175}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
@@ -221,7 +222,7 @@ class ContentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L189}
+  /// [google.cloud.dataplex.v1.DeleteContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L190}
   ///
   // clang-format on
   Status DeleteContent(std::string const& name, Options opts = {});
@@ -247,7 +248,7 @@ class ContentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L189}
+  /// [google.cloud.dataplex.v1.DeleteContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L190}
   ///
   // clang-format on
   Status DeleteContent(
@@ -274,7 +275,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.GetContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L243}
+  /// [google.cloud.dataplex.v1.GetContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
@@ -304,7 +305,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.GetContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L243}
+  /// [google.cloud.dataplex.v1.GetContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L244}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
@@ -480,7 +481,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.ListContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L201}
+  /// [google.cloud.dataplex.v1.ListContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L202}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Content> ListContent(
@@ -519,7 +520,7 @@ class ContentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.ListContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L201}
+  /// [google.cloud.dataplex.v1.ListContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L202}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Content> ListContent(
@@ -751,7 +752,7 @@ class ContentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -780,7 +781,7 @@ class ContentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -813,7 +814,7 @@ class ContentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -852,7 +853,7 @@ class ContentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}

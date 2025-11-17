@@ -1,0 +1,77 @@
+/*!
+@page dataproc-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `dataproc_v1::AutoscalingPolicyServiceClient`:
+
+@snippet autoscaling_policy_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-universe-domain-snippet)
+- [\c dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-universe-domain-snippet)
+- [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-universe-domain-snippet)
+- [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-universe-domain-snippet)
+- [\c dataproc_v1::NodeGroupControllerClient](@ref dataproc_v1::NodeGroupControllerClient-universe-domain-snippet)
+- [\c dataproc_v1::SessionControllerClient](@ref dataproc_v1::SessionControllerClient-universe-domain-snippet)
+- [\c dataproc_v1::SessionTemplateControllerClient](@ref dataproc_v1::SessionTemplateControllerClient-universe-domain-snippet)
+- [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page dataproc_v1::AutoscalingPolicyServiceClient-universe-domain-snippet Override dataproc_v1::AutoscalingPolicyServiceClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::BatchControllerClient-universe-domain-snippet Override dataproc_v1::BatchControllerClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::ClusterControllerClient-universe-domain-snippet Override dataproc_v1::ClusterControllerClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::JobControllerClient-universe-domain-snippet Override dataproc_v1::JobControllerClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::NodeGroupControllerClient-universe-domain-snippet Override dataproc_v1::NodeGroupControllerClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::SessionControllerClient-universe-domain-snippet Override dataproc_v1::SessionControllerClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/session_controller_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::SessionTemplateControllerClient-universe-domain-snippet Override dataproc_v1::SessionTemplateControllerClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/session_template_controller_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dataproc_v1::WorkflowTemplateServiceClient-universe-domain-snippet Override dataproc_v1::WorkflowTemplateServiceClient Universe Domain
+
+@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

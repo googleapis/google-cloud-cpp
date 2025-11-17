@@ -32,6 +32,7 @@ proto_library(
         "@com_google_googleapis//google/api:client_proto",
         "@com_google_googleapis//google/bigtable/v2:bigtable_proto",
         "@com_google_googleapis//google/rpc:status_proto",
+        "@com_google_protobuf//:descriptor_proto",
         "@com_google_protobuf//:duration_proto",
     ],
 )

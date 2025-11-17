@@ -1,0 +1,24 @@
+/*!
+@page parametermanager-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `parametermanager_v1::ParameterManagerClient`:
+
+@snippet parameter_manager_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page parametermanager_v1::ParameterManagerClient-universe-domain-snippet Override parametermanager_v1::ParameterManagerClient Universe Domain
+
+@snippet google/cloud/parametermanager/v1/samples/parameter_manager_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -164,6 +164,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
   ./lib64/cmake/google_cloud_cpp_storage_grpc
   ./lib64/cmake/google_cloud_cpp_storage_grpc_mocks
+  ./lib64/cmake/google_cloud_cpp_universe_domain
   ./lib64/pkgconfig
 )
 

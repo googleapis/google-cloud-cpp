@@ -313,6 +313,20 @@ DefaultBackupDRStub::ListBackups(
   return response;
 }
 
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+DefaultBackupDRStub::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse response;
+  auto status =
+      grpc_stub_->FetchBackupsForResourceType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> DefaultBackupDRStub::GetBackup(
     grpc::ClientContext& context, Options const&,
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
@@ -739,6 +753,20 @@ DefaultBackupDRStub::GetDataSourceReference(
   google::cloud::backupdr::v1::DataSourceReference response;
   auto status =
       grpc_stub_->GetDataSourceReference(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+DefaultBackupDRStub::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListDataSourceReferencesResponse response;
+  auto status =
+      grpc_stub_->ListDataSourceReferences(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

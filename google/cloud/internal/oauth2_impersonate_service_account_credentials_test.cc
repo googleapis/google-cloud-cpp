@@ -63,6 +63,36 @@ auto constexpr kFullValidConfigNoAction = R"""({
   "type": "impersonated_service_account"
 })""";
 
+auto constexpr kWithScopes = R"""({
+  "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com:generateAccessToken",
+  "scopes": [
+    "https://www.googleapis.com/auth/cloud-platform",
+    "https://www.googleapis.com/auth/trace.append"
+  ],
+  "source_credentials": {
+    "type": "authorized_user"
+  },
+  "type": "impersonated_service_account"
+})""";
+
+TEST(ParseImpersonatedServiceAccountCredentials, WithScopes) {
+  auto actual =
+      ParseImpersonatedServiceAccountCredentials(kWithScopes, "test-data");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(actual->scopes,
+              ElementsAre("https://www.googleapis.com/auth/cloud-platform",
+                          "https://www.googleapis.com/auth/trace.append"));
+}
+
+TEST(ParseImpersonatedServiceAccountCredentials, MalformedScopes) {
+  auto json = nlohmann::json::parse(kFullValidConfig);
+  json["scopes"] = "not-an-array";
+  auto actual = ParseImpersonatedServiceAccountCredentials(json.dump(), "");
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("Malformed"), HasSubstr("scopes"))));
+}
+
 TEST(ParseImpersonatedServiceAccountCredentials, Success) {
   auto actual =
       ParseImpersonatedServiceAccountCredentials(kFullValidConfig, "test-data");
