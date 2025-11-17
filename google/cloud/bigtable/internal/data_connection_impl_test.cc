@@ -228,7 +228,6 @@ void MakeResponse(google::bigtable::v2::PartialResultSet& response,
   for (auto const& v : values) {
     google::bigtable::v2::Value value;
     value.set_string_value(v);
-    google::bigtable::v2::Type type;
     *(*value.mutable_type()).mutable_string_type() =
         std::move(google::bigtable::v2::Type_String{});
     *proto_rows.add_values() = value;
