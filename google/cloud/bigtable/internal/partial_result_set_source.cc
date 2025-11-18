@@ -141,10 +141,10 @@ Status PartialResultSetSource::ReadFromStream() {
     return ProcessDataFromStream(result_set.result);
   }
   state_ = State::kFinished;
-  // The buffered_rows_ is expected to be empty because the last successful
-  // read would have had a sentinel resume_token, causing
+  // buffered_rows_ and read_buffer_ are expected to be empty because the last
+  // successful read would have had a sentinel resume_token, causing
   // ProcessDataFromStream to commit them.
-  if (!buffered_rows_.empty()) {
+  if (!buffered_rows_.empty() || !read_buffer_.empty()) {
     return internal::InternalError("Stream ended with uncommitted rows.",
                                    GCP_ERROR_INFO());
   }
@@ -180,7 +180,8 @@ Status PartialResultSetSource::ProcessDataFromStream(
     } else {
       read_buffer_.clear();
       buffered_rows_.clear();
-      return internal::InternalError("Failed to parse ProtoRows from buffer");
+      return internal::InternalError("Failed to parse ProtoRows from buffer",
+                                     GCP_ERROR_INFO());
     }
   }
 
