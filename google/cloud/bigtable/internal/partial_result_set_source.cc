@@ -229,8 +229,8 @@ Status PartialResultSetSource::BufferProtoRows() {
 
     while (parsed_value != proto_values.end()) {
       for (auto const& column : proto_schema.columns()) {
-        auto type_value_match_result = bigtable::Value::TypeAndValuesMatch(column.type(),
-                                                 *parsed_value);
+        auto type_value_match_result =
+            bigtable::Value::TypeAndValuesMatch(column.type(), *parsed_value);
         if (!type_value_match_result.ok()) {
           return type_value_match_result;
         }

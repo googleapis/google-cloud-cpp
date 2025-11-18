@@ -340,14 +340,17 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
-Status Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
-                                    google::bigtable::v2::Value const& value) {
+Status Value::TypeAndArrayValuesMatch(
+    google::bigtable::v2::Type const& type,
+    google::bigtable::v2::Value const& value) {
   if (!value.has_array_value()) {
-    return internal::InternalError("Value kind must be ARRAY_VALUE for columns of type: MAP");
+    return internal::InternalError(
+        "Value kind must be ARRAY_VALUE for columns of type: MAP");
   }
   auto const& vals = value.array_value().values();
   for (auto const& val : vals) {
-    auto const element_match_result = TypeAndValuesMatch(type.array_type().element_type(), val);
+    auto const element_match_result =
+        TypeAndValuesMatch(type.array_type().element_type(), val);
     if (!element_match_result.ok()) {
       return element_match_result;
     }
@@ -357,16 +360,18 @@ Status Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
 
 // NOLINTNEXTLINE(misc-no-recursion)
 Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
-                                  google::bigtable::v2::Value const& value) {
+                                    google::bigtable::v2::Value const& value) {
   if (!value.has_array_value()) {
-    return internal::InternalError("Value kind must be ARRAY_VALUE for columns of type: MAP");
+    return internal::InternalError(
+        "Value kind must be ARRAY_VALUE for columns of type: MAP");
   }
   auto key_type = type.map_type().key_type();
   auto value_type = type.map_type().value_type();
   auto const& vals = value.array_value().values();
   for (auto const& val : vals) {
     if (!val.has_array_value() || val.array_value().values_size() != 2) {
-      return internal::InternalError("ARRAY_VALUE must contain entries of 2 values");
+      return internal::InternalError(
+          "ARRAY_VALUE must contain entries of 2 values");
     }
     auto map_key = val.array_value().values(0);
     auto map_value = val.array_value().values(1);
@@ -385,15 +390,19 @@ Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
-Status Value::TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
-                                     google::bigtable::v2::Value const& value) {
+Status Value::TypeAndStructValuesMatch(
+    google::bigtable::v2::Type const& type,
+    google::bigtable::v2::Value const& value) {
   if (!value.has_array_value()) {
-    return internal::InternalError("Value kind must be ARRAY_VALUE for columns of type: STRUCT");
+    return internal::InternalError(
+        "Value kind must be ARRAY_VALUE for columns of type: STRUCT");
   }
   auto fields = type.struct_type().fields();
   auto values = value.array_value().values();
   if (fields.size() != values.size()) {
-    auto const message = absl::Substitute("received Struct with $0 values, but metadata has $1 fields", values.size(), fields.size());
+    auto const message = absl::Substitute(
+        "received Struct with $0 values, but metadata has $1 fields",
+        values.size(), fields.size());
     return internal::InternalError(message);
   }
   for (int i = 0; i < fields.size(); ++i) {
@@ -414,10 +423,12 @@ Status Value::TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
  */
 // NOLINTNEXTLINE(misc-no-recursion)
 Status Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
-                               google::bigtable::v2::Value const& value) {
+                                 google::bigtable::v2::Value const& value) {
   using google::bigtable::v2::Type;
-  auto make_mismatch_metadata_status = [&](std::string const& value_kind, std::string const& type_name) {
-    auto const message = absl::Substitute("Value kind must be $0 for columns of type: $1", value_kind, type_name);
+  auto make_mismatch_metadata_status = [&](std::string const& value_kind,
+                                           std::string const& type_name) {
+    auto const message = absl::Substitute(
+        "Value kind must be $0 for columns of type: $1", value_kind, type_name);
     return internal::InternalError(message);
   };
   // Null values are allowed by default

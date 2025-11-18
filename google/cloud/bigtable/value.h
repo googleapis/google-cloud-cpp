@@ -316,13 +316,14 @@ class Value {
   }
 
   static Status TypeAndValuesMatch(google::bigtable::v2::Type const& type,
-                                 google::bigtable::v2::Value const& value);
+                                   google::bigtable::v2::Value const& value);
 
  private:
-  static Status TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
-                                      google::bigtable::v2::Value const& value);
+  static Status TypeAndArrayValuesMatch(
+      google::bigtable::v2::Type const& type,
+      google::bigtable::v2::Value const& value);
   static Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
-                                    google::bigtable::v2::Value const& value);
+                                      google::bigtable::v2::Value const& value);
   static Status TypeAndStructValuesMatch(
       google::bigtable::v2::Type const& type,
       google::bigtable::v2::Value const& value);
