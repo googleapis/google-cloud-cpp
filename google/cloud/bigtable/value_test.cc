@@ -1748,6 +1748,275 @@ TEST(Value, OutputStreamMatchesT) {
   // Not included, because a raw map cannot be streamed.
 }
 
+void TestTypeAndValuesMatch(std::string const& type_text,
+                            std::string const& value_text, bool expected) {
+  google::bigtable::v2::Type type;
+  ASSERT_TRUE(TextFormat::ParseFromString(type_text, &type));
+  google::bigtable::v2::Value value;
+  ASSERT_TRUE(TextFormat::ParseFromString(value_text, &value));
+  auto result = Value::TypeAndValuesMatch(type, value);
+  if (expected) {
+    EXPECT_STATUS_OK(result);
+  } else {
+    EXPECT_THAT(result, Not(IsOk()));
+  }
+}
+
+TEST(Value, TypeAndValuesMatchScalar) {
+  TestTypeAndValuesMatch("int64_type {}", "int_value: 123", true);
+  TestTypeAndValuesMatch("string_type {}", "string_value: 'hello'", true);
+  TestTypeAndValuesMatch("bool_type {}", "bool_value: true", true);
+  TestTypeAndValuesMatch("float64_type {}", "float_value: 3.14", true);
+  TestTypeAndValuesMatch("float32_type {}", "float_value: 3.14", true);
+  TestTypeAndValuesMatch("bytes_type {}", "bytes_value: 'bytes'", true);
+  TestTypeAndValuesMatch("timestamp_type {}",
+                         "timestamp_value: { seconds: 123 }", true);
+  TestTypeAndValuesMatch("date_type {}",
+                         "date_value: { year: 2025, month: 1, day: 1 }", true);
+}
+
+TEST(Value, TypeAndValuesMatchScalarMismatch) {
+  TestTypeAndValuesMatch("int64_type {}", "string_value: 'mismatch'", false);
+  TestTypeAndValuesMatch("string_type {}", "int_value: 123", false);
+}
+
+TEST(Value, TypeAndValuesMatchNullScalar) {
+  TestTypeAndValuesMatch("int64_type {}", "", true);
+  TestTypeAndValuesMatch("string_type {}", "", true);
+}
+
+TEST(Value, TypeAndValuesMatchArray) {
+  auto const* type = R"pb(
+    array_type { element_type { int64_type {} } }
+  )pb";
+  auto const* matching_value = R"pb(
+    array_value {
+      values { int_value: 1 }
+      values { int_value: 2 }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, matching_value, true);
+}
+
+TEST(Value, TypeAndValuesMatchArrayMismatchElementType) {
+  auto const* type = R"pb(
+    array_type { element_type { int64_type {} } }
+  )pb";
+  auto const* mismatched_value = R"pb(
+    array_value {
+      values { int_value: 1 }
+      values { string_value: "2" }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, mismatched_value, false);
+}
+
+TEST(Value, TypeAndValuesMatchArrayMismatchScalar) {
+  auto const* type = R"pb(
+    array_type { element_type { int64_type {} } }
+  )pb";
+  TestTypeAndValuesMatch(type, "int_value: 123", false);
+}
+
+TEST(Value, TypeAndValuesMatchArrayWithNull) {
+  auto const* type = R"pb(
+    array_type { element_type { int64_type {} } }
+  )pb";
+  auto const* value_with_null = R"pb(
+    array_value {
+      values { int_value: 1 }
+      values {}  # null
+      values { int_value: 3 }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, value_with_null, true);
+}
+
+TEST(Value, TypeAndValuesMatchStruct) {
+  auto const* type = R"pb(
+    struct_type {
+      fields {
+        field_name: "name"
+        type { string_type {} }
+      }
+      fields {
+        field_name: "age"
+        type { int64_type {} }
+      }
+    }
+  )pb";
+  auto const* matching_value = R"pb(
+    array_value {
+      values { string_value: "John" }
+      values { int_value: 42 }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, matching_value, true);
+}
+
+TEST(Value, TypeAndValuesMatchStructMismatchFieldType) {
+  auto const* type = R"pb(
+    struct_type {
+      fields {
+        field_name: "name"
+        type { string_type {} }
+      }
+      fields {
+        field_name: "age"
+        type { int64_type {} }
+      }
+    }
+  )pb";
+  auto const* mismatched_value = R"pb(
+    array_value {
+      values { string_value: "John" }
+      values { string_value: "42" }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, mismatched_value, false);
+}
+
+TEST(Value, TypeAndValuesMatchStructMismatchFieldCount) {
+  auto const* type = R"pb(
+    struct_type {
+      fields { type { string_type {} } }
+      fields { type { int64_type {} } }
+    }
+  )pb";
+  auto const* mismatched_value = R"pb(
+    array_value { values { string_value: "John" } }
+  )pb";
+  // The current implementation has a bug and will return true here.
+  // This test will fail until the bug is fixed.
+  TestTypeAndValuesMatch(type, mismatched_value, false);
+}
+
+TEST(Value, TypeAndValuesMatchStructMismatchScalar) {
+  auto const* type = R"pb(
+    struct_type { fields { type { string_type {} } } }
+  )pb";
+  TestTypeAndValuesMatch(type, "string_value: 'John'", false);
+}
+
+TEST(Value, TypeAndValuesMatchStructWithNull) {
+  auto const* type = R"pb(
+    struct_type {
+      fields { type { string_type {} } }
+      fields { type { int64_type {} } }
+    }
+  )pb";
+  auto const* value_with_null = R"pb(
+    array_value {
+      values { string_value: "John" }
+      values {}
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, value_with_null, true);
+}
+
+TEST(Value, TypeAndValuesMatchMap) {
+  auto const* type = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  auto const* matching_value = R"pb(
+    array_value {
+      values {
+        array_value {
+          values { string_value: "key1" }
+          values { int_value: 1 }
+        }
+      }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, matching_value, true);
+}
+
+TEST(Value, TypeAndValuesMatchMapMismatchKeyType) {
+  auto const* type = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  auto const* mismatched_value = R"pb(
+    array_value {
+      values {
+        array_value {
+          values { int_value: 1 }
+          values { int_value: 1 }
+        }
+      }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, mismatched_value, false);
+}
+
+TEST(Value, TypeAndValuesMatchMapMismatchValueType) {
+  auto const* type = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  auto const* mismatched_value = R"pb(
+    array_value {
+      values {
+        array_value {
+          values { string_value: "key1" }
+          values { string_value: "1" }
+        }
+      }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, mismatched_value, false);
+}
+
+TEST(Value, TypeAndValuesMatchMapMismatchScalar) {
+  auto const* type = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, "string_value: 'foo'", false);
+}
+
+TEST(Value, TypeAndValuesMatchMapMalformedEntry) {
+  auto const* type = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  auto const* malformed_value = R"pb(
+    array_value { values { array_value { values { string_value: "key1" } } } }
+  )pb";
+  TestTypeAndValuesMatch(type, malformed_value, false);
+}
+
+TEST(Value, TypeAndValuesMatchMapWithNullValue) {
+  auto const* type = R"pb(
+    map_type {
+      key_type { string_type {} }
+      value_type { int64_type {} }
+    }
+  )pb";
+  auto const* value_with_null = R"pb(
+    array_value {
+      values {
+        array_value {
+          values { string_value: "key1" }
+          values {}
+        }
+      }
+    }
+  )pb";
+  TestTypeAndValuesMatch(type, value_with_null, true);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

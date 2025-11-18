@@ -52,9 +52,10 @@ PartialResultSetSource::Create(
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
 
-  // If the initial read finished the stream, and `Finish()` failed, then
-  // creating the `PartialResultSetSource` should fail with the same error.
-  if (source->state_ == State::kFinished && !status.ok()) return status;
+  // Any error during parsing will be returned.
+  if (!status.ok()) {
+    return status;
+  }
 
   return {std::move(source)};
 }
@@ -228,6 +229,11 @@ Status PartialResultSetSource::BufferProtoRows() {
 
     while (parsed_value != proto_values.end()) {
       for (auto const& column : proto_schema.columns()) {
+        auto type_value_match_result =
+            bigtable::Value::TypeAndValuesMatch(column.type(), *parsed_value);
+        if (!type_value_match_result.ok()) {
+          return type_value_match_result;
+        }
         auto value = FromProto(column.type(), *parsed_value);
         values.push_back(std::move(value));
         ++parsed_value;

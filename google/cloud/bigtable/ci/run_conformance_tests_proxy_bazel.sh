@@ -66,10 +66,10 @@ exit_status=$?
 #exit_status=$?
 
 # Response/Metadata mismatches b/461233335
-#go test -v \
-#  -run "FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField" \
-#  -proxy_addr=:9999
-#exit_status=$?
+go test -v \
+  -run "FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField" \
+  -proxy_addr=:9999
+exit_status=$?
 
 # QueryPlan refresh tests b/461233613
 #go test -v \

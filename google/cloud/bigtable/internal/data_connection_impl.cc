@@ -111,6 +111,10 @@ bool IsStatusMetadataIndicatingRetryPolicyExhausted(Status const& status) {
                                                 "retry-policy-exhausted"));
 }
 
+bool IsStatusIndicatingInternalError(Status const& status) {
+  return status.code() == StatusCode::kInternal;
+}
+
 class DefaultPartialResultSetReader
     : public bigtable_internal::PartialResultSetReader {
  public:
@@ -961,6 +965,11 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         return bigtable::RowStream(*std::move(source));
       }
       last_status = source.status();
+
+      if (IsStatusIndicatingInternalError(source.status())) {
+        return bigtable::RowStream(std::make_unique<StatusOnlyResultSetSource>(
+            std::move(last_status)));
+      }
 
       if (QueryPlanRefreshRetry::IsQueryPlanExpired(source.status())) {
         query_plan->Invalidate(source.status(),

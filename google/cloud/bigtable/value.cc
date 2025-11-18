@@ -17,6 +17,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/cord.h"
+#include "absl/strings/substitute.h"
 #include <google/bigtable/v2/types.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
@@ -207,12 +208,6 @@ bool MapEqual(  // NOLINT(misc-no-recursion)
                              comparison_function);
 }
 
-// From the proto description, `NULL` values are represented by having a kind
-// equal to KIND_NOT_SET
-bool IsNullValue(google::bigtable::v2::Value const& value) {
-  return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
-}
-
 // A helper to escape all double quotes in the given string `s`. For example,
 // if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
 // wrap `s` itself in double quotes.
@@ -238,7 +233,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
                            google::bigtable::v2::Value const& v,
                            google::bigtable::v2::Type const& t,
                            StreamMode mode) {
-  if (IsNullValue(v)) {
+  if (Value::IsNullValue(v)) {
     return os << "NULL";
   }
 
@@ -342,6 +337,161 @@ bool operator==(Value const& a, Value const& b) {
 
 std::ostream& operator<<(std::ostream& os, Value const& v) {
   return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+Status Value::TypeAndArrayValuesMatch(
+    google::bigtable::v2::Type const& type,
+    google::bigtable::v2::Value const& value) {
+  if (!value.has_array_value()) {
+    return internal::InternalError(
+        "Value kind must be ARRAY_VALUE for columns of type: MAP");
+  }
+  auto const& vals = value.array_value().values();
+  for (auto const& val : vals) {
+    auto const element_match_result =
+        TypeAndValuesMatch(type.array_type().element_type(), val);
+    if (!element_match_result.ok()) {
+      return element_match_result;
+    }
+  }
+  return Status{};
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
+                                    google::bigtable::v2::Value const& value) {
+  if (!value.has_array_value()) {
+    return internal::InternalError(
+        "Value kind must be ARRAY_VALUE for columns of type: MAP");
+  }
+  auto key_type = type.map_type().key_type();
+  auto value_type = type.map_type().value_type();
+  auto const& vals = value.array_value().values();
+  for (auto const& val : vals) {
+    if (!val.has_array_value() || val.array_value().values_size() != 2) {
+      return internal::InternalError(
+          "ARRAY_VALUE must contain entries of 2 values");
+    }
+    auto map_key = val.array_value().values(0);
+    auto map_value = val.array_value().values(1);
+    // NOLINTNEXTLINE(misc-no-recursion)
+    auto key_match_result = TypeAndValuesMatch(key_type, map_key);
+    if (!key_match_result.ok()) {
+      return key_match_result;
+    }
+    // NOLINTNEXTLINE(misc-no-recursion)
+    auto value_match_result = TypeAndValuesMatch(value_type, map_value);
+    if (!value_match_result.ok()) {
+      return value_match_result;
+    }
+  }
+  return Status{};
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+Status Value::TypeAndStructValuesMatch(
+    google::bigtable::v2::Type const& type,
+    google::bigtable::v2::Value const& value) {
+  if (!value.has_array_value()) {
+    return internal::InternalError(
+        "Value kind must be ARRAY_VALUE for columns of type: STRUCT");
+  }
+  auto fields = type.struct_type().fields();
+  auto values = value.array_value().values();
+  if (fields.size() != values.size()) {
+    auto const message = absl::Substitute(
+        "received Struct with $0 values, but metadata has $1 fields",
+        values.size(), fields.size());
+    return internal::InternalError(message);
+  }
+  for (int i = 0; i < fields.size(); ++i) {
+    auto const& f1 = fields.Get(i);
+    auto const& v = values[i];
+    auto match_result = TypeAndValuesMatch(f1.type(), v);
+    if (!match_result.ok()) {
+      return match_result;
+    }
+  }
+  return Status{};
+}
+
+/**
+ * Checks whether the declared type in column matches the value's contents.
+ * Since the received values may or may not have type() set, we check against
+ * the value contents themselves
+ */
+// NOLINTNEXTLINE(misc-no-recursion)
+Status Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
+                                 google::bigtable::v2::Value const& value) {
+  using google::bigtable::v2::Type;
+  auto make_mismatch_metadata_status = [&](std::string const& value_kind,
+                                           std::string const& type_name) {
+    auto const message = absl::Substitute(
+        "Value kind must be $0 for columns of type: $1", value_kind, type_name);
+    return internal::InternalError(message);
+  };
+  // Null values are allowed by default
+  if (IsNullValue(value)) {
+    return Status{};
+  }
+  Status result;
+  switch (type.kind_case()) {
+    case Type::kArrayType:
+      result = TypeAndArrayValuesMatch(type, value);
+      break;
+    case Type::kMapType:
+      result = TypeAndMapValuesMatch(type, value);
+      break;
+    case Type::kStructType:
+      result = TypeAndStructValuesMatch(type, value);
+      break;
+    case Type::kBoolType:
+      if (!value.has_bool_value()) {
+        result = make_mismatch_metadata_status("BOOL_VALUE", "BOOL");
+      }
+      break;
+    case Type::kBytesType:
+      if (!value.has_bytes_value()) {
+        result = make_mismatch_metadata_status("BYTES_VALUE", "BYTES");
+      }
+      break;
+    case Type::kDateType:
+      if (!value.has_date_value()) {
+        result = make_mismatch_metadata_status("DATE_VALUE", "DATE");
+      }
+      break;
+    case Type::kFloat32Type:
+      if (!value.has_float_value()) {
+        result = make_mismatch_metadata_status("FLOAT_VALUE", "FLOAT32");
+      }
+      break;
+    case Type::kFloat64Type:
+      if (!value.has_float_value()) {
+        result = make_mismatch_metadata_status("FLOAT_VALUE", "FLOAT64");
+      }
+      break;
+    case Type::kInt64Type:
+      if (!value.has_int_value()) {
+        result = make_mismatch_metadata_status("INT_VALUE", "INT64");
+      }
+      break;
+    case Type::kStringType:
+      if (!value.has_string_value()) {
+        result = make_mismatch_metadata_status("STRING_VALUE", "STRING");
+      }
+      break;
+    case Type::kTimestampType:
+      if (!value.has_timestamp_value()) {
+        result = make_mismatch_metadata_status("TIMESTAMP_VALUE", "TIMESTAMP");
+      }
+      break;
+    default:
+      result = internal::InternalError("Unsupported type");
+      break;
+  }
+  // Nulls are allowed;
+  return result;
 }
 
 //
