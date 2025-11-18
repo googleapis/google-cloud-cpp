@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
+#include "google/cloud/bigtable/internal/crc32c.h"
 #include "google/cloud/bigtable/mocks/mock_query_row.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/query_row.h"
@@ -271,8 +272,9 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   )pb";
   google::bigtable::v2::ProtoRows proto_rows;
   ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
-
   std::string binary_batch_data = proto_rows.SerializeAsString();
+  auto correct_checksum =
+      static_cast<uint32_t>(bigtable_internal::Crc32c(binary_batch_data));
   std::string partial_result_set_text =
       absl::Substitute(R"pb(
                          proto_rows_batch: {
@@ -281,9 +283,9 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
                          resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
                          reset: true,
                          estimated_batch_size: 31,
-                         batch_checksum: 123456
+                         batch_checksum: $1
                        )pb",
-                       binary_batch_data);
+                       binary_batch_data, correct_checksum);
   google::bigtable::v2::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(partial_result_set_text, &response));
 
@@ -315,6 +317,58 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   EXPECT_EQ(*row->values().at(2).get<std::string>(), "q1");
 
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(bigtable::QueryRow{}));
+}
+
+TEST(PartialResultSetSourceTest, ChecksumMismatch) {
+  auto operation_context = std::make_shared<OperationContext>();
+
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "user_id"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  google::bigtable::v2::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultMetadataText, &metadata));
+  auto constexpr kProtoRowsText = R"pb(
+    values { string_value: "r1" }
+  )pb";
+  google::bigtable::v2::ProtoRows proto_rows;
+  ASSERT_TRUE(TextFormat::ParseFromString(kProtoRowsText, &proto_rows));
+  std::string binary_batch_data = proto_rows.SerializeAsString();
+  std::string partial_result_set_text =
+      absl::Substitute(R"pb(
+                         proto_rows_batch: {
+                           batch_data: "$0",
+                         },
+                         resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
+                         reset: true,
+                         estimated_batch_size: 31,
+                         batch_checksum: 12345
+                       )pb",
+                       binary_batch_data);
+  google::bigtable::v2::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(partial_result_set_text, &response));
+
+  auto grpc_reader =
+      std::make_unique<bigtable_testing::MockPartialResultSetReader>();
+  EXPECT_CALL(*grpc_reader, Read(_, _))
+      .WillOnce([&response](absl::optional<std::string> const&,
+                            UnownedPartialResultSet& result) {
+        result.result = response;
+        return true;
+      });
+  EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
+  grpc::ClientContext context;
+  EXPECT_CALL(*grpc_reader, context)
+      .WillRepeatedly([&]() -> grpc::ClientContext const& { return context; });
+
+  auto reader = CreatePartialResultSetSource(
+      metadata, std::move(operation_context), std::move(grpc_reader));
+  EXPECT_THAT(reader,
+              StatusIs(StatusCode::kInternal, "Unexpected checksum mismatch"));
 }
 
 /**
@@ -385,6 +439,8 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
     google::bigtable::v2::ProtoRows proto_rows;
     ASSERT_TRUE(TextFormat::ParseFromString(text, &proto_rows));
     std::string binary_batch_data = proto_rows.SerializeAsString();
+    auto correct_checksum =
+        static_cast<uint32_t>(bigtable_internal::Crc32c(binary_batch_data));
     std::string partial_result_set_text = absl::Substitute(
         R"pb(
           proto_rows_batch: {
@@ -393,9 +449,9 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
           resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
           reset: true,
           estimated_batch_size: 31,
-          batch_checksum: 123456
+          batch_checksum: $1
         )pb",
-        binary_batch_data);
+        binary_batch_data, correct_checksum);
     google::bigtable::v2::PartialResultSet response;
     ASSERT_TRUE(
         TextFormat::ParseFromString(partial_result_set_text, &response));
@@ -507,6 +563,8 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
     google::bigtable::v2::ProtoRows proto_rows;
     ASSERT_TRUE(TextFormat::ParseFromString(text, &proto_rows));
     std::string binary_batch_data = proto_rows.SerializeAsString();
+    auto correct_checksum =
+        static_cast<uint32_t>(bigtable_internal::Crc32c(binary_batch_data));
     std::string partial_result_set_text = absl::Substitute(
         R"pb(
           proto_rows_batch: {
@@ -515,9 +573,9 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
           resume_token: "AAAAAWVyZXN1bWVfdG9rZW4=",
           reset: true,
           estimated_batch_size: 31,
-          batch_checksum: 123456
+          batch_checksum: $1
         )pb",
-        binary_batch_data);
+        binary_batch_data, correct_checksum);
     google::bigtable::v2::PartialResultSet response;
     ASSERT_TRUE(
         TextFormat::ParseFromString(partial_result_set_text, &response));

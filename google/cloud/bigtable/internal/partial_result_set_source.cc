@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
+#include "google/cloud/bigtable/internal/crc32c.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
@@ -170,8 +171,14 @@ Status PartialResultSetSource::ProcessDataFromStream(
     absl::StrAppend(&read_buffer_, result.proto_rows_batch().batch_data());
   }
 
-  // TODO(#15617): Validate that the checksum matches the contents of `buffer`.
   if (result.has_batch_checksum() && !read_buffer_.empty()) {
+    if (bigtable_internal::Crc32c(read_buffer_) != result.batch_checksum()) {
+      state_ = State::kFinished;
+      read_buffer_.clear();
+      buffered_rows_.clear();
+      return internal::InternalError("Unexpected checksum mismatch",
+                                     GCP_ERROR_INFO());
+    }
     if (proto_rows_.ParseFromString(read_buffer_)) {
       auto status = BufferProtoRows();
       proto_rows_.Clear();
@@ -231,7 +238,6 @@ Status PartialResultSetSource::BufferProtoRows() {
   }
   return {};
 }
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
