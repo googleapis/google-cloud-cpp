@@ -2070,8 +2070,9 @@ TEST(Value, TypeAndValuesMatchDepthExceeded) {
   type_text = "int64_type {}";
   value_text = "int_value: 1";
   for (int i = 0; i < 4; ++i) {
-    type_text = "struct_type { fields { type { " + type_text + "} } }";
-    value_text = "array_value { values { " + value_text + "} }";
+    type_text =
+        absl::Substitute("struct_type { fields { type { $0 } } }", type_text);
+    value_text = absl::Substitute("array_value { values { $0 } }", value_text);
   }
   TestTypeAndValuesMatch(type_text, value_text, Status{});
 }
