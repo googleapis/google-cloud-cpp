@@ -216,9 +216,10 @@ Status PartialResultSetSource::BufferProtoRows() {
           GCP_ERROR_INFO());
     }
     if (proto_values.size() % columns_size != 0) {
+      state_ = State::kFinished;
       return internal::InternalError(
           "The number of values in ProtoRows is not a multiple of the "
-          "number of columns in the schema.",
+          "number of columns in the schema or received incomplete row",
           GCP_ERROR_INFO());
     }
 
