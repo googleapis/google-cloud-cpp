@@ -339,12 +339,16 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
   return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
 }
 
+Status Value::MakeDepthExceededError() {
+  return internal::InternalError("Nested value depth exceeds 10 levels");
+}
+
 // NOLINTNEXTLINE(misc-no-recursion)
 Status Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
                                       google::bigtable::v2::Value const& value,
                                       int depth) {
   if (depth > 10) {
-    return internal::InternalError("Nested value depth exceeds 10 levels");
+    return MakeDepthExceededError();
   }
   if (!value.has_array_value()) {
     return internal::InternalError(
@@ -366,7 +370,7 @@ Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
                                     google::bigtable::v2::Value const& value,
                                     int depth) {
   if (depth > 10) {
-    return internal::InternalError("Nested value depth exceeds 10 levels");
+    return MakeDepthExceededError();
   }
   if (!value.has_array_value()) {
     return internal::InternalError(
@@ -402,7 +406,7 @@ Status Value::TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
                                        google::bigtable::v2::Value const& value,
                                        int depth) {
   if (depth > 10) {
-    return internal::InternalError("Nested value depth exceeds 10 levels");
+    return MakeDepthExceededError();
   }
   if (!value.has_array_value()) {
     return internal::InternalError(
@@ -437,7 +441,7 @@ Status Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
                                  google::bigtable::v2::Value const& value,
                                  int depth) {
   if (depth > 10) {
-    return internal::InternalError("Nested value depth exceeds 10 levels");
+    return MakeDepthExceededError();
   }
   using google::bigtable::v2::Type;
   auto make_mismatch_metadata_status = [&](std::string const& value_kind,

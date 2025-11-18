@@ -321,6 +321,7 @@ class Value {
   }
 
  private:
+  static Status MakeDepthExceededError();
   static Status TypeAndValuesMatch(google::bigtable::v2::Type const& type,
                                    google::bigtable::v2::Value const& value,
                                    int depth);
