@@ -1780,10 +1780,10 @@ TEST(Value, TypeAndValuesMatchNullScalar) {
 }
 
 TEST(Value, TypeAndValuesMatchArray) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     array_type { element_type { int64_type {} } }
   )pb";
-  auto matching_value = R"pb(
+  auto const* matching_value = R"pb(
     array_value {
       values { int_value: 1 }
       values { int_value: 2 }
@@ -1793,10 +1793,10 @@ TEST(Value, TypeAndValuesMatchArray) {
 }
 
 TEST(Value, TypeAndValuesMatchArrayMismatchElementType) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     array_type { element_type { int64_type {} } }
   )pb";
-  auto mismatched_value = R"pb(
+  auto const* mismatched_value = R"pb(
     array_value {
       values { int_value: 1 }
       values { string_value: "2" }
@@ -1806,17 +1806,17 @@ TEST(Value, TypeAndValuesMatchArrayMismatchElementType) {
 }
 
 TEST(Value, TypeAndValuesMatchArrayMismatchScalar) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     array_type { element_type { int64_type {} } }
   )pb";
   TestTypeAndValuesMatch(type, "int_value: 123", false);
 }
 
 TEST(Value, TypeAndValuesMatchArrayWithNull) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     array_type { element_type { int64_type {} } }
   )pb";
-  auto value_with_null = R"pb(
+  auto const* value_with_null = R"pb(
     array_value {
       values { int_value: 1 }
       values {}  # null
@@ -1827,7 +1827,7 @@ TEST(Value, TypeAndValuesMatchArrayWithNull) {
 }
 
 TEST(Value, TypeAndValuesMatchStruct) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     struct_type {
       fields {
         field_name: "name"
@@ -1839,7 +1839,7 @@ TEST(Value, TypeAndValuesMatchStruct) {
       }
     }
   )pb";
-  auto matching_value = R"pb(
+  auto const* matching_value = R"pb(
     array_value {
       values { string_value: "John" }
       values { int_value: 42 }
@@ -1849,7 +1849,7 @@ TEST(Value, TypeAndValuesMatchStruct) {
 }
 
 TEST(Value, TypeAndValuesMatchStructMismatchFieldType) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     struct_type {
       fields {
         field_name: "name"
@@ -1861,7 +1861,7 @@ TEST(Value, TypeAndValuesMatchStructMismatchFieldType) {
       }
     }
   )pb";
-  auto mismatched_value = R"pb(
+  auto const* mismatched_value = R"pb(
     array_value {
       values { string_value: "John" }
       values { string_value: "42" }
@@ -1871,13 +1871,13 @@ TEST(Value, TypeAndValuesMatchStructMismatchFieldType) {
 }
 
 TEST(Value, TypeAndValuesMatchStructMismatchFieldCount) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     struct_type {
       fields { type { string_type {} } }
       fields { type { int64_type {} } }
     }
   )pb";
-  auto mismatched_value = R"pb(
+  auto const* mismatched_value = R"pb(
     array_value { values { string_value: "John" } }
   )pb";
   // The current implementation has a bug and will return true here.
@@ -1886,20 +1886,20 @@ TEST(Value, TypeAndValuesMatchStructMismatchFieldCount) {
 }
 
 TEST(Value, TypeAndValuesMatchStructMismatchScalar) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     struct_type { fields { type { string_type {} } } }
   )pb";
   TestTypeAndValuesMatch(type, "string_value: 'John'", false);
 }
 
 TEST(Value, TypeAndValuesMatchStructWithNull) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     struct_type {
       fields { type { string_type {} } }
       fields { type { int64_type {} } }
     }
   )pb";
-  auto value_with_null = R"pb(
+  auto const* value_with_null = R"pb(
     array_value {
       values { string_value: "John" }
       values {}
@@ -1909,13 +1909,13 @@ TEST(Value, TypeAndValuesMatchStructWithNull) {
 }
 
 TEST(Value, TypeAndValuesMatchMap) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     map_type {
       key_type { string_type {} }
       value_type { int64_type {} }
     }
   )pb";
-  auto matching_value = R"pb(
+  auto const* matching_value = R"pb(
     array_value {
       values {
         array_value {
@@ -1929,13 +1929,13 @@ TEST(Value, TypeAndValuesMatchMap) {
 }
 
 TEST(Value, TypeAndValuesMatchMapMismatchKeyType) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     map_type {
       key_type { string_type {} }
       value_type { int64_type {} }
     }
   )pb";
-  auto mismatched_value = R"pb(
+  auto const* mismatched_value = R"pb(
     array_value {
       values {
         array_value {
@@ -1949,13 +1949,13 @@ TEST(Value, TypeAndValuesMatchMapMismatchKeyType) {
 }
 
 TEST(Value, TypeAndValuesMatchMapMismatchValueType) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     map_type {
       key_type { string_type {} }
       value_type { int64_type {} }
     }
   )pb";
-  auto mismatched_value = R"pb(
+  auto const* mismatched_value = R"pb(
     array_value {
       values {
         array_value {
@@ -1969,7 +1969,7 @@ TEST(Value, TypeAndValuesMatchMapMismatchValueType) {
 }
 
 TEST(Value, TypeAndValuesMatchMapMismatchScalar) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     map_type {
       key_type { string_type {} }
       value_type { int64_type {} }
@@ -1979,26 +1979,26 @@ TEST(Value, TypeAndValuesMatchMapMismatchScalar) {
 }
 
 TEST(Value, TypeAndValuesMatchMapMalformedEntry) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     map_type {
       key_type { string_type {} }
       value_type { int64_type {} }
     }
   )pb";
-  auto malformed_value = R"pb(
+  auto const* malformed_value = R"pb(
     array_value { values { array_value { values { string_value: "key1" } } } }
   )pb";
   TestTypeAndValuesMatch(type, malformed_value, false);
 }
 
 TEST(Value, TypeAndValuesMatchMapWithNullValue) {
-  auto type = R"pb(
+  auto const* type = R"pb(
     map_type {
       key_type { string_type {} }
       value_type { int64_type {} }
     }
   )pb";
-  auto value_with_null = R"pb(
+  auto const* value_with_null = R"pb(
     array_value {
       values {
         array_value {

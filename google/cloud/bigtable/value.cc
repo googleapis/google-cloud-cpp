@@ -344,12 +344,11 @@ bool Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
   if (!value.has_array_value()) {
     return false;
   }
-  for (auto const& val : value.array_value().values()) {
-    if (!TypeAndValuesMatch(type.array_type().element_type(), val)) {
-      return false;
-    }
-  }
-  return true;
+  auto const& vals = value.array_value().values();
+  // NOLINTNEXTLINE(misc-no-recursion)
+  return std::all_of(vals.begin(), vals.end(), [&](auto const& val) -> bool {
+    return TypeAndValuesMatch(type.array_type().element_type(), val);
+  });
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
@@ -360,18 +359,17 @@ bool Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
   }
   auto key_type = type.map_type().key_type();
   auto value_type = type.map_type().value_type();
-  for (auto const& val : value.array_value().values()) {
+  auto const& vals = value.array_value().values();
+  // NOLINTNEXTLINE(misc-no-recursion)
+  return std::all_of(vals.begin(), vals.end(), [&](auto const& val) -> bool {
     if (!val.has_array_value() || val.array_value().values_size() != 2) {
       return false;
     }
     auto map_key = val.array_value().values(0);
     auto map_value = val.array_value().values(1);
-    if (!TypeAndValuesMatch(key_type, map_key) ||
-        !TypeAndValuesMatch(value_type, map_value)) {
-      return false;
-    }
-  }
-  return true;
+    return TypeAndValuesMatch(key_type, map_key) &&
+           TypeAndValuesMatch(value_type, map_value);
+  });
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
