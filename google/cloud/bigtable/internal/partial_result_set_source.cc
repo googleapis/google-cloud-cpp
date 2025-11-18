@@ -52,7 +52,9 @@ PartialResultSetSource::Create(
   auto status = source->ReadFromStream();
 
   // Any error during parsing will be returned.
-  if (!status.ok()) return status;
+  if (!status.ok()) {
+    return status;
+  }
 
   return {std::move(source)};
 }
@@ -220,6 +222,7 @@ Status PartialResultSetSource::BufferProtoRows() {
       for (auto const& column : proto_schema.columns()) {
         if (!bigtable::Value::TypeAndValuesMatch(column.type(),
                                                  *parsed_value)) {
+          std::cout << "Metadata and Value not matching." << std::endl;
           return internal::InternalError("Metadata and Value not matching.",
                                          GCP_ERROR_INFO());
         }
