@@ -51,7 +51,7 @@ exit_status=$?
 # CloseClient
 go test -v \
   -run "TestExecuteQuery|TestExecuteQuery_PlanRefresh$|TestExecuteQuery_PlanRefresh_WithMetadataChange|TestExecuteQuery_PlanRefresh_Retries|TestExecuteQuery_FailsOnSuccesfulStreamWithNoToken" \
-  -skip "CloseClient|FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType|ChecksumMismatch|FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField|TestExecuteQuery_PlanRefresh_AfterResumeTokenCausesError|TestExecuteQuery_RetryTest_WithPlanRefresh|TestExecuteQuery_PlanRefresh_RespectsDeadline|TestExecuteQuery_PlanRefresh_RecoversAfterPermanentError" \
+  -skip "CloseClient|FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType|FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField|TestExecuteQuery_PlanRefresh_AfterResumeTokenCausesError|TestExecuteQuery_RetryTest_WithPlanRefresh|TestExecuteQuery_PlanRefresh_RespectsDeadline|TestExecuteQuery_PlanRefresh_RecoversAfterPermanentError" \
   -proxy_addr=:9999
 exit_status=$?
 
@@ -62,12 +62,6 @@ exit_status=$?
 # Metadata tests b/461232934
 #go test -v \
 #  -run "FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType" \
-#  -proxy_addr=:9999
-#exit_status=$?
-
-# Stream reading tests b/461232110
-#go test -v \
-#  -run "ChecksumMismatch" \
 #  -proxy_addr=:9999
 #exit_status=$?
 
