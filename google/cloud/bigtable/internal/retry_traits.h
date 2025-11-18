@@ -54,7 +54,8 @@ struct QueryPlanRefreshRetry {
   static bool IsTransientFailure(Status const& status) {
     auto const code = status.code();
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
-           code == StatusCode::kInternal || IsQueryPlanExpired(status);
+           google::cloud::internal::IsTransientInternalError(status) ||
+           IsQueryPlanExpired(status);
   }
   static bool IsPermanentFailure(Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
