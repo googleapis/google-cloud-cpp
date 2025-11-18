@@ -27,7 +27,6 @@ namespace bigtable_internal {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-
 // Some Bigtable proto fields use Cord internally and string externally.
 template <typename T, typename std::enable_if<
                           std::is_same<T, std::string>::value>::type* = nullptr>
@@ -177,7 +176,8 @@ Status PartialResultSetSource::ProcessDataFromStream(
       state_ = State::kFinished;
       read_buffer_.clear();
       buffered_rows_.clear();
-      return internal::InternalError("Unexpected checksum mismatch");
+      return internal::InternalError("Unexpected checksum mismatch",
+                                     GCP_ERROR_INFO());
     }
     if (proto_rows_.ParseFromString(read_buffer_)) {
       auto status = BufferProtoRows();
