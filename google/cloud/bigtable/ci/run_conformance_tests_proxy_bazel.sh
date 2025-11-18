@@ -67,7 +67,7 @@ exit_status=$?
 
 # Stream reading tests b/461232110
 #go test -v \
-#  -run "FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|FailsOnSuccesfulStreamWithNoToken|ChecksumMismatch" \
+#  -run "FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|ChecksumMismatch" \
 #  -proxy_addr=:9999
 #exit_status=$?
 
