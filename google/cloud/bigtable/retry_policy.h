@@ -207,7 +207,7 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
 
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigtable_internal::SafeGrpcRetryAllowingQueryPlanRefresh>
+      bigtable_internal::QueryPlanRefreshRetry>
       impl_;
 };
 
@@ -280,7 +280,7 @@ class QueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
 
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<
-      bigtable_internal::SafeGrpcRetryAllowingQueryPlanRefresh>
+      bigtable_internal::QueryPlanRefreshRetry>
       impl_;
 };
 

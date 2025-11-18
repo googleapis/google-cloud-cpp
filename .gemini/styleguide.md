@@ -14,3 +14,6 @@ This repository differs from the Google C++ style guide in the following ways:
   non-test files.
 - encourages duplication of salient setup and expectations in test cases to
   increase readability.
+
+Do not make comments of suggestions on ordering of includes as a script formats
+them how we want.
