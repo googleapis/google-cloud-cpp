@@ -405,11 +405,14 @@ bool Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
   bool has_matching_value;
   switch (type.kind_case()) {
     case Type::kArrayType:
-      return TypeAndArrayValuesMatch(type, value);
+      has_matching_value = TypeAndArrayValuesMatch(type, value);
+      break;
     case Type::kMapType:
-      return TypeAndMapValuesMatch(type, value);
+      has_matching_value = TypeAndMapValuesMatch(type, value);
+      break;
     case Type::kStructType:
-      return TypeAndStructValuesMatch(type, value);
+      has_matching_value = TypeAndStructValuesMatch(type, value);
+      break;
     case Type::kBoolType:
       has_matching_value = value.has_bool_value();
       break;
@@ -440,7 +443,7 @@ bool Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
       break;
   }
   // Nulls are allowed;
-  return has_matching_value || bigtable::Value::IsNullValue(value);
+  return has_matching_value || IsNullValue(value);
 }
 
 //
