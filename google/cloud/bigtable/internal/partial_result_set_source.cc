@@ -228,11 +228,10 @@ Status PartialResultSetSource::BufferProtoRows() {
 
     while (parsed_value != proto_values.end()) {
       for (auto const& column : proto_schema.columns()) {
-        if (!bigtable::Value::TypeAndValuesMatch(column.type(),
-                                                 *parsed_value)) {
-          std::cout << "Metadata and Value not matching." << std::endl;
-          return internal::InternalError("Metadata and Value not matching.",
-                                         GCP_ERROR_INFO());
+        auto type_value_match_result = bigtable::Value::TypeAndValuesMatch(column.type(),
+                                                 *parsed_value);
+        if (!type_value_match_result.ok()) {
+          return type_value_match_result;
         }
         auto value = FromProto(column.type(), *parsed_value);
         values.push_back(std::move(value));

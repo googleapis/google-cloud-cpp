@@ -1747,13 +1747,19 @@ TEST(Value, OutputStreamMatchesT) {
   // std::unordered_map<...>
   // Not included, because a raw map cannot be streamed.
 }
+
 void TestTypeAndValuesMatch(std::string const& type_text,
                             std::string const& value_text, bool expected) {
   google::bigtable::v2::Type type;
   ASSERT_TRUE(TextFormat::ParseFromString(type_text, &type));
   google::bigtable::v2::Value value;
   ASSERT_TRUE(TextFormat::ParseFromString(value_text, &value));
-  EXPECT_EQ(expected, Value::TypeAndValuesMatch(type, value));
+  auto result = Value::TypeAndValuesMatch(type, value);
+  if (expected) {
+    EXPECT_STATUS_OK(result);
+  } else {
+    EXPECT_THAT(result, Not(IsOk()));
+  }
 }
 
 TEST(Value, TypeAndValuesMatchScalar) {

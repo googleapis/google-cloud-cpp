@@ -315,15 +315,15 @@ class Value {
     return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
   }
 
-  static bool TypeAndValuesMatch(google::bigtable::v2::Type const& type,
+  static Status TypeAndValuesMatch(google::bigtable::v2::Type const& type,
                                  google::bigtable::v2::Value const& value);
 
  private:
-  static bool TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
+  static Status TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
                                       google::bigtable::v2::Value const& value);
-  static bool TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
+  static Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
                                     google::bigtable::v2::Value const& value);
-  static bool TypeAndStructValuesMatch(
+  static Status TypeAndStructValuesMatch(
       google::bigtable::v2::Type const& type,
       google::bigtable::v2::Value const& value);
 
