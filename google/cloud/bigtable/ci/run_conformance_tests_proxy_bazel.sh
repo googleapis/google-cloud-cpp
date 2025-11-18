@@ -51,8 +51,7 @@ exit_status=$?
 # CloseClient
 go test -v \
   -run "TestExecuteQuery|TestExecuteQuery_PlanRefresh$|TestExecuteQuery_PlanRefresh_WithMetadataChange|TestExecuteQuery_PlanRefresh_Retries|TestExecuteQuery_PlanRefresh_RecoversAfterPermanentError" \
-  -skip "CloseClient|FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType|FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|FailsOnSuccesfulStreamWithNoToken|ChecksumMismatch|FailsOnStructMissingField|RetryTest_WithPlanRefresh|PlanRefresh" \
-
+  -skip "CloseClient|FailsOnEmptyMetadata|FailsOnExecuteQueryMetadata|FailsOnInvalidType|FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|FailsOnSuccesfulStreamWithNoToken|ChecksumMismatch|ArraytFailsOnStructMissingField|TestExecuteQuery_PlanRefresh_AfterResumeTokenCausesError|TestExecuteQuery_RetryTest_WithPlanRefresh|TestExecuteQuery_PlanRefresh_RespectsDeadline" \
   -proxy_addr=:9999
 exit_status=$?
 
