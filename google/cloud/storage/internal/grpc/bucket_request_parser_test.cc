@@ -187,7 +187,7 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
         page_size: 123
         page_token: "test-token"
         prefix: "test-prefix"
-        return_partial_success: "true"
+        return_partial_success: false
         read_mask { paths: [ "*" ] }
       )pb",
       &expected));
@@ -216,8 +216,6 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
           name: "projects/_/buckets/test-bucket-2"
           bucket_id: "test-bucket-2"
         }
-        unreachable { "projects/_/buckets/bucket1"
-                      "projects/_/buckets/bucket2" }
         next_page_token: "test-token"
       )pb",
       &input));

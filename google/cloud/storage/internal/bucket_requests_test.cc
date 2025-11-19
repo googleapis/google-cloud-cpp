@@ -141,7 +141,7 @@ TEST(ListBucketsRequestTest, PartialSuccess) {
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("ListBucketsRequest"));
-  EXPECT_THAT(os.str(), HasSubstr("returnPartialSuccess=1"));
+  EXPECT_THAT(os.str(), HasSubstr("returnPartialSuccess=true"));
 }
 
 TEST(ListBucketsResponseTest, Parse) {
