@@ -310,7 +310,24 @@ class Value {
    */
   friend std::ostream& operator<<(std::ostream& os, Value const& v);
 
+  // `NULL` values are represented by having a kind equal to KIND_NOT_SET
+  static bool IsNullValue(google::bigtable::v2::Value const& value) {
+    return value.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET;
+  }
+
+  static Status TypeAndValuesMatch(google::bigtable::v2::Type const& type,
+                                   google::bigtable::v2::Value const& value);
+
  private:
+  static Status TypeAndArrayValuesMatch(
+      google::bigtable::v2::Type const& type,
+      google::bigtable::v2::Value const& value);
+  static Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
+                                      google::bigtable::v2::Value const& value);
+  static Status TypeAndStructValuesMatch(
+      google::bigtable::v2::Type const& type,
+      google::bigtable::v2::Value const& value);
+
   // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};

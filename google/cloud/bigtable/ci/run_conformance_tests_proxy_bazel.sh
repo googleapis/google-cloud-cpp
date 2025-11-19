@@ -51,7 +51,7 @@ exit_status=$?
 # CloseClient
 go test -v \
   -run "TestExecuteQuery|TestExecuteQuery_PlanRefresh$|TestExecuteQuery_PlanRefresh_WithMetadataChange|TestExecuteQuery_PlanRefresh_Retries|TestExecuteQuery_FailsOnSuccesfulStreamWithNoToken" \
-  -skip "CloseClient|FailsOnInvalidType|FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|FailsOnSuccesfulStreamWithNoToken|ChecksumMismatch|FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField|TestExecuteQuery_PlanRefresh_AfterResumeTokenCausesError|TestExecuteQuery_RetryTest_WithPlanRefresh|TestExecuteQuery_PlanRefresh_RespectsDeadline|TestExecuteQuery_PlanRefresh_RecoversAfterPermanentError" \
+  -skip "CloseClient|FailsOnInvalidType|FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField|TestExecuteQuery_PlanRefresh_AfterResumeTokenCausesError|TestExecuteQuery_RetryTest_WithPlanRefresh|TestExecuteQuery_PlanRefresh_RespectsDeadline|TestExecuteQuery_PlanRefresh_RecoversAfterPermanentError" \
   -proxy_addr=:9999
 exit_status=$?
 
@@ -65,21 +65,15 @@ exit_status=$?
 #  -proxy_addr=:9999
 #exit_status=$?
 
-# Stream reading tests b/461232110
-#go test -v \
-#  -run "FailsOnNotEnoughData|FailsOnNotEnoughDataWithCompleteRows|ChecksumMismatch" \
-#  -proxy_addr=:9999
-#exit_status=$?
-
 # Response/Metadata mismatches b/461233335
-#go test -v \
-#  -run "FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField" \
-#  -proxy_addr=:9999
-#exit_status=$?
+go test -v \
+  -run "FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField" \
+  -proxy_addr=:9999
+exit_status=$?
 
 # QueryPlan refresh tests b/461233613
 #go test -v \
-#  -run "RetryTest_WithPlanRefresh|PlanRefresh" \
+#  -run "RetryTest_WithPlanRefresh|PlanRefresh|PlanRefresh_RecoversAfterPermanentError" \
 #  -proxy_addr=:9999
 #exit_status=$?
 

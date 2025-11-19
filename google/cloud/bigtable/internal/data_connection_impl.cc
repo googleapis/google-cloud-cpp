@@ -111,6 +111,10 @@ bool IsStatusMetadataIndicatingRetryPolicyExhausted(Status const& status) {
                                                 "retry-policy-exhausted"));
 }
 
+bool IsStatusIndicatingInternalError(Status const& status) {
+  return status.code() == StatusCode::kInternal;
+}
+
 class DefaultPartialResultSetReader
     : public bigtable_internal::PartialResultSetReader {
  public:
@@ -153,19 +157,20 @@ class DefaultPartialResultSetReader
       // Throw an error when there is a schema difference between
       // ExecuteQueryResponse and PrepareQueryResponse.
       if (response.has_metadata()) {
-        std::string initial_metadata_str;
-        std::string response_metadata_str;
-        bool metadata_matched =
-            initial_metadata_.SerializeToString(&initial_metadata_str) &&
-            response.metadata().SerializeToString(&response_metadata_str) &&
-            initial_metadata_str == response_metadata_str;
-        if (response.metadata().ByteSizeLong() > 0 && !metadata_matched) {
-          final_status_ = internal::AbortedError(
-              "Schema changed during ExecuteQuery operation", GCP_ERROR_INFO());
+        // std::string initial_metadata_str;
+        // std::string response_metadata_str;
+        // bool metadata_matched =
+        //     initial_metadata_.SerializeToString(&initial_metadata_str) &&
+        //     response.metadata().SerializeToString(&response_metadata_str) &&
+        //     initial_metadata_str == response_metadata_str;
+        // if (response.metadata().ByteSizeLong() > 0 && !metadata_matched) {
+          final_status_ = internal::InternalError(
+              "Response contains unknown type metadata", GCP_ERROR_INFO());
           operation_context_->PostCall(*context_, final_status_);
-          return false;
-        }
-        continue;
+          // return false;
+        // }
+        // continue;
+        return false;
       }
 
       final_status_ = internal::InternalError(
@@ -954,10 +959,6 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         query_plan->response();
 
     if (query_plan_data.ok()) {
-       if (!query_plan_data->has_metadata()) {
-        last_status = internal::InternalError("columns cannot be empty",
-                                              GCP_ERROR_INFO());
-      }
       request.set_prepared_query(query_plan_data->prepared_query());
       // Add check inside retry resume fn
       auto source = retry_resume_fn(
@@ -967,6 +968,11 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         return bigtable::RowStream(*std::move(source));
       }
       last_status = source.status();
+
+      if (IsStatusIndicatingInternalError(source.status())) {
+        return bigtable::RowStream(std::make_unique<StatusOnlyResultSetSource>(
+            std::move(last_status)));
+      }
 
       if (QueryPlanRefreshRetry::IsQueryPlanExpired(source.status())) {
         query_plan->Invalidate(source.status(),
