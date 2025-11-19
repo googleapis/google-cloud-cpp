@@ -3751,7 +3751,8 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
   auto row_stream = conn->ExecuteQuery(std::move(params));
   for (auto const& row : row_stream) {
     EXPECT_THAT(row,
-                StatusIs(StatusCode::kInternal, HasSubstr("Response contains unknown type metadata")));
+                StatusIs(StatusCode::kInternal,
+                         HasSubstr("Response contains unknown type metadata")));
   }
   fake_cq_impl->SimulateCompletion(false);
 }
