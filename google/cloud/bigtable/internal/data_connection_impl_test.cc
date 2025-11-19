@@ -3720,21 +3720,18 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
   EXPECT_CALL(*mock, ExecuteQuery)
-      .Times(1)
-      .WillRepeatedly(
-          [&](auto, auto const&,
-              google::bigtable::v2::ExecuteQueryRequest const& request) {
-            EXPECT_EQ(request.app_profile_id(), kAppProfile);
-            EXPECT_EQ(request.instance_name(),
-                      "projects/test-project/instances/test-instance");
-            auto stream = std::make_unique<MockExecuteQueryStream>();
-            EXPECT_CALL(*stream, Read)
-                .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
-                  *r = eq_response;
-                  return absl::nullopt;
-                });
-            return stream;
-          });
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.instance_name(),
+                  "projects/test-project/instances/test-instance");
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              *r = eq_response;
+              return absl::nullopt;
+            });
+        return stream;
+      });
 
   auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());

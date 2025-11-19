@@ -930,7 +930,6 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
       request.instance_name(), app_profile_id(*current));
 
   auto query_plan = params.bound_query.query_plan_;
-
   auto query_plan_retry_policy = query_plan_refresh_retry_policy(*current);
   auto query_plan_backoff_policy = backoff_policy(*current);
   Status last_status;
@@ -967,7 +966,6 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         return bigtable::RowStream(std::make_unique<StatusOnlyResultSetSource>(
             std::move(last_status)));
       }
-
     } else {
       last_status = query_plan_data.status();
     }
