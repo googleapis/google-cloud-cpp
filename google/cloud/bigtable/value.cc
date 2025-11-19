@@ -339,14 +339,14 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
   return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
 }
 
-Status Value::MakeDepthExceededError() {
+Status MakeDepthExceededError() {
   return internal::InternalError("Nested value depth exceeds 10 levels");
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
-Status Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
-                                      google::bigtable::v2::Value const& value,
-                                      int depth) {
+Status TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
+                               google::bigtable::v2::Value const& value,
+                               int depth) {
   if (depth > 10) {
     return MakeDepthExceededError();
   }
@@ -356,8 +356,8 @@ Status Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
   }
   auto const& vals = value.array_value().values();
   for (auto const& val : vals) {
-    auto const element_match_result =
-        TypeAndValuesMatch(type.array_type().element_type(), val, depth + 1);
+    auto const element_match_result = Value::TypeAndValuesMatch(
+        type.array_type().element_type(), val, depth + 1);
     if (!element_match_result.ok()) {
       return element_match_result;
     }
@@ -366,9 +366,9 @@ Status Value::TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
-Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
-                                    google::bigtable::v2::Value const& value,
-                                    int depth) {
+Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
+                             google::bigtable::v2::Value const& value,
+                             int depth) {
   if (depth > 10) {
     return MakeDepthExceededError();
   }
@@ -387,13 +387,14 @@ Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
     auto map_key = val.array_value().values(0);
     auto map_value = val.array_value().values(1);
     // NOLINTNEXTLINE(misc-no-recursion)
-    auto key_match_result = TypeAndValuesMatch(key_type, map_key, depth + 1);
+    auto key_match_result =
+        Value::TypeAndValuesMatch(key_type, map_key, depth + 1);
     if (!key_match_result.ok()) {
       return key_match_result;
     }
     // NOLINTNEXTLINE(misc-no-recursion)
     auto value_match_result =
-        TypeAndValuesMatch(value_type, map_value, depth + 1);
+        Value::TypeAndValuesMatch(value_type, map_value, depth + 1);
     if (!value_match_result.ok()) {
       return value_match_result;
     }
@@ -402,9 +403,9 @@ Status Value::TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
-Status Value::TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
-                                       google::bigtable::v2::Value const& value,
-                                       int depth) {
+Status TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
+                                google::bigtable::v2::Value const& value,
+                                int depth) {
   if (depth > 10) {
     return MakeDepthExceededError();
   }
@@ -423,7 +424,7 @@ Status Value::TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
   for (int i = 0; i < fields.size(); ++i) {
     auto const& f1 = fields.Get(i);
     auto const& v = values[i];
-    auto match_result = TypeAndValuesMatch(f1.type(), v, depth + 1);
+    auto match_result = Value::TypeAndValuesMatch(f1.type(), v, depth + 1);
     if (!match_result.ok()) {
       return match_result;
     }
