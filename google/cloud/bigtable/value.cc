@@ -358,7 +358,7 @@ Status TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
   auto const& vals = value.array_value().values();
   for (auto const& val : vals) {
     auto const element_match_result = Value::TypeAndValuesMatch(
-        type.array_type().element_type(), val, ++depth);
+        type.array_type().element_type(), val, depth);
     if (!element_match_result.ok()) {
       return element_match_result;
     }
