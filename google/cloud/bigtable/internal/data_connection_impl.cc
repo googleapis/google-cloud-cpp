@@ -155,7 +155,8 @@ class DefaultPartialResultSetReader
       // Throw an error when ExecuteQueryResponse returns metadata.
       if (response.has_metadata()) {
         final_status_ = internal::InternalError(
-            "Response contains unknown type metadata", GCP_ERROR_INFO());
+            "Expected results response, but received: METADATA",
+            GCP_ERROR_INFO());
         operation_context_->PostCall(*context_, final_status_);
         return false;
       }

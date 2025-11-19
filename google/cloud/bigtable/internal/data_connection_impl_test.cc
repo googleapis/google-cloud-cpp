@@ -3750,7 +3750,7 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
   for (auto const& row : row_stream) {
     EXPECT_THAT(row,
                 StatusIs(StatusCode::kInternal,
-                         HasSubstr("Response contains unknown type metadata")));
+                         HasSubstr("Expected results response, but received: METADATA")));
   }
   fake_cq_impl->SimulateCompletion(false);
 }
