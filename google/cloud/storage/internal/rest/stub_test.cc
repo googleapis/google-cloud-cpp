@@ -242,7 +242,7 @@ TEST(RestStubTest, ListBucketsReturnPartialSuccess) {
                   ResultOf(
                       "request parameters contain 'returnPartialSuccess'",
                       [](RestRequest const& r) { return r.parameters(); },
-                      Contains(Pair("returnPartialSuccess", "1")))))
+                      Contains(Pair("returnPartialSuccess", "true")))))
       .WillOnce(Return(PermanentError()));
 
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
