@@ -2849,6 +2849,20 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
                   request.instance_name());
         EXPECT_EQ("SELECT * FROM the-table", request.query());
         v2::PrepareQueryResponse response;
+        auto constexpr kResultMetadataText = R"pb(
+          proto_schema {
+            columns {
+              name: "row_key"
+              type { string_type {} }
+            }
+            columns {
+              name: "value"
+              type { string_type {} }
+            }
+          }
+        )pb";
+        EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+            kResultMetadataText, response.mutable_metadata()));
         *response.mutable_valid_until() = internal::ToProtoTimestamp(
             std::chrono::system_clock::now() + std::chrono::seconds(3600));
         return response;
@@ -2929,7 +2943,22 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   request.instance_name());
         EXPECT_EQ("SELECT * FROM the-table", request.query());
-        return make_ready_future(make_status_or(v2::PrepareQueryResponse{}));
+        v2::PrepareQueryResponse response;
+        auto constexpr kResultMetadataText = R"pb(
+          proto_schema {
+            columns {
+              name: "row_key"
+              type { string_type {} }
+            }
+            columns {
+              name: "value"
+              type { string_type {} }
+            }
+          }
+        )pb";
+        EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+            kResultMetadataText, response.mutable_metadata()));
+        return make_ready_future(make_status_or(response));
       });
 
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
@@ -3134,6 +3163,16 @@ TEST_F(DataConnectionTest, ExecuteQueryFailure) {
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
   v2::PrepareQueryResponse pq_response;
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataText, pq_response.mutable_metadata()));
   auto query_plan =
       QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
                         std::move(refresh_fn));
@@ -3188,6 +3227,16 @@ TEST_F(DataConnectionTest, ExecuteQueryOperationRetryExhausted) {
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
   v2::PrepareQueryResponse pq_response;
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataText, pq_response.mutable_metadata()));
   auto query_plan =
       QueryPlan::Create(CompletionQueue(fake_cq_impl), std::move(pq_response),
                         std::move(refresh_fn));

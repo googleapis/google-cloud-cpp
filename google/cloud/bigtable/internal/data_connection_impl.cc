@@ -940,6 +940,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
       request.instance_name(), app_profile_id(*current));
 
   auto query_plan = params.bound_query.query_plan_;
+
   auto query_plan_retry_policy = query_plan_refresh_retry_policy(*current);
   auto query_plan_backoff_policy = backoff_policy(*current);
   Status last_status;
@@ -953,7 +954,12 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         query_plan->response();
 
     if (query_plan_data.ok()) {
+       if (!query_plan_data->has_metadata()) {
+        last_status = internal::InternalError("columns cannot be empty",
+                                              GCP_ERROR_INFO());
+      }
       request.set_prepared_query(query_plan_data->prepared_query());
+      // Add check inside retry resume fn
       auto source = retry_resume_fn(
           request, query_plan_data->metadata(), retry_policy(*current),
           backoff_policy(*current), operation_context);
@@ -970,6 +976,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         return bigtable::RowStream(std::make_unique<StatusOnlyResultSetSource>(
             std::move(last_status)));
       }
+
     } else {
       last_status = query_plan_data.status();
     }
