@@ -3722,6 +3722,7 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
   EXPECT_CALL(*mock, ExecuteQuery)
       .WillOnce([&](auto, auto const&,
                     google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.app_profile_id(), kAppProfile);
         EXPECT_EQ(request.instance_name(),
                   "projects/test-project/instances/test-instance");
         auto stream = std::make_unique<MockExecuteQueryStream>();

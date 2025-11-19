@@ -944,7 +944,6 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
 
     if (query_plan_data.ok()) {
       request.set_prepared_query(query_plan_data->prepared_query());
-      // Add check inside retry resume fn
       auto source = retry_resume_fn(
           request, query_plan_data->metadata(), retry_policy(*current),
           backoff_policy(*current), operation_context);
