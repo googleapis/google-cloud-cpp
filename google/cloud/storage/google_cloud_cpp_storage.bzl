@@ -117,6 +117,7 @@ google_cloud_cpp_storage_hdrs = [
     "internal/well_known_parameters_impl.h",
     "lifecycle_rule.h",
     "list_buckets_reader.h",
+    "list_buckets_partial_reader.h",
     "list_hmac_keys_reader.h",
     "list_objects_and_prefixes_reader.h",
     "list_objects_reader.h",

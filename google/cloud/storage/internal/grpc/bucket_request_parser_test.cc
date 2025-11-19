@@ -217,7 +217,7 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
           bucket_id: "test-bucket-2"
         }
         unreachable { "projects/_/buckets/bucket1"
-                      "projects/1234567/locations/location1" }
+                      "projects/_/buckets/bucket2" }
         next_page_token: "test-token"
       )pb",
       &input));

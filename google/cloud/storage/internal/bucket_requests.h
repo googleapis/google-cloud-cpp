@@ -60,12 +60,6 @@ class ListBucketsRequest
 
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);
 
-struct ListBucketsResult {
-  std::string page_token;
-  std::vector<BucketMetadata> items;
-  std::vector<std::string> unreachable;
-};
-
 struct ListBucketsResponse {
   static StatusOr<ListBucketsResponse> FromHttpResponse(
       std::string const& payload);

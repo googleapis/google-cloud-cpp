@@ -198,6 +198,7 @@ add_library(
     internal/win32/hash_function_impl.cc
     lifecycle_rule.cc
     lifecycle_rule.h
+    list_buckets_partial_reader.h
     list_buckets_reader.cc
     list_buckets_reader.h
     list_hmac_keys_reader.cc
