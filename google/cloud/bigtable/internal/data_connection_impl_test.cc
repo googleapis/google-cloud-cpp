@@ -3748,9 +3748,11 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
   bigtable::ExecuteQueryParams params{std::move(bq)};
   auto row_stream = conn->ExecuteQuery(std::move(params));
   for (auto const& row : row_stream) {
-    EXPECT_THAT(row,
-                StatusIs(StatusCode::kInternal,
-                         HasSubstr("Expected results response, but received: METADATA")));
+    EXPECT_THAT(
+        row,
+        StatusIs(
+            StatusCode::kInternal,
+            HasSubstr("Expected results response, but received: METADATA")));
   }
   fake_cq_impl->SimulateCompletion(false);
 }
