@@ -898,9 +898,6 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
               .then([operation_context](auto f) mutable {
                 StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
                     f.get();
-                if (!response.ok()) {
-                  return response;
-                }
                 operation_context->OnDone(response.status());
                 return response;
               });
