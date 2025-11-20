@@ -388,8 +388,7 @@ Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
     auto map_key = val.array_value().values(0);
     auto map_value = val.array_value().values(1);
     // NOLINTNEXTLINE(misc-no-recursion)
-    auto key_match_result =
-        Value::TypeAndValuesMatch(key_type, map_key, depth);
+    auto key_match_result = Value::TypeAndValuesMatch(key_type, map_key, depth);
     if (!key_match_result.ok()) {
       return key_match_result;
     }
