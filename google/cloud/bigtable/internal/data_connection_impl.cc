@@ -903,13 +903,12 @@ class QueryPlanRefreshingPartialResultSource
       std::unique_ptr<bigtable::DataRetryPolicy>
           query_plan_refresh_retry_policy,
       internal::ImmutableOptions options) {
-    auto foo = std::unique_ptr<QueryPlanRefreshingPartialResultSource>(
+    return std::unique_ptr<QueryPlanRefreshingPartialResultSource>(
         new QueryPlanRefreshingPartialResultSource(
             std::move(request), std::move(source_factory),
             std::move(query_plan), std::move(operation_context),
             std::move(backoff_policy), std::move(retry_policy),
             std::move(query_plan_refresh_retry_policy), std::move(options)));
-    return foo;
   }
 
   ~QueryPlanRefreshingPartialResultSource() override = default;
