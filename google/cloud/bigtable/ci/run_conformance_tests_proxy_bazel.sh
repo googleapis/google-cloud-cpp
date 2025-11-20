@@ -51,7 +51,7 @@ exit_status=$?
 # unimplemented features or issues with the tests themselves.
 go test -v \
   -run "TestExecuteQuery" \
-  -skip "CloseClient|TestExecuteQuery_FailsOnInvalidType|TestExecuteQuery_PlanRefresh_RespectsDeadline" \
+  -skip "CloseClient|TestExecuteQuery_PlanRefresh_RespectsDeadline" \
   -proxy_addr=:9999
 exit_status=$?
 

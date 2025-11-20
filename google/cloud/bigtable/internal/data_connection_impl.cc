@@ -759,6 +759,19 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   if (!response) {
     return std::move(response).status();
   }
+  auto const& proto_schema = response->metadata().proto_schema();
+  auto const columns_size = proto_schema.columns_size();
+  if (columns_size == 0) {
+    return internal::InternalError("ResultSetMetadata columns cannot be empty",
+                                   GCP_ERROR_INFO());
+  }
+  for (auto const& column : proto_schema.columns()) {
+    if (!column.has_type() ||
+        column.type().kind_case() == google::bigtable::v2::Type::KIND_NOT_SET) {
+      return internal::InternalError("Column type cannot be empty",
+                                     GCP_ERROR_INFO());
+    }
+  }
   auto const* func = __func__;
   auto refresh_fn = [this, request, func]() mutable {
     auto current = google::cloud::internal::SaveCurrentOptions();
@@ -842,7 +855,20 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
         if (!response) {
           return std::move(response).status();
         }
-
+        auto const& proto_schema = response->metadata().proto_schema();
+        auto const columns_size = proto_schema.columns_size();
+        if (columns_size == 0) {
+          return internal::InternalError(
+              "ResultSetMetadata columns cannot be empty", GCP_ERROR_INFO());
+        }
+        for (auto const& column : proto_schema.columns()) {
+          if (!column.has_type() ||
+              column.type().kind_case() ==
+                  google::bigtable::v2::Type::KIND_NOT_SET) {
+            return StatusOr<bigtable::PreparedQuery>(internal::InternalError(
+                "Column type cannot be empty", GCP_ERROR_INFO()));
+          }
+        }
         auto refresh_fn = [this, request, func]() mutable {
           auto current = google::cloud::internal::SaveCurrentOptions();
           auto retry = query_plan_refresh_function_retry_policy(*current);

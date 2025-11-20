@@ -216,11 +216,6 @@ Status PartialResultSetSource::BufferProtoRows() {
     auto const columns_size = proto_schema.columns_size();
     auto const& proto_values = proto_rows_.values();
 
-    if (columns_size == 0 && !proto_values.empty()) {
-      return internal::InternalError(
-          "ProtoRows has values but ResultSetMetadata columns cannot be empty",
-          GCP_ERROR_INFO());
-    }
     if (proto_values.size() % columns_size != 0) {
       state_ = State::kFinished;
       return internal::InternalError(
