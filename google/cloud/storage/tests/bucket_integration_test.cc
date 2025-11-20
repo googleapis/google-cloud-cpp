@@ -685,7 +685,8 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 TEST_F(BucketIntegrationTest, ListPartialSuccess) {
   auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
-  std::string unreachable_bucket_name = MakeRandomBucketName() + "-unreachable";
+  std::string unreachable_bucket_name =
+      MakeRandomBucketName().substr(0, 50) + "-unreachable";
 
   auto meta =
       client.CreateBucketForProject(bucket_name, project_id_, BucketMetadata{});
