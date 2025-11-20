@@ -59,12 +59,6 @@ exit_status=$?
 # tests into groups that exercise similar functionality and should be worked on
 # together.
 
-# Metadata tests b/461232934
-#go test -v \
-#  -run "FailsOnInvalidType" \
-#  -proxy_addr=:9999
-#exit_status=$?
-
 # Response/Metadata mismatches b/461233335
 go test -v \
   -run "FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField" \
