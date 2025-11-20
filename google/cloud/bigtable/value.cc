@@ -389,13 +389,13 @@ Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
     auto map_value = val.array_value().values(1);
     // NOLINTNEXTLINE(misc-no-recursion)
     auto key_match_result =
-        Value::TypeAndValuesMatch(key_type, map_key, ++depth);
+        Value::TypeAndValuesMatch(key_type, map_key, depth);
     if (!key_match_result.ok()) {
       return key_match_result;
     }
     // NOLINTNEXTLINE(misc-no-recursion)
     auto value_match_result =
-        Value::TypeAndValuesMatch(value_type, map_value, ++depth);
+        Value::TypeAndValuesMatch(value_type, map_value, depth);
     if (!value_match_result.ok()) {
       return value_match_result;
     }
@@ -425,7 +425,7 @@ Status TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
   for (int i = 0; i < fields.size(); ++i) {
     auto const& f1 = fields.Get(i);
     auto const& v = values[i];
-    auto match_result = Value::TypeAndValuesMatch(f1.type(), v, ++depth);
+    auto match_result = Value::TypeAndValuesMatch(f1.type(), v, depth);
     if (!match_result.ok()) {
       return match_result;
     }

@@ -2051,30 +2051,19 @@ TEST(Value, TypeAndValuesMatchDepthExceeded) {
   std::string type_text = "int64_type {}";
   std::string value_text = "int_value: 1";
 
-  // Each layer of struct nesting increases the depth count. The initial call is
-  // at depth 1. With the current implementation, each level of nesting
-  // increases the depth by 2. To exceed the limit of 10, we need 5 levels of
-  // nesting, which will result in a call with depth 11.
-  for (int i = 0; i < 5; ++i) {
+  // Test that exactly 10 levels does not cause a depth exceeded error.
+  for (int level = 1; level < 12; ++level) {
+    if (level <= 10) {
+      TestTypeAndValuesMatch(type_text, value_text, Status{});
+    } else {
+      TestTypeAndValuesMatch(
+          type_text, value_text,
+          internal::InternalError("Nested value depth exceeds 10 levels"));
+    }
     type_text =
         absl::Substitute("struct_type { fields { type { $0 } } }", type_text);
     value_text = absl::Substitute("array_value { values { $0 } }", value_text);
   }
-
-  TestTypeAndValuesMatch(
-      type_text, value_text,
-      internal::InternalError("Nested value depth exceeds 10 levels"));
-
-  // Verify that nesting up to the limit is fine. 4 levels of nesting will
-  // result in a maximum depth of 9.
-  type_text = "int64_type {}";
-  value_text = "int_value: 1";
-  for (int i = 0; i < 4; ++i) {
-    type_text =
-        absl::Substitute("struct_type { fields { type { $0 } } }", type_text);
-    value_text = absl::Substitute("array_value { values { $0 } }", value_text);
-  }
-  TestTypeAndValuesMatch(type_text, value_text, Status{});
 }
 
 }  // namespace
