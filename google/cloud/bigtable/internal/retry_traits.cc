@@ -24,7 +24,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-bool QueryPlanRefreshRetry::IsQueryPlanExpired(Status const& s) {
+bool ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(Status const& s) {
   if (s.code() == StatusCode::kFailedPrecondition) {
     if (absl::StrContains(s.message(), "PREPARED_QUERY_EXPIRED")) {
       return true;

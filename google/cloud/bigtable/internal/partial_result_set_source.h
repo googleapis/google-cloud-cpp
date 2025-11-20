@@ -81,18 +81,36 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
   std::vector<bigtable::QueryRow> buffered_rows_;
   google::bigtable::v2::ProtoRows proto_rows_;
 
-  // When engaged, the token we can use to resume the stream immediately after
-  // any data in (or previously in) `rows_`. When disengaged, we have already
-  // delivered data that would be replayed, so resumption is disabled until we
-  // see a new token.
+  // An opaque token sent by the server to allow query resumption and signal
+  // that the buffered values constructed from received `partial_rows` can be
+  // yielded to the caller. Clients can provide this token in a subsequent
+  // request to resume the result stream from the current point.
+  //
+  // When `resume_token` is non-empty, the buffered values received from
+  // `partial_rows` since the last non-empty `resume_token` can be yielded to
+  // the callers, provided that the client keeps the value of `resume_token` and
+  // uses it on subsequent retries.
+  //
+  // A `resume_token` may be sent without information in `partial_rows` to
+  // checkpoint the progress of a sparse query. Any previous `partial_rows` data
+  // should still be yielded in this case, and the new `resume_token` should be
+  // saved for future retries as normal.
+  //
+  // A `resume_token` will only be sent on a boundary where there is either no
+  // ongoing result batch, or `batch_checksum` is also populated.
+  //
+  // The server will also send a sentinel `resume_token` when last batch of
+  // `partial_rows` is sent. If the client retries the ExecuteQueryRequest with
+  // the sentinel `resume_token`, the server will emit it again without any
+  // data in `partial_rows`, then return OK.
   absl::optional<std::string> resume_token_ = "";
 
   Status last_status_;
   // The state of our PartialResultSetReader.
   enum class State {
-    // `Read()` has yet to return nullopt.
+    // `Read()` has yet to return false.
     kReading,
-    // `Read()` has returned nullopt, but we are yet to call `Finish()`.
+    // `Read()` has returned false, but we are yet to call `Finish()`.
     kEndOfStream,
     // `Finish()` has been called, which means `NextRow()` has returned
     // either an empty row or an error status.

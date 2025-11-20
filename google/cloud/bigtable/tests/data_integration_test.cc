@@ -618,13 +618,15 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamily) {
       google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
           .clone();
   auto query_refresh_option =
-      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-          .clone();
+      bigtable::experimental::
+          ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+              .clone();
   auto opts =
       Options{}
           .set<DataRetryPolicyOption>(std::move(retry_policy_option))
           .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
   auto connection = google::cloud::bigtable::MakeDataConnection(opts);
   auto table =
@@ -682,13 +684,15 @@ TEST_P(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
       google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
           .clone();
   auto query_refresh_option =
-      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-          .clone();
+      bigtable::experimental::
+          ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+              .clone();
   auto opts =
       Options{}
           .set<DataRetryPolicyOption>(std::move(retry_policy_option))
           .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
   auto connection = google::cloud::bigtable::MakeDataConnection(opts);
   auto table =
@@ -893,13 +897,15 @@ TEST_P(DataIntegrationTest, SingleColumnQuery) {
       google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
           .clone();
   auto query_refresh_option =
-      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-          .clone();
+      bigtable::experimental::
+          ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+              .clone();
   auto opts =
       Options{}
           .set<DataRetryPolicyOption>(std::move(retry_policy_option))
           .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
   auto connection = google::cloud::bigtable::MakeDataConnection(opts);
   auto table =
@@ -954,13 +960,15 @@ TEST_P(DataIntegrationTest, SingleColumnQueryWithHistory) {
       google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
           .clone();
   auto query_refresh_option =
-      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-          .clone();
+      bigtable::experimental::
+          ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+              .clone();
   auto opts =
       Options{}
           .set<DataRetryPolicyOption>(std::move(retry_policy_option))
           .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
   auto connection = google::cloud::bigtable::MakeDataConnection(opts);
   auto table =
@@ -1056,13 +1064,15 @@ TEST_P(DataIntegrationTest, MultiColumnQuery) {
       google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
           .clone();
   auto query_refresh_option =
-      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-          .clone();
+      bigtable::experimental::
+          ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+              .clone();
   auto opts =
       Options{}
           .set<DataRetryPolicyOption>(std::move(retry_policy_option))
           .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
   auto connection = google::cloud::bigtable::MakeDataConnection(opts);
   auto table =
@@ -1121,13 +1131,15 @@ TEST_P(DataIntegrationTest, QueryWithNulls) {
       google::cloud::internal::ExponentialBackoffPolicy(ms(0), ms(0), 2.0)
           .clone();
   auto query_refresh_option =
-      bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(0)
-          .clone();
+      bigtable::experimental::
+          ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(0)
+              .clone();
   auto opts =
       Options{}
           .set<DataRetryPolicyOption>(std::move(retry_policy_option))
           .set<DataBackoffPolicyOption>(std::move(backoff_policy_option))
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
   auto connection = google::cloud::bigtable::MakeDataConnection(opts);
   auto table =
