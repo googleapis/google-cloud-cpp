@@ -685,25 +685,32 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 TEST_F(BucketIntegrationTest, ListPartialSuccess) {
   auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
+  std::string unreachable_bucket_name = MakeRandomBucketName() + "-unreachable";
 
   auto meta =
       client.CreateBucketForProject(bucket_name, project_id_, BucketMetadata{});
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto list_buckets_result = [&client] {
-    std::vector<std::string> names;
-    for (auto& r : client.ListBucketsPartial()) {
-      EXPECT_STATUS_OK(r);
-      if (!r) break;
-      for (auto const& b : r->buckets) {
-        names.push_back(b.name());
-      }
-    }
-    return names;
-  };
+  auto meta_unreachable = client.CreateBucketForProject(
+      unreachable_bucket_name, project_id_, BucketMetadata{});
+  ASSERT_STATUS_OK(meta_unreachable);
+  ScheduleForDelete(*meta_unreachable);
 
-  ASSERT_THAT(list_buckets_result(), Contains(bucket_name));
+  std::vector<std::string> names;
+  std::vector<std::string> unreachable;
+  for (auto& r : client.ListBucketsPartial()) {
+    EXPECT_STATUS_OK(r);
+    if (!r) break;
+    for (auto const& b : r->buckets) {
+      names.push_back(b.name());
+    }
+    unreachable.insert(unreachable.end(), r->unreachable.begin(),
+                       r->unreachable.end());
+  }
+
+  EXPECT_THAT(names, Contains(bucket_name));
+  EXPECT_THAT(unreachable, Contains(unreachable_bucket_name));
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {

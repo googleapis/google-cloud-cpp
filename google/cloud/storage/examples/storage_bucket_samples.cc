@@ -51,7 +51,7 @@ void ListBuckets(google::cloud::storage::Client client,
 
 void ListBucketsPartial(google::cloud::storage::Client client,
                         std::vector<std::string> const& /*argv*/) {
-  //! [list buckets partial result] [START list_buckets_partial]
+  //! [list buckets partial result] [START storage_list_buckets_partial_success]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client) {
@@ -73,7 +73,7 @@ void ListBucketsPartial(google::cloud::storage::Client client,
       std::cout << "No buckets in default project\n";
     }
   }
-  //! [list buckets partial result] [END list_buckets_partial]
+  //! [list buckets partial result] [END storage_list_buckets_partial_success]
   (std::move(client));
 }
 

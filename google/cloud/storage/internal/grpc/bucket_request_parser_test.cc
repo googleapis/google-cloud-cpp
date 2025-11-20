@@ -187,7 +187,7 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
         page_size: 123
         page_token: "test-token"
         prefix: "test-prefix"
-        return_partial_success: false
+        return_partial_success: true
         read_mask { paths: [ "*" ] }
       )pb",
       &expected));

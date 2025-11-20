@@ -407,6 +407,9 @@ google::storage::v2::ListBucketsRequest ToProto(
   }
   result.set_page_token(request.page_token());
   result.set_prefix(request.GetOption<storage::Prefix>().value_or(""));
+  if (request.return_partial_success()) {
+    result.set_return_partial_success(true);
+  }
   if (request.GetOption<storage::Projection>().value_or("") == "full") {
     result.mutable_read_mask()->add_paths("*");
   }

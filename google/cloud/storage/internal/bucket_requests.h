@@ -46,7 +46,9 @@ class ListBucketsRequest
 
   std::string const& project_id() const { return project_id_; }
   std::string const& page_token() const { return page_token_; }
-  bool const& return_partial_success() const { return return_partial_success_; }
+  bool return_partial_success() const {
+    return GetOption<ReturnPartialSuccess>().value_or(false);
+  }
   ListBucketsRequest& set_page_token(std::string page_token) {
     page_token_ = std::move(page_token);
     return *this;
@@ -55,7 +57,6 @@ class ListBucketsRequest
  private:
   std::string project_id_;
   std::string page_token_;
-  bool return_partial_success_;
 };
 
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);

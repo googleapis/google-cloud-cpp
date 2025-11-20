@@ -97,6 +97,7 @@ storage_client_unit_tests = [
     "internal/tuple_filter_test.cc",
     "internal/unified_rest_credentials_test.cc",
     "lifecycle_rule_test.cc",
+    "list_buckets_partial_reader_test.cc",
     "list_buckets_reader_test.cc",
     "list_hmac_keys_reader_test.cc",
     "list_objects_and_prefixes_reader_test.cc",
