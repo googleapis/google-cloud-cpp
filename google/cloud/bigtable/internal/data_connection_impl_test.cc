@@ -2841,16 +2841,31 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
   auto mock = std::make_shared<MockBigtableStub>();
+  v2::PrepareQueryResponse response;
+
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+      columns {
+        name: "value"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  *response.mutable_valid_until() = internal::ToProtoTimestamp(
+      std::chrono::system_clock::now() + std::chrono::seconds(3600));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataText, response.mutable_metadata()));
   EXPECT_CALL(*mock, PrepareQuery)
-      .WillOnce([](grpc::ClientContext&, Options const&,
-                   v2::PrepareQueryRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::PrepareQueryRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   request.instance_name());
         EXPECT_EQ("SELECT * FROM the-table", request.query());
-        v2::PrepareQueryResponse response;
-        *response.mutable_valid_until() = internal::ToProtoTimestamp(
-            std::chrono::system_clock::now() + std::chrono::seconds(3600));
         return response;
       });
 
@@ -2922,14 +2937,29 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
   auto mock = std::make_shared<MockBigtableStub>();
+  auto constexpr kResultMetadataText = R"pb(
+    proto_schema {
+      columns {
+        name: "row_key"
+        type { string_type {} }
+      }
+      columns {
+        name: "value"
+        type { string_type {} }
+      }
+    }
+  )pb";
+  v2::PrepareQueryResponse response;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kResultMetadataText, response.mutable_metadata()));
   EXPECT_CALL(*mock, AsyncPrepareQuery)
-      .WillOnce([](CompletionQueue const&, auto, auto,
-                   v2::PrepareQueryRequest const& request) {
+      .WillOnce([&](CompletionQueue const&, auto, auto,
+                    v2::PrepareQueryRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ("projects/the-project/instances/the-instance",
                   request.instance_name());
         EXPECT_EQ("SELECT * FROM the-table", request.query());
-        return make_ready_future(make_status_or(v2::PrepareQueryResponse{}));
+        return make_ready_future(make_status_or(response));
       });
 
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
