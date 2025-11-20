@@ -257,8 +257,8 @@ class AsyncWriterConnectionResumedState
     auto impl = Impl(lk);
     lk.unlock();
     impl->Query().then([this, result, w = WeakFromThis()](auto f) {
-      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
       if (auto self = w.lock()) return self->OnQuery(f.get());
+      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
     });
   }
 
@@ -464,8 +464,8 @@ class AsyncWriterConnectionResumedState
     flushed.set_value(result);
     // Restart the write loop ONLY if we are not already finalizing.
     // If finalizing_ is true, the completion will be handled by OnFinalize.
-    std::unique_lock<std::mutex> loop_lk(mu_);
-    if (!finalizing_) WriteLoop(std::move(loop_lk));
+    // std::unique_lock<std::mutex> loop_lk(mu_);
+    // if (!finalizing_) WriteLoop(std::move(loop_lk));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
