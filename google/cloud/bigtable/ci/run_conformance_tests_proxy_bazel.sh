@@ -47,35 +47,13 @@ go test -v \
   -proxy_addr=:9999
 exit_status=$?
 
-# Run all the ExecuteQuery tests that either work or we plan to skip such as
-# CloseClient
+# Run all the ExecuteQuery tests that either work or we plan to skip due to
+# unimplemented features or issues with the tests themselves.
 go test -v \
-  -run "TestExecuteQuery|TestExecuteQuery_PlanRefresh$|TestExecuteQuery_PlanRefresh_WithMetadataChange|TestExecuteQuery_PlanRefresh_Retries|TestExecuteQuery_FailsOnSuccesfulStreamWithNoToken" \
-  -skip "CloseClient|FailsOnInvalidType|FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField|TestExecuteQuery_PlanRefresh_AfterResumeTokenCausesError|TestExecuteQuery_RetryTest_WithPlanRefresh|TestExecuteQuery_PlanRefresh_RespectsDeadline|TestExecuteQuery_PlanRefresh_RecoversAfterPermanentError" \
+  -run "TestExecuteQuery" \
+  -skip "CloseClient|TestExecuteQuery_FailsOnInvalidType|TestExecuteQuery_PlanRefresh_RespectsDeadline" \
   -proxy_addr=:9999
 exit_status=$?
-
-# These next four go test commands group the currently failing ExecuteQuery
-# tests into groups that exercise similar functionality and should be worked on
-# together.
-
-# Metadata tests b/461232934
-#go test -v \
-#  -run "FailsOnInvalidType" \
-#  -proxy_addr=:9999
-#exit_status=$?
-
-# Response/Metadata mismatches b/461233335
-go test -v \
-  -run "FailsOnTypeMismatch|FailsOnTypeMismatchWithinMap|FailsOnTypeMismatchWithinArray|FailsOnTypeMismatchWithinStruct|FailsOnStructMissingField" \
-  -proxy_addr=:9999
-exit_status=$?
-
-# QueryPlan refresh tests b/461233613
-#go test -v \
-#  -run "RetryTest_WithPlanRefresh|PlanRefresh|PlanRefresh_RecoversAfterPermanentError" \
-#  -proxy_addr=:9999
-#exit_status=$?
 
 # Remove the entire module cache, including unpacked source code of versioned
 # dependencies.

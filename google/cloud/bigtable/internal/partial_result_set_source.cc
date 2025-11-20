@@ -53,9 +53,7 @@ PartialResultSetSource::Create(
   auto status = source->ReadFromStream();
 
   // Any error during parsing will be returned.
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
 
   return {std::move(source)};
 }
@@ -142,15 +140,23 @@ Status PartialResultSetSource::ReadFromStream() {
   if (reader_->Read(resume_token_, result_set)) {
     return ProcessDataFromStream(result_set.result);
   }
+
+  last_status_ = reader_->Finish();
   state_ = State::kFinished;
-  // buffered_rows_ and read_buffer_ are expected to be empty because the last
-  // successful read would have had a sentinel resume_token, causing
-  // ProcessDataFromStream to commit them.
-  if (!buffered_rows_.empty() || !read_buffer_.empty()) {
+
+  if (ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(last_status_)) {
+    if (resume_token_ && !resume_token_->empty()) {
+      return internal::InternalError(
+          "Query plan expired during a retry attempt", GCP_ERROR_INFO());
+    }
+  } else if (!buffered_rows_.empty() || !read_buffer_.empty()) {
+    // buffered_rows_ and read_buffer_ are expected to be empty because the last
+    // successful read would have had a sentinel resume_token, causing
+    // ProcessDataFromStream to commit them.
     return internal::InternalError("Stream ended with uncommitted rows.",
                                    GCP_ERROR_INFO());
   }
-  last_status_ = reader_->Finish();
+
   return last_status_;
 }
 

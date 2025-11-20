@@ -212,10 +212,10 @@ DataLimitedErrorCountRetryPolicy TestRetryPolicy() {
   return DataLimitedErrorCountRetryPolicy(kNumRetries);
 }
 
-bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy
+bigtable::experimental::ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy
 TestQueryPlanRefreshRetryPolicy() {
-  return bigtable::experimental::QueryPlanRefreshLimitedErrorCountRetryPolicy(
-      kNumRetries);
+  return bigtable::experimental::
+      ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(kNumRetries);
 }
 
 ExponentialBackoffPolicy TestBackoffPolicy() {
@@ -255,7 +255,8 @@ Options CallOptionsWithoutClientContextSetup() {
       Options{}
           .set<bigtable::AppProfileIdOption>(kAppProfile)
           .set<DataRetryPolicyOption>(TestRetryPolicy().clone())
-          .set<bigtable::experimental::QueryPlanRefreshRetryPolicyOption>(
+          .set<
+              bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               TestQueryPlanRefreshRetryPolicy().clone())
           .set<DataBackoffPolicyOption>(TestBackoffPolicy().clone()));
 }
