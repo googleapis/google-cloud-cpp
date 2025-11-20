@@ -757,6 +757,13 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   if (!response) {
     return std::move(response).status();
   }
+  for (auto const& column : response->metadata().proto_schema().columns()) {
+    if (!column.has_type() ||
+        column.type().kind_case() == google::bigtable::v2::Type::KIND_NOT_SET) {
+      return internal::InternalError("Column type cannot be empty",
+                                     GCP_ERROR_INFO());
+    }
+  }
   auto const* func = __func__;
   auto refresh_fn = [this, request, func]() mutable {
     auto current = google::cloud::internal::SaveCurrentOptions();
@@ -840,7 +847,15 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
         if (!response) {
           return std::move(response).status();
         }
-
+        for (auto const& column :
+             response->metadata().proto_schema().columns()) {
+          if (!column.has_type() ||
+              column.type().kind_case() ==
+                  google::bigtable::v2::Type::KIND_NOT_SET) {
+            return StatusOr<bigtable::PreparedQuery>(internal::InternalError(
+                "Column type cannot be empty", GCP_ERROR_INFO()));
+          }
+        }
         auto refresh_fn = [this, request, func]() mutable {
           auto current = google::cloud::internal::SaveCurrentOptions();
           auto retry = retry_policy(*current);
@@ -870,6 +885,9 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
               .then([operation_context](auto f) mutable {
                 StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
                     f.get();
+                if (!response.ok()) {
+                  return response;
+                }
                 operation_context->OnDone(response.status());
                 return response;
               });
