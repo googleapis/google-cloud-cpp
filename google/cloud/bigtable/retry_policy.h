@@ -156,7 +156,8 @@ class DataLimitedTimeRetryPolicy : public DataRetryPolicy {
 namespace experimental {
 
 /**
- * A retry policy used in `bigtable::DataConnection::ExecuteQuery` based on
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery` to
+ * retry query execution that may involve query plan refreshes based on
  * counting errors.
  *
  * This policy stops retrying if:
@@ -171,7 +172,8 @@ namespace experimental {
  * - [`kFailedPrecondition`](@ref google::cloud::StatusCode) if the error
  *   message indicates this was caused by a an expired prepared query.
  */
-class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
+class ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy
+    : public DataRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -180,15 +182,18 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit QueryPlanRefreshLimitedErrorCountRetryPolicy(int maximum_failures)
+  explicit ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(
+      int maximum_failures)
       : impl_(maximum_failures) {}
 
-  QueryPlanRefreshLimitedErrorCountRetryPolicy(
-      QueryPlanRefreshLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : QueryPlanRefreshLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
-  QueryPlanRefreshLimitedErrorCountRetryPolicy(
-      QueryPlanRefreshLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : QueryPlanRefreshLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(
+      ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(
+      ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -198,7 +203,8 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
     return impl_.IsPermanentFailure(s);
   }
   std::unique_ptr<DataRetryPolicy> clone() const override {
-    return std::make_unique<QueryPlanRefreshLimitedErrorCountRetryPolicy>(
+    return std::make_unique<
+        ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy>(
         impl_.maximum_failures());
   }
 
@@ -207,12 +213,13 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
 
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigtable_internal::QueryPlanRefreshRetry>
+      bigtable_internal::ExecuteQueryPlanRefreshRetry>
       impl_;
 };
 
 /**
- * A retry policy used in `bigtable::DataConnection::ExecuteQuery` based on
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery` to
+ * retry query execution that may involve query plan refreshes based on
  * elapsed time.
  *
  * This policy stops retrying if:
@@ -227,7 +234,7 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
  * - [`kFailedPrecondition`](@ref google::cloud::StatusCode) if the error
  *   message indicates this was caused by a an expired prepared query.
  */
-class QueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
+class ExecuteQueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -250,16 +257,16 @@ class QueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
    *     about `std::chrono::duration`.
    */
   template <typename DurationRep, typename DurationPeriod>
-  explicit QueryPlanRefreshLimitedTimeRetryPolicy(
+  explicit ExecuteQueryPlanRefreshLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
       : impl_(maximum_duration) {}
 
-  QueryPlanRefreshLimitedTimeRetryPolicy(
-      QueryPlanRefreshLimitedTimeRetryPolicy&& rhs) noexcept
-      : QueryPlanRefreshLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  QueryPlanRefreshLimitedTimeRetryPolicy(
-      QueryPlanRefreshLimitedTimeRetryPolicy const& rhs) noexcept
-      : QueryPlanRefreshLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExecuteQueryPlanRefreshLimitedTimeRetryPolicy(
+      ExecuteQueryPlanRefreshLimitedTimeRetryPolicy&& rhs) noexcept
+      : ExecuteQueryPlanRefreshLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExecuteQueryPlanRefreshLimitedTimeRetryPolicy(
+      ExecuteQueryPlanRefreshLimitedTimeRetryPolicy const& rhs) noexcept
+      : ExecuteQueryPlanRefreshLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -271,7 +278,7 @@ class QueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
     return impl_.IsPermanentFailure(s);
   }
   std::unique_ptr<DataRetryPolicy> clone() const override {
-    return std::make_unique<QueryPlanRefreshLimitedTimeRetryPolicy>(
+    return std::make_unique<ExecuteQueryPlanRefreshLimitedTimeRetryPolicy>(
         impl_.maximum_duration());
   }
 
@@ -280,7 +287,138 @@ class QueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
 
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<
-      bigtable_internal::QueryPlanRefreshRetry>
+      bigtable_internal::ExecuteQueryPlanRefreshRetry>
+      impl_;
+};
+
+/**
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery`
+ * attempts to refresh a query plan based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kAborted`](@ref google::cloud::StatusCode)
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kInternal`](@ref google::cloud::StatusCode)
+ */
+class QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy
+    : public DataRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
+
+  QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy(
+      QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy(
+      QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& s) const override {
+    return impl_.IsPermanentFailure(s);
+  }
+  std::unique_ptr<DataRetryPolicy> clone() const override {
+    return std::make_unique<
+        QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy>(
+        impl_.maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = RetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigtable_internal::QueryPlanRefreshFunctionRetry>
+      impl_;
+};
+
+/**
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery`
+ * attempts to refresh a query plan based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kAborted`](@ref google::cloud::StatusCode)
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kInternal`](@ref google::cloud::StatusCode)
+ *
+ */
+class QueryPlanRefreshFunctionLimitedTimeRetryPolicy : public DataRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for
+   *     @p maximum_duration's type. The semantics of this template parameter
+   *     are documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for
+   *     @p maximum_duration's type. The semantics of this template parameter
+   *     are documented in `std::chrono::duration<>`. In brief, the length of
+   *     the tick in seconds, expressed as a `std::ratio<>`. For our purposes it
+   *     is simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more details
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit QueryPlanRefreshFunctionLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  QueryPlanRefreshFunctionLimitedTimeRetryPolicy(
+      QueryPlanRefreshFunctionLimitedTimeRetryPolicy&& rhs) noexcept
+      : QueryPlanRefreshFunctionLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
+  QueryPlanRefreshFunctionLimitedTimeRetryPolicy(
+      QueryPlanRefreshFunctionLimitedTimeRetryPolicy const& rhs) noexcept
+      : QueryPlanRefreshFunctionLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& s) const override {
+    return impl_.IsPermanentFailure(s);
+  }
+  std::unique_ptr<DataRetryPolicy> clone() const override {
+    return std::make_unique<QueryPlanRefreshFunctionLimitedTimeRetryPolicy>(
+        impl_.maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = RetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigtable_internal::QueryPlanRefreshFunctionRetry>
       impl_;
 };
 

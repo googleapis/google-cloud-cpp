@@ -36,12 +36,13 @@ TEST(SafeGrpcRetry, RstStreamRetried) {
 TEST(QueryPlanRefreshRetry, IsQueryPlanExpiredNoStatusPayload) {
   auto non_query_plan_failed_precondition =
       internal::FailedPreconditionError("not the query plan");
-  EXPECT_FALSE(QueryPlanRefreshRetry::IsQueryPlanExpired(
+  EXPECT_FALSE(ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(
       non_query_plan_failed_precondition));
 
   auto query_plan_expired =
       internal::FailedPreconditionError("PREPARED_QUERY_EXPIRED");
-  EXPECT_TRUE(QueryPlanRefreshRetry::IsQueryPlanExpired(query_plan_expired));
+  EXPECT_TRUE(
+      ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(query_plan_expired));
 }
 
 TEST(QueryPlanRefreshRetry, QueryPlanExpiredStatusPayload) {
@@ -63,8 +64,8 @@ TEST(QueryPlanRefreshRetry, QueryPlanExpiredStatusPayload) {
   internal::SetPayload(query_plan_expired_violation,
                        google::cloud::internal::StatusPayloadGrpcProto(),
                        status.SerializeAsString());
-  EXPECT_TRUE(
-      QueryPlanRefreshRetry::IsQueryPlanExpired(query_plan_expired_violation));
+  EXPECT_TRUE(ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(
+      query_plan_expired_violation));
 }
 
 TEST(QueryPlanRefreshRetry, QueryPlanNotExpiredStatusPayload) {
@@ -84,7 +85,7 @@ TEST(QueryPlanRefreshRetry, QueryPlanNotExpiredStatusPayload) {
   internal::SetPayload(query_plan_not_expired_violation,
                        google::cloud::internal::StatusPayloadGrpcProto(),
                        status.SerializeAsString());
-  EXPECT_FALSE(QueryPlanRefreshRetry::IsQueryPlanExpired(
+  EXPECT_FALSE(ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(
       query_plan_not_expired_violation));
 }
 
