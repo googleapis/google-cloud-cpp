@@ -3055,10 +3055,6 @@ TEST_F(DataConnectionTest, ExecuteQuerySuccessWithTransientErrors) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
-              *r->mutable_metadata() = pq_response.metadata();
-              return absl::nullopt;
-            })
-            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
                            false);
               return absl::nullopt;
@@ -3309,10 +3305,6 @@ TEST_F(DataConnectionTest, ExecuteQuerySuccessWithQueryPlanRefresh) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
-              *r->mutable_metadata() = refresh_pq_response.metadata();
-              return absl::nullopt;
-            })
-            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
                            false);
               return absl::nullopt;
@@ -3480,10 +3472,6 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](ExecuteQueryResponse* r) {
-              *r->mutable_metadata() = refresh_pq_response.metadata();
-              return absl::nullopt;
-            })
-            .WillOnce([&](ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
                            false);
               return absl::nullopt;
@@ -3650,10 +3638,6 @@ TEST_F(DataConnectionTest,
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](ExecuteQueryResponse* r) {
-              *r->mutable_metadata() = refresh_pq_response.metadata();
-              return absl::nullopt;
-            })
-            .WillOnce([&](ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
                            false);
               return absl::nullopt;
@@ -3726,22 +3710,9 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
       kResultMetadataText, pq_response.mutable_metadata()));
   *pq_response.mutable_valid_until() = internal::ToProtoTimestamp(
       std::chrono::system_clock::now() + std::chrono::seconds(3600));
-
-  auto constexpr kExecuteQueryResultMetadataText = R"pb(
-    proto_schema {
-      columns {
-        name: "row_key"
-        type { string_type {} }
-      }
-      columns {
-        name: "different_value"
-        type { string_type {} }
-      }
-    }
-  )pb";
   v2::ExecuteQueryResponse eq_response;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      kExecuteQueryResultMetadataText, eq_response.mutable_metadata()));
+      kResultMetadataText, eq_response.mutable_metadata()));
 
   auto refresh_fn = []() {
     return make_ready_future(
@@ -3749,21 +3720,19 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
             Status{StatusCode::kUnimplemented, "not implemented"}));
   };
   EXPECT_CALL(*mock, ExecuteQuery)
-      .Times(3)
-      .WillRepeatedly(
-          [&](auto, auto const&,
-              google::bigtable::v2::ExecuteQueryRequest const& request) {
-            EXPECT_EQ(request.app_profile_id(), kAppProfile);
-            EXPECT_EQ(request.instance_name(),
-                      "projects/test-project/instances/test-instance");
-            auto stream = std::make_unique<MockExecuteQueryStream>();
-            EXPECT_CALL(*stream, Read)
-                .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
-                  *r = eq_response;
-                  return absl::nullopt;
-                });
-            return stream;
-          });
+      .WillOnce([&](auto, auto const&,
+                    google::bigtable::v2::ExecuteQueryRequest const& request) {
+        EXPECT_EQ(request.app_profile_id(), kAppProfile);
+        EXPECT_EQ(request.instance_name(),
+                  "projects/test-project/instances/test-instance");
+        auto stream = std::make_unique<MockExecuteQueryStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
+              *r = eq_response;
+              return absl::nullopt;
+            });
+        return stream;
+      });
 
   auto conn = TestConnection(std::move(mock), std::move(factory));
   internal::OptionsSpan span(CallOptions());
@@ -3779,8 +3748,11 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
   bigtable::ExecuteQueryParams params{std::move(bq)};
   auto row_stream = conn->ExecuteQuery(std::move(params));
   for (auto const& row : row_stream) {
-    EXPECT_THAT(row,
-                StatusIs(StatusCode::kAborted, HasSubstr("Schema changed")));
+    EXPECT_THAT(
+        row,
+        StatusIs(
+            StatusCode::kInternal,
+            HasSubstr("Expected results response, but received: METADATA")));
   }
   fake_cq_impl->SimulateCompletion(false);
 }
