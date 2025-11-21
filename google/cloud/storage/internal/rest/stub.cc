@@ -186,8 +186,9 @@ StatusOr<ListBucketsResponse> RestStub::ListBuckets(
   if (!request.page_token().empty()) {
     builder.AddQueryParameter("pageToken", request.page_token());
   }
-  builder.AddQueryParameter("returnPartialSuccess",
-                            (request.return_partial_success() ? "1" : "0"));
+  builder.AddQueryParameter(
+      "returnPartialSuccess",
+      (request.return_partial_success() ? "true" : "false"));
   return ParseFromRestResponse<ListBucketsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }

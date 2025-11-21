@@ -38,6 +38,7 @@ using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsSubsetOf;
 using ::testing::Not;
@@ -700,7 +701,7 @@ TEST_F(BucketIntegrationTest, ListPartialSuccess) {
 
   std::vector<std::string> names;
   std::vector<std::string> unreachable;
-  for (auto& r : client.ListBucketsPartial()) {
+  for (auto& r : client.ListBucketsPartial(ReturnPartialSuccess(true))) {
     EXPECT_STATUS_OK(r);
     if (!r) break;
     for (auto const& b : r->buckets) {
@@ -711,7 +712,7 @@ TEST_F(BucketIntegrationTest, ListPartialSuccess) {
   }
 
   EXPECT_THAT(names, Contains(bucket_name));
-  EXPECT_THAT(unreachable, Contains(unreachable_bucket_name));
+  EXPECT_THAT(unreachable, Contains(HasSubstr(unreachable_bucket_name)));
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {
