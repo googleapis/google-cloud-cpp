@@ -30,6 +30,8 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+auto constexpr kMaxValueDepth = 10;
+
 // Some Bigtable proto fields use Cord internally and string externally.
 template <typename T, typename std::enable_if<
                           std::is_same<T, std::string>::value>::type* = nullptr>
@@ -339,17 +341,21 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
   return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
 }
 
-Status MakeDepthExceededError() {
-  return internal::InternalError("Nested value depth exceeds 10 levels",
-                                 GCP_ERROR_INFO());
+Status CheckDepthExceeded(int const depth) {
+  if (depth > kMaxValueDepth) {
+    return internal::InternalError("Nested value depth exceeds 10 levels",
+                                   GCP_ERROR_INFO());
+  }
+  return Status{};
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
 Status TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
                                google::bigtable::v2::Value const& value,
-                               int depth) {
-  if (depth > 10) {
-    return MakeDepthExceededError();
+                               int const depth) {
+  auto depth_exceeded = CheckDepthExceeded(depth);
+  if (!depth_exceeded.ok()) {
+    return depth_exceeded;
   }
   if (!value.has_array_value()) {
     return internal::InternalError(
@@ -369,9 +375,10 @@ Status TypeAndArrayValuesMatch(google::bigtable::v2::Type const& type,
 // NOLINTNEXTLINE(misc-no-recursion)
 Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
                              google::bigtable::v2::Value const& value,
-                             int depth) {
-  if (depth > 10) {
-    return MakeDepthExceededError();
+                             int const depth) {
+  auto depth_exceeded = CheckDepthExceeded(depth);
+  if (!depth_exceeded.ok()) {
+    return depth_exceeded;
   }
   if (!value.has_array_value()) {
     return internal::InternalError(
@@ -405,9 +412,10 @@ Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
 // NOLINTNEXTLINE(misc-no-recursion)
 Status TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
                                 google::bigtable::v2::Value const& value,
-                                int depth) {
-  if (depth > 10) {
-    return MakeDepthExceededError();
+                                int const depth) {
+  auto depth_exceeded = CheckDepthExceeded(depth);
+  if (!depth_exceeded.ok()) {
+    return depth_exceeded;
   }
   if (!value.has_array_value()) {
     return internal::InternalError(
@@ -440,9 +448,10 @@ Status TypeAndStructValuesMatch(google::bigtable::v2::Type const& type,
 // NOLINTNEXTLINE(misc-no-recursion)
 Status Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
                                  google::bigtable::v2::Value const& value,
-                                 int depth) {
-  if (depth > 10) {
-    return MakeDepthExceededError();
+                                 int const depth) {
+  auto depth_exceeded = CheckDepthExceeded(depth);
+  if (!depth_exceeded.ok()) {
+    return depth_exceeded;
   }
   using google::bigtable::v2::Type;
   auto make_mismatch_metadata_status = [&](std::string const& value_kind,
@@ -458,13 +467,13 @@ Status Value::TypeAndValuesMatch(google::bigtable::v2::Type const& type,
   Status result;
   switch (type.kind_case()) {
     case Type::kArrayType:
-      result = TypeAndArrayValuesMatch(type, value, ++depth);
+      result = TypeAndArrayValuesMatch(type, value, depth + 1);
       break;
     case Type::kMapType:
-      result = TypeAndMapValuesMatch(type, value, ++depth);
+      result = TypeAndMapValuesMatch(type, value, depth + 1);
       break;
     case Type::kStructType:
-      result = TypeAndStructValuesMatch(type, value, ++depth);
+      result = TypeAndStructValuesMatch(type, value, depth + 1);
       break;
     case Type::kBoolType:
       if (!value.has_bool_value()) {
