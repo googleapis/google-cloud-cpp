@@ -17,7 +17,7 @@
 // source: google/cloud/cloudsecuritycompliance/v1/deployment.proto
 
 #include "google/cloud/cloudsecuritycompliance/v1/internal/deployment_auth_decorator.h"
-#include <google/cloud/cloudsecuritycompliance/v1/deployment.grpc.pb.h>
+#include "google/cloud/cloudsecuritycompliance/v1/deployment.grpc.pb.h"
 #include <memory>
 #include <utility>
 

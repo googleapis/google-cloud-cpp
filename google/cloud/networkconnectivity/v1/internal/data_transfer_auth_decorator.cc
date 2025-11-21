@@ -17,7 +17,7 @@
 // source: google/cloud/networkconnectivity/v1/data_transfer.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/data_transfer_auth_decorator.h"
-#include <google/cloud/networkconnectivity/v1/data_transfer.grpc.pb.h>
+#include "google/cloud/networkconnectivity/v1/data_transfer.grpc.pb.h"
 #include <memory>
 #include <utility>
 

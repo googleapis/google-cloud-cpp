@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDSECURITYCOMPLIANCE_V1_DEPLOYMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDSECURITYCOMPLIANCE_V1_DEPLOYMENT_CONNECTION_H
 
+#include "google/cloud/cloudsecuritycompliance/v1/deployment.pb.h"
 #include "google/cloud/cloudsecuritycompliance/v1/deployment_connection_idempotency_policy.h"
 #include "google/cloud/cloudsecuritycompliance/v1/internal/deployment_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/cloudsecuritycompliance/v1/deployment.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

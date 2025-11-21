@@ -17,7 +17,7 @@
 // source: google/cloud/configdelivery/v1/config_delivery.proto
 
 #include "google/cloud/configdelivery/v1/internal/config_delivery_auth_decorator.h"
-#include <google/cloud/configdelivery/v1/config_delivery.grpc.pb.h>
+#include "google/cloud/configdelivery/v1/config_delivery.grpc.pb.h"
 #include <memory>
 #include <utility>
 
