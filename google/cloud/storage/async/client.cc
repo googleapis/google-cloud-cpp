@@ -133,6 +133,9 @@ future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::StartAppendableObjectUpload(
     google::storage::v2::BidiWriteObjectRequest request, Options opts) {
       std::cerr << "Hey this is a test statement of new branch.\n";
+      return make_ready_future(
+          StatusOr<std::pair<AsyncWriter, AsyncToken>>(Status(
+              StatusCode::kInternal, "msg")));
       return connection_
       ->StartAppendableObjectUpload(
           {std::move(request),
