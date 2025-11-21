@@ -25,6 +25,7 @@ bigtable_client_testing_hdrs = [
     "testing/mock_data_client.h",
     "testing/mock_mutate_rows_limiter.h",
     "testing/mock_mutate_rows_reader.h",
+    "testing/mock_partial_result_set_reader.h",
     "testing/mock_policies.h",
     "testing/mock_read_rows_reader.h",
     "testing/mock_response_reader.h",

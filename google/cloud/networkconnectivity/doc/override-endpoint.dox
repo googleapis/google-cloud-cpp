@@ -7,12 +7,13 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `networkconnectivity_v1::HubServiceClient`:
+For example, this will override the default endpoint for `networkconnectivity_v1::DataTransferServiceClient`:
 
-@snippet hub_client_samples.cc set-client-endpoint
+@snippet data_transfer_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c networkconnectivity_v1::DataTransferServiceClient](@ref networkconnectivity_v1::DataTransferServiceClient-endpoint-snippet)
 - [\c networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-endpoint-snippet)
 - [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref networkconnectivity_v1::PolicyBasedRoutingServiceClient-endpoint-snippet)
 
@@ -21,6 +22,12 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page networkconnectivity_v1::DataTransferServiceClient-endpoint-snippet Override networkconnectivity_v1::DataTransferServiceClient Endpoint Configuration
+
+@snippet google/cloud/networkconnectivity/v1/samples/data_transfer_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page networkconnectivity_v1::HubServiceClient-endpoint-snippet Override networkconnectivity_v1::HubServiceClient Endpoint Configuration
 

@@ -270,6 +270,16 @@ BackupDRAuth::ListBackups(
   return child_->ListBackups(context, options, request);
 }
 
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRAuth::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchBackupsForResourceType(context, options, request);
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRAuth::GetBackup(
     grpc::ClientContext& context, Options const& options,
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
@@ -642,6 +652,16 @@ BackupDRAuth::GetDataSourceReference(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataSourceReference(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRAuth::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDataSourceReferences(context, options, request);
 }
 
 StatusOr<google::cloud::backupdr::v1::

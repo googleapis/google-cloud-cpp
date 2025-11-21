@@ -1,0 +1,91 @@
+/*!
+@page monitoring-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `monitoring_dashboard_v1::DashboardsServiceClient`:
+
+@snippet dashboards_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c monitoring_dashboard_v1::DashboardsServiceClient](@ref monitoring_dashboard_v1::DashboardsServiceClient-universe-domain-snippet)
+- [\c monitoring_metricsscope_v1::MetricsScopesClient](@ref monitoring_metricsscope_v1::MetricsScopesClient-universe-domain-snippet)
+- [\c monitoring_v3::AlertPolicyServiceClient](@ref monitoring_v3::AlertPolicyServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::GroupServiceClient](@ref monitoring_v3::GroupServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::MetricServiceClient](@ref monitoring_v3::MetricServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::NotificationChannelServiceClient](@ref monitoring_v3::NotificationChannelServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::QueryServiceClient](@ref monitoring_v3::QueryServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::ServiceMonitoringServiceClient](@ref monitoring_v3::ServiceMonitoringServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::SnoozeServiceClient](@ref monitoring_v3::SnoozeServiceClient-universe-domain-snippet)
+- [\c monitoring_v3::UptimeCheckServiceClient](@ref monitoring_v3::UptimeCheckServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page monitoring_dashboard_v1::DashboardsServiceClient-universe-domain-snippet Override monitoring_dashboard_v1::DashboardsServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/dashboard/v1/samples/dashboards_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_metricsscope_v1::MetricsScopesClient-universe-domain-snippet Override monitoring_metricsscope_v1::MetricsScopesClient Universe Domain
+
+@snippet google/cloud/monitoring/metricsscope/v1/samples/metrics_scopes_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::AlertPolicyServiceClient-universe-domain-snippet Override monitoring_v3::AlertPolicyServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/alert_policy_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::GroupServiceClient-universe-domain-snippet Override monitoring_v3::GroupServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/group_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::MetricServiceClient-universe-domain-snippet Override monitoring_v3::MetricServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/metric_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::NotificationChannelServiceClient-universe-domain-snippet Override monitoring_v3::NotificationChannelServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/notification_channel_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::QueryServiceClient-universe-domain-snippet Override monitoring_v3::QueryServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/query_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::ServiceMonitoringServiceClient-universe-domain-snippet Override monitoring_v3::ServiceMonitoringServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::SnoozeServiceClient-universe-domain-snippet Override monitoring_v3::SnoozeServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/snooze_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page monitoring_v3::UptimeCheckServiceClient-universe-domain-snippet Override monitoring_v3::UptimeCheckServiceClient Universe Domain
+
+@snippet google/cloud/monitoring/v3/samples/uptime_check_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

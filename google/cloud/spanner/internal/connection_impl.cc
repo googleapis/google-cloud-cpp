@@ -137,21 +137,16 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   void TryCancel() override { context_->TryCancel(); }
 
-  absl::optional<PartialResultSet> Read(
-      absl::optional<std::string> const&) override {
-    struct Visitor {
-      Status& final_status;
+  bool Read(absl::optional<std::string> const&,
+            UnownedPartialResultSet& response) override {
+    auto opt_status = reader_->Read(&response.result);
+    response.resumption = false;
 
-      absl::optional<PartialResultSet> operator()(Status s) {
-        final_status = std::move(s);
-        return absl::nullopt;
-      }
-      absl::optional<PartialResultSet> operator()(
-          google::spanner::v1::PartialResultSet result) {
-        return PartialResultSet{std::move(result), false};
-      }
-    };
-    return absl::visit(Visitor{final_status_}, reader_->Read());
+    if (opt_status.has_value()) {
+      final_status_ = *std::move(opt_status);
+      return false;
+    }
+    return true;
   }
 
   Status Finish() override { return final_status_; }
@@ -258,10 +253,6 @@ class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
   absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
-  PrecommitToken() const override {
-    return absl::nullopt;
-  }
 
  private:
   google::cloud::Status status_;
@@ -274,11 +265,11 @@ ResultType MakeStatusOnlyResult(Status status) {
       std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
-class DmlResultSetSource : public spanner::ResultSourceInterface {
+class DmlResultSetSource : public PartialResultSourceInterface {
  public:
-  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
       google::spanner::v1::ResultSet result_set) {
-    return std::unique_ptr<spanner::ResultSourceInterface>(
+    return std::unique_ptr<PartialResultSourceInterface>(
         new DmlResultSetSource(std::move(result_set)));
   }
 
@@ -348,13 +339,8 @@ class StreamingPartitionedDmlResult {
 };
 
 // Converts a `BatchWriteResponse` proto to a `spanner::BatchedCommitResult`.
-absl::variant<Status, spanner::BatchedCommitResult> FromProto(
-    absl::variant<Status, google::spanner::v1::BatchWriteResponse> proto) {
-  if (absl::holds_alternative<Status>(proto)) {
-    return absl::get<Status>(std::move(proto));
-  }
-  auto response =
-      absl::get<google::spanner::v1::BatchWriteResponse>(std::move(proto));
+spanner::BatchedCommitResult FromProto(
+    google::spanner::v1::BatchWriteResponse const& response) {
   auto const& indexes = response.indexes();
   auto status = MakeStatusFromRpcError(response.status());
   spanner::BatchedCommitResult result;
@@ -371,7 +357,8 @@ absl::variant<Status, spanner::BatchedCommitResult> FromProto(
 }
 
 template <typename T>
-absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
+absl::optional<T> GetRandomElement(
+    google::protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
   std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
@@ -533,7 +520,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
                                       Session::Mode mode) {
   if (!session) {
     StatusOr<SessionHolder> session_or;
-    if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+    if (opts_.has<spanner::EnableMultiplexedSessionOption>()) {
       session_or = session_pool_->Multiplexed(mode);
     } else {
       session_or = session_pool_->Allocate(mode);
@@ -802,7 +789,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
-    std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
+    std::function<StatusOr<std::unique_ptr<PartialResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
   if (!selector.ok()) return selector.status();
@@ -901,7 +888,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
       [stub, retry_policy_prototype, backoff_policy_prototype,
        route_to_leader = ctx.route_to_leader, tracing_enabled,
        tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
-      -> StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> {
+      -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     auto factory = [stub, request, route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
@@ -979,7 +966,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
       [function_name, stub, retry_policy_prototype, backoff_policy_prototype,
        session, route_to_leader = ctx.route_to_leader,
        current](google::spanner::v1::ExecuteSqlRequest& request) mutable
-      -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
+      -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     StatusOr<google::spanner::v1::ResultSet> response = RetryLoop(
         retry_policy_prototype->clone(), backoff_policy_prototype->clone(),
         Idempotency::kIdempotent,
@@ -1438,17 +1425,20 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
   // session into the stream range so that it is not returned to the pool
   // until the stream is exhausted.
   return internal::MakeStreamRange<spanner::BatchedCommitResult>(
-      [reader = std::move(reader), session = std::move(session)] {
-        auto result = FromProto(reader->Read());
-        if (absl::holds_alternative<Status>(result)) {
+      [reader = std::move(reader), session = std::move(session)]()
+          -> absl::variant<Status, spanner::BatchedCommitResult> {
+        google::spanner::v1::BatchWriteResponse response;
+        auto result = reader->Read(&response);
+        if (result.has_value()) {
           // "Session not found" can really only happen on the first
           // response, but, rather than tracking that, we just check
           // on non-first failures too.
-          if (IsSessionNotFound(absl::get<Status>(result))) {
+          if (IsSessionNotFound(*result)) {
             session->set_bad();
           }
+          return *result;
         }
-        return result;
+        return FromProto(response);
       });
 }
 

@@ -206,6 +206,25 @@ PredictionServiceClient::StreamGenerateContent(
   return connection_->StreamGenerateContent(request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceClient::EmbedContent(
+    std::string const& model,
+    google::cloud::aiplatform::v1::Content const& content, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::EmbedContentRequest request;
+  request.set_model(model);
+  *request.mutable_content() = content;
+  return connection_->EmbedContent(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceClient::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EmbedContent(request);
+}
+
 StreamRange<google::cloud::location::Location>
 PredictionServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

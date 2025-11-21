@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
@@ -152,7 +153,7 @@ class ConnectionImpl : public spanner::Connection {
       StatusOr<google::spanner::v1::TransactionSelector>& selector,
       TransactionContext& ctx, SqlParams params,
       google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
-      std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
+      std::function<StatusOr<std::unique_ptr<PartialResultSourceInterface>>(
           google::spanner::v1::ExecuteSqlRequest& request)> const&
           retry_resume_fn);
 

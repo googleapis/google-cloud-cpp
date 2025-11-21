@@ -146,6 +146,15 @@ PredictionServiceTracingConnection::StreamGenerateContent(
       google::cloud::aiplatform::v1::GenerateContentResponse>(std::move(span),
                                                               std::move(sr));
 }
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceTracingConnection::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::EmbedContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->EmbedContent(request));
+}
+
 StreamRange<google::cloud::location::Location>
 PredictionServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

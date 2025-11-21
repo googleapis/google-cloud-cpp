@@ -18,7 +18,9 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/git.sh
+source module ci/lib/io.sh
 
 bazel_output_base="$(bazel info output_base)"
 
@@ -119,6 +121,11 @@ if [[ "${TRIGGER_TYPE:-}" != "manual" ]]; then
 else
   io::log_yellow "Skipping update of protobuf lists/deps."
 fi
+
+io::log_h2 "Running doxygen landing-page updates:"
+time {
+  features::libraries | xargs -P "$(nproc)" -n 1 ci/generate-markdown/update-library-landing-dox.sh
+}
 
 io::log_h2 "Highlight generated code differences"
 # We use `--compact-summary` because in almost all cases the delta is at

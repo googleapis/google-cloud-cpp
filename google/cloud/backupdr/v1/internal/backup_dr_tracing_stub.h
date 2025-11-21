@@ -151,6 +151,12 @@ class BackupDRTracingStub : public BackupDRStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::ListBackupsRequest const& request) override;
 
+  StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+  FetchBackupsForResourceType(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+          request) override;
+
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::GetBackupRequest const& request) override;
@@ -321,6 +327,12 @@ class BackupDRTracingStub : public BackupDRStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request)
       override;
+
+  StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+  ListDataSourceReferences(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+          request) override;
 
   StatusOr<google::cloud::backupdr::v1::
                FetchDataSourceReferencesForResourceTypeResponse>

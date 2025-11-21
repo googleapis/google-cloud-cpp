@@ -273,6 +273,19 @@ DefaultOracleDatabaseStub::ListGiVersions(
   return response;
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListMinorVersionsResponse>
+DefaultOracleDatabaseStub::ListMinorVersions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListMinorVersionsRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListMinorVersionsResponse response;
+  auto status = grpc_stub_->ListMinorVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
 DefaultOracleDatabaseStub::ListDbSystemShapes(
     grpc::ClientContext& context, Options const&,
@@ -341,6 +354,40 @@ DefaultOracleDatabaseStub::CreateAutonomousDatabase(
   google::longrunning::Operation response;
   auto status =
       grpc_stub_->CreateAutonomousDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncUpdateAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 UpdateAutonomousDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAutonomousDatabase(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::UpdateAutonomousDatabase(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateAutonomousDatabase(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -573,6 +620,690 @@ DefaultOracleDatabaseStub::RestartAutonomousDatabase(
   google::longrunning::Operation response;
   auto status =
       grpc_stub_->RestartAutonomousDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncSwitchoverAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::SwitchoverAutonomousDatabaseRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 SwitchoverAutonomousDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSwitchoverAutonomousDatabase(context, request,
+                                                             cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::SwitchoverAutonomousDatabase(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SwitchoverAutonomousDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncFailoverAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 FailoverAutonomousDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncFailoverAutonomousDatabase(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::FailoverAutonomousDatabase(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->FailoverAutonomousDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
+DefaultOracleDatabaseStub::ListOdbNetworks(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListOdbNetworksRequest const& request) {
+  google::cloud::oracledatabase::v1::ListOdbNetworksResponse response;
+  auto status = grpc_stub_->ListOdbNetworks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>
+DefaultOracleDatabaseStub::GetOdbNetwork(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request) {
+  google::cloud::oracledatabase::v1::OdbNetwork response;
+  auto status = grpc_stub_->GetOdbNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateOdbNetwork(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateOdbNetworkRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateOdbNetwork(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateOdbNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateOdbNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteOdbNetwork(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteOdbNetwork(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteOdbNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteOdbNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListOdbSubnetsResponse>
+DefaultOracleDatabaseStub::ListOdbSubnets(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListOdbSubnetsRequest const& request) {
+  google::cloud::oracledatabase::v1::ListOdbSubnetsResponse response;
+  auto status = grpc_stub_->ListOdbSubnets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>
+DefaultOracleDatabaseStub::GetOdbSubnet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request) {
+  google::cloud::oracledatabase::v1::OdbSubnet response;
+  auto status = grpc_stub_->GetOdbSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateOdbSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateOdbSubnetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateOdbSubnet(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateOdbSubnet(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateOdbSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteOdbSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteOdbSubnet(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteOdbSubnet(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteOdbSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListExadbVmClustersResponse>
+DefaultOracleDatabaseStub::ListExadbVmClusters(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListExadbVmClustersRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListExadbVmClustersResponse response;
+  auto status = grpc_stub_->ListExadbVmClusters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>
+DefaultOracleDatabaseStub::GetExadbVmCluster(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ExadbVmCluster response;
+  auto status = grpc_stub_->GetExadbVmCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateExadbVmCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateExadbVmCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateExadbVmCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteExadbVmCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteExadbVmCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteExadbVmCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncUpdateExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateExadbVmCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::UpdateExadbVmCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateExadbVmCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncRemoveVirtualMachineExadbVmCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::
+          RemoveVirtualMachineExadbVmClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 RemoveVirtualMachineExadbVmClusterRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRemoveVirtualMachineExadbVmCluster(context,
+                                                                   request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::RemoveVirtualMachineExadbVmCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RemoveVirtualMachineExadbVmCluster(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsResponse>
+DefaultOracleDatabaseStub::ListExascaleDbStorageVaults(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsResponse
+      response;
+  auto status =
+      grpc_stub_->ListExascaleDbStorageVaults(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+DefaultOracleDatabaseStub::GetExascaleDbStorageVault(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ExascaleDbStorageVault response;
+  auto status =
+      grpc_stub_->GetExascaleDbStorageVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateExascaleDbStorageVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateExascaleDbStorageVaultRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 CreateExascaleDbStorageVaultRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateExascaleDbStorageVault(context, request,
+                                                             cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateExascaleDbStorageVault(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateExascaleDbStorageVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteExascaleDbStorageVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteExascaleDbStorageVaultRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 DeleteExascaleDbStorageVaultRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteExascaleDbStorageVault(context, request,
+                                                             cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteExascaleDbStorageVault(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteExascaleDbStorageVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesResponse>
+DefaultOracleDatabaseStub::ListDbSystemInitialStorageSizes(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        ListDbSystemInitialStorageSizesRequest const& request) {
+  google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesResponse
+      response;
+  auto status =
+      grpc_stub_->ListDbSystemInitialStorageSizes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDatabasesResponse>
+DefaultOracleDatabaseStub::ListDatabases(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListDatabasesRequest const& request) {
+  google::cloud::oracledatabase::v1::ListDatabasesResponse response;
+  auto status = grpc_stub_->ListDatabases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::Database>
+DefaultOracleDatabaseStub::GetDatabase(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetDatabaseRequest const& request) {
+  google::cloud::oracledatabase::v1::Database response;
+  auto status = grpc_stub_->GetDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListPluggableDatabasesResponse>
+DefaultOracleDatabaseStub::ListPluggableDatabases(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListPluggableDatabasesResponse response;
+  auto status =
+      grpc_stub_->ListPluggableDatabases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+DefaultOracleDatabaseStub::GetPluggableDatabase(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::PluggableDatabase response;
+  auto status = grpc_stub_->GetPluggableDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDbSystemsResponse>
+DefaultOracleDatabaseStub::ListDbSystems(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListDbSystemsRequest const& request) {
+  google::cloud::oracledatabase::v1::ListDbSystemsResponse response;
+  auto status = grpc_stub_->ListDbSystems(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::DbSystem>
+DefaultOracleDatabaseStub::GetDbSystem(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetDbSystemRequest const& request) {
+  google::cloud::oracledatabase::v1::DbSystem response;
+  auto status = grpc_stub_->GetDbSystem(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateDbSystem(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateDbSystemRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::CreateDbSystemRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDbSystem(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateDbSystem(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDbSystem(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteDbSystem(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteDbSystemRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDbSystem(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteDbSystem(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDbSystem(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
+DefaultOracleDatabaseStub::ListDbVersions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListDbVersionsRequest const& request) {
+  google::cloud::oracledatabase::v1::ListDbVersionsResponse response;
+  auto status = grpc_stub_->ListDbVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsResponse>
+DefaultOracleDatabaseStub::ListDatabaseCharacterSets(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsResponse response;
+  auto status =
+      grpc_stub_->ListDatabaseCharacterSets(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

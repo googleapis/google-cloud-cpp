@@ -128,6 +128,9 @@ class KeyManagementServiceTracingConnection
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
       google::cloud::kms::v1::MacVerifyRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      google::cloud::kms::v1::DecapsulateRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const&
                           request) override;

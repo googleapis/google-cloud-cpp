@@ -37,8 +37,8 @@ using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::ByMove;
 using ::testing::IsNull;
+using ::testing::Optional;
 using ::testing::Return;
-using ::testing::VariantWith;
 
 // The general pattern of these test is to make two requests, both of which
 // return an error. The first one because the auth strategy fails, the second
@@ -129,13 +129,14 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingRead) {
   grpc::ClientContext ctx;
   auto auth_failure = under_test.StreamingRead(
       std::make_shared<grpc::ClientContext>(), Options{}, request);
-  EXPECT_THAT(auth_failure->Read(),
-              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
+  Response response;
+  EXPECT_THAT(auth_failure->Read(&response),
+              Optional(StatusIs(StatusCode::kInvalidArgument)));
 
   auto auth_success = under_test.StreamingRead(
       std::make_shared<grpc::ClientContext>(), Options{}, request);
-  EXPECT_THAT(auth_success->Read(),
-              VariantWith<Status>(StatusIs(StatusCode::kPermissionDenied)));
+  EXPECT_THAT(auth_success->Read(&response),
+              Optional(StatusIs(StatusCode::kPermissionDenied)));
 }
 
 TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {

@@ -1,3 +1,4 @@
+@googleapis//google/cloud/networksecurity/v1:address_group.proto
 @googleapis//google/cloud/networksecurity/v1:authorization_policy.proto
 @googleapis//google/cloud/networksecurity/v1:client_tls_policy.proto
 @googleapis//google/cloud/networksecurity/v1:common.proto

@@ -333,7 +333,7 @@ external_googleapis_add_library("google/rpc/status.proto"
 
 external_googleapis_add_library(
     "google/longrunning/operations.proto" api_annotations_protos
-    api_client_protos rpc_status_protos)
+    api_client_protos rpc_status_protos api_field_behavior_protos)
 
 external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"

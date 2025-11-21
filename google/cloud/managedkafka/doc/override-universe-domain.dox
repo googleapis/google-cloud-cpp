@@ -1,0 +1,35 @@
+/*!
+@page managedkafka-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient`:
+
+@snippet managed_schema_registry_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient](@ref managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-universe-domain-snippet)
+- [\c managedkafka_v1::ManagedKafkaClient](@ref managedkafka_v1::ManagedKafkaClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient-universe-domain-snippet Override managedkafka_schemaregistry_v1::ManagedSchemaRegistryClient Universe Domain
+
+@snippet google/cloud/managedkafka/schemaregistry/v1/samples/managed_schema_registry_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page managedkafka_v1::ManagedKafkaClient-universe-domain-snippet Override managedkafka_v1::ManagedKafkaClient Universe Domain
+
+@snippet google/cloud/managedkafka/v1/samples/managed_kafka_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

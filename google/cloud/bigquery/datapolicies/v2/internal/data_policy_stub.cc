@@ -17,9 +17,9 @@
 // source: google/cloud/bigquery/datapolicies/v2/datapolicy.proto
 
 #include "google/cloud/bigquery/datapolicies/v2/internal/data_policy_stub.h"
+#include "google/cloud/bigquery/datapolicies/v2/datapolicy.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/datapolicies/v2/datapolicy.grpc.pb.h>
 #include <memory>
 #include <utility>
 

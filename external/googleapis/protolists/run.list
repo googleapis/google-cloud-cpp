@@ -2,6 +2,7 @@
 @googleapis//google/cloud/run/v2:condition.proto
 @googleapis//google/cloud/run/v2:execution.proto
 @googleapis//google/cloud/run/v2:execution_template.proto
+@googleapis//google/cloud/run/v2:instance_split.proto
 @googleapis//google/cloud/run/v2:job.proto
 @googleapis//google/cloud/run/v2:k8s.min.proto
 @googleapis//google/cloud/run/v2:revision.proto
@@ -12,3 +13,5 @@
 @googleapis//google/cloud/run/v2:task_template.proto
 @googleapis//google/cloud/run/v2:traffic_target.proto
 @googleapis//google/cloud/run/v2:vendor_settings.proto
+@googleapis//google/cloud/run/v2:worker_pool.proto
+@googleapis//google/cloud/run/v2:worker_pool_revision_template.proto

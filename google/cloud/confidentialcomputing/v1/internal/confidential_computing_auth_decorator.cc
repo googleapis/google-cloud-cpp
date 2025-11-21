@@ -51,6 +51,28 @@ ConfidentialComputingAuth::VerifyAttestation(
   return child_->VerifyAttestation(context, options, request);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingAuth::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyConfidentialSpace(context, options, request);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingAuth::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyConfidentialGke(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

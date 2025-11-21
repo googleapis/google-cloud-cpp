@@ -39,11 +39,12 @@ auto constexpr kMeterInstrumentationScopeVersion = "v1";
 // time.
 LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
                       std::set<std::string> const& filtered_data_labels) {
-  LabelMap labels = {{"project_id", r.project_id},
-                     {"instance", r.instance},
-                     {"table", r.table},
-                     {"cluster", r.cluster},
-                     {"zone", r.zone}};
+  LabelMap labels = {
+      {"project_id", r.project_id},
+      {"instance", r.instance},
+      {"table", r.table},
+      {"cluster", r.cluster.empty() ? "<unspecified>" : r.cluster},
+      {"zone", r.zone.empty() ? "global" : r.zone}};
   std::map<std::string, std::string> data = {{
       {"method", d.method},
       {"streaming", d.streaming},
@@ -74,6 +75,18 @@ LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
                       filtered_data_labels.end(),
                       std::inserter(labels, labels.begin()), Compare());
   return labels;
+}
+
+bool HasServerTiming(grpc::ClientContext const& client_context) {
+  auto const& initial_metadata = client_context.GetServerInitialMetadata();
+  auto it = initial_metadata.find("server-timing");
+  return it != initial_metadata.end();
+}
+
+bool IsConnectivityError(google::cloud::Status const& status,
+                         grpc::ClientContext const& client_context) {
+  return status.code() != google::cloud::StatusCode::kDeadlineExceeded &&
+         !HasServerTiming(client_context);
 }
 
 absl::optional<google::bigtable::v2::ResponseParams>
@@ -338,6 +351,98 @@ void ServerLatency::PostCall(opentelemetry::context::Context const& context,
 std::unique_ptr<Metric> ServerLatency::clone(ResourceLabels resource_labels,
                                              DataLabels data_labels) const {
   auto m = std::make_unique<ServerLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
+ConnectivityErrorCount::ConnectivityErrorCount(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : connectivity_error_count_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateUInt64Counter("connectivity_error_count")
+              .release()) {}
+
+void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const&,
+                                      grpc::ClientContext const& client_context,
+                                      PostCallParams const& p) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+  auto const& status = p.attempt_status;
+  data_labels_.status = StatusCodeToString(status.code());
+  if (resource_labels_.cluster.empty() || resource_labels_.zone.empty() ||
+      IsConnectivityError(status, client_context)) {
+    ++num_errors_;
+  }
+}
+
+void ConnectivityErrorCount::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
+  auto m = IntoLabelMap(resource_labels_, data_labels_,
+                        std::set<std::string>{"streaming"});
+  connectivity_error_count_->Add(num_errors_, std::move(m), context);
+}
+
+std::unique_ptr<Metric> ConnectivityErrorCount::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
+  auto m = std::make_unique<ConnectivityErrorCount>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
+ApplicationBlockingLatency::ApplicationBlockingLatency(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : application_blocking_latencies_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram("application_latencies")) {}
+
+void ApplicationBlockingLatency::ElementDelivery(
+    opentelemetry::context::Context const&, ElementDeliveryParams const& p) {
+  element_delivery_time_ = p.element_delivery;
+}
+
+void ApplicationBlockingLatency::ElementRequest(
+    opentelemetry::context::Context const&, ElementRequestParams const& p) {
+  auto application_blocking_latency =
+      std::chrono::duration_cast<LatencyDuration>(p.element_request -
+                                                  element_delivery_time_);
+  pending_latencies_.push_back(application_blocking_latency);
+}
+
+void ApplicationBlockingLatency::PostCall(
+    opentelemetry::context::Context const&,
+    grpc::ClientContext const& client_context, PostCallParams const&) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+}
+
+void ApplicationBlockingLatency::OnDone(
+    opentelemetry::context::Context const& context, OnDoneParams const&) {
+  auto m = IntoLabelMap(resource_labels_, data_labels_,
+                        std::set<std::string>{"streaming", "status"});
+  for (auto const& latency : pending_latencies_) {
+    application_blocking_latencies_->Record(latency.count(), m, context);
+  }
+}
+
+std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
+  auto m = std::make_unique<ApplicationBlockingLatency>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);
   return m;

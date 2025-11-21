@@ -328,6 +328,145 @@ class MockDepServiceConnection
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>),
+      ListLbEdgeExtensions,
+      (google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>,
+      GetLbEdgeExtension,
+      (google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateLbEdgeExtension(Matcher<google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>,
+      CreateLbEdgeExtension,
+      (google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateLbEdgeExtension(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateLbEdgeExtension,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateLbEdgeExtension(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>,
+      CreateLbEdgeExtension, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLbEdgeExtension(Matcher<google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>,
+      UpdateLbEdgeExtension,
+      (google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateLbEdgeExtension(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateLbEdgeExtension,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLbEdgeExtension(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>,
+      UpdateLbEdgeExtension, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteLbEdgeExtension(Matcher<google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteLbEdgeExtension,
+      (google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteLbEdgeExtension(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteLbEdgeExtension,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteLbEdgeExtension(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteLbEdgeExtension, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::networkservices::v1::AuthzExtension>),
       ListAuthzExtensions,
       (google::cloud::networkservices::v1::ListAuthzExtensionsRequest request),

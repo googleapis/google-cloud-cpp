@@ -223,30 +223,22 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   operation_context_->PreCall(*client_context);
   bool enable_server_retries = options.get<EnableServerRetriesOption>();
 
-  struct UnpackVariant {
-    BulkMutatorState& state;
-    MutateRowsLimiter& limiter;
-    bool enable_server_retries;
-
-    bool operator()(btproto::MutateRowsResponse r) {
-      limiter.Update(r);
-      state.OnRead(std::move(r));
-      return true;
-    }
-    bool operator()(Status s) {
-      state.OnFinish(std::move(s), enable_server_retries);
-      return false;
-    }
-  };
-
   // Potentially throttle the request
   limiter.Acquire();
 
   // Read the stream of responses.
   auto stream = stub.MutateRows(client_context, options, mutations);
-  while (absl::visit(UnpackVariant{state_, limiter, enable_server_retries},
-                     stream->Read())) {
+  absl::optional<Status> status;
+  while (true) {
+    btproto::MutateRowsResponse response;
+    status = stream->Read(&response);
+    if (status.has_value()) {
+      break;
+    }
+    limiter.Update(response);
+    state_.OnRead(std::move(response));
   }
+  state_.OnFinish(*std::move(status), enable_server_retries);
   operation_context_->PostCall(*client_context, state_.last_status());
   return state_.last_status();
 }

@@ -39,6 +39,7 @@ application.
 - @ref optimization-override-retry - describes how to change the default retry
   policies.
 - @ref optimization-env - describes environment variables that can configure the behavior of the library.
+- @ref optimization-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/optimization
 

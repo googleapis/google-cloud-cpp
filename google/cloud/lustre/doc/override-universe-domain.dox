@@ -1,0 +1,24 @@
+/*!
+@page lustre-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `lustre_v1::LustreClient`:
+
+@snippet lustre_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page lustre_v1::LustreClient-universe-domain-snippet Override lustre_v1::LustreClient Universe Domain
+
+@snippet google/cloud/lustre/v1/samples/lustre_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

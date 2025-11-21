@@ -21,13 +21,13 @@
 
 #include "google/cloud/managedkafka/schemaregistry/v1/internal/managed_schema_registry_retry_traits.h"
 #include "google/cloud/managedkafka/schemaregistry/v1/managed_schema_registry_connection_idempotency_policy.h"
+#include "google/cloud/managedkafka/schemaregistry/v1/schema_registry.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/managedkafka/schemaregistry/v1/schema_registry.pb.h>
 #include <memory>
 
 namespace google {

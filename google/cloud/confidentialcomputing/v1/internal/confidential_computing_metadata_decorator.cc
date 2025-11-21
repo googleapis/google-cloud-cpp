@@ -65,6 +65,30 @@ ConfidentialComputingMetadata::VerifyAttestation(
   return child_->VerifyAttestation(context, options, request);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingMetadata::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
+  return child_->VerifyConfidentialSpace(context, options, request);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingMetadata::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
+  return child_->VerifyConfidentialGke(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

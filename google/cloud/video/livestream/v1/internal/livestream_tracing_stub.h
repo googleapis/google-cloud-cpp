@@ -109,6 +109,30 @@ class LivestreamServiceTracingStub : public LivestreamServiceStub {
       google::cloud::video::livestream::v1::StopChannelRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncStartDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStopDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInput(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -154,6 +178,11 @@ class LivestreamServiceTracingStub : public LivestreamServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::UpdateInputRequest const& request)
       override;
+
+  StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(grpc::ClientContext& context, Options const& options,
+               google::cloud::video::livestream::v1::PreviewInputRequest const&
+                   request) override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       grpc::ClientContext& context, Options const& options,

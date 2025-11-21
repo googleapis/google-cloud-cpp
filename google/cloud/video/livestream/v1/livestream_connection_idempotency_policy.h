@@ -63,6 +63,14 @@ class LivestreamServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency StopChannel(
       google::cloud::video::livestream::v1::StopChannelRequest const& request);
 
+  virtual google::cloud::Idempotency StartDistribution(
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency StopDistribution(
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request);
+
   virtual google::cloud::Idempotency CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request);
 
@@ -77,6 +85,9 @@ class LivestreamServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+
+  virtual google::cloud::Idempotency PreviewInput(
+      google::cloud::video::livestream::v1::PreviewInputRequest const& request);
 
   virtual google::cloud::Idempotency CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request);

@@ -280,6 +280,19 @@ PredictionServiceLogging::StreamGenerateContent(
       std::move(context), options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceLogging::EmbedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+        return child_->EmbedContent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 PredictionServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -17,7 +17,7 @@
 // source: google/cloud/licensemanager/v1/licensemanager.proto
 
 #include "google/cloud/licensemanager/v1/internal/license_manager_auth_decorator.h"
-#include <google/cloud/licensemanager/v1/licensemanager.grpc.pb.h>
+#include "google/cloud/licensemanager/v1/licensemanager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

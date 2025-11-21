@@ -18,17 +18,3 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(timeseriesinsights "Timeseries Insights API"
                                    SERVICE_DIRS "v1/")
-
-if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    add_executable(timeseriesinsights_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(timeseriesinsights_quickstart
-                          PRIVATE google-cloud-cpp::timeseriesinsights)
-    google_cloud_cpp_add_common_options(timeseriesinsights_quickstart)
-    add_test(
-        NAME timeseriesinsights_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:timeseriesinsights_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(timeseriesinsights_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
-endif ()

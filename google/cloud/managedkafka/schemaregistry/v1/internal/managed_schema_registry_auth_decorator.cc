@@ -17,7 +17,7 @@
 // source: google/cloud/managedkafka/schemaregistry/v1/schema_registry.proto
 
 #include "google/cloud/managedkafka/schemaregistry/v1/internal/managed_schema_registry_auth_decorator.h"
-#include <google/cloud/managedkafka/schemaregistry/v1/schema_registry.grpc.pb.h>
+#include "google/cloud/managedkafka/schemaregistry/v1/schema_registry.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -1,0 +1,35 @@
+/*!
+@page networkservices-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `networkservices_v1::DepServiceClient`:
+
+@snippet dep_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c networkservices_v1::DepServiceClient](@ref networkservices_v1::DepServiceClient-universe-domain-snippet)
+- [\c networkservices_v1::NetworkServicesClient](@ref networkservices_v1::NetworkServicesClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page networkservices_v1::DepServiceClient-universe-domain-snippet Override networkservices_v1::DepServiceClient Universe Domain
+
+@snippet google/cloud/networkservices/v1/samples/dep_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page networkservices_v1::NetworkServicesClient-universe-domain-snippet Override networkservices_v1::NetworkServicesClient Universe Domain
+
+@snippet google/cloud/networkservices/v1/samples/network_services_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

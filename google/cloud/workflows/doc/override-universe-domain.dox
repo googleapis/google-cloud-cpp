@@ -1,0 +1,35 @@
+/*!
+@page workflows-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `workflows_executions_v1::ExecutionsClient`:
+
+@snippet executions_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c workflows_executions_v1::ExecutionsClient](@ref workflows_executions_v1::ExecutionsClient-universe-domain-snippet)
+- [\c workflows_v1::WorkflowsClient](@ref workflows_v1::WorkflowsClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page workflows_executions_v1::ExecutionsClient-universe-domain-snippet Override workflows_executions_v1::ExecutionsClient Universe Domain
+
+@snippet google/cloud/workflows/executions/v1/samples/executions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page workflows_v1::WorkflowsClient-universe-domain-snippet Override workflows_v1::WorkflowsClient Universe Domain
+
+@snippet google/cloud/workflows/v1/samples/workflows_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

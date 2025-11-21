@@ -199,6 +199,18 @@ DefaultPredictionServiceStub::StreamGenerateContent(
       std::move(context), std::move(stream));
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+DefaultPredictionServiceStub::EmbedContent(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  google::cloud::aiplatform::v1::EmbedContentResponse response;
+  auto status = grpc_stub_->EmbedContent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultPredictionServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

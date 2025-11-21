@@ -106,8 +106,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L94}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L171}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
@@ -136,8 +136,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L94}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L171}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
@@ -175,8 +175,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L105}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L114}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L171}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
@@ -215,8 +215,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L105}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L114}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L171}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
@@ -249,8 +249,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L141}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L150}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L171}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
@@ -300,8 +300,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L141}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L150}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L171}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
@@ -490,7 +490,7 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -519,7 +519,7 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -558,7 +558,7 @@ class RevisionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
+  /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L226}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> WaitOperation(

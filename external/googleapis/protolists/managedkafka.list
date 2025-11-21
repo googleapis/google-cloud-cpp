@@ -1,3 +1,5 @@
+@googleapis//google/cloud/managedkafka/schemaregistry/v1:schema_registry.proto
+@googleapis//google/cloud/managedkafka/schemaregistry/v1:schema_registry_resources.proto
 @googleapis//google/cloud/managedkafka/v1:managed_kafka.proto
 @googleapis//google/cloud/managedkafka/v1:managed_kafka_connect.proto
 @googleapis//google/cloud/managedkafka/v1:resources.proto

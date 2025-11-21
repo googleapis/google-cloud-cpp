@@ -225,7 +225,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
 
   auto spans = span_catcher->GetSpans();
   // There should be a process and ack span for each message.
-  EXPECT_THAT(spans, SizeIs(Ge(2 * kAckCount)));
+  EXPECT_THAT(spans, SizeIs(Ge(static_cast<std::size_t>(2 * kAckCount))));
   // Verify there is at least one process span.
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),

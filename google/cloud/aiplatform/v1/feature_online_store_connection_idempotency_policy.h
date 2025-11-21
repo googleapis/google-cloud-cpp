@@ -47,6 +47,10 @@ class FeatureOnlineStoreServiceConnectionIdempotencyPolicy {
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
           request);
 
+  virtual google::cloud::Idempotency GenerateFetchAccessToken(
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

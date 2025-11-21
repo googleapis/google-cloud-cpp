@@ -17,10 +17,10 @@
 // source: google/cloud/licensemanager/v1/licensemanager.proto
 
 #include "google/cloud/licensemanager/v1/internal/license_manager_stub.h"
+#include "google/cloud/licensemanager/v1/licensemanager.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/licensemanager/v1/licensemanager.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

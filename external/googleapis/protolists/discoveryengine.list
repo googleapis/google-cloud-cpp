@@ -1,4 +1,7 @@
 @googleapis//google/cloud/discoveryengine/v1:answer.proto
+@googleapis//google/cloud/discoveryengine/v1:assist_answer.proto
+@googleapis//google/cloud/discoveryengine/v1:assistant.proto
+@googleapis//google/cloud/discoveryengine/v1:assistant_service.proto
 @googleapis//google/cloud/discoveryengine/v1:chunk.proto
 @googleapis//google/cloud/discoveryengine/v1:cmek_config_service.proto
 @googleapis//google/cloud/discoveryengine/v1:common.proto
@@ -34,6 +37,7 @@
 @googleapis//google/cloud/discoveryengine/v1:serving_config.proto
 @googleapis//google/cloud/discoveryengine/v1:serving_config_service.proto
 @googleapis//google/cloud/discoveryengine/v1:session.proto
+@googleapis//google/cloud/discoveryengine/v1:session_service.proto
 @googleapis//google/cloud/discoveryengine/v1:site_search_engine.proto
 @googleapis//google/cloud/discoveryengine/v1:site_search_engine_service.proto
 @googleapis//google/cloud/discoveryengine/v1:user_event.proto

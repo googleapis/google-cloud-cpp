@@ -1,12 +1,15 @@
 @googleapis//google/cloud/dataplex/v1:analyze.proto
+@googleapis//google/cloud/dataplex/v1:business_glossary.proto
 @googleapis//google/cloud/dataplex/v1:catalog.proto
 @googleapis//google/cloud/dataplex/v1:cmek.proto
 @googleapis//google/cloud/dataplex/v1:content.proto
 @googleapis//google/cloud/dataplex/v1:data_discovery.proto
+@googleapis//google/cloud/dataplex/v1:data_documentation.proto
 @googleapis//google/cloud/dataplex/v1:data_profile.proto
 @googleapis//google/cloud/dataplex/v1:data_quality.proto
 @googleapis//google/cloud/dataplex/v1:data_taxonomy.proto
 @googleapis//google/cloud/dataplex/v1:datascans.proto
+@googleapis//google/cloud/dataplex/v1:datascans_common.proto
 @googleapis//google/cloud/dataplex/v1:logs.proto
 @googleapis//google/cloud/dataplex/v1:metadata.proto
 @googleapis//google/cloud/dataplex/v1:processing.proto

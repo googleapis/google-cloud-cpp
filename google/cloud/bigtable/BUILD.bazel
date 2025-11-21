@@ -59,6 +59,8 @@ cc_library(
         "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
         "@googleapis//google/longrunning:longrunning_cc_grpc",
         "@googleapis//google/rpc:error_details_cc_proto",
+        "@crc32c",
+        "@abseil-cpp//absl/strings:cord",
         "@grpc//:grpc++",
     ] + select({
         ":metrics_enabled": [
@@ -114,8 +116,11 @@ cc_library(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     local_defines = select({
-        ":metrics_enabled": ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
-        "//conditions:default": [],
+        ":metrics_enabled": [
+            "GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS",
+            "GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT",
+        ],
+        "//conditions:default": ["GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT"],
     }),
     deps = [
         ":bigtable_client_testing",

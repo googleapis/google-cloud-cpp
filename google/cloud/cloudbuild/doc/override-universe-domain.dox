@@ -1,0 +1,35 @@
+/*!
+@page cloudbuild-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `cloudbuild_v1::CloudBuildClient`:
+
+@snippet cloud_build_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-universe-domain-snippet)
+- [\c cloudbuild_v2::RepositoryManagerClient](@ref cloudbuild_v2::RepositoryManagerClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page cloudbuild_v1::CloudBuildClient-universe-domain-snippet Override cloudbuild_v1::CloudBuildClient Universe Domain
+
+@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page cloudbuild_v2::RepositoryManagerClient-universe-domain-snippet Override cloudbuild_v2::RepositoryManagerClient Universe Domain
+
+@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -3,6 +3,7 @@
 @googleapis//google/cloud/bigquery/biglake/v1:metastore.proto
 @googleapis//google/cloud/bigquery/connection/v1:connection.proto
 @googleapis//google/cloud/bigquery/datapolicies/v1:datapolicy.proto
+@googleapis//google/cloud/bigquery/datapolicies/v2:datapolicy.proto
 @googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer.proto
 @googleapis//google/cloud/bigquery/datatransfer/v1:transfer.proto
 @googleapis//google/cloud/bigquery/logging/v1:audit_data.proto

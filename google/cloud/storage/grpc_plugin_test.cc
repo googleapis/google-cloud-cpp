@@ -138,6 +138,40 @@ TEST(GrpcPluginTest, BackwardsCompatibilityShims) {
 }
 #include "google/cloud/internal/diagnostics_pop.inc"
 
+TEST(GrpcPluginTest, GrpcMetricsExcludedLabelsOption) {
+  auto const expected =
+      std::set<std::string>{"service_name", "service_version", "custom_label"};
+  auto opts =
+      google::cloud::Options{}
+          .set<storage_experimental::GrpcMetricsExcludedLabelsOption>(expected);
+
+  EXPECT_EQ(expected,
+            opts.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());
+}
+
+TEST(GrpcPluginTest, GrpcMetricsExcludedLabelsOptionEmpty) {
+  auto const expected = std::set<std::string>{};
+  auto opts =
+      google::cloud::Options{}
+          .set<storage_experimental::GrpcMetricsExcludedLabelsOption>(expected);
+
+  EXPECT_TRUE(opts.get<storage_experimental::GrpcMetricsExcludedLabelsOption>()
+                  .empty());
+}
+
+TEST(GrpcPluginTest, GrpcMetricsExcludedLabelsOptionSingle) {
+  auto const expected = std::set<std::string>{"service_name"};
+  auto opts =
+      google::cloud::Options{}
+          .set<storage_experimental::GrpcMetricsExcludedLabelsOption>(expected);
+
+  EXPECT_EQ(
+      1,
+      opts.get<storage_experimental::GrpcMetricsExcludedLabelsOption>().size());
+  EXPECT_EQ(expected,
+            opts.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

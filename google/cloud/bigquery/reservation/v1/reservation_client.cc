@@ -17,7 +17,9 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/reservation_client.h"
+#include "google/cloud/bigquery/reservation/v1/reservation_options.h"
 #include <memory>
+#include <thread>
 #include <utility>
 
 namespace google {
@@ -449,6 +451,141 @@ ReservationServiceClient::UpdateBiReservation(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBiReservation(request);
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(resource);
+  *request.mutable_policy() = policy;
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options opts) {
+  internal::CheckExpectedOptions<ReservationServiceBackoffPolicyOption>(
+      opts, __func__);
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::GetIamPolicyRequest get_request;
+  get_request.set_resource(resource);
+  google::iam::v1::SetIamPolicyRequest set_request;
+  set_request.set_resource(resource);
+  auto backoff_policy =
+      internal::CurrentOptions().get<ReservationServiceBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
+  for (;;) {
+    auto recent = connection_->GetIamPolicy(get_request);
+    if (!recent) {
+      return recent.status();
+    }
+    auto policy = updater(*std::move(recent));
+    if (!policy) {
+      return internal::CancelledError(
+          "updater did not yield a policy",
+          GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
+    }
+    *set_request.mutable_policy() = *std::move(policy);
+    auto result = connection_->SetIamPolicy(set_request);
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
+      return result;
+    }
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+  }
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ReservationServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::CreateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReservationGroup(request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::GetReservationGroup(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::reservation::v1::GetReservationGroupRequest request;
+  request.set_name(name);
+  return connection_->GetReservationGroup(request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::GetReservationGroup(
+    google::cloud::bigquery::reservation::v1::GetReservationGroupRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetReservationGroup(request);
+}
+
+Status ReservationServiceClient::DeleteReservationGroup(std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::reservation::v1::DeleteReservationGroupRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteReservationGroup(request);
+}
+
+Status ReservationServiceClient::DeleteReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteReservationGroup(request);
+}
+
+StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::ListReservationGroups(std::string const& parent,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListReservationGroups(request);
+}
+
+StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceClient::ListReservationGroups(
+    google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListReservationGroups(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

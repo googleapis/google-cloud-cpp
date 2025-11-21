@@ -46,6 +46,7 @@
 @googleapis//google/cloud/aiplatform/v1:content.proto
 @googleapis//google/cloud/aiplatform/v1:context.proto
 @googleapis//google/cloud/aiplatform/v1:custom_job.proto
+@googleapis//google/cloud/aiplatform/v1:data_foundry_service.proto
 @googleapis//google/cloud/aiplatform/v1:data_item.proto
 @googleapis//google/cloud/aiplatform/v1:data_labeling_job.proto
 @googleapis//google/cloud/aiplatform/v1:dataset.proto
@@ -55,6 +56,7 @@
 @googleapis//google/cloud/aiplatform/v1:deployed_model_ref.proto
 @googleapis//google/cloud/aiplatform/v1:deployment_resource_pool.proto
 @googleapis//google/cloud/aiplatform/v1:deployment_resource_pool_service.proto
+@googleapis//google/cloud/aiplatform/v1:deployment_stage.proto
 @googleapis//google/cloud/aiplatform/v1:encryption_spec.proto
 @googleapis//google/cloud/aiplatform/v1:endpoint.proto
 @googleapis//google/cloud/aiplatform/v1:endpoint_service.proto
@@ -148,6 +150,7 @@
 @googleapis//google/cloud/aiplatform/v1:tuning_job.proto
 @googleapis//google/cloud/aiplatform/v1:types.proto
 @googleapis//google/cloud/aiplatform/v1:unmanaged_container_model.proto
+@googleapis//google/cloud/aiplatform/v1:usage_metadata.proto
 @googleapis//google/cloud/aiplatform/v1:user_action_reference.proto
 @googleapis//google/cloud/aiplatform/v1:value.proto
 @googleapis//google/cloud/aiplatform/v1:vertex_rag_data.proto

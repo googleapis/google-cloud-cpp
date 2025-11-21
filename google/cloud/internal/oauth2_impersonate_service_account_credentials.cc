@@ -95,6 +95,18 @@ ParseImpersonatedServiceAccountCredentials(std::string const& content,
     }
   }
 
+  it = credentials.find("scopes");
+  if (it != credentials.end()) {
+    if (!it->is_array()) {
+      return internal::InvalidArgumentError(
+          "Malformed `scopes` field is not an array on data from " + source,
+          GCP_ERROR_INFO());
+    }
+    for (auto const& scope : it->items()) {
+      info.scopes.push_back(scope.value().get<std::string>());
+    }
+  }
+
   it = credentials.find("quota_project_id");
   if (it != credentials.end()) {
     if (!it->is_string()) {

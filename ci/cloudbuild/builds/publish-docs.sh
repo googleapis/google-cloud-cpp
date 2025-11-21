@@ -35,7 +35,7 @@ elif [[ "${LIBRARIES}" == "all_bar_compute" ]]; then
   ENABLED_FEATURES="${ENABLED_FEATURES},-compute"
 else
   mapfile -t FEATURE_LIST < <(printf '%s' "${LIBRARIES}")
-  ENABLED_FEATURES="compute"
+  ENABLED_FEATURES="compute,universe_domain"
 fi
 
 doc_args=(

@@ -228,6 +228,14 @@ BackupDRConnection::ListBackups(
       StreamRange<google::cloud::backupdr::v1::Backup>>();
 }
 
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRConnection::FetchBackupsForResourceType(
+    google::cloud::backupdr::v1::
+        FetchBackupsForResourceTypeRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::Backup>>();
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRConnection::GetBackup(
     google::cloud::backupdr::v1::GetBackupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -506,6 +514,14 @@ StatusOr<google::cloud::backupdr::v1::DataSourceReference>
 BackupDRConnection::GetDataSourceReference(
     google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRConnection::ListDataSourceReferences(
+    google::cloud::backupdr::v1::
+        ListDataSourceReferencesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::backupdr::v1::DataSourceReference>>();
 }
 
 StreamRange<google::cloud::backupdr::v1::DataSourceReference>

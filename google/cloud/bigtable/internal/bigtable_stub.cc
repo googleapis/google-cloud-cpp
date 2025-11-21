@@ -245,6 +245,24 @@ DefaultBigtableStub::AsyncReadModifyWriteRow(
       request, std::move(context));
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+DefaultBigtableStub::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::v2::PrepareQueryRequest,
+                                    google::bigtable::v2::PrepareQueryResponse>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::bigtable::v2::PrepareQueryRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPrepareQuery(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

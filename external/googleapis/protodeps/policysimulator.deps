@@ -4,6 +4,7 @@
 @googleapis//google/api:http_proto
 @googleapis//google/api:launch_stage_proto
 @googleapis//google/api:resource_proto
+@googleapis//google/cloud/orgpolicy/v2:orgpolicy_proto
 @googleapis//google/iam/v1:policy_proto
 @googleapis//google/longrunning:operations_proto
 @googleapis//google/rpc:status_proto

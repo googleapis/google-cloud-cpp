@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/universe_domain.h"
 #include <fstream>
 #include <string>
 #include <vector>
@@ -116,6 +117,32 @@ void TableWithServiceAccount(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+void TableSetUniverseDomain(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw google::cloud::testing_util::Usage{
+        "table-set-endpoint <project-id> <instance-id> <table-id>"};
+  }
+  //! [table-set-universe-domain]
+  namespace bigtable = ::google::cloud::bigtable;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& table_id) {
+    google::cloud::Options options;
+
+    // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if
+    // set, in the provided Options for the Universe Domain associated with the
+    // credentials and adds it to the set of Options.
+    // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+    auto ud_options =
+        google::cloud::AddUniverseDomainOption(std::move(options));
+
+    if (!ud_options.ok()) throw std::move(ud_options).status();
+    auto resource = bigtable::TableResource(project_id, instance_id, table_id);
+    return bigtable::Table(bigtable::MakeDataConnection(*ud_options), resource);
+  }
+  //! [table-set-universe-domain]
+  (argv.at(0), argv.at(1), argv.at(2));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   using ::google::cloud::internal::GetEnv;
   namespace examples = ::google::cloud::testing_util;
@@ -144,6 +171,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetRetryPolicy() sample" << std::endl;
   SetRetryPolicy({project_id, instance_id, table_id});
 
+  std::cout << "\nRunning TableSetUniverseDomain() sample" << std::endl;
+  TableSetUniverseDomain({project_id, instance_id, table_id});
+
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -154,6 +184,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"table-set-endpoint", TableSetEndpoint},
       {"set-retry-policy", SetRetryPolicy},
       {"table-with-service-account", TableWithServiceAccount},
+      {"table-set-universe-domain", TableSetUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

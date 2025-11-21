@@ -145,6 +145,10 @@ class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
       google::cloud::backupdr::v1::ListBackupsRequest request) override;
 
+  StreamRange<google::cloud::backupdr::v1::Backup> FetchBackupsForResourceType(
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request)
+      override;
+
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
       google::cloud::backupdr::v1::GetBackupRequest const& request) override;
 
@@ -305,6 +309,11 @@ class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
   StatusOr<google::cloud::backupdr::v1::DataSourceReference>
   GetDataSourceReference(
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request)
+      override;
+
+  StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+  ListDataSourceReferences(
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest request)
       override;
 
   StreamRange<google::cloud::backupdr::v1::DataSourceReference>
