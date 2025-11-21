@@ -91,10 +91,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "51b5105a760b353773f904d2bbc5e664d0987fbaf22265164de65d43e910d8ac",
+        sha256 = "6e78f0e57de26801f6f564fa7c4a48dc8b36873e416257a92bbb0937eeac8446",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.8.1/bazel-skylib-1.8.1.tar.gz",
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.8.1/bazel-skylib-1.8.1.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.8.2/bazel-skylib-1.8.2.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.8.2/bazel-skylib-1.8.2.tar.gz",
         ],
     )
 
@@ -103,9 +103,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/4.1.2/rules_apple.4.1.2.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/4.2.0/rules_apple.4.2.0.tar.gz",
         ],
-        sha256 = "de1c8bb872da6b03d2abff659178d3abfda5cc8d8a6b646fdab96ab2d00c9fa7",
+        sha256 = "ef8a5744b2ffff49f47647226f69f0f06522ca2e8a6fa1aaf5d65d5314813c34",
     )
 
     # Load Abseil
@@ -136,10 +136,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/f6801ce4e1df0541abb8d1e996cb36363c41fb8d.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/659ea6e98acc7d58661ce2aa7b4cf76a7ef3fd42.tar.gz",
         ],
-        sha256 = "1066f4804e469ed61404cbb9b8d15ecfcbba8b978287739ed42d8f4dd6cb92a6",
-        strip_prefix = "googleapis-f6801ce4e1df0541abb8d1e996cb36363c41fb8d",
+        sha256 = "d7d274d9147e52f63972a2064c60cf2e63066b655a246f7e0d02745e49fc1d3b",
+        strip_prefix = "googleapis-659ea6e98acc7d58661ce2aa7b4cf76a7ef3fd42",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         patches = [

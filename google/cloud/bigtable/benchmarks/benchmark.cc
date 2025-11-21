@@ -62,6 +62,7 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
             "--thread-count=1",
             "--test-duration=1s",
             "--table-size=11000",
+            "--enable-metrics=true",
         },
         description);
   }
@@ -124,9 +125,11 @@ void Benchmark::DeleteTable() {
   }
 }
 
-Table Benchmark::MakeTable() const {
+Table Benchmark::MakeTable(Options connection_opts) const {
+  auto connection_options =
+      google::cloud::internal::MergeOptions(std::move(connection_opts), opts_);
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
-  return Table(MakeDataConnection(opts_),
+  return Table(MakeDataConnection(std::move(connection_options)),
                TableResource(options_.project_id, options_.instance_id,
                              options_.table_id),
                std::move(table_opts));

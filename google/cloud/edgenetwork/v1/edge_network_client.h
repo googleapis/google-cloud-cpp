@@ -179,7 +179,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L318}
-  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
+  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L70}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -222,7 +222,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L318}
-  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
+  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L70}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -252,7 +252,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L360}
-  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
+  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L70}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -286,7 +286,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L360}
-  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
+  /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L70}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -322,7 +322,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L373}
-  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
+  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L97}
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::Network> ListNetworks(
@@ -361,7 +361,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L373}
-  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
+  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L97}
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::Network> ListNetworks(
@@ -387,7 +387,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetNetworkRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L409}
-  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
+  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L97}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
@@ -417,7 +417,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetNetworkRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L409}
-  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
+  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L97}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
@@ -511,7 +511,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateNetworkRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L420}
-  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
+  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L97}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
@@ -566,7 +566,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateNetworkRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L420}
-  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
+  /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L97}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
@@ -743,7 +743,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L480}
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
@@ -782,7 +782,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L480}
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
@@ -808,7 +808,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L516}
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
@@ -838,7 +838,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L516}
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
@@ -875,7 +875,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L527}
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
@@ -930,7 +930,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L527}
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
@@ -995,7 +995,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   /// [google.cloud.edgenetwork.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L561}
   ///
   // clang-format on
@@ -1048,7 +1048,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
+  /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L128}
   /// [google.cloud.edgenetwork.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L561}
   ///
   // clang-format on
@@ -1226,7 +1226,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L185}
+  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L198}
   /// [google.cloud.edgenetwork.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L616}
   ///
   // clang-format on
@@ -1265,7 +1265,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L185}
+  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L198}
   /// [google.cloud.edgenetwork.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L616}
   ///
   // clang-format on
@@ -1292,7 +1292,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetInterconnectRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L652}
-  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L185}
+  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L198}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
@@ -1322,7 +1322,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetInterconnectRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L652}
-  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L185}
+  /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L198}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
@@ -1414,7 +1414,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L237}
+  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L255}
   /// [google.cloud.edgenetwork.v1.ListInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L663}
   ///
   // clang-format on
@@ -1453,7 +1453,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L237}
+  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L255}
   /// [google.cloud.edgenetwork.v1.ListInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L663}
   ///
   // clang-format on
@@ -1482,7 +1482,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetInterconnectAttachmentRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L699}
-  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L237}
+  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L255}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
@@ -1512,7 +1512,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetInterconnectAttachmentRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L699}
-  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L237}
+  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L255}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
@@ -1551,7 +1551,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateInterconnectAttachmentRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L710}
-  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L237}
+  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L255}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
@@ -1609,7 +1609,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateInterconnectAttachmentRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L710}
-  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L237}
+  /// [google.cloud.edgenetwork.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L255}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
@@ -1792,7 +1792,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L772}
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
@@ -1831,7 +1831,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L772}
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
@@ -1857,7 +1857,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L808}
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
@@ -1887,7 +1887,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.GetRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L808}
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
@@ -1981,7 +1981,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L819}
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
@@ -2036,7 +2036,7 @@ class EdgeNetworkClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.edgenetwork.v1.CreateRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L819}
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
@@ -2101,7 +2101,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   /// [google.cloud.edgenetwork.v1.UpdateRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L853}
   ///
   // clang-format on
@@ -2154,7 +2154,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
+  /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L316}
   /// [google.cloud.edgenetwork.v1.UpdateRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L853}
   ///
   // clang-format on
@@ -2530,7 +2530,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -2559,7 +2559,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -2592,7 +2592,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
@@ -2631,7 +2631,7 @@ class EdgeNetworkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}

@@ -19,11 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_FEATURE_ONLINE_STORE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_FEATURE_ONLINE_STORE_STUB_H
 
-#include "google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h"
-#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
@@ -48,6 +50,21 @@ class FeatureOnlineStoreServiceStub {
   SearchNearestEntities(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) = 0;
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+  AsyncFeatureViewDirectWrite(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
+
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
@@ -120,6 +137,20 @@ class DefaultFeatureOnlineStoreServiceStub
   SearchNearestEntities(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+  AsyncFeatureViewDirectWrite(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
           request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

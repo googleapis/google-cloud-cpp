@@ -70,8 +70,8 @@ VARIATIONS = {
     ],
     deps = [
         "//:common",
-        "//:experimental-universe_domain",
         "//:storage",
+        "//:universe_domain",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",

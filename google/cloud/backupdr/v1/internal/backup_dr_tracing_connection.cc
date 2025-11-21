@@ -298,6 +298,17 @@ BackupDRTracingConnection::ListBackups(
       std::move(span), std::move(sr));
 }
 
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRTracingConnection::FetchBackupsForResourceType(
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::FetchBackupsForResourceType");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchBackupsForResourceType(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::backupdr::v1::Backup>(
+      std::move(span), std::move(sr));
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup>
 BackupDRTracingConnection::GetBackup(
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
@@ -692,6 +703,18 @@ BackupDRTracingConnection::GetDataSourceReference(
       "backupdr_v1::BackupDRConnection::GetDataSourceReference");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataSourceReference(request));
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRTracingConnection::ListDataSourceReferences(
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::ListDataSourceReferences");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDataSourceReferences(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::DataSourceReference>(std::move(span),
+                                                        std::move(sr));
 }
 
 StreamRange<google::cloud::backupdr::v1::DataSourceReference>

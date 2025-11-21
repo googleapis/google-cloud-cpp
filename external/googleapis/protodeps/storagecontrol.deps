@@ -6,5 +6,10 @@
 @googleapis//google/api:launch_stage_proto
 @googleapis//google/api:resource_proto
 @googleapis//google/api:routing_proto
+@googleapis//google/iam/v1:iam_policy_proto
+@googleapis//google/iam/v1:options_proto
+@googleapis//google/iam/v1:policy_proto
+@googleapis//google/iam/v1:resource_policy_member_proto
 @googleapis//google/longrunning:operations_proto
 @googleapis//google/rpc:status_proto
+@googleapis//google/type:expr_proto

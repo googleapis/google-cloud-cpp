@@ -4,7 +4,73 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.41.0 - TBD
+## v2.44.0 - TBD
+
+## v2.43.0 - 2025-10
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): fixing flushing and finalization in buffered upload of async client ([#15572](https://github.com/googleapis/google-cloud-cpp/pull/15572))
+- feat(storage): Add samples related to AppendableObject and OpenObject ([#15563](https://github.com/googleapis/google-cloud-cpp/pull/15563))
+- feat(storage): Expose Flush() in AsyncWriter ([#15555](https://github.com/googleapis/google-cloud-cpp/pull/15555))
+- fix(storage): Fix Resume() to use append_object_spec instead of write_object_spec for resumed appendable uploads ([#15558](https://github.com/googleapis/google-cloud-cpp/pull/15558))
+- fix(storage): Increase AsyncWriter default MinLwmValue to avoid frequent flushes ([#15552](https://github.com/googleapis/google-cloud-cpp/pull/15552))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-10-03T13:49:30-07:00](https://github.com/googleapis/googleapis/tree/2193a2bfcecb92b92aad7a4d81baa428cafd7dfd)
+
+## v2.42.0 - 2025-09
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Security Compliance](/google/cloud/cloudsecuritycompliance/README.md)
+- [Config Delivery API](/google/cloud/configdelivery/README.md)
+
+### Updated Libraries
+
+- [Network Connectivity](/google/cloud/networkconnectivity/README.md) - added support for DataTransferService ([#15464](https://github.com/googleapis/google-cloud-cpp/pull/15464))
+
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- perf(spanner): Use arenas to speed up queries that fetch many rows ([#15441](https://github.com/googleapis/google-cloud-cpp/pull/15441))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Remove unnecessary code which was causing race condition ([#15551](https://github.com/googleapis/google-cloud-cpp/pull/15551))
+- feat(storage): Update the appendable object function to store the Object metadata ([#15422](https://github.com/googleapis/google-cloud-cpp/pull/15422))
+- feat(storage): Add generation in append_object_spec in resume operation ([#15395](https://github.com/googleapis/google-cloud-cpp/pull/15395))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- perf: Change StreamingReadRpc::Read interface to take ResponseType ([#15319](https://github.com/googleapis/google-cloud-cpp/pull/15319))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-09-05T15:58:06-07:00](https://github.com/googleapis/googleapis/tree/46403a9acec0719c130b33eb38b2ee62a45f9f6c)
+
+## v2.41.0 - 2025-08-14
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- The `Bigtable::DataConnection` class has been instrumented to collect [Client Side Metrics](https://cloud.google.com/bigtable/docs/client-side-metrics),
+free of charge. These metrics will be collected by
+default if both the [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-cpp)
+and [Google Cloud Monitoring](google/cloud/monitoring/README.md) dependencies are
+available. Users can opt-out by setting the `bigtable::EnableMetricsOption` to `false`.
+
+- The following metrics are available in Bigtable:
+  - AttemptLatency
+  - OperationLatency
+  - RetryCount
+  - FirstResponseLatency
+  - ServerLatency
+  - ApplicationBlockingLatency
+  - ConnectivityErrorCount
 
 ### [Spanner](/google/cloud/spanner/README.md)
 
@@ -13,6 +79,10 @@ support is now available. To enable Multiplexed sessions, add the
 `spanner::EnableMultiplexedSessionOption` to `Options` when calling
 `spanner::MakeConnection`. This enables Multiplexed sessions on all operations
 read-only, read-write, and partitioned.
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-07-30T06:44:36-07:00](https://github.com/googleapis/googleapis/tree/f6801ce4e1df0541abb8d1e996cb36363c41fb8d)
 
 ## v2.40.0 - 2025-08
 

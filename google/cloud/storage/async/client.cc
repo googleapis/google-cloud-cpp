@@ -136,10 +136,7 @@ AsyncClient::StartAppendableObjectUpload(
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
-        auto t = absl::holds_alternative<google::storage::v2::Object>(
-                     (*w)->PersistedState())
-                     ? AsyncToken()
-                     : storage_internal::MakeAsyncToken(w->get());
+        auto t = storage_internal::MakeAsyncToken(w->get());
         return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
       });
 }
@@ -163,10 +160,7 @@ AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
-        auto t = absl::holds_alternative<google::storage::v2::Object>(
-                     (*w)->PersistedState())
-                     ? AsyncToken()
-                     : storage_internal::MakeAsyncToken(w->get());
+        auto t = storage_internal::MakeAsyncToken(w->get());
         return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
       });
 }

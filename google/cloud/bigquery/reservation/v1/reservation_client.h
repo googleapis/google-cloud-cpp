@@ -21,10 +21,13 @@
 
 #include "google/cloud/bigquery/reservation/v1/reservation_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -124,8 +127,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L702}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L984}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -157,8 +160,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L702}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L984}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -195,8 +198,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L723}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1005}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
@@ -234,8 +237,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L723}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1005}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
@@ -262,8 +265,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L753}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1035}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -292,8 +295,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L753}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1035}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -321,7 +324,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L766}
+  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1048}
   ///
   // clang-format on
   Status DeleteReservation(std::string const& name, Options opts = {});
@@ -349,7 +352,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L766}
+  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1048}
   ///
   // clang-format on
   Status DeleteReservation(
@@ -376,8 +379,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
-  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L779}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
+  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1061}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -408,8 +411,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
-  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L779}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
+  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1061}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -445,8 +448,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.FailoverReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L788}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L407}
+  /// [google.cloud.bigquery.reservation.v1.FailoverReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -474,8 +477,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L801}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1166}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -508,8 +511,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L801}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1166}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -545,8 +548,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1193}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -584,8 +587,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1193}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -613,8 +616,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L858}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1223}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -643,8 +646,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L858}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1223}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -671,7 +674,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L871}
+  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1236}
   ///
   // clang-format on
   Status DeleteCapacityCommitment(std::string const& name, Options opts = {});
@@ -699,7 +702,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L871}
+  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1236}
   ///
   // clang-format on
   Status DeleteCapacityCommitment(
@@ -732,8 +735,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L889}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1254}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -771,8 +774,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L889}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1254}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -807,8 +810,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L899}
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L915}
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1264}
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1280}
   ///
   // clang-format on
   StatusOr<
@@ -846,8 +849,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L899}
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L915}
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1264}
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1280}
   ///
   // clang-format on
   StatusOr<
@@ -886,8 +889,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L925}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1290}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -925,8 +928,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L563}
-  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L925}
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L844}
+  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1290}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -988,8 +991,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1020}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1417}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1055,8 +1058,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1020}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1417}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1118,8 +1121,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1042}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1439}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1177,8 +1180,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1042}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1439}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1217,7 +1220,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1079}
+  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1476}
   ///
   // clang-format on
   Status DeleteAssignment(std::string const& name, Options opts = {});
@@ -1257,7 +1260,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1079}
+  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1476}
   ///
   // clang-format on
   Status DeleteAssignment(
@@ -1325,8 +1328,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1094}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1491}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1390,8 +1393,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1094}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1491}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1456,8 +1459,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1125}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1522}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1515,8 +1518,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1125}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1522}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1551,8 +1554,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1183}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1580}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
@@ -1586,8 +1589,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1183}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1580}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
@@ -1616,8 +1619,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1210}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1607}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1650,8 +1653,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L942}
-  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1210}
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
+  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1607}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1679,8 +1682,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1232}
-  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1255}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
+  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1653}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
@@ -1709,8 +1712,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1232}
-  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1255}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
+  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1653}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
@@ -1745,8 +1748,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1232}
-  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1267}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
+  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1665}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
@@ -1785,14 +1788,460 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1232}
-  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1267}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
+  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1665}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request,
                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource.
+  /// May return:
+  ///
+  /// * A`NOT_FOUND` error if the resource doesn't exist or you don't have the
+  ///   permission to view it.
+  /// * An empty policy if the resource exists but doesn't have a set policy.
+  ///
+  /// Supported resources are:
+  /// - Reservations
+  /// - ReservationAssignments
+  ///
+  /// To call this method, you must have the following Google IAM permissions:
+  ///
+  /// - `bigqueryreservation.reservations.getIamPolicy` to get policies on
+  /// reservations.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource.
+  /// May return:
+  ///
+  /// * A`NOT_FOUND` error if the resource doesn't exist or you don't have the
+  ///   permission to view it.
+  /// * An empty policy if the resource exists but doesn't have a set policy.
+  ///
+  /// Supported resources are:
+  /// - Reservations
+  /// - ReservationAssignments
+  ///
+  /// To call this method, you must have the following Google IAM permissions:
+  ///
+  /// - `bigqueryreservation.reservations.getIamPolicy` to get policies on
+  /// reservations.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets an access control policy for a resource. Replaces any existing
+  /// policy.
+  ///
+  /// Supported resources are:
+  /// - Reservations
+  ///
+  /// To call this method, you must have the following Google IAM permissions:
+  ///
+  /// - `bigqueryreservation.reservations.setIamPolicy` to set policies on
+  /// reservations.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
+  ///  the policy is limited to a few 10s of KB. An empty policy is a
+  ///  valid policy but certain Cloud Platform services (such as Projects)
+  ///  might reject them.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
+
+  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param opts  Optional. Override the class-level options, such as retry and
+   *    backoff policies.
+   * @return google::iam::v1::Policy
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets an access control policy for a resource. Replaces any existing
+  /// policy.
+  ///
+  /// Supported resources are:
+  /// - Reservations
+  ///
+  /// To call this method, you must have the following Google IAM permissions:
+  ///
+  /// - `bigqueryreservation.reservations.setIamPolicy` to set policies on
+  /// reservations.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets your permissions on a resource. Returns an empty set of permissions if
+  /// the resource doesn't exist.
+  ///
+  /// Supported resources are:
+  /// - Reservations
+  ///
+  /// No Google IAM permissions are required to call this method.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new reservation group.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.CreateReservationGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.ReservationGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CreateReservationGroupRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1088}
+  /// [google.cloud.bigquery.reservation.v1.ReservationGroup]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(google::cloud::bigquery::reservation::v1::
+                             CreateReservationGroupRequest const& request,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns information about the reservation group.
+  ///
+  /// @param name  Required. Resource name of the reservation group to retrieve. E.g.,
+  ///     `projects/myproject/locations/US/reservationGroups/team1-prod`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.ReservationGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.GetReservationGroupRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1110}
+  /// [google.cloud.bigquery.reservation.v1.ReservationGroup]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns information about the reservation group.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.GetReservationGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.ReservationGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.GetReservationGroupRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1110}
+  /// [google.cloud.bigquery.reservation.v1.ReservationGroup]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a reservation.
+  /// Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has
+  /// assignments.
+  ///
+  /// @param name  Required. Resource name of the reservation group to retrieve. E.g.,
+  ///     `projects/myproject/locations/US/reservationGroups/team1-prod`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteReservationGroupRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1153}
+  ///
+  // clang-format on
+  Status DeleteReservationGroup(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a reservation.
+  /// Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has
+  /// assignments.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.DeleteReservationGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteReservationGroupRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1153}
+  ///
+  // clang-format on
+  Status DeleteReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the reservation groups for the project in the specified location.
+  ///
+  /// @param parent  Required. The parent resource name containing project and location, e.g.:
+  ///    `projects/myproject/locations/US`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.ReservationGroup], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.ListReservationGroupsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1123}
+  /// [google.cloud.bigquery.reservation.v1.ReservationGroup]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  ListReservationGroups(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the reservation groups for the project in the specified location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.ListReservationGroupsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.ReservationGroup], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.ListReservationGroupsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1123}
+  /// [google.cloud.bigquery.reservation.v1.ReservationGroup]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  ListReservationGroups(
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ReservationServiceConnection> connection_;

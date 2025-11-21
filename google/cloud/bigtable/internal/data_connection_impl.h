@@ -19,6 +19,9 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
+#include "google/cloud/bigtable/internal/partial_result_set_reader.h"
+#include "google/cloud/bigtable/prepared_query.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -100,6 +103,12 @@ class DataConnectionImpl : public bigtable::DataConnection {
   future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override;
+
+  StatusOr<bigtable::PreparedQuery> PrepareQuery(
+      bigtable::PrepareQueryParams const& p) override;
+  future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
+      bigtable::PrepareQueryParams const& p) override;
+  bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
 
  private:
   void AsyncReadRowsHelper(std::string const& table_name,

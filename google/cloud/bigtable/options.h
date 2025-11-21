@@ -187,6 +187,22 @@ struct BulkApplyThrottlingOption {
   using Type = bool;
 };
 
+/**
+ * Option to configure the retry policy used in `bigtable::Client::ExecuteQuery`
+ * to automatically refresh expired or invalid query plans encountered during
+ * execution.
+ */
+struct ExecuteQueryPlanRefreshRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+/**
+ * Option to configure the retry policy used for query plan refresh attempts.
+ */
+struct QueryPlanRefreshFunctionRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`

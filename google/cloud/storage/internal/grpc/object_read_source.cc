@@ -53,17 +53,18 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
       stream_->Cancel();
       return true;
     });
-    auto data = stream_->Read();
+    google::storage::v2::ReadObjectResponse response;
+    auto status = stream_->Read(&response);
     watchdog.cancel();
     if (watchdog.get()) {
       status_ = google::cloud::internal::DeadlineExceededError(
           "Deadline exceeded waiting for data in ReadObject", GCP_ERROR_INFO());
       // The stream is already cancelled, but we need to wait for its status.
-      while (!absl::holds_alternative<Status>(data)) data = stream_->Read();
+      while (!status.has_value()) status = stream_->Read(&response);
       return status_;
     }
-    if (absl::holds_alternative<Status>(data)) {
-      status_ = absl::get<Status>(std::move(data));
+    if (status.has_value()) {
+      status_ = *std::move(status);
       auto metadata = stream_->GetRequestMetadata();
       result.response.headers.insert(metadata.headers.begin(),
                                      metadata.headers.end());
@@ -73,8 +74,7 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
       if (!status_.ok()) return status_;
       return result;
     }
-    HandleResponse(result, buf, n,
-                   absl::get<ReadObjectResponse>(std::move(data)));
+    HandleResponse(result, buf, n, std::move(response));
   }
 
   return result;

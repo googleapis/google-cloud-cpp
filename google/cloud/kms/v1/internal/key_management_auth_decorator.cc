@@ -274,6 +274,15 @@ KeyManagementServiceAuth::MacVerify(
   return child_->MacVerify(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceAuth::Decapsulate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->Decapsulate(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceAuth::GenerateRandomBytes(
     grpc::ClientContext& context, Options const& options,

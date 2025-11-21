@@ -281,6 +281,10 @@ class BackupDRConnection {
   virtual StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
       google::cloud::backupdr::v1::ListBackupsRequest request);
 
+  virtual StreamRange<google::cloud::backupdr::v1::Backup>
+  FetchBackupsForResourceType(
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request);
+
   virtual StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
       google::cloud::backupdr::v1::GetBackupRequest const& request);
 
@@ -430,6 +434,10 @@ class BackupDRConnection {
   GetDataSourceReference(
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
           request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+  ListDataSourceReferences(
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest request);
 
   virtual StreamRange<google::cloud::backupdr::v1::DataSourceReference>
   FetchDataSourceReferencesForResourceType(

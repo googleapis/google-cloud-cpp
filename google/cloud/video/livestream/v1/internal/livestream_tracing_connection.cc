@@ -194,6 +194,70 @@ LivestreamServiceTracingConnection::StopChannel(
   return internal::EndSpan(std::move(span), child_->StopChannel(operation));
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceTracingConnection::StartDistribution(
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StartDistribution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartDistribution(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::StartDistribution(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StartDistribution");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->StartDistribution(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceTracingConnection::StartDistribution(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StartDistribution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StartDistribution(operation));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceTracingConnection::StopDistribution(
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StopDistribution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StopDistribution(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::StopDistribution(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StopDistribution");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->StopDistribution(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceTracingConnection::StopDistribution(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StopDistribution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopDistribution(operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceTracingConnection::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
@@ -297,6 +361,15 @@ LivestreamServiceTracingConnection::UpdateInput(
       "video_livestream_v1::LivestreamServiceConnection::UpdateInput");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInput(operation));
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceTracingConnection::PreviewInput(
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::PreviewInput");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PreviewInput(request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>

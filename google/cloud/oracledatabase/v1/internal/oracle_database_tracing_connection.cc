@@ -265,6 +265,18 @@ OracleDatabaseTracingConnection::ListGiVersions(
                                                     std::move(sr));
 }
 
+StreamRange<google::cloud::oracledatabase::v1::MinorVersion>
+OracleDatabaseTracingConnection::ListMinorVersions(
+    google::cloud::oracledatabase::v1::ListMinorVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListMinorVersions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListMinorVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::MinorVersion>(std::move(span),
+                                                       std::move(sr));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
 OracleDatabaseTracingConnection::ListDbSystemShapes(
     google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request) {
@@ -330,6 +342,39 @@ OracleDatabaseTracingConnection::CreateAutonomousDatabase(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAutonomousDatabase(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::UpdateAutonomousDatabase(
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::UpdateAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAutonomousDatabase(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::UpdateAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::UpdateAutonomousDatabase");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAutonomousDatabase(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::UpdateAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::UpdateAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAutonomousDatabase(operation));
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -549,6 +594,648 @@ OracleDatabaseTracingConnection::RestartAutonomousDatabase(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RestartAutonomousDatabase(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::SwitchoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "SwitchoverAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SwitchoverAutonomousDatabase(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::SwitchoverAutonomousDatabase(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    SwitchoverAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "SwitchoverAutonomousDatabase");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SwitchoverAutonomousDatabase(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::SwitchoverAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "SwitchoverAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SwitchoverAutonomousDatabase(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::FailoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "FailoverAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->FailoverAutonomousDatabase(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::FailoverAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "FailoverAutonomousDatabase");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->FailoverAutonomousDatabase(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::FailoverAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "FailoverAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->FailoverAutonomousDatabase(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseTracingConnection::ListOdbNetworks(
+    google::cloud::oracledatabase::v1::ListOdbNetworksRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListOdbNetworks");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOdbNetworks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::OdbNetwork>(std::move(span),
+                                                     std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseTracingConnection::GetOdbNetwork(
+    google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetOdbNetwork");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOdbNetwork(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+OracleDatabaseTracingConnection::CreateOdbNetwork(
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateOdbNetwork(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateOdbNetwork(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbNetwork");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateOdbNetwork(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+OracleDatabaseTracingConnection::CreateOdbNetwork(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateOdbNetwork(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteOdbNetwork(
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteOdbNetwork(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteOdbNetwork(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbNetwork");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteOdbNetwork(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteOdbNetwork(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteOdbNetwork(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseTracingConnection::ListOdbSubnets(
+    google::cloud::oracledatabase::v1::ListOdbSubnetsRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListOdbSubnets");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOdbSubnets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::OdbSubnet>(std::move(span),
+                                                    std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseTracingConnection::GetOdbSubnet(
+    google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetOdbSubnet");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOdbSubnet(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+OracleDatabaseTracingConnection::CreateOdbSubnet(
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbSubnet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateOdbSubnet(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateOdbSubnet(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbSubnet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateOdbSubnet(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+OracleDatabaseTracingConnection::CreateOdbSubnet(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateOdbSubnet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateOdbSubnet(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteOdbSubnet(
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbSubnet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteOdbSubnet(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteOdbSubnet(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbSubnet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteOdbSubnet(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteOdbSubnet(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteOdbSubnet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteOdbSubnet(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseTracingConnection::ListExadbVmClusters(
+    google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListExadbVmClusters");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListExadbVmClusters(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(std::move(span),
+                                                         std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseTracingConnection::GetExadbVmCluster(
+    google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetExadbVmCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExadbVmCluster(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseTracingConnection::CreateExadbVmCluster(
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExadbVmCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateExadbVmCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateExadbVmCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseTracingConnection::CreateExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExadbVmCluster(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteExadbVmCluster(
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExadbVmCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteExadbVmCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteExadbVmCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExadbVmCluster(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseTracingConnection::UpdateExadbVmCluster(
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::UpdateExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExadbVmCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::UpdateExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::UpdateExadbVmCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateExadbVmCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseTracingConnection::UpdateExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::UpdateExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExadbVmCluster(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseTracingConnection::RemoveVirtualMachineExadbVmCluster(
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "RemoveVirtualMachineExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveVirtualMachineExadbVmCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::RemoveVirtualMachineExadbVmCluster(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "RemoveVirtualMachineExadbVmCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RemoveVirtualMachineExadbVmCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseTracingConnection::RemoveVirtualMachineExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "RemoveVirtualMachineExadbVmCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->RemoveVirtualMachineExadbVmCluster(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseTracingConnection::ListExascaleDbStorageVaults(
+    google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListExascaleDbStorageVaults");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListExascaleDbStorageVaults(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::ExascaleDbStorageVault>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseTracingConnection::GetExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetExascaleDbStorageVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExascaleDbStorageVault(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+OracleDatabaseTracingConnection::CreateExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateExascaleDbStorageVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExascaleDbStorageVault(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateExascaleDbStorageVault(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    CreateExascaleDbStorageVaultRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateExascaleDbStorageVault");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateExascaleDbStorageVault(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+OracleDatabaseTracingConnection::CreateExascaleDbStorageVault(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateExascaleDbStorageVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExascaleDbStorageVault(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteExascaleDbStorageVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExascaleDbStorageVault(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteExascaleDbStorageVault(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    DeleteExascaleDbStorageVaultRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteExascaleDbStorageVault");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteExascaleDbStorageVault(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteExascaleDbStorageVault(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteExascaleDbStorageVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExascaleDbStorageVault(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+OracleDatabaseTracingConnection::ListDbSystemInitialStorageSizes(
+    google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListDbSystemInitialStorageSizes");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDbSystemInitialStorageSizes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseTracingConnection::ListDatabases(
+    google::cloud::oracledatabase::v1::ListDatabasesRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListDatabases");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDatabases(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::Database>(std::move(span),
+                                                   std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseTracingConnection::GetDatabase(
+    google::cloud::oracledatabase::v1::GetDatabaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatabase(request));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseTracingConnection::ListPluggableDatabases(
+    google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListPluggableDatabases");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListPluggableDatabases(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::PluggableDatabase>(std::move(span),
+                                                            std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseTracingConnection::GetPluggableDatabase(
+    google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetPluggableDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPluggableDatabase(request));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseTracingConnection::ListDbSystems(
+    google::cloud::oracledatabase::v1::ListDbSystemsRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListDbSystems");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDbSystems(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::DbSystem>(std::move(span),
+                                                   std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseTracingConnection::GetDbSystem(
+    google::cloud::oracledatabase::v1::GetDbSystemRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetDbSystem");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDbSystem(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>>
+OracleDatabaseTracingConnection::CreateDbSystem(
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateDbSystem");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDbSystem(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateDbSystem(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateDbSystem");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateDbSystem(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>>
+OracleDatabaseTracingConnection::CreateDbSystem(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::CreateDbSystem");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDbSystem(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteDbSystem(
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteDbSystem");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDbSystem(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteDbSystem(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteDbSystem");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteDbSystem(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteDbSystem(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::DeleteDbSystem");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDbSystem(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbVersion>
+OracleDatabaseTracingConnection::ListDbVersions(
+    google::cloud::oracledatabase::v1::ListDbVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListDbVersions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDbVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::DbVersion>(std::move(span),
+                                                    std::move(sr));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+OracleDatabaseTracingConnection::ListDatabaseCharacterSets(
+    google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListDatabaseCharacterSets");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDatabaseCharacterSets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::DatabaseCharacterSet>(std::move(span),
+                                                               std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>

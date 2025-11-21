@@ -1,5 +1,6 @@
 @googleapis//google/cloud/networkconnectivity/v1:common.proto
 @googleapis//google/cloud/networkconnectivity/v1:cross_network_automation.proto
+@googleapis//google/cloud/networkconnectivity/v1:data_transfer.proto
 @googleapis//google/cloud/networkconnectivity/v1:hub.proto
 @googleapis//google/cloud/networkconnectivity/v1:internal_range.proto
 @googleapis//google/cloud/networkconnectivity/v1:policy_based_routing.proto

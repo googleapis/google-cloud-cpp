@@ -5,6 +5,7 @@
 @googleapis//google/cloud/retail/v2:completion_service.proto
 @googleapis//google/cloud/retail/v2:control.proto
 @googleapis//google/cloud/retail/v2:control_service.proto
+@googleapis//google/cloud/retail/v2:conversational_search_service.proto
 @googleapis//google/cloud/retail/v2:export_config.proto
 @googleapis//google/cloud/retail/v2:generative_question.proto
 @googleapis//google/cloud/retail/v2:generative_question_service.proto
@@ -16,6 +17,7 @@
 @googleapis//google/cloud/retail/v2:product_service.proto
 @googleapis//google/cloud/retail/v2:promotion.proto
 @googleapis//google/cloud/retail/v2:purge_config.proto
+@googleapis//google/cloud/retail/v2:safety.proto
 @googleapis//google/cloud/retail/v2:search_service.proto
 @googleapis//google/cloud/retail/v2:serving_config.proto
 @googleapis//google/cloud/retail/v2:serving_config_service.proto

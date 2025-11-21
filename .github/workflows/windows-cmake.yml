@@ -65,7 +65,7 @@ jobs:
         - shard: Core4
           build_type: Debug
     steps:
-    - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -85,11 +85,11 @@ jobs:
       shell: bash
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        core1_features=(bigtable)
-        core2_features=(spanner)
-        core3_features=(storage)
-        core4_features=(storage_grpc)
-        core5_features=(pubsub pubsublite)
+        core1_features=(bigtable universe_domain)
+        core2_features=(spanner universe_domain)
+        core3_features=(storage universe_domain)
+        core4_features=(storage_grpc universe_domain)
+        core5_features=(pubsub pubsublite universe_domain)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -107,6 +107,7 @@ jobs:
           sql
           dialogflow_cx
           dialogflow_es
+          universe_domain
         )
         shard2_features=(
           beyondcorp
@@ -119,6 +120,7 @@ jobs:
           servicecontrol
           speech
           support
+          universe_domain
         )
         shard3_features=(
           securesourcemanager
@@ -164,6 +166,7 @@ jobs:
           trace
           vision
           workflows
+          universe_domain
         )
         shard4_features=(
           accessapproval
@@ -203,6 +206,7 @@ jobs:
           gkebackup
           gkeconnect
           gkehub
+          universe_domain
         )
         shard5_features=(
           video
@@ -216,6 +220,7 @@ jobs:
           bigquery
           bigquerycontrol
           resourcemanager
+          universe_domain
         )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"

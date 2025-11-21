@@ -16,7 +16,7 @@
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
-#include "google/cloud/opentelemetry/monitoring_exporter.h"
+#include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
@@ -49,8 +49,8 @@ auto MakeReaderOptions(Options const& options) {
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
   reader_options.export_interval_millis = std::chrono::milliseconds(
       options.get<storage_experimental::GrpcMetricsPeriodOption>());
-  reader_options.export_timeout_millis =
-      std::chrono::milliseconds(std::chrono::seconds(30));
+  reader_options.export_timeout_millis = std::chrono::milliseconds(
+      options.get<storage_experimental::GrpcMetricsExportTimeoutOption>());
   return reader_options;
 }
 
@@ -91,6 +91,11 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
   if (!project) return absl::nullopt;
 
   auto exporter_options = MetricsExporterOptions(*project, resource);
+  if (options.has<storage_experimental::GrpcMetricsExcludedLabelsOption>()) {
+    exporter_options.set<otel_internal::ResourceFilterDataFnOption>(
+        options.get<storage_experimental::GrpcMetricsExcludedLabelsOption>());
+  }
+
   auto exporter_connection_options = MetricsExporterConnectionOptions(options);
   return ExporterConfig{std::move(*project), std::move(exporter_options),
                         std::move(exporter_connection_options),

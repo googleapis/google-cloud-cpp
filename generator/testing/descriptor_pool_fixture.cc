@@ -55,6 +55,7 @@ DescriptorPoolFixture::DescriptorPoolFixture()
   source_tree_.Insert("test/v1/common.proto", kCommonFileContents);
   source_tree_.Insert("google/api/annotations.proto", kEmptyFile);
   source_tree_.Insert("google/api/client.proto", kEmptyFile);
+  source_tree_.Insert("google/api/field_behavior.proto", kEmptyFile);
 
   // We need google.longrunning.* to be available. This also imports the
   // google.protobuf.*Descriptor protos.

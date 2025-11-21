@@ -217,6 +217,18 @@ class CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetEntryLinkRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -476,6 +488,20 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
       override;
+
+  StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CreateEntryLinkRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetEntryLinkRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

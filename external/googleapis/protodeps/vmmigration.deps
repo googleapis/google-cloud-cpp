@@ -1,6 +1,7 @@
 @googleapis//google/api:annotations_proto
 @googleapis//google/api:client_proto
 @googleapis//google/api:field_behavior_proto
+@googleapis//google/api:field_info_proto
 @googleapis//google/api:http_proto
 @googleapis//google/api:launch_stage_proto
 @googleapis//google/api:resource_proto

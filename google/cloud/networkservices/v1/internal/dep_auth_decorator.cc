@@ -254,6 +254,116 @@ StatusOr<google::longrunning::Operation> DepServiceAuth::DeleteLbRouteExtension(
   return child_->DeleteLbRouteExtension(context, options, request);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+DepServiceAuth::ListLbEdgeExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListLbEdgeExtensions(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceAuth::GetLbEdgeExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetLbEdgeExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceAuth::AsyncCreateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateLbEdgeExtension(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DepServiceAuth::CreateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateLbEdgeExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceAuth::AsyncUpdateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateLbEdgeExtension(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DepServiceAuth::UpdateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateLbEdgeExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceAuth::AsyncDeleteLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteLbEdgeExtension(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DepServiceAuth::DeleteLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteLbEdgeExtension(context, options, request);
+}
+
 StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
 DepServiceAuth::ListAuthzExtensions(
     grpc::ClientContext& context, Options const& options,

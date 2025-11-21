@@ -46,6 +46,7 @@ application.
 - @ref channel-override-retry - describes how to change the default retry
   policies.
 - @ref channel-env - describes environment variables that can configure the behavior of the library.
+- @ref channel-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/channel
 

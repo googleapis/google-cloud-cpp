@@ -45,6 +45,7 @@ application.
 - @ref servicedirectory-override-retry - describes how to change the default retry
   policies.
 - @ref servicedirectory-env - describes environment variables that can configure the behavior of the library.
+- @ref servicedirectory-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service]: https://cloud.google.com/service-directory
 

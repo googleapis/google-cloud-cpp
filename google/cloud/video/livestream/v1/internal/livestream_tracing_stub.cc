@@ -187,6 +187,66 @@ LivestreamServiceTracingStub::StopChannel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceTracingStub::AsyncStartDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.video.livestream.v1.LivestreamService",
+      "StartDistribution");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncStartDistribution(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingStub::StartDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.video.livestream.v1.LivestreamService",
+      "StartDistribution");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->StartDistribution(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceTracingStub::AsyncStopDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.video.livestream.v1.LivestreamService", "StopDistribution");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncStopDistribution(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingStub::StopDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.video.livestream.v1.LivestreamService", "StopDistribution");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StopDistribution(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -286,6 +346,18 @@ LivestreamServiceTracingStub::UpdateInput(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateInput(context, options, request));
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceTracingStub::PreviewInput(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.video.livestream.v1.LivestreamService", "PreviewInput");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->PreviewInput(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>

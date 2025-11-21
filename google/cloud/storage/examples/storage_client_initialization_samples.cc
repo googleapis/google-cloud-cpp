@@ -18,6 +18,7 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/universe_domain.h"
 #include <iostream>
 #include <random>
 #include <stdexcept>
@@ -128,6 +129,34 @@ void ServiceAccountKeyfile(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
+void SetClientUniverseDomain(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::storage::examples;
+  if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 2) {
+    throw examples::Usage{
+        "set-client-universe-domain"
+        " <bucket-name> <object-name>"};
+  }
+  //! [START storage_set_client_universe_domain] [set-client-universe-domain]
+  namespace g = ::google::cloud;
+  namespace gcs = ::google::cloud::storage;
+  [](std::string const& bucket_name, std::string const& object_name) {
+    google::cloud::Options options;
+
+    // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if
+    // set, in the provided Options for the Universe Domain associated with the
+    // credentials and adds it to the set of Options.
+    // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+    auto ud_options =
+        google::cloud::AddUniverseDomainOption(std::move(options));
+
+    if (!ud_options.ok()) throw std::move(ud_options).status();
+    auto client = gcs::Client(*ud_options);
+    PerformSomeOperations(client, bucket_name, object_name);
+  }
+  //! [END storage_set_client_universe_domain] [set-client-universe-domain]
+  (argv.at(0), argv.at(1));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -163,6 +192,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ExplicitADCs()" << std::endl;
   ExplicitADCs({bucket_name, object_name});
 
+  std::cout << "\nRunning SetClientUniverseDomain()" << std::endl;
+  SetClientUniverseDomain({bucket_name, object_name});
+
   auto const filename = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (filename.has_value()) {
@@ -183,6 +215,7 @@ int main(int argc, char* argv[]) {
       {"explicit-adcs", ExplicitADCs},
       {"service-account-keyfile", ServiceAccountKeyfile},
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-client-universe-domain", SetClientUniverseDomain},
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

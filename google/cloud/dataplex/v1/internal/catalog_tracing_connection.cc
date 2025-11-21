@@ -486,6 +486,33 @@ Status CatalogServiceTracingConnection::CancelMetadataJob(
   return internal::EndSpan(*span, child_->CancelMetadataJob(request));
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingConnection::CreateEntryLink(
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEntryLink(request));
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingConnection::DeleteEntryLink(
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::DeleteEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEntryLink(request));
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingConnection::GetEntryLink(
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::CatalogServiceConnection::GetEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntryLink(request));
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

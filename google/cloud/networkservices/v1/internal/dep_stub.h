@@ -145,6 +145,58 @@ class DepServiceStub {
           request) = 0;
 
   virtual StatusOr<
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+  ListLbEdgeExtensions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+  GetLbEdgeExtension(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) = 0;
+
+  virtual StatusOr<
       google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
   ListAuthzExtensions(
       grpc::ClientContext& context, Options const& options,
@@ -360,6 +412,54 @@ class DefaultDepServiceStub : public DepServiceStub {
   StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
       grpc::ClientContext& context, Options options,
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+  ListLbEdgeExtensions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+  GetLbEdgeExtension(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
           request) override;
 
   StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>

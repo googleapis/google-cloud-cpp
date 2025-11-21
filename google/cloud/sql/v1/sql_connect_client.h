@@ -109,8 +109,8 @@ class SqlConnectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.ConnectSettings]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L75}
-  /// [google.cloud.sql.v1.GetConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L61}
+  /// [google.cloud.sql.v1.ConnectSettings]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L73}
+  /// [google.cloud.sql.v1.GetConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L59}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
@@ -143,8 +143,8 @@ class SqlConnectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L132}
-  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L157}
+  /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L130}
+  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L155}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>

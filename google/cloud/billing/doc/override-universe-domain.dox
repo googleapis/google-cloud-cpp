@@ -1,0 +1,42 @@
+/*!
+@page billing-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `billing_budgets_v1::BudgetServiceClient`:
+
+@snippet budget_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c billing_budgets_v1::BudgetServiceClient](@ref billing_budgets_v1::BudgetServiceClient-universe-domain-snippet)
+- [\c billing_v1::CloudBillingClient](@ref billing_v1::CloudBillingClient-universe-domain-snippet)
+- [\c billing_v1::CloudCatalogClient](@ref billing_v1::CloudCatalogClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page billing_budgets_v1::BudgetServiceClient-universe-domain-snippet Override billing_budgets_v1::BudgetServiceClient Universe Domain
+
+@snippet google/cloud/billing/budgets/v1/samples/budget_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page billing_v1::CloudBillingClient-universe-domain-snippet Override billing_v1::CloudBillingClient Universe Domain
+
+@snippet google/cloud/billing/v1/samples/cloud_billing_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page billing_v1::CloudCatalogClient-universe-domain-snippet Override billing_v1::CloudCatalogClient Universe Domain
+
+@snippet google/cloud/billing/v1/samples/cloud_catalog_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

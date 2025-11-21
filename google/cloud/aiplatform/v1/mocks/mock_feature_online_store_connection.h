@@ -60,6 +60,19 @@ class MockFeatureOnlineStoreServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+           google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+           google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>),
+      AsyncFeatureViewDirectWrite, (), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>,
+      GenerateFetchAccessToken,
+      (google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+           request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -182,6 +182,15 @@ PredictionServiceMetadata::StreamGenerateContent(
   return child_->StreamGenerateContent(std::move(context), options, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceMetadata::EmbedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("model=", internal::UrlEncode(request.model())));
+  return child_->EmbedContent(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 PredictionServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -345,6 +345,15 @@ class CatalogServiceConnection {
   virtual Status CancelMetadataJob(
       google::cloud::dataplex::v1::CancelMetadataJobRequest const& request);
 
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
+      google::cloud::dataplex::v1::CreateEntryLinkRequest const& request);
+
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
+      google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request);
+
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
+      google::cloud::dataplex::v1::GetEntryLinkRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

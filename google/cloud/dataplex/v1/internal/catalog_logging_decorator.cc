@@ -544,6 +544,44 @@ Status CatalogServiceLogging::CancelMetadataJob(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceLogging::CreateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+        return child_->CreateEntryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceLogging::DeleteEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+        return child_->DeleteEntryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceLogging::GetEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+        return child_->GetEntryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

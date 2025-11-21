@@ -31,10 +31,10 @@ if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
   readonly ENABLED_FEATURES="${GOOGLE_CLOUD_CPP_CHECK_API}"
   IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
 else
-  readonly ENABLED_FEATURES="__ga_libraries__,opentelemetry"
+  readonly ENABLED_FEATURES="__ga_libraries__,opentelemetry,universe_domain"
   mapfile -t library_list < <(cmake -P cmake/print-ga-libraries.cmake 2>&1)
   # These libraries are not "features", but they are part of the public API
-  library_list+=("common" "grpc_utils")
+  library_list+=("common" "grpc_utils" "universe_domain")
   # This is a GA library, not included in __ga_libraries__
   library_list+=("opentelemetry")
 fi
@@ -68,7 +68,7 @@ function check_abi() {
 
   local shortlib="${library#google_cloud_cpp_}"
   local public_headers="${prefix}/include/google/cloud/${shortlib}"
-  if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" || "${shortlib}" == "oauth2" ]]; then
+  if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" || "${shortlib}" == "universe_domain" || "${shortlib}" == "oauth2" ]]; then
     # These are special and share their header location.
     public_headers="${prefix}/include/google/cloud"
   elif [[ "${shortlib}" == "storage_grpc" ]]; then

@@ -62,8 +62,8 @@ auto TestOptions() {
   options.set<UnifiedCredentialsOption>(
       MakeServiceAccountCredentials(contents));
 
-  auto ud_options = AddUniverseDomainOption(
-      ExperimentalTag{}, options.set<ProjectIdOption>(projectId));
+  auto ud_options =
+      AddUniverseDomainOption(options.set<ProjectIdOption>(projectId));
   if (!ud_options.ok()) throw std::move(ud_options).status();
 
   return *ud_options;

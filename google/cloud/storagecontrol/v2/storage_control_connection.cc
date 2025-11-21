@@ -235,6 +235,22 @@ StorageControlConnection::UpdateOrganizationIntelligenceConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::iam::v1::Policy> StorageControlConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> StorageControlConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageControlConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

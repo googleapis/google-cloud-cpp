@@ -55,6 +55,24 @@ FeatureOnlineStoreServiceTracingConnection::SearchNearestEntities(
   return internal::EndSpan(*span, child_->SearchNearestEntities(request));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceTracingConnection::AsyncFeatureViewDirectWrite() {
+  return child_->AsyncFeatureViewDirectWrite();
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceTracingConnection::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreServiceConnection::"
+      "GenerateFetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateFetchAccessToken(request));
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
