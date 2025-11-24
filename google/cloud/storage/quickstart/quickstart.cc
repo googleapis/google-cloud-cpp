@@ -14,30 +14,10 @@
 
 //! [all]
 #include "google/cloud/storage/client.h"
-#include "google/cloud/common_options.h" // Required for CARootsFilePathOption
-#include <curl/curl.h>
-#include <cstdlib>
 #include <iostream>
 #include <string>
 
 int main(int argc, char* argv[]) {
-  // --- DEBUG START ---
-  std::cout << "--- BINARY DEBUG START ---\n";
-  auto* vinfo = curl_version_info(CURLVERSION_NOW);
-  std::cout << "Libcurl Version: " << vinfo->version << "\n";
-  std::cout << "SSL Backend: " << vinfo->ssl_version << "\n";
-  
-  const char* env_p = std::getenv("CURL_CA_BUNDLE");
-  std::string ca_path;
-  if (env_p) {
-      ca_path = std::string(env_p);
-      std::cout << "CURL_CA_BUNDLE found: [" << ca_path << "]\n";
-  } else {
-      std::cout << "FAIL: CURL_CA_BUNDLE is NOT set.\n";
-  }
-  std::cout << "--- BINARY DEBUG END ---\n";
-  // --- DEBUG END ---
-
   if (argc != 2) {
     std::cerr << "Missing bucket name.\n";
     std::cerr << "Usage: quickstart <bucket-name>\n";
@@ -45,21 +25,16 @@ int main(int argc, char* argv[]) {
   }
   std::string const bucket_name = argv[1];
 
-  // Configure options explicitly
-  auto options = google::cloud::Options{};
-  if (!ca_path.empty()) {
-      std::cout << "Forcing CARootsFilePathOption to: " << ca_path << "\n";
-      options.set<google::cloud::CARootsFilePathOption>(ca_path);
-  }
-
-  // Create client with explicit options
-  auto client = google::cloud::storage::Client(options);
+  // Create a client to communicate with Google Cloud Storage. This client
+  // uses the default configuration for authentication and project id.
+  auto client = google::cloud::storage::Client();
 
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
   writer.Close();
   if (!writer.metadata()) {
-    std::cerr << "Error creating object: " << writer.metadata().status() << "\n";
+    std::cerr << "Error creating object: " << writer.metadata().status()
+              << "\n";
     return 1;
   }
   std::cout << "Successfully created object: " << *writer.metadata() << "\n";
