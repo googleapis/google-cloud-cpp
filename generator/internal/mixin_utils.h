@@ -38,16 +38,30 @@ struct MixinMethod {
   google::api::HttpRule http_override;
 };
 
+struct MixinService {
+  std::string service_full_name;
+  std::string proto_file_path;
+};
+
+inline bool operator==(MixinService const& lhs, MixinService const& rhs) {
+  return lhs.service_full_name == rhs.service_full_name &&
+         lhs.proto_file_path == rhs.proto_file_path;
+}
+inline bool operator!=(MixinService const& lhs, MixinService const& rhs) {
+  return !(lhs == rhs);
+}
+
 /**
  * Extract Mixin proto file paths from the YAML Node.
  */
-std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config);
+std::vector<MixinService> GetMixinServiceProto(
+    YAML::Node const& service_config);
 
 /**
  * Extract Mixin proto file paths from the YAML Node loaded from a YAML file
  * path.
  */
-std::vector<std::string> GetMixinProtoPaths(
+std::vector<MixinService> GetMixinServiceProto(
     std::string const& service_yaml_path);
 
 /**

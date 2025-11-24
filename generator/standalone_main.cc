@@ -18,6 +18,7 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/discovery_to_proto.h"
 #include "generator/internal/format_method_comments.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -329,10 +330,6 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (service.generate_rest_transport()) {
       args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
     }
-    args.emplace_back(service.service_proto_path());
-    for (auto const& additional_proto_file : service.additional_proto_files()) {
-      args.emplace_back(additional_proto_file);
-    }
     if (service.experimental()) {
       args.emplace_back("--cpp_codegen_opt=experimental=true");
     }
@@ -388,10 +385,29 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
                        "=", kv.second));
     }
 
+    std::vector<std::string> mixin_files_to_append;
     auto path = ServiceConfigYamlPath(yaml_root, scaffold_vars);
     if (!path.empty()) {
+      auto mixins =
+          google::cloud::generator_internal::GetMixinServiceProto(path);
       args.emplace_back(absl::StrCat("--cpp_codegen_opt=service_config_yaml=",
                                      std::move(path)));
+      for (auto const& mixin_service : mixins) {
+        if (mixin_service.proto_file_path != service.service_proto_path()) {
+          args.emplace_back("--cpp_codegen_opt=omit_service=" +
+                            mixin_service.service_full_name);
+          mixin_files_to_append.push_back(mixin_service.proto_file_path);
+        }
+      }
+    }
+
+    args.emplace_back(service.service_proto_path());
+    for (auto const& additional_proto_file : service.additional_proto_files()) {
+      args.emplace_back(additional_proto_file);
+    }
+
+    for (auto const& m : mixin_files_to_append) {
+      args.emplace_back(m);
     }
 
     GCP_LOG(INFO) << "Generating service code using: "
