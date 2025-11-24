@@ -177,6 +177,12 @@ AsyncWriterConnectionImpl::MakeRequest() {
     request.clear_append_object_spec();
   }
   request.set_write_offset(offset_);
+  if (latest_write_handle_.has_value()) {
+    if (request.has_append_object_spec()) {
+      *request.mutable_append_object_spec()->mutable_write_handle() =
+          *latest_write_handle_;
+    }
+  }
   return request;
 }
 
@@ -240,6 +246,9 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
                                    grpc_status);
           return StatusOr<std::int64_t>(std::move(result));
         });
+  }
+  if (response->has_write_handle()) {
+    latest_write_handle_ = response->write_handle();
   }
   if (response->has_persisted_size()) {
     persisted_state_ = response->persisted_size();

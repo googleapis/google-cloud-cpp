@@ -363,6 +363,11 @@ class AsyncWriterConnectionResumedState
   void OnResume(Status const& original_status, bool was_finalizing,
                 StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
+    // Update write_handle from any resume response that contains it.
+    if (res && res.value().first_response.has_write_handle()) {
+      *first_response_.mutable_write_handle() =
+          res.value().first_response.write_handle();
+    }
 
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the

@@ -105,6 +105,9 @@ class AsyncWriterConnectionImpl
   // that `on_finish_` is called when `Finish()` is completed.
   google::cloud::promise<void> on_finish_;
   google::cloud::future<void> finished_;
+
+  // Track the latest write handle seen in responses.
+  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

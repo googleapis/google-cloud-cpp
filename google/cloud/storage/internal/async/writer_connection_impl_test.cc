@@ -648,6 +648,44 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
   EXPECT_THAT(query.get(), StatusIs(StatusCode::kInternal));
 }
 
+TEST(AsyncWriterConnectionImpl, WriteHandleIsPropagatedAfterQuery) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& req, grpc::WriteOptions) {
+        EXPECT_TRUE(req.has_append_object_spec());
+        EXPECT_TRUE(req.append_object_spec().has_write_handle());
+        EXPECT_EQ(req.append_object_spec().write_handle().handle(),
+                  "test-handle");
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read).WillOnce([&]() {
+    Response resp;
+    resp.mutable_write_handle()->set_handle("test-handle");
+    resp.set_persisted_size(42);
+    return make_ready_future(absl::make_optional(std::move(resp)));
+  });
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  auto hash = std::make_shared<MockHashFunction>();
+  google::storage::v2::BidiWriteObjectRequest req;
+  req.mutable_append_object_spec()->set_bucket("bucket");
+  req.mutable_append_object_spec()->set_object("object");
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), req, std::move(mock), hash, 0);
+
+  EXPECT_THAT(tested->Query().get(), IsOkAndHolds(42));
+  auto result = tested->Write(WritePayload("payload"));
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(result.get());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
