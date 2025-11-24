@@ -140,8 +140,9 @@ std::unordered_set<std::string> GetMethodNames(
 
 }  // namespace
 
-std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config) {
-  std::vector<std::string> proto_paths;
+std::vector<MixinService> GetMixinServiceProto(
+    YAML::Node const& service_config) {
+  std::vector<MixinService> proto_paths;
   if (service_config.Type() != YAML::NodeType::Map) return proto_paths;
   auto const& apis = service_config["apis"];
   if (apis.Type() != YAML::NodeType::Sequence) return proto_paths;
@@ -149,18 +150,18 @@ std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config) {
     if (api.Type() != YAML::NodeType::Map) continue;
     auto const& name = api["name"];
     if (name.Type() != YAML::NodeType::Scalar) continue;
-    auto const package_path = name.as<std::string>();
+    auto const service = name.as<std::string>();
     auto const& mixin_proto_path_map = GetMixinProtoPathMap();
-    auto const it = mixin_proto_path_map.find(package_path);
+    auto const it = mixin_proto_path_map.find(service);
     if (it == mixin_proto_path_map.end()) continue;
-    proto_paths.push_back(it->second);
+    proto_paths.push_back({it->first, it->second});
   }
   return proto_paths;
 }
 
-std::vector<std::string> GetMixinProtoPaths(
+std::vector<MixinService> GetMixinServiceProto(
     std::string const& service_yaml_path) {
-  return GetMixinProtoPaths(YAML::LoadFile(service_yaml_path));
+  return GetMixinServiceProto(YAML::LoadFile(service_yaml_path));
 }
 
 std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
@@ -173,15 +174,16 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
                    << service.full_name();
   }
   std::unordered_set<std::string> const method_names = GetMethodNames(service);
-  auto const mixin_proto_paths = GetMixinProtoPaths(service_config);
+  auto const mixin_proto_paths = GetMixinServiceProto(service_config);
   auto const mixin_http_overrides = GetMixinHttpOverrides(service_config);
 
   for (auto const& mixin_proto_path : mixin_proto_paths) {
-    FileDescriptor const* mixin_file = pool->FindFileByName(mixin_proto_path);
+    FileDescriptor const* mixin_file =
+        pool->FindFileByName(mixin_proto_path.proto_file_path);
     if (mixin_file == nullptr) {
       GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
                      << " Mixin FileDescriptor is not found for path: "
-                     << mixin_proto_path
+                     << mixin_proto_path.proto_file_path
                      << " in service: " << service.full_name();
     }
     for (int i = 0; i < mixin_file->service_count(); ++i) {
