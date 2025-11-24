@@ -364,9 +364,9 @@ class AsyncWriterConnectionResumedState
                 StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
     // Update write_handle from any resume response that contains it.
-    if (res && res.value().first_response.has_write_handle()) {
+    if (res && res->first_response.has_write_handle()) {
       *first_response_.mutable_write_handle() =
-          res.value().first_response.write_handle();
+          res->first_response.write_handle();
     }
 
     if (was_finalizing) {

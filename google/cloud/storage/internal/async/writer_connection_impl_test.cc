@@ -651,12 +651,15 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
 TEST(AsyncWriterConnectionImpl, WriteHandleIsPropagatedAfterQuery) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
+  int write_call_count = 0;
   EXPECT_CALL(*mock, Write)
-      .WillOnce([&](Request const& req, grpc::WriteOptions) {
+      .Times(2)
+      .WillRepeatedly([&](Request const& req, grpc::WriteOptions) {
         EXPECT_TRUE(req.has_append_object_spec());
         EXPECT_TRUE(req.append_object_spec().has_write_handle());
         EXPECT_EQ(req.append_object_spec().write_handle().handle(),
                   "test-handle");
+        ++write_call_count;
         return sequencer.PushBack("Write");
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
@@ -679,11 +682,21 @@ TEST(AsyncWriterConnectionImpl, WriteHandleIsPropagatedAfterQuery) {
       TestOptions(), req, std::move(mock), hash, 0);
 
   EXPECT_THAT(tested->Query().get(), IsOkAndHolds(42));
-  auto result = tested->Write(WritePayload("payload"));
-  auto next = sequencer.PopFrontWithName();
-  ASSERT_THAT(next.second, "Write");
-  next.first.set_value(true);
-  EXPECT_STATUS_OK(result.get());
+
+  auto result1 = tested->Write(WritePayload("payload1"));
+  auto next1 = sequencer.PopFrontWithName();
+  ASSERT_THAT(next1.second, "Write");
+  next1.first.set_value(true);
+  EXPECT_STATUS_OK(result1.get());
+
+  // Second write should also include write_handle.
+  auto result2 = tested->Write(WritePayload("payload2"));
+  auto next2 = sequencer.PopFrontWithName();
+  ASSERT_THAT(next2.second, "Write");
+  next2.first.set_value(true);
+  EXPECT_STATUS_OK(result2.get());
+
+  EXPECT_EQ(write_call_count, 2);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
