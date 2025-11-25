@@ -21,7 +21,7 @@
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
-#include "google/cloud/storage/list_buckets_partial_reader.h"
+#include "google/cloud/storage/list_buckets_extended_reader.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_hmac_keys_reader.h"
 #include "google/cloud/storage/list_objects_and_prefixes_reader.h"
@@ -392,13 +392,13 @@ class Client {
    * @snippet storage_bucket_samples.cc list buckets partial result
    */
   template <typename... Options>
-  ListBucketsPartialReader ListBucketsPartial(Options&&... options) {
+  ListBucketsExtendedReader ListBucketsExtended(Options&&... options) {
     auto opts = SpanOptions(std::forward<Options>(options)...);
     auto project_id = storage_internal::RequestProjectId(
         GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
     if (!project_id) {
       return google::cloud::internal::MakeErrorPaginationRange<
-          ListBucketsPartialReader>(std::move(project_id).status());
+          ListBucketsExtendedReader>(std::move(project_id).status());
     }
     google::cloud::internal::OptionsSpan const span(std::move(opts));
 
@@ -406,14 +406,14 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     auto& client = connection_;
     return google::cloud::internal::MakePaginationRange<
-        ListBucketsPartialReader>(
+        ListBucketsExtendedReader>(
         request,
         [client](internal::ListBucketsRequest const& r) {
           return client->ListBuckets(r);
         },
-        [](internal::ListBucketsResponse r) {
-          return std::vector<BucketsPartial>{
-              BucketsPartial{std::move(r.items), std::move(r.unreachable)}};
+        [](internal::ListBucketsResponse res) {
+          return std::vector<BucketsExtended>{
+              BucketsExtended{std::move(res.items), std::move(res.unreachable)}};
         });
   }
 

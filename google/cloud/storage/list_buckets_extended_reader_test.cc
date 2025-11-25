@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/list_buckets_partial_reader.h"
+#include "google/cloud/storage/list_buckets_extended_reader.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -47,13 +47,13 @@ BucketMetadata CreateElement(int index) {
   return internal::BucketMetadataParser::FromJson(metadata).value();
 }
 
-TEST(ListBucketsPartialReaderTest, Basic) {
+TEST(ListBucketsExtendedReaderTest, Basic) {
   // We will have 3 pages.
   // Page 0: 2 buckets, 1 unreachable
   // Page 1: 1 bucket, 0 unreachable
   // Page 2: 0 buckets, 1 unreachable
 
-  std::vector<BucketsPartial> expected;
+  std::vector<BucketsExtended> expected;
 
   // Page 0
   expected.push_back({{CreateElement(0), CreateElement(1)}, {"region-a"}});
@@ -84,18 +84,18 @@ TEST(ListBucketsPartialReaderTest, Basic) {
       .WillOnce(create_mock(2));
 
   auto reader =
-      google::cloud::internal::MakePaginationRange<ListBucketsPartialReader>(
+      google::cloud::internal::MakePaginationRange<ListBucketsExtendedReader>(
           ListBucketsRequest("test-project"),
           [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); },
           [](internal::ListBucketsResponse r) {
-            std::vector<BucketsPartial> result;
+            std::vector<BucketsExtended> result;
             if (r.items.empty() && r.unreachable.empty()) return result;
             result.push_back(
-                BucketsPartial{std::move(r.items), std::move(r.unreachable)});
+                BucketsExtended{std::move(r.items), std::move(r.unreachable)});
             return result;
           });
 
-  std::vector<BucketsPartial> actual;
+  std::vector<BucketsExtended> actual;
   for (auto&& page : reader) {
     ASSERT_STATUS_OK(page);
     actual.push_back(*std::move(page));
@@ -108,20 +108,20 @@ TEST(ListBucketsPartialReaderTest, Basic) {
   }
 }
 
-TEST(ListBucketsPartialReaderTest, Empty) {
+TEST(ListBucketsExtendedReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListBuckets)
       .WillOnce(Return(make_status_or(ListBucketsResponse())));
 
   auto reader =
-      google::cloud::internal::MakePaginationRange<ListBucketsPartialReader>(
+      google::cloud::internal::MakePaginationRange<ListBucketsExtendedReader>(
           ListBucketsRequest("test-project"),
           [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); },
           [](internal::ListBucketsResponse r) {
-            std::vector<BucketsPartial> result;
+            std::vector<BucketsExtended> result;
             if (r.items.empty() && r.unreachable.empty()) return result;
             result.push_back(
-                BucketsPartial{std::move(r.items), std::move(r.unreachable)});
+                BucketsExtended{std::move(r.items), std::move(r.unreachable)});
             return result;
           });
 
@@ -129,9 +129,9 @@ TEST(ListBucketsPartialReaderTest, Empty) {
   EXPECT_EQ(0, count);
 }
 
-TEST(ListBucketsPartialReaderTest, PermanentFailure) {
-  // Create a synthetic list of BucketsPartial elements.
-  std::vector<BucketsPartial> expected;
+TEST(ListBucketsExtendedReaderTest, PermanentFailure) {
+  // Create a synthetic list of BucketsExtended elements.
+  std::vector<BucketsExtended> expected;
 
   // Page 0
   expected.push_back({{CreateElement(0), CreateElement(1)}, {"region-a"}});
@@ -157,17 +157,17 @@ TEST(ListBucketsPartialReaderTest, PermanentFailure) {
       });
 
   auto reader =
-      google::cloud::internal::MakePaginationRange<ListBucketsPartialReader>(
+      google::cloud::internal::MakePaginationRange<ListBucketsExtendedReader>(
           ListBucketsRequest("test-project"),
           [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); },
           [](internal::ListBucketsResponse r) {
-            std::vector<BucketsPartial> result;
+            std::vector<BucketsExtended> result;
             if (r.items.empty() && r.unreachable.empty()) return result;
             result.push_back(
-                BucketsPartial{std::move(r.items), std::move(r.unreachable)});
+                BucketsExtended{std::move(r.items), std::move(r.unreachable)});
             return result;
           });
-  std::vector<BucketsPartial> actual;
+  std::vector<BucketsExtended> actual;
   bool has_status_or_error = false;
   for (auto&& page : reader) {
     if (page.ok()) {

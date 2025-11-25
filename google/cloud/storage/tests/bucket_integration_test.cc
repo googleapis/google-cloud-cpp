@@ -701,7 +701,7 @@ TEST_F(BucketIntegrationTest, ListPartialSuccess) {
 
   std::vector<std::string> names;
   std::vector<std::string> unreachable;
-  for (auto& r : client.ListBucketsPartial(ReturnPartialSuccess(true))) {
+  for (auto& r : client.ListBucketsExtended(ReturnPartialSuccess(true))) {
     EXPECT_STATUS_OK(r);
     if (!r) break;
     for (auto const& b : r->buckets) {

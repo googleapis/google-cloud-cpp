@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_PARTIAL_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_PARTIAL_READER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_EXTENDED_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_EXTENDED_READER_H
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/version.h"
@@ -26,15 +26,15 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct BucketsPartial {
+struct BucketsExtended {
   std::vector<BucketMetadata> buckets;
   std::vector<std::string> unreachable;
 };
 
-using ListBucketsPartialReader =
-    google::cloud::internal::PaginationRange<BucketsPartial>;
+using ListBucketsExtendedReader =
+    google::cloud::internal::PaginationRange<BucketsExtended>;
 
-using ListBucketsPartialIterator = ListBucketsPartialReader::iterator;
+using ListBucketsExtendedIterator = ListBucketsExtendedReader::iterator;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

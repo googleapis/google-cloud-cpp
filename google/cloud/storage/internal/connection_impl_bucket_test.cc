@@ -66,6 +66,28 @@ TEST(StorageConnectionImpl, ListBucketPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
+TEST(StorageConnectionImpl, ListBucketsPartialResult) {
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, ListBuckets)
+      .WillOnce([](rest_internal::RestContext&, Options const&,
+                   ListBucketsRequest const& r) {
+        EXPECT_TRUE(r.return_partial_success());
+        ListBucketsResponse response;
+        response.items.emplace_back(BucketMetadata{});
+        response.unreachable.emplace_back("projects/_/buckets/bucket1");
+        return response;
+      });
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto response = client->ListBuckets(
+      ListBucketsRequest("test-project").set_option(ReturnPartialSuccess(true)));
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(1, response->items.size());
+  EXPECT_THAT(response->unreachable, ::testing::ElementsAre("projects/_/buckets/bucket1"));
+}
+
 TEST(StorageConnectionImpl, CreateBucketTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();

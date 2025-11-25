@@ -229,6 +229,25 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
   EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
 }
 
+TEST(GrpcBucketRequestParser, ListBucketsPartialResult) {
+  google::storage::v2::ListBucketsResponse input;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        buckets {
+          name: "projects/_/buckets/test-bucket-1"
+          bucket_id: "test-bucket-1"
+        }
+        next_page_token: "test-token"
+        unreachable: "projects/_/buckets/unreachable-bucket-1"
+        unreachable: "projects/_/buckets/unreachable-bucket-2"
+      )pb",
+      &input));
+
+  auto const actual = FromProto(input);
+  EXPECT_EQ(actual.next_page_token, "test-token");
+  EXPECT_THAT(actual.unreachable, ElementsAre("projects/_/buckets/unreachable-bucket-1", "projects/_/buckets/unreachable-bucket-2"));
+}
+
 TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
   google::storage::v2::LockBucketRetentionPolicyRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(

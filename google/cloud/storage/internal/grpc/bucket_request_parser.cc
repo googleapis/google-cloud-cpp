@@ -427,6 +427,9 @@ storage::internal::ListBucketsResponse FromProto(
                  [&](google::storage::v2::Bucket const& b) {
                    return storage_internal::FromProto(b, current_options);
                  });
+  for (auto const& u : response.unreachable()) {
+    result.unreachable.push_back(u);
+  }
   return result;
 }
 
