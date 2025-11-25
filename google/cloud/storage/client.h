@@ -389,7 +389,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc list buckets partial result
+   * @snippet storage_bucket_samples.cc list buckets partial success
    */
   template <typename... Options>
   ListBucketsExtendedReader ListBucketsExtended(Options&&... options) {

@@ -74,7 +74,7 @@ TEST(StorageConnectionImpl, ListBucketsPartialResult) {
                    ListBucketsRequest const& r) {
         EXPECT_TRUE(r.return_partial_success());
         ListBucketsResponse response;
-        response.items.emplace_back(BucketMetadata{});
+        response.items.emplace_back(BucketMetadata{}.set_name("bucket2"));
         response.unreachable.emplace_back("projects/_/buckets/bucket1");
         return response;
       });

@@ -684,6 +684,8 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListPartialSuccess) {
+  // This test requires the emulator to simulate unreachable buckets.
+  if (!UsingEmulator()) GTEST_SKIP();
   auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   std::string unreachable_bucket_name =
