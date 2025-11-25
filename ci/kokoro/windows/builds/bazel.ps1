@@ -83,19 +83,22 @@ function Invoke-gRPC-Quickstart {
 
 if (Test-Integration-Enabled) {
     Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
-    
+
     # Install certificates and set up environment variables for BoringSSL
     Install-Roots-Pem
-    
-    # BoringSSL prefers forward slashes for paths, even on Windows
-    $RawRootsPath = Join-Path $env:KOKORO_GFILE_DIR "roots.pem"
-    $RootsPath = $RawRootsPath -replace '\\', '/'
-    $KeyPath = (Join-Path $env:KOKORO_GFILE_DIR "kokoro-run-key.json") -replace '\\', '/'
 
+    # 2. MAGIC STEP: Add directory to PATH so libcurl finds the .crt file automatically
+    $env:PATH = "${env:KOKORO_GFILE_DIR};" + $env:PATH
+
+    # 3. Point gRPC to the same file. It handles .crt extensions perfectly fine.
+    $RootsPath = (Join-Path $env:KOKORO_GFILE_DIR "curl-ca-bundle.crt") -replace '\\', '/'
     $env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = $RootsPath
-    $env:CURL_CA_BUNDLE = $RootsPath
-    $env:SSL_CERT_FILE = $RootsPath
+    $KeyPath = (Join-Path $env:KOKORO_GFILE_DIR "kokoro-run-key.json") -replace '\\', '/'
     $env:GOOGLE_APPLICATION_CREDENTIALS = $KeyPath
+
+    # 4. (Optional) Clear CURL_CA_BUNDLE to prove the "Magic PATH" works
+    # If the test passes now, it means libcurl found the file in %PATH%
+    $env:CURL_CA_BUNDLE = ""
 
     Invoke-REST-Quickstart
     Invoke-gRPC-Quickstart

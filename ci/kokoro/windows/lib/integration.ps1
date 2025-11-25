@@ -26,20 +26,25 @@ function Test-Integration-Enabled {
     return $False
 }
 
+# ci/kokoro/windows/lib/integration.ps1
+
 function Install-Roots-Pem {
+    $DestPath = "${env:KOKORO_GFILE_DIR}/curl-ca-bundle.crt"
+
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "Downloading roots.pem [$_]"
+        "Downloading curl-ca-bundle.crt [$_]"
+
     ForEach($attempt in (1, 2, 3)) {
         try {
             (New-Object System.Net.WebClient).Downloadfile(
                     'https://pki.google.com/roots.pem',
-                    "${env:KOKORO_GFILE_DIR}/roots.pem")
+                    $DestPath)
             return
         } catch {
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
         }
         Start-Sleep -Seconds (60 * $attempt)
     }
-    Write-Host -ForegroundColor Red "cannot download roots.pem file."
+    Write-Host -ForegroundColor Red "cannot download curl-ca-bundle.crt file."
     Exit 1
 }
