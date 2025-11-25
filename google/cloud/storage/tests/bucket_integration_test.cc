@@ -559,6 +559,37 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(BucketIntegrationTest, PatchIpFilter) {
+  auto client = MakeIntegrationTestClient();
+  auto bucket_name = MakeRandomBucketName();
+
+  auto insert_meta = client.CreateBucketForProject(
+      bucket_name, project_id_, BucketMetadata(), Projection("full"));
+  ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
+
+  BucketIpFilter ip_filter;
+  ip_filter.mode = "Enabled";
+  ip_filter.allow_all_service_agent_access = true;
+  ip_filter.allow_cross_org_vpcs = true;
+  ip_filter.public_network_source =
+      BucketIpFilterPublicNetworkSource{{"1.2.3.4/32"}};
+  auto network_name = "projects/" + project_id_ + "/global/networks/default";
+  ip_filter.vpc_network_sources =
+      absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>(
+          {BucketIpFilterVpcNetworkSource{network_name, {"5.6.7.8/32"}}});
+
+  auto patched = client.PatchBucket(
+      bucket_name, BucketMetadataPatchBuilder().SetIpFilter(ip_filter));
+  ASSERT_STATUS_OK(patched);
+
+  ASSERT_TRUE(patched->has_ip_filter());
+  EXPECT_EQ(patched->ip_filter(), ip_filter);
+
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
   auto client = MakeBucketIntegrationTestClient();

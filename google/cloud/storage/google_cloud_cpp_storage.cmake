@@ -38,6 +38,8 @@ add_library(
     bucket_hierarchical_namespace.h
     bucket_iam_configuration.cc
     bucket_iam_configuration.h
+    bucket_ip_filter.cc
+    bucket_ip_filter.h
     bucket_lifecycle.h
     bucket_logging.cc
     bucket_logging.h
@@ -430,6 +432,7 @@ if (BUILD_TESTING)
         bucket_access_control_test.cc
         bucket_cors_entry_test.cc
         bucket_iam_configuration_test.cc
+        bucket_ip_filter_test.cc
         bucket_metadata_test.cc
         bucket_object_retention_test.cc
         bucket_soft_delete_policy_test.cc

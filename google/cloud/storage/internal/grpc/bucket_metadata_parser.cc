@@ -113,6 +113,9 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   if (rhs.has_soft_delete_policy()) {
     *result.mutable_soft_delete_policy() = ToProto(rhs.soft_delete_policy());
   }
+  if (rhs.has_ip_filter()) {
+    *result.mutable_ip_filter() = ToProto(rhs.ip_filter());
+  }
   return result;
 }
 
@@ -202,6 +205,9 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs,
   }
   if (rhs.has_autoclass()) {
     metadata.set_autoclass(FromProto(rhs.autoclass()));
+  }
+  if (rhs.has_ip_filter()) {
+    metadata.set_ip_filter(FromProto(rhs.ip_filter()));
   }
 
   return metadata;
@@ -318,6 +324,70 @@ storage::BucketIamConfiguration FromProto(
   }
   if (!rhs.public_access_prevention().empty()) {
     result.public_access_prevention = rhs.public_access_prevention();
+  }
+  return result;
+}
+
+google::storage::v2::Bucket::IpFilter ToProto(
+    storage::BucketIpFilter const& rhs) {
+  google::storage::v2::Bucket::IpFilter result;
+  if (rhs.mode.has_value()) {
+    result.set_mode(*rhs.mode);
+  }
+  if (rhs.allow_all_service_agent_access.has_value()) {
+    result.set_allow_all_service_agent_access(
+        *rhs.allow_all_service_agent_access);
+  }
+  if (rhs.allow_cross_org_vpcs.has_value()) {
+    result.set_allow_cross_org_vpcs(*rhs.allow_cross_org_vpcs);
+  }
+  if (rhs.public_network_source.has_value()) {
+    auto& pns = *result.mutable_public_network_source();
+    for (auto const& v : rhs.public_network_source->allowed_ip_cidr_ranges) {
+      pns.add_allowed_ip_cidr_ranges(v);
+    }
+  }
+  if (rhs.vpc_network_sources.has_value()) {
+    for (auto const& v : *rhs.vpc_network_sources) {
+      auto& entry = *result.add_vpc_network_sources();
+      entry.set_network(v.network);
+      for (auto const& ip : v.allowed_ip_cidr_ranges) {
+        entry.add_allowed_ip_cidr_ranges(ip);
+      }
+    }
+  }
+  return result;
+}
+
+storage::BucketIpFilter FromProto(
+    google::storage::v2::Bucket::IpFilter const& rhs) {
+  storage::BucketIpFilter result;
+  if (!rhs.mode().empty()) {
+    result.mode = rhs.mode();
+  }
+  if (rhs.has_allow_all_service_agent_access()) {
+    result.allow_all_service_agent_access =
+        rhs.allow_all_service_agent_access();
+  }
+  result.allow_cross_org_vpcs = rhs.allow_cross_org_vpcs();
+  if (rhs.has_public_network_source()) {
+    storage::BucketIpFilterPublicNetworkSource pns;
+    for (auto const& v : rhs.public_network_source().allowed_ip_cidr_ranges()) {
+      pns.allowed_ip_cidr_ranges.push_back(v);
+    }
+    result.public_network_source = std::move(pns);
+  }
+  if (!rhs.vpc_network_sources().empty()) {
+    std::vector<storage::BucketIpFilterVpcNetworkSource> vns;
+    for (auto const& v : rhs.vpc_network_sources()) {
+      storage::BucketIpFilterVpcNetworkSource entry;
+      entry.network = v.network();
+      for (auto const& ip : v.allowed_ip_cidr_ranges()) {
+        entry.allowed_ip_cidr_ranges.push_back(ip);
+      }
+      vns.push_back(std::move(entry));
+    }
+    result.vpc_network_sources = std::move(vns);
   }
   return result;
 }

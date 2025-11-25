@@ -96,6 +96,7 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          && lhs.etag_ == rhs.etag_                                          //
          && lhs.hierarchical_namespace_ == rhs.hierarchical_namespace_      //
          && lhs.iam_configuration_ == rhs.iam_configuration_                //
+         && lhs.ip_filter_ == rhs.ip_filter_                                //
          && lhs.id_ == rhs.id_                                              //
          && lhs.kind_ == rhs.kind_                                          //
          && lhs.labels_ == rhs.labels_                                      //
@@ -162,6 +163,10 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
 
   if (rhs.has_iam_configuration()) {
     os << ", iam_configuration=" << rhs.iam_configuration();
+  }
+
+  if (rhs.has_ip_filter()) {
+    os << ", ip_filter=" << rhs.ip_filter();
   }
 
   os << ", id=" << rhs.id() << ", kind=" << rhs.kind();
@@ -399,6 +404,51 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetIamConfiguration(
 BucketMetadataPatchBuilder&
 BucketMetadataPatchBuilder::ResetIamConfiguration() {
   impl_.RemoveField("iamConfiguration");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetIpFilter(
+    BucketIpFilter const& v) {
+  internal::PatchBuilder ip_filter;
+  if (v.mode.has_value()) {
+    ip_filter.SetStringField("mode", *v.mode);
+  }
+  if (v.allow_all_service_agent_access.has_value()) {
+    ip_filter.SetBoolField("allowAllServiceAgentAccess",
+                           *v.allow_all_service_agent_access);
+  }
+  if (v.allow_cross_org_vpcs.has_value()) {
+    ip_filter.SetBoolField("allowCrossOrgVpcs", *v.allow_cross_org_vpcs);
+  }
+  if (v.public_network_source.has_value()) {
+    internal::PatchBuilder public_network_source;
+    auto array = nlohmann::json::array();
+    for (auto const& r : v.public_network_source->allowed_ip_cidr_ranges) {
+      array.emplace_back(r);
+    }
+    public_network_source.SetArrayField("allowedIpCidrRanges", array.dump());
+    ip_filter.AddSubPatch("publicNetworkSource", public_network_source);
+  }
+  if (v.vpc_network_sources.has_value()) {
+    auto array = nlohmann::json::array();
+    for (auto const& r : *v.vpc_network_sources) {
+      nlohmann::json vpc_network_source;
+      vpc_network_source["network"] = r.network;
+      auto allowed_ips = nlohmann::json::array();
+      for (auto const& ip : r.allowed_ip_cidr_ranges) {
+        allowed_ips.emplace_back(ip);
+      }
+      vpc_network_source["allowedIpCidrRanges"] = allowed_ips;
+      array.emplace_back(vpc_network_source);
+    }
+    ip_filter.SetArrayField("vpcNetworkSources", array.dump());
+  }
+  impl_.AddSubPatch("ipFilter", ip_filter);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetIpFilter() {
+  impl_.RemoveField("ipFilter");
   return *this;
 }
 

@@ -574,6 +574,35 @@ TEST(GrpcBucketMetadataParser, BucketCustomPlacementConfigRoundtrip) {
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
+TEST(GrpcBucketMetadataParser, BucketIpFilterRoundtrip) {
+  auto constexpr kText = R"pb(
+    mode: "Enabled"
+    allow_all_service_agent_access: true
+    allow_cross_org_vpcs: true
+    public_network_source { allowed_ip_cidr_ranges: "1.2.3.4/32" }
+    vpc_network_sources {
+      network: "projects/p/global/networks/n"
+      allowed_ip_cidr_ranges: "5.6.7.8/32"
+    }
+  )pb";
+  google::storage::v2::Bucket::IpFilter start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  storage::BucketIpFilter expected;
+  expected.mode = "Enabled";
+  expected.allow_all_service_agent_access = true;
+  expected.allow_cross_org_vpcs = true;
+  expected.public_network_source =
+      storage::BucketIpFilterPublicNetworkSource{{"1.2.3.4/32"}};
+  expected.vpc_network_sources =
+      absl::make_optional<std::vector<storage::BucketIpFilterVpcNetworkSource>>(
+          {storage::BucketIpFilterVpcNetworkSource{
+              "projects/p/global/networks/n", {"5.6.7.8/32"}}});
+  auto const middle = FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
