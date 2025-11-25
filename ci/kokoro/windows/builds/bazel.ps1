@@ -83,20 +83,10 @@ function Invoke-gRPC-Quickstart {
 
 if (Test-Integration-Enabled) {
     Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
-    
-    # Install certificates and set up environment variables for BoringSSL
     Install-Roots-Pem
-    
-    # BoringSSL prefers forward slashes for paths, even on Windows
-    $RawRootsPath = Join-Path $env:KOKORO_GFILE_DIR "roots.pem"
-    $RootsPath = $RawRootsPath -replace '\\', '/'
-    $KeyPath = (Join-Path $env:KOKORO_GFILE_DIR "kokoro-run-key.json") -replace '\\', '/'
-
-    $env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = $RootsPath
-    $env:CURL_CA_BUNDLE = $RootsPath
-    $env:SSL_CERT_FILE = $RootsPath
-    $env:GOOGLE_APPLICATION_CREDENTIALS = $KeyPath
-
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:CURL_CA_BUNDLE}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
     Invoke-REST-Quickstart
     Invoke-gRPC-Quickstart
 }
