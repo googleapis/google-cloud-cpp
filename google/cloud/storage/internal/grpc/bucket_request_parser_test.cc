@@ -245,7 +245,9 @@ TEST(GrpcBucketRequestParser, ListBucketsPartialResult) {
 
   auto const actual = FromProto(input);
   EXPECT_EQ(actual.next_page_token, "test-token");
-  EXPECT_THAT(actual.unreachable, ElementsAre("projects/_/buckets/unreachable-bucket-1", "projects/_/buckets/unreachable-bucket-2"));
+  EXPECT_THAT(actual.unreachable,
+              ElementsAre("projects/_/buckets/unreachable-bucket-1",
+                          "projects/_/buckets/unreachable-bucket-2"));
 }
 
 TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {

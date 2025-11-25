@@ -412,8 +412,8 @@ class Client {
           return client->ListBuckets(r);
         },
         [](internal::ListBucketsResponse res) {
-          return std::vector<BucketsExtended>{
-              BucketsExtended{std::move(res.items), std::move(res.unreachable)}};
+          return std::vector<BucketsExtended>{BucketsExtended{
+              std::move(res.items), std::move(res.unreachable)}};
         });
   }
 

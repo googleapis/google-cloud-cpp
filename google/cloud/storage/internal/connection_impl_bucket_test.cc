@@ -81,11 +81,13 @@ TEST(StorageConnectionImpl, ListBucketsPartialResult) {
   auto client =
       StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
-  auto response = client->ListBuckets(
-      ListBucketsRequest("test-project").set_option(ReturnPartialSuccess(true)));
+  auto response =
+      client->ListBuckets(ListBucketsRequest("test-project")
+                              .set_option(ReturnPartialSuccess(true)));
   ASSERT_TRUE(response.ok());
   EXPECT_EQ(1, response->items.size());
-  EXPECT_THAT(response->unreachable, ::testing::ElementsAre("projects/_/buckets/bucket1"));
+  EXPECT_THAT(response->unreachable,
+              ::testing::ElementsAre("projects/_/buckets/bucket1"));
 }
 
 TEST(StorageConnectionImpl, CreateBucketTooManyFailures) {
