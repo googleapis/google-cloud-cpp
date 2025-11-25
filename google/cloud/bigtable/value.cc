@@ -343,8 +343,10 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
 
 Status CheckDepthExceeded(int const depth) {
   if (depth > kMaxValueDepth) {
-    return internal::InternalError("Nested value depth exceeds 10 levels",
-                                   GCP_ERROR_INFO());
+    return internal::InternalError(
+        absl::Substitute("Nested value depth exceeds $0 levels",
+                         kMaxValueDepth),
+        GCP_ERROR_INFO());
   }
   return Status{};
 }
