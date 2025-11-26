@@ -142,10 +142,10 @@ std::unordered_set<std::string> GetMethodNames(
 
 std::vector<MixinService> GetMixinServiceProto(
     YAML::Node const& service_config) {
-  std::vector<MixinService> proto_paths;
-  if (service_config.Type() != YAML::NodeType::Map) return proto_paths;
+  std::vector<MixinService> mixin_services;
+  if (service_config.Type() != YAML::NodeType::Map) return mixin_services;
   auto const& apis = service_config["apis"];
-  if (apis.Type() != YAML::NodeType::Sequence) return proto_paths;
+  if (apis.Type() != YAML::NodeType::Sequence) return mixin_services;
   for (auto const& api : apis) {
     if (api.Type() != YAML::NodeType::Map) continue;
     auto const& name = api["name"];
@@ -154,9 +154,9 @@ std::vector<MixinService> GetMixinServiceProto(
     auto const& mixin_proto_path_map = GetMixinProtoPathMap();
     auto const it = mixin_proto_path_map.find(service);
     if (it == mixin_proto_path_map.end()) continue;
-    proto_paths.push_back({it->first, it->second});
+    mixin_services.push_back({it->first, it->second});
   }
-  return proto_paths;
+  return mixin_services;
 }
 
 std::vector<MixinService> GetMixinServiceProto(
