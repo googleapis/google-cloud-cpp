@@ -388,10 +388,10 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     std::vector<std::string> mixin_files_to_append;
     auto path = ServiceConfigYamlPath(yaml_root, scaffold_vars);
     if (!path.empty()) {
-      args.emplace_back(absl::StrCat("--cpp_codegen_opt=service_config_yaml=",
-                                     std::move(path)));
       auto mixins =
           google::cloud::generator_internal::GetMixinServiceProto(path);
+      args.emplace_back(absl::StrCat("--cpp_codegen_opt=service_config_yaml=",
+                                     std::move(path)));
       for (auto const& mixin_service : mixins) {
         if (mixin_service.proto_file_path != service.service_proto_path()) {
           args.emplace_back("--cpp_codegen_opt=omit_service=" +
