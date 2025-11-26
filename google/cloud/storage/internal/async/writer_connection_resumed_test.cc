@@ -400,7 +400,8 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
     std::string bucket, object, handle;
     std::int64_t generation;
   } cases[] = {
-      {false, "projects/_/buckets/test-bucket", "test-object", "expected-handle", 12345},
+      {false, "projects/_/buckets/test-bucket", "test-object",
+       "expected-handle", 12345},
       {true, "bucket1", "object1", "handle1", 111},
       {false, "bucket2", "object2", "handle2", 222},
   };
@@ -410,7 +411,8 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
     auto mock = std::make_unique<MockAsyncWriterConnection>();
     google::storage::v2::BidiWriteObjectRequest req;
     if (tc.use_write_object_spec) {
-      req.mutable_write_object_spec()->mutable_resource()->set_bucket(tc.bucket);
+      req.mutable_write_object_spec()->mutable_resource()->set_bucket(
+          tc.bucket);
       req.mutable_write_object_spec()->mutable_resource()->set_name(tc.object);
     } else {
       req.mutable_append_object_spec()->set_bucket(tc.bucket);
@@ -420,7 +422,8 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
     resp.mutable_write_handle()->set_handle(tc.handle);
     resp.mutable_resource()->set_generation(tc.generation);
 
-    EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(MakePersistedState(0)));
+    EXPECT_CALL(*mock, PersistedState)
+        .WillRepeatedly(Return(MakePersistedState(0)));
     EXPECT_CALL(*mock, Flush(_)).WillOnce([&](auto) {
       return sequencer.PushBack("Flush").then([](auto f) {
         if (f.get()) return google::cloud::Status{};
@@ -439,8 +442,9 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
           });
         });
 
-    auto conn = MakeWriterConnectionResumed(
-        mock_factory.AsStdFunction(), std::move(mock), req, nullptr, resp, Options{});
+    auto conn = MakeWriterConnectionResumed(mock_factory.AsStdFunction(),
+                                            std::move(mock), req, nullptr, resp,
+                                            Options{});
     auto write = conn->Write(TestPayload(1));
     sequencer.PopFrontWithName().first.set_value(false);
     sequencer.PopFrontWithName().first.set_value(true);
