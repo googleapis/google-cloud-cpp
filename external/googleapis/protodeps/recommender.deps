@@ -5,4 +5,5 @@
 @googleapis//google/api:launch_stage_proto
 @googleapis//google/api:resource_proto
 @googleapis//google/cloud/recommender/v1:recommender_proto
+@googleapis//google/rpc:status_proto
 @googleapis//google/type:money_proto

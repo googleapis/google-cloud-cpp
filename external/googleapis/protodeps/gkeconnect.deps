@@ -3,3 +3,4 @@
 @googleapis//google/api:field_behavior_proto
 @googleapis//google/api:http_proto
 @googleapis//google/api:launch_stage_proto
+@googleapis//google/rpc:status_proto

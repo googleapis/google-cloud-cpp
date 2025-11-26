@@ -1,1 +1,2 @@
 @googleapis//google/api:field_behavior_proto
+@googleapis//google/rpc:status_proto
