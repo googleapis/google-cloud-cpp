@@ -589,6 +589,22 @@ struct RequestedPolicyVersion
   }
 };
 
+/**
+ * Controls if unreachable resources should be included when performing list
+ * operations.
+ *
+ * By default requests listing resources only includs the latest (live) version
+ * of each resource, set this option to `true` to get list of unreachable
+ * regions.
+ */
+struct ReturnPartialSuccess
+    : public internal::WellKnownParameter<ReturnPartialSuccess, bool> {
+  using WellKnownParameter<ReturnPartialSuccess, bool>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "returnPartialSuccess";
+  }
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

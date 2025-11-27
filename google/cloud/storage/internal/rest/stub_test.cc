@@ -230,6 +230,26 @@ TEST(RestStubTest, ListBucketsOmitsPageTokenWhenEmptyInRequest) {
   tested->ListBuckets(context, TestOptions(), request);
 }
 
+TEST(RestStubTest, ListBucketsReturnPartialSuccess) {
+  auto mock = std::make_shared<MockRestClient>();
+  bool return_partial_success = true;
+  ListBucketsRequest request("test-project-id");
+  request.set_multiple_options(
+      storage::ReturnPartialSuccess(return_partial_success));
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters contain 'returnPartialSuccess'",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Contains(Pair("returnPartialSuccess", "true")))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
+}
+
 TEST(RestStubTest, GetBucketMetadata) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
