@@ -243,10 +243,10 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
     result.items.emplace_back(std::move(*parsed));
   }
 
-  if (json.count("unreachable") != 0) {
-    for (auto const& kv : json["unreachable"].items()) {
-      result.unreachable.push_back(kv.value().get<std::string>());
-    }
+  auto const& unreachable = json["unreachable"];
+  result.unreachable.reserve(unreachable.size());
+  for (auto const& bucket : unreachable) {
+    result.unreachable.push_back(bucket.get<std::string>());
   }
 
   return result;
