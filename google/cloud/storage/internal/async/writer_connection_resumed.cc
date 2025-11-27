@@ -191,6 +191,7 @@ class AsyncWriterConnectionResumedState
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
+    if (writing_) return;
     // Determine if there's data left to write *before* potentially finalizing.
     writing_ = write_offset_ < resend_buffer_.size();
 
@@ -212,7 +213,8 @@ class AsyncWriterConnectionResumedState
     }
     // If not finalizing, check if an empty flush is needed.
     if (flush_) {
-      // Pass empty payload to FlushStep
+      writing_ = true;
+      // Pass empty payload to FlushStep 
       return FlushStep(std::move(lk), absl::Cord{});
     }
 
@@ -263,8 +265,10 @@ class AsyncWriterConnectionResumedState
     auto impl = Impl(lk);
     lk.unlock();
     impl->Query().then([this, result, w = WeakFromThis()](auto f) {
-      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
-      if (auto self = w.lock()) return self->OnQuery(f.get());
+      auto self = w.lock();
+      if (!self) return;
+      self->OnQuery(f.get());
+      self->SetFlushed(std::unique_lock<std::mutex>(self->mu_), std::move(result));
     });
   }
 
@@ -302,8 +306,9 @@ class AsyncWriterConnectionResumedState
     buffer_offset_ = persisted_size;
     write_offset_ -= static_cast<std::size_t>(n);
     // If the buffer is small enough, collect all the handlers to notify them.
-    auto const handlers = ClearHandlersIfEmpty(lk);
-    WriteLoop(std::move(lk));
+    auto const handlers = ClearHandlersIfEmpty(lk); 
+    writing_ = false;
+    StartWriting(std::move(lk));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
     for (auto const& h : handlers) {
@@ -325,7 +330,8 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
-    return WriteLoop(std::move(lk));
+    writing_ = false; 
+    return StartWriting(std::move(lk));
   }
 
   void Resume(Status const& s) {
@@ -353,7 +359,8 @@ class AsyncWriterConnectionResumedState
     bool was_finalizing;
     {
       std::unique_lock<std::mutex> lk(mu_);
-      was_finalizing = finalizing_;
+      was_finalizing = finalizing_;    
+      writing_ = false; 
       if (!s.ok() && cancelled_) {
         return SetError(std::move(lk), std::move(s));
       }
@@ -471,10 +478,6 @@ class AsyncWriterConnectionResumedState
     // lock.
     for (auto& h : handlers) h->Execute(Status{});
     flushed.set_value(result);
-    // Restart the write loop ONLY if we are not already finalizing.
-    // If finalizing_ is true, the completion will be handled by OnFinalize.
-    std::unique_lock<std::mutex> loop_lk(mu_);
-    if (!finalizing_) WriteLoop(std::move(loop_lk));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
@@ -600,7 +603,7 @@ class AsyncWriterConnectionResumedState
   // - A Flush() call that returns an unsatisified future until the buffer is
   //   small enough.
   std::vector<std::unique_ptr<BufferShrinkHandler>> flush_handlers_;
-
+  
   // True if the writing loop is activate.
   bool writing_ = false;
 
