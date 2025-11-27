@@ -133,7 +133,8 @@ AsyncWriterConnectionImpl::Finalize(
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto action = request_.has_append_object_spec()
+  auto action = request_.has_append_object_spec() ||
+                        request_.write_object_spec().appendable()
                     ? PartialUpload::kFinalize
                     : PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
