@@ -177,7 +177,8 @@ TEST_F(LoggingStubTest, ListBuckets) {
   };
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, ListBuckets)
-      .WillOnce(Return(make_status_or(ListBucketsResponse{"a-token", items})));
+      .WillOnce(
+          Return(make_status_or(ListBucketsResponse{"a-token", items, {}})));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.

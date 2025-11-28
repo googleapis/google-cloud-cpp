@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
+#include "google/cloud/storage/list_buckets_extended_reader.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_hmac_keys_reader.h"
 #include "google/cloud/storage/list_objects_and_prefixes_reader.h"
@@ -364,6 +365,56 @@ class Client {
     google::cloud::internal::OptionsSpan const span(std::move(opts));
     return ListBucketsForProject(*std::move(project_id),
                                  std::forward<Options>(options)...);
+  }
+
+  /**
+   * Fetches the list of buckets and unreachable resources for the default
+   * project.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
+   *
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `MaxResults`, `Prefix`,
+   *     `Projection`, `UserProject`, `OverrideDefaultProject`, and
+   *     `ReturnPartialSuccess`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list buckets partial success
+   */
+  template <typename... Options>
+  ListBucketsExtendedReader ListBucketsExtended(Options&&... options) {
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) {
+      return google::cloud::internal::MakeErrorPaginationRange<
+          ListBucketsExtendedReader>(std::move(project_id).status());
+    }
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::ListBucketsRequest request(*std::move(project_id));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto& client = connection_;
+    return google::cloud::internal::MakePaginationRange<
+        ListBucketsExtendedReader>(
+        request,
+        [client](internal::ListBucketsRequest const& r) {
+          return client->ListBuckets(r);
+        },
+        [](internal::ListBucketsResponse res) {
+          return std::vector<BucketsExtended>{BucketsExtended{
+              std::move(res.items), std::move(res.unreachable)}};
+        });
   }
 
   /**
