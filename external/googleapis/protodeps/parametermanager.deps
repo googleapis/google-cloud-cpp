@@ -6,3 +6,4 @@
 @googleapis//google/api:launch_stage_proto
 @googleapis//google/api:resource_proto
 @googleapis//google/iam/v1:resource_policy_member_proto
+@googleapis//google/rpc:status_proto
