@@ -378,6 +378,20 @@ DefaultCloudBuildStub::ListWorkerPools(
   return response;
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+DefaultCloudBuildStub::GetDefaultServiceAccount(
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  google::devtools::cloudbuild::v1::DefaultServiceAccount response;
+  auto status =
+      grpc_stub_->GetDefaultServiceAccount(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

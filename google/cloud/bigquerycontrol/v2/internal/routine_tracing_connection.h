@@ -51,9 +51,6 @@ class RoutineServiceTracingConnection
       google::cloud::bigquery::v2::UpdateRoutineRequest const& request)
       override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request) override;
-
   Status DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const&
                            request) override;
 

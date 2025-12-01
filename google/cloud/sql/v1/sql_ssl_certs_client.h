@@ -145,7 +145,7 @@ class SqlSslCertsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.SqlSslCertsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L81}
-  /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1418}
+  /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1424}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SslCert> Get(

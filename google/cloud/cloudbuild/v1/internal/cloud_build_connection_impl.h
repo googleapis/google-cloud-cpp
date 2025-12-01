@@ -184,6 +184,11 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request)
       override;
 
+  StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<cloudbuild_v1_internal::CloudBuildStub> stub_;
