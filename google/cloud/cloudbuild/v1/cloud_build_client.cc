@@ -54,6 +54,22 @@ StatusOr<google::longrunning::Operation> CloudBuildClient::CreateBuild(
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildClient::CreateBuild(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::CreateBuildRequest request;
+  request.set_parent(parent);
+  return connection_->CreateBuild(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildClient::CreateBuild(
+    NoAwaitTag, std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::CreateBuildRequest request;
+  request.set_parent(parent);
+  return connection_->CreateBuild(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
     Options opts) {
@@ -82,6 +98,14 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::GetBuild(
   google::devtools::cloudbuild::v1::GetBuildRequest request;
   request.set_project_id(project_id);
   request.set_id(id);
+  return connection_->GetBuild(request);
+}
+
+StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::GetBuild(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::GetBuildRequest request;
+  request.set_name(name);
   return connection_->GetBuild(request);
 }
 
@@ -119,6 +143,14 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::CancelBuild(
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::CancelBuild(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::CancelBuildRequest request;
+  request.set_name(name);
+  return connection_->CancelBuild(request);
+}
+
+StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::CancelBuild(
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -142,6 +174,22 @@ StatusOr<google::longrunning::Operation> CloudBuildClient::RetryBuild(
   google::devtools::cloudbuild::v1::RetryBuildRequest request;
   request.set_project_id(project_id);
   request.set_id(id);
+  return connection_->RetryBuild(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildClient::RetryBuild(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::RetryBuildRequest request;
+  request.set_name(name);
+  return connection_->RetryBuild(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildClient::RetryBuild(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::RetryBuildRequest request;
+  request.set_name(name);
   return connection_->RetryBuild(NoAwaitTag{}, request);
 }
 
@@ -227,6 +275,14 @@ CloudBuildClient::CreateBuildTrigger(
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+CloudBuildClient::CreateBuildTrigger(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::CreateBuildTriggerRequest request;
+  request.set_parent(parent);
+  return connection_->CreateBuildTrigger(request);
+}
+
+StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::CreateBuildTrigger(
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request,
     Options opts) {
@@ -241,6 +297,14 @@ CloudBuildClient::GetBuildTrigger(std::string const& project_id,
   google::devtools::cloudbuild::v1::GetBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
+  return connection_->GetBuildTrigger(request);
+}
+
+StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+CloudBuildClient::GetBuildTrigger(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::GetBuildTriggerRequest request;
+  request.set_name(name);
   return connection_->GetBuildTrigger(request);
 }
 
@@ -276,6 +340,14 @@ Status CloudBuildClient::DeleteBuildTrigger(std::string const& project_id,
   google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
+  return connection_->DeleteBuildTrigger(request);
+}
+
+Status CloudBuildClient::DeleteBuildTrigger(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest request;
+  request.set_name(name);
   return connection_->DeleteBuildTrigger(request);
 }
 
@@ -526,6 +598,24 @@ CloudBuildClient::ListWorkerPools(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkerPools(std::move(request));
+}
+
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildClient::GetDefaultServiceAccount(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest request;
+  request.set_name(name);
+  return connection_->GetDefaultServiceAccount(request);
+}
+
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildClient::GetDefaultServiceAccount(
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDefaultServiceAccount(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

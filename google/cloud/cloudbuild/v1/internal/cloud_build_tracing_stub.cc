@@ -349,6 +349,20 @@ CloudBuildTracingStub::ListWorkerPools(
                            child_->ListWorkerPools(context, options, request));
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildTracingStub::GetDefaultServiceAccount(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "GetDefaultServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetDefaultServiceAccount(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

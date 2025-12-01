@@ -348,6 +348,16 @@ CloudBuildTracingConnection::ListWorkerPools(
                                                     std::move(sr));
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildTracingConnection::GetDefaultServiceAccount(
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::GetDefaultServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDefaultServiceAccount(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<cloudbuild_v1::CloudBuildConnection>

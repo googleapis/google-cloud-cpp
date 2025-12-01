@@ -130,7 +130,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DockerImage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
-  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L90}
+  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L134}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
@@ -169,7 +169,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DockerImage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
-  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L90}
+  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L134}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
@@ -196,7 +196,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DockerImage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
-  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L116}
+  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L160}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
@@ -226,7 +226,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DockerImage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
-  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L116}
+  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L160}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
@@ -262,8 +262,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListMavenArtifactsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L169}
-  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L127}
+  /// [google.devtools.artifactregistry.v1.ListMavenArtifactsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L213}
+  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L171}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
@@ -301,8 +301,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListMavenArtifactsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L169}
-  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L127}
+  /// [google.devtools.artifactregistry.v1.ListMavenArtifactsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L213}
+  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L171}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
@@ -328,8 +328,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetMavenArtifactRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L197}
-  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L127}
+  /// [google.devtools.artifactregistry.v1.GetMavenArtifactRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L241}
+  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L171}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
@@ -358,8 +358,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetMavenArtifactRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L197}
-  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L127}
+  /// [google.devtools.artifactregistry.v1.GetMavenArtifactRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L241}
+  /// [google.devtools.artifactregistry.v1.MavenArtifact]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L171}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
@@ -396,8 +396,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListNpmPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L242}
-  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L208}
+  /// [google.devtools.artifactregistry.v1.ListNpmPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L286}
+  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L252}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
@@ -435,8 +435,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListNpmPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L242}
-  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L208}
+  /// [google.devtools.artifactregistry.v1.ListNpmPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L286}
+  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L252}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
@@ -462,8 +462,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetNpmPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L270}
-  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L208}
+  /// [google.devtools.artifactregistry.v1.GetNpmPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L314}
+  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L252}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
@@ -492,8 +492,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetNpmPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L270}
-  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L208}
+  /// [google.devtools.artifactregistry.v1.GetNpmPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L314}
+  /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L252}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
@@ -529,8 +529,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListPythonPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L319}
-  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L281}
+  /// [google.devtools.artifactregistry.v1.ListPythonPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L363}
+  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L325}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
@@ -568,8 +568,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListPythonPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L319}
-  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L281}
+  /// [google.devtools.artifactregistry.v1.ListPythonPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L363}
+  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L325}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
@@ -595,8 +595,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetPythonPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L347}
-  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L281}
+  /// [google.devtools.artifactregistry.v1.GetPythonPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L391}
+  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L325}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
@@ -625,8 +625,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetPythonPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L347}
-  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L281}
+  /// [google.devtools.artifactregistry.v1.GetPythonPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L391}
+  /// [google.devtools.artifactregistry.v1.PythonPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L325}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
@@ -813,7 +813,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L661}
+  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L665}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -852,7 +852,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L661}
+  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L665}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -879,7 +879,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L713}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L717}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -909,7 +909,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L713}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L717}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -947,7 +947,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L724}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L728}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -1004,7 +1004,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L724}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L728}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -1066,7 +1066,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L742}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L746}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1097,7 +1097,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L742}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L746}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1132,7 +1132,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L753}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L757}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
@@ -1185,7 +1185,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L753}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L757}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on

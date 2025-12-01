@@ -172,6 +172,11 @@ class CloudBuildTracingConnection : public cloudbuild_v1::CloudBuildConnection {
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request)
       override;
 
+  StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request) override;
+
  private:
   std::shared_ptr<cloudbuild_v1::CloudBuildConnection> child_;
 };

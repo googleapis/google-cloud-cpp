@@ -6,6 +6,9 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.44.0 - TBD
 
+### [BigQueryControl](google/cloud/bigquerycontrol/README.md)
+- !fix(bigquerycontrol): PatchRoutine RPC has been removed.
+
 ## v2.43.0 - 2025-10
 
 ### [Storage](/google/cloud/storage/README.md)

@@ -180,6 +180,12 @@ class CloudBuildTracingStub : public CloudBuildStub {
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request)
       override;
 
+  StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
