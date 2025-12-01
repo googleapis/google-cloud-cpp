@@ -72,7 +72,8 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
   services.reserve(file->service_count());
   for (int i = 0; i < file->service_count(); ++i) {
     auto const* service = file->service(i);
-    if (!internal::Contains(omitted_services, service->name())) {
+    if (!internal::Contains(omitted_services, service->name()) &&
+        !internal::Contains(omitted_services, service->full_name())) {
       services.push_back(generator_internal::MakeGenerators(
           service, context, service_config, *command_line_args));
     }
