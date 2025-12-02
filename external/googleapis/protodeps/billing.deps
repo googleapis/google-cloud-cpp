@@ -8,6 +8,7 @@
 @googleapis//google/iam/v1:options_proto
 @googleapis//google/iam/v1:policy_proto
 @googleapis//google/iam/v1:resource_policy_member_proto
+@googleapis//google/rpc:status_proto
 @googleapis//google/type:date_proto
 @googleapis//google/type:expr_proto
 @googleapis//google/type:money_proto
