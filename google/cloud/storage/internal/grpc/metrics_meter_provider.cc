@@ -73,7 +73,7 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
       opentelemetry::sdk::metrics::MeterSelectorFactory::Create(
           kGrpcMeterName, grpc::Version(), kGrpcSchema),
       opentelemetry::sdk::metrics::ViewFactory::Create(
-          name, std::move(description), unit,
+          name, std::move(description),
           opentelemetry::sdk::metrics::AggregationType::kHistogram,
           std::move(aggregation_config)));
 #else
