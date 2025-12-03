@@ -27,9 +27,10 @@
 #include "google/cloud/status_or.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -44,18 +45,20 @@ namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
     pubsub::Topic const& topic, pubsub::Message const& m) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
       topic.topic_id() + " create",
-      {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic.topic_id()},
+      {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {sc::messaging::kMessagingDestinationName, topic.topic_id()},
        {"gcp.project_id", topic.project_id()},
-       {/*sc::kMessagingOperationType=*/"messaging.operation.type", "create"},
-       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
+       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "create"},
+       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
+                                                         "envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
-       {sc::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
+       {sc::code::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
@@ -67,10 +70,11 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
 future<StatusOr<std::string>> EndPublishSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     future<StatusOr<std::string>> f) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   return f.then([span = std::move(span)](auto fut) {
     auto message_id = fut.get();
-    if (message_id) span->SetAttribute(sc::kMessagingMessageId, *message_id);
+    if (message_id)
+      span->SetAttribute(sc::messaging::kMessagingMessageId, *message_id);
     return internal::EndSpan(*span, std::move(message_id));
   });
 }

@@ -21,8 +21,10 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span.h>
 #include <algorithm>
 #include <string>
@@ -60,23 +62,23 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 
 auto MakeParent(Links const& links, Spans const& message_spans,
                 pubsub::Topic const& topic, std::string const& endpoint) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto options = RootStartSpanOptions();
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  auto batch_sink_parent =
-      internal::MakeSpan(topic.topic_id() + " publish",
-                         /*attributes=*/
-                         {{sc::kMessagingBatchMessageCount,
-                           static_cast<std::int64_t>(message_spans.size())},
-                          {sc::kCodeFunction, "BatchSink::AsyncPublish"},
-                          {/*sc::kMessagingOperationType=*/
-                           "messaging.operation.type", "publish"},
-                          {sc::kThreadId, internal::CurrentThreadId()},
-                          {sc::kMessagingSystem, "gcp_pubsub"},
-                          {/*sc::kServerAddress=*/"server.address", endpoint},
-                          {"gcp.project_id", topic.project_id()},
-                          {sc::kMessagingDestinationName, topic.topic_id()}},
-                         /*links*/ std::move(links), options);
+  auto batch_sink_parent = internal::MakeSpan(
+      topic.topic_id() + " publish",
+      /*attributes=*/
+      {{sc::messaging::kMessagingBatchMessageCount,
+        static_cast<std::int64_t>(message_spans.size())},
+       {sc::code::kCodeFunction, "BatchSink::AsyncPublish"},
+       {/*sc::messaging::kMessagingOperationType=*/
+        "messaging.operation.type", "publish"},
+       {sc::thread::kThreadId, internal::CurrentThreadId()},
+       {sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {/*sc::kServerAddress=*/"server.address", endpoint},
+       {"gcp.project_id", topic.project_id()},
+       {sc::messaging::kMessagingDestinationName, topic.topic_id()}},
+      /*links*/ std::move(links), options);
 
   auto context = batch_sink_parent->GetContext();
   auto trace_id = internal::ToString(context.trace_id());

@@ -20,7 +20,8 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
@@ -51,20 +52,22 @@ class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     opentelemetry::trace::StartSpanOptions start_span_options =
         RootStartSpanOptions();
     start_span_options.kind = opentelemetry::trace::SpanKind::kClient;
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
-        {{sc::kMessagingSystem, "gcp_pubsub"},
-         {/*sc::kMessagingOperationType=*/"messaging.operation.type", "modack"},
-         {sc::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
+        {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+          "modack"},
+         {sc::code::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id_},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",
           static_cast<std::int32_t>(request.ack_deadline_seconds())},
          {"gcp.project_id", subscription_.project_id()},
-         {sc::kMessagingDestinationName, subscription_.subscription_id()}},
+         {sc::messaging::kMessagingDestinationName,
+          subscription_.subscription_id()}},
         CreateLinks(consumer_span_context_), start_span_options);
     auto scope = internal::OTelScope(span);
     MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");

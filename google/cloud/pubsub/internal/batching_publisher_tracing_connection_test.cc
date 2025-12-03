@@ -22,7 +22,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -45,7 +45,7 @@ using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
 TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -72,7 +72,7 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
                 SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                 SpanHasAttributes(
                     OTelAttribute<std::string>(
-                        sc::kCodeFunction,
+                        sc::code::kCodeFunction,
                         "pubsub::BatchingPublisherConnection::Publish"),
                     OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }

@@ -21,8 +21,8 @@
 #include <gmock/gmock.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
+#include <opentelemetry/semconv/incubating/network_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -66,7 +66,7 @@ using ::testing::ResultOf;
 using ::testing::UnorderedElementsAre;
 
 TEST(TracingRestClient, Delete) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto impl = std::make_unique<MockRestClient>();
@@ -107,7 +107,7 @@ TEST(TracingRestClient, Delete) {
               SpanHasAttributes(
                   OTelAttribute<std::string>(
                       /*sc::kNetworkTransport=*/"network.transport",
-                      sc::NetTransportValues::kIpTcp),
+                      sc::network::NetworkTransportValues::kTcp),
                   OTelAttribute<std::string>(
                       /*sc::kHttpRequestMethod=*/"http.request.method",
                       "DELETE"),
@@ -209,7 +209,7 @@ TEST(TracingRestClient, PropagatesTraceContext) {
 }
 
 TEST(TracingRestClient, WithRestContextDetails) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto impl = std::make_unique<MockRestClient>();
@@ -256,7 +256,7 @@ TEST(TracingRestClient, WithRestContextDetails) {
               SpanHasAttributes(
                   OTelAttribute<std::string>(
                       /*sc::kNetworkTransport=*/"network.transport",
-                      sc::NetTransportValues::kIpTcp),
+                      sc::network::NetworkTransportValues::kTcp),
                   OTelAttribute<std::string>(
                       /*sc::kHttpRequestMethod=*/"http.request.method", "POST"),
                   OTelAttribute<std::string>(/*sc::kUrlFull=*/"url.full", kUrl),

@@ -19,8 +19,9 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status_or.h"
 #include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
@@ -34,18 +35,20 @@ namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
     pubsub::Topic const& topic, pubsub::Message const& m) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
       topic.topic_id() + " create",
-      {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic.topic_id()},
+      {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {sc::messaging::kMessagingDestinationName, topic.topic_id()},
        {"gcp.project_id", topic.project_id()},
-       {/*sc::kMessagingOperationType=*/"messaging.operation.type", "create"},
-       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
+       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "create"},
+       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
+                                                         "envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
-       {sc::kCodeFunction, "pubsub::BlockingPublisher::Publish"}},
+       {sc::code::kCodeFunction, "pubsub::BlockingPublisher::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",

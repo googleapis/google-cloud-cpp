@@ -19,8 +19,9 @@
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <cstdint>
@@ -48,27 +49,28 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
 
   TracingAttributes MakeSharedAttributes(
       std::string const& ack_id, pubsub::Subscription const& subscription) {
-    namespace sc = opentelemetry::trace::SemanticConventions;
-    return TracingAttributes{
-        {sc::kMessagingSystem, "gcp_pubsub"},
-        {"messaging.gcp_pubsub.message.ack_id", ack_id},
-        {"messaging.gcp_pubsub.message.delivery_attempt",
-         child_->delivery_attempt()},
-        {"gcp.project_id", subscription.project_id()},
-        {sc::kMessagingDestinationName, subscription.subscription_id()}};
+    namespace sc = opentelemetry::semconv;
+    return TracingAttributes{{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+                             {"messaging.gcp_pubsub.message.ack_id", ack_id},
+                             {"messaging.gcp_pubsub.message.delivery_attempt",
+                              child_->delivery_attempt()},
+                             {"gcp.project_id", subscription.project_id()},
+                             {sc::messaging::kMessagingDestinationName,
+                              subscription.subscription_id()}};
   }
 
   future<Status> ack() override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     opentelemetry::trace::StartSpanOptions options;
     options.kind = opentelemetry::trace::SpanKind::kClient;
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
     TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
     attributes.emplace_back(
-        std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::ack"));
+        std::make_pair(sc::code::kCodeFunction, "pubsub::PullAckHandler::ack"));
     attributes.emplace_back(std::make_pair(
-        /*sc::kMessagingOperationType=*/"messaging.operation.type", "ack"));
+        /*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "ack"));
     auto span =
         internal::MakeSpan(subscription.subscription_id() + " ack", attributes,
                            CreateLinks(consumer_span_context_), options);
@@ -85,16 +87,17 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
   }
 
   future<Status> nack() override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     opentelemetry::trace::StartSpanOptions options;
     options.kind = opentelemetry::trace::SpanKind::kClient;
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
     TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
-    attributes.emplace_back(
-        std::make_pair(sc::kCodeFunction, "pubsub::PullAckHandler::nack"));
+    attributes.emplace_back(std::make_pair(sc::code::kCodeFunction,
+                                           "pubsub::PullAckHandler::nack"));
     attributes.emplace_back(std::make_pair(
-        /*sc::kMessagingOperationType=*/"messaging.operation.type", "nack"));
+        /*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "nack"));
     auto span =
         internal::MakeSpan(subscription.subscription_id() + " nack", attributes,
                            CreateLinks(consumer_span_context_), options);

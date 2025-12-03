@@ -17,7 +17,7 @@
 #include "google/cloud/storage/internal/grpc/monitoring_project.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -46,14 +46,14 @@ absl::optional<Project> MonitoringProject(Credentials const& credentials) {
 
 absl::optional<Project> MonitoringProject(
     opentelemetry::sdk::resource::Resource const& resource) {
-  namespace sc = ::opentelemetry::sdk::resource::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto const& attributes = resource.GetAttributes();
-  auto l = attributes.find(sc::kCloudProvider);
+  auto l = attributes.find(sc::cloud::kCloudProvider);
   if (l == attributes.end() ||
       opentelemetry::nostd::get<std::string>(l->second) != "gcp") {
     return absl::nullopt;
   }
-  l = attributes.find(sc::kCloudAccountId);
+  l = attributes.find(sc::cloud::kCloudAccountId);
   if (l == attributes.end()) return absl::nullopt;
   return Project(opentelemetry::nostd::get<std::string>(l->second));
 }

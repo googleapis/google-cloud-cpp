@@ -20,7 +20,7 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 #include <cctype>
 
 namespace google {
@@ -29,7 +29,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 
 google::protobuf::Timestamp ToProtoTimestamp(
     opentelemetry::common::SystemTimestamp ts) {
@@ -113,6 +113,12 @@ void ToTimeSeriesHelper(
             return ToTimeSeries(metric_data, point);
           }
           absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::
+                  Base2ExponentialHistogramPointData const&) {
+            // TODO(#xxxxx): Add support for exponential histograms.
+            return absl::nullopt;
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::DropPointData const&) {
             return absl::nullopt;
           }
@@ -164,9 +170,9 @@ google::api::Metric ToMetric(
     // service processes on a single GCE VM.
     auto const& ra = resource->GetAttributes().GetAttributes();
     for (std::string key : {
-             sc::kServiceName,
-             sc::kServiceNamespace,
-             sc::kServiceInstanceId,
+             sc::service::kServiceName,
+             sc::service::kServiceNamespace,
+             sc::service::kServiceInstanceId,
          }) {
       auto it = ra.find(std::move(key));
       if (it != ra.end()) add_label(labels, it->first, it->second);

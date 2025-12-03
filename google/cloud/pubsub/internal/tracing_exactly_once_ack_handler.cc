@@ -20,8 +20,9 @@
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <cstdint>
@@ -61,21 +62,21 @@ class TracingExactlyOnceAckHandler
       links.emplace_back(
           std::make_pair(subscribe_span_->GetContext(), Attributes{}));
     }
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
     options.kind = opentelemetry::trace::SpanKind::kInternal;
     auto sub = subscription();
     auto span = internal::MakeSpan(
         sub.subscription_id() + " ack",
-        {{sc::kCodeFunction, "pubsub::AckHandler::ack"},
-         {sc::kMessagingSystem, "gcp_pubsub"},
+        {{sc::code::kCodeFunction, "pubsub::AckHandler::ack"},
+         {sc::messaging::kMessagingSystem, "gcp_pubsub"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id()},
          {"messaging.gcp_pubsub.subscription.template", sub.FullName()},
          {"gcp.project_id", sub.project_id()},
-         {sc::kMessagingDestinationName, sub.subscription_id()},
+         {sc::messaging::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
-         {/*sc::kMessagingOperationType=*/"messaging.operation.type",
+         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
           "settle"}},
         std::move(links), options);
     auto scope = internal::OTelScope(span);
@@ -91,21 +92,21 @@ class TracingExactlyOnceAckHandler
       links.emplace_back(
           std::make_pair(subscribe_span_->GetContext(), Attributes{}));
     }
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
     options.kind = opentelemetry::trace::SpanKind::kInternal;
     auto sub = subscription();
     auto span = internal::MakeSpan(
         sub.subscription_id() + " nack",
-        {{sc::kCodeFunction, "pubsub::AckHandler::nack"},
-         {sc::kMessagingSystem, "gcp_pubsub"},
+        {{sc::code::kCodeFunction, "pubsub::AckHandler::nack"},
+         {sc::messaging::kMessagingSystem, "gcp_pubsub"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id()},
          {"messaging.gcp_pubsub.subscription.template", sub.FullName()},
          {"gcp.project_id", sub.project_id()},
-         {sc::kMessagingDestinationName, sub.subscription_id()},
+         {sc::messaging::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
-         {/*sc::kMessagingOperationType=*/"messaging.operation.type",
+         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
           "settle"}},
         std::move(links), options);
 
