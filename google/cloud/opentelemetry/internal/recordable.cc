@@ -19,6 +19,7 @@
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
+#include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>
 #include <iterator>
 
