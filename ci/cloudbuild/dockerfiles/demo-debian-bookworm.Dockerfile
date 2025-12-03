@@ -88,14 +88,14 @@ RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
+        -DWITH_STL=CXX17 \
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
