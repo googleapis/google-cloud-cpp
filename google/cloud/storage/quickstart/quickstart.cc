@@ -20,12 +20,12 @@
 #include <string>
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    std::cerr << "Missing bucket name.\n";
-    std::cerr << "Usage: quickstart <bucket-name>\n";
-    return 1;
-  }
-  std::string const bucket_name = argv[1];
+  // if (argc != 2) {
+  //   std::cerr << "Missing bucket name.\n";
+  //   std::cerr << "Usage: quickstart <bucket-name>\n";
+  //   return 1;
+  // }
+  std::string const bucket_name = "vaibhav-test-001";
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
@@ -41,8 +41,14 @@ int main(int argc, char* argv[]) {
 
   auto client = google::cloud::storage::Client(options);
 
-  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
-  writer << "Hello World!";
+  auto writer = client.WriteObject(bucket_name, "quickstart1.txt");
+  std::string x ="Hello World1!";
+  for(int i=0;i<17;i++){
+    x+=x;
+  }
+  for(int i=0;i<15;i++){
+  writer << x.data();
+  }
   writer.Close();
   if (!writer.metadata()) {
     std::cerr << "Error creating object: " << writer.metadata().status()
@@ -51,14 +57,14 @@ int main(int argc, char* argv[]) {
   }
   std::cout << "Successfully created object: " << *writer.metadata() << "\n";
 
-  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
-  if (!reader) {
-    std::cerr << "Error reading object: " << reader.status() << "\n";
-    return 1;
-  }
+  // auto reader = client.ReadObject(bucket_name, "quickstart.txt");
+  // if (!reader) {
+  //   std::cerr << "Error reading object: " << reader.status() << "\n";
+  //   return 1;
+  // }
 
-  std::string contents{std::istreambuf_iterator<char>{reader}, {}};
-  std::cout << contents << "\n";
+  // std::string contents{std::istreambuf_iterator<char>{reader}, {}};
+  // std::cout << contents << "\n";
 
   return 0;
 }
