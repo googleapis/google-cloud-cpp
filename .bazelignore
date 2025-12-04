@@ -5,4 +5,3 @@ cmake-build-debug/
 cmake-build-coverage/
 cmake-build-release/
 .build/
-_build/

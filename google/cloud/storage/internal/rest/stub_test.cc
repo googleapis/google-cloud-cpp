@@ -73,8 +73,7 @@ class NoOpHashFunction : public HashFunction {
 
 TEST(RestStubTest, ResolveStorageAuthorityProdEndpoint) {
   auto options =
-      Options{}.set<RestEndpointOption>("https://storage.googleapis.com")
-      .set<AuthorityOption>("storage.googleapis.com");
+      Options{}.set<RestEndpointOption>("https://storage.googleapis.com");
   auto result_options = RestStub::ResolveStorageAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("storage.googleapis.com"));
@@ -82,8 +81,7 @@ TEST(RestStubTest, ResolveStorageAuthorityProdEndpoint) {
 
 TEST(RestStubTest, ResolveStorageAuthorityEapEndpoint) {
   auto options =
-      Options{}.set<RestEndpointOption>("https://eap.googleapis.com")
-      .set<AuthorityOption>("storage.googleapis.com");
+      Options{}.set<RestEndpointOption>("https://eap.googleapis.com");
   auto result_options = RestStub::ResolveStorageAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("storage.googleapis.com"));
@@ -106,15 +104,13 @@ TEST(RestStubTest, ResolveStorageAuthorityOptionSpecified) {
 TEST(RestStubTest, ResolveIamAuthorityProdEndpoint) {
   auto options =
       Options{}.set<IamEndpointOption>("https://iamcredentials.googleapis.com");
-  auto result_options = RestStub::ResolveIamAuthority(options)
-  .set<AuthorityOption>("iamcredentials.googleapis.com");
+  auto result_options = RestStub::ResolveIamAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("iamcredentials.googleapis.com"));
 }
 
 TEST(RestStubTest, ResolveIamAuthorityEapEndpoint) {
-  auto options = Options{}.set<IamEndpointOption>("https://eap.googleapis.com")
-  .set<AuthorityOption>("iamcredentials.googleapis.com");
+  auto options = Options{}.set<IamEndpointOption>("https://eap.googleapis.com");
   auto result_options = RestStub::ResolveIamAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("iamcredentials.googleapis.com"));
