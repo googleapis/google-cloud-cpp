@@ -207,9 +207,6 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   auto upload_request =
       UploadChunkRequest(upload_id_, committed_size_, payload, hash_function_);
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
-  upload_request.ForEachOption([](auto const& opt) {
-    std::cout << "DEBUG: option=" << opt << "\n";
-  });
   OptionsSpan const span(span_options_);
   auto response = connection_->UploadChunk(upload_request);
   if (!response) {
