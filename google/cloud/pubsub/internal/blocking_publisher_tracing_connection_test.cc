@@ -95,7 +95,7 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnSuccess) {
                                "messaging.message.envelope.size", 45),
               OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
               OTelAttribute<std::string>(
-                  sc::code::kCodeFunction,
+                  sc::code::kCodeFunctionName,
                   "pubsub::BlockingPublisher::Publish")))));
 }
 

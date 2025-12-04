@@ -104,7 +104,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::string>(sc::messaging::kMessagingMessageId,
                                          "test-id-0"),
               OTelAttribute<std::string>(
-                  sc::code::kCodeFunction,
+                  sc::code::kCodeFunctionName,
                   "pubsub::PublisherConnection::Publish")))));
 }
 

@@ -121,7 +121,7 @@ TEST(TracingAckHandlerTest, AckAttributes) {
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription ack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::code::kCodeFunction,
+                                 sc::code::kCodeFunctionName,
                                  "pubsub::PullAckHandler::ack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(
@@ -196,7 +196,7 @@ TEST(TracingAckHandlerTest, NackAttributes) {
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::code::kCodeFunction,
+                                 sc::code::kCodeFunctionName,
                                  "pubsub::PullAckHandler::nack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(

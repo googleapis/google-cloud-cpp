@@ -181,7 +181,7 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::code::kCodeFunction,
+                                 sc::code::kCodeFunctionName,
                                  "pubsub::PullLeaseManager::ExtendLease")))));
   EXPECT_THAT(
       spans,

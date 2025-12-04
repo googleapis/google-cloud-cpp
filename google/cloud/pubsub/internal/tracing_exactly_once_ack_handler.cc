@@ -68,7 +68,7 @@ class TracingExactlyOnceAckHandler
     auto sub = subscription();
     auto span = internal::MakeSpan(
         sub.subscription_id() + " ack",
-        {{sc::code::kCodeFunction, "pubsub::AckHandler::ack"},
+        {{sc::code::kCodeFunctionName, "pubsub::AckHandler::ack"},
          {sc::messaging::kMessagingSystem, "gcp_pubsub"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id()},
          {"messaging.gcp_pubsub.subscription.template", sub.FullName()},
@@ -98,7 +98,7 @@ class TracingExactlyOnceAckHandler
     auto sub = subscription();
     auto span = internal::MakeSpan(
         sub.subscription_id() + " nack",
-        {{sc::code::kCodeFunction, "pubsub::AckHandler::nack"},
+        {{sc::code::kCodeFunctionName, "pubsub::AckHandler::nack"},
          {sc::messaging::kMessagingSystem, "gcp_pubsub"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id()},
          {"messaging.gcp_pubsub.subscription.template", sub.FullName()},

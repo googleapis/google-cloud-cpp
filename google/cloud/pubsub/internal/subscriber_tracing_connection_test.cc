@@ -151,7 +151,7 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription receive"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::code::kCodeFunction,
+                                 sc::code::kCodeFunctionName,
                                  "pubsub::SubscriberConnection::Pull")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription receive"),

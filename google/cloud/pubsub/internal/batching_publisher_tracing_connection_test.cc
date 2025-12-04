@@ -72,7 +72,7 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
                 SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                 SpanHasAttributes(
                     OTelAttribute<std::string>(
-                        sc::code::kCodeFunction,
+                        sc::code::kCodeFunctionName,
                         "pubsub::BatchingPublisherConnection::Publish"),
                     OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }

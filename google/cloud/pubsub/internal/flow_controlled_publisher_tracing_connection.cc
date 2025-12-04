@@ -41,7 +41,7 @@ class FlowControlledPublisherTracingConnection
     namespace sc = ::opentelemetry::semconv;
     auto span = internal::MakeSpan(
         "publisher flow control",
-        {{sc::code::kCodeFunction,
+        {{sc::code::kCodeFunctionName,
           "pubsub::FlowControlledPublisherConnection::Publish"}});
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);

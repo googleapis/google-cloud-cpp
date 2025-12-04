@@ -169,7 +169,7 @@ TEST(TracingAckHandlerTest, AckAttributes) {
               OTelAttribute<std::string>(
                   /*sc::messaging::kMessagingOperationType=*/
                   "messaging.operation.type", "settle"),
-              OTelAttribute<std::string>(sc::code::kCodeFunction,
+              OTelAttribute<std::string>(sc::code::kCodeFunctionName,
                                          "pubsub::AckHandler::ack"),
               OTelAttribute<std::int32_t>(
                   "messaging.gcp_pubsub.message.delivery_attempt", 42),
@@ -279,7 +279,7 @@ TEST(TracingAckHandlerTest, NackAttributes) {
               OTelAttribute<std::string>(
                   /*sc::messaging::kMessagingOperationType=*/
                   "messaging.operation.type", "settle"),
-              OTelAttribute<std::string>(sc::code::kCodeFunction,
+              OTelAttribute<std::string>(sc::code::kCodeFunctionName,
                                          "pubsub::AckHandler::nack"),
               OTelAttribute<std::int32_t>(
                   "messaging.gcp_pubsub.message.delivery_attempt", 42),

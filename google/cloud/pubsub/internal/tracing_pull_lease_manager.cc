@@ -61,7 +61,7 @@ class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
         {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
          {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
           "modack"},
-         {sc::code::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
+         {sc::code::kCodeFunctionName, "pubsub::PullLeaseManager::ExtendLease"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id_},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",
           static_cast<std::int32_t>(request.ack_deadline_seconds())},

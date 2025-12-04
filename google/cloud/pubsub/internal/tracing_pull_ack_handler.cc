@@ -66,8 +66,8 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
     TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
-    attributes.emplace_back(
-        std::make_pair(sc::code::kCodeFunction, "pubsub::PullAckHandler::ack"));
+    attributes.emplace_back(std::make_pair(sc::code::kCodeFunctionName,
+                                           "pubsub::PullAckHandler::ack"));
     attributes.emplace_back(std::make_pair(
         /*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
         "ack"));
@@ -93,7 +93,7 @@ class TracingPullAckHandler : public pubsub::PullAckHandler::Impl {
     auto const ack_id = child_->ack_id();
     auto const subscription = child_->subscription();
     TracingAttributes attributes = MakeSharedAttributes(ack_id, subscription);
-    attributes.emplace_back(std::make_pair(sc::code::kCodeFunction,
+    attributes.emplace_back(std::make_pair(sc::code::kCodeFunctionName,
                                            "pubsub::PullAckHandler::nack"));
     attributes.emplace_back(std::make_pair(
         /*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",

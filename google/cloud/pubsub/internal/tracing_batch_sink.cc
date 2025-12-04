@@ -70,7 +70,7 @@ auto MakeParent(Links const& links, Spans const& message_spans,
       /*attributes=*/
       {{sc::messaging::kMessagingBatchMessageCount,
         static_cast<std::int64_t>(message_spans.size())},
-       {sc::code::kCodeFunction, "BatchSink::AsyncPublish"},
+       {sc::code::kCodeFunctionName, "BatchSink::AsyncPublish"},
        {/*sc::messaging::kMessagingOperationType=*/
         "messaging.operation.type", "publish"},
        {sc::thread::kThreadId, internal::CurrentThreadId()},

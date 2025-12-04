@@ -39,7 +39,7 @@ class BatchingPublisherTracingConnection : public pubsub::PublisherConnection {
     namespace sc = opentelemetry::semconv;
     auto span =
         internal::MakeSpan("publisher batching",
-                           {{sc::code::kCodeFunction,
+                           {{sc::code::kCodeFunctionName,
                              "pubsub::BatchingPublisherConnection::Publish"}});
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
