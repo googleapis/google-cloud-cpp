@@ -208,7 +208,7 @@ void AddAttributeImpl(
     std::size_t limit) {
   auto* proto = ProtoOrDrop(attributes, key, limit);
   if (proto) {
-    absl::visit(AttributeVisitor{*proto}, value);
+    std::visit(AttributeVisitor{*proto}, value);
   } else {
     attributes.set_dropped_attributes_count(
         attributes.dropped_attributes_count() + 1);

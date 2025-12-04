@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <numeric>
 #include <unordered_map>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -235,7 +236,7 @@ MonitoredResourceProvider MakeProvider(
 
 std::string AsString(
     opentelemetry::sdk::common::OwnedAttributeValue const& attribute) {
-  return absl::visit(AsStringVisitor{}, attribute);
+  return std::visit(AsStringVisitor{}, attribute);
 }
 
 MonitoredResource ToMonitoredResource(
