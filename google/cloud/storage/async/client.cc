@@ -166,6 +166,21 @@ AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeAppendableObjectUpload(
+    google::storage::v2::BidiWriteObjectRequest request, Options opts) {
+  return connection_
+      ->ResumeAppendableObjectUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::StartBufferedUpload(BucketName const& bucket_name,
                                  std::string object_name, Options opts) {
   auto request = google::storage::v2::StartResumableWriteRequest{};
