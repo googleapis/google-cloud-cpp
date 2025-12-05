@@ -115,7 +115,6 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
         -DBUILD_SHARED_LIBS=ON \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \

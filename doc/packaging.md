@@ -210,7 +210,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -315,7 +314,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -362,51 +360,14 @@ sudo zypper install --allow-downgrade -y automake cmake curl \
         gcc8 gcc8-c++ git gzip libtool make patch tar wget
 ```
 
-sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y gdb
-
-#RUN sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y
-krb5-debuginfo-1.20.1-150600.11.14.1.x86_64 \
-libabsl2401_0_0-debuginfo-20240116.3-150600.19.3.15.x86_64 \
-libbrotlidec1-debuginfo-1.0.7-150200.3.5.1.x86_64 \
-libcares2-debuginfo-1.19.1-150000.3.26.1.x86_64 \
-libcom_err2-debuginfo-1.47.0-150600.4.6.2.x86_64 \
-libcrc32c1-debuginfo-1.1.2-150400.9.3.1.x86_64 \
-libcurl4-debuginfo-8.14.1-150600.4.31.1.x86_64 \
-libgcc_s1-debuginfo-15.2.0+git10201-150000.1.3.3.x86_64 \
-libgrpc++1_60-debuginfo-1.60.0-150600.15.3.1.x86_64 \
-libgrpc37-debuginfo-1.60.0-150600.15.3.1.x86_64 \
-libidn2-0-debuginfo-2.2.0-3.6.1.x86_64 \
-libjitterentropy3-debuginfo-3.4.1-150000.1.12.1.x86_64 \
-libkeyutils1-debuginfo-1.6.3-5.6.1.x86_64 \
-libldap-2_4-2-debuginfo-2.4.46-150600.23.21.x86_64 \
-libnghttp2-14-debuginfo-1.40.0-150600.23.2.x86_64 \
-libopenssl3-debuginfo-3.1.4-150600.5.39.1.x86_64
-libpcre2-8-0-debuginfo-10.42-150600.1.26.x86_64
-libprotobuf25_1_0-debuginfo-25.1-150600.16.13.1.x86_64
-libpsl5-debuginfo-0.20.1-150000.3.3.1.x86_64
-libre2-11-debuginfo-20240201-150600.14.2.x86_64
-libsasl2-3-debuginfo-2.1.28-150600.7.14.1.x86_64
-libselinux1-debuginfo-3.5-150600.3.3.1.x86_64
-libstdc++6-debuginfo-15.2.0+git10201-150000.1.3.3.x86_64
-libunistring2-debuginfo-0.9.10-1.1.x86_64
-libupb37-debuginfo-1.60.0-150600.15.3.1.x86_64
-libz1-debuginfo-1.2.13-150500.4.3.1.x86_64
-libzstd1-debuginfo-1.5.5-150600.1.3.x86_64
-
 Install some of the dependencies for `google-cloud-cpp`.
 
 ```bash
-#RUN sudo zypper refresh && \
-   sudo zypper install --allow-downgrade -y c-ares-devel \
-       libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel
-```
-
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
-libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel \
-grpc-devel libprotobuf-devel
+        libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel \
+        grpc-devel libprotobuf-devel
+```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
 does not search for shared libraries in these directories by default. There are
@@ -420,103 +381,11 @@ export PATH=/usr/local/bin:${PATH}
 ```
 
 Use the following environment variables to configure the compiler used by CMake.
-
-#ENV CC=gcc-8 #ENV CXX=g++-8
-
-#### Abseil
-
-```bash
-#WORKDIR $HOME/Downloads/abseil-cpp
-#RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
-   tar -xzf - --strip-components=1 && \
-   cmake \
-     -DCMAKE_BUILD_TYPE=Release \
-     -DCMAKE_CXX_STANDARD=17 \
-     -DABSL_BUILD_TESTING=OFF \
-     -DABSL_PROPAGATE_CXX_STD=ON \
-     -DBUILD_SHARED_LIBS=yes \
-     -S . -B cmake-out && \
-   cmake --build cmake-out -- -j ${NCPU:-4} && \
-   sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-   sudo ldconfig
-```
-
-#### Protobuf
-
-Unless you are only using the Google Cloud Storage library the project needs
-Protobuf and gRPC. Unfortunately the version of Protobuf that ships with Debian
-11 is not recent enough to support the protos published by Google Cloud. We need
-to build from source:
-
-```bash
-#WORKDIR $HOME/Downloads/protobuf
-#RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz | \
-   tar -xzf - --strip-components=1 && \
-   cmake \
-       -DCMAKE_BUILD_TYPE=Release \
-       -DCMAKE_CXX_STANDARD=17 \
-       -DBUILD_SHARED_LIBS=yes \
-       -Dprotobuf_BUILD_TESTS=OFF \
-       -Dprotobuf_ABSL_PROVIDER=package \
-       -S . -B cmake-out && \
-   sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-   sudo ldconfig
-```
-
-#### RE2
-
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. You can skip this build and use the system's package if you are not
-planning to use pkg-config.
-
-```bash
-#WORKDIR $HOME/Downloads/re2
-#RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
-   tar -xzf - --strip-components=1 && \
-   cmake -DCMAKE_BUILD_TYPE=Release \
-       -DCMAKE_CXX_STANDARD=17 \
-       -DBUILD_SHARED_LIBS=ON \
-       -DRE2_BUILD_TESTING=OFF \
-       -S . -B cmake-out && \
-   cmake --build cmake-out -- -j ${NCPU:-4} && \
-   sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-   sudo ldconfig
-```
-
-#### gRPC
-
-Finally, we build gRPC from source:
-
-```bash
-#WORKDIR $HOME/Downloads/grpc
-#RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
-   tar -xzf - --strip-components=1 && \
-   cmake \
-       -DCMAKE_BUILD_TYPE=Release \
-       -DCMAKE_CXX_STANDARD=17 \
-       -DBUILD_SHARED_LIBS=yes \
-       -DgRPC_INSTALL=ON \
-       -DgRPC_BUILD_TESTS=OFF \
-       -DgRPC_ABSL_PROVIDER=package \
-       -DgRPC_CARES_PROVIDER=package \
-       -DgRPC_PROTOBUF_PROVIDER=package \
-       -DgRPC_RE2_PROVIDER=package \
-       -DgRPC_SSL_PROVIDER=package \
-       -DgRPC_ZLIB_PROVIDER=package \
-       -S . -B cmake-out && \
-   sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-   sudo ldconfig
-```
-
 export CC=gcc-8 export CXX=g++-8
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
+The project has a dependency on the OpenTelemetry library.
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
@@ -643,7 +512,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -816,7 +684,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -1008,7 +875,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -1121,7 +987,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -1260,8 +1125,6 @@ sudo ldconfig
 
 #### gRPC
 
-Finally, we build gRPC from source:
-
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
 curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
@@ -1301,7 +1164,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -1527,7 +1389,6 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_STL=CXX17 \
-        -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
