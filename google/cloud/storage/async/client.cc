@@ -153,16 +153,7 @@ AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
   append_object_spec.set_object(std::move(object_name));
   append_object_spec.set_generation(generation);
 
-  return connection_
-      ->ResumeAppendableObjectUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
-      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
-        auto w = f.get();
-        if (!w) return std::move(w).status();
-        auto t = storage_internal::MakeAsyncToken(w->get());
-        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
-      });
+  return ResumeAppendableObjectUpload(std::move(request), std::move(opts));
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>

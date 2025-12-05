@@ -432,7 +432,7 @@ class AsyncClient {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be uploaded.
    * @param generation the object generation to be uploaded.
-   * @param opts options controlling the behaviour of this RPC, for example the
+   * @param opts options controlling the behavior of this RPC, for example the
    * application may change the retry policy.
    */
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
@@ -446,7 +446,7 @@ class AsyncClient {
    *
    * @param request the request contents, it must include the bucket name,
    *     object name, and generation. Many other fields are optional.
-   * @param opts options controlling the behaviour of this RPC, for example the
+   * @param opts options controlling the behavior of this RPC, for example the
    * application may change the retry policy.
    */
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
