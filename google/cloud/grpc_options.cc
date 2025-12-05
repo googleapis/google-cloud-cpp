@@ -112,6 +112,14 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
                              static_cast<int>(kKeepaliveTimeout.count()));
   }
 
+  if (opts.has<GrpcStreamLookaheadBytesOption>()) {
+    std::cout<<"Setting GRPC_ARG_HTTP2_STREAM_LOOKAHEAD_BYTES to "
+             << opts.get<GrpcStreamLookaheadBytesOption>() << "\n";
+    channel_arguments.SetInt(GRPC_ARG_HTTP2_STREAM_LOOKAHEAD_BYTES,
+                             opts.get<GrpcStreamLookaheadBytesOption>());
+    channel_arguments.SetInt(GRPC_ARG_HTTP2_BDP_PROBE, 0);
+  }
+
   auto const proxy = MakeGrpcHttpProxy(opts.get<ProxyOption>());
   if (!proxy.empty()) channel_arguments.SetString(GRPC_ARG_HTTP_PROXY, proxy);
 
