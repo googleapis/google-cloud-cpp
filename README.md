@@ -28,6 +28,8 @@ of what it's like to use one of these C++ libraries.
 
 ```cc
 #include "google/cloud/storage/client.h"
+#include "google/cloud/common_options.h"
+#include <cstdlib>
 #include <iostream>
 #include <string>
 
@@ -41,7 +43,17 @@ int main(int argc, char* argv[]) {
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = google::cloud::storage::Client();
+  auto options = google::cloud::Options{};
+
+  // If the CURL_CA_BUNDLE environment variable is set, configure the client
+  // to use it. This is required for the Windows CI environment where standard
+  // system roots may not be sufficient or accessible by the hermetic build.
+  auto const* ca_bundle = std::getenv("CURL_CA_BUNDLE");
+  if (ca_bundle != nullptr) {
+    options.set<google::cloud::CARootsFilePathOption>(ca_bundle);
+  }
+
+  auto client = google::cloud::storage::Client(options);
 
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
