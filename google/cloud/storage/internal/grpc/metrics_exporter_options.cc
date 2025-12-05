@@ -21,7 +21,8 @@
 #include "google/cloud/universe_domain_options.h"
 #include "absl/types/variant.h"
 #include "google/api/monitored_resource.pb.h"
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <algorithm>
 #include <type_traits>
 
@@ -43,18 +44,20 @@ auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
 Options MetricsExporterOptions(
     Project const& project,
     opentelemetry::sdk::resource::Resource const& resource) {
-  namespace sc = ::opentelemetry::sdk::resource::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
 
   auto const& attributes = resource.GetAttributes();
   auto monitored_resource = google::api::MonitoredResource{};
   monitored_resource.set_type("storage.googleapis.com/Client");
   auto& labels = *monitored_resource.mutable_labels();
   labels["project_id"] = project.project_id();
-  labels["location"] = ByName(attributes, sc::kCloudAvailabilityZone,
-                              ByName(attributes, sc::kCloudRegion, "global"));
-  labels["cloud_platform"] = ByName(attributes, sc::kCloudPlatform, "unknown");
-  labels["host_id"] =
-      ByName(attributes, "faas.id", ByName(attributes, sc::kHostId, "unknown"));
+  labels["location"] =
+      ByName(attributes, sc::cloud::kCloudAvailabilityZone,
+             ByName(attributes, sc::cloud::kCloudRegion, "global"));
+  labels["cloud_platform"] =
+      ByName(attributes, sc::cloud::kCloudPlatform, "unknown");
+  labels["host_id"] = ByName(attributes, "faas.id",
+                             ByName(attributes, sc::host::kHostId, "unknown"));
 
   // We need a UUID because there may be multiple monitored resources within the
   // same process, and we need these monitored resources to be globally unique

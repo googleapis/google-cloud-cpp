@@ -18,7 +18,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 
@@ -31,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
 class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
  public:
@@ -56,13 +56,13 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
             span->AddEvent(
                 "gl-cpp.read-range",
                 {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
-                 {sc::kThreadId, internal::CurrentThreadId()},
+                 {sc::thread::kThreadId, internal::CurrentThreadId()},
                  {"message.size", static_cast<std::uint32_t>(payload.size())}});
           } else {
             span->AddEvent(
                 "gl-cpp.read-range",
                 {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
-                 {sc::kThreadId, internal::CurrentThreadId()}});
+                 {sc::thread::kThreadId, internal::CurrentThreadId()}});
             return internal::EndSpan(*span,
                                      absl::get<Status>(std::move(result)));
           }

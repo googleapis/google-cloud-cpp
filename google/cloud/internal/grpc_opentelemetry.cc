@@ -25,7 +25,8 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/rpc_attributes.h>
+#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -110,17 +111,17 @@ std::pair<std::string, std::string> MakeAttribute(
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
     opentelemetry::nostd::string_view service,
     opentelemetry::nostd::string_view method) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   return internal::MakeSpan(
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
                    absl::string_view{method.data(), method.size()}),
-      {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
-       {sc::kRpcService, service},
-       {sc::kRpcMethod, method},
+      {{sc::rpc::kRpcSystem, sc::rpc::RpcSystemValues::kGrpc},
+       {sc::rpc::kRpcService, service},
+       {sc::rpc::kRpcMethod, method},
        {/*sc::kNetworkTransport=*/"network.transport",
-        sc::NetTransportValues::kIpTcp},
+        sc::network::NetworkTransportValues::kTcp},
        {"grpc.version", grpc::Version()}},
       options);
 }

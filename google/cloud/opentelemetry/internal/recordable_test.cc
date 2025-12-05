@@ -20,7 +20,8 @@
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -28,7 +29,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 namespace v2 = ::google::devtools::cloudtrace::v2;
 using ::testing::_;
 using ::testing::AllOf;
@@ -674,10 +675,10 @@ TEST(Recordable, SetAttributeRespectsLimit) {
 
 TEST(Recordable, SetResourceMapsMonitoredResources) {
   auto resource = opentelemetry::sdk::resource::Resource::Create({
-      {sc::kCloudProvider, "gcp"},
-      {sc::kCloudPlatform, "gcp_compute_engine"},
-      {sc::kHostId, "1020304050607080900"},
-      {sc::kCloudAvailabilityZone, "us-central1-a"},
+      {sc::cloud::kCloudProvider, "gcp"},
+      {sc::cloud::kCloudPlatform, "gcp_compute_engine"},
+      {sc::host::kHostId, "1020304050607080900"},
+      {sc::cloud::kCloudAvailabilityZone, "us-central1-a"},
   });
 
   auto rec = Recordable(Project(kProjectId), TestGenerator());

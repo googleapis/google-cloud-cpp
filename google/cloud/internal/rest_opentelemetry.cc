@@ -22,8 +22,8 @@
 #include "absl/strings/match.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/provider.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -71,13 +71,13 @@ void InjectTraceContext(
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
     RestRequest const& request, opentelemetry::nostd::string_view method) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span = internal::MakeSpan(
       absl::StrCat("HTTP/", absl::string_view{method.data(), method.size()}),
       {{/*sc::kNetworkTransport=*/"network.transport",
-        sc::NetTransportValues::kIpTcp},
+        sc::network::NetworkTransportValues::kTcp},
        {/*sc::kHttpRequestMethod=*/"http.request.method", method},
        {/*sc::kUrlFull=*/"url.full", request.path()}},
       options);

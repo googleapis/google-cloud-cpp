@@ -66,6 +66,18 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
 // These are useful on Windows with DLLs and mixed CRTs, and we should try to
 // them if they are available.
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || \
+    (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 23)
+  (void)unit;
+  provider.AddView(
+      opentelemetry::sdk::metrics::InstrumentSelectorFactory::Create(
+          opentelemetry::sdk::metrics::InstrumentType::kHistogram, name, unit),
+      opentelemetry::sdk::metrics::MeterSelectorFactory::Create(
+          kGrpcMeterName, grpc::Version(), kGrpcSchema),
+      opentelemetry::sdk::metrics::ViewFactory::Create(
+          name, std::move(description),
+          opentelemetry::sdk::metrics::AggregationType::kHistogram,
+          std::move(aggregation_config)));
+#elif OPENTELEMETRY_VERSION_MAJOR > 1 || \
     (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 10)
   provider.AddView(
       opentelemetry::sdk::metrics::InstrumentSelectorFactory::Create(

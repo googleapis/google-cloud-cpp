@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
@@ -43,14 +43,14 @@ class TracingMessageCallback : public MessageCallback {
   ~TracingMessageCallback() override = default;
 
   void user_callback(MessageAndHandler m) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     opentelemetry::trace::StartSpanOptions options;
     if (m.subscribe_span.span) {
       options.parent = m.subscribe_span.span->GetContext();
     }
-    auto span =
-        internal::MakeSpan(subscription_id_ + " process",
-                           {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
+    auto span = internal::MakeSpan(
+        subscription_id_ + " process",
+        {{sc::messaging::kMessagingSystem, "gcp_pubsub"}}, options);
     m.ack_handler = MakeTracingExactlyOnceAckHandler(std::move(m.ack_handler),
                                                      m.subscribe_span);
     child_->user_callback(std::move(m));

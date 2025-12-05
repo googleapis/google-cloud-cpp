@@ -22,7 +22,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
 
 namespace google {
@@ -53,12 +53,12 @@ using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 auto ExpectSent(std::int64_t id, std::uint64_t size) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   return SpanEventAttributesAre(
       OTelAttribute<std::string>(/*sc::kRpcMessageType=*/"rpc.message.type",
                                  "SENT"),
       OTelAttribute<std::int64_t>(/*sc::kRpcMessageId=*/"rpc.message.id", id),
-      OTelAttribute<std::string>(sc::kThreadId, _),
+      OTelAttribute<std::string>(sc::thread::kThreadId, _),
       OTelAttribute<std::uint64_t>("gl-cpp.size", size));
 }
 
@@ -71,14 +71,14 @@ auto ExpectFlush(std::int64_t id, std::uint64_t size) {
 }
 
 auto ExpectQuery(std::int64_t id) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   return AllOf(EventNamed("gl-cpp.query"),
                SpanEventAttributesAre(
                    OTelAttribute<std::string>(
                        /*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVE"),
                    OTelAttribute<std::int64_t>(
                        /*sc::kRpcMessageId=*/"rpc.message.id", id),
-                   OTelAttribute<std::string>(sc::kThreadId, _)));
+                   OTelAttribute<std::string>(sc::thread::kThreadId, _)));
 }
 
 TEST(WriterConnectionTracing, FullCycle) {
@@ -224,7 +224,7 @@ TEST(WriterConnectionTracing, QueryError) {
 }
 
 TEST(WriterConnectionTracing, Cancel) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -247,7 +247,7 @@ TEST(WriterConnectionTracing, Cancel) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasEvents(AllOf(EventNamed("gl-cpp.cancel"),
                               SpanEventAttributesAre(OTelAttribute<std::string>(
-                                  sc::kThreadId, _)))))));
+                                  sc::thread::kThreadId, _)))))));
 }
 
 }  // namespace

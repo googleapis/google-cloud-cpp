@@ -26,9 +26,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <gmock/gmock.h>
 
@@ -63,7 +63,7 @@ std::shared_ptr<MessageCallback> MakeTestMessageCallback(
 }
 
 TEST(TracingMessageCallback, UserCallback) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockMessageCallback>();
   EXPECT_CALL(*mock, user_callback).Times(1);
@@ -83,12 +83,12 @@ TEST(TracingMessageCallback, UserCallback) {
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
                             SpanNamed("test-sub process"),
                             SpanHasAttributes(OTelAttribute<std::string>(
-                                sc::kMessagingSystem, "gcp_pubsub")),
+                                sc::messaging::kMessagingSystem, "gcp_pubsub")),
                             SpanWithParent(span))));
 }
 
 TEST(TracingMessageCallback, AddTracingAckHandler) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock_handler =
       std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>();
@@ -125,7 +125,7 @@ TEST(TracingMessageCallback, AddTracingAckHandler) {
                   AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
                         SpanNamed("test-sub process"),
                         SpanHasAttributes(OTelAttribute<std::string>(
-                            sc::kMessagingSystem, "gcp_pubsub")),
+                            sc::messaging::kMessagingSystem, "gcp_pubsub")),
                         SpanWithParent(span)),
                   SpanNamed("test-sub ack")));
 }

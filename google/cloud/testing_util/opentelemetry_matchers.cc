@@ -23,6 +23,7 @@
 #include <opentelemetry/sdk/trace/tracer.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
 #include <opentelemetry/trace/provider.h>
+#include <variant>
 
 namespace {
 
@@ -38,7 +39,6 @@ void AttributeFormatter(
       *out += "bool:";
       *out += v ? "true" : "false";
     }
-    void operator()(double v) const { *out += "double:" + std::to_string(v); }
     void operator()(std::int32_t v) const {
       *out += "std::int32_t:" + std::to_string(v);
     }
@@ -48,25 +48,13 @@ void AttributeFormatter(
     void operator()(std::int64_t v) const {
       *out += "std::int64_t:" + std::to_string(v);
     }
-    void operator()(std::uint64_t v) const {
-      *out += "std::uint64_t:" + std::to_string(v);
-    }
+    void operator()(double v) const { *out += "double:" + std::to_string(v); }
     void operator()(std::string const& v) const { *out += "std::string:" + v; }
     void operator()(std::vector<bool> const& v) const {
       auto format = [](std::string* out, bool b) {
         *out += b ? "true" : "false";
       };
       *out += "std::vector<bool>:[" + absl::StrJoin(v, ", ", format) + "]";
-    }
-    void operator()(std::vector<double> const& v) const {
-      *out += "std::vector<double>:[" + absl::StrJoin(v, ", ") + "]";
-    }
-    void operator()(std::vector<std::string> const& v) const {
-      *out += "std::vector<std::string>:[" + absl::StrJoin(v, ", ") + "]";
-    }
-    void operator()(std::vector<std::uint8_t> const& v) const {
-      *out += "std::vector<std::uint8_t>:[" + absl::StrJoin(v, ", ") + "]";
-      ;
     }
     void operator()(std::vector<std::int32_t> const& v) const {
       *out += "std::vector<std::int32_t>:[" + absl::StrJoin(v, ", ") + "]";
@@ -77,11 +65,23 @@ void AttributeFormatter(
     void operator()(std::vector<std::int64_t> const& v) const {
       *out += "std::vector<std::int64_t>:[" + absl::StrJoin(v, ", ") + "]";
     }
+    void operator()(std::vector<double> const& v) const {
+      *out += "std::vector<double>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<std::string> const& v) const {
+      *out += "std::vector<std::string>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::uint64_t v) const {
+      *out += "std::uint64_t:" + std::to_string(v);
+    }
     void operator()(std::vector<std::uint64_t> const& v) const {
       *out += "std::vector<std::uint64_t>:[" + absl::StrJoin(v, ", ") + "]";
     }
+    void operator()(std::vector<std::uint8_t> const& v) const {
+      *out += "std::vector<std::uint8_t>:[" + absl::StrJoin(v, ", ") + "]";
+    }
   };
-  absl::visit(Visitor{out}, kv.second);
+  std::visit(Visitor{out}, kv.second);
 }
 }  // namespace
 

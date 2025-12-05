@@ -23,7 +23,9 @@
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 #include <algorithm>
 #include <cstdint>
 
@@ -33,7 +35,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
@@ -137,10 +139,10 @@ auto Interval(std::chrono::system_clock::time_point start,
 
 auto TestResource() {
   return opentelemetry::sdk::resource::Resource::Create({
-      {sc::kCloudProvider, "gcp"},
-      {sc::kCloudPlatform, "gcp_compute_engine"},
-      {sc::kHostId, "1020304050607080900"},
-      {sc::kCloudAvailabilityZone, "us-central1-a"},
+      {sc::cloud::kCloudProvider, "gcp"},
+      {sc::cloud::kCloudPlatform, "gcp_compute_engine"},
+      {sc::host::kHostId, "1020304050607080900"},
+      {sc::cloud::kCloudAvailabilityZone, "us-central1-a"},
   });
 }
 
@@ -284,9 +286,9 @@ TEST(ToMetric, IncludesServiceLabelsFromResource) {
 
   opentelemetry::sdk::resource::ResourceAttributes resource_attributes = {
       {"unused", "unused"},
-      {sc::kServiceName, "test-name"},
-      {sc::kServiceNamespace, "test-namespace"},
-      {sc::kServiceInstanceId, "test-instance"},
+      {sc::service::kServiceName, "test-name"},
+      {sc::service::kServiceNamespace, "test-namespace"},
+      {sc::service::kServiceInstanceId, "test-instance"},
   };
   auto resource =
       opentelemetry::sdk::resource::Resource::Create(resource_attributes);
@@ -310,9 +312,9 @@ TEST(ToMetric, PointAttributesOverServiceResourceAttributes) {
   };
 
   opentelemetry::sdk::resource::ResourceAttributes resource_attributes = {
-      {sc::kServiceName, "resource-name"},
-      {sc::kServiceNamespace, "resource-namespace"},
-      {sc::kServiceInstanceId, "resource-instance"},
+      {sc::service::kServiceName, "resource-name"},
+      {sc::service::kServiceNamespace, "resource-namespace"},
+      {sc::service::kServiceInstanceId, "resource-instance"},
   };
   auto resource =
       opentelemetry::sdk::resource::Resource::Create(resource_attributes);
@@ -333,17 +335,17 @@ TEST(ToMetric, ResourceFilter) {
       {"service_name", "point-name"},
       {"service_namespace", "point-namespace"},
       {"service_instance_id", "point-instance"},
-      {sc::kServiceName, "resource-name"},
-      {sc::kServiceNamespace, "resource-namespace"},
-      {sc::kServiceInstanceId, "resource-instance"},
+      {sc::service::kServiceName, "resource-name"},
+      {sc::service::kServiceNamespace, "resource-namespace"},
+      {sc::service::kServiceInstanceId, "resource-instance"},
   };
 
   auto resource = opentelemetry::sdk::resource::Resource::Create({});
 
   auto resource_filter_fn =
       [resource_labels = std::set<std::string>{
-           sc::kServiceName, sc::kServiceNamespace,
-           sc::kServiceInstanceId}](std::string const& l) {
+           sc::service::kServiceName, sc::service::kServiceNamespace,
+           sc::service::kServiceInstanceId}](std::string const& l) {
         return internal::Contains(resource_labels, l);
       };
 
