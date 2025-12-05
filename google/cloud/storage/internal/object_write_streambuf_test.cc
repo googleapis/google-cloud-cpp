@@ -670,6 +670,37 @@ TEST(ObjectWriteStreambufTest, WriteObjectWithCustomHeader) {
   EXPECT_STATUS_OK(response);
 }
 
+/// @test Verify that hashes are computed and passed in FlushFinal.
+TEST(ObjectWriteStreambufTest, FlushFinalWithHashes) {
+  auto mock = std::make_unique<testing::MockClient>();
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = "small test payload";
+
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
+    EXPECT_EQ(payload.size(), r.payload_size());
+    EXPECT_EQ(0, r.offset());
+    EXPECT_TRUE(r.last_chunk());
+    EXPECT_EQ(r.hash_function_ptr(), nullptr);
+    EXPECT_EQ(r.known_object_hashes().crc32c, ComputeCrc32cChecksum(payload));
+    EXPECT_EQ(r.known_object_hashes().md5, ComputeMD5Hash(payload));
+    return QueryResumableUploadResponse{payload.size(), ObjectMetadata()};
+  });
+
+  ResumableUploadRequest request;
+  request.set_option(DisableCrc32cChecksum(false));
+  request.set_option(DisableMD5Hash(false));
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), request, "test-only-upload-id",
+      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      CreateHashFunction(Crc32cChecksumValue(), DisableCrc32cChecksum(false),
+                         MD5HashValue(), DisableMD5Hash(false)),
+      HashValues{}, CreateHashValidator(request), AutoFinalizeConfig::kEnabled);
+
+  streambuf.sputn(payload.data(), payload.size());
+  auto response = streambuf.Close();
+  EXPECT_STATUS_OK(response);
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
