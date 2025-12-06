@@ -102,6 +102,7 @@ bigtable::RowReader ReadRowsHelper(
         params,  // NOLINT(performance-unnecessary-value-param)
     std::shared_ptr<OperationContext>
         operation_context) {  // NOLINT(performance-unnecessary-value-param)
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto impl = std::make_shared<DefaultRowReader>(
       stub, std::move(params.app_profile_id), std::move(params.table_name),
       std::move(params.row_set), params.rows_limit, std::move(params.filter),
@@ -338,6 +339,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
 
 std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::string const& table_name, bigtable::BulkMutation mut) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (mut.empty()) return {};
   auto operation_context = operation_context_factory_->MutateRows(
@@ -350,6 +352,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   Status status;
+  std::cout << __PRETTY_FUNCTION__ << ": pre-loop" << std::endl;
   while (true) {
     status = mutator.MakeOneRequest(*stub_, *limiter_, *current);
     if (!mutator.HasPendingMutations()) break;
@@ -361,6 +364,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     if (!delay) break;
     std::this_thread::sleep_for(*delay);
   }
+  std::cout << __PRETTY_FUNCTION__ << ": post-loop" << std::endl;
   operation_context->OnDone(status);
   return std::move(mutator).OnRetryDone();
 }
@@ -380,6 +384,7 @@ DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
     bigtable::ReadRowsParams params) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto operation_context = operation_context_factory_->ReadRows(
       params.table_name, params.app_profile_id);
@@ -660,6 +665,7 @@ void DataConnectionImpl::AsyncReadRows(
     std::function<future<bool>(bigtable::Row)> on_row,
     std::function<void(Status)> on_finish, bigtable::RowSet row_set,
     std::int64_t rows_limit, bigtable::Filter filter) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto operation_context = operation_context_factory_->ReadRows(
       table_name, app_profile_id(*current));

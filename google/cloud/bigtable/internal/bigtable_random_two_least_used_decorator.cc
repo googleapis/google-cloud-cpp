@@ -89,6 +89,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableRandomTwoLeastUsed::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->ReadRows(std::move(context), options, request);
@@ -136,6 +137,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableRandomTwoLeastUsed::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::MutateRowsRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->MutateRows(std::move(context), options, request);
@@ -334,6 +336,7 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
 
 std::shared_ptr<internal::StubWrapper<BigtableStub>>
 BigtableRandomTwoLeastUsed::Child() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return pool_->GetChannelRandomTwoLeastUsed();
   //  std::unique_lock<std::mutex> lk(mu_);
   //  std::vector<std::size_t> indices(pool_->size(lk) - 1);

@@ -74,27 +74,30 @@ template <typename T>
 class DynamicChannelPool
     : public std::enable_shared_from_this<DynamicChannelPool<T>> {
  public:
-  using StubFactoryFn = std::function<std::shared_ptr<T>()>;
+  using StubFactoryFn = std::function<std::shared_ptr<T>(int id)>;
   struct SizingPolicy {
     // To avoid channel churn, the pool will not add or remove channels more
     // frequently that this period.
-    std::chrono::milliseconds resize_cooldown_interval;
+    std::chrono::milliseconds resize_cooldown_interval =
+        std::chrono::milliseconds(60 * 1000);
 
     // If the average number of outstanding RPCs is below this threshold,
     // the pool size will be decreased.
-    std::size_t minimum_average_outstanding_rpcs_per_channel;
+    std::size_t minimum_average_outstanding_rpcs_per_channel = 20;
     // If the average number of outstanding RPCs is above this threshold,
     // the pool size will be increased.
-    std::size_t maximum_average_outstanding_rpcs_per_channel;
+    std::size_t maximum_average_outstanding_rpcs_per_channel = 80;
 
     // When channels are removed from the pool, we have to wait until all
     // outstanding RPCs on that channel are completed before destroying it.
-    std::chrono::milliseconds decommissioned_channel_polling_interval;
+    std::chrono::milliseconds decommissioned_channel_polling_interval =
+        std::chrono::milliseconds(30 * 1000);
   };
 
   static std::shared_ptr<DynamicChannelPool> Create(
       CompletionQueue cq, std::size_t initial_size, StubFactoryFn factory_fn,
       SizingPolicy sizing_policy = {}) {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     std::vector<std::shared_ptr<StubWrapper<T>>> initial_wrapped_channels;
     for (std::size_t i = 0; i < initial_size; ++i) {
       initial_wrapped_channels.emplace_back(factory_fn());
@@ -103,9 +106,11 @@ class DynamicChannelPool
         std::move(cq), std::move(initial_wrapped_channels),
         std::move(factory_fn), std::move(sizing_policy)));
   }
+
   static std::shared_ptr<DynamicChannelPool> Create(
       CompletionQueue cq, std::vector<std::shared_ptr<T>> initial_channels,
       StubFactoryFn factory_fn, SizingPolicy sizing_policy = {}) {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(cq), std::move(initial_channels), std::move(factory_fn),
         std::move(sizing_policy)));
@@ -132,16 +137,20 @@ class DynamicChannelPool
   //  }
 
   std::shared_ptr<StubWrapper<T>> GetChannelRandomTwoLeastUsed() {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     std::unique_lock<std::mutex> lk(mu_);
 
+    std::cout << __PRETTY_FUNCTION__ << ": channels_size()=" << channels_.size()
+              << std::endl;
     // TODO: check if resize is needed.
 
     std::vector<std::size_t> indices(channels_.size());
     // TODO(sdhart): Maybe use iota on iterators instead of indices
     std::iota(indices.begin(), indices.end(), 0);
     std::shuffle(indices.begin(), indices.end(), rng_);
-    auto channel_1 = channels_[indices[0]];
-    auto channel_2 = channels_[indices[1]];
+
+    std::shared_ptr<StubWrapper<T>> channel_1 = channels_[indices[0]];
+    std::shared_ptr<StubWrapper<T>> channel_2 = channels_[indices[1]];
 
     return channel_1->outstanding_rpcs(lk) < channel_2->outstanding_rpcs(lk)
                ? channel_1
@@ -156,18 +165,26 @@ class DynamicChannelPool
       : cq_(std::move(cq)),
         factory_fn_(std::move(factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
-        sizing_policy_(std::move(sizing_policy)) {}
+        sizing_policy_(std::move(sizing_policy)),
+        next_channel_id_(channels_.size()) {}
 
   DynamicChannelPool(CompletionQueue cq,
                      std::vector<std::shared_ptr<T>> initial_channels,
                      StubFactoryFn factory_fn, SizingPolicy sizing_policy)
       : cq_(std::move(cq)),
         factory_fn_(std::move(factory_fn)),
-        channels_(initial_channels.size()),
-        sizing_policy_(std::move(sizing_policy)) {
+        channels_(),
+        sizing_policy_(std::move(sizing_policy)),
+        next_channel_id_(initial_channels.size()) {
+    std::cout << __PRETTY_FUNCTION__ << ": wrap initial_channels" << std::endl;
+    channels_.reserve(initial_channels.size());
     for (auto& channel : initial_channels) {
-      channels_.push_back(std::make_shared<StubWrapper<T>>(channel));
+      channels_.push_back(std::make_shared<StubWrapper<T>>(std::move(channel)));
     }
+    //    for (auto i = 0; i < channels_.size(); ++i) {
+    //        std::cout << __PRETTY_FUNCTION__ << ": channels_[" << i <<
+    //        "].get()=" << channels_[i].get() << std::endl;
+    //    }
   }
 
   void ScheduleAddChannel() {}
@@ -234,6 +251,7 @@ class DynamicChannelPool
   SizingPolicy sizing_policy_;
   std::vector<std::shared_ptr<StubWrapper<T>>> decommissioned_channels_;
   future<StatusOr<std::chrono::system_clock::time_point>> decommission_timer_;
+  int next_channel_id_;
 };
 
 }  // namespace internal

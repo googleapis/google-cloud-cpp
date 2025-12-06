@@ -222,6 +222,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter, Options opts) {
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter, Options opts) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (connection_) {
     OptionsSpan span(MergeOptions(std::move(opts), options_));
     return connection_->ReadRows(table_name_, std::move(row_set), rows_limit,

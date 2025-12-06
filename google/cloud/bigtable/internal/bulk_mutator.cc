@@ -214,6 +214,7 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
 Status BulkMutator::MakeOneRequest(BigtableStub& stub,
                                    MutateRowsLimiter& limiter,
                                    Options const& options) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   // Send the request to the server.
   auto const& mutations = state_.BeforeStart();
 
@@ -226,8 +227,10 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   // Potentially throttle the request
   limiter.Acquire();
 
+  std::cout << __PRETTY_FUNCTION__ << ": pre-stub" << std::endl;
   // Read the stream of responses.
   auto stream = stub.MutateRows(client_context, options, mutations);
+  std::cout << __PRETTY_FUNCTION__ << ": post-stub" << std::endl;
   absl::optional<Status> status;
   while (true) {
     btproto::MutateRowsResponse response;

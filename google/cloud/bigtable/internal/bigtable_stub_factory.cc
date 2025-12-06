@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
 #include "google/cloud/bigtable/internal/bigtable_logging_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
+#include "google/cloud/bigtable/internal/bigtable_random_two_least_used_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
@@ -73,6 +74,18 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
   return std::make_shared<BigtableRoundRobin>(std::move(children));
 }
 
+std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
+    Options const& options, CompletionQueue cq,
+    std::function<std::shared_ptr<BigtableStub>(int)> child_factory) {
+  std::vector<std::shared_ptr<BigtableStub>> children(
+      (std::max)(1, options.get<GrpcNumChannelsOption>()));
+  int id = 0;
+  std::generate(children.begin(), children.end(),
+                [&id, &child_factory] { return child_factory(id++); });
+  return std::make_shared<BigtableRandomTwoLeastUsed>(cq, child_factory,
+                                                      std::move(children));
+}
+
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     CompletionQueue const& cq, Options const& options,
@@ -87,7 +100,10 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     if (refresh->enabled()) ScheduleChannelRefresh(cq_impl, refresh, channel);
     return base_factory(std::move(channel));
   };
-  auto stub = CreateBigtableStubRoundRobin(options, std::move(child_factory));
+  //  auto stub = CreateBigtableStubRoundRobin(options,
+  //  std::move(child_factory));
+  auto stub = CreateBigtableStubRandomTwoLeastUsed(options, cq,
+                                                   std::move(child_factory));
   if (refresh->enabled()) {
     stub = std::make_shared<BigtableChannelRefresh>(std::move(stub),
                                                     std::move(refresh));
