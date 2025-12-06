@@ -206,6 +206,7 @@ TEST_P(DataIntegrationTest, TableReadRowNotExistTest) {
 }
 
 TEST_P(DataIntegrationTest, TableReadRowsAllRows) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";

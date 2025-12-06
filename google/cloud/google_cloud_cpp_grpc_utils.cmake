@@ -61,6 +61,8 @@ add_library(
     internal/async_streaming_write_rpc_tracing.h
     internal/background_threads_impl.cc
     internal/background_threads_impl.h
+    internal/channel_pool.cc
+    internal/channel_pool.h
     internal/completion_queue_impl.h
     internal/debug_string_protobuf.cc
     internal/debug_string_protobuf.h
@@ -256,6 +258,7 @@ if (BUILD_TESTING)
         internal/async_streaming_write_rpc_timeout_test.cc
         internal/async_streaming_write_rpc_tracing_test.cc
         internal/background_threads_impl_test.cc
+        internal/channel_pool_test.cc
         internal/debug_string_protobuf_test.cc
         internal/debug_string_status_test.cc
         internal/extract_long_running_result_test.cc

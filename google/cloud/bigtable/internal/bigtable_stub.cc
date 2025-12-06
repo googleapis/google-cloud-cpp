@@ -36,6 +36,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 DefaultBigtableStub::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::ReadRowsRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto stream = grpc_stub_->ReadRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ReadRowsResponse>>(std::move(context),
@@ -70,6 +71,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 DefaultBigtableStub::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::MutateRowsRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto stream = grpc_stub_->MutateRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::MutateRowsResponse>>(std::move(context),

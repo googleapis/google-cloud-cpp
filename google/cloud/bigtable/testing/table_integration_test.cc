@@ -122,6 +122,7 @@ void TableAdminTestEnvironment::TearDown() {
 }
 
 void TableIntegrationTest::SetUp() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   data_connection_ = MakeDataConnection();
   data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
                                           TableTestEnvironment::instance_id());
