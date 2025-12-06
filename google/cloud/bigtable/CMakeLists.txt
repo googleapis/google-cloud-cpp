@@ -166,6 +166,8 @@ add_library(
     internal/bigtable_logging_decorator.h
     internal/bigtable_metadata_decorator.cc
     internal/bigtable_metadata_decorator.h
+    internal/bigtable_random_two_least_used_decorator.cc
+    internal/bigtable_random_two_least_used_decorator.h
     internal/bigtable_round_robin_decorator.cc
     internal/bigtable_round_robin_decorator.h
     internal/bigtable_stub.cc
