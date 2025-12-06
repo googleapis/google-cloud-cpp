@@ -530,16 +530,15 @@ SELECT ARRAY<INTERVAL>[INTERVAL '1-2 3 4:5:6.789123456' YEAR TO SECOND];)sql",
 
 TEST_F(DataTypeIntegrationTest, SelectIntervalFromTimestampDiff) {
   if (UsingEmulator()) GTEST_SKIP();
-  Interval expected_interval{
-      std::chrono::duration_cast<std::chrono::nanoseconds>(
-          std::chrono::hours(1))};
-  std::time_t now_seconds =
-      std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-  std::time_t one_hour_later_seconds = now_seconds + 3600;
 
-  std::vector<std::vector<Timestamp>> const data = {std::vector<Timestamp>{
-      MakeTimestamp(MakeTime(now_seconds, 0)).value(),
-      MakeTimestamp(MakeTime(one_hour_later_seconds, 0)).value()}};
+  auto const t0 = std::chrono::system_clock::from_time_t(1234567890);
+  auto const t1 = t0 + std::chrono::hours(1);
+
+  Interval expected_interval{t1 - t0};
+
+  std::vector<std::vector<Timestamp>> const data = {
+      {MakeTimestamp(t0).value(), MakeTimestamp(t1).value()}};
+
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 
