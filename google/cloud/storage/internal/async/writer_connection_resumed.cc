@@ -120,7 +120,7 @@ class AsyncWriterConnectionResumedState
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk));
-    // Return the unique future associated with this finalization.
+    // Returns the unique future associated with this finalization.
     return std::move(finalized_future_);
   }
 
@@ -191,6 +191,7 @@ class AsyncWriterConnectionResumedState
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
+    std::cerr << "Hey this is a test statement of new branch.\n";
     // Determine if there's data left to write *before* potentially finalizing.
     writing_ = write_offset_ < resend_buffer_.size();
 
@@ -263,8 +264,8 @@ class AsyncWriterConnectionResumedState
     auto impl = Impl(lk);
     lk.unlock();
     impl->Query().then([this, result, w = WeakFromThis()](auto f) {
-      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
       if (auto self = w.lock()) return self->OnQuery(f.get());
+      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
     });
   }
 
@@ -473,8 +474,8 @@ class AsyncWriterConnectionResumedState
     flushed.set_value(result);
     // Restart the write loop ONLY if we are not already finalizing.
     // If finalizing_ is true, the completion will be handled by OnFinalize.
-    std::unique_lock<std::mutex> loop_lk(mu_);
-    if (!finalizing_) WriteLoop(std::move(loop_lk));
+    // std::unique_lock<std::mutex> loop_lk(mu_);
+    // if (!finalizing_) WriteLoop(std::move(loop_lk));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
