@@ -79,10 +79,12 @@ class AsyncStreamingReadRpcTracking
 
 BigtableRandomTwoLeastUsed::BigtableRandomTwoLeastUsed(
     CompletionQueue cq,
-    internal::DynamicChannelPool<BigtableStub>::StubFactoryFn factory_fn,
+    internal::DynamicChannelPool<BigtableStub>::StubFactoryFn
+        refreshing_channel_stub_factory_fn,
     std::vector<std::shared_ptr<BigtableStub>> children)
     : pool_(internal::DynamicChannelPool<BigtableStub>::Create(
-          std::move(cq), std::move(children), std::move(factory_fn))) {}
+          std::move(cq), std::move(children),
+          std::move(refreshing_channel_stub_factory_fn))) {}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
@@ -93,8 +95,7 @@ BigtableRandomTwoLeastUsed::ReadRows(
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->ReadRows(std::move(context), options, request);
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -111,8 +112,7 @@ BigtableRandomTwoLeastUsed::SampleRowKeys(
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->SampleRowKeys(std::move(context), options, request);
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -141,8 +141,7 @@ BigtableRandomTwoLeastUsed::MutateRows(
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->MutateRows(std::move(context), options, request);
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -203,8 +202,7 @@ BigtableRandomTwoLeastUsed::ExecuteQuery(
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->ExecuteQuery(std::move(context), options, request);
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -224,8 +222,7 @@ BigtableRandomTwoLeastUsed::AsyncReadRows(
   auto stub = child->AcquireStub();
   auto result =
       stub->AsyncReadRows(cq, std::move(context), std::move(options), request);
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -245,8 +242,7 @@ BigtableRandomTwoLeastUsed::AsyncSampleRowKeys(
   auto stub = child->AcquireStub();
   auto result = stub->AsyncSampleRowKeys(cq, std::move(context),
                                          std::move(options), request);
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -280,9 +276,7 @@ BigtableRandomTwoLeastUsed::AsyncMutateRows(
   auto stub = child->AcquireStub();
   auto result = stub->AsyncMutateRows(cq, std::move(context),
                                       std::move(options), request);
-
-  std::weak_ptr<internal::StubWrapper<BigtableStub>> weak = child;
-  auto release_fn = [weak = std::move(weak)]() {
+  auto release_fn = [weak = child->MakeWeak()] {
     auto child = weak.lock();
     if (child) child->ReleaseStub();
   };
@@ -334,21 +328,10 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
   return result;
 }
 
-std::shared_ptr<internal::StubWrapper<BigtableStub>>
+std::shared_ptr<internal::StubUsageWrapper<BigtableStub>>
 BigtableRandomTwoLeastUsed::Child() {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   return pool_->GetChannelRandomTwoLeastUsed();
-  //  std::unique_lock<std::mutex> lk(mu_);
-  //  std::vector<std::size_t> indices(pool_->size(lk) - 1);
-  //  // TODO(sdhart): Maybe use iota on iterators instead of indices
-  //  std::iota(indices.begin(), indices.end(), 0);
-  //  std::shuffle(indices.begin(), indices.end(), rng_);
-  //  auto channel_1 = pool_->GetChannel(lk, indices[0]);
-  //  auto channel_2 = pool_->GetChannel(lk, indices[1]);
-  //
-  //  return channel_1->outstanding_rpcs(lk) < channel_2->outstanding_rpcs(lk)
-  //             ? channel_1
-  //             : channel_2;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

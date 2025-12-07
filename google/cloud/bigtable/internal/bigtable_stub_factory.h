@@ -28,18 +28,29 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+enum class ChannelSelectionStrategy { kNone, kRoundRobin, kRandomTwoLeastUsed };
+
+struct ChannelSelectionStrategyOption {
+  using Type = ChannelSelectionStrategy;
+};
+
 using BaseBigtableStubFactory = std::function<std::shared_ptr<BigtableStub>(
     std::shared_ptr<grpc::Channel>)>;
 
 std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)> child_factory);
+    Options const& options, std::function<std::shared_ptr<BigtableStub>(int)>
+                                refreshing_channel_stub_factory);
+
+std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
+    CompletionQueue cq, Options const& options,
+    std::function<std::shared_ptr<BigtableStub>(int)>
+        refreshing_channel_stub_factory);
 
 /// Used in testing to create decorated mocks.
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     CompletionQueue const& cq, Options const& options,
-    BaseBigtableStubFactory const& base_factory);
+    BaseBigtableStubFactory const& stub_factory);
 
 /// Default function used by `DataConnectionImpl`.
 std::shared_ptr<BigtableStub> CreateBigtableStub(

@@ -35,7 +35,8 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
  public:
   BigtableRandomTwoLeastUsed(
       CompletionQueue cq,
-      internal::DynamicChannelPool<BigtableStub>::StubFactoryFn factory_fn,
+      internal::DynamicChannelPool<BigtableStub>::StubFactoryFn
+          refreshing_channel_stub_factory_fn,
       std::vector<std::shared_ptr<BigtableStub>> children);
   ~BigtableRandomTwoLeastUsed() override = default;
 
@@ -133,7 +134,7 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
       google::bigtable::v2::PrepareQueryRequest const& request) override;
 
  private:
-  std::shared_ptr<internal::StubWrapper<BigtableStub>> Child();
+  std::shared_ptr<internal::StubUsageWrapper<BigtableStub>> Child();
 
   //  std::mutex mu_;
   std::shared_ptr<internal::DynamicChannelPool<BigtableStub>> pool_;
