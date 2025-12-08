@@ -316,18 +316,10 @@ class Value {
   }
 
   static Status TypeAndValuesMatch(google::bigtable::v2::Type const& type,
-                                   google::bigtable::v2::Value const& value);
+                                   google::bigtable::v2::Value const& value,
+                                   int depth = 1);
 
  private:
-  static Status TypeAndArrayValuesMatch(
-      google::bigtable::v2::Type const& type,
-      google::bigtable::v2::Value const& value);
-  static Status TypeAndMapValuesMatch(google::bigtable::v2::Type const& type,
-                                      google::bigtable::v2::Value const& value);
-  static Status TypeAndStructValuesMatch(
-      google::bigtable::v2::Type const& type,
-      google::bigtable::v2::Value const& value);
-
   // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};

@@ -595,7 +595,7 @@ struct RequestedPolicyVersion
  *
  * By default requests listing resources only includs the latest (live) version
  * of each resource, set this option to `true` to get list of unreachable
- * regions.
+ * resources.
  */
 struct ReturnPartialSuccess
     : public internal::WellKnownParameter<ReturnPartialSuccess, bool> {

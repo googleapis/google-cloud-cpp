@@ -16,7 +16,7 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.44.0-rc",  # Updated by CMake
+    version = "2.45.0-rc",  # Updated by CMake
     compatibility_level = 2,  # Updated by CMake
 )
 
@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-19J02RR+UvY5cqIGTGDPLmMGa2VaJG9+DQJ0Xkn8HTs=",
+    integrity = "sha256-FmS38nQIBSC65yV3DK1nVENNQ8dXKhlFJRLrqQJz8p0=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-659ea6e98acc7d58661ce2aa7b4cf76a7ef3fd42",
+    strip_prefix = "googleapis-8cd3749f4b98f2eeeef511c16431979aeb3a6502",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/659ea6e98acc7d58661ce2aa7b4cf76a7ef3fd42.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/8cd3749f4b98f2eeeef511c16431979aeb3a6502.tar.gz",
     ],
 )
 

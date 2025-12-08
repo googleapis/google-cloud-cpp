@@ -49,11 +49,6 @@ Idempotency RoutineServiceConnectionIdempotencyPolicy::UpdateRoutine(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::PatchRoutine(
-    google::cloud::bigquery::v2::PatchRoutineRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
 Idempotency RoutineServiceConnectionIdempotencyPolicy::DeleteRoutine(
     google::cloud::bigquery::v2::DeleteRoutineRequest const&) {
   return Idempotency::kNonIdempotent;
