@@ -79,6 +79,20 @@ RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     ldconfig
 # ```
 
+# #### abseil
+WORKDIR /var/tmp/build/abseil-cpp
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DABSL_BUILD_TESTING=OFF \
+      -DABSL_PROPAGATE_CXX_STD=ON \
+      -DBUILD_SHARED_LIBS=yes \
+      -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+
 # #### opentelemetry-cpp
 
 # The project has an **optional** dependency on the OpenTelemetry library.
