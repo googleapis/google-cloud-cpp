@@ -20,8 +20,8 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/pubsub/v1/pubsub.pb.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
@@ -41,7 +41,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
         opentelemetry::context::propagation::TextMapPropagator> const&
         propagator,
     bool exactly_once_delivery_enabled) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kConsumer;
   auto m = pubsub_internal::FromProto(message.message());
@@ -54,14 +54,16 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
 
   auto span = internal::MakeSpan(
       subscription.subscription_id() + " subscribe",
-      {{sc::kMessagingSystem, "gcp_pubsub"},
-       {/*sc::kMessagingOperationType=*/"messaging.operation.type",
+      {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
         "subscribe"},
        {"gcp.project_id", subscription.project_id()},
-       {sc::kMessagingDestinationName, subscription.subscription_id()},
-       {sc::kMessagingMessageId, m.message_id()},
-       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope."
-                                              "size",
+       {sc::messaging::kMessagingDestinationName,
+        subscription.subscription_id()},
+       {sc::messaging::kMessagingMessageId, m.message_id()},
+       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
+                                                         "envelope."
+                                                         "size",
         static_cast<std::int64_t>(MessageSize(m))},
        {"messaging.gcp_pubsub.message.ack_id", message.ack_id()},
        {"messaging.gcp_pubsub.subscription.exactly_once_delivery",
@@ -136,7 +138,7 @@ class TracingBatchCallback : public BatchCallback {
   }
 
   void StartConcurrencyControl(std::string const& ack_id) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     std::lock_guard<std::mutex> lk(mu_);
     auto it = spans_by_ack_id_.find(ack_id);
     if (it == spans_by_ack_id_.end()) return;
@@ -144,9 +146,9 @@ class TracingBatchCallback : public BatchCallback {
     if (!subscribe_span) return;
     opentelemetry::trace::StartSpanOptions options;
     options.parent = subscribe_span->GetContext();
-    it->second.concurrency_control_span =
-        internal::MakeSpan("subscriber concurrency control",
-                           {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
+    it->second.concurrency_control_span = internal::MakeSpan(
+        "subscriber concurrency control",
+        {{sc::messaging::kMessagingSystem, "gcp_pubsub"}}, options);
   }
 
   void EndConcurrencyControl(std::string const& ack_id) override {
@@ -162,7 +164,7 @@ class TracingBatchCallback : public BatchCallback {
   }
 
   void StartScheduler(std::string const& ack_id) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     std::lock_guard<std::mutex> lk(mu_);
     auto spans = spans_by_ack_id_.find(ack_id);
     if (spans == spans_by_ack_id_.end()) return;
@@ -170,9 +172,9 @@ class TracingBatchCallback : public BatchCallback {
     if (!subscribe_span) return;
     opentelemetry::trace::StartSpanOptions options;
     options.parent = subscribe_span->GetContext();
-    spans->second.scheduler_span =
-        internal::MakeSpan("subscriber scheduler",
-                           {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
+    spans->second.scheduler_span = internal::MakeSpan(
+        "subscriber scheduler",
+        {{sc::messaging::kMessagingSystem, "gcp_pubsub"}}, options);
   }
 
   void EndScheduler(std::string const& ack_id) override {
@@ -185,7 +187,7 @@ class TracingBatchCallback : public BatchCallback {
 
   Span StartModackSpan(
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
+    namespace sc = opentelemetry::semconv;
     using Attributes =
         std::vector<std::pair<opentelemetry::nostd::string_view,
                               opentelemetry::common::AttributeValue>>;
@@ -207,13 +209,15 @@ class TracingBatchCallback : public BatchCallback {
     options.kind = opentelemetry::trace::SpanKind::kClient;
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
-        {{sc::kMessagingSystem, "gcp_pubsub"},
-         {/*sc::kMessagingOperationType=*/"messaging.operation.type", "extend"},
-         {sc::kMessagingBatchMessageCount,
+        {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+         {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+          "extend"},
+         {sc::messaging::kMessagingBatchMessageCount,
           static_cast<int64_t>(request.ack_ids().size())},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",
           static_cast<int64_t>(request.ack_deadline_seconds())},
-         {sc::kMessagingDestinationName, subscription_.subscription_id()},
+         {sc::messaging::kMessagingDestinationName,
+          subscription_.subscription_id()},
          {"gcp.project_id", subscription_.project_id()}},
         std::move(links), options);
 

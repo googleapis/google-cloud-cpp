@@ -23,7 +23,11 @@
 #include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/faas_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
+#include <opentelemetry/semconv/incubating/k8s_attributes.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -31,7 +35,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 
 // The metadata server returns fully qualified names. (e.g. a zone may be
 // "projects/p/zones/us-central1-a"). Return the IDs only.
@@ -84,8 +88,9 @@ class Parser {
   // environment variables into resource attributes. This populates the
   // `attributes_` member.
   void ProcessMetadataAndEnv() {
-    SetAttribute(sc::kCloudProvider, "gcp");
-    SetAttribute(sc::kCloudAccountId, Metadata({"project", "projectId"}));
+    SetAttribute(sc::cloud::kCloudProvider, "gcp");
+    SetAttribute(sc::cloud::kCloudAccountId,
+                 Metadata({"project", "projectId"}));
 
     if (internal::GetEnv("KUBERNETES_SERVICE_HOST")) return Gke();
     if (internal::GetEnv("FUNCTION_TARGET")) return CloudFunctions();
@@ -95,10 +100,10 @@ class Parser {
   }
 
   void Gke() {
-    SetAttribute(sc::kCloudPlatform, "gcp_kubernetes_engine");
-    SetAttribute(sc::kK8sClusterName,
+    SetAttribute(sc::cloud::kCloudPlatform, "gcp_kubernetes_engine");
+    SetAttribute(sc::k8s::kK8sClusterName,
                  Metadata({"instance", "attributes", "cluster-name"}));
-    SetAttribute(sc::kHostId, Metadata({"instance", "id"}));
+    SetAttribute(sc::host::kHostId, Metadata({"instance", "id"}));
     auto cluster_location =
         Tail(Metadata({"instance", "attributes", "cluster-location"}));
 
@@ -106,48 +111,49 @@ class Parser {
     auto hyphen_count =
         std::count(cluster_location.begin(), cluster_location.end(), '-');
     if (hyphen_count == 1) {
-      SetAttribute(sc::kCloudRegion, cluster_location);
+      SetAttribute(sc::cloud::kCloudRegion, cluster_location);
     } else if (hyphen_count == 2) {
-      SetAttribute(sc::kCloudAvailabilityZone, cluster_location);
+      SetAttribute(sc::cloud::kCloudAvailabilityZone, cluster_location);
     }
   }
 
   void CloudFunctions() {
-    SetAttribute(sc::kCloudPlatform, "gcp_cloud_functions");
-    SetEnvAttribute(sc::kFaasName, "K_SERVICE");
-    SetEnvAttribute(sc::kFaasVersion, "K_REVISION");
-    SetAttribute(sc::kFaasInstance, Metadata({"instance", "id"}));
+    SetAttribute(sc::cloud::kCloudPlatform, "gcp_cloud_functions");
+    SetEnvAttribute(sc::faas::kFaasName, "K_SERVICE");
+    SetEnvAttribute(sc::faas::kFaasVersion, "K_REVISION");
+    SetAttribute(sc::faas::kFaasInstance, Metadata({"instance", "id"}));
   }
 
   void CloudRun() {
-    SetAttribute(sc::kCloudPlatform, "gcp_cloud_run");
-    SetEnvAttribute(sc::kFaasName, "K_SERVICE");
-    SetEnvAttribute(sc::kFaasVersion, "K_REVISION");
-    SetAttribute(sc::kFaasInstance, Metadata({"instance", "id"}));
+    SetAttribute(sc::cloud::kCloudPlatform, "gcp_cloud_run");
+    SetEnvAttribute(sc::faas::kFaasName, "K_SERVICE");
+    SetEnvAttribute(sc::faas::kFaasVersion, "K_REVISION");
+    SetAttribute(sc::faas::kFaasInstance, Metadata({"instance", "id"}));
   }
 
   void Gae() {
-    SetAttribute(sc::kCloudPlatform, "gcp_app_engine");
-    SetEnvAttribute(sc::kFaasName, "GAE_SERVICE");
-    SetEnvAttribute(sc::kFaasVersion, "GAE_VERSION");
-    SetEnvAttribute(sc::kFaasInstance, "GAE_INSTANCE");
+    SetAttribute(sc::cloud::kCloudPlatform, "gcp_app_engine");
+    SetEnvAttribute(sc::faas::kFaasName, "GAE_SERVICE");
+    SetEnvAttribute(sc::faas::kFaasVersion, "GAE_VERSION");
+    SetEnvAttribute(sc::faas::kFaasInstance, "GAE_INSTANCE");
 
     auto zone = Tail(Metadata({"instance", "zone"}));
-    SetAttribute(sc::kCloudAvailabilityZone, zone);
+    SetAttribute(sc::cloud::kCloudAvailabilityZone, zone);
     auto const pos = zone.rfind('-');
-    SetAttribute(sc::kCloudRegion, zone.substr(0, pos));
+    SetAttribute(sc::cloud::kCloudRegion, zone.substr(0, pos));
   }
 
   void Gce() {
-    SetAttribute(sc::kCloudPlatform, "gcp_compute_engine");
-    SetAttribute(sc::kHostType, Tail(Metadata({"instance", "machineType"})));
-    SetAttribute(sc::kHostId, Metadata({"instance", "id"}));
-    SetAttribute(sc::kHostName, Metadata({"instance", "name"}));
+    SetAttribute(sc::cloud::kCloudPlatform, "gcp_compute_engine");
+    SetAttribute(sc::host::kHostType,
+                 Tail(Metadata({"instance", "machineType"})));
+    SetAttribute(sc::host::kHostId, Metadata({"instance", "id"}));
+    SetAttribute(sc::host::kHostName, Metadata({"instance", "name"}));
 
     auto zone = Tail(Metadata({"instance", "zone"}));
-    SetAttribute(sc::kCloudAvailabilityZone, zone);
+    SetAttribute(sc::cloud::kCloudAvailabilityZone, zone);
     auto const pos = zone.rfind('-');
-    SetAttribute(sc::kCloudRegion, zone.substr(0, pos));
+    SetAttribute(sc::cloud::kCloudRegion, zone.substr(0, pos));
   }
 
   std::string Metadata(std::deque<std::string> keys) {

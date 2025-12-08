@@ -20,8 +20,9 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 #include <cctype>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -29,7 +30,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 
 google::protobuf::Timestamp ToProtoTimestamp(
     opentelemetry::common::SystemTimestamp ts) {
@@ -40,10 +41,10 @@ google::protobuf::Timestamp ToProtoTimestamp(
 google::monitoring::v3::TypedValue ToValue(
     opentelemetry::sdk::metrics::ValueType value) {
   google::monitoring::v3::TypedValue proto;
-  if (absl::holds_alternative<double>(value)) {
-    proto.set_double_value(absl::get<double>(value));
+  if (std::holds_alternative<double>(value)) {
+    proto.set_double_value(std::get<double>(value));
   } else {
-    proto.set_int64_value(absl::get<std::int64_t>(value));
+    proto.set_int64_value(std::get<std::int64_t>(value));
   }
   return proto;
 }
@@ -62,9 +63,9 @@ google::api::MetricDescriptor::ValueType ToValueType(
 }
 
 double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
-  return absl::holds_alternative<double>(v)
-             ? absl::get<double>(v)
-             : static_cast<double>(absl::get<std::int64_t>(v));
+  return std::holds_alternative<double>(v)
+             ? std::get<double>(v)
+             : static_cast<double>(std::get<std::int64_t>(v));
 }
 
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequestsHelper(
@@ -112,12 +113,21 @@ void ToTimeSeriesHelper(
               opentelemetry::sdk::metrics::HistogramPointData const& point) {
             return ToTimeSeries(metric_data, point);
           }
+#if OPENTELEMETRY_VERSION_MAJOR > 1 || \
+    (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 21)
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::
+                  Base2ExponentialHistogramPointData const&) {
+            // TODO(#xxxxx): Add support for exponential histograms.
+            return absl::nullopt;
+          }
+#endif
           absl::optional<google::monitoring::v3::TimeSeries> operator()(
               opentelemetry::sdk::metrics::DropPointData const&) {
             return absl::nullopt;
           }
         };
-        auto ts = absl::visit(Visitor{metric_data}, pda.point_data);
+        auto ts = std::visit(Visitor{metric_data}, pda.point_data);
         if (!ts) continue;
         ts->set_unit(metric_data.instrument_descriptor.unit_);
         ts_collector_fn(metric_data, pda, *std::move(ts));
@@ -164,9 +174,9 @@ google::api::Metric ToMetric(
     // service processes on a single GCE VM.
     auto const& ra = resource->GetAttributes().GetAttributes();
     for (std::string key : {
-             sc::kServiceName,
-             sc::kServiceNamespace,
-             sc::kServiceInstanceId,
+             sc::service::kServiceName,
+             sc::service::kServiceNamespace,
+             sc::service::kServiceInstanceId,
          }) {
       auto it = ra.find(std::move(key));
       if (it != ra.end()) add_label(labels, it->first, it->second);

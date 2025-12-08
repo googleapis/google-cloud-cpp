@@ -21,7 +21,7 @@
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
 
 namespace google {
@@ -71,7 +71,7 @@ auto expect_no_context = [](auto f) {
 };
 
 TEST(ReaderConnectionTracing, WithError) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<ReadResponse> p1;
   PromiseWithOTelContext<ReadResponse> p2;
@@ -112,7 +112,7 @@ TEST(ReaderConnectionTracing, WithError) {
                           /*sc::kRpcMessageType=*/"rpc.message.type",
                           "RECEIVED"),
                       OTelAttribute<std::int64_t>("message.starting_offset", 0),
-                      OTelAttribute<std::string>(sc::kThreadId, _))),
+                      OTelAttribute<std::string>(sc::thread::kThreadId, _))),
               AllOf(EventNamed("gl-cpp.read"),
                     SpanEventAttributesAre(
                         OTelAttribute<std::int64_t>(
@@ -120,11 +120,12 @@ TEST(ReaderConnectionTracing, WithError) {
                         OTelAttribute<std::string>(
                             /*sc::kRpcMessageType=*/"rpc.message.type",
                             "RECEIVED"),
-                        OTelAttribute<std::string>(sc::kThreadId, _)))))));
+                        OTelAttribute<std::string>(sc::thread::kThreadId,
+                                                   _)))))));
 }
 
 TEST(ReaderConnectionTracing, WithSuccess) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<ReadResponse> p1;
   PromiseWithOTelContext<ReadResponse> p2;
@@ -170,7 +171,7 @@ TEST(ReaderConnectionTracing, WithSuccess) {
                           /*sc::kRpcMessageType=*/"rpc.message.type",
                           "RECEIVED"),
                       OTelAttribute<std::int64_t>("message.starting_offset", 0),
-                      OTelAttribute<std::string>(sc::kThreadId, _))),
+                      OTelAttribute<std::string>(sc::thread::kThreadId, _))),
               AllOf(EventNamed("gl-cpp.read"),
                     SpanEventAttributesAre(
                         OTelAttribute<std::int64_t>(
@@ -180,7 +181,7 @@ TEST(ReaderConnectionTracing, WithSuccess) {
                             "RECEIVED"),
                         OTelAttribute<std::int64_t>("message.starting_offset",
                                                     1024),
-                        OTelAttribute<std::string>(sc::kThreadId, _))),
+                        OTelAttribute<std::string>(sc::thread::kThreadId, _))),
               AllOf(EventNamed("gl-cpp.read"),
                     SpanEventAttributesAre(
                         OTelAttribute<std::int64_t>(
@@ -188,7 +189,8 @@ TEST(ReaderConnectionTracing, WithSuccess) {
                         OTelAttribute<std::string>(
                             /*sc::kRpcMessageType=*/"rpc.message.type",
                             "RECEIVED"),
-                        OTelAttribute<std::string>(sc::kThreadId, _)))))));
+                        OTelAttribute<std::string>(sc::thread::kThreadId,
+                                                   _)))))));
 
   auto const metadata = actual->GetRequestMetadata();
   EXPECT_THAT(metadata.headers,

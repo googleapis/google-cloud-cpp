@@ -25,7 +25,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -146,7 +147,7 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineError) {
 }
 
 TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPullLeaseManagerImpl>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
@@ -168,20 +169,19 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
   EXPECT_STATUS_OK(status.get());
 
   auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanNamed("test-subscription modack"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::messaging::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(
-      spans, Contains(AllOf(
-                 SpanNamed("test-subscription modack"),
-                 SpanHasAttributes(OTelAttribute<std::string>(
-                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                     "modack")))));
+                                 /*sc::messaging::kMessagingOperationType=*/
+                                 "messaging.operation.type", "modack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kCodeFunction,
+                                 sc::code::kCodeFunctionName,
                                  "pubsub::PullLeaseManager::ExtendLease")))));
   EXPECT_THAT(
       spans,
@@ -195,10 +195,10 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "messaging.gcp_pubsub.message.ack_id", "test-ack-id")))));
   EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription modack"),
-                  SpanHasAttributes(OTelAttribute<std::string>(
-                      sc::kMessagingDestinationName, "test-subscription")))));
+              Contains(AllOf(SpanNamed("test-subscription modack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::messaging::kMessagingDestinationName,
+                                 "test-subscription")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(

@@ -30,9 +30,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <gmock/gmock.h>
 #include <atomic>
@@ -218,7 +218,7 @@ using ::testing::SizeIs;
 /// @test Verify callbacks are scheduled in the background threads with Open
 /// Telemetry enabled.
 TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto constexpr kAckCount = 100;
   ScheduleCallbacks(kAckCount, /*enable_open_telemetry=*/true);
@@ -227,11 +227,11 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
   // There should be a process and ack span for each message.
   EXPECT_THAT(spans, SizeIs(Ge(static_cast<std::size_t>(2 * kAckCount))));
   // Verify there is at least one process span.
-  EXPECT_THAT(
-      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
-                            SpanNamed("test-subscription process"),
-                            SpanHasAttributes(OTelAttribute<std::string>(
-                                sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanNamed("test-subscription process"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::messaging::kMessagingSystem, "gcp_pubsub")))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

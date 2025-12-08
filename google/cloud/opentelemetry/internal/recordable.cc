@@ -19,6 +19,7 @@
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
+#include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>
 #include <iterator>
 
@@ -207,7 +208,7 @@ void AddAttributeImpl(
     std::size_t limit) {
   auto* proto = ProtoOrDrop(attributes, key, limit);
   if (proto) {
-    absl::visit(AttributeVisitor{*proto}, value);
+    std::visit(AttributeVisitor{*proto}, value);
   } else {
     attributes.set_dropped_attributes_count(
         attributes.dropped_attributes_count() + 1);

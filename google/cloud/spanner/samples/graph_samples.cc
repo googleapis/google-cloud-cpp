@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "absl/time/clock.h"
 #include <string>
 #include <tuple>
 #include <utility>

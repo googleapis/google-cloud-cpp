@@ -22,7 +22,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock-matchers.h>
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -41,7 +41,7 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
 TEST(ObjectDescriptorReaderTracing, Read) {
   auto span_catcher = InstallSpanCatcher();
@@ -60,16 +60,16 @@ TEST(ObjectDescriptorReaderTracing, Read) {
 
   auto actual = reader->Read().get();
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans, ElementsAre(
-                 AllOf(SpanNamed("storage::AsyncConnection::ReadRange"),
-                       SpanHasEvents(AllOf(
-                           EventNamed("gl-cpp.read-range"),
-                           SpanEventAttributesAre(
-                               OTelAttribute<std::uint32_t>("message.size", 10),
-                               OTelAttribute<std::string>(sc::kThreadId, _),
-                               OTelAttribute<std::string>("rpc.message.type",
-                                                          "RECEIVED")))))));
+  EXPECT_THAT(spans,
+              ElementsAre(AllOf(
+                  SpanNamed("storage::AsyncConnection::ReadRange"),
+                  SpanHasEvents(AllOf(
+                      EventNamed("gl-cpp.read-range"),
+                      SpanEventAttributesAre(
+                          OTelAttribute<std::uint32_t>("message.size", 10),
+                          OTelAttribute<std::string>(sc::thread::kThreadId, _),
+                          OTelAttribute<std::string>("rpc.message.type",
+                                                     "RECEIVED")))))));
 }
 
 TEST(ObjectDescriptorReaderTracing, ReadError) {
@@ -81,17 +81,17 @@ TEST(ObjectDescriptorReaderTracing, ReadError) {
 
   auto actual = reader->Read().get();
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      ElementsAre(AllOf(
-          SpanNamed("storage::AsyncConnection::ReadRange"),
-          SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", "NOT_FOUND")),
-          SpanHasEvents(AllOf(EventNamed("gl-cpp.read-range"),
-                              SpanEventAttributesAre(
-                                  OTelAttribute<std::string>(sc::kThreadId, _),
-                                  OTelAttribute<std::string>("rpc.message.type",
-                                                             "RECEIVED")))))));
+  EXPECT_THAT(spans,
+              ElementsAre(AllOf(
+                  SpanNamed("storage::AsyncConnection::ReadRange"),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", "NOT_FOUND")),
+                  SpanHasEvents(AllOf(
+                      EventNamed("gl-cpp.read-range"),
+                      SpanEventAttributesAre(
+                          OTelAttribute<std::string>(sc::thread::kThreadId, _),
+                          OTelAttribute<std::string>("rpc.message.type",
+                                                     "RECEIVED")))))));
 }
 
 }  // namespace

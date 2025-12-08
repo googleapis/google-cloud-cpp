@@ -26,7 +26,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -58,7 +59,7 @@ using ::testing::Pair;
 using ::testing::StartsWith;
 
 TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -84,28 +85,31 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
           SpanNamed("test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-topic"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-topic"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
               OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
-              OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
-                                          "messaging.message.envelope.size",
-                                          45),
+              OTelAttribute<
+                  std::
+                      int64_t>(/*sc::messaging::kMessagingMessageEnvelopeSize=*/
+                               "messaging.message.envelope.size", 45),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "create"),
-              OTelAttribute<std::string>(sc::kMessagingMessageId, "test-id-0"),
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "create"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingMessageId,
+                                         "test-id-0"),
               OTelAttribute<std::string>(
-                  sc::kCodeFunction,
+                  sc::code::kCodeFunctionName,
                   "pubsub::PublisherConnection::Publish")))));
 }
 
 TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -132,20 +136,22 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
           SpanNamed("test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-topic"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-topic"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "create"),
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "create"),
               OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode),
-              OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
-                                          "messaging.message.envelope.size",
-                                          45)))));
+              OTelAttribute<
+                  std::
+                      int64_t>(/*sc::messaging::kMessagingMessageEnvelopeSize=*/
+                               "messaging.message.envelope.size", 45)))));
 }
 
 TEST(PublisherTracingConnectionTest, PublishInjectsTraceContext) {

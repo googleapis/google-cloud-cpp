@@ -20,10 +20,15 @@
 #include "absl/types/variant.h"
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/faas_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
+#include <opentelemetry/semconv/incubating/k8s_attributes.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 #include <algorithm>
 #include <numeric>
 #include <unordered_map>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -31,7 +36,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 
 struct AsStringVisitor {
   template <typename T>
@@ -86,22 +91,23 @@ class MonitoredResourceProvider {
 };
 
 MonitoredResourceProvider GceInstance() {
-  return MonitoredResourceProvider("gce_instance",
-                                   {
-                                       {"zone", {{sc::kCloudAvailabilityZone}}},
-                                       {"instance_id", {{sc::kHostId}}},
-                                   });
+  return MonitoredResourceProvider(
+      "gce_instance", {
+                          {"zone", {{sc::cloud::kCloudAvailabilityZone}}},
+                          {"instance_id", {{sc::host::kHostId}}},
+                      });
 }
 
 MonitoredResourceProvider K8sContainer() {
   return MonitoredResourceProvider(
       "k8s_container",
       {
-          {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
-          {"cluster_name", {{sc::kK8sClusterName}}},
-          {"namespace_name", {{sc::kK8sNamespaceName}}},
-          {"pod_name", {{sc::kK8sPodName}}},
-          {"container_name", {{sc::kK8sContainerName}}},
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+          {"namespace_name", {{sc::k8s::kK8sNamespaceName}}},
+          {"pod_name", {{sc::k8s::kK8sPodName}}},
+          {"container_name", {{sc::k8s::kK8sContainerName}}},
       });
 }
 
@@ -109,10 +115,11 @@ MonitoredResourceProvider K8sPod() {
   return MonitoredResourceProvider(
       "k8s_pod",
       {
-          {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
-          {"cluster_name", {{sc::kK8sClusterName}}},
-          {"namespace_name", {{sc::kK8sNamespaceName}}},
-          {"pod_name", {{sc::kK8sPodName}}},
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+          {"namespace_name", {{sc::k8s::kK8sNamespaceName}}},
+          {"pod_name", {{sc::k8s::kK8sPodName}}},
       });
 }
 
@@ -120,9 +127,10 @@ MonitoredResourceProvider K8sNode() {
   return MonitoredResourceProvider(
       "k8s_node",
       {
-          {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
-          {"cluster_name", {{sc::kK8sClusterName}}},
-          {"node_name", {{sc::kK8sNodeName}}},
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+          {"node_name", {{sc::k8s::kK8sNodeName}}},
       });
 }
 
@@ -130,8 +138,9 @@ MonitoredResourceProvider K8sCluster() {
   return MonitoredResourceProvider(
       "k8s_cluster",
       {
-          {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
-          {"cluster_name", {{sc::kK8sClusterName}}},
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
       });
 }
 
@@ -139,10 +148,11 @@ MonitoredResourceProvider GaeInstance() {
   return MonitoredResourceProvider(
       "gae_instance",
       {
-          {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
-          {"module_id", {{sc::kFaasName}}},
-          {"version_id", {{sc::kFaasVersion}}},
-          {"instance_id", {{sc::kFaasInstance}}},
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"module_id", {{sc::faas::kFaasName}}},
+          {"version_id", {{sc::faas::kFaasVersion}}},
+          {"instance_id", {{sc::faas::kFaasInstance}}},
       });
 }
 
@@ -150,9 +160,10 @@ MonitoredResourceProvider AwsEc2Instance() {
   return MonitoredResourceProvider(
       "aws_ec2_instance",
       {
-          {"instance_id", {{sc::kHostId}}},
-          {"region", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
-          {"aws_account", {{sc::kCloudAccountId}}},
+          {"instance_id", {{sc::host::kHostId}}},
+          {"region",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"aws_account", {{sc::cloud::kCloudAccountId}}},
       });
 }
 
@@ -161,10 +172,12 @@ MonitoredResourceProvider GenericTask() {
       "generic_task",
       {
           {"location",
-           {{sc::kCloudAvailabilityZone, sc::kCloudRegion}, "global"}},
-          {"namespace", {{sc::kServiceNamespace}}},
-          {"job", {{sc::kServiceName, sc::kFaasName}}},
-          {"task_id", {{sc::kServiceInstanceId, sc::kFaasInstance}}},
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion},
+            "global"}},
+          {"namespace", {{sc::service::kServiceNamespace}}},
+          {"job", {{sc::service::kServiceName, sc::faas::kFaasName}}},
+          {"task_id",
+           {{sc::service::kServiceInstanceId, sc::faas::kFaasInstance}}},
       });
 }
 
@@ -173,9 +186,10 @@ MonitoredResourceProvider GenericNode() {
       "generic_node",
       {
           {"location",
-           {{sc::kCloudAvailabilityZone, sc::kCloudRegion}, "global"}},
-          {"namespace", {{sc::kServiceNamespace}}},
-          {"node_id", {{sc::kHostId, sc::kHostName}}},
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion},
+            "global"}},
+          {"namespace", {{sc::service::kServiceNamespace}}},
+          {"node_id", {{sc::host::kHostId, sc::host::kHostName}}},
       });
 }
 
@@ -185,20 +199,20 @@ MonitoredResourceProvider GenericNode() {
 MonitoredResourceProvider MakeProvider(
     opentelemetry::sdk::resource::ResourceAttributes const& attributes) {
   std::string platform;
-  auto p = attributes.find(sc::kCloudPlatform);
+  auto p = attributes.find(sc::cloud::kCloudPlatform);
   if (p != attributes.end()) platform = AsString(p->second);
 
   if (platform == "gcp_compute_engine") {
     return GceInstance();
   }
   if (platform == "gcp_kubernetes_engine") {
-    if (attributes.find(sc::kK8sContainerName) != attributes.end()) {
+    if (attributes.find(sc::k8s::kK8sContainerName) != attributes.end()) {
       return K8sContainer();
     }
-    if (attributes.find(sc::kK8sPodName) != attributes.end()) {
+    if (attributes.find(sc::k8s::kK8sPodName) != attributes.end()) {
       return K8sPod();
     }
-    if (attributes.find(sc::kK8sNodeName) != attributes.end()) {
+    if (attributes.find(sc::k8s::kK8sNodeName) != attributes.end()) {
       return K8sNode();
     }
     return K8sCluster();
@@ -209,10 +223,10 @@ MonitoredResourceProvider MakeProvider(
   if (platform == "aws_ec2") {
     return AwsEc2Instance();
   }
-  if ((attributes.find(sc::kServiceName) != attributes.end() &&
-       attributes.find(sc::kServiceInstanceId) != attributes.end()) ||
-      (attributes.find(sc::kFaasName) != attributes.end() &&
-       attributes.find(sc::kFaasInstance) != attributes.end())) {
+  if ((attributes.find(sc::service::kServiceName) != attributes.end() &&
+       attributes.find(sc::service::kServiceInstanceId) != attributes.end()) ||
+      (attributes.find(sc::faas::kFaasName) != attributes.end() &&
+       attributes.find(sc::faas::kFaasInstance) != attributes.end())) {
     return GenericTask();
   }
   return GenericNode();
@@ -222,7 +236,7 @@ MonitoredResourceProvider MakeProvider(
 
 std::string AsString(
     opentelemetry::sdk::common::OwnedAttributeValue const& attribute) {
-  return absl::visit(AsStringVisitor{}, attribute);
+  return std::visit(AsStringVisitor{}, attribute);
 }
 
 MonitoredResource ToMonitoredResource(

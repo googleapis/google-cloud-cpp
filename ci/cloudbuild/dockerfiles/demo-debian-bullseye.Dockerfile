@@ -123,8 +123,6 @@ RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
 
 # #### gRPC
 
-# Finally, we build gRPC from source:
-
 # ```bash
 WORKDIR /var/tmp/build/grpc
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
@@ -155,15 +153,14 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
