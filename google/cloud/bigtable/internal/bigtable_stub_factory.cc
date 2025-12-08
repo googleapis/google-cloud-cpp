@@ -79,7 +79,8 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     CompletionQueue cq, Options const& options,
     std::function<std::shared_ptr<BigtableStub>(int)>
-        refreshing_channel_stub_factory) {
+        refreshing_channel_stub_factory,
+    std::shared_ptr<ConnectionRefreshState> refresh_state) {
   std::vector<std::shared_ptr<BigtableStub>> children(
       (std::max)(1, options.get<GrpcNumChannelsOption>()));
   int id = 0;
@@ -88,7 +89,8 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
                   return refreshing_channel_stub_factory(id++);
                 });
   return std::make_shared<BigtableRandomTwoLeastUsed>(
-      std::move(cq), refreshing_channel_stub_factory, std::move(children));
+      std::move(cq), std::move(refresh_state), refreshing_channel_stub_factory,
+      std::move(children));
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
@@ -99,28 +101,35 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
   auto refresh = std::make_shared<ConnectionRefreshState>(
       cq_impl, options.get<bigtable::MinConnectionRefreshOption>(),
       options.get<bigtable::MaxConnectionRefreshOption>());
-  auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh, &auth,
-                                          options](int id) {
-    auto channel = CreateGrpcChannel(*auth, options, id);
-    if (refresh->enabled()) ScheduleChannelRefresh(cq_impl, refresh, channel);
-    return stub_factory(std::move(channel));
-  };
 
   std::shared_ptr<BigtableStub> stub;
   if (options.has<ChannelSelectionStrategyOption>() &&
       options.get<ChannelSelectionStrategyOption>() ==
           ChannelSelectionStrategy::kRandomTwoLeastUsed) {
+    auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh,
+                                            &auth, options](int id) {
+      auto channel = CreateGrpcChannel(*auth, options, id);
+      ScheduleChannelRefresh(cq_impl, refresh, channel);
+      return stub_factory(std::move(channel));
+    };
     stub = CreateBigtableStubRandomTwoLeastUsed(
-        cq, options, std::move(refreshing_channel_stub_factory));
+        cq, options, std::move(refreshing_channel_stub_factory),
+        std::move(refresh));
   } else {
+    auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh,
+                                            &auth, options](int id) {
+      auto channel = CreateGrpcChannel(*auth, options, id);
+      if (refresh->enabled()) ScheduleChannelRefresh(cq_impl, refresh, channel);
+      return stub_factory(std::move(channel));
+    };
     stub = CreateBigtableStubRoundRobin(
         options, std::move(refreshing_channel_stub_factory));
+    if (refresh->enabled()) {
+      stub = std::make_shared<BigtableChannelRefresh>(std::move(stub),
+                                                      std::move(refresh));
+    }
   }
 
-  if (refresh->enabled()) {
-    stub = std::make_shared<BigtableChannelRefresh>(std::move(stub),
-                                                    std::move(refresh));
-  }
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));
   }

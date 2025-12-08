@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableRandomTwoLeastUsed : public BigtableStub {
  public:
   BigtableRandomTwoLeastUsed(
-      CompletionQueue cq,
+      CompletionQueue cq, std::shared_ptr<ConnectionRefreshState> refresh_state,
       DynamicChannelPool<BigtableStub>::StubFactoryFn
           refreshing_channel_stub_factory_fn,
       std::vector<std::shared_ptr<BigtableStub>> children);

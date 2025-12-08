@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_STUB_FACTORY_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
@@ -44,7 +45,8 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     CompletionQueue cq, Options const& options,
     std::function<std::shared_ptr<BigtableStub>(int)>
-        refreshing_channel_stub_factory);
+        refreshing_channel_stub_factory,
+    std::shared_ptr<ConnectionRefreshState> refresh_state);
 
 /// Used in testing to create decorated mocks.
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(

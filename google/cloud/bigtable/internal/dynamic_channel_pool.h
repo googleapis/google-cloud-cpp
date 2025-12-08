@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H
 
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/version.h"
@@ -98,7 +99,9 @@ class DynamicChannelPool
 
   static std::shared_ptr<DynamicChannelPool> Create(
       CompletionQueue cq, std::size_t initial_size,
-      StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy = {}) {
+      StubFactoryFn stub_factory_fn,
+      std::shared_ptr<ConnectionRefreshState> refresh_state,
+      SizingPolicy sizing_policy = {}) {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
     std::vector<std::shared_ptr<StubUsageWrapper<T>>> initial_wrapped_channels;
     for (std::size_t i = 0; i < initial_size; ++i) {
@@ -106,16 +109,18 @@ class DynamicChannelPool
     }
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(cq), std::move(initial_wrapped_channels),
-        std::move(stub_factory_fn), std::move(sizing_policy)));
+        std::move(refresh_state), std::move(stub_factory_fn),
+        std::move(sizing_policy)));
   }
 
   static std::shared_ptr<DynamicChannelPool> Create(
       CompletionQueue cq, std::vector<std::shared_ptr<T>> initial_channels,
+      std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy = {}) {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
-        std::move(cq), std::move(initial_channels), std::move(stub_factory_fn),
-        std::move(sizing_policy)));
+        std::move(cq), std::move(initial_channels), std::move(refresh_state),
+        std::move(stub_factory_fn), std::move(sizing_policy)));
     return pool;
   }
 
@@ -166,8 +171,10 @@ class DynamicChannelPool
   DynamicChannelPool(CompletionQueue cq,
                      std::vector<std::shared_ptr<StubUsageWrapper<T>>>
                          initial_wrapped_channels,
+                     std::shared_ptr<ConnectionRefreshState> refresh_state,
                      StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy)
       : cq_(std::move(cq)),
+        refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
         sizing_policy_(std::move(sizing_policy)),
@@ -175,8 +182,10 @@ class DynamicChannelPool
 
   DynamicChannelPool(CompletionQueue cq,
                      std::vector<std::shared_ptr<T>> initial_channels,
+                     std::shared_ptr<ConnectionRefreshState> refresh_state,
                      StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy)
       : cq_(std::move(cq)),
+        refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(),
         sizing_policy_(std::move(sizing_policy)),
@@ -299,6 +308,7 @@ class DynamicChannelPool
   mutable std::mutex mu_;
   CompletionQueue cq_;
   google::cloud::internal::DefaultPRNG rng_;
+  std::shared_ptr<ConnectionRefreshState> refresh_state_;
   StubFactoryFn stub_factory_fn_;
   std::vector<std::shared_ptr<StubUsageWrapper<T>>> channels_;
   SizingPolicy sizing_policy_;
