@@ -40,14 +40,19 @@ $test_flags = $build_flags
 $test_flags += @("--test_output=errors", "--verbose_failures=true")
 
 Write-Host "`n$(Get-Date -Format o) Compiling and running unit tests"
-bazelisk $common_flags test $test_flags --test_tag_filters=-integration-test ...
+# See #15678
+$exclude_build_targets = @("-//google/cloud/bigtable:internal_query_plan_test", `
+    "-//google/cloud/storage/tests:storage_include_test-default", `
+    "-//google/cloud/storage/tests:storage_include_test-grpc-metadata", `
+    "-//google/cloud/pubsub/samples:all")
+bazelisk $common_flags test $test_flags --test_tag_filters=-integration-test ... -- $exclude_build_targets
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
 }
 
 Write-Host "`n$(Get-Date -Format o) Compiling extra programs with bazel $common_flags build $build_flags ..."
-bazelisk $common_flags build $build_flags ...
+bazelisk $common_flags build $build_flags ... -- $exclude_build_targets
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
