@@ -85,6 +85,7 @@ if (Test-Integration-Enabled) {
     Write-Host "`n$(Get-Date -Format o) Running minimal quickstart prorams"
     Install-Roots-Pem
     ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:CURL_CA_BUNDLE}="${env:KOKORO_GFILE_DIR}/roots.pem"
     ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
     Invoke-REST-Quickstart
     Invoke-gRPC-Quickstart
