@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/channel_pool.h"
-#include "google/cloud/testing_util/status_matchers.h"
-#include <gmock/gmock.h>
+#include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

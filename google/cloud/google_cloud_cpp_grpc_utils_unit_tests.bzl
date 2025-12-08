@@ -42,7 +42,6 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/async_streaming_write_rpc_timeout_test.cc",
     "internal/async_streaming_write_rpc_tracing_test.cc",
     "internal/background_threads_impl_test.cc",
-    "internal/channel_pool_test.cc",
     "internal/debug_string_protobuf_test.cc",
     "internal/debug_string_status_test.cc",
     "internal/extract_long_running_result_test.cc",

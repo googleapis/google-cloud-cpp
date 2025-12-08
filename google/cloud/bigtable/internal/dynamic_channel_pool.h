@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CHANNEL_POOL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CHANNEL_POOL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/random.h"
@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 template <typename T>
 class StubUsageWrapper
@@ -61,18 +61,6 @@ class StubUsageWrapper
   mutable std::mutex mu_;
   std::shared_ptr<T> stub_;
   int outstanding_rpcs_ = 0;
-};
-
-template <typename T>
-class StaticChannelPool {
- public:
-  explicit StaticChannelPool(std::size_t size);
-
-  std::shared_ptr<T> GetChannel();
-  std::shared_ptr<T> GetChannel(std::size_t index);
-
- private:
-  std::vector<T> channels_;
 };
 
 template <typename T>
@@ -137,18 +125,6 @@ class DynamicChannelPool
     std::unique_lock<std::mutex> lk(mu_);
     return channels_.size();
   }
-
-  //  std::shared_ptr<StubUsageWrapper<T>> GetChannel(
-  //      std::unique_lock<std::mutex> const&) {
-  //    // TODO: check for empty
-  //    return channels_[0];
-  //  }
-  //
-  //  std::shared_ptr<StubUsageWrapper<T>> GetChannel(
-  //      std::unique_lock<std::mutex> const&, std::size_t index) {
-  //    // TODO: bounds check
-  //    return channels_[index];
-  //  }
 
   std::shared_ptr<StubUsageWrapper<T>> GetChannelRandomTwoLeastUsed() {
     std::unique_lock<std::mutex> lk(mu_);
@@ -333,9 +309,9 @@ class DynamicChannelPool
   int next_channel_id_;
 };
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CHANNEL_POOL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H

@@ -196,6 +196,8 @@ add_library(
     internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
+    internal/dynamic_channel_pool.cc
+    internal/dynamic_channel_pool.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
     internal/legacy_async_bulk_apply.cc
@@ -493,6 +495,7 @@ if (BUILD_TESTING)
         internal/data_tracing_connection_test.cc
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
+        internal/dynamic_channel_pool_test.cc
         internal/google_bytes_traits_test.cc
         internal/legacy_async_bulk_apply_test.cc
         internal/legacy_async_row_reader_test.cc
