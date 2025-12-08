@@ -18,6 +18,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/version.h"
+#include <cmath>
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -84,6 +85,15 @@ class DynamicChannelPool
     // frequently that this period.
     std::chrono::milliseconds pool_resize_cooldown_interval =
         std::chrono::milliseconds(60 * 1000);
+
+    struct DiscreteChannels {
+      int number;
+    };
+    struct PercentageOfPoolSize {
+      double percentage;
+    };
+    absl::variant<DiscreteChannels, PercentageOfPoolSize>
+        channels_to_add_per_resize = DiscreteChannels{1};
 
     // If the average number of outstanding RPCs is below this threshold,
     // the pool size will be decreased.
@@ -154,7 +164,7 @@ class DynamicChannelPool
     }
 
     if (channels_.size() == 1) {
-      return channels_[0];
+      return channels_.front();
     }
 
     std::shared_ptr<StubUsageWrapper<T>> channel_1;
@@ -194,7 +204,7 @@ class DynamicChannelPool
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(),
         sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(initial_channels.size()) {
+        next_channel_id_(static_cast<int>(initial_channels.size())) {
     std::cout << __PRETTY_FUNCTION__ << ": wrap initial_channels" << std::endl;
     channels_.reserve(initial_channels.size());
     for (auto& channel : initial_channels) {
@@ -203,21 +213,49 @@ class DynamicChannelPool
     }
   }
 
+  struct ChannelAddVisitor {
+    std::size_t pool_size;
+    explicit ChannelAddVisitor(std::size_t pool_size) : pool_size(pool_size) {}
+    int operator()(typename SizingPolicy::DiscreteChannels const& c) {
+      return c.number;
+    }
+
+    int operator()(typename SizingPolicy::PercentageOfPoolSize const& c) {
+      return static_cast<int>(
+          std::floor(static_cast<double>(pool_size) * c.percentage));
+    }
+  };
+
   void ScheduleAddChannel(std::unique_lock<std::mutex> const&) {
+    auto num_channels_to_add =
+        absl::visit(ChannelAddVisitor(channels_.size()),
+                    sizing_policy_.channels_to_add_per_resize);
+    std::vector<int> new_channel_ids;
+    new_channel_ids.reserve(num_channels_to_add);
+    for (int i = 0; i < num_channels_to_add; ++i) {
+      new_channel_ids.push_back(next_channel_id_++);
+    }
+
     std::weak_ptr<DynamicChannelPool<T>> foo = this->shared_from_this();
-    cq_.RunAsync(
-        [new_channel_id = next_channel_id_++, weak = std::move(foo)]() {
-          if (auto self = weak.lock()) {
-            self->AddChannel(new_channel_id);
-          }
-        });
+    cq_.RunAsync([new_channel_ids = std::move(new_channel_ids),
+                  weak = std::move(foo)]() {
+      if (auto self = weak.lock()) {
+        self->AddChannel(new_channel_ids);
+      }
+    });
   }
 
-  void AddChannel(int new_channel_id) {
-    auto new_stub = stub_factory_fn_(new_channel_id);
+  void AddChannel(std::vector<int> const& new_channel_ids) {
+    std::vector<std::shared_ptr<StubUsageWrapper<T>>> new_stubs;
+    new_stubs.reserve(new_channel_ids.size());
+    for (auto const& id : new_channel_ids) {
+      new_stubs.push_back(
+          std::make_shared<StubUsageWrapper<T>>(stub_factory_fn_(id)));
+    }
     std::unique_lock<std::mutex> lk(mu_);
-    channels_.push_back(
-        std::make_shared<StubUsageWrapper<T>>(std::move(new_stub)));
+    channels_.insert(channels_.end(),
+                     std::make_move_iterator(new_stubs.begin()),
+                     std::make_move_iterator(new_stubs.end()));
   }
 
   void ScheduleRemoveChannel(std::unique_lock<std::mutex> const&) {

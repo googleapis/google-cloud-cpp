@@ -88,7 +88,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
                   return refreshing_channel_stub_factory(id++);
                 });
   return std::make_shared<BigtableRandomTwoLeastUsed>(
-      cq, refreshing_channel_stub_factory, std::move(children));
+      std::move(cq), refreshing_channel_stub_factory, std::move(children));
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
