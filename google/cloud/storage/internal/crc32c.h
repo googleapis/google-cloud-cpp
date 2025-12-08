@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/version.h"
+#include "absl/crc/crc32c.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include <cstdint>
