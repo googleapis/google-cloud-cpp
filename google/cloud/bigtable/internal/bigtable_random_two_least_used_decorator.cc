@@ -105,6 +105,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableRandomTwoLeastUsed::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->SampleRowKeys(std::move(context), options, request);
@@ -121,6 +122,7 @@ StatusOr<google::bigtable::v2::MutateRowResponse>
 BigtableRandomTwoLeastUsed::MutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::MutateRowRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->MutateRow(context, options, request);
@@ -150,6 +152,7 @@ StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableRandomTwoLeastUsed::CheckAndMutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->CheckAndMutateRow(context, options, request);
@@ -161,6 +164,7 @@ StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableRandomTwoLeastUsed::PingAndWarm(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PingAndWarmRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->PingAndWarm(context, options, request);
@@ -172,6 +176,7 @@ StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableRandomTwoLeastUsed::ReadModifyWriteRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->ReadModifyWriteRow(context, options, request);
@@ -183,6 +188,7 @@ StatusOr<google::bigtable::v2::PrepareQueryResponse>
 BigtableRandomTwoLeastUsed::PrepareQuery(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PrepareQueryRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->PrepareQuery(context, options, request);
@@ -195,6 +201,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableRandomTwoLeastUsed::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ExecuteQueryRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->ExecuteQuery(std::move(context), options, request);
@@ -214,6 +221,7 @@ BigtableRandomTwoLeastUsed::AsyncReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result =
@@ -234,6 +242,7 @@ BigtableRandomTwoLeastUsed::AsyncSampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->AsyncSampleRowKeys(cq, std::move(context),
@@ -253,6 +262,7 @@ BigtableRandomTwoLeastUsed::AsyncMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result =
@@ -268,6 +278,7 @@ BigtableRandomTwoLeastUsed::AsyncMutateRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->AsyncMutateRows(cq, std::move(context),
@@ -288,6 +299,7 @@ BigtableRandomTwoLeastUsed::AsyncCheckAndMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->AsyncCheckAndMutateRow(cq, std::move(context),
@@ -302,6 +314,7 @@ BigtableRandomTwoLeastUsed::AsyncReadModifyWriteRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->AsyncReadModifyWriteRow(cq, std::move(context),
@@ -316,6 +329,7 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto child = Child();
   auto stub = child->AcquireStub();
   auto result = stub->AsyncPrepareQuery(cq, std::move(context),
@@ -324,7 +338,7 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
   return result;
 }
 
-std::shared_ptr<StubUsageWrapper<BigtableStub>>
+std::shared_ptr<ChannelUsageWrapper<BigtableStub>>
 BigtableRandomTwoLeastUsed::Child() {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   return pool_->GetChannelRandomTwoLeastUsed();

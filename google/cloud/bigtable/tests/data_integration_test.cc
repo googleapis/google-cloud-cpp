@@ -206,7 +206,7 @@ TEST_P(DataIntegrationTest, TableReadRowNotExistTest) {
 }
 
 TEST_P(DataIntegrationTest, TableReadRowsAllRows) {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  std::cout << __PRETTY_FUNCTION__ << ": ENTER TEST CASE" << std::endl;
   auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
@@ -220,6 +220,7 @@ TEST_P(DataIntegrationTest, TableReadRowsAllRows) {
 
   CreateCells(table, created);
 
+  std::cout << __PRETTY_FUNCTION__ << ": START READING ROWS" << std::endl;
   // Some equivalent ways to read the three rows
   auto read1 = table.ReadRows(RowSet(RowRange::InfiniteRange()),
                               Filter::PassAllFilter());

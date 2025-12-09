@@ -86,7 +86,8 @@ class ConnectionRefreshState {
 void ScheduleChannelRefresh(
     std::shared_ptr<internal::CompletionQueueImpl> const& cq,
     std::shared_ptr<ConnectionRefreshState> const& state,
-    std::shared_ptr<grpc::Channel> const& channel);
+    std::shared_ptr<grpc::Channel> const& channel,
+    std::function<void(Status const&)> connection_status_fn = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

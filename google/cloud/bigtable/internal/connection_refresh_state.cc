@@ -53,10 +53,20 @@ bool ConnectionRefreshState::enabled() const {
   return max_conn_refresh_period_.count() != 0;
 }
 
+void LogFailedConnectionRefresh(Status const& conn_status) {
+  if (!conn_status.ok()) {
+    GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << conn_status;
+  }
+}
+
 void ScheduleChannelRefresh(
     std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
     std::shared_ptr<ConnectionRefreshState> const& state,
-    std::shared_ptr<grpc::Channel> const& channel) {
+    std::shared_ptr<grpc::Channel> const& channel,
+    std::function<void(Status const&)> connection_status_fn) {
+  if (!connection_status_fn) {
+    connection_status_fn = LogFailedConnectionRefresh;
+  }
   // The timers will only hold weak pointers to the channel or to the
   // completion queue, so if either of them are destroyed, the timer chain
   // will simply not continue.
@@ -66,7 +76,9 @@ void ScheduleChannelRefresh(
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto timer_future =
       cq.MakeRelativeTimer(state->RandomizedRefreshDelay())
-          .then([weak_channel, weak_cq_impl, state](TimerFuture fut) {
+          .then([weak_channel, weak_cq_impl, state,
+                 connection_status_fn =
+                     std::move(connection_status_fn)](TimerFuture fut) {
             if (!fut.get()) {
               // Timer cancelled.
               return;
@@ -79,17 +91,18 @@ void ScheduleChannelRefresh(
             cq.AsyncWaitConnectionReady(
                   channel,
                   std::chrono::system_clock::now() + kConnectionReadyTimeout)
-                .then([weak_channel, weak_cq_impl, state](future<Status> fut) {
+                .then([weak_channel, weak_cq_impl, state,
+                       connection_status_fn = std::move(connection_status_fn)](
+                          future<Status> fut) {
                   auto conn_status = fut.get();
-                  if (!conn_status.ok()) {
-                    GCP_LOG(WARNING) << "Failed to refresh connection. Error: "
-                                     << conn_status;
-                  }
+                  if (connection_status_fn) connection_status_fn(conn_status);
+
                   auto channel = weak_channel.lock();
                   if (!channel) return;
                   auto cq_impl = weak_cq_impl.lock();
                   if (!cq_impl) return;
-                  ScheduleChannelRefresh(cq_impl, state, channel);
+                  ScheduleChannelRefresh(cq_impl, state, channel,
+                                         std::move(connection_status_fn));
                 });
           });
   state->timers().RegisterTimer(std::move(timer_future));

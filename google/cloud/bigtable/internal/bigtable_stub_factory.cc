@@ -81,6 +81,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     std::function<std::shared_ptr<BigtableStub>(int)>
         refreshing_channel_stub_factory,
     std::shared_ptr<ConnectionRefreshState> refresh_state) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   std::vector<std::shared_ptr<BigtableStub>> children(
       (std::max)(1, options.get<GrpcNumChannelsOption>()));
   int id = 0;
@@ -88,6 +89,8 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
                 [&id, &refreshing_channel_stub_factory] {
                   return refreshing_channel_stub_factory(id++);
                 });
+  std::cout << __PRETTY_FUNCTION__ << ": children.size()=" << children.size()
+            << std::endl;
   return std::make_shared<BigtableRandomTwoLeastUsed>(
       std::move(cq), std::move(refresh_state), refreshing_channel_stub_factory,
       std::move(children));
@@ -103,9 +106,9 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
       options.get<bigtable::MaxConnectionRefreshOption>());
 
   std::shared_ptr<BigtableStub> stub;
-  if (options.has<ChannelSelectionStrategyOption>() &&
-      options.get<ChannelSelectionStrategyOption>() ==
-          ChannelSelectionStrategy::kRandomTwoLeastUsed) {
+  if (options.has<bigtable::experimental::ChannelPoolTypeOption>() &&
+      options.get<bigtable::experimental::ChannelPoolTypeOption>() ==
+          bigtable::experimental::ChannelPoolType::kDynamic) {
     auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh,
                                             &auth, options](int id) {
       auto channel = CreateGrpcChannel(*auth, options, id);

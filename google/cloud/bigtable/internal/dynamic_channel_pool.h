@@ -31,19 +31,31 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 template <typename T>
-class StubUsageWrapper
-    : public std::enable_shared_from_this<StubUsageWrapper<T>> {
+class ChannelUsageWrapper
+    : public std::enable_shared_from_this<ChannelUsageWrapper<T>> {
  public:
-  explicit StubUsageWrapper(std::shared_ptr<T> stub) : stub_(std::move(stub)) {}
+  explicit ChannelUsageWrapper(std::shared_ptr<T> stub)
+      : stub_(std::move(stub)) {}
 
   // This value is a snapshot and can change immediately after the lock is
   // released.
-  int outstanding_rpcs() const {
+  StatusOr<int> outstanding_rpcs() const {
     std::unique_lock<std::mutex> lk(mu_);
+    if (!last_refresh_status_.ok()) return last_refresh_status_;
     return outstanding_rpcs_;
   }
 
-  std::weak_ptr<StubUsageWrapper<T>> MakeWeak() {
+  Status LastRefreshStatus() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return last_refresh_status_;
+  }
+
+  void SetLastRefreshStatus(Status s) {
+    std::unique_lock<std::mutex> lk(mu_);
+    last_refresh_status_ = std::move(s);
+  }
+
+  std::weak_ptr<ChannelUsageWrapper<T>> MakeWeak() {
     return this->shared_from_this();
   }
 
@@ -62,6 +74,7 @@ class StubUsageWrapper
   mutable std::mutex mu_;
   std::shared_ptr<T> stub_;
   int outstanding_rpcs_ = 0;
+  Status last_refresh_status_;
 };
 
 template <typename T>
@@ -95,6 +108,12 @@ class DynamicChannelPool
     // outstanding RPCs on that channel are completed before destroying it.
     std::chrono::milliseconds remove_channel_polling_interval =
         std::chrono::milliseconds(30 * 1000);
+
+    // Limits how large the pool can grow.
+    std::size_t maximum_channel_pool_size;
+
+    // This is set to the initial channel pool size.
+    std::size_t minimum_channel_pool_size;
   };
 
   static std::shared_ptr<DynamicChannelPool> Create(
@@ -102,8 +121,9 @@ class DynamicChannelPool
       StubFactoryFn stub_factory_fn,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       SizingPolicy sizing_policy = {}) {
-    std::cout << __PRETTY_FUNCTION__ << std::endl;
-    std::vector<std::shared_ptr<StubUsageWrapper<T>>> initial_wrapped_channels;
+    std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
+    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>
+        initial_wrapped_channels;
     for (std::size_t i = 0; i < initial_size; ++i) {
       initial_wrapped_channels.emplace_back(stub_factory_fn());
     }
@@ -111,17 +131,32 @@ class DynamicChannelPool
         std::move(cq), std::move(initial_wrapped_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
         std::move(sizing_policy)));
+    std::cout << __PRETTY_FUNCTION__ << ": return pool" << std::endl;
+    return pool;
   }
 
   static std::shared_ptr<DynamicChannelPool> Create(
       CompletionQueue cq, std::vector<std::shared_ptr<T>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy = {}) {
-    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(cq), std::move(initial_channels), std::move(refresh_state),
         std::move(stub_factory_fn), std::move(sizing_policy)));
+    std::cout << __PRETTY_FUNCTION__ << ": return pool" << std::endl;
     return pool;
+  }
+
+  ~DynamicChannelPool() {
+    std::unique_lock<std::mutex> lk(mu_);
+    // Eventually the channel refresh chain will terminate after this class is
+    // destroyed. But only after the timer futures expire on the CompletionQueue
+    // performing this work. We might as well cancel those timer futures now.
+    refresh_state_->timers().CancelAll();
+    if (remove_channel_poll_timer_.valid()) remove_channel_poll_timer_.cancel();
+    if (pool_resize_cooldown_timer_ && remove_channel_poll_timer_.valid()) {
+      pool_resize_cooldown_timer_->cancel();
+    }
   }
 
   // This is a snapshot aka dirty read as the size could immediately change
@@ -131,10 +166,14 @@ class DynamicChannelPool
     return channels_.size();
   }
 
-  std::shared_ptr<StubUsageWrapper<T>> GetChannelRandomTwoLeastUsed() {
+  std::shared_ptr<ChannelUsageWrapper<T>> GetChannelRandomTwoLeastUsed() {
     std::unique_lock<std::mutex> lk(mu_);
     std::cout << __PRETTY_FUNCTION__ << ": channels_size()=" << channels_.size()
               << std::endl;
+    //    for (auto const& c : channels_) {
+    //      std::cout << __PRETTY_FUNCTION__ << ": channel=" << c.get() <<
+    //      std::endl;
+    //    }
 
     if (!pool_resize_cooldown_timer_) {
       CheckPoolChannelHealth(lk);
@@ -144,32 +183,95 @@ class DynamicChannelPool
       CheckPoolChannelHealth(lk);
     }
 
-    if (channels_.size() == 1) {
-      return channels_.front();
+    //    std::cout << __PRETTY_FUNCTION__ << ": finished
+    //    CheckPoolChannelHealth"
+    //              << std::endl;
+    std::vector<
+        typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>
+        iterators(channels_.size());
+
+    std::iota(iterators.begin(), iterators.end(), channels_.begin());
+    std::shuffle(iterators.begin(), iterators.end(), rng_);
+
+    //    std::cout << __PRETTY_FUNCTION__ << ": shuffled iterators" <<
+    //    std::endl;
+    // std::vector<
+    //       typename
+    //       std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>
+    //       iterators;
+    typename std::vector<typename std::vector<
+        std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>::iterator
+        shuffle_iter = iterators.begin();
+    typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
+        channel_1 = *shuffle_iter;
+    std::shared_ptr<ChannelUsageWrapper<T>> c = *channel_1;
+    //    std::cout << __PRETTY_FUNCTION__
+    //              << ": check channel 1=" << c.get() << std::endl;
+    auto channel_1_rpcs = shuffle_iter != iterators.end()
+                              ? (*channel_1)->outstanding_rpcs()
+                              : Status{StatusCode::kNotFound, ""};
+    ++shuffle_iter;
+    typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
+        channel_2 = *shuffle_iter;
+    // We want to snapshot these outstanding_rpcs values.
+    //    std::cout << __PRETTY_FUNCTION__
+    //              << ": check channel 2=" << (channel_2)->get() << std::endl;
+    auto channel_2_rpcs = shuffle_iter != iterators.end()
+                              ? (*channel_2)->outstanding_rpcs()
+                              : Status{StatusCode::kNotFound, ""};
+    // This is the ideal (and most common ) case so we try it first.
+    //    std::cout << __PRETTY_FUNCTION__ << ": compare channel rpcs" <<
+    //    std::endl;
+    if (channel_1_rpcs.ok() && channel_2_rpcs.ok()) {
+      std::cout << __PRETTY_FUNCTION__ << ": 2 ok channels, returning smaller"
+                << std::endl;
+      return *channel_1_rpcs < *channel_2_rpcs ? *channel_1 : *channel_2;
     }
 
-    std::shared_ptr<StubUsageWrapper<T>> channel_1;
-    std::shared_ptr<StubUsageWrapper<T>> channel_2;
-    if (channels_.size() == 2) {
-      channel_1 = channels_[0];
-      channel_2 = channels_[1];
-    } else {
-      std::vector<std::size_t> indices(channels_.size());
-      // TODO(sdhart): Maybe use iota on iterators instead of indices
-      std::iota(indices.begin(), indices.end(), 0);
-      std::shuffle(indices.begin(), indices.end(), rng_);
-
-      channel_1 = channels_[indices[0]];
-      channel_2 = channels_[indices[1]];
+    // We have one or more bad channels. Spending time finding a good channel
+    // will be cheaper than trying to use a bad channel in the long run.
+    std::vector<
+        typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>
+        bad_channels;
+    while (!channel_1_rpcs.ok() && shuffle_iter != iterators.end()) {
+      bad_channels.push_back(channel_1);
+      ++shuffle_iter;
+      channel_1 = *shuffle_iter;
+      channel_1_rpcs = shuffle_iter != iterators.end()
+                           ? (*channel_1)->outstanding_rpcs()
+                           : Status{StatusCode::kNotFound, ""};
     }
-    return channel_1->outstanding_rpcs() < channel_2->outstanding_rpcs()
-               ? channel_1
-               : channel_2;
+
+    while (!channel_2_rpcs.ok() && shuffle_iter != iterators.end()) {
+      bad_channels.push_back(channel_2);
+      ++shuffle_iter;
+      channel_2 = *shuffle_iter;
+      channel_2_rpcs = shuffle_iter != iterators.end()
+                           ? (*channel_2)->outstanding_rpcs()
+                           : Status{StatusCode::kNotFound, ""};
+    }
+
+    if (channel_1_rpcs.ok() && channel_2_rpcs.ok()) {
+      std::cout << __PRETTY_FUNCTION__ << ": 2 ok channels" << std::endl;
+      return *channel_1_rpcs < *channel_2_rpcs ? *channel_1 : *channel_2;
+    }
+    if (channel_1_rpcs.ok()) {
+      std::cout << __PRETTY_FUNCTION__ << ": ONLY channel_1 ok" << std::endl;
+      return *channel_1;
+    }
+    if (channel_2_rpcs.ok()) {
+      std::cout << __PRETTY_FUNCTION__ << ": ONLY channel_2 ok" << std::endl;
+      return *channel_2;
+    }
+
+    // TODO: we have no usable channels in the entire pool; this is bad.
+    std::cout << __PRETTY_FUNCTION__ << ": NO USABLE CHANNELS" << std::endl;
+    return nullptr;
   }
 
  private:
   DynamicChannelPool(CompletionQueue cq,
-                     std::vector<std::shared_ptr<StubUsageWrapper<T>>>
+                     std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>
                          initial_wrapped_channels,
                      std::shared_ptr<ConnectionRefreshState> refresh_state,
                      StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy)
@@ -178,7 +280,9 @@ class DynamicChannelPool
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
         sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(channels_.size()) {}
+        next_channel_id_(channels_.size()) {
+    sizing_policy_.minimum_channel_pool_size = channels_.size();
+  }
 
   DynamicChannelPool(CompletionQueue cq,
                      std::vector<std::shared_ptr<T>> initial_channels,
@@ -194,30 +298,40 @@ class DynamicChannelPool
     channels_.reserve(initial_channels.size());
     for (auto& channel : initial_channels) {
       channels_.push_back(
-          std::make_shared<StubUsageWrapper<T>>(std::move(channel)));
+          std::make_shared<ChannelUsageWrapper<T>>(std::move(channel)));
     }
+    sizing_policy_.minimum_channel_pool_size = channels_.size();
   }
 
   struct ChannelAddVisitor {
     std::size_t pool_size;
     explicit ChannelAddVisitor(std::size_t pool_size) : pool_size(pool_size) {}
-    int operator()(typename SizingPolicy::DiscreteChannels const& c) {
+    std::size_t operator()(typename SizingPolicy::DiscreteChannels const& c) {
       return c.number;
     }
 
-    int operator()(typename SizingPolicy::PercentageOfPoolSize const& c) {
-      return static_cast<int>(
+    std::size_t operator()(
+        typename SizingPolicy::PercentageOfPoolSize const& c) {
+      return static_cast<std::size_t>(
           std::floor(static_cast<double>(pool_size) * c.percentage));
     }
   };
 
   void ScheduleAddChannel(std::unique_lock<std::mutex> const&) {
-    auto num_channels_to_add =
-        absl::visit(ChannelAddVisitor(channels_.size()),
-                    sizing_policy_.channels_to_add_per_resize);
+    std::size_t num_channels_to_add;
+    // If we're undersized due to bad channels, get us back to the minimum size.
+    if (channels_.size() < sizing_policy_.minimum_channel_pool_size) {
+      num_channels_to_add =
+          sizing_policy_.minimum_channel_pool_size - channels_.size();
+    } else {
+      num_channels_to_add =
+          std::min(sizing_policy_.maximum_channel_pool_size - channels_.size(),
+                   absl::visit(ChannelAddVisitor(channels_.size()),
+                               sizing_policy_.channels_to_add_per_resize));
+    }
     std::vector<int> new_channel_ids;
     new_channel_ids.reserve(num_channels_to_add);
-    for (int i = 0; i < num_channels_to_add; ++i) {
+    for (std::size_t i = 0; i < num_channels_to_add; ++i) {
       new_channel_ids.push_back(next_channel_id_++);
     }
 
@@ -231,11 +345,11 @@ class DynamicChannelPool
   }
 
   void AddChannel(std::vector<int> const& new_channel_ids) {
-    std::vector<std::shared_ptr<StubUsageWrapper<T>>> new_stubs;
+    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>> new_stubs;
     new_stubs.reserve(new_channel_ids.size());
     for (auto const& id : new_channel_ids) {
       new_stubs.push_back(
-          std::make_shared<StubUsageWrapper<T>>(stub_factory_fn_(id)));
+          std::make_shared<ChannelUsageWrapper<T>>(stub_factory_fn_(id)));
     }
     std::unique_lock<std::mutex> lk(mu_);
     channels_.insert(channels_.end(),
@@ -261,17 +375,25 @@ class DynamicChannelPool
   void RemoveChannel() {
     std::unique_lock<std::mutex> lk(mu_);
     std::sort(draining_channels_.begin(), draining_channels_.end(),
-              [](std::shared_ptr<StubUsageWrapper<T>> const& a,
-                 std::shared_ptr<StubUsageWrapper<T>> b) {
-                return a->outstanding_rpcs() > b->outstanding_rpcs();
+              [](std::shared_ptr<ChannelUsageWrapper<T>> const& a,
+                 std::shared_ptr<ChannelUsageWrapper<T>> b) {
+                auto rpcs_a = a->outstanding_rpcs();
+                auto rpcs_b = b->outstanding_rpcs();
+                if (!rpcs_a.ok()) return false;
+                if (!rpcs_b.ok()) return true;
+                return *rpcs_a > *rpcs_b;
               });
     while (!draining_channels_.empty()) {
-      if (draining_channels_.back()->outstanding_rpcs() != 0) {
+      auto outstanding_rpcs = draining_channels_.back()->outstanding_rpcs();
+      if (outstanding_rpcs.ok() && *outstanding_rpcs != 0) {
         ScheduleRemoveChannel(lk);
         return;
       }
       draining_channels_.pop_back();
     }
+    // TODO: If iterators becomes a member variable perhaps add logic to call
+    //  shrink_to_fit on iterators_ if there's a large
+    // difference between iterators_.capacity and channels_.size
   }
 
   void SetResizeCooldownTimer(std::unique_lock<std::mutex> const&) {
@@ -281,12 +403,19 @@ class DynamicChannelPool
 
   void CheckPoolChannelHealth(std::unique_lock<std::mutex> const& lk) {
     int average_rpc_per_channel =
-        std::accumulate(
-            channels_.begin(), channels_.end(), 0,
-            [](int a, auto const& b) { return a + b->outstanding_rpcs(); }) /
+        std::accumulate(channels_.begin(), channels_.end(), 0,
+                        [](int a, auto const& b) {
+                          auto rpcs_b = b->outstanding_rpcs();
+                          return a + (rpcs_b.ok() ? *rpcs_b : 0);
+                        }) /
         static_cast<int>(channels_.size());
+    std::cout << __PRETTY_FUNCTION__
+              << ": channels_.size()=" << channels_.size()
+              << "; sizing_policy_.minimum_channel_pool_size="
+              << sizing_policy_.minimum_channel_pool_size << std::endl;
     if (average_rpc_per_channel <
-        sizing_policy_.minimum_average_outstanding_rpcs_per_channel) {
+            sizing_policy_.minimum_average_outstanding_rpcs_per_channel &&
+        channels_.size() > sizing_policy_.minimum_channel_pool_size) {
       auto random_channel = std::uniform_int_distribution<std::size_t>(
           0, channels_.size() - 1)(rng_);
       std::swap(channels_[random_channel], channels_.back());
@@ -296,7 +425,8 @@ class DynamicChannelPool
       SetResizeCooldownTimer(lk);
     }
     if (average_rpc_per_channel >
-        sizing_policy_.maximum_average_outstanding_rpcs_per_channel) {
+            sizing_policy_.maximum_average_outstanding_rpcs_per_channel &&
+        channels_.size() < sizing_policy_.maximum_channel_pool_size) {
       // Channel/stub creation is expensive, instead of making the current RPC
       // wait on this, use an existing channel right now, and schedule a channel
       // to be added.
@@ -310,13 +440,17 @@ class DynamicChannelPool
   google::cloud::internal::DefaultPRNG rng_;
   std::shared_ptr<ConnectionRefreshState> refresh_state_;
   StubFactoryFn stub_factory_fn_;
-  std::vector<std::shared_ptr<StubUsageWrapper<T>>> channels_;
+  std::vector<std::shared_ptr<ChannelUsageWrapper<T>>> channels_;
   SizingPolicy sizing_policy_;
-  std::vector<std::shared_ptr<StubUsageWrapper<T>>> draining_channels_;
+  std::vector<std::shared_ptr<ChannelUsageWrapper<T>>> draining_channels_;
   future<void> remove_channel_poll_timer_;
   absl::optional<future<StatusOr<std::chrono::system_clock::time_point>>>
       pool_resize_cooldown_timer_ = absl::nullopt;
   int next_channel_id_;
+  //  std::vector<
+  //      typename
+  //      std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>
+  //      iterators_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

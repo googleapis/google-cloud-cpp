@@ -93,6 +93,8 @@ grpc::Status CbtTestProxy::CreateClient(
 
   auto options =
       Options{}
+          .set<bigtable::experimental::ChannelPoolTypeOption>(
+              bigtable::experimental::ChannelPoolType::kDynamic)
           .set<EndpointOption>(request->data_target())
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<MaxConnectionRefreshOption>(std::chrono::milliseconds(0))

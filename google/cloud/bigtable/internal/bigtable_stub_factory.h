@@ -29,7 +29,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-enum class ChannelSelectionStrategy { kNone, kRoundRobin, kRandomTwoLeastUsed };
+enum class ChannelSelectionStrategy { kRoundRobin, kRandomTwoLeastUsed };
 
 struct ChannelSelectionStrategyOption {
   using Type = ChannelSelectionStrategy;

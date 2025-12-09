@@ -203,6 +203,15 @@ struct QueryPlanRefreshFunctionRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
 };
 
+/**
+ * Option to select between a static sized or dynamically resizing channel pool.
+ * The default is the static sized pool.
+ */
+enum class ChannelPoolType { kStatic, kDynamic };
+struct ChannelPoolTypeOption {
+  using Type = ChannelPoolType;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`

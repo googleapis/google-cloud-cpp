@@ -130,7 +130,7 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
       google::bigtable::v2::PrepareQueryRequest const& request) override;
 
  private:
-  std::shared_ptr<StubUsageWrapper<BigtableStub>> Child();
+  std::shared_ptr<ChannelUsageWrapper<BigtableStub>> Child();
 
   //  std::mutex mu_;
   std::shared_ptr<DynamicChannelPool<BigtableStub>> pool_;
