@@ -39,8 +39,8 @@ excluded_rules=(
   "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
 )
 
+#   --test_filter="*ReadRowsAllRows*" --test_timeout=30 \
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" --test_output=all \
-  --test_filter="*ReadRowsAllRows*" --test_timeout=30 \
   //google/cloud/bigtable/tests:data_integration_test

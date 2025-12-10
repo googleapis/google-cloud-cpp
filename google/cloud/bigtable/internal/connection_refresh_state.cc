@@ -95,8 +95,7 @@ void ScheduleChannelRefresh(
                        connection_status_fn = std::move(connection_status_fn)](
                           future<Status> fut) {
                   auto conn_status = fut.get();
-                  if (connection_status_fn) connection_status_fn(conn_status);
-
+                  connection_status_fn(conn_status);
                   auto channel = weak_channel.lock();
                   if (!channel) return;
                   auto cq_impl = weak_cq_impl.lock();

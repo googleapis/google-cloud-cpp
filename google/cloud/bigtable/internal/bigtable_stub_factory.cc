@@ -77,23 +77,47 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 }
 
 std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
-    CompletionQueue cq, Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)>
-        refreshing_channel_stub_factory,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
+    Options const& options, BaseBigtableStubFactory stub_factory,
     std::shared_ptr<ConnectionRefreshState> refresh_state) {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
-  std::vector<std::shared_ptr<BigtableStub>> children(
-      (std::max)(1, options.get<GrpcNumChannelsOption>()));
-  int id = 0;
+
+  auto refreshing_channel_stub_factory =
+      [stub_factory = std::move(stub_factory), cq_impl, refresh_state,
+       auth = std::move(auth), options](std::uint32_t id)
+      -> std::shared_ptr<ChannelUsageWrapper<BigtableStub>> {
+    auto wrapper = std::make_shared<ChannelUsageWrapper<BigtableStub>>();
+    auto connection_status_fn = [weak = wrapper->MakeWeak()](Status const& s) {
+      if (auto self = weak.lock()) {
+        self->SetLastRefreshStatus(s);
+      }
+      if (!s.ok()) {
+        GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+      }
+    };
+    auto channel = CreateGrpcChannel(*auth, options, id);
+    ScheduleChannelRefresh(cq_impl, refresh_state, channel,
+                           std::move(connection_status_fn));
+    wrapper->set_channel(stub_factory(std::move(channel)));
+    return wrapper;
+  };
+
+  std::vector<std::shared_ptr<ChannelUsageWrapper<BigtableStub>>> children(
+      std::max(1, options.get<GrpcNumChannelsOption>()));
+  std::uint32_t id = 0;
   std::generate(children.begin(), children.end(),
                 [&id, &refreshing_channel_stub_factory] {
                   return refreshing_channel_stub_factory(id++);
                 });
-  std::cout << __PRETTY_FUNCTION__ << ": children.size()=" << children.size()
-            << std::endl;
+
   return std::make_shared<BigtableRandomTwoLeastUsed>(
-      std::move(cq), std::move(refresh_state), refreshing_channel_stub_factory,
-      std::move(children));
+      DynamicChannelPool<BigtableStub>::Create(
+          CompletionQueue(std::move(cq_impl)), std::move(children),
+          std::move(refresh_state),
+          std::move(refreshing_channel_stub_factory)));
+  //      CompletionQueue(cq_impl), std::move(refresh_state),
+  //      std::move(refreshing_channel_stub_factory), std::move(children));
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
@@ -109,14 +133,9 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
   if (options.has<bigtable::experimental::ChannelPoolTypeOption>() &&
       options.get<bigtable::experimental::ChannelPoolTypeOption>() ==
           bigtable::experimental::ChannelPoolType::kDynamic) {
-    auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh,
-                                            &auth, options](int id) {
-      auto channel = CreateGrpcChannel(*auth, options, id);
-      ScheduleChannelRefresh(cq_impl, refresh, channel);
-      return stub_factory(std::move(channel));
-    };
     stub = CreateBigtableStubRandomTwoLeastUsed(
-        cq, options, std::move(refreshing_channel_stub_factory),
+        auth, std::move(cq_impl), options, stub_factory,
+        //        std::move(refreshing_channel_stub_factory),
         std::move(refresh));
   } else {
     auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh,

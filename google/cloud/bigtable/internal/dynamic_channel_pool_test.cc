@@ -34,13 +34,15 @@ TEST(DynamicChannelPoolTest, GetChannelRandomTwoLeastUsed) {
       fake_cq_impl, std::chrono::milliseconds(1),
       std::chrono::milliseconds(10));
 
-  auto stub_factory_fn = [](int) -> std::shared_ptr<BigtableStub> {
-    return std::make_shared<MockBigtableStub>();
+  auto stub_factory_fn =
+      [](int) -> std::shared_ptr<ChannelUsageWrapper<BigtableStub>> {
+    auto mock = std::make_shared<MockBigtableStub>();
+    return std::make_shared<ChannelUsageWrapper<BigtableStub>>(mock);
   };
 
   DynamicChannelPool<BigtableStub>::SizingPolicy sizing_policy;
 
-  std::vector<std::shared_ptr<BigtableStub>> channels(10);
+  std::vector<std::shared_ptr<ChannelUsageWrapper<BigtableStub>>> channels(10);
   int id = 0;
   std::generate(channels.begin(), channels.end(),
                 [&]() { return stub_factory_fn(id++); });

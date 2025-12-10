@@ -34,6 +34,7 @@ template <typename T>
 class ChannelUsageWrapper
     : public std::enable_shared_from_this<ChannelUsageWrapper<T>> {
  public:
+  ChannelUsageWrapper() = default;
   explicit ChannelUsageWrapper(std::shared_ptr<T> stub)
       : stub_(std::move(stub)) {}
 
@@ -53,6 +54,11 @@ class ChannelUsageWrapper
   void SetLastRefreshStatus(Status s) {
     std::unique_lock<std::mutex> lk(mu_);
     last_refresh_status_ = std::move(s);
+  }
+
+  ChannelUsageWrapper& set_channel(std::shared_ptr<T> channel) {
+    stub_ = std::move(channel);
+    return *this;
   }
 
   std::weak_ptr<ChannelUsageWrapper<T>> MakeWeak() {
@@ -81,7 +87,8 @@ template <typename T>
 class DynamicChannelPool
     : public std::enable_shared_from_this<DynamicChannelPool<T>> {
  public:
-  using StubFactoryFn = std::function<std::shared_ptr<T>(int id)>;
+  using StubFactoryFn =
+      std::function<std::shared_ptr<ChannelUsageWrapper<T>>(std::uint32_t id)>;
   struct SizingPolicy {
     // To avoid channel churn, the pool will not add or remove channels more
     // frequently that this period.
@@ -117,26 +124,8 @@ class DynamicChannelPool
   };
 
   static std::shared_ptr<DynamicChannelPool> Create(
-      CompletionQueue cq, std::size_t initial_size,
-      StubFactoryFn stub_factory_fn,
-      std::shared_ptr<ConnectionRefreshState> refresh_state,
-      SizingPolicy sizing_policy = {}) {
-    std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
-    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>
-        initial_wrapped_channels;
-    for (std::size_t i = 0; i < initial_size; ++i) {
-      initial_wrapped_channels.emplace_back(stub_factory_fn());
-    }
-    auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
-        std::move(cq), std::move(initial_wrapped_channels),
-        std::move(refresh_state), std::move(stub_factory_fn),
-        std::move(sizing_policy)));
-    std::cout << __PRETTY_FUNCTION__ << ": return pool" << std::endl;
-    return pool;
-  }
-
-  static std::shared_ptr<DynamicChannelPool> Create(
-      CompletionQueue cq, std::vector<std::shared_ptr<T>> initial_channels,
+      CompletionQueue cq,
+      std::vector<std::shared_ptr<ChannelUsageWrapper<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy = {}) {
     std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
@@ -193,17 +182,12 @@ class DynamicChannelPool
     std::iota(iterators.begin(), iterators.end(), channels_.begin());
     std::shuffle(iterators.begin(), iterators.end(), rng_);
 
-    //    std::cout << __PRETTY_FUNCTION__ << ": shuffled iterators" <<
-    //    std::endl;
-    // std::vector<
-    //       typename
-    //       std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>
-    //       iterators;
-    typename std::vector<typename std::vector<
-        std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>::iterator
-        shuffle_iter = iterators.begin();
-    typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
-        channel_1 = *shuffle_iter;
+    //    typename std::vector<typename std::vector<
+    //        std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>::iterator
+    auto shuffle_iter = iterators.begin();
+    //    typename
+    //    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
+    auto channel_1 = *shuffle_iter;
     std::shared_ptr<ChannelUsageWrapper<T>> c = *channel_1;
     //    std::cout << __PRETTY_FUNCTION__
     //              << ": check channel 1=" << c.get() << std::endl;
@@ -211,8 +195,9 @@ class DynamicChannelPool
                               ? (*channel_1)->outstanding_rpcs()
                               : Status{StatusCode::kNotFound, ""};
     ++shuffle_iter;
-    typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
-        channel_2 = *shuffle_iter;
+    //    typename
+    //    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
+    auto channel_2 = *shuffle_iter;
     // We want to snapshot these outstanding_rpcs values.
     //    std::cout << __PRETTY_FUNCTION__
     //              << ": check channel 2=" << (channel_2)->get() << std::endl;
@@ -264,7 +249,7 @@ class DynamicChannelPool
       return *channel_2;
     }
 
-    // TODO: we have no usable channels in the entire pool; this is bad.
+    // TODO(sdhart): we have no usable channels in the entire pool; this is bad.
     std::cout << __PRETTY_FUNCTION__ << ": NO USABLE CHANNELS" << std::endl;
     return nullptr;
   }
@@ -280,26 +265,7 @@ class DynamicChannelPool
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
         sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(channels_.size()) {
-    sizing_policy_.minimum_channel_pool_size = channels_.size();
-  }
-
-  DynamicChannelPool(CompletionQueue cq,
-                     std::vector<std::shared_ptr<T>> initial_channels,
-                     std::shared_ptr<ConnectionRefreshState> refresh_state,
-                     StubFactoryFn stub_factory_fn, SizingPolicy sizing_policy)
-      : cq_(std::move(cq)),
-        refresh_state_(std::move(refresh_state)),
-        stub_factory_fn_(std::move(stub_factory_fn)),
-        channels_(),
-        sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(static_cast<int>(initial_channels.size())) {
-    std::cout << __PRETTY_FUNCTION__ << ": wrap initial_channels" << std::endl;
-    channels_.reserve(initial_channels.size());
-    for (auto& channel : initial_channels) {
-      channels_.push_back(
-          std::make_shared<ChannelUsageWrapper<T>>(std::move(channel)));
-    }
+        next_channel_id_(static_cast<std::uint32_t>(channels_.size())) {
     sizing_policy_.minimum_channel_pool_size = channels_.size();
   }
 
@@ -348,8 +314,8 @@ class DynamicChannelPool
     std::vector<std::shared_ptr<ChannelUsageWrapper<T>>> new_stubs;
     new_stubs.reserve(new_channel_ids.size());
     for (auto const& id : new_channel_ids) {
-      new_stubs.push_back(
-          std::make_shared<ChannelUsageWrapper<T>>(stub_factory_fn_(id)));
+      new_stubs.push_back(stub_factory_fn_(id));
+      //          std::make_shared<ChannelUsageWrapper<T>>(stub_factory_fn_(id)));
     }
     std::unique_lock<std::mutex> lk(mu_);
     channels_.insert(channels_.end(),
@@ -391,7 +357,8 @@ class DynamicChannelPool
       }
       draining_channels_.pop_back();
     }
-    // TODO: If iterators becomes a member variable perhaps add logic to call
+    // TODO(sdhart): If iterators becomes a member variable perhaps add logic to
+    // call
     //  shrink_to_fit on iterators_ if there's a large
     // difference between iterators_.capacity and channels_.size
   }
@@ -446,7 +413,7 @@ class DynamicChannelPool
   future<void> remove_channel_poll_timer_;
   absl::optional<future<StatusOr<std::chrono::system_clock::time_point>>>
       pool_resize_cooldown_timer_ = absl::nullopt;
-  int next_channel_id_;
+  std::uint32_t next_channel_id_;
   //  std::vector<
   //      typename
   //      std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>

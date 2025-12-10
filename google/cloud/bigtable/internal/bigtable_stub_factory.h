@@ -43,9 +43,11 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
                                 refreshing_channel_stub_factory);
 
 std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
-    CompletionQueue cq, Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)>
-        refreshing_channel_stub_factory,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
+    Options const& options, BaseBigtableStubFactory stub_factory,
+    //    std::function<std::shared_ptr<BigtableStub>(int)>
+    //        refreshing_channel_stub_factory,
     std::shared_ptr<ConnectionRefreshState> refresh_state);
 
 /// Used in testing to create decorated mocks.

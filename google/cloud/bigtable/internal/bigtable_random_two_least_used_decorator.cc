@@ -73,15 +73,6 @@ class AsyncStreamingReadRpcTracking
 
 }  // namespace
 
-BigtableRandomTwoLeastUsed::BigtableRandomTwoLeastUsed(
-    CompletionQueue cq, std::shared_ptr<ConnectionRefreshState> refresh_state,
-    DynamicChannelPool<BigtableStub>::StubFactoryFn
-        refreshing_channel_stub_factory_fn,
-    std::vector<std::shared_ptr<BigtableStub>> children)
-    : pool_(DynamicChannelPool<BigtableStub>::Create(
-          std::move(cq), std::move(children), std::move(refresh_state),
-          std::move(refreshing_channel_stub_factory_fn))) {}
-
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableRandomTwoLeastUsed::ReadRows(
