@@ -187,22 +187,22 @@ class DynamicChannelPool
     auto shuffle_iter = iterators.begin();
     //    typename
     //    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
-    auto channel_1 = *shuffle_iter;
-    std::shared_ptr<ChannelUsageWrapper<T>> c = *channel_1;
+    auto channel_1_iter = *shuffle_iter;
+    std::shared_ptr<ChannelUsageWrapper<T>> c = *channel_1_iter;
     //    std::cout << __PRETTY_FUNCTION__
     //              << ": check channel 1=" << c.get() << std::endl;
     auto channel_1_rpcs = shuffle_iter != iterators.end()
-                              ? (*channel_1)->outstanding_rpcs()
+                              ? (*channel_1_iter)->outstanding_rpcs()
                               : Status{StatusCode::kNotFound, ""};
     ++shuffle_iter;
     //    typename
     //    std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator
-    auto channel_2 = *shuffle_iter;
+    auto channel_2_iter = *shuffle_iter;
     // We want to snapshot these outstanding_rpcs values.
     //    std::cout << __PRETTY_FUNCTION__
     //              << ": check channel 2=" << (channel_2)->get() << std::endl;
     auto channel_2_rpcs = shuffle_iter != iterators.end()
-                              ? (*channel_2)->outstanding_rpcs()
+                              ? (*channel_2_iter)->outstanding_rpcs()
                               : Status{StatusCode::kNotFound, ""};
     // This is the ideal (and most common ) case so we try it first.
     //    std::cout << __PRETTY_FUNCTION__ << ": compare channel rpcs" <<
@@ -210,43 +210,49 @@ class DynamicChannelPool
     if (channel_1_rpcs.ok() && channel_2_rpcs.ok()) {
       std::cout << __PRETTY_FUNCTION__ << ": 2 ok channels, returning smaller"
                 << std::endl;
-      return *channel_1_rpcs < *channel_2_rpcs ? *channel_1 : *channel_2;
+      return *channel_1_rpcs < *channel_2_rpcs ? *channel_1_iter
+                                               : *channel_2_iter;
     }
 
     // We have one or more bad channels. Spending time finding a good channel
     // will be cheaper than trying to use a bad channel in the long run.
     std::vector<
         typename std::vector<std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>
-        bad_channels;
+        bad_channel_iters;
+
     while (!channel_1_rpcs.ok() && shuffle_iter != iterators.end()) {
-      bad_channels.push_back(channel_1);
+      bad_channel_iters.push_back(channel_1_iter);
       ++shuffle_iter;
-      channel_1 = *shuffle_iter;
+      channel_1_iter = *shuffle_iter;
       channel_1_rpcs = shuffle_iter != iterators.end()
-                           ? (*channel_1)->outstanding_rpcs()
+                           ? (*channel_1_iter)->outstanding_rpcs()
                            : Status{StatusCode::kNotFound, ""};
     }
 
     while (!channel_2_rpcs.ok() && shuffle_iter != iterators.end()) {
-      bad_channels.push_back(channel_2);
+      bad_channel_iters.push_back(channel_2_iter);
       ++shuffle_iter;
-      channel_2 = *shuffle_iter;
+      channel_2_iter = *shuffle_iter;
       channel_2_rpcs = shuffle_iter != iterators.end()
-                           ? (*channel_2)->outstanding_rpcs()
+                           ? (*channel_2_iter)->outstanding_rpcs()
                            : Status{StatusCode::kNotFound, ""};
     }
 
+    EvictBadChannels(lk, bad_channel_iters);
+    ScheduleRemoveChannel(lk);
+
     if (channel_1_rpcs.ok() && channel_2_rpcs.ok()) {
       std::cout << __PRETTY_FUNCTION__ << ": 2 ok channels" << std::endl;
-      return *channel_1_rpcs < *channel_2_rpcs ? *channel_1 : *channel_2;
+      return *channel_1_rpcs < *channel_2_rpcs ? *channel_1_iter
+                                               : *channel_2_iter;
     }
     if (channel_1_rpcs.ok()) {
       std::cout << __PRETTY_FUNCTION__ << ": ONLY channel_1 ok" << std::endl;
-      return *channel_1;
+      return *channel_1_iter;
     }
     if (channel_2_rpcs.ok()) {
       std::cout << __PRETTY_FUNCTION__ << ": ONLY channel_2 ok" << std::endl;
-      return *channel_2;
+      return *channel_2_iter;
     }
 
     // TODO(sdhart): we have no usable channels in the entire pool; this is bad.
@@ -324,6 +330,9 @@ class DynamicChannelPool
   }
 
   void ScheduleRemoveChannel(std::unique_lock<std::mutex> const&) {
+    if (remove_channel_poll_timer_.valid()) return;
+    std::cout << __PRETTY_FUNCTION__ << ": set remove_channel_poll_timer"
+              << std::endl;
     std::weak_ptr<DynamicChannelPool<T>> foo = this->shared_from_this();
     remove_channel_poll_timer_ =
         cq_.MakeRelativeTimer(sizing_policy_.remove_channel_polling_interval)
@@ -351,7 +360,7 @@ class DynamicChannelPool
               });
     while (!draining_channels_.empty()) {
       auto outstanding_rpcs = draining_channels_.back()->outstanding_rpcs();
-      if (outstanding_rpcs.ok() && *outstanding_rpcs != 0) {
+      if (outstanding_rpcs.ok() && *outstanding_rpcs > 0) {
         ScheduleRemoveChannel(lk);
         return;
       }
@@ -361,6 +370,28 @@ class DynamicChannelPool
     // call
     //  shrink_to_fit on iterators_ if there's a large
     // difference between iterators_.capacity and channels_.size
+  }
+
+  void EvictBadChannels(std::unique_lock<std::mutex> const&,
+                        std::vector<typename std::vector<
+                            std::shared_ptr<ChannelUsageWrapper<T>>>::iterator>&
+                            bad_channel_iters) {
+    auto back_iter = channels_.rbegin();
+    for (auto& bad_channel_iter : bad_channel_iters) {
+      bool swapped = false;
+      while (!swapped) {
+        auto b = (*back_iter)->outstanding_rpcs();
+        if (b.ok()) {
+          std::swap(*back_iter, *bad_channel_iter);
+          draining_channels_.push_back(std::move(*back_iter));
+          swapped = true;
+        }
+        ++back_iter;
+      }
+    }
+    for (std::size_t i = 0; i < bad_channel_iters.size(); ++i) {
+      channels_.pop_back();
+    }
   }
 
   void SetResizeCooldownTimer(std::unique_lock<std::mutex> const&) {
@@ -380,6 +411,7 @@ class DynamicChannelPool
               << ": channels_.size()=" << channels_.size()
               << "; sizing_policy_.minimum_channel_pool_size="
               << sizing_policy_.minimum_channel_pool_size << std::endl;
+    // TODO(sdhart): do we need to check if we're over max pool size here?
     if (average_rpc_per_channel <
             sizing_policy_.minimum_average_outstanding_rpcs_per_channel &&
         channels_.size() > sizing_policy_.minimum_channel_pool_size) {
@@ -391,6 +423,7 @@ class DynamicChannelPool
       ScheduleRemoveChannel(lk);
       SetResizeCooldownTimer(lk);
     }
+    // TODO(sdhart): do we need to check if we're under min pool size here?
     if (average_rpc_per_channel >
             sizing_policy_.maximum_average_outstanding_rpcs_per_channel &&
         channels_.size() < sizing_policy_.maximum_channel_pool_size) {
