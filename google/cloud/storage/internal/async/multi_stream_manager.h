@@ -1,0 +1,163 @@
+// Copyright 2024 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_MULTI_STREAM_MANAGER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_MULTI_STREAM_MANAGER_H
+
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
+#include <cassert>
+#include <cstdint>
+#include <functional>
+#include <list>
+#include <memory>
+#include <unordered_map>
+
+namespace google {
+namespace cloud {
+namespace storage_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+class StreamBase {
+ public:
+  virtual ~StreamBase() = default;
+  virtual void Cancel() = 0;
+};
+
+// Manages a collection of streams.
+//
+// This class implements the "Subsequent Stream" logic where idle streams
+// are moved to the back of the queue for reuse.
+//
+// THREAD SAFETY:
+// This class is NOT thread-safe. The owner (ObjectDescriptorImpl) must
+// serialize access, typically by holding `mu_` while calling these methods.
+template <typename StreamT, typename RangeT>
+class MultiStreamManager {
+ public:
+  struct Stream {
+    std::shared_ptr<StreamT> stream;
+    std::unordered_map<std::int64_t, std::shared_ptr<RangeT>> active_ranges;
+  };
+
+  using StreamIterator = typename std::list<Stream>::iterator;
+  using StreamFactory = std::function<std::shared_ptr<StreamT>()>;
+
+  // Constructor creates the first stream using the factory immediately.
+  explicit MultiStreamManager(StreamFactory stream_factory)
+      : stream_factory_(std::move(stream_factory)) {
+    streams_.push_back(Stream{stream_factory_(), {}});
+  }
+
+  // Constructor accepts an already-created initial stream.
+  // This is required by ObjectDescriptorImpl which receives an OpenStream.
+  MultiStreamManager(StreamFactory stream_factory, std::shared_ptr<StreamT> initial_stream)
+      : stream_factory_(std::move(stream_factory)) {
+    streams_.push_back(Stream{std::move(initial_stream), {}});
+  }
+
+  StreamIterator GetLastStream() {
+    // SAFETY: The caller must ensure the manager is not empty.
+    // In ObjectDescriptorImpl, we ensure there is always at least one stream,
+    // but this assertion protects against future refactoring errors.
+    assert(!streams_.empty());
+    return std::prev(streams_.end()); 
+  }
+
+  StreamIterator GetLeastBusyStream() {
+    // SAFETY: The caller must ensure the manager is not empty.
+    // In ObjectDescriptorImpl, we ensure there is always at least one stream,
+    // but this assertion protects against future refactoring errors.
+    assert(!streams_.empty());
+    auto best_it = streams_.begin();
+    // Track min_ranges to avoid calling .size() repeatedly if possible,
+    // though for std::unordered_map .size() is O(1).
+    std::size_t min_ranges = best_it->active_ranges.size();
+
+    // Start checking from the second element
+    for (auto it = std::next(streams_.begin()); it != streams_.end(); ++it) {
+      // Strict less-than ensures stability (preferring older streams if tied)
+      if (it->active_ranges.size() < min_ranges) {
+        best_it = it;
+        min_ranges = it->active_ranges.size();
+      }
+    }
+    return best_it;
+  }
+
+  StreamIterator AddStream(std::shared_ptr<StreamT> stream) {
+    streams_.push_back(Stream{std::move(stream), {}});
+    return std::prev(streams_.end());
+  }
+
+  void CancelAll() {
+    for (auto& s : streams_) {
+      if (s.stream) s.stream->Cancel();
+    }
+  }
+
+  void RemoveStreamAndNotifyRanges(StreamIterator it, Status const& status) {
+    auto ranges = std::move(it->active_ranges);
+    streams_.erase(it);
+    for (auto const& kv : ranges) {
+      kv.second->OnFinish(status);
+    }
+  }
+
+  void MoveActiveRanges(StreamIterator from, StreamIterator to) {
+    to->active_ranges = std::move(from->active_ranges);
+  }
+
+  void CleanupDoneRanges(StreamIterator it) {
+    auto& active_ranges = it->active_ranges;
+    for (auto i = active_ranges.begin(); i != active_ranges.end();) {
+      if (i->second->IsDone()) {
+        i = active_ranges.erase(i);
+      } else {
+        ++i;
+      }
+    }
+  }
+
+  template <typename Pred>
+  bool ReuseIdleStreamToBack(Pred pred) {
+    for (auto it = streams_.begin(); it != streams_.end(); ++it) {
+      if (!pred(*it)) continue;
+
+      // If the idle stream is already at the back, we don't
+      // need to move it. If it's elsewhere, use splice() to move the node.
+      // splice() is O(1) and, crucially, does not invalidate iterators
+      // or copy the Stream object.
+      if (std::next(it) != streams_.end()) {
+        streams_.splice(streams_.end(), streams_, it);
+      }
+      return true;
+    }
+    return false;
+  }
+
+  bool Empty() const { return streams_.empty(); }
+  std::size_t Size() const { return streams_.size(); }
+
+ private:
+  std::list<Stream> streams_;
+  StreamFactory stream_factory_;
+};
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage_internal
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_MULTI_STREAM_MANAGER_H
