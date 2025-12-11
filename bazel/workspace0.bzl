@@ -237,8 +237,7 @@ def gl_cpp_workspace0(name = None):
     )
 
     # We need libcurl for the Google Cloud Storage client.
-    maybe(
-        http_archive,
+    http_archive(
         name = "com_github_curl_curl",
         urls = [
             "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
