@@ -44,8 +44,11 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::InvokeWithoutArgs;
+using ::testing::NiceMock;
 using ::testing::NotNull;
 using ::testing::Optional;
+using ::testing::Return;
 
 using BidiReadStream = google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
@@ -183,6 +186,19 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
               [](auto) { return Status{}; });
         });
 
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
+      })
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::shared_ptr<grpc::ClientContext> const&,
+                         google::cloud::internal::ImmutableOptions const&) {
+        auto stream = std::make_unique<NiceMock<MockStream>>();
+        ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+          return make_ready_future(false);
+        }));
+        ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+          return make_ready_future(Status{});
+        }));
+        ON_CALL(*stream, Cancel).WillByDefault([] {});
         return std::unique_ptr<BidiReadStream>(std::move(stream));
       });
 
