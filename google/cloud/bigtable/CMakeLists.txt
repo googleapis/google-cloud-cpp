@@ -48,7 +48,6 @@ include(CTest)
 include(CreateBazelConfig)
 
 find_package(opentelemetry-cpp CONFIG)
-find_package(Crc32c)
 
 # the client library
 add_library(
@@ -297,7 +296,6 @@ target_link_libraries(
            google-cloud-cpp::bigtable_protos
            google-cloud-cpp::common
            google-cloud-cpp::grpc_utils
-           Crc32c::crc32c
            gRPC::grpc++
            gRPC::grpc
            protobuf::libprotobuf)
@@ -354,9 +352,7 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "google_cloud_cpp_bigtable_protos"
-    ${EXTRA_MODULES}
-    LIBS
-    crc32c)
+    ${EXTRA_MODULES})
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

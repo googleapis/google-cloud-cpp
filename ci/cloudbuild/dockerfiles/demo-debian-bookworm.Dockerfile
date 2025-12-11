@@ -58,26 +58,19 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
 # ```
 
-# #### crc32c
-
-# The project depends on the Crc32c library, we need to compile this from
-# source:
-
-# ```bash
-WORKDIR /var/tmp/build/crc32c
-RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+# #### abseil
+WORKDIR /var/tmp/build/abseil-cpp
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
-        -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DABSL_BUILD_TESTING=OFF \
+      -DABSL_PROPAGATE_CXX_STD=ON \
+      -DBUILD_SHARED_LIBS=yes \
+      -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
-# ```
 
 # #### opentelemetry-cpp
 

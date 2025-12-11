@@ -59,8 +59,8 @@ cc_library(
         "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
         "@googleapis//google/longrunning:longrunning_cc_grpc",
         "@googleapis//google/rpc:error_details_cc_proto",
-        "@crc32c",
         "@abseil-cpp//absl/strings:cord",
+        "@abseil-cpp//absl/crc:crc32c",
         "@grpc//:grpc++",
     ] + select({
         ":metrics_enabled": [

@@ -268,7 +268,6 @@ target_link_libraries(
            google-cloud-cpp::common
            google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
-           Crc32c::crc32c
            CURL::libcurl
            Threads::Threads)
 if (WIN32)
@@ -342,8 +341,6 @@ google_cloud_cpp_add_pkgconfig(
     "absl_variant"
     NON_WIN32_REQUIRES
     openssl
-    LIBS
-    crc32c
     WIN32_LIBS
     ws2_32
     bcrypt)
