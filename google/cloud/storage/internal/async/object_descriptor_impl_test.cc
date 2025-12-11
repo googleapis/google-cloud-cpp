@@ -27,7 +27,7 @@
 #include <google/protobuf/util/message_differencer.h>
 #include <google/storage/v2/storage.pb.h>
 #include <gmock/gmock.h>
-#include <thread> // Make sure to add this include for std::thread
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -42,15 +42,15 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::_;
+using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::ResultOf;
-using ::testing::VariantWith;
-using ::testing::AtMost;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
-using ::testing::_;
+using ::testing::VariantWith;
 
 using Request = google::storage::v2::BidiReadObjectRequest;
 using Response = google::storage::v2::BidiReadObjectResponse;
@@ -278,7 +278,6 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 }
-
 
 /// @test Reading multiple ranges creates a single request.
 TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
@@ -785,15 +784,14 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   EXPECT_CALL(factory, Call)
       .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.read_ranges().empty());
-        return make_ready_future(
-            StatusOr<OpenStreamResult>(TransientError()));
+        return make_ready_future(StatusOr<OpenStreamResult>(TransientError()));
       })
       .WillOnce([&](Request const& request) {
         EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(
                                  expected_resume_request));
-        return sequencer.PushBack("Factory").then([](auto) {
-          return StatusOr<OpenStreamResult>(PermanentError());
-        });
+        // Resume with an unrecoverable failure to simplify the test.
+        return sequencer.PushBack("Factory").then(
+            [](auto) { return StatusOr<OpenStreamResult>(PermanentError()); });
       });
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
@@ -921,7 +919,8 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
     )pb";
 
     auto stream = std::make_unique<MockStream>();
-    EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+    EXPECT_CALL(*stream, Cancel)
+        .Times(AtMost(1));  // Always called by OpenStream
     EXPECT_CALL(*stream, Write)
         .WillOnce([=, &sequencer](Request const& request, grpc::WriteOptions) {
           auto expected = Request{};
@@ -1065,17 +1064,15 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
   EXPECT_CALL(factory, Call)
       .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.read_ranges().empty());
-        return make_ready_future(
-            StatusOr<OpenStreamResult>(TransientError()));
+        return make_ready_future(StatusOr<OpenStreamResult>(TransientError()));
       })
       .WillOnce([&](Request const& request) {
         EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(
                                  expected_resume_request));
-        return sequencer.PushBack("Factory").then([](auto) {
-          return StatusOr<OpenStreamResult>(PermanentError());
-        });
+        // Resume with an unrecoverable failure to simplify the test.
+        return sequencer.PushBack("Factory").then(
+            [](auto) { return StatusOr<OpenStreamResult>(PermanentError()); });
       });
-
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
@@ -1200,22 +1197,21 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
   });
   EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
 
-   Request expected_resume_request;
+  Request expected_resume_request;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kResumeRequest, &expected_resume_request));
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.read_ranges().empty());
-        return make_ready_future(
-            StatusOr<OpenStreamResult>(TransientError()));
+        return make_ready_future(StatusOr<OpenStreamResult>(TransientError()));
       })
       .WillOnce([&](Request const& request) {
         EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(
                                  expected_resume_request));
-        return sequencer.PushBack("Factory").then([](auto) {
-          return StatusOr<OpenStreamResult>(PermanentError());
-        });
+        // Resume with an unrecoverable failure to simplify the test.
+        return sequencer.PushBack("Factory").then(
+            [](auto) { return StatusOr<OpenStreamResult>(PermanentError()); });
       });
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
@@ -1288,8 +1284,7 @@ TEST(ObjectDescriptorImpl, ProactiveStreamCreation) {
         [](auto) { return absl::optional<Response>(); });
   });
   EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
-  // The stream may be cancelled by the destructor if OnFinish has not run yet.
-  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));  // Always called by OpenStream
 
   MockFactory factory;
   // This is the proactive stream creation. The implementation is designed to
@@ -1313,7 +1308,6 @@ TEST(ObjectDescriptorImpl, ProactiveStreamCreation) {
   auto read_called = sequencer.PopFrontWithName();
   EXPECT_EQ(read_called.second, "Read");
 
-  // The factory call for the proactive stream should be triggered by Start().
   auto factory_called = sequencer.PopFrontWithName();
   EXPECT_EQ(factory_called.second, "Factory");
 
@@ -1321,7 +1315,6 @@ TEST(ObjectDescriptorImpl, ProactiveStreamCreation) {
   read_called.first.set_value(true);
   factory_called.first.set_value(true);
 }
-
 
 /// @test Verify a new stream is used if all existing streams are busy.
 TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
@@ -1355,9 +1348,8 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
   MockFactory factory;
   // First call is proactive for stream2. It may be called more than once.
   EXPECT_CALL(factory, Call).WillRepeatedly([&](Request const&) {
-    return make_ready_future(StatusOr<OpenStreamResult>(
-        OpenStreamResult{std::make_shared<OpenStream>(std::move(stream2)),
-                         Response{}}));
+    return make_ready_future(StatusOr<OpenStreamResult>(OpenStreamResult{
+        std::make_shared<OpenStream>(std::move(stream2)), Response{}}));
   });
 
   auto tested = std::make_shared<ObjectDescriptorImpl>(
@@ -1368,9 +1360,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
 
   // Start a read on stream1 to make it busy.
   auto reader1 = tested->Read({0, 100});
-  // Expect Write[1]
   sequencer.PopFrontWithName().first.set_value(true);
-  // Do not complete the read, so stream1 remains active.
 
   // Call MakeSubsequentStream. Since stream1 is busy, this should activate the
   // pending stream (stream2).
@@ -1378,7 +1368,6 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
 
   // A new read should now be routed to stream2.
   auto reader2 = tested->Read({100, 200});
-  // Expect Write[2]
   sequencer.PopFrontWithName().first.set_value(true);
 }
 
@@ -1386,31 +1375,32 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
 TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesIdleStreamAlreadyLast) {
   AsyncSequencer<bool> sequencer;
 
-  // Setup for the first (and only) stream.
+  // Setup for the first and only stream.
   auto stream1 = std::make_unique<MockStream>();
   EXPECT_CALL(*stream1, Write(_, _)).WillOnce([&](Request const&, auto) {
     return sequencer.PushBack("Write[1]").then([](auto f) { return f.get(); });
   });
 
   EXPECT_CALL(*stream1, Read)
-      .WillOnce([&] { // From Start()
-        return sequencer.PushBack("Read[1.1]").then(
-            [](auto) { return absl::make_optional(Response{}); });
+      .WillOnce([&] {  // From Start()
+        return sequencer.PushBack("Read[1.1]").then([](auto) {
+          return absl::make_optional(Response{});
+        });
       })
-      .WillOnce([&] { // From OnRead() loop
-        return sequencer.PushBack("Read[1.2]").then(
-            [](auto) { return absl::make_optional(Response{}); });
+      .WillOnce([&] {  // From OnRead() loop
+        return sequencer.PushBack("Read[1.2]").then([](auto) {
+          return absl::make_optional(Response{});
+        });
       })
-      .WillRepeatedly([&] { // Subsequent loop calls
+      .WillRepeatedly([&] {  // Subsequent loop calls
         return promise<absl::optional<Response>>().get_future();
       });
 
   // Finish() will be called by the OpenStream destructor.
-  EXPECT_CALL(*stream1, Finish)
-      .WillOnce(Return(make_ready_future(Status{})));
-  EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*stream1, Cancel)
+      .Times(AtMost(1));  // Always called by OpenStream
 
-  // *** THIS IS THE FIX: ***
   // We no longer need a 'stream2' mock. The factory will be
   // called, but the resulting promise/future will just be
   // abandoned when the test ends, which is correct.
@@ -1424,65 +1414,51 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesIdleStreamAlreadyLast) {
       std::make_shared<OpenStream>(std::move(stream1)));
   tested->Start(Response{});
 
-  // 1. Pop the first Read() from Start()
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1.1]");
 
-  // 2. Complete it. This schedules OnRead -> DoRead -> Read[1.2]
   read1.first.set_value(true);
 
-  // 3. Wait for OnRead to run by popping Read[1.2]
   auto read2 = sequencer.PopFrontWithName();
   EXPECT_EQ(read2.second, "Read[1.2]");
 
-  // 4. Now stream1 is IDLE.
-  //    (active_ranges = empty, write_pending = false)
-
-  // 5. Call MakeSubsequentStream. It should find stream1 and return.
-  //    It will *not* consume p_factory.
+  // Call MakeSubsequentStream. It should find stream1 and return.
   tested->MakeSubsequentStream();
 
-  // 6. Start a new read. It should be routed to stream1.
+  // Start a new read. It should be routed to stream1.
   auto reader = tested->Read({0, 100});
   auto write1 = sequencer.PopFrontWithName();
   EXPECT_EQ(write1.second, "Write[1]");
 
-  // 7. Clean up.
   write1.first.set_value(true);
-  
-  // 8. Satisfy Read[1.2] to let the read loop continue.
-  read2.first.set_value(true); 
-
-  // 9. *** FIX: ***
-  //    Remove p_factory.set_value() and tested.reset().
-  //    The test will now end, destructors will run, and
-  //    p_factory will be broken safely.
+  read2.first.set_value(true);
 }
 
 /// @test Verify an idle stream at the front is moved to the back and reused.
 TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
   AsyncSequencer<bool> sequencer;
 
-  // Setup for stream1
+  // First stream setup
   auto stream1 = std::make_unique<MockStream>();
   EXPECT_CALL(*stream1, Write(_, _))
-      .WillOnce([&](Request const&, auto) { // For reader1
+      .WillOnce([&](Request const&, auto) {  // For reader1
         return sequencer.PushBack("Write[1.1]").then([](auto f) {
           return f.get();
         });
       })
-      .WillOnce([&](Request const&, auto) { // For reader3
+      .WillOnce([&](Request const&, auto) {  // For reader3
         return sequencer.PushBack("Write[1.2]").then([](auto f) {
           return f.get();
         });
       });
 
   EXPECT_CALL(*stream1, Read)
-      .WillOnce([&] { // From Start()
-        return sequencer.PushBack("Read[1.1]").then(
-            [](auto) { return absl::make_optional(Response{}); });
+      .WillOnce([&] {  // From Start()
+        return sequencer.PushBack("Read[1.1]").then([](auto) {
+          return absl::make_optional(Response{});
+        });
       })
-      .WillOnce([&] { // From OnRead() loop
+      .WillOnce([&] {  // From OnRead() loop
         return sequencer.PushBack("Read[1.2]").then([](auto) {
           auto constexpr kResponse = R"pb(
             object_data_ranges {
@@ -1495,18 +1471,17 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
           return absl::make_optional(std::move(response));
         });
       })
-      .WillOnce([&] { // From OnRead() loop after reader1 done
-        return sequencer.PushBack("Read[1.3]").then(
-            [](auto) { return absl::make_optional(Response{}); });
+      .WillOnce([&] {  // From OnRead() loop after reader1 done
+        return sequencer.PushBack("Read[1.3]").then([](auto) {
+          return absl::make_optional(Response{});
+        });
       })
-      .WillRepeatedly([&] {
-        return promise<absl::optional<Response>>().get_future();
-      });
-  EXPECT_CALL(*stream1, Finish)
-      .WillOnce(Return(make_ready_future(Status{})));
+      .WillRepeatedly(
+          [&] { return promise<absl::optional<Response>>().get_future(); });
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
 
-  // Setup for stream2
+  // Second stream setup
   auto stream2 = std::make_unique<MockStream>();
   EXPECT_CALL(*stream2, Write(_, _)).WillOnce([&](Request const&, auto) {
     return sequencer.PushBack("Write[2.1]").then([](auto f) {
@@ -1515,99 +1490,87 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
   });
   EXPECT_CALL(*stream2, Read)
       .WillOnce([&] {
-        return sequencer.PushBack("Read[2.1]").then(
-            [](auto) { return absl::make_optional(Response{}); });
+        return sequencer.PushBack("Read[2.1]").then([](auto) {
+          return absl::make_optional(Response{});
+        });
       })
-      .WillRepeatedly([&] {
-        return promise<absl::optional<Response>>().get_future();
-      });
-  EXPECT_CALL(*stream2, Finish)
-      .WillOnce(Return(make_ready_future(Status{})));
+      .WillRepeatedly(
+          [&] { return promise<absl::optional<Response>>().get_future(); });
+  EXPECT_CALL(*stream2, Finish).WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*stream2, Cancel).Times(AtMost(1));
 
-  // Setup for stream3 (The pending one that never gets used)
+  // Third stream setup
   auto stream3 = std::make_unique<MockStream>();
-  // FIX: stream3 sits in pending_stream_ and is destroyed when the test ends.
+  // stream3 sits in pending_stream_ and is destroyed when the test ends.
   // It is never "started", so Finish() is never called.
   EXPECT_CALL(*stream3, Finish).Times(AtMost(1));
   EXPECT_CALL(*stream3, Cancel).Times(AtMost(1));
 
+  // Mock factory for subsequent streams
   MockFactory factory;
-  // Expect TWO factory calls.
   EXPECT_CALL(factory, Call)
-      .WillOnce([&] { // For stream2 (Triggered by Start)
-        return make_ready_future(StatusOr<OpenStreamResult>(
-            OpenStreamResult{std::make_shared<OpenStream>(std::move(stream2)),
-                             Response{}}));
+      .WillOnce([&] {  // For stream2 (Triggered by Start)
+        return make_ready_future(StatusOr<OpenStreamResult>(OpenStreamResult{
+            std::make_shared<OpenStream>(std::move(stream2)), Response{}}));
       })
-      .WillOnce([&] { // For stream3 (Triggered by MakeSubsequentStream #1)
-        return make_ready_future(StatusOr<OpenStreamResult>(
-            OpenStreamResult{std::make_shared<OpenStream>(std::move(stream3)),
-                             Response{}}));
+      .WillOnce([&] {  // For stream3 (Triggered by MakeSubsequentStream)
+        return make_ready_future(StatusOr<OpenStreamResult>(OpenStreamResult{
+            std::make_shared<OpenStream>(std::move(stream3)), Response{}}));
       });
 
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
       std::make_shared<OpenStream>(std::move(stream1)));
-  
+
   tested->Start(Response{});
 
-  // 1. Pop Read[1.1] from Start()
   auto read1_1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1_1.second, "Read[1.1]");
 
-  // 2. Make stream1 busy
+  // Make stream1 busy
   auto reader1 = tested->Read({0, 100});
   auto write1_1 = sequencer.PopFrontWithName();
   EXPECT_EQ(write1_1.second, "Write[1.1]");
-  write1_1.first.set_value(true); // Complete write immediately
+  write1_1.first.set_value(true);  // Complete write immediately
 
-  // 3. Create stream2. This call is non-blocking.
-  //    This will consume the pending stream (stream2) and queue stream3.
+  // Create and switch to a new stream. This happens before the first
+  // stream is finished.
   tested->MakeSubsequentStream();
-  
+
   auto read2_1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read2_1.second, "Read[2.1]");
 
-  // 4. Make stream2 busy
+  // Make stream2 busy
   auto reader2 = tested->Read({100, 200});
   auto write2_1 = sequencer.PopFrontWithName();
   EXPECT_EQ(write2_1.second, "Write[2.1]");
-  write2_1.first.set_value(true); // Complete write immediately
-  // At this point: streams_ = {stream1 (busy), stream2 (busy)}
+  write2_1.first.set_value(true);  // Complete write immediately
 
-  // 5. Now, make stream1 IDLE.
+  // Make stream1 IDLE.
   auto r1f1 = reader1->Read();
-  read1_1.first.set_value(true); // Complete Read[1.1] (empty)
-  auto read1_2 = sequencer.PopFrontWithName(); // Pop Read[1.2] (with data)
+  read1_1.first.set_value(true);
+  auto read1_2 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1_2.second, "Read[1.2]");
-  read1_2.first.set_value(true); // Complete Read[1.2]
+  read1_2.first.set_value(true);
   ASSERT_THAT(r1f1.get(), VariantWith<storage_experimental::ReadPayload>(_));
   auto r1f2 = reader1->Read();
   ASSERT_THAT(r1f2.get(), VariantWith<Status>(IsOk()));
 
-  // 6. Wait for the cleanup and next read loop
   auto read1_3 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1_3.second, "Read[1.3]");
-  // Now: stream1 is IDLE. streams_ = {stream1 (idle), stream2 (busy)}
 
-  // 7. Call MakeSubsequentStream. It finds stream1, moves it, and returns.
-  //    It does NOT consume the pending stream (stream3).
+  // Call MakeSubsequentStream. It finds stream1, moves it, and returns.
   tested->MakeSubsequentStream();
 
-  // 8. Start a new read. It should be routed to stream1 (now at the back).
   auto reader3 = tested->Read({200, 300});
   auto write1_2 = sequencer.PopFrontWithName();
   EXPECT_EQ(write1_2.second, "Write[1.2]");
 
-  // 9. Clean up
   write1_2.first.set_value(true);
   read1_3.first.set_value(true);
   read2_1.first.set_value(true);
-  
-  // Explicitly reset to trigger destructors while expectations are active
-  tested.reset(); 
+  tested.reset();
 }
 
 }  // namespace

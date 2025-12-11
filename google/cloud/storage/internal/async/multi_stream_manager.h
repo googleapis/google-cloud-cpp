@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -62,7 +62,8 @@ class MultiStreamManager {
 
   // Constructor accepts an already-created initial stream.
   // This is required by ObjectDescriptorImpl which receives an OpenStream.
-  MultiStreamManager(StreamFactory stream_factory, std::shared_ptr<StreamT> initial_stream)
+  MultiStreamManager(StreamFactory stream_factory,
+                     std::shared_ptr<StreamT> initial_stream)
       : stream_factory_(std::move(stream_factory)) {
     streams_.push_back(Stream{std::move(initial_stream), {}});
   }
@@ -72,7 +73,7 @@ class MultiStreamManager {
     // In ObjectDescriptorImpl, we ensure there is always at least one stream,
     // but this assertion protects against future refactoring errors.
     assert(!streams_.empty());
-    return std::prev(streams_.end()); 
+    return std::prev(streams_.end());
   }
 
   StreamIterator GetLeastBusyStream() {
