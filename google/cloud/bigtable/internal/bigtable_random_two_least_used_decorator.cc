@@ -329,7 +329,7 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
   return result;
 }
 
-std::shared_ptr<ChannelUsageWrapper<BigtableStub>>
+std::shared_ptr<ChannelUsage<BigtableStub>>
 BigtableRandomTwoLeastUsed::Child() {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   return pool_->GetChannelRandomTwoLeastUsed();

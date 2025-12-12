@@ -212,6 +212,44 @@ struct ChannelPoolTypeOption {
   using Type = ChannelPoolType;
 };
 
+struct DynamicChannelPoolSizingPolicy {
+  // To avoid channel churn, the pool will not add or remove channels more
+  // frequently that this period.
+  std::chrono::milliseconds pool_resize_cooldown_interval =
+      std::chrono::seconds(60);
+
+  struct DiscreteChannels {
+    int number;
+  };
+  struct PercentageOfPoolSize {
+    double percentage;
+  };
+  absl::variant<DiscreteChannels, PercentageOfPoolSize>
+      channels_to_add_per_resize = DiscreteChannels{1};
+
+  // If the average number of outstanding RPCs is below this threshold,
+  // the pool size will be decreased.
+  int minimum_average_outstanding_rpcs_per_channel = 1;
+  // If the average number of outstanding RPCs is above this threshold,
+  // the pool size will be increased.
+  int maximum_average_outstanding_rpcs_per_channel = 25;
+
+  // When channels are removed from the pool, we have to wait until all
+  // outstanding RPCs on that channel are completed before destroying it.
+  std::chrono::milliseconds remove_channel_polling_interval =
+      std::chrono::seconds(30);
+
+  // Limits how large the pool can grow. Default is twice the minimum_pool_size.
+  std::size_t maximum_channel_pool_size;
+
+  // This is set to the value of GrpcNumChannelsOption.
+  std::size_t minimum_channel_pool_size;
+};
+
+struct DynamicChannelPoolSizingPolicyOption {
+  using Type = DynamicChannelPoolSizingPolicy;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`

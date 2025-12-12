@@ -85,30 +85,34 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
 
   auto refreshing_channel_stub_factory =
       [stub_factory = std::move(stub_factory), cq_impl, refresh_state,
-       auth = std::move(auth), options](std::uint32_t id)
-      -> std::shared_ptr<ChannelUsageWrapper<BigtableStub>> {
-    auto wrapper = std::make_shared<ChannelUsageWrapper<BigtableStub>>();
+       auth = std::move(auth), options](
+          std::uint32_t id,
+          bool prime_channel) -> std::shared_ptr<ChannelUsage<BigtableStub>> {
+    auto wrapper = std::make_shared<ChannelUsage<BigtableStub>>();
     auto connection_status_fn = [weak = wrapper->MakeWeak()](Status const& s) {
       if (auto self = weak.lock()) {
-        self->SetLastRefreshStatus(s);
+        self->set_last_refresh_status(s);
       }
       if (!s.ok()) {
         GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
       }
     };
     auto channel = CreateGrpcChannel(*auth, options, id);
+    if (prime_channel) {
+      (void)channel->GetState(true);
+    }
     ScheduleChannelRefresh(cq_impl, refresh_state, channel,
                            std::move(connection_status_fn));
     wrapper->set_channel(stub_factory(std::move(channel)));
     return wrapper;
   };
 
-  std::vector<std::shared_ptr<ChannelUsageWrapper<BigtableStub>>> children(
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> children(
       std::max(1, options.get<GrpcNumChannelsOption>()));
   std::uint32_t id = 0;
   std::generate(children.begin(), children.end(),
                 [&id, &refreshing_channel_stub_factory] {
-                  return refreshing_channel_stub_factory(id++);
+                  return refreshing_channel_stub_factory(id++, false);
                 });
 
   return std::make_shared<BigtableRandomTwoLeastUsed>(

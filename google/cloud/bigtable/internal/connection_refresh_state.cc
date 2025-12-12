@@ -30,6 +30,12 @@ namespace {
  */
 auto constexpr kConnectionReadyTimeout = std::chrono::seconds(10);
 
+void LogFailedConnectionRefresh(Status const& conn_status) {
+  if (!conn_status.ok()) {
+    GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << conn_status;
+  }
+}
+
 }  // namespace
 
 ConnectionRefreshState::ConnectionRefreshState(
@@ -51,12 +57,6 @@ std::chrono::milliseconds ConnectionRefreshState::RandomizedRefreshDelay() {
 
 bool ConnectionRefreshState::enabled() const {
   return max_conn_refresh_period_.count() != 0;
-}
-
-void LogFailedConnectionRefresh(Status const& conn_status) {
-  if (!conn_status.ok()) {
-    GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << conn_status;
-  }
 }
 
 void ScheduleChannelRefresh(
