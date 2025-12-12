@@ -49,7 +49,7 @@ struct MultiStreamManagerTest : public ::testing::Test {
 TEST(MultiStreamManagerTest, ConstructsWithFactoryAndHasOneStream) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   EXPECT_FALSE(mgr.Empty());
-  EXPECT_EQ(mgr.Size(), 1u);
+  EXPECT_EQ(mgr.Size(), 1U);
   auto it = mgr.GetLastStream();
   ASSERT_TRUE(it->stream);
 }
@@ -57,7 +57,7 @@ TEST(MultiStreamManagerTest, ConstructsWithFactoryAndHasOneStream) {
 TEST(MultiStreamManagerTest, ConstructsWithInitialStream) {
   auto initial = std::make_shared<FakeStream>();
   Manager mgr([] { return nullptr; }, initial);
-  EXPECT_EQ(mgr.Size(), 1u);
+  EXPECT_EQ(mgr.Size(), 1U);
   auto it = mgr.GetLastStream();
   EXPECT_EQ(it->stream, initial);
 }
@@ -66,7 +66,7 @@ TEST(MultiStreamManagerTest, AddStreamAppendsAndGetLastReturnsNew) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   auto s1 = std::make_shared<FakeStream>();
   auto it1 = mgr.AddStream(s1);
-  EXPECT_EQ(mgr.Size(), 2u);
+  EXPECT_EQ(mgr.Size(), 2U);
   EXPECT_EQ(it1->stream.get(), s1.get());
   auto it_last = mgr.GetLastStream();
   EXPECT_EQ(it_last->stream.get(), s1.get());
@@ -98,7 +98,7 @@ TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
 
   // Expect it2 (1 range) over it1 (2 ranges) and it_init (2 ranges).
   EXPECT_EQ(it_least, it2);
-  EXPECT_EQ(it_least->active_ranges.size(), 1u);
+  EXPECT_EQ(it_least->active_ranges.size(), 1U);
 }
 
 TEST(MultiStreamManagerTest, CleanupDoneRangesRemovesFinished) {
@@ -114,7 +114,7 @@ TEST(MultiStreamManagerTest, CleanupDoneRangesRemovesFinished) {
   it->active_ranges.emplace(2, r2);
   it->active_ranges.emplace(3, r3);
   mgr.CleanupDoneRanges(it);
-  EXPECT_EQ(it->active_ranges.size(), 1u);
+  EXPECT_EQ(it->active_ranges.size(), 1U);
   EXPECT_TRUE(it->active_ranges.count(1));
 }
 
@@ -126,7 +126,7 @@ TEST(MultiStreamManagerTest, RemoveStreamAndNotifyRangesCallsOnFinish) {
   it->active_ranges.emplace(11, r1);
   it->active_ranges.emplace(22, r2);
   mgr.RemoveStreamAndNotifyRanges(it, Status());  // OK status
-  EXPECT_EQ(mgr.Size(), 0u);
+  EXPECT_EQ(mgr.Size(), 0U);
   EXPECT_EQ(r1->finished, 1);
   EXPECT_EQ(r2->finished, 1);
 }
@@ -145,11 +145,11 @@ TEST(MultiStreamManagerTest, CancelAllInvokesCancel) {
 TEST(MultiStreamManagerTest, ReuseIdleStreamToBackMovesElement) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   // Capture the factory-created stream pointer (initial element)
-  auto factory_ptr = mgr.GetLastStream()->stream.get();
+  auto* factory_ptr = mgr.GetLastStream()->stream.get();
   auto s1 = std::make_shared<FakeStream>();
   mgr.AddStream(s1);
   bool moved = mgr.ReuseIdleStreamToBack([](Manager::Stream const& s) {
-    auto fs = s.stream.get();
+    auto* fs = s.stream.get();
     return fs != nullptr && s.active_ranges.empty() && !fs->write_pending;
   });
   EXPECT_TRUE(moved);
@@ -179,7 +179,7 @@ TEST(MultiStreamManagerTest, ReuseIdleStreamDoesNotMoveWhenWritePending) {
   s1->write_pending = true;  // also mark appended stream as not reusable
   mgr.AddStream(s1);
   bool moved = mgr.ReuseIdleStreamToBack([](Manager::Stream const& s) {
-    auto fs = s.stream.get();
+    auto* fs = s.stream.get();
     return fs != nullptr && s.active_ranges.empty() && !fs->write_pending;
   });
   EXPECT_FALSE(moved);
@@ -195,11 +195,11 @@ TEST(MultiStreamManagerTest, MoveActiveRangesTransfersAllEntries) {
   auto it2 = mgr.AddStream(s2);
   it1->active_ranges.emplace(101, std::make_shared<FakeRange>());
   it1->active_ranges.emplace(202, std::make_shared<FakeRange>());
-  ASSERT_EQ(it1->active_ranges.size(), 2u);
+  ASSERT_EQ(it1->active_ranges.size(), 2U);
   ASSERT_TRUE(it2->active_ranges.empty());
   mgr.MoveActiveRanges(it1, it2);
   EXPECT_TRUE(it1->active_ranges.empty());
-  EXPECT_EQ(it2->active_ranges.size(), 2u);
+  EXPECT_EQ(it2->active_ranges.size(), 2U);
   EXPECT_TRUE(it2->active_ranges.count(101));
   EXPECT_TRUE(it2->active_ranges.count(202));
 }
@@ -220,15 +220,15 @@ TEST(MultiStreamManagerTest, GetLastStreamReflectsRecentAppendAndReuse) {
 TEST(MultiStreamManagerTest, EmptyAndSizeTransitions) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   EXPECT_FALSE(mgr.Empty());
-  EXPECT_EQ(mgr.Size(), 1u);
+  EXPECT_EQ(mgr.Size(), 1U);
   auto it = mgr.GetLastStream();
   mgr.RemoveStreamAndNotifyRanges(it, Status());
   EXPECT_TRUE(mgr.Empty());
-  EXPECT_EQ(mgr.Size(), 0u);
+  EXPECT_EQ(mgr.Size(), 0U);
   auto s = std::make_shared<FakeStream>();
   mgr.AddStream(s);
   EXPECT_FALSE(mgr.Empty());
-  EXPECT_EQ(mgr.Size(), 1u);
+  EXPECT_EQ(mgr.Size(), 1U);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

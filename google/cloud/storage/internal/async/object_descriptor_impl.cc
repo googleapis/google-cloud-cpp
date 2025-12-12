@@ -86,7 +86,8 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   if (stream_manager_->ReuseIdleStreamToBack(
           [](StreamManager::Stream const& s) {
             auto const* rs = s.stream.get();
-            return rs && s.active_ranges.empty() && !rs->write_pending;
+            return rs != nullptr && s.active_ranges.empty() &&
+                   !rs->write_pending;
           })) {
     return;
   }
@@ -300,7 +301,7 @@ bool ObjectDescriptorImpl::IsResumable(
 
     std::vector<std::pair<std::int64_t, Status>> notify;
     for (auto const& re : error.read_range_errors()) {
-      if (it->active_ranges.count(re.read_id())) {
+      if (it->active_ranges.count(re.read_id()) != 0) {
         notify.emplace_back(re.read_id(), MakeStatusFromRpcError(re.status()));
       }
     }
