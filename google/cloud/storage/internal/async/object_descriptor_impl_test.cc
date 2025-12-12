@@ -49,7 +49,6 @@ using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
-using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 using Request = google::storage::v2::BidiReadObjectRequest;

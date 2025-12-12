@@ -48,7 +48,6 @@ using ::testing::InvokeWithoutArgs;
 using ::testing::NiceMock;
 using ::testing::NotNull;
 using ::testing::Optional;
-using ::testing::Return;
 
 using BidiReadStream = google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
