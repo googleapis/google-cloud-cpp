@@ -848,6 +848,40 @@ DefaultArtifactRegistryStub::DeleteAttachment(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultArtifactRegistryStub::AsyncExportArtifact(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::ExportArtifactRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExportArtifact(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::ExportArtifact(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportArtifact(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultArtifactRegistryStub::ListLocations(
     grpc::ClientContext& context, Options const&,

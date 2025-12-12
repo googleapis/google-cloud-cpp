@@ -1133,7 +1133,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L757}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1186,7 +1186,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L757}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1382,7 +1382,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeletePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L147}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1434,7 +1434,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeletePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L147}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1630,7 +1630,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L173}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1682,7 +1682,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L173}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -2067,7 +2067,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L186}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -2121,7 +2121,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L186}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -3495,7 +3495,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L152}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -3548,7 +3548,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.DeleteAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L152}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -3586,6 +3586,78 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteAttachment(google::longrunning::Operation const& operation,
                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Exports an artifact.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.ExportArtifactRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.ExportArtifactResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.ExportArtifactRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/export.proto#L33}
+  /// [google.devtools.artifactregistry.v1.ExportArtifactResponse]: @googleapis_reference_link{google/devtools/artifactregistry/v1/export.proto#L70}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportArtifact
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ExportArtifact(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportArtifact
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///

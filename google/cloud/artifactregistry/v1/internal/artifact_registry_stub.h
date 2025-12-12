@@ -384,6 +384,18 @@ class ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportArtifact(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportArtifact(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -747,6 +759,18 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
   StatusOr<google::longrunning::Operation> DeleteAttachment(
       grpc::ClientContext& context, Options options,
       google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportArtifact(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportArtifact(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
           request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
