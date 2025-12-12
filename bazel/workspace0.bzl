@@ -240,10 +240,10 @@ def gl_cpp_workspace0(name = None):
     http_archive(
         name = "com_github_curl_curl",
         urls = [
-            "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
+            "https://curl.haxx.se/download/curl-8.17.0.tar.gz",
         ],
-        sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
-        strip_prefix = "curl-7.69.1",
+        sha256 = "e8e74cdeefe5fb78b3ae6e90cd542babf788fa9480029cfcee6fd9ced42b7910",
+        strip_prefix = "curl-8.17.0",
         build_file = Label("//bazel:curl.BUILD"),
     )
 
