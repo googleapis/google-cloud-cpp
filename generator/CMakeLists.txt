@@ -27,7 +27,7 @@ find_package(Protobuf CONFIG QUIET)
 if (NOT Protobuf_FOUND)
     find_package(Protobuf REQUIRED)
 endif ()
-include(IncludeNlohmannJson)
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 
 add_library(

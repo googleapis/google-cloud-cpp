@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-include(IncludeNlohmannJson)
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(CURL REQUIRED)
 if (NOT WIN32)
     find_package(OpenSSL REQUIRED)

@@ -30,7 +30,7 @@ google_cloud_cpp_doxygen_targets("storage" DEPENDS cloud-docs
 
 include(GoogleCloudCppCommon)
 
-include(IncludeNlohmannJson)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
