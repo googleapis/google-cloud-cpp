@@ -40,7 +40,7 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)) {
   stream_manager_ = std::make_unique<StreamManager>(
-      []() -> std::shared_ptr<ReadStream> { return nullptr; },
+      []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
                                    resume_policy_prototype_->clone()));
 }
@@ -96,24 +96,33 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   auto stream_future = std::move(pending_stream_);
   lk.unlock();
 
-  //  Wait for the stream to be created.
-  auto stream_result = stream_future.get();
-  if (!stream_result) {
-    // Stream creation failed.
-    // The next call to AssurePendingStreamQueued will retry creation.
-    return;
-  }
+  // Use .then() to retrieves the result without blocking.
+  stream_future.then([w = WeakFromThis()](auto f) {
+    auto self = w.lock();
+    if (!self) return;
 
-  lk.lock();
-  if (cancelled_) return;
-  auto read_stream = std::make_shared<ReadStream>(
-      std::move(stream_result->stream), resume_policy_prototype_->clone());
-  auto new_it = stream_manager_->AddStream(std::move(read_stream));
-  // Now that we consumed pending_stream_, queue the next one immediately.
-  AssurePendingStreamQueued();
+    auto stream_result = f.get();
+    if (!stream_result) {
+      // Stream creation failed.
+      // The next call to AssurePendingStreamQueued will retry creation.
+      return;
+    }
 
-  lk.unlock();
-  OnRead(new_it, std::move(stream_result->first_response));
+    std::unique_lock<std::mutex> lk(self->mu_);
+    if (self->cancelled_) return;
+
+    auto read_stream =
+        std::make_shared<ReadStream>(std::move(stream_result->stream),
+                                     self->resume_policy_prototype_->clone());
+
+    auto new_it = self->stream_manager_->AddStream(std::move(read_stream));
+
+    // Now that we consumed pending_stream_, queue the next one immediately.
+    self->AssurePendingStreamQueued();
+
+    lk.unlock();
+    self->OnRead(new_it, std::move(stream_result->first_response));
+  });
 }
 
 std::unique_ptr<storage_experimental::AsyncReaderConnection>

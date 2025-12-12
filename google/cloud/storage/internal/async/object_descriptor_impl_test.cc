@@ -1572,6 +1572,178 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
   tested.reset();
 }
 
+/// @test Verify that a successful resume executes the OnResume logic correctly.
+TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
+  AsyncSequencer<bool> sequencer;
+
+  auto expect_startup_events = [&](AsyncSequencer<bool>& seq) {
+    auto e1 = seq.PopFrontWithName();
+    auto e2 = seq.PopFrontWithName();
+    std::set<std::string> names = {e1.second, e2.second};
+    if (names.count("Read[1]") && names.count("ProactiveFactory")) {
+      e1.first.set_value(true);  // Allow read to proceed
+      e2.first.set_value(true);  // Allow factory to proceed
+    } else {
+      ADD_FAILURE() << "Got unexpected events: " << e1.second << ", "
+                    << e2.second;
+    }
+  };
+
+  auto stream1 = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream1, Write).WillOnce([&](auto, auto) {
+    return sequencer.PushBack("Write[1]").then([](auto f) { return f.get(); });
+  });
+
+  // To keep Stream 1 alive during startup, the first Read returns a valid
+  // (empty) response. Subsequent reads return nullopt to trigger the
+  // Finish/Resume logic.
+  EXPECT_CALL(*stream1, Read)
+      .WillOnce([&] {
+        return sequencer.PushBack("Read[1]").then(
+            [](auto) { return absl::make_optional(Response{}); });
+      })
+      .WillRepeatedly([&] {
+        return sequencer.PushBack("Read[Loop]").then([](auto) {
+          return absl::optional<Response>{};
+        });
+      });
+
+  EXPECT_CALL(*stream1, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish[1]").then([](auto) {
+      return TransientError();
+    });
+  });
+  EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
+
+  auto stream2 = std::make_unique<MockStream>();
+  // The resumed stream to starts reading immediately.
+  EXPECT_CALL(*stream2, Read).WillRepeatedly([&] {
+    return sequencer.PushBack("Read[2]").then(
+        [](auto) { return absl::make_optional(Response{}); });
+  });
+  EXPECT_CALL(*stream2, Finish).WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*stream2, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([&](auto) {
+        return sequencer.PushBack("ProactiveFactory").then([](auto) {
+          return StatusOr<OpenStreamResult>(TransientError());
+        });
+      })
+      .WillOnce([&](auto) {
+        return sequencer.PushBack("ResumeFactory").then([&](auto) {
+          return StatusOr<OpenStreamResult>(OpenStreamResult{
+              std::make_shared<OpenStream>(std::move(stream2)), Response{}});
+        });
+      });
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      storage_experimental::LimitedErrorCountResumePolicy(1)(),
+      factory.AsStdFunction(), google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream1)));
+
+  tested->Start(Response{});
+  expect_startup_events(sequencer);
+
+  // Register the read range.
+  auto reader = tested->Read({0, 100});
+
+  auto next_event = sequencer.PopFrontWithName();
+  promise<bool> fail_stream_promise;
+
+  if (next_event.second == "Read[Loop]") {
+    fail_stream_promise = std::move(next_event.first);
+    // Now expect Write[1]
+    auto w1 = sequencer.PopFrontWithName();
+    EXPECT_EQ(w1.second, "Write[1]");
+    w1.first.set_value(true);
+  } else {
+    // It was Write[1] immediately
+    EXPECT_EQ(next_event.second, "Write[1]");
+    next_event.first.set_value(true);
+
+    // Now wait for Read[Loop]
+    auto read_loop = sequencer.PopFrontWithName();
+    EXPECT_EQ(read_loop.second, "Read[Loop]");
+    fail_stream_promise = std::move(read_loop.first);
+  }
+
+  // Trigger Failure on Stream 1.
+  fail_stream_promise.set_value(true);
+
+  auto f1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(f1.second, "Finish[1]");
+  f1.first.set_value(true);
+
+  auto resume = sequencer.PopFrontWithName();
+  EXPECT_EQ(resume.second, "ResumeFactory");
+  resume.first.set_value(true);
+
+  // The OnResume block calls OnRead, which triggers Read() on Stream 2.
+  auto r2 = sequencer.PopFrontWithName();
+  EXPECT_EQ(r2.second, "Read[2]");
+  r2.first.set_value(true);
+
+  tested.reset();
+}
+
+/// @test Verify Read() behavior when all streams have failed permanently.
+TEST(ObjectDescriptorImpl, ReadFailsWhenAllStreamsAreDead) {
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+
+  // Initial Read returns empty (EOF) to trigger Finish
+  EXPECT_CALL(*stream, Read).WillOnce([&] {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return absl::optional<Response>{}; });
+  });
+
+  EXPECT_CALL(*stream, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([&](auto) {
+    return sequencer.PushBack("ProactiveFactory").then([](auto) {
+      return StatusOr<OpenStreamResult>(PermanentError());
+    });
+  });
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)));
+
+  tested->Start(Response{});
+
+  auto e1 = sequencer.PopFrontWithName();
+  auto e2 = sequencer.PopFrontWithName();
+
+  std::set<std::string> names = {e1.second, e2.second};
+  ASSERT_EQ(names.count("Read[1]"), 1);
+  ASSERT_EQ(names.count("ProactiveFactory"), 1);
+
+  e1.first.set_value(true);
+  e2.first.set_value(true);
+
+  auto finish = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish.second, "Finish");
+  finish.first.set_value(true);
+
+  // At this point, the only active stream failed permanently and was removed.
+  // The proactive stream creation also failed. The manager is now EMPTY.
+
+  auto reader = tested->Read({0, 100});
+
+  // The Read() should immediately fail with FailedPrecondition.
+  auto result = reader->Read().get();
+  EXPECT_THAT(result,
+              VariantWith<Status>(StatusIs(StatusCode::kFailedPrecondition)));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
