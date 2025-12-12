@@ -119,6 +119,7 @@ steps:
 
   # Runs the specified build in the image that was created in the first step.
 - name: '${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}'
+  id: 'build.sh'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '--local', '--build', '${_BUILD_NAME}' ]
   secretEnv: ['CODECOV_TOKEN', 'UD', 'UD_PROJECT', 'UD_REGION', 'UD_ZONE', 'UD_SERVICE_ACCOUNT', 'UD_SERVICE_ACCOUNT_NAME', 'UD_IMPERSONATED_SERVICE_ACCOUNT_NAME', 'UD_IDTOKEN_SA_IMPERSONATION_CRED', 'UD_FETCH_OIDC_TOKEN', 'UD_EXTERNAL_ACCOUNT_CRED']
@@ -136,6 +137,7 @@ steps:
 
   # Remove the image created by this build.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'remove-image'
   allowFailure: true
   entrypoint: 'bash'
   args:
@@ -147,6 +149,7 @@ steps:
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'cancel-in-progress-builds-for-PR'
   allowFailure: true
   waitFor: [ '-' ]
   entrypoint: 'bash'
