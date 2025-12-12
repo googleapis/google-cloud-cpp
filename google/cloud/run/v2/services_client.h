@@ -118,7 +118,7 @@ class ServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.run.v2.CreateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L168}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
@@ -172,7 +172,7 @@ class ServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.run.v2.CreateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L168}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
@@ -226,8 +226,8 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L246}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.GetServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L250}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Service> GetService(std::string const& name,
@@ -256,8 +256,8 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L246}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.GetServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L250}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Service> GetService(
@@ -295,7 +295,7 @@ class ServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.run.v2.ListServicesRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L212}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Service> ListServices(
@@ -334,7 +334,7 @@ class ServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.run.v2.ListServicesRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L212}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Service> ListServices(
@@ -365,7 +365,7 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   /// [google.cloud.run.v2.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L193}
   ///
   // clang-format on
@@ -413,7 +413,7 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   /// [google.cloud.run.v2.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L193}
   ///
   // clang-format on
@@ -466,7 +466,7 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   /// [google.cloud.run.v2.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L193}
   ///
   // clang-format on
@@ -530,8 +530,8 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L257}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L261}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
@@ -583,8 +583,8 @@ class ServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L257}
-  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L280}
+  /// [google.cloud.run.v2.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L261}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L284}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(

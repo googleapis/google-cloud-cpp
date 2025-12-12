@@ -829,6 +829,35 @@ ArtifactRegistryTracingStub::DeleteAttachment(
                            child_->DeleteAttachment(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryTracingStub::AsyncExportArtifact(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ExportArtifact");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncExportArtifact(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::ExportArtifact(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ExportArtifact");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportArtifact(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

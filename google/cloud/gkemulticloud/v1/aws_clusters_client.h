@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class AwsClustersClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "AwsClusters has been deprecated and will be turned down in the future.")
+    AwsClustersClient {
  public:
   explicit AwsClustersClient(std::shared_ptr<AwsClustersConnection> connection,
                              Options opts = {});
@@ -90,6 +92,8 @@ class AwsClustersClient {
   ///@}
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -138,10 +142,11 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L257}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L274}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(
       std::string const& parent,
@@ -149,6 +154,8 @@ class AwsClustersClient {
       std::string const& aws_cluster_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAwsCluster
   ///
@@ -159,12 +166,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAwsCluster(
       NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       std::string const& aws_cluster_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -200,16 +210,19 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L257}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L274}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAwsCluster
   ///
@@ -220,12 +233,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAwsCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAwsCluster
   ///
@@ -234,11 +250,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
@@ -269,15 +288,18 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L293}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L312}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAwsCluster
   ///
@@ -288,12 +310,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAwsCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
@@ -324,15 +349,18 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L293}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L312}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAwsCluster
   ///
@@ -343,12 +371,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAwsCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAwsCluster
   ///
@@ -357,11 +388,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource.
@@ -389,13 +423,16 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L337}
+  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L358}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource.
@@ -420,14 +457,17 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L337}
+  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L358}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resources
   /// on a given Google Cloud project and region.
@@ -462,13 +502,16 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L356}
+  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L379}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resources
   /// on a given Google Cloud project and region.
@@ -502,14 +545,17 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L356}
+  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L379}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
       google::cloud::gkemulticloud::v1::ListAwsClustersRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource.
@@ -550,16 +596,19 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L398}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L425}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAwsCluster
   ///
@@ -570,10 +619,13 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAwsCluster(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource.
@@ -612,18 +664,21 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L398}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L425}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAwsCluster
   ///
@@ -634,12 +689,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAwsCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAwsCluster
   ///
@@ -648,11 +706,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Generates an access token for a cluster agent.
   ///
@@ -675,10 +736,11 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L733}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L770}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L786}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L825}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
   GenerateAwsClusterAgentToken(
@@ -687,6 +749,8 @@ class AwsClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Generates a short-lived access token to authenticate to a given
   /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource.
@@ -711,10 +775,11 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L705}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L724}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L754}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L775}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
@@ -722,6 +787,8 @@ class AwsClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool],
   /// attached to a given [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
@@ -770,11 +837,12 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L442}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L471}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
       std::string const& parent,
@@ -782,6 +850,8 @@ class AwsClustersClient {
       std::string const& aws_node_pool_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAwsNodePool
   ///
@@ -792,12 +862,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAwsNodePool(
       NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       std::string const& aws_node_pool_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool],
   /// attached to a given [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
@@ -833,17 +906,20 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L442}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L471}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAwsNodePool
   ///
@@ -854,12 +930,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAwsNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAwsNodePool
   ///
@@ -868,11 +947,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool].
   ///
@@ -902,16 +984,19 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L479}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L510}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAwsNodePool
   ///
@@ -922,12 +1007,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool].
   ///
@@ -957,16 +1045,19 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L479}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L510}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAwsNodePool
   ///
@@ -977,12 +1068,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAwsNodePool
   ///
@@ -991,11 +1085,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Rolls back a previously aborted or failed
   /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] update request.
@@ -1033,14 +1130,17 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L526}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L559}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RollbackAwsNodePoolUpdate
   ///
@@ -1051,10 +1151,13 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Rolls back a previously aborted or failed
   /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] update request.
@@ -1089,10 +1192,11 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L526}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.RollbackAwsNodePoolUpdateRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L559}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
@@ -1100,6 +1204,8 @@ class AwsClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RollbackAwsNodePoolUpdate
   ///
@@ -1110,6 +1216,7 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
@@ -1118,6 +1225,8 @@ class AwsClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief RollbackAwsNodePoolUpdate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -1125,11 +1234,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource.
@@ -1156,14 +1268,17 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L549}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L584}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource.
@@ -1187,15 +1302,18 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L549}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L584}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   /// resources on a given
@@ -1232,14 +1350,17 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L568}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L605}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   /// resources on a given
@@ -1274,15 +1395,18 @@ class AwsClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L568}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L605}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
       google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   /// resource.
@@ -1319,16 +1443,19 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L611}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L652}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAwsNodePool
   ///
@@ -1339,10 +1466,13 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   /// resource.
@@ -1377,18 +1507,21 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L611}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L652}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAwsNodePool
   ///
@@ -1399,12 +1532,15 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAwsNodePool
   ///
@@ -1413,11 +1549,14 @@ class AwsClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets the OIDC discovery document for the cluster.
   /// See the
@@ -1444,10 +1583,11 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L631}
-  /// [google.cloud.gkemulticloud.v1.GetAwsOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L657}
+  /// [google.cloud.gkemulticloud.v1.AwsOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L659}
+  /// [google.cloud.gkemulticloud.v1.GetAwsOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L700}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
   GetAwsOpenIdConfig(
       google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
@@ -1455,6 +1595,8 @@ class AwsClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets the public component of the cluster signing keys in
   /// JSON Web Key format.
@@ -1478,15 +1620,18 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L655}
-  /// [google.cloud.gkemulticloud.v1.GetAwsJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L673}
+  /// [google.cloud.gkemulticloud.v1.AwsJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L688}
+  /// [google.cloud.gkemulticloud.v1.GetAwsJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L718}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
       google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Returns information, such as supported AWS regions and Kubernetes
   /// versions, on a given Google Cloud location.
@@ -1513,14 +1658,17 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L662}
-  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L686}
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L697}
+  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L733}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
   GetAwsServerConfig(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Returns information, such as supported AWS regions and Kubernetes
   /// versions, on a given Google Cloud location.
@@ -1544,10 +1692,11 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L662}
-  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L686}
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L697}
+  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L733}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
   GetAwsServerConfig(
       google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&

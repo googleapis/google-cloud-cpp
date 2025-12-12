@@ -749,6 +749,37 @@ ArtifactRegistryTracingConnection::DeleteAttachment(
                            child_->DeleteAttachment(operation));
 }
 
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryTracingConnection::ExportArtifact(
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ExportArtifact");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportArtifact(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::ExportArtifact(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ExportArtifact");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ExportArtifact(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryTracingConnection::ExportArtifact(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ExportArtifact");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportArtifact(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 ArtifactRegistryTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
