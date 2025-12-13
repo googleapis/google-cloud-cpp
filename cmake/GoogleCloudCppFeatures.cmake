@@ -403,6 +403,13 @@ macro (google_cloud_cpp_enable_cleanup)
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
 
+    # We need the REST libraries for the full suite of samples.
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_REST
+        AND BUILD_TESTING
+        AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
+    endif ()
+
     list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
 endmacro ()
 
