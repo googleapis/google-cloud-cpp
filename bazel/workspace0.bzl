@@ -275,8 +275,7 @@ def gl_cpp_workspace0(name = None):
     )
 
     # Open Telemetry
-    maybe(
-        http_archive,
+    http_archive(
         name = "opentelemetry-cpp",
         urls = [
             "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz",

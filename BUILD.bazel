@@ -255,7 +255,4 @@ cc_library(
     ],
 )
 
-bool_flag(
-    name = "enable_opentelemetry",
-    build_setting_default = False,
-)
+

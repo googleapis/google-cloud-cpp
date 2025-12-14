@@ -47,7 +47,7 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
-find_package(opentelemetry-cpp CONFIG)
+find_package(opentelemetry-cpp CONFIG REQUIRED)
 
 # the client library
 add_library(
@@ -299,14 +299,12 @@ target_link_libraries(
            gRPC::grpc++
            gRPC::grpc
            protobuf::libprotobuf)
-if (opentelemetry-cpp_FOUND)
-    target_compile_definitions(
-        google_cloud_cpp_bigtable
-        PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
-    target_link_libraries(google_cloud_cpp_bigtable
-                          PUBLIC google-cloud-cpp::opentelemetry)
-    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
-endif ()
+target_compile_definitions(
+    google_cloud_cpp_bigtable
+    PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
+target_link_libraries(google_cloud_cpp_bigtable
+                      PUBLIC google-cloud-cpp::opentelemetry)
+set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable)
 target_include_directories(
     google_cloud_cpp_bigtable
