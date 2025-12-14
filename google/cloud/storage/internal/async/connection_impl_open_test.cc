@@ -202,6 +202,12 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            StatusOr<std::chrono::system_clock::time_point>(
+                std::chrono::system_clock::now()));
+      });
   auto connection = std::make_shared<AsyncConnectionImpl>(
       CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
       TestOptions());
