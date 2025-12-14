@@ -93,6 +93,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   }
   // Proactively create a new stream if needed.
   AssurePendingStreamQueued();
+  if (!pending_stream_.valid()) return;
   auto stream_future = std::move(pending_stream_);
   lk.unlock();
 

@@ -1580,7 +1580,7 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
     auto e1 = seq.PopFrontWithName();
     auto e2 = seq.PopFrontWithName();
     std::set<std::string> names = {e1.second, e2.second};
-    if (names.count("Read[1]") && names.count("ProactiveFactory")) {
+    if (names.count("Read[1]") != 0 && names.count("ProactiveFactory") != 0) {
       e1.first.set_value(true);  // Allow read to proceed
       e2.first.set_value(true);  // Allow factory to proceed
     } else {
