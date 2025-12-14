@@ -44,8 +44,8 @@ cc_library(
         "@abseil-cpp//absl/debugging:failure_signal_handler",
         "@abseil-cpp//absl/debugging:symbolize",
         "@googletest//:gtest_main",
-            "@opentelemetry-cpp//exporters/memory:in_memory_span_exporter",
-            "@opentelemetry-cpp//sdk/src/trace",
+        "@opentelemetry-cpp//exporters/memory:in_memory_span_exporter",
+        "@opentelemetry-cpp//sdk/src/trace",
         ]
 )
 
