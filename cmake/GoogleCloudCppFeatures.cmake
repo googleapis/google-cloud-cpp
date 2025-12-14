@@ -302,7 +302,7 @@ export_libraries_bzl()
 #   other feature, or even if no features are enabled.
 # ~~~
 macro (google_cloud_cpp_enable_deps)
-    list(APPEND GOOGLE_CLOUD_CPP_ENABLE opentelemetry)
+    list(APPEND GOOGLE_CLOUD_CPP_ENABLE monitoring trace opentelemetry)
     if (__ga_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE
