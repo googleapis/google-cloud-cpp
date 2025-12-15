@@ -44,13 +44,6 @@ capture_build_info(
     ],
 )
 
-config_setting(
-    name = "enable_opentelemetry",
-    flag_values = {
-        "//:enable_opentelemetry": "true",
-    },
-)
-
 filegroup(
     name = "common_hdrs",
     srcs = [h for h in google_cloud_cpp_common_hdrs if not h.startswith("internal/")],
@@ -61,13 +54,10 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
-    defines = select({
-        ":enable_opentelemetry": [
-            # Enable OpenTelemetry features in google-cloud-cpp
-            "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
-        ],
-        "//conditions:default": [],
-    }),
+    defines = [
+        # Enable OpenTelemetry features in google-cloud-cpp
+        "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
+    ],
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
@@ -94,12 +84,8 @@ cc_library(
         "@abseil-cpp//absl/types:optional",
         "@abseil-cpp//absl/types:span",
         "@abseil-cpp//absl/types:variant",
+        "@opentelemetry-cpp//api",
     ] + select({
-        ":enable_opentelemetry": [
-            "@opentelemetry-cpp//api",
-        ],
-        "//conditions:default": [],
-    }) + select({
         "@platforms//os:windows": [],
         "//conditions:default": [
             "@boringssl//:crypto",

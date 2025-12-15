@@ -54,9 +54,6 @@ build --experimental_ui_max_stdouterr_bytes=-1
 # in a random order to help expose undesirable interdependencies.
 test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 
-# By default, build the library with OpenTelemetry
-build --//:enable_opentelemetry
-
 # Don't show warnings when building external dependencies. This still shows
 # warnings when using these dependencies (say in headers).
 build --output_filter='^//((?!(external):).)*$'
