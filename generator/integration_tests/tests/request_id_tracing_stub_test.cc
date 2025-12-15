@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "generator/integration_tests/golden/v1/internal/request_id_tracing_stub.h"
 #include "generator/integration_tests/golden/v1/internal/request_id_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/request_id_option_defaults.h"
@@ -214,5 +212,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

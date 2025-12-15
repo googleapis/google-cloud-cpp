@@ -46,7 +46,7 @@ cc_library(
         "@googletest//:gtest_main",
         "@opentelemetry-cpp//exporters/memory:in_memory_span_exporter",
         "@opentelemetry-cpp//sdk/src/trace",
-        ]
+    ],
 )
 
 cc_library(
