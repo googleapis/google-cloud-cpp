@@ -6,6 +6,13 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.45.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Maintenance API](/google/cloud/maintenance/README.md)
+
 ## v2.44.0 - 2025-12
 
 ### [BigQueryControl](google/cloud/bigquerycontrol/README.md)

@@ -1,0 +1,24 @@
+/*!
+@page maintenance-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `maintenance_api_v1::MaintenanceClient`:
+
+@snippet maintenance_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page maintenance_api_v1::MaintenanceClient-universe-domain-snippet Override maintenance_api_v1::MaintenanceClient Universe Domain
+
+@snippet google/cloud/maintenance/api/v1/samples/maintenance_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
