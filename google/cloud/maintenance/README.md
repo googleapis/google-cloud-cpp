@@ -22,7 +22,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/maintenance/api/v1/ EDIT HERE _client.h"
+#include "google/cloud/maintenance/api/v1/maintenance_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -35,10 +35,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace maintenance = ::google::cloud::maintenance_api_v1;
-  auto client = maintenance::ServiceClient(
-      maintenance::MakeServiceConnection());  // EDIT HERE
+  auto client =
+      maintenance::MaintenanceClient(maintenance::MakeMaintenanceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListResourceMaintenances(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

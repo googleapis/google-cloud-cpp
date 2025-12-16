@@ -118,6 +118,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "licensemanager"
     "logging"
     "lustre"
+    "maintenance"
     "managedidentities"
     "managedkafka"
     "memcache"

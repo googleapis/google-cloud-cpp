@@ -52,6 +52,11 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_BUILD_METADATA)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_common.cmake")
 
+# We need the REST libraries for the full suite of samples.
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
+endif ()
+
 add_subdirectory(testing_util)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
@@ -73,6 +78,13 @@ endif ()
 if (universe_domain IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     OR BUILD_TESTING
     AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    include(
+        "${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_universe_domain.cmake")
+    add_subdirectory(universe_domain)
+endif ()
+
+# We need the universe_domain library for the full suite of samples.
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     include(
         "${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_universe_domain.cmake")
     add_subdirectory(universe_domain)
