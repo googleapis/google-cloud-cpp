@@ -100,6 +100,7 @@ export GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 
 # Cloud Pub/Sub configuration parameters
 export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
+export GOOGLE_CLOUD_CPP_PUBSUB_TEST_IMPERSONATED_SERVICE_ACCOUNT="pubsub-impersonate-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
 # Cloud Batch configuration parameters
 # Created using:

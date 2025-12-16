@@ -351,6 +351,22 @@ TEST_F(SubscriberIntegrationTest, PublishPullAck) {
   ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
 }
 
+TEST_F(SubscriberIntegrationTest, PublishPullAckWithImpersonatedCredentials) {
+  std::string iam_service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_PUBSUB_TEST_IMPERSONATED_SERVICE_ACCOUNT")
+          .value_or("");
+  ASSERT_FALSE(iam_service_account.empty());
+  auto google_default_credentials = MakeGoogleDefaultCredentials();
+  auto options = Options{}.set<UnifiedCredentialsOption>(
+      MakeImpersonateServiceAccountCredentials(google_default_credentials,
+                                               iam_service_account));
+  auto publisher = Publisher(MakePublisherConnection(topic_, options));
+  auto subscriber =
+      Subscriber(MakeSubscriberConnection(subscription_, options));
+  ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
+}
+
 TEST_F(SubscriberIntegrationTest, FireAndForget) {
   std::mutex mu;
   std::condition_variable cv;
