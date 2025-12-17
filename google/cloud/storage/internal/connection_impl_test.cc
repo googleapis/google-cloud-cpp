@@ -637,7 +637,6 @@ TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
   ASSERT_THAT(response, Not(IsOk()));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanNamed;
@@ -695,7 +694,6 @@ TEST(RetryClientTest, BackoffSpansUploadChunk) {
                   SpanNamed("Backoff"),
                   SpanNamed("storage::Client::WriteObject/UploadChunk")));
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

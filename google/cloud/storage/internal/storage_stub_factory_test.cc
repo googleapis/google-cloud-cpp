@@ -258,7 +258,6 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("QueryWriteStatus")));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
@@ -315,7 +314,6 @@ TEST_F(StorageStubFactory, TracingDisabled) {
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

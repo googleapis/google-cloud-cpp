@@ -1678,7 +1678,6 @@ TEST(GoldenThingAdminConnectionTest, ConnectionCreatedWithOption) {
   EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("foo"));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
@@ -1723,8 +1722,6 @@ TEST(GoldenThingAdminConnectionTest, TracingDisabled) {
               Not(Contains(SpanNamed(
                   "golden_v1::GoldenThingAdminConnection::DeleteBackup"))));
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1

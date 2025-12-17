@@ -19,11 +19,9 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/semconv/incubating/code_attributes.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/span.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 #include <string>
 
@@ -31,8 +29,6 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
  public:
@@ -93,16 +89,6 @@ std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
   return std::make_shared<TracingPullLeaseManagerImpl>(
       std::move(manager), std::move(ack_id), std::move(subscription));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
-    std::shared_ptr<PullLeaseManagerImpl> manager, std::string,
-    pubsub::Subscription) {
-  return manager;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

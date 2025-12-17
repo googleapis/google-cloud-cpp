@@ -32,7 +32,6 @@ using ::google::cloud::golden_v1_mocks::MockGoldenThingAdminConnection;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -701,20 +700,6 @@ TEST(MakeGoldenThingAdminTracingConnection, TracingDisabled) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
 }
-
-#else
-
-TEST(MakeGoldenThingAdminTracingConnection, NoOpenTelemetry) {
-  auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, DropDatabase)
-      .WillOnce(Return(internal::AbortedError("fail")));
-
-  auto under_test = MakeGoldenThingAdminTracingConnection(mock);
-  auto result = under_test->DropDatabase({});
-  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

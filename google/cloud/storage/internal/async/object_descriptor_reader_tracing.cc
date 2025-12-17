@@ -17,17 +17,13 @@
 #include "google/cloud/storage/internal/async/object_descriptor_reader.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/semconv/incubating/thread_attributes.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -77,15 +73,6 @@ std::unique_ptr<storage_experimental::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl) {
   return std::make_unique<ObjectDescriptorReaderTracing>(std::move(impl));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::unique_ptr<storage_experimental::AsyncReaderConnection>
-MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl) {
-  return std::make_unique<ObjectDescriptorReader>(std::move(impl));
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

@@ -21,8 +21,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 namespace {
 
 using google::cloud::internal::EndSpan;
@@ -75,17 +73,6 @@ MakeTracingAsyncRewriterConnection(
   return std::make_shared<AsyncRewriterTracingConnection>(std::move(impl),
                                                           std::move(span));
 }
-
-#else
-
-std::shared_ptr<storage_experimental::AsyncRewriterConnection>
-MakeTracingAsyncRewriterConnection(
-    std::shared_ptr<storage_experimental::AsyncRewriterConnection> impl,
-    bool /*enabled*/) {
-  return impl;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

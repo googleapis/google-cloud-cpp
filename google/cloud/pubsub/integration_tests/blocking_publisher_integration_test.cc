@@ -71,7 +71,7 @@ TEST_F(BlockingPublisherIntegrationTest, Basic) {
   ASSERT_STATUS_OK(publish);
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 
@@ -90,7 +90,6 @@ TEST_F(BlockingPublisherIntegrationTest, TracingDisabled) {
       publisher.Publish(topic_, MessageBuilder().SetData("test data").Build());
   ASSERT_STATUS_OK(publish);
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

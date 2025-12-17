@@ -161,7 +161,6 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
   TracingOptions tracing_options_;
 };
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
  public:
   explicit AsyncAccessTokenGeneratorTracing(
@@ -197,8 +196,6 @@ class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 }  // namespace
 
 std::shared_ptr<MinimalIamCredentialsStub> DecorateMinimalIamCredentialsStub(
@@ -209,11 +206,9 @@ std::shared_ptr<MinimalIamCredentialsStub> DecorateMinimalIamCredentialsStub(
     impl = std::make_shared<AsyncAccessTokenGeneratorLogging>(
         std::move(impl), options.get<GrpcTracingOptionsOption>());
   }
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(options)) {
     impl = std::make_shared<AsyncAccessTokenGeneratorTracing>(std::move(impl));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return impl;
 }
 

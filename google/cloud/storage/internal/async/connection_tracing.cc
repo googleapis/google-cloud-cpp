@@ -27,8 +27,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 namespace {
 
 class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
@@ -232,16 +230,6 @@ MakeTracingAsyncConnection(
   if (!internal::TracingEnabled(impl->options())) return impl;
   return std::make_unique<AsyncConnectionTracing>(std::move(impl));
 }
-
-#else
-
-std::shared_ptr<storage_experimental::AsyncConnection>
-MakeTracingAsyncConnection(
-    std::shared_ptr<storage_experimental::AsyncConnection> impl) {
-  return impl;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

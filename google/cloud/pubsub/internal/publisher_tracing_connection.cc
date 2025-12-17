@@ -13,18 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
+#include "google/cloud/pubsub/internal/message_propagator.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/status.h"
-#include "google/cloud/version.h"
-#include <memory>
-#include <string>
-#include <utility>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/pubsub/internal/message_propagator.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
@@ -33,14 +29,15 @@
 #include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
@@ -131,16 +128,6 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
   return std::make_shared<PublisherTracingConnection>(std::move(topic),
                                                       std::move(connection));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
-    pubsub::Topic,  // NOLINT(performance-unnecessary-value-param)
-    std::shared_ptr<pubsub::PublisherConnection> connection) {
-  return connection;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

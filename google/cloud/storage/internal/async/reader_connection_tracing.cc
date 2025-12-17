@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
@@ -104,5 +102,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

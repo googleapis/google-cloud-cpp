@@ -18,17 +18,13 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/span_startoptions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -69,15 +65,6 @@ std::shared_ptr<MessageCallback> MakeTracingMessageCallback(
   return std::make_shared<TracingMessageCallback>(std::move(message_callback),
                                                   opts);
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<MessageCallback> MakeTracingMessageCallback(
-    std::shared_ptr<MessageCallback> message_callback, Options const&) {
-  return message_callback;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

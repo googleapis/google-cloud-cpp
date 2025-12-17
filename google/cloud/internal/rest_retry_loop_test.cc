@@ -235,7 +235,6 @@ TEST(RestRetryLoopTest, ExhaustedOnStart) {
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
@@ -271,8 +270,6 @@ TEST(RestRetryLoopTest, TracingDisabled) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

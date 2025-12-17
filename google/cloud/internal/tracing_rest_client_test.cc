@@ -19,11 +19,9 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/semconv/incubating/network_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -48,7 +46,6 @@ std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -390,8 +387,6 @@ TEST(TracingRestClient, NoOpenTelemetry) {
   auto contents = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

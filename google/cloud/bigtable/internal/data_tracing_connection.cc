@@ -21,7 +21,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace {
 
 std::vector<bigtable::FailedMutation> EndBulkApplySpan(
@@ -221,8 +220,6 @@ std::shared_ptr<bigtable::DataConnection> MakeDataTracingConnection(
     std::shared_ptr<bigtable::DataConnection> conn) {
   return conn;
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

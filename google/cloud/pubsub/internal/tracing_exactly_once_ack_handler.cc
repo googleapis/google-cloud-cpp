@@ -18,13 +18,11 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/semconv/incubating/code_attributes.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/context.h>
 #include <opentelemetry/trace/span.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -33,8 +31,6 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -139,15 +135,6 @@ MakeTracingExactlyOnceAckHandler(
                                                         span.span);
 }
 
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>
-MakeTracingExactlyOnceAckHandler(
-    std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler, Span const&) {
-  return handler;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

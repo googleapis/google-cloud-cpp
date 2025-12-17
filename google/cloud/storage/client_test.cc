@@ -196,7 +196,6 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
               ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 
@@ -238,8 +237,6 @@ TEST_F(ClientTest, OTelDisableTracing) {
   EXPECT_THAT(impl->InspectStackStructure(),
               ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 

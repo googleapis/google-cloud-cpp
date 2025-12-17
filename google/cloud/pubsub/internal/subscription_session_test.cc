@@ -28,13 +28,11 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <gmock/gmock.h>
 #include <atomic>
 #include <chrono>
 #include <thread>
@@ -203,8 +201,6 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   ScheduleCallbacks(/*ack_count=*/100, /*enable_open_telemetry=*/false);
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -233,8 +229,6 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
                          SpanHasAttributes(OTelAttribute<std::string>(
                              sc::messaging::kMessagingSystem, "gcp_pubsub")))));
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {

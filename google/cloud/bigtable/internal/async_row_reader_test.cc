@@ -1733,7 +1733,6 @@ TEST_F(AsyncRowReaderTest, BigtableCookie) {
                          std::make_shared<OperationContext>());
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
@@ -1811,7 +1810,6 @@ TEST_F(AsyncRowReaderTest, CallSpanActiveThroughout) {
   // Block until the async call has completed.
   p.get_future().get();
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

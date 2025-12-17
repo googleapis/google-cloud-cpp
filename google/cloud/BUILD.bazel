@@ -54,10 +54,6 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
-    defines = [
-        # Enable OpenTelemetry features in google-cloud-cpp
-        "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
-    ],
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",

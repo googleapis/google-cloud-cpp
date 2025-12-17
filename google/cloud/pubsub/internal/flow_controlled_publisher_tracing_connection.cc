@@ -14,18 +14,14 @@
 
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/semconv/incubating/code_attributes.h>
 #include <opentelemetry/trace/context.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 class FlowControlledPublisherTracingConnection
@@ -74,16 +70,6 @@ MakeFlowControlledPublisherTracingConnection(
   return std::make_shared<FlowControlledPublisherTracingConnection>(
       std::move(connection));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<pubsub::PublisherConnection>
-MakeFlowControlledPublisherTracingConnection(
-    std::shared_ptr<pubsub::PublisherConnection> connection) {
-  return connection;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

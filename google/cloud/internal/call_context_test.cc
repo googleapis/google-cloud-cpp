@@ -44,7 +44,6 @@ TEST(CallContext, Options) {
   EXPECT_FALSE(CallContext().options->has<IntOption>());
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
@@ -66,8 +65,6 @@ TEST(CallContext, OTel) {
   }
   EXPECT_THAT(CallContext().otel_context, IsEmpty());
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal
