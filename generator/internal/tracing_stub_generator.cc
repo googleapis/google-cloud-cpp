@@ -57,8 +57,6 @@ Status TracingStubGenerator::GenerateHeader() {
   // Tracing stub class definition
   HeaderPrint(
       R"""(
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class $tracing_stub_class_name$ : public $stub_class_name$ {
  public:
   ~$tracing_stub_class_name$() override = default;
@@ -73,8 +71,6 @@ class $tracing_stub_class_name$ : public $stub_class_name$ {
   std::shared_ptr<$stub_class_name$> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.
@@ -129,8 +125,6 @@ Status TracingStubGenerator::GenerateCc() {
   // constructor
   CcPrint(
       R"""(
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 $tracing_stub_class_name$::$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -346,15 +340,9 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
   }
 
   CcPrint(R"""(
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<$tracing_stub_class_name$>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 )""");
   CcCloseNamespaces();
