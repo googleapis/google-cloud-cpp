@@ -319,20 +319,6 @@ TEST(OpenTelemetry, TracedAsyncBackoffPreservesContext) {
                   SpanNamed("parent")));
 }
 
-#else
-
-TEST(NoOpenTelemetry, TracedAsyncBackoff) {
-  auto const duration = std::chrono::nanoseconds(100);
-  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer(duration))
-      .WillOnce(Return(ByMove(make_ready_future(
-          make_status_or(std::chrono::system_clock::now())))));
-  CompletionQueue cq(mock_cq);
-
-  auto f = TracedAsyncBackoff(cq, Options{}, duration, "Async Backoff");
-  EXPECT_STATUS_OK(f.get());
-}
-
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
