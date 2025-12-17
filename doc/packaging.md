@@ -1196,7 +1196,16 @@ sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
-        patch zlib-devel libcurl-devel c-ares-devel tar wget which
+        patch zlib-devel libcurl-devel c-ares-devel tar wget which \
+        autoconf automake libtool binutils
+```
+
+Set some useful environment variables.
+
+```bash
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is

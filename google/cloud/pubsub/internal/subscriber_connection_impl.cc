@@ -29,10 +29,11 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriberConnectionImpl::SubscriberConnectionImpl(
-    Options opts, std::shared_ptr<pubsub_internal::SubscriberStub> stub)
+    Options opts, std::shared_ptr<pubsub_internal::SubscriberStub> stub,
+    std::shared_ptr<BackgroundThreads> background)
     : opts_(std::move(opts)),
       stub_(std::move(stub)),
-      background_(internal::MakeBackgroundThreadsFactory(opts_)()),
+      background_(std::move(background)),
       generator_(internal::MakeDefaultPRNG()) {}
 
 SubscriberConnectionImpl::~SubscriberConnectionImpl() = default;

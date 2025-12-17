@@ -18,6 +18,7 @@
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_api_key_credentials.h"
+#include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
@@ -33,6 +34,7 @@ namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::ApiKeyConfig;
+using ::google::cloud::internal::ComputeEngineCredentialsConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
@@ -141,6 +143,14 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ApiKeyConfig const& cfg) override {
       result =
           std::make_shared<oauth2_internal::ApiKeyCredentials>(cfg.api_key());
+    }
+
+    void visit(ComputeEngineCredentialsConfig const& cfg) override {
+      result = Decorate(
+          std::make_shared<
+              google::cloud::oauth2_internal::ComputeEngineCredentials>(
+              cfg.options(), std::move(client_factory_)),
+          cfg.options());
     }
 
    private:

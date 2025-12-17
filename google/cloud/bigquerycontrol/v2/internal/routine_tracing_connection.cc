@@ -57,15 +57,6 @@ RoutineServiceTracingConnection::UpdateRoutine(
   return internal::EndSpan(*span, child_->UpdateRoutine(request));
 }
 
-StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceTracingConnection::PatchRoutine(
-    google::cloud::bigquery::v2::PatchRoutineRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RoutineServiceConnection::PatchRoutine");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->PatchRoutine(request));
-}
-
 Status RoutineServiceTracingConnection::DeleteRoutine(
     google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
   auto span = internal::MakeSpan(

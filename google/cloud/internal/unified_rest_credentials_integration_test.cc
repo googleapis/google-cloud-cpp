@@ -18,6 +18,7 @@
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -97,6 +98,16 @@ TEST(UnifiedRestCredentialsIntegrationTest, InsecureCredentials) {
 TEST(UnifiedRestCredentialsIntegrationTest, GoogleDefaultCredentials) {
   ASSERT_NO_FATAL_FAILURE(MakeStorageRpcCall(
       Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials())));
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, ComputeEngineCredentials) {
+  auto oauth2_creds = MapCredentials(*MakeComputeEngineCredentials());
+  auto token = oauth2_creds->GetToken(std::chrono::system_clock::now());
+  // This test only works if we're running in a Google Production VM. Running in
+  // other environments will always fail.
+  if (!token.ok()) GTEST_SKIP();
+  ASSERT_NO_FATAL_FAILURE(MakeStorageRpcCall(
+      Options{}.set<UnifiedCredentialsOption>(MakeComputeEngineCredentials())));
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, AccessTokenCredentials) {

@@ -7,6 +7,7 @@
 @googleapis//google/spanner/v1:change_stream.proto
 @googleapis//google/spanner/v1:commit_response.proto
 @googleapis//google/spanner/v1:keys.proto
+@googleapis//google/spanner/v1:location.proto
 @googleapis//google/spanner/v1:mutation.proto
 @googleapis//google/spanner/v1:query_plan.proto
 @googleapis//google/spanner/v1:result_set.proto

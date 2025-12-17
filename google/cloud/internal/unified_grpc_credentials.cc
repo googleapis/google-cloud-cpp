@@ -18,6 +18,7 @@
 #include "google/cloud/internal/grpc_access_token_authentication.h"
 #include "google/cloud/internal/grpc_api_key_authentication.h"
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
+#include "google/cloud/internal/grpc_compute_engine_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
 #include <grpcpp/security/credentials.h>
@@ -129,6 +130,10 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ApiKeyConfig const& cfg) override {
       result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());
     }
+    void visit(ComputeEngineCredentialsConfig const&) override {
+      result = std::make_unique<GrpcComputeEngineAuthentication>(options);
+    }
+
   } visitor(std::move(cq), std::move(options));
 
   CredentialsVisitor::dispatch(credentials, visitor);

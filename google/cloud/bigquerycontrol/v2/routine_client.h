@@ -108,8 +108,8 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L487}
-  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
+  /// [google.cloud.bigquery.v2.GetRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L482}
+  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L80}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Routine> GetRoutine(
@@ -139,8 +139,8 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L499}
-  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
+  /// [google.cloud.bigquery.v2.InsertRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L494}
+  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L80}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Routine> InsertRoutine(
@@ -171,44 +171,12 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
-  /// [google.cloud.bigquery.v2.UpdateRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L511}
+  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L80}
+  /// [google.cloud.bigquery.v2.UpdateRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L506}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
       google::cloud::bigquery::v2::UpdateRoutineRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Patches information in an existing routine. The patch method does a partial
-  /// update to an existing Routine resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.bigquery.v2.PatchRoutineRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.bigquery.v2.Routine])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.PatchRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L526}
-  /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Routine> PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -232,7 +200,7 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L547}
+  /// [google.cloud.bigquery.v2.DeleteRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L521}
   ///
   // clang-format on
   Status DeleteRoutine(
@@ -263,8 +231,8 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListRoutinesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L559}
-  /// [google.cloud.bigquery.v2.ListRoutinesResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L581}
+  /// [google.cloud.bigquery.v2.ListRoutinesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L533}
+  /// [google.cloud.bigquery.v2.ListRoutinesResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L555}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse> ListRoutines(

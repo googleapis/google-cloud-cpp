@@ -327,6 +327,16 @@ CloudBuildAuth::ListWorkerPools(
   return child_->ListWorkerPools(context, options, request);
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildAuth::GetDefaultServiceAccount(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDefaultServiceAccount(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

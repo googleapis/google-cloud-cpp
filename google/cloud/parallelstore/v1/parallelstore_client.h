@@ -136,7 +136,7 @@ class ParallelstoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
-  /// [google.cloud.parallelstore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L347}
+  /// [google.cloud.parallelstore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L395}
   ///
   // clang-format on
   StreamRange<google::cloud::parallelstore::v1::Instance> ListInstances(
@@ -175,7 +175,7 @@ class ParallelstoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
-  /// [google.cloud.parallelstore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L347}
+  /// [google.cloud.parallelstore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L395}
   ///
   // clang-format on
   StreamRange<google::cloud::parallelstore::v1::Instance> ListInstances(
@@ -201,7 +201,7 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L388}
+  /// [google.cloud.parallelstore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L436}
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
@@ -231,7 +231,7 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L388}
+  /// [google.cloud.parallelstore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L436}
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
@@ -274,7 +274,7 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L400}
+  /// [google.cloud.parallelstore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L448}
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
@@ -329,7 +329,7 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L400}
+  /// [google.cloud.parallelstore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L448}
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
@@ -395,7 +395,7 @@ class ParallelstoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
-  /// [google.cloud.parallelstore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L440}
+  /// [google.cloud.parallelstore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L488}
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
@@ -448,7 +448,7 @@ class ParallelstoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
-  /// [google.cloud.parallelstore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L440}
+  /// [google.cloud.parallelstore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L488}
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
@@ -508,8 +508,8 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L468}
-  /// [google.cloud.parallelstore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L494}
+  /// [google.cloud.parallelstore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L516}
+  /// [google.cloud.parallelstore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L542}
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
@@ -559,8 +559,8 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L468}
-  /// [google.cloud.parallelstore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L494}
+  /// [google.cloud.parallelstore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L516}
+  /// [google.cloud.parallelstore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L542}
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
@@ -627,8 +627,8 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L554}
-  /// [google.cloud.parallelstore.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L671}
+  /// [google.cloud.parallelstore.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L602}
+  /// [google.cloud.parallelstore.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L727}
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
@@ -694,8 +694,8 @@ class ParallelstoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.parallelstore.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L613}
-  /// [google.cloud.parallelstore.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L730}
+  /// [google.cloud.parallelstore.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L665}
+  /// [google.cloud.parallelstore.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L786}
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>

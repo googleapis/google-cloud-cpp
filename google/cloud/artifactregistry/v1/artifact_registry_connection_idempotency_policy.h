@@ -210,6 +210,10 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
       google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
           request);
 
+  virtual google::cloud::Idempotency ExportArtifact(
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

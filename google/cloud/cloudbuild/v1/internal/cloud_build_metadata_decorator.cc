@@ -755,6 +755,37 @@ CloudBuildMetadata::ListWorkerPools(
   return child_->ListWorkerPools(context, options, request);
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildMetadata::GetDefaultServiceAccount(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::
+                    GetDefaultServiceAccountRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{
+                 "projects/[^/]+/locations/([^/]+)/defaultServiceAccount",
+                 std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->GetDefaultServiceAccount(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

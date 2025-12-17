@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class AzureClustersClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "AzureClusters has been deprecated and will be turned down in the future.")
+    AzureClustersClient {
  public:
   explicit AzureClustersClient(
       std::shared_ptr<AzureClustersConnection> connection, Options opts = {});
@@ -90,6 +92,8 @@ class AzureClustersClient {
   ///@}
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resource on a given Google Cloud project and region.
@@ -141,11 +145,12 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L702}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L752}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
   CreateAzureClient(
       std::string const& parent,
@@ -153,6 +158,8 @@ class AzureClustersClient {
       std::string const& azure_client_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureClient
   ///
@@ -163,12 +170,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAzureClient(
       NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
       std::string const& azure_client_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resource on a given Google Cloud project and region.
@@ -207,17 +217,20 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L702}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L752}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
   CreateAzureClient(
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureClient
   ///
@@ -228,12 +241,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAzureClient(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureClient
   ///
@@ -242,11 +258,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
   CreateAzureClient(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
@@ -274,14 +293,17 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L738}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L790}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
@@ -305,15 +327,18 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L738}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L790}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resources on a given Google Cloud project and region.
@@ -347,14 +372,17 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L758}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L812}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resources on a given Google Cloud project and region.
@@ -387,15 +415,18 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L758}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L812}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
       google::cloud::gkemulticloud::v1::ListAzureClientsRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resource.
@@ -436,16 +467,19 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L800}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L858}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureClient
   ///
@@ -456,10 +490,13 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAzureClient(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resource.
@@ -497,18 +534,21 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L800}
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L416}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L858}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureClient
   ///
@@ -519,12 +559,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAzureClient(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureClient
   ///
@@ -533,11 +576,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -586,10 +632,11 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L309}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L329}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(
       std::string const& parent,
@@ -597,6 +644,8 @@ class AzureClustersClient {
       std::string const& azure_cluster_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureCluster
   ///
@@ -607,12 +656,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAzureCluster(
       NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       std::string const& azure_cluster_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -648,10 +700,11 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L309}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L329}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
@@ -659,6 +712,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureCluster
   ///
@@ -669,6 +724,7 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAzureCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
@@ -677,6 +733,8 @@ class AzureClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief CreateAzureCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -684,11 +742,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
@@ -736,15 +797,18 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L345}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L367}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAzureCluster
   ///
@@ -755,12 +819,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAzureCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
@@ -791,9 +858,10 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L345}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L367}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
@@ -801,6 +869,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAzureCluster
   ///
@@ -811,6 +881,7 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAzureCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
@@ -819,6 +890,8 @@ class AzureClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief UpdateAzureCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -826,11 +899,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -858,13 +934,16 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L379}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L403}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -889,14 +968,17 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L379}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L403}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
       google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resources on a given Google Cloud project and region.
@@ -931,13 +1013,16 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L398}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L424}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resources on a given Google Cloud project and region.
@@ -971,14 +1056,17 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L398}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L424}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
       google::cloud::gkemulticloud::v1::ListAzureClustersRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -1019,16 +1107,19 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L440}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L470}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureCluster
   ///
@@ -1039,10 +1130,13 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAzureCluster(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -1081,12 +1175,13 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L440}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L470}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
@@ -1094,6 +1189,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureCluster
   ///
@@ -1104,6 +1201,7 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAzureCluster(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
@@ -1112,6 +1210,8 @@ class AzureClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief DeleteAzureCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -1119,11 +1219,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Generates an access token for a cluster agent.
   ///
@@ -1146,10 +1249,11 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L858}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L895}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L922}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L961}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
   GenerateAzureClusterAgentToken(
@@ -1158,6 +1262,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Generates a short-lived access token to authenticate to a given
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -1182,10 +1288,11 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L830}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L849}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L890}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L911}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
@@ -1193,6 +1300,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool],
   /// attached to a given
@@ -1242,11 +1351,12 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L484}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L516}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(
       std::string const& parent,
@@ -1254,6 +1364,8 @@ class AzureClustersClient {
       std::string const& azure_node_pool_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureNodePool
   ///
@@ -1264,12 +1376,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAzureNodePool(
       NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       std::string const& azure_node_pool_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates a new [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool],
   /// attached to a given
@@ -1306,11 +1421,12 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L484}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L516}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
@@ -1318,6 +1434,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateAzureNodePool
   ///
@@ -1328,6 +1446,7 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateAzureNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
@@ -1336,6 +1455,8 @@ class AzureClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief CreateAzureNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -1343,11 +1464,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
   ///
@@ -1384,16 +1508,19 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L521}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L555}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAzureNodePool
   ///
@@ -1404,12 +1531,15 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
   ///
@@ -1439,10 +1569,11 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L521}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L555}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
@@ -1450,6 +1581,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateAzureNodePool
   ///
@@ -1460,6 +1593,7 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
@@ -1468,6 +1602,8 @@ class AzureClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief UpdateAzureNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -1475,11 +1611,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -1506,14 +1645,17 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L545}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L581}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Describes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -1537,15 +1679,18 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L545}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L581}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
       google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]
   /// resources on a given
@@ -1582,14 +1727,17 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L564}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L602}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
   ListAzureNodePools(std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists all [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]
   /// resources on a given
@@ -1624,16 +1772,19 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L564}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L602}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
   ListAzureNodePools(
       google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -1670,16 +1821,19 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L607}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L649}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureNodePool
   ///
@@ -1690,10 +1844,13 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -1728,12 +1885,13 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L607}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L518}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L649}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
@@ -1741,6 +1899,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteAzureNodePool
   ///
@@ -1751,6 +1911,7 @@ class AzureClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
       NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
@@ -1759,6 +1920,8 @@ class AzureClustersClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief DeleteAzureNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -1766,11 +1929,14 @@ class AzureClustersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets the OIDC discovery document for the cluster.
   /// See the
@@ -1794,14 +1960,17 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L681}
-  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L654}
+  /// [google.cloud.gkemulticloud.v1.AzureOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L712}
+  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L698}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
   GetAzureOpenIdConfig(std::string const& azure_cluster, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets the OIDC discovery document for the cluster.
   /// See the
@@ -1828,10 +1997,11 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L681}
-  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L654}
+  /// [google.cloud.gkemulticloud.v1.AzureOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L712}
+  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L698}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
   GetAzureOpenIdConfig(
       google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
@@ -1839,6 +2009,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets the public component of the cluster signing keys in
   /// JSON Web Key format.
@@ -1859,14 +2031,17 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L705}
-  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L670}
+  /// [google.cloud.gkemulticloud.v1.AzureJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L741}
+  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L716}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
   GetAzureJsonWebKeys(std::string const& azure_cluster, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Gets the public component of the cluster signing keys in
   /// JSON Web Key format.
@@ -1890,10 +2065,11 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L705}
-  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L670}
+  /// [google.cloud.gkemulticloud.v1.AzureJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L741}
+  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L716}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
   GetAzureJsonWebKeys(
       google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
@@ -1901,6 +2077,8 @@ class AzureClustersClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Returns information, such as supported Azure regions and Kubernetes
   /// versions, on a given Google Cloud location.
@@ -1927,14 +2105,17 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L713}
-  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L683}
+  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L751}
+  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L731}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Returns information, such as supported Azure regions and Kubernetes
   /// versions, on a given Google Cloud location.
@@ -1958,10 +2139,11 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L713}
-  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L683}
+  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L751}
+  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L731}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(
       google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&

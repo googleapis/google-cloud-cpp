@@ -137,7 +137,6 @@ void SetClientUniverseDomain(std::vector<std::string> const& argv) {
         " <bucket-name> <object-name>"};
   }
   //! [START storage_set_client_universe_domain] [set-client-universe-domain]
-  namespace g = ::google::cloud;
   namespace gcs = ::google::cloud::storage;
   [](std::string const& bucket_name, std::string const& object_name) {
     google::cloud::Options options;

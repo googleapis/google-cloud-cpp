@@ -89,7 +89,7 @@ class TopicAdminClient {
   /// Creates the given topic with the given name. See the [resource name rules]
   /// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
   ///
-  /// @param name  Required. The name of the topic. It must have the format
+  /// @param name  Required. Identifier. The name of the topic. It must have the format
   ///  `"projects/{project}/topics/{topic}"`. `{topic}` must start with a letter,
   ///  and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),
   ///  underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent
@@ -169,7 +169,7 @@ class TopicAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L827}
-  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L972}
+  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L976}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
@@ -201,7 +201,7 @@ class TopicAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L827}
-  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L972}
+  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L976}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
@@ -211,7 +211,7 @@ class TopicAdminClient {
   ///
   /// Gets the configuration of a topic.
   ///
-  /// @param topic  Required. The name of the topic to get.
+  /// @param topic  Required. Identifier. The name of the topic to get.
   ///  Format is `projects/{project}/topics/{topic}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -226,7 +226,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L962}
+  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L965}
   /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L827}
   ///
   // clang-format on
@@ -256,7 +256,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L962}
+  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L965}
   /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L827}
   ///
   // clang-format on
@@ -267,7 +267,7 @@ class TopicAdminClient {
   ///
   /// Lists matching topics.
   ///
-  /// @param project  Required. The name of the project in which to list topics.
+  /// @param project  Required. Identifier. The name of the project in which to list topics.
   ///  Format is `projects/{project-id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -291,7 +291,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1007}
+  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1012}
   /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L827}
   ///
   // clang-format on
@@ -330,7 +330,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1007}
+  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1012}
   /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L827}
   ///
   // clang-format on
@@ -363,7 +363,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
+  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1043}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSubscriptions(std::string const& topic,
@@ -399,7 +399,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
+  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1043}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSubscriptions(
@@ -436,7 +436,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1072}
+  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1078}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSnapshots(std::string const& topic,
@@ -476,7 +476,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1072}
+  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1078}
   ///
   // clang-format on
   StreamRange<std::string> ListTopicSnapshots(
@@ -490,7 +490,7 @@ class TopicAdminClient {
   /// configuration or subscriptions. Existing subscriptions to this topic are
   /// not deleted, but their `topic` field is set to `_deleted-topic_`.
   ///
-  /// @param topic  Required. Name of the topic to delete.
+  /// @param topic  Required. Identifier. Name of the topic to delete.
   ///  Format is `projects/{project}/topics/{topic}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -503,7 +503,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1104}
+  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1110}
   ///
   // clang-format on
   Status DeleteTopic(std::string const& topic, Options opts = {});
@@ -533,7 +533,7 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1104}
+  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1110}
   ///
   // clang-format on
   Status DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request,
@@ -565,8 +565,8 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DetachSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1114}
-  /// [google.pubsub.v1.DetachSubscriptionResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1127}
+  /// [google.pubsub.v1.DetachSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1121}
+  /// [google.pubsub.v1.DetachSubscriptionResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1134}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
