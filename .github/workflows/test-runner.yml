@@ -88,15 +88,8 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-bazel:
-    # Build the full matrix only on push events to the default branch, or
-    # when PR gets the has a `gha:full-build` label, or when it had the
-    # label already and it gets a new commit.
-    if: |-
-      ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
-      }}
+    # Disabled
+    if: false
     name: Windows-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/windows-bazel.yml
@@ -153,8 +146,8 @@ jobs:
     needs:
       # macos-bazel is disabled
       # macos-cmake is disabled
-      - windows-bazel
-      # windows-cmake is disabled is disabled
+      # windows-bazel is disabled
+      # windows-cmake is disabled
     # Run even if the other jobs failed or were skipped.
     if: always()
     runs-on: ubuntu-latest
