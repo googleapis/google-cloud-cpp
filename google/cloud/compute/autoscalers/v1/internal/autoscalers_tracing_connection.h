@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_autoscalers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AutoscalersTracingConnection
     : public compute_autoscalers_v1::AutoscalersConnection {
  public:
@@ -101,8 +99,6 @@ class AutoscalersTracingConnection
  private:
   std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

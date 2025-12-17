@@ -28,8 +28,6 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AdminServiceTracingConnection
     : public pubsublite::AdminServiceConnection {
  public:
@@ -139,8 +137,6 @@ class AdminServiceTracingConnection
  private:
   std::shared_ptr<pubsublite::AdminServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

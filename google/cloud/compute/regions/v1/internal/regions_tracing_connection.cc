@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_regions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionsTracingConnection::RegionsTracingConnection(
     std::shared_ptr<compute_regions_v1::RegionsConnection> child)
     : child_(std::move(child)) {}
@@ -53,16 +51,12 @@ RegionsTracingConnection::ListRegions(
       google::cloud::cpp::compute::v1::Region>(std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_regions_v1::RegionsConnection>
 MakeRegionsTracingConnection(
     std::shared_ptr<compute_regions_v1::RegionsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

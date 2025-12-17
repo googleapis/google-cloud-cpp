@@ -28,8 +28,6 @@ namespace cloud {
 namespace policysimulator_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SimulatorTracingConnection
     : public policysimulator_v1::SimulatorConnection {
  public:
@@ -69,8 +67,6 @@ class SimulatorTracingConnection
  private:
   std::shared_ptr<policysimulator_v1::SimulatorConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

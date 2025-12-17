@@ -26,8 +26,6 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 GroupServiceTracingStub::GroupServiceTracingStub(
     std::shared_ptr<GroupServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -100,15 +98,9 @@ GroupServiceTracingStub::ListGroupMembers(
                            child_->ListGroupMembers(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<GroupServiceStub> MakeGroupServiceTracingStub(
     std::shared_ptr<GroupServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<GroupServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

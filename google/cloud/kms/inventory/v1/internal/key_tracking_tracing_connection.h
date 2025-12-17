@@ -28,8 +28,6 @@ namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class KeyTrackingServiceTracingConnection
     : public kms_inventory_v1::KeyTrackingServiceConnection {
  public:
@@ -53,8 +51,6 @@ class KeyTrackingServiceTracingConnection
  private:
   std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

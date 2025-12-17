@@ -26,8 +26,6 @@ namespace cloud {
 namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 EnvironmentsTracingStub::EnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -569,15 +567,9 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<EnvironmentsStub> MakeEnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<EnvironmentsTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

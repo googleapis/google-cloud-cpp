@@ -27,8 +27,6 @@ namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DocumentSchemaServiceTracingConnection::DocumentSchemaServiceTracingConnection(
     std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection> child)
     : child_(std::move(child)) {}
@@ -98,18 +96,14 @@ DocumentSchemaServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection>
 MakeDocumentSchemaServiceTracingConnection(
     std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DocumentSchemaServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

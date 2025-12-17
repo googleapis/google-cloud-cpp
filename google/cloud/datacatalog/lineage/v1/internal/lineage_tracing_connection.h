@@ -28,8 +28,6 @@ namespace cloud {
 namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LineageTracingConnection
     : public datacatalog_lineage_v1::LineageConnection {
  public:
@@ -146,8 +144,6 @@ class LineageTracingConnection
  private:
   std::shared_ptr<datacatalog_lineage_v1::LineageConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_backend_services_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BackendServicesTracingConnection
     : public compute_backend_services_v1::BackendServicesConnection {
  public:
@@ -176,8 +174,6 @@ class BackendServicesTracingConnection
   std::shared_ptr<compute_backend_services_v1::BackendServicesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

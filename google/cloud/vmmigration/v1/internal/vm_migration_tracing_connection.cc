@@ -27,8 +27,6 @@ namespace cloud {
 namespace vmmigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 VmMigrationTracingConnection::VmMigrationTracingConnection(
     std::shared_ptr<vmmigration_v1::VmMigrationConnection> child)
     : child_(std::move(child)) {}
@@ -1457,16 +1455,12 @@ Status VmMigrationTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<vmmigration_v1::VmMigrationConnection>
 MakeVmMigrationTracingConnection(
     std::shared_ptr<vmmigration_v1::VmMigrationConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<VmMigrationTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

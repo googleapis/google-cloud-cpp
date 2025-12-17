@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_ssl_certificates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionSslCertificatesTracingConnection::RegionSslCertificatesTracingConnection(
     std::shared_ptr<
         compute_region_ssl_certificates_v1::RegionSslCertificatesConnection>
@@ -131,20 +129,16 @@ RegionSslCertificatesTracingConnection::ListRegionSslCertificates(
                                                        std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_region_ssl_certificates_v1::RegionSslCertificatesConnection>
 MakeRegionSslCertificatesTracingConnection(
     std::shared_ptr<
         compute_region_ssl_certificates_v1::RegionSslCertificatesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionSslCertificatesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

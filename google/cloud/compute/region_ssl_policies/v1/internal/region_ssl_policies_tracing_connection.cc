@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_region_ssl_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionSslPoliciesTracingConnection::RegionSslPoliciesTracingConnection(
     std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>
         child)
@@ -170,18 +168,14 @@ RegionSslPoliciesTracingConnection::PatchSslPolicy(
   return internal::EndSpan(std::move(span), child_->PatchSslPolicy(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>
 MakeRegionSslPoliciesTracingConnection(
     std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<RegionSslPoliciesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

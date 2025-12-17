@@ -27,8 +27,6 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
@@ -119,15 +117,9 @@ Status SessionsTracingStub::CancelOperation(
                            child_->CancelOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SessionsStub> MakeSessionsTracingStub(
     std::shared_ptr<SessionsStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SessionsTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

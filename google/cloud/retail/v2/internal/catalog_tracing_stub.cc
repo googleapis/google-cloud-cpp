@@ -26,8 +26,6 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CatalogServiceTracingStub::CatalogServiceTracingStub(
     std::shared_ptr<CatalogServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -191,15 +189,9 @@ CatalogServiceTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CatalogServiceStub> MakeCatalogServiceTracingStub(
     std::shared_ptr<CatalogServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CatalogServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

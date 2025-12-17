@@ -27,8 +27,6 @@ namespace cloud {
 namespace iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 PolicyBindingsTracingConnection::PolicyBindingsTracingConnection(
     std::shared_ptr<iam_v3::PolicyBindingsConnection> child)
     : child_(std::move(child)) {}
@@ -163,16 +161,12 @@ PolicyBindingsTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<iam_v3::PolicyBindingsConnection>
 MakePolicyBindingsTracingConnection(
     std::shared_ptr<iam_v3::PolicyBindingsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<PolicyBindingsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

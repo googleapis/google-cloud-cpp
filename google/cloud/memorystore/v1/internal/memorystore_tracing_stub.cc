@@ -26,8 +26,6 @@ namespace cloud {
 namespace memorystore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MemorystoreTracingStub::MemorystoreTracingStub(
     std::shared_ptr<MemorystoreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -398,15 +396,9 @@ future<Status> MemorystoreTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<MemorystoreStub> MakeMemorystoreTracingStub(
     std::shared_ptr<MemorystoreStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<MemorystoreTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

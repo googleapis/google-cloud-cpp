@@ -27,8 +27,6 @@ namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConfigServiceV2TracingConnection::ConfigServiceV2TracingConnection(
     std::shared_ptr<logging_v2::ConfigServiceV2Connection> child)
     : child_(std::move(child)) {}
@@ -448,16 +446,12 @@ Status ConfigServiceV2TracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<logging_v2::ConfigServiceV2Connection>
 MakeConfigServiceV2TracingConnection(
     std::shared_ptr<logging_v2::ConfigServiceV2Connection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ConfigServiceV2TracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

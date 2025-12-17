@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_interconnect_remote_locations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 InterconnectRemoteLocationsTracingConnection::
     InterconnectRemoteLocationsTracingConnection(
         std::shared_ptr<compute_interconnect_remote_locations_v1::
@@ -63,20 +61,16 @@ InterconnectRemoteLocationsTracingConnection::ListInterconnectRemoteLocations(
       std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_interconnect_remote_locations_v1::
                     InterconnectRemoteLocationsConnection>
 MakeInterconnectRemoteLocationsTracingConnection(
     std::shared_ptr<compute_interconnect_remote_locations_v1::
                         InterconnectRemoteLocationsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InterconnectRemoteLocationsTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

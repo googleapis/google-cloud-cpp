@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_packet_mirrorings_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 PacketMirroringsTracingConnection::PacketMirroringsTracingConnection(
     std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
         child)
@@ -191,17 +189,13 @@ PacketMirroringsTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
 MakePacketMirroringsTracingConnection(
     std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<PacketMirroringsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

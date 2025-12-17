@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_zone_operations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ZoneOperationsTracingConnection::ZoneOperationsTracingConnection(
     std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection> child)
     : child_(std::move(child)) {}
@@ -76,17 +74,13 @@ ZoneOperationsTracingConnection::Wait(
   return internal::EndSpan(*span, child_->Wait(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection>
 MakeZoneOperationsTracingConnection(
     std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ZoneOperationsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

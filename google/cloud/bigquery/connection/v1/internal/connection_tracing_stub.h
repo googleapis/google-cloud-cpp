@@ -30,8 +30,6 @@ namespace cloud {
 namespace bigquery_connection_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ConnectionServiceTracingStub : public ConnectionServiceStub {
  public:
   ~ConnectionServiceTracingStub() override = default;
@@ -84,8 +82,6 @@ class ConnectionServiceTracingStub : public ConnectionServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

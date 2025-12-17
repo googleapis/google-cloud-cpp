@@ -28,8 +28,6 @@ namespace cloud {
 namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
  public:
   ~DatastreamTracingConnection() override = default;
@@ -259,8 +257,6 @@ class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
  private:
   std::shared_ptr<datastream_v1::DatastreamConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

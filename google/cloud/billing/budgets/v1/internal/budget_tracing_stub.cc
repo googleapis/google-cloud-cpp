@@ -26,8 +26,6 @@ namespace cloud {
 namespace billing_budgets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BudgetServiceTracingStub::BudgetServiceTracingStub(
     std::shared_ptr<BudgetServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -91,15 +89,9 @@ Status BudgetServiceTracingStub::DeleteBudget(
                            child_->DeleteBudget(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<BudgetServiceStub> MakeBudgetServiceTracingStub(
     std::shared_ptr<BudgetServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<BudgetServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,8 +26,6 @@ namespace cloud {
 namespace iam_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IAMPolicyTracingStub::IAMPolicyTracingStub(std::shared_ptr<IAMPolicyStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
@@ -63,15 +61,9 @@ IAMPolicyTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<IAMPolicyStub> MakeIAMPolicyTracingStub(
     std::shared_ptr<IAMPolicyStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<IAMPolicyTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

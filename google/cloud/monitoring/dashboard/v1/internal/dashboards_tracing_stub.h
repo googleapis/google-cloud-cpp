@@ -30,8 +30,6 @@ namespace cloud {
 namespace monitoring_dashboard_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DashboardsServiceTracingStub : public DashboardsServiceStub {
  public:
   ~DashboardsServiceTracingStub() override = default;
@@ -69,8 +67,6 @@ class DashboardsServiceTracingStub : public DashboardsServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

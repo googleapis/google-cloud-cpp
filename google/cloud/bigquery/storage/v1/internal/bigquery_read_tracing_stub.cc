@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigquery_storage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BigQueryReadTracingStub::BigQueryReadTracingStub(
     std::shared_ptr<BigQueryReadStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -74,15 +72,9 @@ BigQueryReadTracingStub::SplitReadStream(
                            child_->SplitReadStream(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<BigQueryReadStub> MakeBigQueryReadTracingStub(
     std::shared_ptr<BigQueryReadStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<BigQueryReadTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

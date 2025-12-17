@@ -27,8 +27,6 @@ namespace cloud {
 namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IdentityAwareProxyAdminServiceTracingConnection::
     IdentityAwareProxyAdminServiceTracingConnection(
         std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection> child)
@@ -140,17 +138,13 @@ IdentityAwareProxyAdminServiceTracingConnection::UpdateTunnelDestGroup(
   return internal::EndSpan(*span, child_->UpdateTunnelDestGroup(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection>
 MakeIdentityAwareProxyAdminServiceTracingConnection(
     std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<IdentityAwareProxyAdminServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

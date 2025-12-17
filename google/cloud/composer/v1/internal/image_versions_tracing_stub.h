@@ -30,8 +30,6 @@ namespace cloud {
 namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ImageVersionsTracingStub : public ImageVersionsStub {
  public:
   ~ImageVersionsTracingStub() override = default;
@@ -61,8 +59,6 @@ class ImageVersionsTracingStub : public ImageVersionsStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

@@ -27,8 +27,6 @@ namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AttachedClustersTracingConnection::AttachedClustersTracingConnection(
     std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection> child)
     : child_(std::move(child)) {}
@@ -259,16 +257,12 @@ Status AttachedClustersTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection>
 MakeAttachedClustersTracingConnection(
     std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AttachedClustersTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

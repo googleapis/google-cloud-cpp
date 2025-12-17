@@ -27,8 +27,6 @@ namespace cloud {
 namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DocumentProcessorServiceTracingConnection::
     DocumentProcessorServiceTracingConnection(
         std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection>
@@ -567,17 +565,13 @@ Status DocumentProcessorServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection>
 MakeDocumentProcessorServiceTracingConnection(
     std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DocumentProcessorServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

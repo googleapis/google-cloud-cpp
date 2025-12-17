@@ -26,8 +26,6 @@ namespace cloud {
 namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudChannelServiceTracingStub::CloudChannelServiceTracingStub(
     std::shared_ptr<CloudChannelServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -909,15 +907,9 @@ future<Status> CloudChannelServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CloudChannelServiceStub> MakeCloudChannelServiceTracingStub(
     std::shared_ptr<CloudChannelServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CloudChannelServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

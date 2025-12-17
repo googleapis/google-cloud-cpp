@@ -26,8 +26,6 @@ namespace cloud {
 namespace iam_credentials_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IAMCredentialsTracingStub::IAMCredentialsTracingStub(
     std::shared_ptr<IAMCredentialsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -80,15 +78,9 @@ IAMCredentialsTracingStub::SignJwt(
                            child_->SignJwt(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<IAMCredentialsStub> MakeIAMCredentialsTracingStub(
     std::shared_ptr<IAMCredentialsStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<IAMCredentialsTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

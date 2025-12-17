@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_storage_pools_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class StoragePoolsTracingConnection
     : public compute_storage_pools_v1::StoragePoolsConnection {
  public:
@@ -109,8 +107,6 @@ class StoragePoolsTracingConnection
  private:
   std::shared_ptr<compute_storage_pools_v1::StoragePoolsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

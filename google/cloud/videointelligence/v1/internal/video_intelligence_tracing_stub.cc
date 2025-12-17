@@ -26,8 +26,6 @@ namespace cloud {
 namespace videointelligence_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 VideoIntelligenceServiceTracingStub::VideoIntelligenceServiceTracingStub(
     std::shared_ptr<VideoIntelligenceServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -88,16 +86,10 @@ future<Status> VideoIntelligenceServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<VideoIntelligenceServiceStub>
 MakeVideoIntelligenceServiceTracingStub(
     std::shared_ptr<VideoIntelligenceServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<VideoIntelligenceServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

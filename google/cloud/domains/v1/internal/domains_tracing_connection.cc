@@ -27,8 +27,6 @@ namespace cloud {
 namespace domains_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DomainsTracingConnection::DomainsTracingConnection(
     std::shared_ptr<domains_v1::DomainsConnection> child)
     : child_(std::move(child)) {}
@@ -349,15 +347,11 @@ DomainsTracingConnection::ResetAuthorizationCode(
   return internal::EndSpan(*span, child_->ResetAuthorizationCode(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<domains_v1::DomainsConnection> MakeDomainsTracingConnection(
     std::shared_ptr<domains_v1::DomainsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DomainsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

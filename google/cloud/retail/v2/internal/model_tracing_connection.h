@@ -28,8 +28,6 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ModelServiceTracingConnection : public retail_v2::ModelServiceConnection {
  public:
   ~ModelServiceTracingConnection() override = default;
@@ -86,8 +84,6 @@ class ModelServiceTracingConnection : public retail_v2::ModelServiceConnection {
  private:
   std::shared_ptr<retail_v2::ModelServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

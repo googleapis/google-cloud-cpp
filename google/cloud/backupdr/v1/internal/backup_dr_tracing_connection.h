@@ -28,8 +28,6 @@ namespace cloud {
 namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
  public:
   ~BackupDRTracingConnection() override = default;
@@ -363,8 +361,6 @@ class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
  private:
   std::shared_ptr<backupdr_v1::BackupDRConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

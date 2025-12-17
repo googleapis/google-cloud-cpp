@@ -30,8 +30,6 @@ namespace cloud {
 namespace video_stitcher_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VideoStitcherServiceTracingStub : public VideoStitcherServiceStub {
  public:
   ~VideoStitcherServiceTracingStub() override = default;
@@ -314,8 +312,6 @@ class VideoStitcherServiceTracingStub : public VideoStitcherServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

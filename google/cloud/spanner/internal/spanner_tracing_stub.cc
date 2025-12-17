@@ -27,8 +27,6 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SpannerTracingStub::SpannerTracingStub(std::shared_ptr<SpannerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
@@ -242,15 +240,9 @@ SpannerTracingStub::AsyncExecuteSql(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SpannerStub> MakeSpannerTracingStub(
     std::shared_ptr<SpannerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SpannerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

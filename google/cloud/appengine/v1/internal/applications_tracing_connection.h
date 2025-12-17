@@ -28,8 +28,6 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ApplicationsTracingConnection
     : public appengine_v1::ApplicationsConnection {
  public:
@@ -76,8 +74,6 @@ class ApplicationsTracingConnection
  private:
   std::shared_ptr<appengine_v1::ApplicationsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

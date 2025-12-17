@@ -28,8 +28,6 @@ namespace cloud {
 namespace metastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataprocMetastoreTracingConnection
     : public metastore_v1::DataprocMetastoreConnection {
  public:
@@ -243,8 +241,6 @@ class DataprocMetastoreTracingConnection
  private:
   std::shared_ptr<metastore_v1::DataprocMetastoreConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

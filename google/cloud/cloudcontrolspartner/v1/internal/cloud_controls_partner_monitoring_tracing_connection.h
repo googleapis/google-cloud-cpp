@@ -28,8 +28,6 @@ namespace cloud {
 namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudControlsPartnerMonitoringTracingConnection
     : public cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection {
  public:
@@ -55,8 +53,6 @@ class CloudControlsPartnerMonitoringTracingConnection
       cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

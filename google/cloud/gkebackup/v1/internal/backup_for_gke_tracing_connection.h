@@ -28,8 +28,6 @@ namespace cloud {
 namespace gkebackup_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BackupForGKETracingConnection
     : public gkebackup_v1::BackupForGKEConnection {
  public:
@@ -376,8 +374,6 @@ class BackupForGKETracingConnection
  private:
   std::shared_ptr<gkebackup_v1::BackupForGKEConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

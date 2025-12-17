@@ -27,8 +27,6 @@ namespace cloud {
 namespace osconfig_agentendpoint_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AgentEndpointServiceTracingConnection::AgentEndpointServiceTracingConnection(
     std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
         child)
@@ -103,18 +101,14 @@ AgentEndpointServiceTracingConnection::ReportInventory(
   return internal::EndSpan(*span, child_->ReportInventory(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
 MakeAgentEndpointServiceTracingConnection(
     std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AgentEndpointServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

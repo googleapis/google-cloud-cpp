@@ -27,8 +27,6 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 PredictionServiceTracingConnection::PredictionServiceTracingConnection(
     std::shared_ptr<retail_v2::PredictionServiceConnection> child)
     : child_(std::move(child)) {}
@@ -62,17 +60,13 @@ PredictionServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<retail_v2::PredictionServiceConnection>
 MakePredictionServiceTracingConnection(
     std::shared_ptr<retail_v2::PredictionServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

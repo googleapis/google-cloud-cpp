@@ -26,8 +26,6 @@ namespace cloud {
 namespace beyondcorp_appgateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AppGatewaysServiceTracingStub::AppGatewaysServiceTracingStub(
     std::shared_ptr<AppGatewaysServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -263,15 +261,9 @@ future<Status> AppGatewaysServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AppGatewaysServiceStub> MakeAppGatewaysServiceTracingStub(
     std::shared_ptr<AppGatewaysServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AppGatewaysServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

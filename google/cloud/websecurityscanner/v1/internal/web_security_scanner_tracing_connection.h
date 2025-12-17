@@ -28,8 +28,6 @@ namespace cloud {
 namespace websecurityscanner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WebSecurityScannerTracingConnection
     : public websecurityscanner_v1::WebSecurityScannerConnection {
  public:
@@ -97,8 +95,6 @@ class WebSecurityScannerTracingConnection
  private:
   std::shared_ptr<websecurityscanner_v1::WebSecurityScannerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

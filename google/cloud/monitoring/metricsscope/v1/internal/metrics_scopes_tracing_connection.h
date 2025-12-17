@@ -28,8 +28,6 @@ namespace cloud {
 namespace monitoring_metricsscope_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class MetricsScopesTracingConnection
     : public monitoring_metricsscope_v1::MetricsScopesConnection {
  public:
@@ -82,8 +80,6 @@ class MetricsScopesTracingConnection
  private:
   std::shared_ptr<monitoring_metricsscope_v1::MetricsScopesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

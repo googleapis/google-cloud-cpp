@@ -30,8 +30,6 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AutokeyAdminTracingStub : public AutokeyAdminStub {
  public:
   ~AutokeyAdminTracingStub() override = default;
@@ -82,8 +80,6 @@ class AutokeyAdminTracingStub : public AutokeyAdminStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

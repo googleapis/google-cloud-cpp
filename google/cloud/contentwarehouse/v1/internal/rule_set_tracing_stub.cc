@@ -26,8 +26,6 @@ namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RuleSetServiceTracingStub::RuleSetServiceTracingStub(
     std::shared_ptr<RuleSetServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -103,15 +101,9 @@ RuleSetServiceTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<RuleSetServiceStub> MakeRuleSetServiceTracingStub(
     std::shared_ptr<RuleSetServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<RuleSetServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,8 +30,6 @@ namespace cloud {
 namespace websecurityscanner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WebSecurityScannerTracingStub : public WebSecurityScannerStub {
  public:
   ~WebSecurityScannerTracingStub() override = default;
@@ -112,8 +110,6 @@ class WebSecurityScannerTracingStub : public WebSecurityScannerStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

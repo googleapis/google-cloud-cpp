@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_health_check_services_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionHealthCheckServicesTracingConnection::
     RegionHealthCheckServicesTracingConnection(
         std::shared_ptr<compute_region_health_check_services_v1::
@@ -167,20 +165,16 @@ RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
                            child_->PatchHealthCheckService(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_region_health_check_services_v1::
                     RegionHealthCheckServicesConnection>
 MakeRegionHealthCheckServicesTracingConnection(
     std::shared_ptr<compute_region_health_check_services_v1::
                         RegionHealthCheckServicesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionHealthCheckServicesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

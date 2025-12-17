@@ -26,8 +26,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MetadataServiceTracingStub::MetadataServiceTracingStub(
     std::shared_ptr<MetadataServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -242,15 +240,9 @@ Status MetadataServiceTracingStub::CancelOperation(
                            child_->CancelOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<MetadataServiceStub> MakeMetadataServiceTracingStub(
     std::shared_ptr<MetadataServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<MetadataServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

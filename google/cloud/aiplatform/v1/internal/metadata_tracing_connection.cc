@@ -27,8 +27,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MetadataServiceTracingConnection::MetadataServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::MetadataServiceConnection> child)
     : child_(std::move(child)) {}
@@ -600,16 +598,12 @@ MetadataServiceTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<aiplatform_v1::MetadataServiceConnection>
 MakeMetadataServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::MetadataServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MetadataServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

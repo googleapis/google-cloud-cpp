@@ -28,8 +28,6 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WebhooksTracingConnection : public dialogflow_cx::WebhooksConnection {
  public:
   ~WebhooksTracingConnection() override = default;
@@ -76,8 +74,6 @@ class WebhooksTracingConnection : public dialogflow_cx::WebhooksConnection {
  private:
   std::shared_ptr<dialogflow_cx::WebhooksConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

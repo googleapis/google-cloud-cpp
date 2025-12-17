@@ -27,8 +27,6 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AuthorizedCertificatesTracingConnection::
     AuthorizedCertificatesTracingConnection(
         std::shared_ptr<appengine_v1::AuthorizedCertificatesConnection> child)
@@ -86,17 +84,13 @@ Status AuthorizedCertificatesTracingConnection::DeleteAuthorizedCertificate(
   return internal::EndSpan(*span, child_->DeleteAuthorizedCertificate(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<appengine_v1::AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesTracingConnection(
     std::shared_ptr<appengine_v1::AuthorizedCertificatesConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AuthorizedCertificatesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

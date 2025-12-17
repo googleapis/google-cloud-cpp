@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_target_grpc_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TargetGrpcProxiesTracingConnection
     : public compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection {
  public:
@@ -92,8 +90,6 @@ class TargetGrpcProxiesTracingConnection
   std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

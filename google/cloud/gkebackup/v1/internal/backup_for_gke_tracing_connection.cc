@@ -27,8 +27,6 @@ namespace cloud {
 namespace gkebackup_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BackupForGKETracingConnection::BackupForGKETracingConnection(
     std::shared_ptr<gkebackup_v1::BackupForGKEConnection> child)
     : child_(std::move(child)) {}
@@ -865,16 +863,12 @@ Status BackupForGKETracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<gkebackup_v1::BackupForGKEConnection>
 MakeBackupForGKETracingConnection(
     std::shared_ptr<gkebackup_v1::BackupForGKEConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BackupForGKETracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

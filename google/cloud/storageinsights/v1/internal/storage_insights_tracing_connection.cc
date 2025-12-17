@@ -27,8 +27,6 @@ namespace cloud {
 namespace storageinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 StorageInsightsTracingConnection::StorageInsightsTracingConnection(
     std::shared_ptr<storageinsights_v1::StorageInsightsConnection> child)
     : child_(std::move(child)) {}
@@ -337,16 +335,12 @@ Status StorageInsightsTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<storageinsights_v1::StorageInsightsConnection>
 MakeStorageInsightsTracingConnection(
     std::shared_ptr<storageinsights_v1::StorageInsightsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<StorageInsightsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

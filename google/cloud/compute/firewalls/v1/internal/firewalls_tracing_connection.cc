@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_firewalls_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 FirewallsTracingConnection::FirewallsTracingConnection(
     std::shared_ptr<compute_firewalls_v1::FirewallsConnection> child)
     : child_(std::move(child)) {}
@@ -178,16 +176,12 @@ FirewallsTracingConnection::UpdateFirewall(
   return internal::EndSpan(std::move(span), child_->UpdateFirewall(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_firewalls_v1::FirewallsConnection>
 MakeFirewallsTracingConnection(
     std::shared_ptr<compute_firewalls_v1::FirewallsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<FirewallsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

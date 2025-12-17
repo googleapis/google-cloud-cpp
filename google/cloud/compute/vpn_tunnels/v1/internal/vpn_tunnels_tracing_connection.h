@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_vpn_tunnels_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VpnTunnelsTracingConnection
     : public compute_vpn_tunnels_v1::VpnTunnelsConnection {
  public:
@@ -91,8 +89,6 @@ class VpnTunnelsTracingConnection
  private:
   std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

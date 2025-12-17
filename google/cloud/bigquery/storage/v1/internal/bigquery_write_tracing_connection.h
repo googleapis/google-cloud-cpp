@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquery_storage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BigQueryWriteTracingConnection
     : public bigquery_storage_v1::BigQueryWriteConnection {
  public:
@@ -71,8 +69,6 @@ class BigQueryWriteTracingConnection
  private:
   std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class GkeHubTracingConnection : public gkehub_v1::GkeHubConnection {
  public:
   ~GkeHubTracingConnection() override = default;
@@ -125,8 +123,6 @@ class GkeHubTracingConnection : public gkehub_v1::GkeHubConnection {
  private:
   std::shared_ptr<gkehub_v1::GkeHubConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

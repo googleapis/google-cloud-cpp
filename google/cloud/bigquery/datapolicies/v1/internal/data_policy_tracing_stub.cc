@@ -26,8 +26,6 @@ namespace cloud {
 namespace bigquery_datapolicies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DataPolicyServiceTracingStub::DataPolicyServiceTracingStub(
     std::shared_ptr<DataPolicyServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -152,15 +150,9 @@ DataPolicyServiceTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DataPolicyServiceStub> MakeDataPolicyServiceTracingStub(
     std::shared_ptr<DataPolicyServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DataPolicyServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

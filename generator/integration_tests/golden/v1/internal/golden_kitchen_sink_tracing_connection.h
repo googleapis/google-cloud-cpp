@@ -28,8 +28,6 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class GoldenKitchenSinkTracingConnection
     : public golden_v1::GoldenKitchenSinkConnection {
  public:
@@ -87,8 +85,6 @@ class GoldenKitchenSinkTracingConnection
  private:
   std::shared_ptr<golden_v1::GoldenKitchenSinkConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

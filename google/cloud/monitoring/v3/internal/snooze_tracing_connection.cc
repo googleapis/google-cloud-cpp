@@ -27,8 +27,6 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SnoozeServiceTracingConnection::SnoozeServiceTracingConnection(
     std::shared_ptr<monitoring_v3::SnoozeServiceConnection> child)
     : child_(std::move(child)) {}
@@ -71,16 +69,12 @@ SnoozeServiceTracingConnection::UpdateSnooze(
   return internal::EndSpan(*span, child_->UpdateSnooze(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<monitoring_v3::SnoozeServiceConnection>
 MakeSnoozeServiceTracingConnection(
     std::shared_ptr<monitoring_v3::SnoozeServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SnoozeServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

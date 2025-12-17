@@ -30,8 +30,6 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ValidationHelperV1TracingStub : public ValidationHelperV1Stub {
  public:
   ~ValidationHelperV1TracingStub() override = default;
@@ -51,8 +49,6 @@ class ValidationHelperV1TracingStub : public ValidationHelperV1Stub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

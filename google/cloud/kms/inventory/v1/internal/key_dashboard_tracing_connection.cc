@@ -27,8 +27,6 @@ namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 KeyDashboardServiceTracingConnection::KeyDashboardServiceTracingConnection(
     std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection> child)
     : child_(std::move(child)) {}
@@ -44,17 +42,13 @@ KeyDashboardServiceTracingConnection::ListCryptoKeys(
       std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection>
 MakeKeyDashboardServiceTracingConnection(
     std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<KeyDashboardServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

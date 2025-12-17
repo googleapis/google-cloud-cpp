@@ -28,8 +28,6 @@ namespace cloud {
 namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataAccessControlServiceTracingConnection
     : public chronicle_v1::DataAccessControlServiceConnection {
  public:
@@ -95,8 +93,6 @@ class DataAccessControlServiceTracingConnection
  private:
   std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

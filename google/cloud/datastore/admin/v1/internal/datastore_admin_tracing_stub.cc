@@ -26,8 +26,6 @@ namespace cloud {
 namespace datastore_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DatastoreAdminTracingStub::DatastoreAdminTracingStub(
     std::shared_ptr<DatastoreAdminStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -234,15 +232,9 @@ future<Status> DatastoreAdminTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DatastoreAdminStub> MakeDatastoreAdminTracingStub(
     std::shared_ptr<DatastoreAdminStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DatastoreAdminTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

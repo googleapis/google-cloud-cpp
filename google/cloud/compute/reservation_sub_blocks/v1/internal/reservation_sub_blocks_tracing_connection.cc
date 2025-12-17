@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_reservation_sub_blocks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ReservationSubBlocksTracingConnection::ReservationSubBlocksTracingConnection(
     std::shared_ptr<
         compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection>
@@ -62,20 +60,16 @@ ReservationSubBlocksTracingConnection::ListReservationSubBlocks(
                                                             std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection>
 MakeReservationSubBlocksTracingConnection(
     std::shared_ptr<
         compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ReservationSubBlocksTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

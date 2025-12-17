@@ -26,8 +26,6 @@ namespace cloud {
 namespace essentialcontacts_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 EssentialContactsServiceTracingStub::EssentialContactsServiceTracingStub(
     std::shared_ptr<EssentialContactsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -123,16 +121,10 @@ Status EssentialContactsServiceTracingStub::SendTestMessage(
                            child_->SendTestMessage(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<EssentialContactsServiceStub>
 MakeEssentialContactsServiceTracingStub(
     std::shared_ptr<EssentialContactsServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<EssentialContactsServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

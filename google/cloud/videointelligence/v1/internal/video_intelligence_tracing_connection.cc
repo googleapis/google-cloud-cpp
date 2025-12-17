@@ -26,8 +26,6 @@ namespace cloud {
 namespace videointelligence_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 VideoIntelligenceServiceTracingConnection::
     VideoIntelligenceServiceTracingConnection(
         std::shared_ptr<
@@ -66,18 +64,14 @@ VideoIntelligenceServiceTracingConnection::AnnotateVideo(
   return internal::EndSpan(std::move(span), child_->AnnotateVideo(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceTracingConnection(
     std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<VideoIntelligenceServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

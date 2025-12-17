@@ -26,8 +26,6 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RoutineServiceTracingConnection::RoutineServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> child)
     : child_(std::move(child)) {}
@@ -85,16 +83,12 @@ RoutineServiceTracingConnection::ListRoutines(
   return internal::EndSpan(*span, child_->ListRoutines(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection>
 MakeRoutineServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RoutineServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

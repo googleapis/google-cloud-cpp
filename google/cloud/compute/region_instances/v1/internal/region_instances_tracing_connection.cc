@@ -26,8 +26,6 @@ namespace cloud {
 namespace compute_region_instances_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionInstancesTracingConnection::RegionInstancesTracingConnection(
     std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
         child)
@@ -63,17 +61,13 @@ RegionInstancesTracingConnection::BulkInsert(
   return internal::EndSpan(std::move(span), child_->BulkInsert(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
 MakeRegionInstancesTracingConnection(
     std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionInstancesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

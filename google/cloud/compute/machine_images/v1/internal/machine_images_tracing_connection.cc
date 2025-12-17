@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_machine_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MachineImagesTracingConnection::MachineImagesTracingConnection(
     std::shared_ptr<compute_machine_images_v1::MachineImagesConnection> child)
     : child_(std::move(child)) {}
@@ -180,16 +178,12 @@ MachineImagesTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_machine_images_v1::MachineImagesConnection>
 MakeMachineImagesTracingConnection(
     std::shared_ptr<compute_machine_images_v1::MachineImagesConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MachineImagesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

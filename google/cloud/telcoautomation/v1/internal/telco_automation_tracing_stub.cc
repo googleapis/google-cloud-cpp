@@ -26,8 +26,6 @@ namespace cloud {
 namespace telcoautomation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TelcoAutomationTracingStub::TelcoAutomationTracingStub(
     std::shared_ptr<TelcoAutomationStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -675,15 +673,9 @@ future<Status> TelcoAutomationTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<TelcoAutomationStub> MakeTelcoAutomationTracingStub(
     std::shared_ptr<TelcoAutomationStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<TelcoAutomationTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

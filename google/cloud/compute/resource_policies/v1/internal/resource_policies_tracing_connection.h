@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_resource_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ResourcePoliciesTracingConnection
     : public compute_resource_policies_v1::ResourcePoliciesConnection {
  public:
@@ -107,8 +105,6 @@ class ResourcePoliciesTracingConnection
   std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

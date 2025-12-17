@@ -27,8 +27,6 @@ namespace cloud {
 namespace apigateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ApiGatewayServiceTracingConnection::ApiGatewayServiceTracingConnection(
     std::shared_ptr<apigateway_v1::ApiGatewayServiceConnection> child)
     : child_(std::move(child)) {}
@@ -348,17 +346,13 @@ ApiGatewayServiceTracingConnection::DeleteApiConfig(
   return internal::EndSpan(std::move(span), child_->DeleteApiConfig(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<apigateway_v1::ApiGatewayServiceConnection>
 MakeApiGatewayServiceTracingConnection(
     std::shared_ptr<apigateway_v1::ApiGatewayServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<ApiGatewayServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

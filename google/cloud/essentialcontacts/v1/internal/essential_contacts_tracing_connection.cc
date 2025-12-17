@@ -27,8 +27,6 @@ namespace cloud {
 namespace essentialcontacts_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 EssentialContactsServiceTracingConnection::
     EssentialContactsServiceTracingConnection(
         std::shared_ptr<
@@ -109,18 +107,14 @@ Status EssentialContactsServiceTracingConnection::SendTestMessage(
   return internal::EndSpan(*span, child_->SendTestMessage(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
 MakeEssentialContactsServiceTracingConnection(
     std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<EssentialContactsServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

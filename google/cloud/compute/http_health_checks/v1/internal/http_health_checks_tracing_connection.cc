@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_http_health_checks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 HttpHealthChecksTracingConnection::HttpHealthChecksTracingConnection(
     std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
         child)
@@ -199,17 +197,13 @@ HttpHealthChecksTracingConnection::UpdateHttpHealthCheck(
                            child_->UpdateHttpHealthCheck(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
 MakeHttpHealthChecksTracingConnection(
     std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<HttpHealthChecksTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

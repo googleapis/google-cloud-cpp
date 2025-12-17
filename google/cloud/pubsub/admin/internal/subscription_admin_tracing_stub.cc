@@ -26,8 +26,6 @@ namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SubscriptionAdminTracingStub::SubscriptionAdminTracingStub(
     std::shared_ptr<SubscriptionAdminStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -205,15 +203,9 @@ SubscriptionAdminTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SubscriptionAdminStub> MakeSubscriptionAdminTracingStub(
     std::shared_ptr<SubscriptionAdminStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SubscriptionAdminTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

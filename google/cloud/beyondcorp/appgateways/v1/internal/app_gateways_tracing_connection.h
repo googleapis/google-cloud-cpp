@@ -28,8 +28,6 @@ namespace cloud {
 namespace beyondcorp_appgateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AppGatewaysServiceTracingConnection
     : public beyondcorp_appgateways_v1::AppGatewaysServiceConnection {
  public:
@@ -110,8 +108,6 @@ class AppGatewaysServiceTracingConnection
   std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

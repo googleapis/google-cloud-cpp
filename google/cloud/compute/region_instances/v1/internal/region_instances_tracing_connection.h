@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_instances_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RegionInstancesTracingConnection
     : public compute_region_instances_v1::RegionInstancesConnection {
  public:
@@ -56,8 +54,6 @@ class RegionInstancesTracingConnection
   std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

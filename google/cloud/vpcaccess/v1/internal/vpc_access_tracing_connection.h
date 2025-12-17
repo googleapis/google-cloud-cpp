@@ -28,8 +28,6 @@ namespace cloud {
 namespace vpcaccess_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VpcAccessServiceTracingConnection
     : public vpcaccess_v1::VpcAccessServiceConnection {
  public:
@@ -83,8 +81,6 @@ class VpcAccessServiceTracingConnection
  private:
   std::shared_ptr<vpcaccess_v1::VpcAccessServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

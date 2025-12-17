@@ -28,8 +28,6 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TagKeysTracingConnection : public resourcemanager_v3::TagKeysConnection {
  public:
   ~TagKeysTracingConnection() override = default;
@@ -101,8 +99,6 @@ class TagKeysTracingConnection : public resourcemanager_v3::TagKeysConnection {
  private:
   std::shared_ptr<resourcemanager_v3::TagKeysConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

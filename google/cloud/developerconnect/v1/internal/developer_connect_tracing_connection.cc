@@ -27,8 +27,6 @@ namespace cloud {
 namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DeveloperConnectTracingConnection::DeveloperConnectTracingConnection(
     std::shared_ptr<developerconnect_v1::DeveloperConnectConnection> child)
     : child_(std::move(child)) {}
@@ -573,16 +571,12 @@ Status DeveloperConnectTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<developerconnect_v1::DeveloperConnectConnection>
 MakeDeveloperConnectTracingConnection(
     std::shared_ptr<developerconnect_v1::DeveloperConnectConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DeveloperConnectTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

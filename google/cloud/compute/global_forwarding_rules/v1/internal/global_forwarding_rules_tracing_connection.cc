@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_global_forwarding_rules_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 GlobalForwardingRulesTracingConnection::GlobalForwardingRulesTracingConnection(
     std::shared_ptr<
         compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection>
@@ -230,20 +228,16 @@ GlobalForwardingRulesTracingConnection::SetTarget(
   return internal::EndSpan(std::move(span), child_->SetTarget(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection>
 MakeGlobalForwardingRulesTracingConnection(
     std::shared_ptr<
         compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<GlobalForwardingRulesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

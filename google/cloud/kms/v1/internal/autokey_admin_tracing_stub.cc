@@ -26,8 +26,6 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AutokeyAdminTracingStub::AutokeyAdminTracingStub(
     std::shared_ptr<AutokeyAdminStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -138,15 +136,9 @@ StatusOr<google::longrunning::Operation> AutokeyAdminTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AutokeyAdminStub> MakeAutokeyAdminTracingStub(
     std::shared_ptr<AutokeyAdminStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AutokeyAdminTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

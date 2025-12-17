@@ -28,8 +28,6 @@ namespace cloud {
 namespace managedidentities_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ManagedIdentitiesServiceTracingConnection
     : public managedidentities_v1::ManagedIdentitiesServiceConnection {
  public:
@@ -144,8 +142,6 @@ class ManagedIdentitiesServiceTracingConnection
   std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

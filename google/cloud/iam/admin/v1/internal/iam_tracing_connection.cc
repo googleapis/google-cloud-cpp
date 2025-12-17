@@ -27,8 +27,6 @@ namespace cloud {
 namespace iam_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IAMTracingConnection::IAMTracingConnection(
     std::shared_ptr<iam_admin_v1::IAMConnection> child)
     : child_(std::move(child)) {}
@@ -270,15 +268,11 @@ IAMTracingConnection::LintPolicy(
   return internal::EndSpan(*span, child_->LintPolicy(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<iam_admin_v1::IAMConnection> MakeIAMTracingConnection(
     std::shared_ptr<iam_admin_v1::IAMConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<IAMTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

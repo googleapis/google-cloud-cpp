@@ -30,8 +30,6 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SnoozeServiceTracingStub : public SnoozeServiceStub {
  public:
   ~SnoozeServiceTracingStub() override = default;
@@ -59,8 +57,6 @@ class SnoozeServiceTracingStub : public SnoozeServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

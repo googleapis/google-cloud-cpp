@@ -26,8 +26,6 @@ namespace cloud {
 namespace secretmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SecretManagerServiceTracingStub::SecretManagerServiceTracingStub(
     std::shared_ptr<SecretManagerServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -244,15 +242,9 @@ SecretManagerServiceTracingStub::GetLocation(
                            child_->GetLocation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SecretManagerServiceStub> MakeSecretManagerServiceTracingStub(
     std::shared_ptr<SecretManagerServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SecretManagerServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

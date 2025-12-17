@@ -30,8 +30,6 @@ namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DlpServiceTracingStub : public DlpServiceStub {
  public:
   ~DlpServiceTracingStub() override = default;
@@ -317,8 +315,6 @@ class DlpServiceTracingStub : public DlpServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

@@ -26,8 +26,6 @@ namespace cloud {
 namespace configdelivery_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConfigDeliveryTracingStub::ConfigDeliveryTracingStub(
     std::shared_ptr<ConfigDeliveryStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -662,15 +660,9 @@ future<Status> ConfigDeliveryTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ConfigDeliveryStub> MakeConfigDeliveryTracingStub(
     std::shared_ptr<ConfigDeliveryStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ConfigDeliveryTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,8 +30,6 @@ namespace cloud {
 namespace translate_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TranslationServiceTracingStub : public TranslationServiceStub {
  public:
   ~TranslationServiceTracingStub() override = default;
@@ -360,8 +358,6 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

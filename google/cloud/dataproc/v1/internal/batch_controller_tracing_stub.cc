@@ -26,8 +26,6 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BatchControllerTracingStub::BatchControllerTracingStub(
     std::shared_ptr<BatchControllerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -201,15 +199,9 @@ future<Status> BatchControllerTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<BatchControllerStub> MakeBatchControllerTracingStub(
     std::shared_ptr<BatchControllerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<BatchControllerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

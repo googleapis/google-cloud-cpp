@@ -27,8 +27,6 @@ namespace cloud {
 namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudQuotasTracingConnection::CloudQuotasTracingConnection(
     std::shared_ptr<cloudquotas_v1::CloudQuotasConnection> child)
     : child_(std::move(child)) {}
@@ -92,16 +90,12 @@ CloudQuotasTracingConnection::UpdateQuotaPreference(
   return internal::EndSpan(*span, child_->UpdateQuotaPreference(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<cloudquotas_v1::CloudQuotasConnection>
 MakeCloudQuotasTracingConnection(
     std::shared_ptr<cloudquotas_v1::CloudQuotasConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudQuotasTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -28,8 +28,6 @@ namespace cloud {
 namespace policytroubleshooter_iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PolicyTroubleshooterTracingConnection
     : public policytroubleshooter_iam_v3::PolicyTroubleshooterConnection {
  public:
@@ -52,8 +50,6 @@ class PolicyTroubleshooterTracingConnection
   std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

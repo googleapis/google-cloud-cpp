@@ -28,8 +28,6 @@ namespace cloud {
 namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AssuredWorkloadsServiceTracingConnection
     : public assuredworkloads_v1::AssuredWorkloadsServiceConnection {
  public:
@@ -99,8 +97,6 @@ class AssuredWorkloadsServiceTracingConnection
   std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

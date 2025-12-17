@@ -27,8 +27,6 @@ namespace cloud {
 namespace managedidentities_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ManagedIdentitiesServiceTracingConnection::
     ManagedIdentitiesServiceTracingConnection(
         std::shared_ptr<
@@ -282,18 +280,14 @@ ManagedIdentitiesServiceTracingConnection::ValidateTrust(
   return internal::EndSpan(std::move(span), child_->ValidateTrust(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
 MakeManagedIdentitiesServiceTracingConnection(
     std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ManagedIdentitiesServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

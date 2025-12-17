@@ -28,8 +28,6 @@ namespace cloud {
 namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LanguageServiceTracingConnection
     : public language_v1::LanguageServiceConnection {
  public:
@@ -69,8 +67,6 @@ class LanguageServiceTracingConnection
  private:
   std::shared_ptr<language_v1::LanguageServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace trace_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TraceServiceTracingConnection : public trace_v1::TraceServiceConnection {
  public:
   ~TraceServiceTracingConnection() override = default;
@@ -52,8 +50,6 @@ class TraceServiceTracingConnection : public trace_v1::TraceServiceConnection {
  private:
   std::shared_ptr<trace_v1::TraceServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

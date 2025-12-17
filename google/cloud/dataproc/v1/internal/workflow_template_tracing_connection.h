@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WorkflowTemplateServiceTracingConnection
     : public dataproc_v1::WorkflowTemplateServiceConnection {
  public:
@@ -115,8 +113,6 @@ class WorkflowTemplateServiceTracingConnection
  private:
   std::shared_ptr<dataproc_v1::WorkflowTemplateServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

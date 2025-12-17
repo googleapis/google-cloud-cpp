@@ -30,8 +30,6 @@ namespace cloud {
 namespace workflows_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WorkflowsTracingStub : public WorkflowsStub {
  public:
   ~WorkflowsTracingStub() override = default;
@@ -126,8 +124,6 @@ class WorkflowsTracingStub : public WorkflowsStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

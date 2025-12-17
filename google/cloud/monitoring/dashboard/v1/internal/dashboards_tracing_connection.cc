@@ -27,8 +27,6 @@ namespace cloud {
 namespace monitoring_dashboard_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DashboardsServiceTracingConnection::DashboardsServiceTracingConnection(
     std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection> child)
     : child_(std::move(child)) {}
@@ -80,18 +78,14 @@ DashboardsServiceTracingConnection::UpdateDashboard(
   return internal::EndSpan(*span, child_->UpdateDashboard(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection>
 MakeDashboardsServiceTracingConnection(
     std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<DashboardsServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

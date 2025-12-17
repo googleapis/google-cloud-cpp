@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BigtableTracingStub::BigtableTracingStub(std::shared_ptr<BigtableStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
@@ -262,15 +260,9 @@ BigtableTracingStub::AsyncPrepareQuery(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<BigtableStub> MakeBigtableTracingStub(
     std::shared_ptr<BigtableStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<BigtableTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

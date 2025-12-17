@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_image_family_views_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ImageFamilyViewsTracingConnection
     : public compute_image_family_views_v1::ImageFamilyViewsConnection {
  public:
@@ -49,8 +47,6 @@ class ImageFamilyViewsTracingConnection
   std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

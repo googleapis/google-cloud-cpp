@@ -28,8 +28,6 @@ namespace cloud {
 namespace lustre_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LustreTracingConnection : public lustre_v1::LustreConnection {
  public:
   ~LustreTracingConnection() override = default;
@@ -116,8 +114,6 @@ class LustreTracingConnection : public lustre_v1::LustreConnection {
  private:
   std::shared_ptr<lustre_v1::LustreConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

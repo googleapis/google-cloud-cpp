@@ -27,8 +27,6 @@ namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 KeyTrackingServiceTracingConnection::KeyTrackingServiceTracingConnection(
     std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> child)
     : child_(std::move(child)) {}
@@ -59,17 +57,13 @@ KeyTrackingServiceTracingConnection::SearchProtectedResources(
                                                             std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection>
 MakeKeyTrackingServiceTracingConnection(
     std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<KeyTrackingServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

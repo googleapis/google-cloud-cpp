@@ -28,8 +28,6 @@ namespace cloud {
 namespace datafusion_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataFusionTracingConnection : public datafusion_v1::DataFusionConnection {
  public:
   ~DataFusionTracingConnection() override = default;
@@ -101,8 +99,6 @@ class DataFusionTracingConnection : public datafusion_v1::DataFusionConnection {
  private:
   std::shared_ptr<datafusion_v1::DataFusionConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

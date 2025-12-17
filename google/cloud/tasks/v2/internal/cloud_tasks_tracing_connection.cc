@@ -27,8 +27,6 @@ namespace cloud {
 namespace tasks_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudTasksTracingConnection::CloudTasksTracingConnection(
     std::shared_ptr<tasks_v2::CloudTasksConnection> child)
     : child_(std::move(child)) {}
@@ -180,15 +178,11 @@ CloudTasksTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<tasks_v2::CloudTasksConnection> MakeCloudTasksTracingConnection(
     std::shared_ptr<tasks_v2::CloudTasksConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudTasksTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_target_https_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionTargetHttpsProxiesTracingConnection::
     RegionTargetHttpsProxiesTracingConnection(
         std::shared_ptr<compute_region_target_https_proxies_v1::
@@ -234,20 +232,16 @@ RegionTargetHttpsProxiesTracingConnection::SetUrlMap(
   return internal::EndSpan(std::move(span), child_->SetUrlMap(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesConnection>
 MakeRegionTargetHttpsProxiesTracingConnection(
     std::shared_ptr<compute_region_target_https_proxies_v1::
                         RegionTargetHttpsProxiesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionTargetHttpsProxiesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

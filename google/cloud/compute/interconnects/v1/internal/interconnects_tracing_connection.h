@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_interconnects_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class InterconnectsTracingConnection
     : public compute_interconnects_v1::InterconnectsConnection {
  public:
@@ -108,8 +106,6 @@ class InterconnectsTracingConnection
  private:
   std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -27,8 +27,6 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RevisionsTracingConnection::RevisionsTracingConnection(
     std::shared_ptr<run_v2::RevisionsConnection> child)
     : child_(std::move(child)) {}
@@ -110,15 +108,11 @@ RevisionsTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<run_v2::RevisionsConnection> MakeRevisionsTracingConnection(
     std::shared_ptr<run_v2::RevisionsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RevisionsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -26,8 +26,6 @@ namespace cloud {
 namespace trace_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TraceServiceTracingConnection::TraceServiceTracingConnection(
     std::shared_ptr<trace_v2::TraceServiceConnection> child)
     : child_(std::move(child)) {}
@@ -49,16 +47,12 @@ TraceServiceTracingConnection::CreateSpan(
   return internal::EndSpan(*span, child_->CreateSpan(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<trace_v2::TraceServiceConnection>
 MakeTraceServiceTracingConnection(
     std::shared_ptr<trace_v2::TraceServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<TraceServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

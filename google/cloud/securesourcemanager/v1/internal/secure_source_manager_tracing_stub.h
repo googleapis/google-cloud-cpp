@@ -30,8 +30,6 @@ namespace cloud {
 namespace securesourcemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
  public:
   ~SecureSourceManagerTracingStub() override = default;
@@ -576,8 +574,6 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

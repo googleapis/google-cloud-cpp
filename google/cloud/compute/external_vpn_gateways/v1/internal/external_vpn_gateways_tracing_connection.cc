@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_external_vpn_gateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ExternalVpnGatewaysTracingConnection::ExternalVpnGatewaysTracingConnection(
     std::shared_ptr<
         compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection>
@@ -174,19 +172,15 @@ ExternalVpnGatewaysTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection>
 MakeExternalVpnGatewaysTracingConnection(
     std::shared_ptr<
         compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<ExternalVpnGatewaysTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

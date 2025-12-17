@@ -26,8 +26,6 @@ namespace cloud {
 namespace monitoring_metricsscope_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MetricsScopesTracingConnection::MetricsScopesTracingConnection(
     std::shared_ptr<monitoring_metricsscope_v1::MetricsScopesConnection> child)
     : child_(std::move(child)) {}
@@ -127,16 +125,12 @@ MetricsScopesTracingConnection::DeleteMonitoredProject(
                            child_->DeleteMonitoredProject(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<monitoring_metricsscope_v1::MetricsScopesConnection>
 MakeMetricsScopesTracingConnection(
     std::shared_ptr<monitoring_metricsscope_v1::MetricsScopesConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MetricsScopesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

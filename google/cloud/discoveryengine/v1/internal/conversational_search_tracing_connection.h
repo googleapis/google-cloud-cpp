@@ -28,8 +28,6 @@ namespace cloud {
 namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ConversationalSearchServiceTracingConnection
     : public discoveryengine_v1::ConversationalSearchServiceConnection {
  public:
@@ -111,8 +109,6 @@ class ConversationalSearchServiceTracingConnection
   std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

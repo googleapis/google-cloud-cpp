@@ -26,8 +26,6 @@ namespace cloud {
 namespace bigquery_datatransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DataTransferServiceTracingStub::DataTransferServiceTracingStub(
     std::shared_ptr<DataTransferServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -281,15 +279,9 @@ DataTransferServiceTracingStub::GetLocation(
                            child_->GetLocation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DataTransferServiceStub> MakeDataTransferServiceTracingStub(
     std::shared_ptr<DataTransferServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DataTransferServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

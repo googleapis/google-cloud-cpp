@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigquery_biglake_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MetastoreServiceTracingConnection::MetastoreServiceTracingConnection(
     std::shared_ptr<bigquery_biglake_v1::MetastoreServiceConnection> child)
     : child_(std::move(child)) {}
@@ -180,16 +178,12 @@ MetastoreServiceTracingConnection::ListTables(
                                                    std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquery_biglake_v1::MetastoreServiceConnection>
 MakeMetastoreServiceTracingConnection(
     std::shared_ptr<bigquery_biglake_v1::MetastoreServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MetastoreServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -30,8 +30,6 @@ namespace cloud {
 namespace osconfig_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class OsConfigZonalServiceTracingStub : public OsConfigZonalServiceStub {
  public:
   ~OsConfigZonalServiceTracingStub() override = default;
@@ -146,8 +144,6 @@ class OsConfigZonalServiceTracingStub : public OsConfigZonalServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

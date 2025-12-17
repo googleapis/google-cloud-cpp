@@ -28,8 +28,6 @@ namespace cloud {
 namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AutoMlTracingConnection : public automl_v1::AutoMlConnection {
  public:
   ~AutoMlTracingConnection() override = default;
@@ -161,8 +159,6 @@ class AutoMlTracingConnection : public automl_v1::AutoMlConnection {
  private:
   std::shared_ptr<automl_v1::AutoMlConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_global_addresses_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class GlobalAddressesTracingConnection
     : public compute_global_addresses_v1::GlobalAddressesConnection {
  public:
@@ -99,8 +97,6 @@ class GlobalAddressesTracingConnection
   std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -27,8 +27,6 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BinauthzManagementServiceV1TracingConnection::
     BinauthzManagementServiceV1TracingConnection(
         std::shared_ptr<
@@ -112,19 +110,15 @@ Status BinauthzManagementServiceV1TracingConnection::DeleteAttestor(
   return internal::EndSpan(*span, child_->DeleteAttestor(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1TracingConnection(
     std::shared_ptr<
         binaryauthorization_v1::BinauthzManagementServiceV1Connection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BinauthzManagementServiceV1TracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

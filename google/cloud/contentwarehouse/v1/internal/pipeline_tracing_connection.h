@@ -28,8 +28,6 @@ namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PipelineServiceTracingConnection
     : public contentwarehouse_v1::PipelineServiceConnection {
  public:
@@ -58,8 +56,6 @@ class PipelineServiceTracingConnection
  private:
   std::shared_ptr<contentwarehouse_v1::PipelineServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

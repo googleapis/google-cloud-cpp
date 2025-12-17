@@ -26,8 +26,6 @@ namespace cloud {
 namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CertificateManagerTracingStub::CertificateManagerTracingStub(
     std::shared_ptr<CertificateManagerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -842,15 +840,9 @@ future<Status> CertificateManagerTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CertificateManagerStub> MakeCertificateManagerTracingStub(
     std::shared_ptr<CertificateManagerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CertificateManagerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

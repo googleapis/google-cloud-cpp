@@ -28,8 +28,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class FeatureRegistryServiceTracingConnection
     : public aiplatform_v1::FeatureRegistryServiceConnection {
  public:
@@ -174,8 +172,6 @@ class FeatureRegistryServiceTracingConnection
  private:
   std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

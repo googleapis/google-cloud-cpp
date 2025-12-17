@@ -26,8 +26,6 @@ namespace cloud {
 namespace workflows_executions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ExecutionsTracingStub::ExecutionsTracingStub(
     std::shared_ptr<ExecutionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -84,15 +82,9 @@ ExecutionsTracingStub::CancelExecution(
                            child_->CancelExecution(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ExecutionsStub> MakeExecutionsTracingStub(
     std::shared_ptr<ExecutionsStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ExecutionsTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
