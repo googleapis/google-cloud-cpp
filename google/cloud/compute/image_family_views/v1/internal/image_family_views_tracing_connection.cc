@@ -26,8 +26,6 @@ namespace cloud {
 namespace compute_image_family_views_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ImageFamilyViewsTracingConnection::ImageFamilyViewsTracingConnection(
     std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
         child)
@@ -44,17 +42,13 @@ ImageFamilyViewsTracingConnection::GetImageFamilyView(
   return internal::EndSpan(*span, child_->GetImageFamilyView(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
 MakeImageFamilyViewsTracingConnection(
     std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ImageFamilyViewsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

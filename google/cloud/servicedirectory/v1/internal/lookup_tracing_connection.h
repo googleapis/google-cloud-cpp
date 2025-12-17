@@ -28,8 +28,6 @@ namespace cloud {
 namespace servicedirectory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LookupServiceTracingConnection
     : public servicedirectory_v1::LookupServiceConnection {
  public:
@@ -54,8 +52,6 @@ class LookupServiceTracingConnection
  private:
   std::shared_ptr<servicedirectory_v1::LookupServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -27,8 +27,6 @@ namespace cloud {
 namespace networkconnectivity_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 HubServiceTracingConnection::HubServiceTracingConnection(
     std::shared_ptr<networkconnectivity_v1::HubServiceConnection> child)
     : child_(std::move(child)) {}
@@ -567,16 +565,12 @@ Status HubServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<networkconnectivity_v1::HubServiceConnection>
 MakeHubServiceTracingConnection(
     std::shared_ptr<networkconnectivity_v1::HubServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<HubServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

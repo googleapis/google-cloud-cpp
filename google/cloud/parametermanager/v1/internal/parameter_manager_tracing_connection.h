@@ -28,8 +28,6 @@ namespace cloud {
 namespace parametermanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ParameterManagerTracingConnection
     : public parametermanager_v1::ParameterManagerConnection {
  public:
@@ -98,8 +96,6 @@ class ParameterManagerTracingConnection
  private:
   std::shared_ptr<parametermanager_v1::ParameterManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_instance_group_managers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionInstanceGroupManagersTracingConnection::
     RegionInstanceGroupManagersTracingConnection(
         std::shared_ptr<compute_region_instance_group_managers_v1::
@@ -713,20 +711,16 @@ RegionInstanceGroupManagersTracingConnection::UpdatePerInstanceConfigs(
                            child_->UpdatePerInstanceConfigs(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_region_instance_group_managers_v1::
                     RegionInstanceGroupManagersConnection>
 MakeRegionInstanceGroupManagersTracingConnection(
     std::shared_ptr<compute_region_instance_group_managers_v1::
                         RegionInstanceGroupManagersConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionInstanceGroupManagersTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

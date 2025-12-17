@@ -26,8 +26,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ScheduleServiceTracingStub::ScheduleServiceTracingStub(
     std::shared_ptr<ScheduleServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -273,15 +271,9 @@ future<Status> ScheduleServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ScheduleServiceStub> MakeScheduleServiceTracingStub(
     std::shared_ptr<ScheduleServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ScheduleServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

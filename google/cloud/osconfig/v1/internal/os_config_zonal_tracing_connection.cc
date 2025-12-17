@@ -27,8 +27,6 @@ namespace cloud {
 namespace osconfig_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 OsConfigZonalServiceTracingConnection::OsConfigZonalServiceTracingConnection(
     std::shared_ptr<osconfig_v1::OsConfigZonalServiceConnection> child)
     : child_(std::move(child)) {}
@@ -234,17 +232,13 @@ OsConfigZonalServiceTracingConnection::ListVulnerabilityReports(
                                                         std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<osconfig_v1::OsConfigZonalServiceConnection>
 MakeOsConfigZonalServiceTracingConnection(
     std::shared_ptr<osconfig_v1::OsConfigZonalServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<OsConfigZonalServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

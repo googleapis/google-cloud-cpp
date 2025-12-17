@@ -28,8 +28,6 @@ namespace cloud {
 namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class EnvironmentsTracingConnection
     : public composer_v1::EnvironmentsConnection {
  public:
@@ -235,8 +233,6 @@ class EnvironmentsTracingConnection
  private:
   std::shared_ptr<composer_v1::EnvironmentsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

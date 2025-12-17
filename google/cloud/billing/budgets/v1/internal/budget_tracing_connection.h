@@ -28,8 +28,6 @@ namespace cloud {
 namespace billing_budgets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BudgetServiceTracingConnection
     : public billing_budgets_v1::BudgetServiceConnection {
  public:
@@ -62,8 +60,6 @@ class BudgetServiceTracingConnection
  private:
   std::shared_ptr<billing_budgets_v1::BudgetServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

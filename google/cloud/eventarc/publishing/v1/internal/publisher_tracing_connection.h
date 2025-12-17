@@ -28,8 +28,6 @@ namespace cloud {
 namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PublisherTracingConnection
     : public eventarc_publishing_v1::PublisherConnection {
  public:
@@ -58,8 +56,6 @@ class PublisherTracingConnection
  private:
   std::shared_ptr<eventarc_publishing_v1::PublisherConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

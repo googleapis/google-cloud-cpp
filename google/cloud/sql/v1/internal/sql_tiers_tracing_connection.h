@@ -28,8 +28,6 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SqlTiersServiceTracingConnection
     : public sql_v1::SqlTiersServiceConnection {
  public:
@@ -46,8 +44,6 @@ class SqlTiersServiceTracingConnection
  private:
   std::shared_ptr<sql_v1::SqlTiersServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

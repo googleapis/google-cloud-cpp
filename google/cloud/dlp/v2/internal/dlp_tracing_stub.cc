@@ -26,8 +26,6 @@ namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DlpServiceTracingStub::DlpServiceTracingStub(
     std::shared_ptr<DlpServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -691,15 +689,9 @@ DlpServiceTracingStub::UpdateConnection(
                            child_->UpdateConnection(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DlpServiceStub> MakeDlpServiceTracingStub(
     std::shared_ptr<DlpServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DlpServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

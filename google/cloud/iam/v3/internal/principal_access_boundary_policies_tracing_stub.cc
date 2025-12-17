@@ -26,8 +26,6 @@ namespace cloud {
 namespace iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 PrincipalAccessBoundaryPoliciesTracingStub::
     PrincipalAccessBoundaryPoliciesTracingStub(
         std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child)
@@ -217,17 +215,11 @@ future<Status> PrincipalAccessBoundaryPoliciesTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<PrincipalAccessBoundaryPoliciesStub>
 MakePrincipalAccessBoundaryPoliciesTracingStub(
     std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<PrincipalAccessBoundaryPoliciesTracingStub>(
       std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

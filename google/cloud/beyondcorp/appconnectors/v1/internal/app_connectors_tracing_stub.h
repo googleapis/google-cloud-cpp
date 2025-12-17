@@ -30,8 +30,6 @@ namespace cloud {
 namespace beyondcorp_appconnectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AppConnectorsServiceTracingStub : public AppConnectorsServiceStub {
  public:
   ~AppConnectorsServiceTracingStub() override = default;
@@ -151,8 +149,6 @@ class AppConnectorsServiceTracingStub : public AppConnectorsServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

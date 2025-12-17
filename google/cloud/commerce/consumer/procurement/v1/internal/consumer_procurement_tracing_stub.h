@@ -31,8 +31,6 @@ namespace cloud {
 namespace commerce_consumer_procurement_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ConsumerProcurementServiceTracingStub
     : public ConsumerProcurementServiceStub {
  public:
@@ -109,8 +107,6 @@ class ConsumerProcurementServiceTracingStub
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

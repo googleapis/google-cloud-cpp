@@ -30,8 +30,6 @@ namespace cloud {
 namespace vmwareengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VmwareEngineTracingStub : public VmwareEngineStub {
  public:
   ~VmwareEngineTracingStub() override = default;
@@ -761,8 +759,6 @@ class VmwareEngineTracingStub : public VmwareEngineStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

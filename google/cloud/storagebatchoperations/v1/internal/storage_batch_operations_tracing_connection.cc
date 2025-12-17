@@ -27,8 +27,6 @@ namespace cloud {
 namespace storagebatchoperations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 StorageBatchOperationsTracingConnection::
     StorageBatchOperationsTracingConnection(
         std::shared_ptr<
@@ -168,18 +166,14 @@ Status StorageBatchOperationsTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
 MakeStorageBatchOperationsTracingConnection(
     std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<StorageBatchOperationsTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

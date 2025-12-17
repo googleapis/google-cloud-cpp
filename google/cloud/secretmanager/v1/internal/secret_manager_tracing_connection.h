@@ -28,8 +28,6 @@ namespace cloud {
 namespace secretmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SecretManagerServiceTracingConnection
     : public secretmanager_v1::SecretManagerServiceConnection {
  public:
@@ -108,8 +106,6 @@ class SecretManagerServiceTracingConnection
  private:
   std::shared_ptr<secretmanager_v1::SecretManagerServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

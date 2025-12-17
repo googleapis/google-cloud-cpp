@@ -26,8 +26,6 @@ namespace cloud {
 namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudQuotasTracingStub::CloudQuotasTracingStub(
     std::shared_ptr<CloudQuotasStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -104,15 +102,9 @@ CloudQuotasTracingStub::UpdateQuotaPreference(
       context, *span, child_->UpdateQuotaPreference(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CloudQuotasStub> MakeCloudQuotasTracingStub(
     std::shared_ptr<CloudQuotasStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CloudQuotasTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

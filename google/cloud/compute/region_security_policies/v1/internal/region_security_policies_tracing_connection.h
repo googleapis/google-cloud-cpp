@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_region_security_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RegionSecurityPoliciesTracingConnection
     : public compute_region_security_policies_v1::
           RegionSecurityPoliciesConnection {
@@ -145,8 +143,6 @@ class RegionSecurityPoliciesTracingConnection
       compute_region_security_policies_v1::RegionSecurityPoliciesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

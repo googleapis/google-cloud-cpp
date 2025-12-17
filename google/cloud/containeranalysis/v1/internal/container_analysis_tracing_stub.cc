@@ -26,8 +26,6 @@ namespace cloud {
 namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ContainerAnalysisTracingStub::ContainerAnalysisTracingStub(
     std::shared_ptr<ContainerAnalysisStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -95,15 +93,9 @@ ContainerAnalysisTracingStub::ExportSBOM(
                            child_->ExportSBOM(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ContainerAnalysisStub> MakeContainerAnalysisTracingStub(
     std::shared_ptr<ContainerAnalysisStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ContainerAnalysisTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

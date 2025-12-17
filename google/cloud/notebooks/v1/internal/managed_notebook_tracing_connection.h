@@ -28,8 +28,6 @@ namespace cloud {
 namespace notebooks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ManagedNotebookServiceTracingConnection
     : public notebooks_v1::ManagedNotebookServiceConnection {
  public:
@@ -199,8 +197,6 @@ class ManagedNotebookServiceTracingConnection
  private:
   std::shared_ptr<notebooks_v1::ManagedNotebookServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class IDSTracingConnection : public ids_v1::IDSConnection {
  public:
   ~IDSTracingConnection() override = default;
@@ -67,8 +65,6 @@ class IDSTracingConnection : public ids_v1::IDSConnection {
  private:
   std::shared_ptr<ids_v1::IDSConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -28,8 +28,6 @@ namespace cloud {
 namespace servicehealth_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ServiceHealthTracingConnection
     : public servicehealth_v1::ServiceHealthConnection {
  public:
@@ -76,8 +74,6 @@ class ServiceHealthTracingConnection
  private:
   std::shared_ptr<servicehealth_v1::ServiceHealthConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

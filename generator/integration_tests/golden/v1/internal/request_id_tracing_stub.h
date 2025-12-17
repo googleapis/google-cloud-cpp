@@ -30,8 +30,6 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RequestIdServiceTracingStub : public RequestIdServiceStub {
  public:
   ~RequestIdServiceTracingStub() override = default;
@@ -81,8 +79,6 @@ class RequestIdServiceTracingStub : public RequestIdServiceStub {
   std::shared_ptr<RequestIdServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

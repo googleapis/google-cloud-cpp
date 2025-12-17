@@ -28,8 +28,6 @@ namespace cloud {
 namespace tpu_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TpuTracingConnection : public tpu_v2::TpuConnection {
  public:
   ~TpuTracingConnection() override = default;
@@ -181,8 +179,6 @@ class TpuTracingConnection : public tpu_v2::TpuConnection {
  private:
   std::shared_ptr<tpu_v2::TpuConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

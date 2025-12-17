@@ -26,8 +26,6 @@ namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CaseServiceTracingStub::CaseServiceTracingStub(
     std::shared_ptr<CaseServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -125,15 +123,9 @@ CaseServiceTracingStub::SearchCaseClassifications(
       child_->SearchCaseClassifications(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CaseServiceStub> MakeCaseServiceTracingStub(
     std::shared_ptr<CaseServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CaseServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

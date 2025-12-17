@@ -30,8 +30,6 @@ namespace cloud {
 namespace videointelligence_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VideoIntelligenceServiceTracingStub
     : public VideoIntelligenceServiceStub {
  public:
@@ -69,8 +67,6 @@ class VideoIntelligenceServiceTracingStub
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

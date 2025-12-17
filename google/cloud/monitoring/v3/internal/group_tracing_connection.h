@@ -28,8 +28,6 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class GroupServiceTracingConnection
     : public monitoring_v3::GroupServiceConnection {
  public:
@@ -61,8 +59,6 @@ class GroupServiceTracingConnection
  private:
   std::shared_ptr<monitoring_v3::GroupServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -27,8 +27,6 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 GoldenKitchenSinkTracingConnection::GoldenKitchenSinkTracingConnection(
     std::shared_ptr<golden_v1::GoldenKitchenSinkConnection> child)
     : child_(std::move(child)) {}
@@ -136,16 +134,12 @@ GoldenKitchenSinkTracingConnection::ListOperations(google::longrunning::ListOper
         std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<golden_v1::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkTracingConnection(
     std::shared_ptr<golden_v1::GoldenKitchenSinkConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<GoldenKitchenSinkTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

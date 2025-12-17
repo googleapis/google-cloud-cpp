@@ -27,8 +27,6 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MetricServiceTracingConnection::MetricServiceTracingConnection(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> child)
     : child_(std::move(child)) {}
@@ -129,16 +127,12 @@ future<Status> MetricServiceTracingConnection::AsyncCreateTimeSeries(
                            child_->AsyncCreateTimeSeries(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<monitoring_v3::MetricServiceConnection>
 MakeMetricServiceTracingConnection(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MetricServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

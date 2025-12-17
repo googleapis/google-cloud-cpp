@@ -28,8 +28,6 @@ namespace cloud {
 namespace memorystore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class MemorystoreTracingConnection
     : public memorystore_v1::MemorystoreConnection {
  public:
@@ -175,8 +173,6 @@ class MemorystoreTracingConnection
  private:
   std::shared_ptr<memorystore_v1::MemorystoreConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -26,8 +26,6 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 EventServiceTracingStub::EventServiceTracingStub(
     std::shared_ptr<EventServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -55,15 +53,9 @@ StatusOr<google::longrunning::Operation> EventServiceTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<EventServiceStub> MakeEventServiceTracingStub(
     std::shared_ptr<EventServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<EventServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

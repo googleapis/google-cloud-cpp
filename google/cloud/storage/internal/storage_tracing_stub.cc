@@ -31,8 +31,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 StorageTracingStub::StorageTracingStub(std::shared_ptr<StorageStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
@@ -432,15 +430,9 @@ StorageTracingStub::AsyncQueryWriteStatus(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<StorageStub> MakeStorageTracingStub(
     std::shared_ptr<StorageStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<StorageTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

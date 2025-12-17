@@ -28,8 +28,6 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CompletionTracingConnection : public talent_v4::CompletionConnection {
  public:
   ~CompletionTracingConnection() override = default;
@@ -48,8 +46,6 @@ class CompletionTracingConnection : public talent_v4::CompletionConnection {
  private:
   std::shared_ptr<talent_v4::CompletionConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

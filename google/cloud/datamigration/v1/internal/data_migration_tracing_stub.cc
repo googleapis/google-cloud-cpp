@@ -26,8 +26,6 @@ namespace cloud {
 namespace datamigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DataMigrationServiceTracingStub::DataMigrationServiceTracingStub(
     std::shared_ptr<DataMigrationServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -1083,15 +1081,9 @@ future<Status> DataMigrationServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DataMigrationServiceStub> MakeDataMigrationServiceTracingStub(
     std::shared_ptr<DataMigrationServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DataMigrationServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,8 +30,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ScheduleServiceTracingStub : public ScheduleServiceStub {
  public:
   ~ScheduleServiceTracingStub() override = default;
@@ -138,8 +136,6 @@ class ScheduleServiceTracingStub : public ScheduleServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

@@ -26,8 +26,6 @@ namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudCatalogTracingStub::CloudCatalogTracingStub(
     std::shared_ptr<CloudCatalogStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -56,15 +54,9 @@ CloudCatalogTracingStub::ListSkus(
                            child_->ListSkus(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CloudCatalogStub> MakeCloudCatalogTracingStub(
     std::shared_ptr<CloudCatalogStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CloudCatalogTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

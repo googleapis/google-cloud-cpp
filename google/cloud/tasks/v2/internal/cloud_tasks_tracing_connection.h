@@ -28,8 +28,6 @@ namespace cloud {
 namespace tasks_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudTasksTracingConnection : public tasks_v2::CloudTasksConnection {
  public:
   ~CloudTasksTracingConnection() override = default;
@@ -96,8 +94,6 @@ class CloudTasksTracingConnection : public tasks_v2::CloudTasksConnection {
  private:
   std::shared_ptr<tasks_v2::CloudTasksConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

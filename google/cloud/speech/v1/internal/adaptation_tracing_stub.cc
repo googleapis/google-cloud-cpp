@@ -26,8 +26,6 @@ namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AdaptationTracingStub::AdaptationTracingStub(
     std::shared_ptr<AdaptationStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -173,15 +171,9 @@ StatusOr<google::longrunning::Operation> AdaptationTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AdaptationStub> MakeAdaptationTracingStub(
     std::shared_ptr<AdaptationStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AdaptationTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

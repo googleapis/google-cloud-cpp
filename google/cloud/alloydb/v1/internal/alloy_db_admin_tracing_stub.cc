@@ -26,8 +26,6 @@ namespace cloud {
 namespace alloydb_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AlloyDBAdminTracingStub::AlloyDBAdminTracingStub(
     std::shared_ptr<AlloyDBAdminStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -871,15 +869,9 @@ future<Status> AlloyDBAdminTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AlloyDBAdminStub> MakeAlloyDBAdminTracingStub(
     std::shared_ptr<AlloyDBAdminStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AlloyDBAdminTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

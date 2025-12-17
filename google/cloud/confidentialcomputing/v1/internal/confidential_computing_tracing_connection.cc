@@ -27,8 +27,6 @@ namespace cloud {
 namespace confidentialcomputing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConfidentialComputingTracingConnection::ConfidentialComputingTracingConnection(
     std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
         child)
@@ -101,18 +99,14 @@ ConfidentialComputingTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
 MakeConfidentialComputingTracingConnection(
     std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ConfidentialComputingTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

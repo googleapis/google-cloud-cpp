@@ -27,8 +27,6 @@ namespace cloud {
 namespace netapp_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 NetAppTracingConnection::NetAppTracingConnection(
     std::shared_ptr<netapp_v1::NetAppConnection> child)
     : child_(std::move(child)) {}
@@ -1387,15 +1385,11 @@ Status NetAppTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<netapp_v1::NetAppConnection> MakeNetAppTracingConnection(
     std::shared_ptr<netapp_v1::NetAppConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<NetAppTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

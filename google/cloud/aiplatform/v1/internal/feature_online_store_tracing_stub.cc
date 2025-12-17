@@ -27,8 +27,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 FeatureOnlineStoreServiceTracingStub::FeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -215,17 +213,11 @@ FeatureOnlineStoreServiceTracingStub::WaitOperation(
                            child_->WaitOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<FeatureOnlineStoreServiceStub>
 MakeFeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<FeatureOnlineStoreServiceTracingStub>(
       std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

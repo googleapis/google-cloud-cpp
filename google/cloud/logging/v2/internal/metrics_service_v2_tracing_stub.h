@@ -30,8 +30,6 @@ namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class MetricsServiceV2TracingStub : public MetricsServiceV2Stub {
  public:
   ~MetricsServiceV2TracingStub() override = default;
@@ -76,8 +74,6 @@ class MetricsServiceV2TracingStub : public MetricsServiceV2Stub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

@@ -26,8 +26,6 @@ namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CommentServiceTracingStub::CommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -56,15 +54,9 @@ CommentServiceTracingStub::CreateComment(
                            child_->CreateComment(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CommentServiceStub> MakeCommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CommentServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

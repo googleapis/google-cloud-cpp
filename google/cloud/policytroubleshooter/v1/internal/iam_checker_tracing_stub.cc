@@ -26,8 +26,6 @@ namespace cloud {
 namespace policytroubleshooter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IamCheckerTracingStub::IamCheckerTracingStub(
     std::shared_ptr<IamCheckerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -46,15 +44,9 @@ IamCheckerTracingStub::TroubleshootIamPolicy(
       context, *span, child_->TroubleshootIamPolicy(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<IamCheckerStub> MakeIamCheckerTracingStub(
     std::shared_ptr<IamCheckerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<IamCheckerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

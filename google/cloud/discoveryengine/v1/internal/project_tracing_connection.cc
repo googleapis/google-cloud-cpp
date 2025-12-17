@@ -27,8 +27,6 @@ namespace cloud {
 namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ProjectServiceTracingConnection::ProjectServiceTracingConnection(
     std::shared_ptr<discoveryengine_v1::ProjectServiceConnection> child)
     : child_(std::move(child)) {}
@@ -93,16 +91,12 @@ Status ProjectServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<discoveryengine_v1::ProjectServiceConnection>
 MakeProjectServiceTracingConnection(
     std::shared_ptr<discoveryengine_v1::ProjectServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ProjectServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

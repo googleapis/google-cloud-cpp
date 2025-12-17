@@ -27,8 +27,6 @@ namespace cloud {
 namespace texttospeech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TextToSpeechTracingConnection::TextToSpeechTracingConnection(
     std::shared_ptr<texttospeech_v1::TextToSpeechConnection> child)
     : child_(std::move(child)) {}
@@ -78,16 +76,12 @@ TextToSpeechTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<texttospeech_v1::TextToSpeechConnection>
 MakeTextToSpeechTracingConnection(
     std::shared_ptr<texttospeech_v1::TextToSpeechConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<TextToSpeechTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

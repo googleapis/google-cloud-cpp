@@ -26,8 +26,6 @@ namespace cloud {
 namespace memcache_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudMemcacheTracingStub::CloudMemcacheTracingStub(
     std::shared_ptr<CloudMemcacheStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -315,15 +313,9 @@ future<Status> CloudMemcacheTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CloudMemcacheStub> MakeCloudMemcacheTracingStub(
     std::shared_ptr<CloudMemcacheStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CloudMemcacheTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

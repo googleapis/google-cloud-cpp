@@ -30,8 +30,6 @@ namespace cloud {
 namespace telcoautomation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TelcoAutomationTracingStub : public TelcoAutomationStub {
  public:
   ~TelcoAutomationTracingStub() override = default;
@@ -309,8 +307,6 @@ class TelcoAutomationTracingStub : public TelcoAutomationStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

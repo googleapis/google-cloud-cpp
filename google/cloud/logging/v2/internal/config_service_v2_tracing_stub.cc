@@ -26,8 +26,6 @@ namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConfigServiceV2TracingStub::ConfigServiceV2TracingStub(
     std::shared_ptr<ConfigServiceV2Stub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -536,15 +534,9 @@ future<Status> ConfigServiceV2TracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ConfigServiceV2Stub> MakeConfigServiceV2TracingStub(
     std::shared_ptr<ConfigServiceV2Stub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ConfigServiceV2TracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

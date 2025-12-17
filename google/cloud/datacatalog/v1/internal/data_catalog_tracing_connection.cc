@@ -27,8 +27,6 @@ namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DataCatalogTracingConnection::DataCatalogTracingConnection(
     std::shared_ptr<datacatalog_v1::DataCatalogConnection> child)
     : child_(std::move(child)) {}
@@ -450,16 +448,12 @@ Status DataCatalogTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<datacatalog_v1::DataCatalogConnection>
 MakeDataCatalogTracingConnection(
     std::shared_ptr<datacatalog_v1::DataCatalogConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DataCatalogTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

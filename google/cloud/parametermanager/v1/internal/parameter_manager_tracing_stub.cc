@@ -26,8 +26,6 @@ namespace cloud {
 namespace parametermanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ParameterManagerTracingStub::ParameterManagerTracingStub(
     std::shared_ptr<ParameterManagerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -205,15 +203,9 @@ ParameterManagerTracingStub::GetLocation(
                            child_->GetLocation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ParameterManagerStub> MakeParameterManagerTracingStub(
     std::shared_ptr<ParameterManagerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ParameterManagerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

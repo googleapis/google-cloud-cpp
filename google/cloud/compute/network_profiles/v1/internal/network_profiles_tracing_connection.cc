@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_network_profiles_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 NetworkProfilesTracingConnection::NetworkProfilesTracingConnection(
     std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection>
         child)
@@ -59,17 +57,13 @@ NetworkProfilesTracingConnection::ListNetworkProfiles(
                                                        std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection>
 MakeNetworkProfilesTracingConnection(
     std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<NetworkProfilesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

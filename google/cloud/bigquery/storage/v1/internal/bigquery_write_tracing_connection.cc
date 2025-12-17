@@ -26,8 +26,6 @@ namespace cloud {
 namespace bigquery_storage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BigQueryWriteTracingConnection::BigQueryWriteTracingConnection(
     std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection> child)
     : child_(std::move(child)) {}
@@ -88,16 +86,12 @@ BigQueryWriteTracingConnection::FlushRows(
   return internal::EndSpan(*span, child_->FlushRows(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection>
 MakeBigQueryWriteTracingConnection(
     std::shared_ptr<bigquery_storage_v1::BigQueryWriteConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BigQueryWriteTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

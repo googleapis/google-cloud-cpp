@@ -28,8 +28,6 @@ namespace cloud {
 namespace webrisk_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WebRiskServiceTracingConnection
     : public webrisk_v1::WebRiskServiceConnection {
  public:
@@ -80,8 +78,6 @@ class WebRiskServiceTracingConnection
  private:
   std::shared_ptr<webrisk_v1::WebRiskServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

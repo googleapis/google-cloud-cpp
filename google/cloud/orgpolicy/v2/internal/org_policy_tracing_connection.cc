@@ -27,8 +27,6 @@ namespace cloud {
 namespace orgpolicy_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 OrgPolicyTracingConnection::OrgPolicyTracingConnection(
     std::shared_ptr<orgpolicy_v2::OrgPolicyConnection> child)
     : child_(std::move(child)) {}
@@ -149,16 +147,12 @@ Status OrgPolicyTracingConnection::DeleteCustomConstraint(
   return internal::EndSpan(*span, child_->DeleteCustomConstraint(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<orgpolicy_v2::OrgPolicyConnection>
 MakeOrgPolicyTracingConnection(
     std::shared_ptr<orgpolicy_v2::OrgPolicyConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<OrgPolicyTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

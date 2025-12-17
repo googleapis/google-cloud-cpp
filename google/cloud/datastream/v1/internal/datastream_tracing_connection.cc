@@ -27,8 +27,6 @@ namespace cloud {
 namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DatastreamTracingConnection::DatastreamTracingConnection(
     std::shared_ptr<datastream_v1::DatastreamConnection> child)
     : child_(std::move(child)) {}
@@ -571,16 +569,12 @@ Status DatastreamTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<datastream_v1::DatastreamConnection>
 MakeDatastreamTracingConnection(
     std::shared_ptr<datastream_v1::DatastreamConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DatastreamTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -28,8 +28,6 @@ namespace cloud {
 namespace apigateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ApiGatewayServiceTracingConnection
     : public apigateway_v1::ApiGatewayServiceConnection {
  public:
@@ -164,8 +162,6 @@ class ApiGatewayServiceTracingConnection
  private:
   std::shared_ptr<apigateway_v1::ApiGatewayServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

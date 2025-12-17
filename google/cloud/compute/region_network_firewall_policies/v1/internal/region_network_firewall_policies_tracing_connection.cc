@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_network_firewall_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionNetworkFirewallPoliciesTracingConnection::
     RegionNetworkFirewallPoliciesTracingConnection(
         std::shared_ptr<compute_region_network_firewall_policies_v1::
@@ -431,20 +429,16 @@ RegionNetworkFirewallPoliciesTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_region_network_firewall_policies_v1::
                     RegionNetworkFirewallPoliciesConnection>
 MakeRegionNetworkFirewallPoliciesTracingConnection(
     std::shared_ptr<compute_region_network_firewall_policies_v1::
                         RegionNetworkFirewallPoliciesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionNetworkFirewallPoliciesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

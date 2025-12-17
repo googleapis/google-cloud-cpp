@@ -26,8 +26,6 @@ namespace cloud {
 namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AccessApprovalTracingStub::AccessApprovalTracingStub(
     std::shared_ptr<AccessApprovalStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -162,15 +160,9 @@ AccessApprovalTracingStub::GetAccessApprovalServiceAccount(
       child_->GetAccessApprovalServiceAccount(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AccessApprovalStub> MakeAccessApprovalTracingStub(
     std::shared_ptr<AccessApprovalStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AccessApprovalTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

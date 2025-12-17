@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_vpn_tunnels_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 VpnTunnelsTracingConnection::VpnTunnelsTracingConnection(
     std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child)
     : child_(std::move(child)) {}
@@ -162,16 +160,12 @@ VpnTunnelsTracingConnection::SetLabels(
   return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection>
 MakeVpnTunnelsTracingConnection(
     std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<VpnTunnelsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquery_datapolicies_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataPolicyServiceTracingConnection
     : public bigquery_datapolicies_v2::DataPolicyServiceConnection {
  public:
@@ -85,8 +83,6 @@ class DataPolicyServiceTracingConnection
  private:
   std::shared_ptr<bigquery_datapolicies_v2::DataPolicyServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

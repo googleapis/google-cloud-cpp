@@ -28,8 +28,6 @@ namespace cloud {
 namespace apikeys_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ApiKeysTracingConnection : public apikeys_v2::ApiKeysConnection {
  public:
   ~ApiKeysTracingConnection() override = default;
@@ -97,8 +95,6 @@ class ApiKeysTracingConnection : public apikeys_v2::ApiKeysConnection {
  private:
   std::shared_ptr<apikeys_v2::ApiKeysConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

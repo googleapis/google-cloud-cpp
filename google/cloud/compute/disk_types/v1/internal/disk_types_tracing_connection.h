@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_disk_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DiskTypesTracingConnection
     : public compute_disk_types_v1::DiskTypesConnection {
  public:
@@ -56,8 +54,6 @@ class DiskTypesTracingConnection
  private:
   std::shared_ptr<compute_disk_types_v1::DiskTypesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

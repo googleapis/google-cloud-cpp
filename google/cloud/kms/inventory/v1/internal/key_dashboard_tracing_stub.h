@@ -30,8 +30,6 @@ namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class KeyDashboardServiceTracingStub : public KeyDashboardServiceStub {
  public:
   ~KeyDashboardServiceTracingStub() override = default;
@@ -49,8 +47,6 @@ class KeyDashboardServiceTracingStub : public KeyDashboardServiceStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

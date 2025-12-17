@@ -26,8 +26,6 @@ namespace cloud {
 namespace video_transcoder_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TranscoderServiceTracingStub::TranscoderServiceTracingStub(
     std::shared_ptr<TranscoderServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -132,15 +130,9 @@ Status TranscoderServiceTracingStub::DeleteJobTemplate(
       context, *span, child_->DeleteJobTemplate(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<TranscoderServiceStub> MakeTranscoderServiceTracingStub(
     std::shared_ptr<TranscoderServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<TranscoderServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

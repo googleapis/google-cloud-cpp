@@ -26,8 +26,6 @@ namespace cloud {
 namespace servicecontrol_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 QuotaControllerTracingStub::QuotaControllerTracingStub(
     std::shared_ptr<QuotaControllerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -44,15 +42,9 @@ QuotaControllerTracingStub::AllocateQuota(
                            child_->AllocateQuota(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<QuotaControllerStub> MakeQuotaControllerTracingStub(
     std::shared_ptr<QuotaControllerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<QuotaControllerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

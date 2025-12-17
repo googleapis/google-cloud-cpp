@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BigtableInstanceAdminTracingConnection::BigtableInstanceAdminTracingConnection(
     std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> child)
     : child_(std::move(child)) {}
@@ -531,17 +529,13 @@ Status BigtableInstanceAdminTracingConnection::DeleteMaterializedView(
   return internal::EndSpan(*span, child_->DeleteMaterializedView(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
 MakeBigtableInstanceAdminTracingConnection(
     std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BigtableInstanceAdminTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

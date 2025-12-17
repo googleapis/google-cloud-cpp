@@ -28,8 +28,6 @@ namespace cloud {
 namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ArtifactRegistryTracingConnection
     : public artifactregistry_v1::ArtifactRegistryConnection {
  public:
@@ -348,8 +346,6 @@ class ArtifactRegistryTracingConnection
  private:
   std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -30,8 +30,6 @@ namespace cloud {
 namespace managedkafka_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ManagedKafkaTracingStub : public ManagedKafkaStub {
  public:
   ~ManagedKafkaTracingStub() override = default;
@@ -201,8 +199,6 @@ class ManagedKafkaTracingStub : public ManagedKafkaStub {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

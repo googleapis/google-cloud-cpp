@@ -30,8 +30,6 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DeprecatedServiceTracingStub : public DeprecatedServiceStub {
  public:
   ~DeprecatedServiceTracingStub() override = default;
@@ -47,8 +45,6 @@ class DeprecatedServiceTracingStub : public DeprecatedServiceStub {
   std::shared_ptr<DeprecatedServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.

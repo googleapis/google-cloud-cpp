@@ -28,8 +28,6 @@ namespace cloud {
 namespace netapp_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class NetAppTracingConnection : public netapp_v1::NetAppConnection {
  public:
   ~NetAppTracingConnection() override = default;
@@ -584,8 +582,6 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
  private:
   std::shared_ptr<netapp_v1::NetAppConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

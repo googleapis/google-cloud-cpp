@@ -26,8 +26,6 @@ namespace cloud {
 namespace managedkafka_schemaregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ManagedSchemaRegistryTracingStub::ManagedSchemaRegistryTracingStub(
     std::shared_ptr<ManagedSchemaRegistryStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -482,15 +480,9 @@ Status ManagedSchemaRegistryTracingStub::CancelOperation(
                            child_->CancelOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ManagedSchemaRegistryStub> MakeManagedSchemaRegistryTracingStub(
     std::shared_ptr<ManagedSchemaRegistryStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ManagedSchemaRegistryTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

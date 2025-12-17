@@ -28,8 +28,6 @@ namespace cloud {
 namespace commerce_consumer_procurement_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConsumerProcurementServiceTracingConnection::
     ConsumerProcurementServiceTracingConnection(
         std::shared_ptr<commerce_consumer_procurement_v1::
@@ -169,20 +167,16 @@ ConsumerProcurementServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection>
 MakeConsumerProcurementServiceTracingConnection(
     std::shared_ptr<
         commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ConsumerProcurementServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

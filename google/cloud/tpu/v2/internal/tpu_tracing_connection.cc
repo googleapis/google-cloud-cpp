@@ -27,8 +27,6 @@ namespace cloud {
 namespace tpu_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TpuTracingConnection::TpuTracingConnection(
     std::shared_ptr<tpu_v2::TpuConnection> child)
     : child_(std::move(child)) {}
@@ -359,15 +357,11 @@ Status TpuTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<tpu_v2::TpuConnection> MakeTpuTracingConnection(
     std::shared_ptr<tpu_v2::TpuConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<TpuTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

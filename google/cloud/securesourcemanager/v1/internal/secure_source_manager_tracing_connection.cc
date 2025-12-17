@@ -27,8 +27,6 @@ namespace cloud {
 namespace securesourcemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SecureSourceManagerTracingConnection::SecureSourceManagerTracingConnection(
     std::shared_ptr<securesourcemanager_v1::SecureSourceManagerConnection>
         child)
@@ -1353,18 +1351,14 @@ Status SecureSourceManagerTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<securesourcemanager_v1::SecureSourceManagerConnection>
 MakeSecureSourceManagerTracingConnection(
     std::shared_ptr<securesourcemanager_v1::SecureSourceManagerConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<SecureSourceManagerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

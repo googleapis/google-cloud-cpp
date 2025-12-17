@@ -27,8 +27,6 @@ namespace cloud {
 namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConversationalSearchServiceTracingStub::ConversationalSearchServiceTracingStub(
     std::shared_ptr<ConversationalSearchServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -259,17 +257,11 @@ Status ConversationalSearchServiceTracingStub::CancelOperation(
                            child_->CancelOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ConversationalSearchServiceStub>
 MakeConversationalSearchServiceTracingStub(
     std::shared_ptr<ConversationalSearchServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ConversationalSearchServiceTracingStub>(
       std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

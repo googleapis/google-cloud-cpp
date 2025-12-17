@@ -26,8 +26,6 @@ namespace cloud {
 namespace servicecontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ServiceControllerTracingStub::ServiceControllerTracingStub(
     std::shared_ptr<ServiceControllerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -56,15 +54,9 @@ ServiceControllerTracingStub::Report(
                            child_->Report(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ServiceControllerStub> MakeServiceControllerTracingStub(
     std::shared_ptr<ServiceControllerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ServiceControllerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

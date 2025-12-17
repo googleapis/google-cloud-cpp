@@ -26,8 +26,6 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TasksTracingStub::TasksTracingStub(std::shared_ptr<TasksStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
@@ -96,15 +94,9 @@ StatusOr<google::longrunning::Operation> TasksTracingStub::WaitOperation(
                            child_->WaitOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<TasksStub> MakeTasksTracingStub(
     std::shared_ptr<TasksStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<TasksTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

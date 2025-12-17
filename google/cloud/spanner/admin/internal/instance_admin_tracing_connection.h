@@ -28,8 +28,6 @@ namespace cloud {
 namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class InstanceAdminTracingConnection
     : public spanner_admin::InstanceAdminConnection {
  public:
@@ -204,8 +202,6 @@ class InstanceAdminTracingConnection
  private:
   std::shared_ptr<spanner_admin::InstanceAdminConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

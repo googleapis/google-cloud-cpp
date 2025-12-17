@@ -26,8 +26,6 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SystemPolicyV1TracingStub::SystemPolicyV1TracingStub(
     std::shared_ptr<SystemPolicyV1Stub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -45,15 +43,9 @@ SystemPolicyV1TracingStub::GetSystemPolicy(
                            child_->GetSystemPolicy(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SystemPolicyV1Stub> MakeSystemPolicyV1TracingStub(
     std::shared_ptr<SystemPolicyV1Stub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SystemPolicyV1TracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

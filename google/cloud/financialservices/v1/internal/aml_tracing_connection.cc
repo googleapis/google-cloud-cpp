@@ -27,8 +27,6 @@ namespace cloud {
 namespace financialservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AMLTracingConnection::AMLTracingConnection(
     std::shared_ptr<financialservices_v1::AMLConnection> child)
     : child_(std::move(child)) {}
@@ -995,15 +993,11 @@ Status AMLTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<financialservices_v1::AMLConnection> MakeAMLTracingConnection(
     std::shared_ptr<financialservices_v1::AMLConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AMLTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -27,8 +27,6 @@ namespace cloud {
 namespace scheduler_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudSchedulerTracingConnection::CloudSchedulerTracingConnection(
     std::shared_ptr<scheduler_v1::CloudSchedulerConnection> child)
     : child_(std::move(child)) {}
@@ -126,16 +124,12 @@ CloudSchedulerTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<scheduler_v1::CloudSchedulerConnection>
 MakeCloudSchedulerTracingConnection(
     std::shared_ptr<scheduler_v1::CloudSchedulerConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudSchedulerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

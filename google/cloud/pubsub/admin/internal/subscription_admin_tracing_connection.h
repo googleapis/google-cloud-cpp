@@ -28,8 +28,6 @@ namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SubscriptionAdminTracingConnection
     : public pubsub_admin::SubscriptionAdminConnection {
  public:
@@ -88,8 +86,6 @@ class SubscriptionAdminTracingConnection
  private:
   std::shared_ptr<pubsub_admin::SubscriptionAdminConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -26,8 +26,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SchemaServiceTracingStub::SchemaServiceTracingStub(
     std::shared_ptr<SchemaServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -181,15 +179,9 @@ SchemaServiceTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SchemaServiceStub> MakeSchemaServiceTracingStub(
     std::shared_ptr<SchemaServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SchemaServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

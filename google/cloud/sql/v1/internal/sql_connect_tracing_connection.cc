@@ -26,8 +26,6 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SqlConnectServiceTracingConnection::SqlConnectServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlConnectServiceConnection> child)
     : child_(std::move(child)) {}
@@ -50,17 +48,13 @@ SqlConnectServiceTracingConnection::GenerateEphemeralCert(
   return internal::EndSpan(*span, child_->GenerateEphemeralCert(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<sql_v1::SqlConnectServiceConnection>
 MakeSqlConnectServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlConnectServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<SqlConnectServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

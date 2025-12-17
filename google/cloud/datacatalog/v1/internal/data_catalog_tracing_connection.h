@@ -28,8 +28,6 @@ namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataCatalogTracingConnection
     : public datacatalog_v1::DataCatalogConnection {
  public:
@@ -211,8 +209,6 @@ class DataCatalogTracingConnection
  private:
   std::shared_ptr<datacatalog_v1::DataCatalogConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

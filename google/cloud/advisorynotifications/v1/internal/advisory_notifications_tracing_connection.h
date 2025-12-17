@@ -28,8 +28,6 @@ namespace cloud {
 namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AdvisoryNotificationsServiceTracingConnection
     : public advisorynotifications_v1::AdvisoryNotificationsServiceConnection {
  public:
@@ -65,8 +63,6 @@ class AdvisoryNotificationsServiceTracingConnection
       advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

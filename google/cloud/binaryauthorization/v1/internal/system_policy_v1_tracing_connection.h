@@ -28,8 +28,6 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SystemPolicyV1TracingConnection
     : public binaryauthorization_v1::SystemPolicyV1Connection {
  public:
@@ -47,8 +45,6 @@ class SystemPolicyV1TracingConnection
  private:
   std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

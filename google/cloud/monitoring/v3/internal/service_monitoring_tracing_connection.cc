@@ -27,8 +27,6 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ServiceMonitoringServiceTracingConnection::
     ServiceMonitoringServiceTracingConnection(
         std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection>
@@ -133,17 +131,13 @@ Status ServiceMonitoringServiceTracingConnection::DeleteServiceLevelObjective(
   return internal::EndSpan(*span, child_->DeleteServiceLevelObjective(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection>
 MakeServiceMonitoringServiceTracingConnection(
     std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ServiceMonitoringServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

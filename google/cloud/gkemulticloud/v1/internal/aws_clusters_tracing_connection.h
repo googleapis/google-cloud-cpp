@@ -28,8 +28,6 @@ namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AwsClustersTracingConnection
     : public gkemulticloud_v1::AwsClustersConnection {
  public:
@@ -188,8 +186,6 @@ class AwsClustersTracingConnection
  private:
   std::shared_ptr<gkemulticloud_v1::AwsClustersConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

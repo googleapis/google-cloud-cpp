@@ -27,8 +27,6 @@ namespace cloud {
 namespace apikeys_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ApiKeysTracingConnection::ApiKeysTracingConnection(
     std::shared_ptr<apikeys_v2::ApiKeysConnection> child)
     : child_(std::move(child)) {}
@@ -164,15 +162,11 @@ StatusOr<google::longrunning::Operation> ApiKeysTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<apikeys_v2::ApiKeysConnection> MakeApiKeysTracingConnection(
     std::shared_ptr<apikeys_v2::ApiKeysConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ApiKeysTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

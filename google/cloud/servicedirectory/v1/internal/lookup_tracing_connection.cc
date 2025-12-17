@@ -27,8 +27,6 @@ namespace cloud {
 namespace servicedirectory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LookupServiceTracingConnection::LookupServiceTracingConnection(
     std::shared_ptr<servicedirectory_v1::LookupServiceConnection> child)
     : child_(std::move(child)) {}
@@ -62,16 +60,12 @@ LookupServiceTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<servicedirectory_v1::LookupServiceConnection>
 MakeLookupServiceTracingConnection(
     std::shared_ptr<servicedirectory_v1::LookupServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LookupServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

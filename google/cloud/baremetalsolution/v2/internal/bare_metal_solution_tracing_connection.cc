@@ -27,8 +27,6 @@ namespace cloud {
 namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BareMetalSolutionTracingConnection::BareMetalSolutionTracingConnection(
     std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection> child)
     : child_(std::move(child)) {}
@@ -834,17 +832,13 @@ BareMetalSolutionTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection>
 MakeBareMetalSolutionTracingConnection(
     std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<BareMetalSolutionTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

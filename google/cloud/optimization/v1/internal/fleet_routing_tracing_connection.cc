@@ -26,8 +26,6 @@ namespace cloud {
 namespace optimization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 FleetRoutingTracingConnection::FleetRoutingTracingConnection(
     std::shared_ptr<optimization_v1::FleetRoutingConnection> child)
     : child_(std::move(child)) {}
@@ -81,16 +79,12 @@ FleetRoutingTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<optimization_v1::FleetRoutingConnection>
 MakeFleetRoutingTracingConnection(
     std::shared_ptr<optimization_v1::FleetRoutingConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<FleetRoutingTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

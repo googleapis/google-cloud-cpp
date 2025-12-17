@@ -26,8 +26,6 @@ namespace cloud {
 namespace recaptchaenterprise_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RecaptchaEnterpriseServiceTracingStub::RecaptchaEnterpriseServiceTracingStub(
     std::shared_ptr<RecaptchaEnterpriseServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -341,17 +339,11 @@ RecaptchaEnterpriseServiceTracingStub::SearchRelatedAccountGroupMemberships(
       child_->SearchRelatedAccountGroupMemberships(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<RecaptchaEnterpriseServiceStub>
 MakeRecaptchaEnterpriseServiceTracingStub(
     std::shared_ptr<RecaptchaEnterpriseServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<RecaptchaEnterpriseServiceTracingStub>(
       std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

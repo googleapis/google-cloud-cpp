@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_target_pools_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TargetPoolsTracingConnection
     : public compute_target_pools_v1::TargetPoolsConnection {
  public:
@@ -153,8 +151,6 @@ class TargetPoolsTracingConnection
  private:
   std::shared_ptr<compute_target_pools_v1::TargetPoolsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

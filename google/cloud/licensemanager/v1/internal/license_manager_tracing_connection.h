@@ -28,8 +28,6 @@ namespace cloud {
 namespace licensemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LicenseManagerTracingConnection
     : public licensemanager_v1::LicenseManagerConnection {
  public:
@@ -161,8 +159,6 @@ class LicenseManagerTracingConnection
  private:
   std::shared_ptr<licensemanager_v1::LicenseManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

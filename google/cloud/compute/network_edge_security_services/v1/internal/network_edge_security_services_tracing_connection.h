@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_network_edge_security_services_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class NetworkEdgeSecurityServicesTracingConnection
     : public compute_network_edge_security_services_v1::
           NetworkEdgeSecurityServicesConnection {
@@ -105,8 +103,6 @@ class NetworkEdgeSecurityServicesTracingConnection
                       NetworkEdgeSecurityServicesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

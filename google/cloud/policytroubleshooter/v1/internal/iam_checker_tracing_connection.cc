@@ -26,8 +26,6 @@ namespace cloud {
 namespace policytroubleshooter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IamCheckerTracingConnection::IamCheckerTracingConnection(
     std::shared_ptr<policytroubleshooter_v1::IamCheckerConnection> child)
     : child_(std::move(child)) {}
@@ -42,16 +40,12 @@ IamCheckerTracingConnection::TroubleshootIamPolicy(
   return internal::EndSpan(*span, child_->TroubleshootIamPolicy(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<policytroubleshooter_v1::IamCheckerConnection>
 MakeIamCheckerTracingConnection(
     std::shared_ptr<policytroubleshooter_v1::IamCheckerConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<IamCheckerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

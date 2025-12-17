@@ -26,8 +26,6 @@ namespace cloud {
 namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BatchServiceTracingStub::BatchServiceTracingStub(
     std::shared_ptr<BatchServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -236,15 +234,9 @@ future<Status> BatchServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<BatchServiceStub> MakeBatchServiceTracingStub(
     std::shared_ptr<BatchServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<BatchServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

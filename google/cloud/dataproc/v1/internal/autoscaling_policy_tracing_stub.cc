@@ -26,8 +26,6 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AutoscalingPolicyServiceTracingStub::AutoscalingPolicyServiceTracingStub(
     std::shared_ptr<AutoscalingPolicyServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -187,16 +185,10 @@ Status AutoscalingPolicyServiceTracingStub::CancelOperation(
                            child_->CancelOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AutoscalingPolicyServiceStub>
 MakeAutoscalingPolicyServiceTracingStub(
     std::shared_ptr<AutoscalingPolicyServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AutoscalingPolicyServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

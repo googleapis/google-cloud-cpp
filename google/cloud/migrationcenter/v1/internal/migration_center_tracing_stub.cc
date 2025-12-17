@@ -26,8 +26,6 @@ namespace cloud {
 namespace migrationcenter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MigrationCenterTracingStub::MigrationCenterTracingStub(
     std::shared_ptr<MigrationCenterStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -1076,15 +1074,9 @@ future<Status> MigrationCenterTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<MigrationCenterStub> MakeMigrationCenterTracingStub(
     std::shared_ptr<MigrationCenterStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<MigrationCenterTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

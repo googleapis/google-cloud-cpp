@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigquery_reservation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ReservationServiceTracingConnection::ReservationServiceTracingConnection(
     std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
         child)
@@ -358,18 +356,14 @@ ReservationServiceTracingConnection::ListReservationGroups(
       std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
 MakeReservationServiceTracingConnection(
     std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<ReservationServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

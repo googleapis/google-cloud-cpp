@@ -26,8 +26,6 @@ namespace cloud {
 namespace timeseriesinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TimeseriesInsightsControllerTracingStub::
     TimeseriesInsightsControllerTracingStub(
         std::shared_ptr<TimeseriesInsightsControllerStub> child)
@@ -127,17 +125,11 @@ TimeseriesInsightsControllerTracingStub::EvaluateTimeseries(
       context, *span, child_->EvaluateTimeseries(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<TimeseriesInsightsControllerStub>
 MakeTimeseriesInsightsControllerTracingStub(
     std::shared_ptr<TimeseriesInsightsControllerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<TimeseriesInsightsControllerTracingStub>(
       std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

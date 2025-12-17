@@ -28,8 +28,6 @@ namespace cloud {
 namespace iam_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class IAMTracingConnection : public iam_admin_v1::IAMConnection {
  public:
   ~IAMTracingConnection() override = default;
@@ -143,8 +141,6 @@ class IAMTracingConnection : public iam_admin_v1::IAMConnection {
  private:
   std::shared_ptr<iam_admin_v1::IAMConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

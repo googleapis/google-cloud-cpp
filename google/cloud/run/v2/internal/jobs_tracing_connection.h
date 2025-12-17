@@ -28,8 +28,6 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class JobsTracingConnection : public run_v2::JobsConnection {
  public:
   ~JobsTracingConnection() override = default;
@@ -108,8 +106,6 @@ class JobsTracingConnection : public run_v2::JobsConnection {
  private:
   std::shared_ptr<run_v2::JobsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

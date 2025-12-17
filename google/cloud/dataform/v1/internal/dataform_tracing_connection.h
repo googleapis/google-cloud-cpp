@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataformTracingConnection : public dataform_v1::DataformConnection {
  public:
   ~DataformTracingConnection() override = default;
@@ -282,8 +280,6 @@ class DataformTracingConnection : public dataform_v1::DataformConnection {
  private:
   std::shared_ptr<dataform_v1::DataformConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

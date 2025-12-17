@@ -28,8 +28,6 @@ namespace cloud {
 namespace workflows_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class WorkflowsTracingConnection : public workflows_v1::WorkflowsConnection {
  public:
   ~WorkflowsTracingConnection() override = default;
@@ -103,8 +101,6 @@ class WorkflowsTracingConnection : public workflows_v1::WorkflowsConnection {
  private:
   std::shared_ptr<workflows_v1::WorkflowsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.
