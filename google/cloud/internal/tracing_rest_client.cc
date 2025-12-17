@@ -230,20 +230,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
-
-#else
-
-namespace google {
-namespace cloud {
-namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::unique_ptr<RestClient> MakeTracingRestClient(
-    std::unique_ptr<RestClient> client) {
-  return client;
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace rest_internal
-}  // namespace cloud
-}  // namespace google
