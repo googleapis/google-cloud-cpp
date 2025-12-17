@@ -263,37 +263,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_H
-
-bool TracingEnabled(Options const& options);
-
-/// Wraps the sleeper in a span, if tracing is enabled.
-template <typename Rep, typename Period>
-std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
-    Options const& options,
-    std::function<void(std::chrono::duration<Rep, Period>)> sleeper,
-    std::string const& name) {
-  if (TracingEnabled(options)) {
-    return [name, sleeper = std::move(sleeper)](
-               std::chrono::duration<Rep, Period> d) {
-      // A sleep of 0 is not an interesting event worth tracing.
-      if (d == std::chrono::duration<Rep, Period>::zero()) return sleeper(d);
-      auto span = MakeSpan(name);
-      sleeper(d);
-      span->End();
-    };
-  }
-  (void)options;
-  (void)name;
-  return sleeper;
-}
-
-/// Adds an attribute to the active span, if tracing is enabled.
-void AddSpanAttribute(Options const& options, std::string const& key,
-                      std::string const& value);
-
-}  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloud
-}  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_H

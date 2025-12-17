@@ -202,8 +202,7 @@ if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     if (opentelemetry-cpp_FOUND)
         target_link_libraries(google_cloud_cpp_common
                               PUBLIC opentelemetry-cpp::api)
-        target_compile_definitions(
-            google_cloud_cpp_common)
+        target_compile_definitions(google_cloud_cpp_common)
         set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES
             "find_dependency(opentelemetry-cpp)")
         set(GOOGLE_CLOUD_CPP_OPENTELEMETRY_API "opentelemetry_api")

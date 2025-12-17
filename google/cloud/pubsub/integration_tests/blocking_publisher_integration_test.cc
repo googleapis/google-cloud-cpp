@@ -71,7 +71,6 @@ TEST_F(BlockingPublisherIntegrationTest, Basic) {
   ASSERT_STATUS_OK(publish);
 }
 
-
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 

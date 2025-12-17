@@ -164,7 +164,6 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
   ASSERT_STATUS_OK(response.get());
 }
 
-
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -270,8 +269,6 @@ TEST(MakeSubscriberConnectionTest, TracingDisabledForUnaryPull) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
 }
-
-
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
