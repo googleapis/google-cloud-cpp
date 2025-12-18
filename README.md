@@ -10,6 +10,9 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+> Please refer to the [V3 Migration Guide](doc/v3-migration-guide.md) for
+> details on updating existing applications using v1.x.y or v2.x.y.
+
 > Please check the [CHANGELOG] for important announcements and upcoming changes.
 
 ## Quickstart
