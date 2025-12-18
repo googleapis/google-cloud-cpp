@@ -22,11 +22,9 @@
 #include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/semconv/incubating/rpc_attributes.h>
 #include <opentelemetry/semconv/network_attributes.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -37,7 +35,6 @@ namespace {
 using ::testing::ByMove;
 using ::testing::Return;
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -321,22 +318,6 @@ TEST(OpenTelemetry, TracedAsyncBackoffPreservesContext) {
       ElementsAre(AllOf(SpanNamed("Async Backoff"), SpanWithParent(parent)),
                   SpanNamed("parent")));
 }
-
-#else
-
-TEST(NoOpenTelemetry, TracedAsyncBackoff) {
-  auto const duration = std::chrono::nanoseconds(100);
-  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer(duration))
-      .WillOnce(Return(ByMove(make_ready_future(
-          make_status_or(std::chrono::system_clock::now())))));
-  CompletionQueue cq(mock_cq);
-
-  auto f = TracedAsyncBackoff(cq, Options{}, duration, "Async Backoff");
-  EXPECT_STATUS_OK(f.get());
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

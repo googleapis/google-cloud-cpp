@@ -24,13 +24,11 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
@@ -38,7 +36,6 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -129,30 +126,6 @@ TEST(TracingMessageCallback, AddTracingAckHandler) {
                         SpanWithParent(span)),
                   SpanNamed("test-sub ack")));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-using ::testing::IsNull;
-using ::testing::Not;
-
-TEST(TracingMessageCallback,
-     VerifyMessageCallbackIsNotNullWhenOTelIsNotCompiled) {
-  auto mock = std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock, user_callback).Times(1);
-  auto message_callback = MakeTracingMessageCallback(
-      std::move(mock), Options{}.set<pubsub::SubscriptionOption>(
-                           pubsub::Subscription("test-project", "test-sub")));
-
-  EXPECT_THAT(message_callback, Not(IsNull()));
-
-  message_callback->user_callback(MessageCallback::MessageAndHandler{
-      pubsub::MessageBuilder().Build(),
-      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
-      "ack-id",
-      {}});
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -604,7 +604,6 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
               Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
@@ -657,8 +656,6 @@ TEST(AsyncRetryLoopTest, CallSpanActiveDuringCancel) {
   p.set_value(0);
   (void)actual.get();
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

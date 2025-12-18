@@ -19,11 +19,9 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/semconv/incubating/network_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -48,7 +46,6 @@ std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -359,39 +356,6 @@ TEST(TracingRestClient, CachedConnection) {
                             "gl-cpp.cached_connection", true)),
                         SpanHasEvents(EventNamed("gl-cpp.curl.connected")))));
 }
-
-#else
-
-TEST(TracingRestClient, NoOpenTelemetry) {
-  auto impl = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*impl, Delete).WillOnce([](RestContext&, RestRequest const&) {
-    auto response = std::make_unique<MockRestResponse>();
-    EXPECT_CALL(*response, StatusCode)
-        .WillRepeatedly(Return(HttpStatusCode::kOk));
-    EXPECT_CALL(*response, Headers).WillRepeatedly(Return(MockHeaders()));
-    EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
-      return MakeMockHttpPayloadSuccess(MockContents());
-    });
-    return std::unique_ptr<RestResponse>(std::move(response));
-  });
-
-  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
-  RestRequest request(kUrl);
-  request.AddHeader("x-test-header-3", "value3");
-
-  auto client = MakeTracingRestClient(std::move(impl));
-  rest_internal::RestContext context;
-  auto r = client->Delete(context, request);
-  ASSERT_STATUS_OK(r);
-  auto response = *std::move(r);
-  ASSERT_THAT(response, NotNull());
-  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
-  EXPECT_THAT(response->Headers(), ElementsAreArray(MockHeaders()));
-  auto contents = ReadAll(std::move(*response).ExtractPayload());
-  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

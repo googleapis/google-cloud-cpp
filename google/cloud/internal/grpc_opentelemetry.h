@@ -22,10 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <chrono>
 #include <functional>
 
@@ -33,8 +31,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Make a span, setting attributes related to gRPC.
@@ -112,8 +108,6 @@ future<StatusOr<T>> EndSpan(
   });
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Returns a traced timer, if OpenTelemetry tracing is enabled.
  */
@@ -121,14 +115,12 @@ template <typename Rep, typename Period>
 future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
     CompletionQueue& cq, Options const& options,
     std::chrono::duration<Rep, Period> duration, std::string const& name) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(options)) {
     auto span = MakeSpan(name);
     OTelScope scope(span);
     auto timer = cq.MakeRelativeTimer(duration);
     return EndSpan(std::move(span), std::move(timer));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   (void)options;
   (void)name;
   return cq.MakeRelativeTimer(duration);

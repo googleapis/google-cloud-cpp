@@ -18,11 +18,9 @@
 #include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/tracer.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <chrono>
 #include <functional>
 
@@ -44,9 +42,7 @@ struct CallContext {
   CallContext() : CallContext(SaveCurrentOptions()) {}
 
   ImmutableOptions options;
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   OTelContext otel_context = CurrentOTelContext();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 };
 
 /**
@@ -58,13 +54,10 @@ class ScopedCallContext {
  public:
   explicit ScopedCallContext(CallContext call_context)
       : options_span_(std::move(call_context.options))
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
         // clang-format off
         , scoped_otel_context_(std::move(call_context.otel_context))
   // clang-format on
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  {
-  }
+  {}
 
   // `ScopedCallContext` should not be copied/moved.
   ScopedCallContext(ScopedCallContext const&) = delete;
@@ -78,9 +71,7 @@ class ScopedCallContext {
 
  private:
   OptionsSpan options_span_;
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   ScopedOTelContext scoped_otel_context_;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 };
 
 }  // namespace internal

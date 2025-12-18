@@ -100,8 +100,6 @@ TEST(CompletionQueueTest, SuccessfulWaitingForConnection) {
   cli_thread.join();
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TEST(CompletionQueueTest, PropagateCallContext) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -136,8 +134,6 @@ TEST(CompletionQueueTest, PropagateCallContext) {
   cq.Shutdown();
   t.join();
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

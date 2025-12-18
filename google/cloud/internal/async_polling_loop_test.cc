@@ -642,7 +642,6 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
                                      HasSubstr("operation cancelled"))));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -772,8 +771,6 @@ TEST(AsyncPollingLoopTest, TraceCapturesOperationName) {
                                 SpanHasAttributes(OTelAttribute<std::string>(
                                     "gl-cpp.LRO_name", "test-op-name")))));
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

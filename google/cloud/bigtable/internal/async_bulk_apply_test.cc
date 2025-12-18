@@ -1119,7 +1119,6 @@ TEST_F(AsyncBulkApplyTest, BigtableCookie) {
   CheckFailedMutations(actual.get(), expected);
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
@@ -1191,7 +1190,6 @@ TEST_F(AsyncBulkApplyTest, CallSpanActiveThroughout) {
   auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
   (void)f.get();
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -90,7 +90,6 @@ TEST(RowReaderTest, OptionsSpan) {
   }
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::IsActive;
 
 TEST(RowReader, CallSpanActiveThroughout) {
@@ -121,7 +120,6 @@ TEST(RowReader, CallSpanActiveThroughout) {
     EXPECT_STATUS_OK(row);
   }
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
