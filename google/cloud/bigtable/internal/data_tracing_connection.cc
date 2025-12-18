@@ -214,13 +214,6 @@ std::shared_ptr<bigtable::DataConnection> MakeDataTracingConnection(
   return std::make_shared<DataTracingConnection>(std::move(conn));
 }
 
-#else
-
-std::shared_ptr<bigtable::DataConnection> MakeDataTracingConnection(
-    std::shared_ptr<bigtable::DataConnection> conn) {
-  return conn;
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

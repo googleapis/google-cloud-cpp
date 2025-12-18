@@ -356,7 +356,6 @@ TEST(TracingRestClient, CachedConnection) {
                             "gl-cpp.cached_connection", true)),
                         SpanHasEvents(EventNamed("gl-cpp.curl.connected")))));
 }
-}
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
