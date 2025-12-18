@@ -906,6 +906,42 @@ ArtifactRegistryLogging::DeleteAttachment(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryLogging::AsyncExportArtifact(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+              request) {
+        return child_->AsyncExportArtifact(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryLogging::ExportArtifact(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+              request) {
+        return child_->ExportArtifact(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

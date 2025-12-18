@@ -4,7 +4,59 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.44.0 - TBD
+## v2.46.0 - TBD
+
+## v2.45.0 - 2025-12-17
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Maintenance API](/google/cloud/maintenance/README.md)
+
+### [Pubsub](google/cloud/pubsub/README.md)
+
+- fix(pubsub): impersonate sa credentials CompletionQueue lifetime ([#15833](https://github.com/googleapis/google-cloud-cpp/pull/15833))
+
+### [Storage](google/cloud/storage/README.md)
+
+- fix(storage): append object spec should only be set in the first request ([#15831](https://github.com/googleapis/google-cloud-cpp/pull/15831))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-12-11T12:53:16-08:00](https://github.com/googleapis/googleapis/tree/05f65958eb7f2a8bc59db87ad40487f0fb093097)
+
+## v2.44.0 - 2025-12
+
+### [BigQueryControl](google/cloud/bigquerycontrol/README.md)
+- !fix(bigquerycontrol): PatchRoutine RPC has been removed.
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- Support for ([GoogleSQL](https://docs.cloud.google.com/bigtable/docs/googlesql-overview)) has been added to the Bigtable library. Please see the new ([bigtable::Client](https://docs.cloud.google.com/cpp/docs/reference/bigtable/latest/classgoogle_1_1cloud_1_1bigtable_1_1Client)) class for more details. 
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- fix(spanner): Do not compare iterators from different containers ([#15665](https://github.com/googleapis/google-cloud-cpp/pull/15665))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): always use latest write handle for fast resume in gRPC BidiWriteObject ([#15795](https://github.com/googleapis/google-cloud-cpp/pull/15795))
+- feat(storage): add support for partial list bucket ([#15763](https://github.com/googleapis/google-cloud-cpp/pull/15763))
+- fix(storage): Add start appendable condition for bypassing full object checksum ([#15786](https://github.com/googleapis/google-cloud-cpp/pull/15786))
+- feat(storage): add GrpcMetricsExcludedLabelsOption for gRPC metrics label filtering ([#15735](https://github.com/googleapis/google-cloud-cpp/pull/15735))
+- fix(storage): enable fast resume for rapid object write streams by including write handle ([#15762](https://github.com/googleapis/google-cloud-cpp/pull/15762))
+- feat(storage): add configurable metrics export timeout for GCS gRPC Client ([#15629](https://github.com/googleapis/google-cloud-cpp/pull/15629))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(credentials): add support for creating ComputeEngine credentials explicitly ([#15789](https://github.com/googleapis/google-cloud-cpp/pull/15789))
+- feat: Support scopes field in impersonated json ([#15675](https://github.com/googleapis/google-cloud-cpp/pull/15675))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-11-27T07:02:42Z](https://github.com/googleapis/googleapis/tree/8cd3749f4b98f2eeeef511c16431979aeb3a6502)
 
 ## v2.43.0 - 2025-10
 

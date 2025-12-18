@@ -193,6 +193,7 @@ add_library(
     internal/win32/hash_function_impl.cc
     lifecycle_rule.cc
     lifecycle_rule.h
+    list_buckets_extended_reader.h
     list_buckets_reader.cc
     list_buckets_reader.h
     list_hmac_keys_reader.cc
@@ -496,6 +497,7 @@ if (BUILD_TESTING)
         internal/tuple_filter_test.cc
         internal/unified_rest_credentials_test.cc
         lifecycle_rule_test.cc
+        list_buckets_extended_reader_test.cc
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc
         list_objects_and_prefixes_reader_test.cc

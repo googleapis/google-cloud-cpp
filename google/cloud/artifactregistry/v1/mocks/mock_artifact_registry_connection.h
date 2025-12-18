@@ -713,6 +713,50 @@ class MockArtifactRegistryConnection
       DeleteAttachment, (google::longrunning::Operation const& operation),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportArtifact(Matcher<google::devtools::artifactregistry::v1::ExportArtifactRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::artifactregistry::v1::ExportArtifactResponse>>,
+      ExportArtifact,
+      (google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportArtifact(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportArtifact,
+      (NoAwaitTag,
+       google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportArtifact(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::artifactregistry::v1::ExportArtifactResponse>>,
+      ExportArtifact, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

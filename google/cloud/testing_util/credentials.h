@@ -64,6 +64,10 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
     name = "ApiKeyConfig";
     api_key = cfg.api_key();
   }
+  void visit(internal::ComputeEngineCredentialsConfig const& cfg) override {
+    name = "ComputeEngineCredentialsConfig";
+    options = cfg.options();
+  }
 };
 
 }  // namespace testing_util

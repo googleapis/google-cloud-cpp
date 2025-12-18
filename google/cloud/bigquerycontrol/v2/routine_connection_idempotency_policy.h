@@ -46,9 +46,6 @@ class RoutineServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateRoutine(
       google::cloud::bigquery::v2::UpdateRoutineRequest const& request);
 
-  virtual google::cloud::Idempotency PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request);
-
   virtual google::cloud::Idempotency DeleteRoutine(
       google::cloud::bigquery::v2::DeleteRoutineRequest const& request);
 

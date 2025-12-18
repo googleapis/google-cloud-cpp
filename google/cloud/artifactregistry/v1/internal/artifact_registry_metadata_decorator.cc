@@ -651,6 +651,31 @@ ArtifactRegistryMetadata::DeleteAttachment(
   return child_->DeleteAttachment(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncExportArtifact(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  return child_->AsyncExportArtifact(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::ExportArtifact(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("repository=", internal::UrlEncode(request.repository())));
+  return child_->ExportArtifact(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

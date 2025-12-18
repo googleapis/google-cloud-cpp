@@ -334,6 +334,21 @@ class ArtifactRegistryTracingConnection
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteAttachment(google::longrunning::Operation const& operation) override;
 
+  future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportArtifact(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

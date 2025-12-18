@@ -193,6 +193,7 @@ declare -A -r LIBRARIES=(
   ["logging_type"]="@googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@googleapis//google/logging/v2:logging_cc_grpc"
   ["lustre"]="@googleapis//google/cloud/lustre/v1:lustre_cc_grpc"
+  ["maintenance"]="@googleapis//google/cloud/maintenance/api/v1:api_cc_grpc"
   ["managedidentities"]="@googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["managedkafka"]="$(
     printf ",%s" \

@@ -305,6 +305,11 @@ class CloudBuildConnection {
   virtual StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
   ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
+
+  virtual StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request);
 };
 
 /**
