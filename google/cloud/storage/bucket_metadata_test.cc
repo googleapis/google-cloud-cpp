@@ -107,7 +107,19 @@ BucketMetadata CreateBucketMetadataForTest() {
         "etag": "AYX="
       }],
       "encryption": {
-        "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name"
+        "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name",
+        "googleManagedEncryptionEnforcementConfig": {
+          "restriction_mode": "FULLY_RESTRICTED",
+          "effective_time": "2025-12-18T18:13:15Z"
+        },
+        "customerManagedEncryptionEnforcementConfig": {
+          "restriction_mode": "NOT_RESTRICTED",
+          "effective_time": "2025-12-18T18:13:15Z"
+        },
+        "customerSuppliedEncryptionEnforcementConfig": {
+          "restriction_mode": "NOT_RESTRICTED",
+          "effective_time": "2025-12-18T18:13:15Z"
+        }
       },
       "etag": "XYZ=",
       "hierarchicalNamespace": {
@@ -224,6 +236,10 @@ TEST(BucketMetadataTest, Parse) {
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual.encryption().default_kms_key_name);
+  EXPECT_EQ("FULLY_RESTRICTED", actual.encryption().googleManagedEncryptionEnforcementConfig.restriction_mode);
+  EXPECT_EQ("NOT_RESTRICTED", actual.encryption().customerManagedEncryptionEnforcementConfig.restriction_mode);
+  EXPECT_EQ("NOT_RESTRICTED", actual.encryption().customerSuppliedEncryptionEnforcementConfig.restriction_mode);
+  EXPECT_EQ("2025-12-18T18:13:15Z", actual.encryption().customerSuppliedEncryptionEnforcementConfig.effective_time);
   EXPECT_EQ("XYZ=", actual.etag());
   // hierarchicalNamespace
   ASSERT_TRUE(actual.has_hierarchical_namespace());
@@ -493,6 +509,11 @@ TEST(BucketMetadataTest, ToJsonString) {
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual["encryption"].value("defaultKmsKeyName", ""));
+  nlohmann::json expected_encryption_enforcement_config{
+    {"googleManagedEncryptionEnforcementConfig", nlohmann::json{"restriction_mode", "FULLY_RESTRICTED"}},
+    {"customerManagedEncryptionEnforcementConfig", nlohmann::json{"restriction_mode", "NOT_RESTRICTED"}},
+    {"customerSuppliedEncryptionEnforcementConfig", nlohmann::json{"restriction_mode", "NOT_RESTRICTED"}}};
+  EXPECT_EQ(expected_encryption_enforcement_config, actual["encryption"]);
 
   // hierarchical_namespace()
   ASSERT_EQ(1, actual.count("hierarchicalNamespace"));
@@ -849,8 +870,13 @@ TEST(BucketMetadataTest, SetEncryption) {
   std::string fake_key_name =
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/another-test-key-name";
-  copy.set_encryption(BucketEncryption{fake_key_name});
+  std::string fake_restriction_mode = "FULLY_RESTRICTED";
+
+  copy.set_encryption(BucketEncryption{fake_key_name, fake_restriction_mode});
   EXPECT_EQ(fake_key_name, copy.encryption().default_kms_key_name);
+  EXPECT_EQ(fake_restriction_mode, copy.encryption().googleManagedEncryptionEnforcementConfig.restriction_mode);
+  EXPECT_EQ(fake_restriction_mode, copy.encryption().customerManagedEncryptionEnforcementConfig.restriction_mode);
+  EXPECT_EQ(fake_restriction_mode, copy.encryption().customerSuppliedEncryptionEnforcementConfig.restriction_mode);
   EXPECT_NE(expected, copy);
 }
 

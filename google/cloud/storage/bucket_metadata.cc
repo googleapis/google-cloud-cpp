@@ -150,8 +150,8 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   os << "]";
 
   if (rhs.has_encryption()) {
-    os << ", encryption.default_kms_key_name="
-       << rhs.encryption().default_kms_key_name;
+    os << ", encryption="
+       << rhs.encryption();
   }
 
   os << ", etag=" << rhs.etag();

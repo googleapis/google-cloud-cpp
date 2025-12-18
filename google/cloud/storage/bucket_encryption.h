@@ -24,6 +24,31 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * Google Managed Encryption (GMEK) enforcement config of a bucket.
+ */
+struct GoogleManagedEncryptionEnforcementConfig {
+  std::string restriction_mode;
+  std::chrono::system_clock::time_point effective_time;
+};
+
+inline bool operator==(GoogleManagedEncryptionEnforcementConfig const& lhs,
+                       GoogleManagedEncryptionEnforcementConfig const& rhs) {
+                        return std::tie(lhs.restriction_mode, lhs.effective_time) == 
+                        std::tie(rhs.restriction_mode, rhs.effective_time);
+                       }
+
+inline bool operator<(GoogleManagedEncryptionEnforcementConfig const& lhs,
+                      GoogleManagedEncryptionEnforcementConfig const& rhs) {
+                        return std::tie(lhs.restriction_mode, lhs.effective_time) <
+                        std::tie(rhs.restriction_mode, rhs.effective_time);
+                      }
+
+inline bool operator!=(GoogleManagedEncryptionEnforcementConfig const& lhs,
+                       GoogleManagedEncryptionEnforcementConfig const& rhs) {
+                        
+                       }
+
+/**
  * Describes the default customer managed encryption key for a bucket.
  *
  * Customer managed encryption keys (CMEK) are encryption keys selected by the
@@ -37,6 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct BucketEncryption {
   std::string default_kms_key_name;
+  GoogleManagedEncryptionEnforcementConfig google_managed_encryption_enforcement_config;
+  CustomerManagedEncryptionEnforcementConfig customer_managed_encryption_enforcement_config;
+  CustomerSuppliedEncryptionEnforcementConfig customer_supplied_encryption_enforcement_config;
 };
 
 inline bool operator==(BucketEncryption const& lhs,

@@ -160,9 +160,30 @@ Status ParseEncryption(BucketMetadata& meta, nlohmann::json const& json) {
   if (json.contains("encryption")) {
     BucketEncryption e;
     e.default_kms_key_name = json["encryption"].value("defaultKmsKeyName", "");
+    e.google_managed_encryption_enforcement_config = ParseGoogleManagedEncryptionEnforcementConfig(json["encryption"]);
+    e.customer_managed_encryption_enforcement_config = ParseCustomerManagedEncryptionEnforcementConfig(json["encryption"]);
+    e.customer_supplied_encryption_enforcement_config = ParseCustomerSuppliedEncryptionEnforcementConfig(json["encryption"]);
     meta.set_encryption(std::move(e));
   }
   return Status{};
+}
+
+StatusOr<GoogleManagedEncryptionEnforcementConfig> ParseGoogleManagedEncryptionEnforcementConfig(nlohmann::json const& json) {
+  auto restriction_mode = json["restriction_mode"];
+  auto effective_time = internal::ParseTimestampField(json, "effective_time");
+  return GoogleManagedEncryptionEnforcementConfig{*restriction_mode, *effective_time};
+}
+
+StatusOr<CustomerManagedEncryptionEnforcementConfig> ParseCustomerManagedEncryptionEnforcementConfig(nlohmann::json const& json) {
+  auto restriction_mode = json["restriction_mode"];
+  auto effective_time = internal::ParseTimestampField(json, "effective_time");
+  return CustomerManagedEncryptionEnforcementConfig{*restriction_mode, *effective_time};
+}
+
+StatusOr<CustomerSuppliedEncryptionEnforcementConfig> ParseCustomerSuppliedEncryptionEnforcementConfig(nlohmann:json const& json) {
+  auto restriction_mode = json["restriction_mode"];
+  auto effective_time = internal::ParseTimestampField(json, "effective_time");
+  return CustomerSuppliedEncryptionEnforcementConfig{*restriction_mode, *effective_time};
 }
 
 Status ParseHierarchicalNamespace(BucketMetadata& meta,
