@@ -65,22 +65,6 @@ class RowReader {
   /// Default constructs an empty RowReader.
   RowReader();
 
-  GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
-  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
-            RowSet row_set, std::int64_t rows_limit, Filter filter,
-            std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
-
-  GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
-  RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
-            std::string table_name, RowSet row_set, std::int64_t rows_limit,
-            Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
-
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   RowReader(RowReader&&) = default;
 
