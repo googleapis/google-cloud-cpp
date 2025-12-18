@@ -48,9 +48,9 @@ class ReadStream : public storage_internal::StreamBase {
 
   std::shared_ptr<OpenStream> stream_;
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
-  google::storage::v2::BidiReadObjectRequest next_request;
-  bool write_pending = false;
-  bool read_pending = false;
+  google::storage::v2::BidiReadObjectRequest next_request_;
+  bool write_pending_ = false;
+  bool read_pending_ = false;
 };
 
 class ObjectDescriptorImpl

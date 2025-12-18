@@ -29,6 +29,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// Defines the interface contract that any stream type (e.g., ReadStream,
+// WriteStream) managed by MultiStreamManager must implement. This explicit base
+// class ensures we have a clear, enforceable interface for operations like
+// CancelAll().
 class StreamBase {
  public:
   virtual ~StreamBase() = default;
@@ -41,8 +45,20 @@ class StreamBase {
 // are moved to the back of the queue for reuse.
 //
 // THREAD SAFETY:
-// This class is NOT thread-safe. The owner (ObjectDescriptorImpl) must
-// serialize access, typically by holding `mu_` while calling these methods.
+// This class is NOT thread-safe. The owner (e.g. ObjectDescriptorImpl
+// or AsyncWriterImpl etc) must serialize access, typically by holding
+// an external mutex while calling these methods.
+//
+// EXAMPLE USAGE:
+//   class MyOwner {
+//     std::mutex mu_;
+//     MultiStreamManager<MyStream, MyRange> manager_;
+//
+//     void StartRead() {
+//        std::unique_lock<std::mutex> lk(mu_);
+//        auto it = manager_.GetLeastBusyStream();
+//     }
+//   };
 template <typename StreamT, typename RangeT>
 class MultiStreamManager {
  public:
@@ -81,20 +97,20 @@ class MultiStreamManager {
     // In ObjectDescriptorImpl, we ensure there is always at least one stream,
     // but this assertion protects against future refactoring errors.
     assert(!streams_.empty());
-    auto best_it = streams_.begin();
+    auto least_busy_it = streams_.begin();
     // Track min_ranges to avoid calling .size() repeatedly if possible,
     // though for std::unordered_map .size() is O(1).
-    std::size_t min_ranges = best_it->active_ranges.size();
+    std::size_t min_ranges = least_busy_it->active_ranges.size();
 
     // Start checking from the second element
     for (auto it = std::next(streams_.begin()); it != streams_.end(); ++it) {
       // Strict less-than ensures stability (preferring older streams if tied)
       if (it->active_ranges.size() < min_ranges) {
-        best_it = it;
+        least_busy_it = it;
         min_ranges = it->active_ranges.size();
       }
     }
-    return best_it;
+    return least_busy_it;
   }
 
   StreamIterator AddStream(std::shared_ptr<StreamT> stream) {
