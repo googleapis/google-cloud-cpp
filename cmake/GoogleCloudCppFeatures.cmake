@@ -118,6 +118,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "licensemanager"
     "logging"
     "lustre"
+    "maintenance"
     "managedidentities"
     "managedkafka"
     "memcache"
@@ -393,6 +394,13 @@ macro (google_cloud_cpp_enable_cleanup)
         OR (sql IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (universe_domain IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+        set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
+    endif ()
+
+    # We need the REST libraries for the full suite of samples.
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_REST
+        AND BUILD_TESTING
+        AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
 

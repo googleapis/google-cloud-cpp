@@ -365,6 +365,18 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncExportArtifact(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportArtifact(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

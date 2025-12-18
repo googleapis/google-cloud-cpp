@@ -881,6 +881,11 @@
 ./include/google/cloud/lustre/v1
 ./include/google/cloud/lustre/v1/internal
 ./include/google/cloud/lustre/v1/mocks
+./include/google/cloud/maintenance
+./include/google/cloud/maintenance/api
+./include/google/cloud/maintenance/api/v1
+./include/google/cloud/maintenance/api/v1/internal
+./include/google/cloud/maintenance/api/v1/mocks
 ./include/google/cloud/managedidentities
 ./include/google/cloud/managedidentities/mocks
 ./include/google/cloud/managedidentities/v1
@@ -1491,6 +1496,8 @@
 ./lib64/cmake/google_cloud_cpp_logging_mocks
 ./lib64/cmake/google_cloud_cpp_lustre
 ./lib64/cmake/google_cloud_cpp_lustre_mocks
+./lib64/cmake/google_cloud_cpp_maintenance
+./lib64/cmake/google_cloud_cpp_maintenance_mocks
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_managedidentities_mocks
 ./lib64/cmake/google_cloud_cpp_managedkafka

@@ -187,6 +187,7 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
         page_size: 123
         page_token: "test-token"
         prefix: "test-prefix"
+        return_partial_success: true
         read_mask { paths: [ "*" ] }
       )pb",
       &expected));
@@ -196,7 +197,8 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
   req.set_multiple_options(
       storage::MaxResults(123), storage::Prefix("test-prefix"),
       storage::Projection("full"), storage::UserProject("test-user-project"),
-      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
+      storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"),
+      storage::ReturnPartialSuccess(true));
 
   auto const actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -225,6 +227,27 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
                  std::back_inserter(names),
                  [](storage::BucketMetadata const& b) { return b.name(); });
   EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
+}
+
+TEST(GrpcBucketRequestParser, ListBucketsPartialResult) {
+  google::storage::v2::ListBucketsResponse input;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        buckets {
+          name: "projects/_/buckets/test-bucket-1"
+          bucket_id: "test-bucket-1"
+        }
+        next_page_token: "test-token"
+        unreachable: "projects/_/buckets/unreachable-bucket-1"
+        unreachable: "projects/_/buckets/unreachable-bucket-2"
+      )pb",
+      &input));
+
+  auto const actual = FromProto(input);
+  EXPECT_EQ(actual.next_page_token, "test-token");
+  EXPECT_THAT(actual.unreachable,
+              ElementsAre("projects/_/buckets/unreachable-bucket-1",
+                          "projects/_/buckets/unreachable-bucket-2"));
 }
 
 TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {

@@ -38,6 +38,7 @@ using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsSubsetOf;
 using ::testing::Not;
@@ -680,6 +681,40 @@ TEST_F(BucketIntegrationTest, ListFailure) {
   auto it = stream.begin();
   StatusOr<BucketMetadata> metadata = *it;
   EXPECT_THAT(metadata, Not(IsOk())) << "value=" << metadata.value();
+}
+
+TEST_F(BucketIntegrationTest, ListPartialSuccess) {
+  // This test requires the emulator to simulate unreachable buckets.
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+  std::string unreachable_bucket_name =
+      MakeRandomBucketName().substr(0, 50) + "-unreachable";
+
+  auto meta =
+      client.CreateBucketForProject(bucket_name, project_id_, BucketMetadata{});
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto meta_unreachable = client.CreateBucketForProject(
+      unreachable_bucket_name, project_id_, BucketMetadata{});
+  ASSERT_STATUS_OK(meta_unreachable);
+  ScheduleForDelete(*meta_unreachable);
+
+  std::vector<std::string> names;
+  std::vector<std::string> unreachable;
+  for (auto& r : client.ListBucketsExtended(ReturnPartialSuccess(true))) {
+    EXPECT_STATUS_OK(r);
+    if (!r) break;
+    for (auto const& b : r->buckets) {
+      names.push_back(b.name());
+    }
+    unreachable.insert(unreachable.end(), r->unreachable.begin(),
+                       r->unreachable.end());
+  }
+
+  EXPECT_THAT(names, Contains(bucket_name));
+  EXPECT_THAT(unreachable, Contains(HasSubstr(unreachable_bucket_name)));
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {

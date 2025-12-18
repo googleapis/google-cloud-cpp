@@ -700,6 +700,36 @@ StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::DeleteAttachment(
   return child_->DeleteAttachment(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryAuth::AsyncExportArtifact(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncExportArtifact(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::ExportArtifact(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportArtifact(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -285,6 +285,11 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteAttachment(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ExportArtifact(
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

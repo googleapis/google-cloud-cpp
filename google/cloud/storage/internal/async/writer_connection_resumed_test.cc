@@ -268,7 +268,7 @@ TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
       "test-object");
 
   google::storage::v2::BidiWriteObjectResponse first_response;
-  first_response.mutable_write_handle();
+  first_response.mutable_write_handle()->set_handle("test-handle");
   first_response.mutable_resource()->set_generation(12345);
 
   EXPECT_CALL(*mock, PersistedState)
@@ -320,6 +320,8 @@ TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
   EXPECT_FALSE(captured_request.has_write_object_spec());
   EXPECT_TRUE(captured_request.has_append_object_spec());
   EXPECT_TRUE(captured_request.append_object_spec().has_write_handle());
+  EXPECT_EQ(captured_request.append_object_spec().write_handle().handle(),
+            "test-handle");
   EXPECT_EQ(captured_request.append_object_spec().generation(), 12345);
   EXPECT_EQ(captured_request.append_object_spec().object(), "test-object");
   EXPECT_EQ(captured_request.append_object_spec().bucket(),
@@ -390,6 +392,71 @@ TEST(WriteConnectionResumed, ResumeUsesAppendObjectSpecFromInitialRequest) {
   EXPECT_EQ(captured_request.append_object_spec().object(), "test-object");
   EXPECT_EQ(captured_request.append_object_spec().bucket(),
             "projects/_/buckets/test-bucket");
+}
+
+TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
+  struct {
+    bool use_write_object_spec;
+    std::string bucket, object, handle;
+    std::int64_t generation;
+  } cases[] = {
+      {false, "projects/_/buckets/test-bucket", "test-object",
+       "expected-handle", 12345},
+      {true, "bucket1", "object1", "handle1", 111},
+      {false, "bucket2", "object2", "handle2", 222},
+  };
+
+  for (auto const& tc : cases) {
+    AsyncSequencer<bool> sequencer;
+    auto mock = std::make_unique<MockAsyncWriterConnection>();
+    google::storage::v2::BidiWriteObjectRequest req;
+    if (tc.use_write_object_spec) {
+      req.mutable_write_object_spec()->mutable_resource()->set_bucket(
+          tc.bucket);
+      req.mutable_write_object_spec()->mutable_resource()->set_name(tc.object);
+    } else {
+      req.mutable_append_object_spec()->set_bucket(tc.bucket);
+      req.mutable_append_object_spec()->set_object(tc.object);
+    }
+    google::storage::v2::BidiWriteObjectResponse resp;
+    resp.mutable_write_handle()->set_handle(tc.handle);
+    resp.mutable_resource()->set_generation(tc.generation);
+
+    EXPECT_CALL(*mock, PersistedState)
+        .WillRepeatedly(Return(MakePersistedState(0)));
+    EXPECT_CALL(*mock, Flush(_)).WillOnce([&](auto) {
+      return sequencer.PushBack("Flush").then([](auto f) {
+        if (f.get()) return google::cloud::Status{};
+        return TransientError();
+      });
+    });
+
+    MockFactory mock_factory;
+    google::storage::v2::BidiWriteObjectRequest captured;
+    EXPECT_CALL(mock_factory, Call(_))
+        .WillOnce([&](google::storage::v2::BidiWriteObjectRequest r) {
+          captured = std::move(r);
+          return sequencer.PushBack("Factory").then([](auto) {
+            return StatusOr<WriteObject::WriteResult>(
+                internal::AbortedError("stop test", GCP_ERROR_INFO()));
+          });
+        });
+
+    auto conn = MakeWriterConnectionResumed(mock_factory.AsStdFunction(),
+                                            std::move(mock), req, nullptr, resp,
+                                            Options{});
+    auto write = conn->Write(TestPayload(1));
+    sequencer.PopFrontWithName().first.set_value(false);
+    sequencer.PopFrontWithName().first.set_value(true);
+
+    EXPECT_THAT(write.get(), StatusIs(StatusCode::kAborted));
+    EXPECT_TRUE(captured.has_append_object_spec());
+    EXPECT_EQ(captured.append_object_spec().bucket(), tc.bucket);
+    EXPECT_EQ(captured.append_object_spec().object(), tc.object);
+    EXPECT_EQ(captured.append_object_spec().generation(), tc.generation);
+    EXPECT_TRUE(captured.append_object_spec().has_write_handle());
+    EXPECT_EQ(captured.append_object_spec().write_handle().handle(), tc.handle);
+  }
 }
 
 }  // namespace

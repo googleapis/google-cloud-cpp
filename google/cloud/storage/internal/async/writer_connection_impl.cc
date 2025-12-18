@@ -133,7 +133,8 @@ AsyncWriterConnectionImpl::Finalize(
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto action = request_.has_append_object_spec()
+  auto action = request_.has_append_object_spec() ||
+                        request_.write_object_spec().appendable()
                     ? PartialUpload::kFinalize
                     : PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
@@ -171,6 +172,10 @@ AsyncWriterConnectionImpl::MakeRequest() {
   auto request = request_;
   if (first_request_) {
     first_request_ = false;
+    if (latest_write_handle_.has_value()) {
+      *request.mutable_append_object_spec()->mutable_write_handle() =
+          *latest_write_handle_;
+    }
   } else {
     request.clear_upload_id();
     request.clear_write_object_spec();
@@ -240,6 +245,9 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
                                    grpc_status);
           return StatusOr<std::int64_t>(std::move(result));
         });
+  }
+  if (response->has_write_handle()) {
+    latest_write_handle_ = response->write_handle();
   }
   if (response->has_persisted_size()) {
     persisted_state_ = response->persisted_size();

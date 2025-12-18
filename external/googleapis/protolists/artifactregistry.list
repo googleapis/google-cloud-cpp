@@ -1,6 +1,7 @@
 @googleapis//google/devtools/artifactregistry/v1:apt_artifact.proto
 @googleapis//google/devtools/artifactregistry/v1:artifact.proto
 @googleapis//google/devtools/artifactregistry/v1:attachment.proto
+@googleapis//google/devtools/artifactregistry/v1:export.proto
 @googleapis//google/devtools/artifactregistry/v1:file.proto
 @googleapis//google/devtools/artifactregistry/v1:generic.proto
 @googleapis//google/devtools/artifactregistry/v1:go.proto

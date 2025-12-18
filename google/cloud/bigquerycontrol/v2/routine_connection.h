@@ -190,9 +190,6 @@ class RoutineServiceConnection {
   virtual StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
       google::cloud::bigquery::v2::UpdateRoutineRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::v2::Routine> PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request);
-
   virtual Status DeleteRoutine(
       google::cloud::bigquery::v2::DeleteRoutineRequest const& request);
 

@@ -1855,6 +1855,103 @@ ArtifactRegistryConnectionImpl::DeleteAttachment(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryConnectionImpl::ExportArtifact(
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportArtifact(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::devtools::artifactregistry::v1::ExportArtifactResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+              request) {
+        return stub->AsyncExportArtifact(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::ExportArtifactResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::ExportArtifact(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportArtifact(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+              request) {
+        return stub_->ExportArtifact(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryConnectionImpl::ExportArtifact(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   ExportArtifactMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::devtools::artifactregistry::v1::ExportArtifactResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportArtifact",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::ExportArtifactResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::ExportArtifactResponse>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 ArtifactRegistryConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

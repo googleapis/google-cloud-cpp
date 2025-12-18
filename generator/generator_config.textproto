@@ -2884,6 +2884,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Maintenance
+service {
+  service_proto_path: "google/cloud/maintenance/api/v1/maintenance_service.proto"
+  product_path: "google/cloud/maintenance/api/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
 service {
   service_proto_path: "google/cloud/managedidentities/v1/managed_identities_service.proto"
