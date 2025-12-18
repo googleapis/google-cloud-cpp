@@ -47,14 +47,15 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 ### Bigtable
 
 <details>
-<summary>Bigtable: Removed <code>bigtable::RowReader</code> constructors
+<summary>Removed <code>bigtable::RowReader</code> constructors
 </summary>
 <br>
 
-The `bigtable::RowReader` constructors that accept `DataClient` as
-an argument have been removed.
+The `bigtable::RowReader` constructors that accept `DataClient` as an argument
+have been removed.
 
-Developers that read rows by directly constructing a `RowReader` object should instead construct a `Table` object and call `Table::ReadRows(...)`.
+Developers that read rows by directly constructing a `RowReader` object should
+instead construct a `Table` object and call `Table::ReadRows(...)`.
 
 </details>
 
