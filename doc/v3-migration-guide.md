@@ -22,19 +22,19 @@ for your compiler if it does not already default to `--std=c++17` or higher.
 Bazel is moving away from WORKSPACE file support to using modules from the Bazel
 Central Registry. Part of the v3.x.y release series includes supporting the new
 [google-cloud-cpp](https://registry.bazel.build/modules/google_cloud_cpp) Bazel
-module which can be added to your MODULE.bazel file as a dependency.
+module which can be added to your `MODULE.bazel` file as a dependency.
 
 ## Dependencies
 
 ### Previously Optional Dependencies that are now Required
 
-- libcurl
-- nlohmann_json
-- opentelemetry-cpp
+- `libcurl`
+- `nlohmann_json`
+- `opentelemetry-cpp`
 
 ### Relocated Dependencies
 
-- crc32c
+- `crc32c`
 
 ## Decommissioned API Surfaces
 
