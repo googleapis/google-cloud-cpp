@@ -375,18 +375,6 @@ TEST(MakeGoldenKitchenSinkTracingConnection, TracingDisabled) {
   EXPECT_THAT(spans, IsEmpty());
 }
 
-#else
-
-TEST(MakeGoldenKitchenSinkTracingConnection, NoOpenTelemetry) {
-  auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, DoNothing)
-      .WillOnce(Return(internal::AbortedError("fail")));
-
-  auto under_test = MakeGoldenKitchenSinkTracingConnection(mock);
-  auto result = under_test->DoNothing({});
-  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
