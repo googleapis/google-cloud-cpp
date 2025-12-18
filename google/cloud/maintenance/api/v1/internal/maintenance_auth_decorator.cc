@@ -17,7 +17,7 @@
 // source: google/cloud/maintenance/api/v1/maintenance_service.proto
 
 #include "google/cloud/maintenance/api/v1/internal/maintenance_auth_decorator.h"
-#include <google/cloud/maintenance/api/v1/maintenance_service.grpc.pb.h>
+#include "google/cloud/maintenance/api/v1/maintenance_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,9 +17,9 @@
 // source: google/cloud/maintenance/api/v1/maintenance_service.proto
 
 #include "google/cloud/maintenance/api/v1/internal/maintenance_logging_decorator.h"
+#include "google/cloud/maintenance/api/v1/maintenance_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/maintenance/api/v1/maintenance_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
