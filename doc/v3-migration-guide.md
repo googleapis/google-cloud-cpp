@@ -46,6 +46,53 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Bigtable
 
+#### `bigtable::ClientOptions`
+
+The deprecated `bigtable::ClientOptions` has been removed. Please use
+`google::cloud::Options` instead.
+
+The following table shows the mapping from `bigtable::ClientOptions` methods to
+their `google::cloud::Options` equivalents:
+
+| `bigtable::ClientOptions` method                | `google::cloud::Options` equivalent                                                              |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `(constructor)`                                 | `google::cloud::Options{}`                                                                       |
+| `set_data_endpoint`                             |`google::cloud::EndpointOption`               |
+| `set_admin_endpoint`                            |`google::cloud::EndpointOption`               |
+| `set_connection_pool_name`                      | `google::cloud::GrpcChannelArgumentsOption` or`google::cloud::GrpcChannelArgumentsNativeOption` |
+| `set_connection_pool_size`                      |`google::cloud::GrpcNumChannelsOption`        |
+| `SetCredentials`                                |`google::cloud::GrpcCredentialOption`         |
+| `set_channel_arguments`                         |`google::cloud::GrpcChannelArgumentsNativeOption`|
+| `SetCompressionAlgorithm`                       |`google::cloud::GrpcChannelArgumentsNativeOption`|
+| `SetGrpclbFallbackTimeout`                      |`google::cloud::GrpcChannelArgumentsNativeOption`|
+| `SetUserAgentPrefix`                            | `google::cloud::UserAgentProductsOption` or`google::cloud::GrpcChannelArgumentsNativeOption` |
+| `SetResourceQuota`                              |`google::cloud::GrpcChannelArgumentsNativeOption`  |
+| `SetMaxReceiveMessageSize`                      |`google::cloud::GrpcChannelArgumentsNativeOption`  |
+| `SetMaxSendMessageSize`                         |`google::cloud::GrpcChannelArgumentsNativeOption`  |
+| `SetLoadBalancingPolicyName`                    |`google::cloud::GrpcChannelArgumentsNativeOption`  |
+| `SetServiceConfigJSON`                          |`google::cloud::GrpcChannelArgumentsNativeOption`  |
+| `SetSslTargetNameOverride`                      |`google::cloud::GrpcChannelArgumentsNativeOption`  |
+| `enable_tracing`, `disable_tracing`             |`google::cloud::LoggingComponentsOption`           |
+| `tracing_options`                               |`google::cloud::GrpcTracingOptionsOption`          |
+| `set_max_conn_refresh_period`                   |`bigtable::MaxConnectionRefreshOption`             |
+| `set_min_conn_refresh_period`                   |`bigtable::MinConnectionRefreshOption`             |
+| `set_background_thread_pool_size`               |`google::cloud::GrpcBackgroundThreadPoolSizeOption` |
+| `DisableBackgroundThreads`                      |`google::cloud::GrpcCompletionQueueOption`         |
+
+Example usage of the replacements can be found below. 
+
+**Before:**
+```cpp
+auto client = bigtable::Client(
+    bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+```cpp
+auto client = bigtable::Client(
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
 ### Pubsub
 
 ### Spanner
