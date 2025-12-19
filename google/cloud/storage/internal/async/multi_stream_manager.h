@@ -41,7 +41,7 @@ class StreamBase {
 // Manages a collection of streams.
 //
 // This class implements the "Subsequent Stream" logic where idle streams
-// are moved to the back of the queue for reuse.
+// are moved to the front of the queue for reuse.
 //
 // THREAD SAFETY:
 // This class is NOT thread-safe. The owner (e.g. ObjectDescriptorImpl
@@ -83,9 +83,9 @@ class MultiStreamManager {
     streams_.push_back(Stream{std::move(initial_stream), {}});
   }
 
-  StreamIterator GetLastStream() {
+  StreamIterator GetFirstStream() {
     if (streams_.empty()) return streams_.end();
-    return std::prev(streams_.end());
+    return streams_.begin();
   }
 
   StreamIterator GetLeastBusyStream() {
@@ -94,21 +94,24 @@ class MultiStreamManager {
     // Track min_ranges to avoid calling .size() repeatedly if possible,
     // though for std::unordered_map .size() is O(1).
     std::size_t min_ranges = least_busy_it->active_ranges.size();
+    if (min_ranges == 0) return least_busy_it;
 
     // Start checking from the second element
     for (auto it = std::next(streams_.begin()); it != streams_.end(); ++it) {
       // Strict less-than ensures stability (preferring older streams if tied)
-      if (it->active_ranges.size() < min_ranges) {
+      auto size = it->active_ranges.size();
+      if (size < min_ranges) {
         least_busy_it = it;
-        min_ranges = it->active_ranges.size();
+        min_ranges = size;
+        if (min_ranges == 0) return least_busy_it;
       }
     }
     return least_busy_it;
   }
 
   StreamIterator AddStream(std::shared_ptr<StreamT> stream) {
-    streams_.push_back(Stream{std::move(stream), {}});
-    return std::prev(streams_.end());
+    streams_.push_front(Stream{std::move(stream), {}});
+    return streams_.begin();
   }
 
   void CancelAll() {
@@ -141,16 +144,14 @@ class MultiStreamManager {
   }
 
   template <typename Pred>
-  bool ReuseIdleStreamToBack(Pred pred) {
+  bool ReuseIdleStreamToFront(Pred pred) {
     for (auto it = streams_.begin(); it != streams_.end(); ++it) {
       if (!pred(*it)) continue;
 
-      // If the idle stream is already at the back, we don't
-      // need to move it. If it's elsewhere, use splice() to move the node.
-      // splice() is O(1) and, crucially, does not invalidate iterators
-      // or copy the Stream object.
-      if (std::next(it) != streams_.end()) {
-        streams_.splice(streams_.end(), streams_, it);
+      // If the idle stream is already at the front, we don't
+      // need to move it. Otherwise splice to the front in O(1).
+      if (it != streams_.begin()) {
+        streams_.splice(streams_.begin(), streams_, it);
       }
       return true;
     }

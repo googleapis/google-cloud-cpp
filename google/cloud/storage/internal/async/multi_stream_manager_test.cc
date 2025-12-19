@@ -50,7 +50,7 @@ TEST(MultiStreamManagerTest, ConstructsWithFactoryAndHasOneStream) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   EXPECT_FALSE(mgr.Empty());
   EXPECT_EQ(mgr.Size(), 1U);
-  auto it = mgr.GetLastStream();
+  auto it = mgr.GetFirstStream();
   ASSERT_TRUE(it->stream);
 }
 
@@ -58,18 +58,18 @@ TEST(MultiStreamManagerTest, ConstructsWithInitialStream) {
   auto initial = std::make_shared<FakeStream>();
   Manager mgr([] { return nullptr; }, initial);
   EXPECT_EQ(mgr.Size(), 1U);
-  auto it = mgr.GetLastStream();
+  auto it = mgr.GetFirstStream();
   EXPECT_EQ(it->stream, initial);
 }
 
-TEST(MultiStreamManagerTest, AddStreamAppendsAndGetLastReturnsNew) {
+TEST(MultiStreamManagerTest, AddStreamAppendsAndGetFirstReturnsNew) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   auto s1 = std::make_shared<FakeStream>();
   auto it1 = mgr.AddStream(s1);
   EXPECT_EQ(mgr.Size(), 2U);
   EXPECT_EQ(it1->stream.get(), s1.get());
-  auto it_last = mgr.GetLastStream();
-  EXPECT_EQ(it_last->stream.get(), s1.get());
+  auto it_first = mgr.GetFirstStream();
+  EXPECT_EQ(it_first->stream.get(), s1.get());
 }
 
 TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
@@ -78,7 +78,7 @@ TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
   // The manager starts with an initial stream (size 0).
   // We must make it "busy" so it doesn't win the comparison against our test
   // streams.
-  auto it_init = mgr.GetLastStream();
+  auto it_init = mgr.GetFirstStream();
   it_init->active_ranges.emplace(999, std::make_shared<FakeRange>());
   it_init->active_ranges.emplace(998, std::make_shared<FakeRange>());
 
@@ -103,7 +103,7 @@ TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
 
 TEST(MultiStreamManagerTest, CleanupDoneRangesRemovesFinished) {
   auto mgr = MultiStreamManagerTest::MakeManager();
-  auto it = mgr.GetLastStream();
+  auto it = mgr.GetFirstStream();
   auto r1 = std::make_shared<FakeRange>();
   r1->done = false;
   auto r2 = std::make_shared<FakeRange>();
@@ -120,7 +120,7 @@ TEST(MultiStreamManagerTest, CleanupDoneRangesRemovesFinished) {
 
 TEST(MultiStreamManagerTest, RemoveStreamAndNotifyRangesCallsOnFinish) {
   auto mgr = MultiStreamManagerTest::MakeManager();
-  auto it = mgr.GetLastStream();
+  auto it = mgr.GetFirstStream();
   auto r1 = std::make_shared<FakeRange>();
   auto r2 = std::make_shared<FakeRange>();
   it->active_ranges.emplace(11, r1);
@@ -142,49 +142,50 @@ TEST(MultiStreamManagerTest, CancelAllInvokesCancel) {
   EXPECT_EQ(s2->cancelled, 1);
 }
 
-TEST(MultiStreamManagerTest, ReuseIdleStreamToBackMovesElement) {
+TEST(MultiStreamManagerTest, ReuseIdleStreamToFrontMovesElement) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   // Capture the factory-created stream pointer (initial element)
-  auto* factory_ptr = mgr.GetLastStream()->stream.get();
+  auto* factory_ptr = mgr.GetFirstStream()->stream.get();
   auto s1 = std::make_shared<FakeStream>();
   mgr.AddStream(s1);
-  bool moved = mgr.ReuseIdleStreamToBack([](Manager::Stream const& s) {
+  bool moved = mgr.ReuseIdleStreamToFront([](Manager::Stream const& s) {
     auto* fs = s.stream.get();
     return fs != nullptr && s.active_ranges.empty() && !fs->write_pending;
   });
   EXPECT_TRUE(moved);
-  auto it_last = mgr.GetLastStream();
-  // After move, the factory stream should be last
-  EXPECT_EQ(it_last->stream.get(), factory_ptr);
-  EXPECT_NE(it_last->stream.get(), s1.get());
+  auto it_first = mgr.GetFirstStream();
+  // After move, the s1 stream should be first
+  EXPECT_EQ(it_first->stream.get(), s1.get());
+  EXPECT_NE(it_first->stream.get(), factory_ptr);
 }
 
 TEST(MultiStreamManagerTest,
-     ReuseIdleStreamAlreadyAtBackReturnsTrueWithoutMove) {
+     ReuseIdleStreamAlreadyAtFrontReturnsTrueWithoutMove) {
   auto mgr = MultiStreamManagerTest::MakeManager();
-  // The manager starts with one stream. It is the last stream, and it is idle.
-  auto initial_last = mgr.GetLastStream();
-  bool reused = mgr.ReuseIdleStreamToBack(
+  // The manager starts with one stream. It is the first stream, and it is idle.
+  auto initial_first = mgr.GetFirstStream();
+  bool reused = mgr.ReuseIdleStreamToFront(
       [](Manager::Stream const& s) { return s.active_ranges.empty(); });
   EXPECT_TRUE(reused);
-  // Pointer should remain the same (it was already at the back)
-  EXPECT_EQ(mgr.GetLastStream(), initial_last);
+  // Pointer should remain the same (it was already at the front)
+  EXPECT_EQ(mgr.GetFirstStream(), initial_first);
 }
 
 TEST(MultiStreamManagerTest, ReuseIdleStreamDoesNotMoveWhenWritePending) {
   auto mgr = MultiStreamManagerTest::MakeManager();
+  auto factory_ptr = mgr.GetFirstStream()->stream.get();
   // Mark factory stream as not reusable
-  mgr.GetLastStream()->stream->write_pending = true;
+  mgr.GetFirstStream()->stream->write_pending = true;
   auto s1 = std::make_shared<FakeStream>();
   s1->write_pending = true;  // also mark appended stream as not reusable
   mgr.AddStream(s1);
-  bool moved = mgr.ReuseIdleStreamToBack([](Manager::Stream const& s) {
+  bool moved = mgr.ReuseIdleStreamToFront([](Manager::Stream const& s) {
     auto* fs = s.stream.get();
     return fs != nullptr && s.active_ranges.empty() && !fs->write_pending;
   });
   EXPECT_FALSE(moved);
-  auto it_last = mgr.GetLastStream();
-  EXPECT_EQ(it_last->stream.get(), s1.get());
+  auto it_first = mgr.GetFirstStream();
+  EXPECT_EQ(it_first->stream.get(), factory_ptr);
 }
 
 TEST(MultiStreamManagerTest, MoveActiveRangesTransfersAllEntries) {
@@ -204,24 +205,24 @@ TEST(MultiStreamManagerTest, MoveActiveRangesTransfersAllEntries) {
   EXPECT_TRUE(it2->active_ranges.count(202));
 }
 
-TEST(MultiStreamManagerTest, GetLastStreamReflectsRecentAppendAndReuse) {
+TEST(MultiStreamManagerTest, GetFirstStreamReflectsFrontReuse) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   auto s1 = std::make_shared<FakeStream>();
   mgr.AddStream(s1);
-  EXPECT_EQ(mgr.GetLastStream()->stream.get(), s1.get());
-  bool moved = mgr.ReuseIdleStreamToBack([](Manager::Stream const& s) {
+  EXPECT_EQ(mgr.GetFirstStream()->stream.get(), s1.get());
+  bool moved = mgr.ReuseIdleStreamToFront([](Manager::Stream const& s) {
     return s.stream != nullptr && s.active_ranges.empty();
   });
   EXPECT_TRUE(moved);
-  auto it_last = mgr.GetLastStream();
-  EXPECT_NE(it_last->stream.get(), s1.get());
+  auto it_first = mgr.GetFirstStream();
+  EXPECT_EQ(it_first->stream.get(), s1.get());
 }
 
 TEST(MultiStreamManagerTest, EmptyAndSizeTransitions) {
   auto mgr = MultiStreamManagerTest::MakeManager();
   EXPECT_FALSE(mgr.Empty());
   EXPECT_EQ(mgr.Size(), 1U);
-  auto it = mgr.GetLastStream();
+  auto it = mgr.GetFirstStream();
   mgr.RemoveStreamAndNotifyRanges(it, Status());
   EXPECT_TRUE(mgr.Empty());
   EXPECT_EQ(mgr.Size(), 0U);

@@ -50,7 +50,7 @@ ObjectDescriptorImpl::~ObjectDescriptorImpl() { Cancel(); }
 void ObjectDescriptorImpl::Start(
     google::storage::v2::BidiReadObjectResponse first_response) {
   std::unique_lock<std::mutex> lk(mu_);
-  auto it = stream_manager_->GetLastStream();
+  auto it = stream_manager_->GetFirstStream();
   if (it == stream_manager_->End()) return;
   lk.unlock();
   OnRead(it, std::move(first_response));
@@ -83,7 +83,7 @@ void ObjectDescriptorImpl::AssurePendingStreamQueued() {
 void ObjectDescriptorImpl::MakeSubsequentStream() {
   std::unique_lock<std::mutex> lk(mu_);
   // Reuse an idle stream if possible.
-  if (stream_manager_->ReuseIdleStreamToBack(
+  if (stream_manager_->ReuseIdleStreamToFront(
           [](StreamManager::Stream const& s) {
             auto const* rs = s.stream.get();
             return rs != nullptr && s.active_ranges.empty() &&
@@ -151,16 +151,6 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
-  if (it == stream_manager_->End()) {
-    lk.unlock();
-    range->OnFinish(Status(StatusCode::kFailedPrecondition,
-                           "Cannot read object, all streams failed"));
-    if (!internal::TracingEnabled(options_)) {
-      return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-          std::make_unique<ObjectDescriptorReader>(std::move(range)));
-    }
-    return MakeTracingObjectDescriptorReader(std::move(range));
-  }
   auto const id = ++read_id_generator_;
   it->active_ranges.emplace(id, range);
   auto& read_range = *it->stream->next_request.add_read_ranges();
