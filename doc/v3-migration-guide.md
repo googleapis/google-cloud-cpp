@@ -46,6 +46,14 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Bigtable
 
+<details>
+<summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
+</summary>
+
+AsyncRowReader::NO_ROWS_LIMIT has been removed. Please use RowReader::NO_ROWS_LIMIT` instead.
+
+</details>
+
 ### Pubsub
 
 ### Spanner
