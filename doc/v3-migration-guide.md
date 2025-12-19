@@ -50,7 +50,7 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 <summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
 </summary>
 
-AsyncRowReader::NO_ROWS_LIMIT has been removed. Please use 
+AsyncRowReader::NO_ROWS_LIMIT has been removed. Please use
 `google::cloud::bigtable::RowReader::NO_ROWS_LIMIT` instead.
 
 </details>
