@@ -185,7 +185,8 @@ TEST(MultiStreamManagerTest, ReuseIdleStreamDoesNotMoveWhenWritePending) {
   });
   EXPECT_FALSE(moved);
   auto it_first = mgr.GetFirstStream();
-  EXPECT_EQ(it_first->stream.get(), factory_ptr);
+  EXPECT_EQ(it_first->stream.get(), s1.get());
+  EXPECT_NE(it_first->stream.get(), factory_ptr);
 }
 
 TEST(MultiStreamManagerTest, MoveActiveRangesTransfersAllEntries) {
