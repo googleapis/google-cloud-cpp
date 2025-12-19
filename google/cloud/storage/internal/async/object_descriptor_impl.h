@@ -36,30 +36,25 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ReadStream : public storage_internal::StreamBase {
- public:
+struct ReadStream : public storage_internal::StreamBase {
   ReadStream(std::shared_ptr<OpenStream> stream,
              std::unique_ptr<storage_experimental::ResumePolicy> resume_policy)
-      : stream_(std::move(stream)), resume_policy_(std::move(resume_policy)) {}
+      : stream(std::move(stream)), resume_policy(std::move(resume_policy)) {}
 
   void Cancel() override {
-    if (stream_) stream_->Cancel();
+    if (stream) stream->Cancel();
   }
 
-  std::shared_ptr<OpenStream> stream_;
-  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
-  google::storage::v2::BidiReadObjectRequest next_request_;
-  bool write_pending_ = false;
-  bool read_pending_ = false;
+  std::shared_ptr<OpenStream> stream;
+  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
+  google::storage::v2::BidiReadObjectRequest next_request;
+  bool write_pending = false;
+  bool read_pending = false;
 };
 
 class ObjectDescriptorImpl
     : public storage_experimental::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
- private:
-  using StreamManager = MultiStreamManager<ReadStream, ReadRange>;
-  using StreamIterator = StreamManager::StreamIterator;
-
  public:
   ObjectDescriptorImpl(
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
@@ -87,6 +82,10 @@ class ObjectDescriptorImpl
   void MakeSubsequentStream() override;
 
  private:
+  using StreamManager = MultiStreamManager<ReadStream, ReadRange>;
+  using StreamIterator =
+      MultiStreamManager<ReadStream, ReadRange>::StreamIterator;
+
   std::weak_ptr<ObjectDescriptorImpl> WeakFromThis() {
     return shared_from_this();
   }

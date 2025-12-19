@@ -17,7 +17,6 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <cassert>
 #include <cstdint>
 #include <functional>
 #include <list>
@@ -85,18 +84,12 @@ class MultiStreamManager {
   }
 
   StreamIterator GetLastStream() {
-    // SAFETY: The caller must ensure the manager is not empty.
-    // In ObjectDescriptorImpl, we ensure there is always at least one stream,
-    // but this assertion protects against future refactoring errors.
-    assert(!streams_.empty());
+    if (streams_.empty()) return streams_.end();
     return std::prev(streams_.end());
   }
 
   StreamIterator GetLeastBusyStream() {
-    // SAFETY: The caller must ensure the manager is not empty.
-    // In ObjectDescriptorImpl, we ensure there is always at least one stream,
-    // but this assertion protects against future refactoring errors.
-    assert(!streams_.empty());
+    if (streams_.empty()) return streams_.end();
     auto least_busy_it = streams_.begin();
     // Track min_ranges to avoid calling .size() repeatedly if possible,
     // though for std::unordered_map .size() is O(1).
@@ -165,6 +158,7 @@ class MultiStreamManager {
   }
 
   bool Empty() const { return streams_.empty(); }
+  StreamIterator End() { return streams_.end(); }
   std::size_t Size() const { return streams_.size(); }
 
  private:

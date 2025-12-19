@@ -51,6 +51,7 @@ void ObjectDescriptorImpl::Start(
     google::storage::v2::BidiReadObjectResponse first_response) {
   std::unique_lock<std::mutex> lk(mu_);
   auto it = stream_manager_->GetLastStream();
+  if (it == stream_manager_->End()) return;
   lk.unlock();
   OnRead(it, std::move(first_response));
   // Acquire lock and queue the background stream.
@@ -86,7 +87,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
           [](StreamManager::Stream const& s) {
             auto const* rs = s.stream.get();
             return rs != nullptr && s.active_ranges.empty() &&
-                   !rs->write_pending_;
+                   !rs->write_pending;
           })) {
     return;
   }
@@ -150,9 +151,19 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
+  if (it == stream_manager_->End()) {
+    lk.unlock();
+    range->OnFinish(Status(StatusCode::kFailedPrecondition,
+                           "Cannot read object, all streams failed"));
+    if (!internal::TracingEnabled(options_)) {
+      return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+          std::make_unique<ObjectDescriptorReader>(std::move(range)));
+    }
+    return MakeTracingObjectDescriptorReader(std::move(range));
+  }
   auto const id = ++read_id_generator_;
   it->active_ranges.emplace(id, range);
-  auto& read_range = *it->stream->next_request_.add_read_ranges();
+  auto& read_range = *it->stream->next_request.add_read_ranges();
   read_range.set_read_id(id);
   read_range.set_read_offset(p.start);
   read_range.set_read_length(p.length);
@@ -168,18 +179,18 @@ ObjectDescriptorImpl::Read(ReadParams p) {
 
 void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk,
                                  StreamIterator it) {
-  if (it->stream->write_pending_ ||
-      it->stream->next_request_.read_ranges().empty()) {
+  if (it->stream->write_pending ||
+      it->stream->next_request.read_ranges().empty()) {
     return;
   }
-  it->stream->write_pending_ = true;
+  it->stream->write_pending = true;
   google::storage::v2::BidiReadObjectRequest request;
-  request.Swap(&it->stream->next_request_);
+  request.Swap(&it->stream->next_request);
 
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  auto current_stream = it->stream->stream_;
+  auto current_stream = it->stream->stream;
   lk.unlock();
   current_stream->Write(std::move(request))
       .then([w = WeakFromThis(), it](auto f) {
@@ -190,19 +201,19 @@ void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk,
 void ObjectDescriptorImpl::OnWrite(StreamIterator it, bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   if (!ok) return DoFinish(std::move(lk), it);
-  it->stream->write_pending_ = false;
+  it->stream->write_pending = false;
   Flush(std::move(lk), it);
 }
 
 void ObjectDescriptorImpl::DoRead(std::unique_lock<std::mutex> lk,
                                   StreamIterator it) {
-  if (it->stream->read_pending_) return;
-  it->stream->read_pending_ = true;
+  if (it->stream->read_pending) return;
+  it->stream->read_pending = true;
 
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  auto current_stream = it->stream->stream_;
+  auto current_stream = it->stream->stream;
   lk.unlock();
   current_stream->Read().then([w = WeakFromThis(), it](auto f) {
     if (auto self = w.lock()) self->OnRead(it, f.get());
@@ -213,7 +224,7 @@ void ObjectDescriptorImpl::OnRead(
     StreamIterator it,
     absl::optional<google::storage::v2::BidiReadObjectResponse> response) {
   std::unique_lock<std::mutex> lk(mu_);
-  it->stream->read_pending_ = false;
+  it->stream->read_pending = false;
 
   if (!response) return DoFinish(std::move(lk), it);
   if (response->has_metadata()) {
@@ -242,11 +253,11 @@ void ObjectDescriptorImpl::OnRead(
 
 void ObjectDescriptorImpl::DoFinish(std::unique_lock<std::mutex> lk,
                                     StreamIterator it) {
-  it->stream->read_pending_ = false;
+  it->stream->read_pending = false;
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
-  auto current_stream = it->stream->stream_;
+  auto current_stream = it->stream->stream;
   lk.unlock();
   auto pending = current_stream->Finish();
   if (!pending.valid()) return;
@@ -292,8 +303,8 @@ void ObjectDescriptorImpl::OnResume(StreamIterator it,
 
   it->stream = std::make_shared<ReadStream>(std::move(result->stream),
                                             resume_policy_prototype_->clone());
-  it->stream->write_pending_ = false;
-  it->stream->read_pending_ = false;
+  it->stream->write_pending = false;
+  it->stream->read_pending = false;
 
   // TODO(#15105) - this should be done without release the lock.
   Flush(std::move(lk), it);
@@ -326,7 +337,7 @@ bool ObjectDescriptorImpl::IsResumable(
     stream_manager_->CleanupDoneRanges(it);
     return true;
   }
-  return it->stream->resume_policy_->OnFinish(status) ==
+  return it->stream->resume_policy->OnFinish(status) ==
          storage_experimental::ResumePolicy::kContinue;
 }
 
