@@ -173,7 +173,7 @@ TEST(MultiStreamManagerTest,
 
 TEST(MultiStreamManagerTest, ReuseIdleStreamDoesNotMoveWhenWritePending) {
   auto mgr = MultiStreamManagerTest::MakeManager();
-  auto factory_ptr = mgr.GetFirstStream()->stream.get();
+  auto* factory_ptr = mgr.GetFirstStream()->stream.get();
   // Mark factory stream as not reusable
   mgr.GetFirstStream()->stream->write_pending = true;
   auto s1 = std::make_shared<FakeStream>();
