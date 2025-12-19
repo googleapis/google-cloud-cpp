@@ -194,8 +194,8 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitEnable) {
   EXPECT_THAT(os.computed_hash(),
               HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
   }
 }
 
@@ -286,8 +286,7 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithFullChecksumValidation) {
 
   auto os = client.WriteObject(bucket_name_, object_name,
                                DisableCrc32cChecksum(false),
-                               DisableMD5Hash(true), 
-                               IfGenerationMatch(0));
+                               DisableMD5Hash(true), IfGenerationMatch(0));
   os << content;
   os.Close();
   auto meta = os.metadata();
@@ -295,33 +294,36 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithFullChecksumValidation) {
   ScheduleForDelete(*meta);
 
   EXPECT_EQ(os.computed_hash(), expected_crc32c);
-  
+
   if (meta->has_metadata("x_emulator_upload")) {
-    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", expected_crc32c)));
+    EXPECT_THAT(meta->metadata(),
+                Contains(Pair("x_emulator_crc32c", expected_crc32c)));
     EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", "true")));
   }
 }
 
-/// @test Verify that the upload fails when the provided CRC32C checksum does not match the data.
+/// @test Verify that the upload fails when the provided CRC32C checksum does
+/// not match the data.
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithIncorrectChecksumValue) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto content = LoremIpsum();
 
-  auto bad_crc32c = ComputeCrc32cChecksum("this is not the data being uploaded");
+  auto bad_crc32c =
+      ComputeCrc32cChecksum("this is not the data being uploaded");
 
   auto os = client.WriteObject(bucket_name_, object_name,
                                Crc32cChecksumValue(bad_crc32c),
-                               DisableMD5Hash(true),
-                               IfGenerationMatch(0));
-  
+                               DisableMD5Hash(true), IfGenerationMatch(0));
+
   os << content;
   os.Close();
   EXPECT_TRUE(os.bad());
   auto meta = os.metadata();
   EXPECT_THAT(meta, Not(IsOk()));
-  
-  // The server returns FAILED_PRECONDITION (412) for checksum mismatches during finalization
+
+  // The server returns FAILED_PRECONDITION (412) for checksum mismatches during
+  // finalization
   EXPECT_THAT(meta, StatusIs(StatusCode::kFailedPrecondition));
 }
 
@@ -421,4 +423,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
- 

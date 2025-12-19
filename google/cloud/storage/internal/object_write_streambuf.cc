@@ -144,12 +144,12 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
- HashValues final_hashes = known_hashes_;
- if (hash_function_) {
-   hash_function_->Update(committed_size_, {pbase(), actual_size});
-   final_hashes = hash_function_->Finish();
-   hash_function_.reset();
- }
+  HashValues final_hashes = known_hashes_;
+  if (hash_function_) {
+    hash_function_->Update(committed_size_, {pbase(), actual_size});
+    final_hashes = hash_function_->Finish();
+    hash_function_.reset();
+  }
 
   // After this point the session will be closed, and no more calls to the hash
   // function are possible.
@@ -163,7 +163,7 @@ void ObjectWriteStreambuf::FlushFinal() {
     last_status_ = std::move(response).status();
     return;
   }
- hash_values_ = final_hashes;
+  hash_values_ = final_hashes;
 
   committed_size_ = response->committed_size.value_or(0);
   metadata_ = std::move(response->payload);

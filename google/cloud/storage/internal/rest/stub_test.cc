@@ -54,13 +54,11 @@ class NoOpHashFunction : public HashFunction {
     Cormorant(o, b);
     return Status{};
   }
-  Status Update(std::int64_t o, absl::string_view b,
-                std::uint32_t c) override {
+  Status Update(std::int64_t o, absl::string_view b, std::uint32_t c) override {
     Cormorant(o, b, c);
     return Status{};
   }
-  Status Update(std::int64_t o, absl::Cord const& b,
-                std::uint32_t c) override {
+  Status Update(std::int64_t o, absl::Cord const& b, std::uint32_t c) override {
     Cormorant(o, b, c);
     return Status{};
   }
@@ -971,13 +969,14 @@ TEST(RestStubTest, UploadChunkLastChunkWithCrc32c) {
 
 TEST(RestStubTest, UploadChunkLastChunkWithMd5) {
   auto mock = std::make_shared<MockRestClient>();
-  EXPECT_CALL(*mock,
-              Put(ExpectedContext(),
-                  ResultOf("request headers contain x-goog-hash with md5",
-                           [](RestRequest const& r) { return r.headers(); },
-                           Contains(Pair("x-goog-hash",
-                                         ElementsAre("md5=test-md5")))),
-                  ExpectedPayload()))
+  EXPECT_CALL(
+      *mock,
+      Put(ExpectedContext(),
+          ResultOf(
+              "request headers contain x-goog-hash with md5",
+              [](RestRequest const& r) { return r.headers(); },
+              Contains(Pair("x-goog-hash", ElementsAre("md5=test-md5")))),
+          ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
@@ -999,7 +998,7 @@ TEST(RestStubTest, UploadChunkLastChunkWithBoth) {
               "request headers contain x-goog-hash with crc32c and md5",
               [](RestRequest const& r) { return r.headers(); },
               Contains(Pair("x-goog-hash", ElementsAre("crc32c=test-crc32c",
-                                                      "md5=test-md5")))),
+                                                       "md5=test-md5")))),
           ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
@@ -1016,9 +1015,10 @@ TEST(RestStubTest, UploadChunkLastChunkWithBoth) {
 TEST(RestStubTest, UploadChunkIntermediate) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(),
-                         ResultOf("request headers do not contain x-goog-hash",
-                                  [](RestRequest const& r) { return r.headers(); },
-                                  Not(Contains(Pair("x-goog-hash", _)))),
+                         ResultOf(
+                             "request headers do not contain x-goog-hash",
+                             [](RestRequest const& r) { return r.headers(); },
+                             Not(Contains(Pair("x-goog-hash", _)))),
                          ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
