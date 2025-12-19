@@ -955,7 +955,7 @@ TEST(RestStubTest, UploadChunkLastChunkWithCrc32c) {
           ResultOf(
               "request headers contain x-goog-hash with crc32c",
               [](RestRequest const& r) { return r.headers(); },
-              Contains(Pair("x-goog-hash", ElementsAre("crc32c=test-crc32")))),
+              Contains(Pair("x-goog-hash", ElementsAre("crc32c=test-crc32c")))),
           ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
