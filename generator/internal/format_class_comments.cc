@@ -82,7 +82,7 @@ std::string FormatClassCommentsFromServiceComments(
   auto api_version = service.options().GetExtension(google::api::api_version);
   if (!api_version.empty()) {
     absl::StrAppend(&formatted_comments, "\n///\n/// This client uses ",
-                    service_name, " version ", api_version, ".\n///");
+                    service_name, " version ", api_version, ".");
   }
 
   auto const references =
