@@ -15,10 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H
 
-#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <string>
 
@@ -204,17 +205,6 @@ class DataClient {
 std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
                                            std::string instance_id,
                                            Options options = {});
-
-/**
- * Create a new data client configured via @p options.
- *
- * @deprecated use the `MakeDataClient` method which accepts
- * `google::cloud::Options` instead.
- */
-GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeDataClient` instead")
-std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
-                                                    std::string instance_id,
-                                                    ClientOptions options);
 
 /**
  * Return the fully qualified instance name for the @p client.

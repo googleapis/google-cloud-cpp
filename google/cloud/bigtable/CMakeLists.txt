@@ -116,8 +116,6 @@ add_library(
     cell.h
     client.cc
     client.h
-    client_options.cc
-    client_options.h
     cluster_config.cc
     cluster_config.h
     cluster_list_responses.h
@@ -452,7 +450,6 @@ if (BUILD_TESTING)
         bound_query_test.cc
         bytes_test.cc
         cell_test.cc
-        client_options_test.cc
         client_test.cc
         cluster_config_test.cc
         column_family_test.cc

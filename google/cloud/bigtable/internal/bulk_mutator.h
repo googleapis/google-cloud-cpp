@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/status.h"
 #include <string>
@@ -89,7 +90,7 @@ class BulkMutatorState {
      * request provided by the application.
      */
     int original_index;
-    Idempotency idempotency;
+    google::cloud::Idempotency idempotency;
     /// Set to `false` if the result is unknown.
     bool has_mutation_result;
     /**

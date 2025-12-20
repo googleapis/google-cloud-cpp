@@ -32,10 +32,6 @@ class MockDataClient : public bigtable::DataClient {
 
   explicit MockDataClient(Options options) : options_(std::move(options)) {}
 
-  /// @deprecated use constructor that takes `google::cloud::Options`
-  explicit MockDataClient(ClientOptions options)
-      : options_(internal::MakeOptions(std::move(options))) {}
-
   MOCK_METHOD(std::string const&, project_id, (), (const, override));
   MOCK_METHOD(std::string const&, instance_id, (), (const, override));
   MOCK_METHOD(std::shared_ptr<grpc::Channel>, Channel, (), (override));

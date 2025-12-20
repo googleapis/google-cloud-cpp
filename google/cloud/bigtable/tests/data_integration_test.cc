@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_split.h"
 #include <thread>
 
 namespace google {

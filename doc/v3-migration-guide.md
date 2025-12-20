@@ -93,6 +93,60 @@ auto client = bigtable::Client(
     google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
 ```
 
+#### `bigtable::CreateDefaultDataClient`
+
+The deprecated `bigtable::CreateDefaultDataClient` function has been removed.
+Please use `bigtable::MakeDataClient` instead.
+
+**Before:**
+```cpp
+auto client = bigtable::CreateDefaultDataClient(
+    "my-project", "my-instance",
+    bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+```cpp
+auto client = bigtable::MakeDataClient(
+    "my-project", "my-instance",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultAdminClient`
+
+The deprecated `bigtable::CreateDefaultAdminClient` function has been removed.
+Please use `bigtable::MakeAdminClient` instead.
+
+**Before:**
+```cpp
+auto client = bigtable::CreateDefaultAdminClient(
+    "my-project", bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+```cpp
+auto client = bigtable::MakeAdminClient(
+    "my-project",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultInstanceAdminClient`
+
+The deprecated `bigtable::CreateDefaultInstanceAdminClient` function has been
+removed. Please use `bigtable::MakeInstanceAdminClient` instead.
+
+**Before:**
+```cpp
+auto client = bigtable::CreateDefaultInstanceAdminClient(
+    "my-project", bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+```cpp
+auto client = bigtable::MakeInstanceAdminClient(
+    "my-project",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
 ### Pubsub
 
 ### Spanner

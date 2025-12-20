@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/row_key_sample.h"

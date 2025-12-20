@@ -23,29 +23,6 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-// TODO(#8800) - remove after `DataClient` deprecation is complete
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-
-TEST(DataClientTest, Default) {
-  auto data_client =
-      CreateDefaultDataClient("test-project", "test-instance",
-                              ClientOptions().set_connection_pool_size(1));
-  ASSERT_TRUE(data_client);
-  EXPECT_EQ("test-project", data_client->project_id());
-  EXPECT_EQ("test-instance", data_client->instance_id());
-
-  auto channel0 = data_client->Channel();
-  EXPECT_TRUE(channel0);
-
-  auto channel1 = data_client->Channel();
-  EXPECT_EQ(channel0.get(), channel1.get());
-
-  data_client->reset();
-  channel1 = data_client->Channel();
-  EXPECT_TRUE(channel1);
-  EXPECT_NE(channel0.get(), channel1.get());
-}
-
 TEST(DataClientTest, MakeClient) {
   auto data_client = MakeDataClient("test-project", "test-instance",
                                     Options{}.set<GrpcNumChannelsOption>(1));
@@ -64,9 +41,6 @@ TEST(DataClientTest, MakeClient) {
   EXPECT_TRUE(channel1);
   EXPECT_NE(channel0.get(), channel1.get());
 }
-
-// TODO(#8800) - remove after `DataClient` deprecation is complete
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(DataClientTest, Logging) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "rpc");

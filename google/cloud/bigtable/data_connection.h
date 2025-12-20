@@ -180,7 +180,6 @@ class DataConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
  * - `google::cloud::bigtable::AppProfileIdOption`
- * - `google::cloud::bigtable::ClientOptionsList`
  * - `google::cloud::bigtable::DataPolicyOptionList`
  *
  * @note Unrecognized options will be ignored. To debug issues with options set

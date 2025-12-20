@@ -229,13 +229,6 @@ std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
   return client;
 }
 
-std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
-                                                    std::string instance_id,
-                                                    ClientOptions options) {
-  return MakeDataClient(std::move(project_id), std::move(instance_id),
-                        internal::MakeOptions(std::move(options)));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud

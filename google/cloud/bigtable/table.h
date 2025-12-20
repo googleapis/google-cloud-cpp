@@ -34,6 +34,7 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_resource.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/group_options.h"
