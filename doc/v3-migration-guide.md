@@ -46,6 +46,68 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Bigtable
 
+<details>
+<summary>Removed <code>bigtable::RowReader</code> constructors
+</summary>
+
+The `bigtable::RowReader` constructors that accept `DataClient` as an argument
+have been removed.
+
+Developers that read rows by directly constructing a `RowReader` object should
+instead construct a `Table` object and call `Table::ReadRows(...)`.
+
+For example, code that used to look like this:
+
+**Before:**
+
+```cpp
+#include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/table.h"
+
+// ...
+
+auto client = google::cloud::bigtable::MakeDataClient(
+    "my-project", "my-instance", creds);
+auto reader = google::cloud::bigtable::RowReader(
+    client, "my-table-id", google::cloud::bigtable::RowSet("r1", "r2"),
+    google::cloud::bigtable::RowReader::NO_ROWS_LIMIT,
+    google::cloud::bigtable::Filter::PassAllFilter(),
+    /*...retry and backoff policies...*/);
+
+for (auto& row : reader) {
+  if (!row) throw std::move(row).status();
+  // ...
+}
+```
+
+Should be changed to this:
+
+**After:**
+
+```cpp
+#include "google/cloud/bigtable/table.h"
+
+// ...
+
+namespace cbt = google::cloud::bigtable;
+cbt::Table table(cbt::MakeDataConnection(),
+                 cbt::TableResource("my-project", "my-instance", "my-table-id"));
+
+for (auto& row : table.ReadRows(
+         cbt::RowSet("r1", "r2"),
+         cbt::Filter::PassAllFilter())) {
+  if (!row) throw std::move(row).status();
+  // ...
+}
+```
+
+</details>
+
+
+<details>
+  <summary>Removed <code>bigtable::ClientOptions</code>
+</summary>
 #### `bigtable::ClientOptions`
 
 The deprecated `bigtable::ClientOptions` has been removed. Please use
@@ -147,6 +209,7 @@ auto client = bigtable::MakeInstanceAdminClient(
     "my-project",
     google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
 ```
+</details>
 ### Pubsub
 
 ### Spanner
