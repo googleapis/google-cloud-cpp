@@ -314,6 +314,8 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithFullChecksumValidation) {
 /// @test Verify that the upload fails when the provided CRC32C checksum does
 /// not match the data.
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithIncorrectChecksumValue) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto content = LoremIpsum();
