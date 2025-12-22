@@ -56,7 +56,7 @@ void ObjectDescriptorImpl::Start(
   OnRead(it, std::move(first_response));
   // Acquire lock and queue the background stream.
   lk.lock();
-  AssurePendingStreamQueued();
+  AssurePendingStreamQueued(lk);
 }
 
 void ObjectDescriptorImpl::Cancel() {
@@ -72,7 +72,8 @@ absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
   return metadata_;
 }
 
-void ObjectDescriptorImpl::AssurePendingStreamQueued() {
+void ObjectDescriptorImpl::AssurePendingStreamQueued(
+    std::unique_lock<std::mutex> const&) {
   if (pending_stream_.valid()) return;
   auto request = google::storage::v2::BidiReadObjectRequest{};
 
@@ -92,7 +93,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     return;
   }
   // Proactively create a new stream if needed.
-  AssurePendingStreamQueued();
+  AssurePendingStreamQueued(lk);
   if (!pending_stream_.valid()) return;
   auto stream_future = std::move(pending_stream_);
   lk.unlock();
@@ -119,7 +120,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
     auto new_it = self->stream_manager_->AddStream(std::move(read_stream));
 
     // Now that we consumed pending_stream_, queue the next one immediately.
-    self->AssurePendingStreamQueued();
+    self->AssurePendingStreamQueued(lk);
 
     lk.unlock();
     self->OnRead(new_it, std::move(stream_result->first_response));
@@ -263,7 +264,7 @@ void ObjectDescriptorImpl::OnFinish(StreamIterator it, Status const& status) {
   std::unique_lock<std::mutex> lk(mu_);
   stream_manager_->RemoveStreamAndNotifyRanges(it, status);
   // Since a stream died, we might want to ensure a replacement is queued.
-  AssurePendingStreamQueued();
+  AssurePendingStreamQueued(lk);
 }
 
 void ObjectDescriptorImpl::Resume(StreamIterator it,
