@@ -90,8 +90,9 @@ class ObjectDescriptorImpl
     return shared_from_this();
   }
 
-  // Logic to ensure a background stream is always connecting.
-  void AssurePendingStreamQueued();
+  // Logic to ensure a background stream is always connecting which must be
+  // invoked while holding `mu_`.
+  void AssurePendingStreamQueued(std::unique_lock<std::mutex> const&);
 
   void Flush(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnWrite(StreamIterator it, bool ok);
