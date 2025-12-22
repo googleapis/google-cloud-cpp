@@ -131,6 +131,15 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectDefault) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
+  auto create = client.CreateBucket(
+        bucket_name_, storage::BucketMetadata{}.set_location("us-west4")
+                                              .set_storage_class("STANDARD"));
+    if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+      GTEST_FAIL() << "cannot create bucket: " << create.status();
+    } else {
+      std::cout << "Bucket successfully created." << std::endl;
+    }
+
   auto os = client.WriteObject(bucket_name_, object_name, DisableMD5Hash(true),
                                IfGenerationMatch(0));
   os << LoremIpsum();
@@ -322,8 +331,10 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithIncorrectChecksumValue) {
   auto meta = os.metadata();
   EXPECT_THAT(meta, Not(IsOk()));
 
-  // The server returns FAILED_PRECONDITION (412) for checksum mismatches during
-  // finalization
+  if(UsingGrpc()) {
+    EXPECT_THAT(meta, StatusIs(StatusCode::kInvalidArgument));
+    return;
+  }
   EXPECT_THAT(meta, StatusIs(StatusCode::kFailedPrecondition));
 }
 

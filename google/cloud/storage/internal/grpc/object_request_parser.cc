@@ -851,6 +851,15 @@ Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
                            Merge(std::move(hashes), hash_function.Finish()));
 }
 
+Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
+                grpc::WriteOptions& options,
+                storage::internal::HashValues hashes) {
+  write_request.set_finish_write(true);
+  options.set_last_message();
+  return FinalizeChecksums(*write_request.mutable_object_checksums(),
+                           std::move(hashes));
+}
+
 Status Finalize(google::storage::v2::BidiWriteObjectRequest& write_request,
                 grpc::WriteOptions& options,
                 storage::internal::HashFunction& hash_function,
@@ -879,8 +888,11 @@ Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
                      bool chunk_has_more) {
   if (!chunk_has_more) options.set_last_message();
   if (!request.last_chunk() || chunk_has_more) return {};
-  return Finalize(write_request, options, request.hash_function(),
-                  request.known_object_hashes());
+  if (request.hash_function_ptr()) {
+    return Finalize(write_request, options, request.hash_function(),
+                    request.known_object_hashes());
+  }
+  return Finalize(write_request, options, request.known_object_hashes());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

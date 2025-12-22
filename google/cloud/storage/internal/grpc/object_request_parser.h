@@ -87,6 +87,10 @@ Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
                 storage::internal::HashFunction& hash_function,
                 storage::internal::HashValues = {});
 
+Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
+                grpc::WriteOptions& options,
+                storage::internal::HashValues hashes);
+
 Status Finalize(google::storage::v2::BidiWriteObjectRequest& write_request,
                 grpc::WriteOptions& options,
                 storage::internal::HashFunction& hash_function,
