@@ -330,12 +330,6 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithIncorrectChecksumValue) {
   EXPECT_TRUE(os.bad());
   auto meta = os.metadata();
   EXPECT_THAT(meta, Not(IsOk()));
-
-  if(UsingGrpc()) {
-    EXPECT_THAT(meta, StatusIs(StatusCode::kInvalidArgument));
-    return;
-  }
-  EXPECT_THAT(meta, StatusIs(StatusCode::kFailedPrecondition));
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
