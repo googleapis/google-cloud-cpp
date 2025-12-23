@@ -191,8 +191,8 @@ Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
         mutable_config->set_restriction_mode(c.value("restrictionMode", ""));
       }
       if (c.contains("effectiveTime")) {
-        auto ts = google::cloud::internal::ParseRfc3339(
-            c.value("effectiveTime", ""));
+        auto ts =
+            google::cloud::internal::ParseRfc3339(c.value("effectiveTime", ""));
         if (ts) {
           *mutable_config->mutable_effective_time() = ToProtoTimestamp(*ts);
         }
@@ -333,30 +333,21 @@ void UpdateEncryption(Bucket& bucket, storage::BucketMetadata const& metadata) {
   auto& encryption = *bucket.mutable_encryption();
   encryption.set_default_kms_key(metadata.encryption().default_kms_key_name);
 
-  auto const& gmek =
-      metadata.encryption().google_managed_encryption_enforcement_config;
-  if (!gmek.restriction_mode.empty()) {
-    auto& config =
-        *encryption.mutable_google_managed_encryption_enforcement_config();
-    config.set_restriction_mode(gmek.restriction_mode);
-    *config.mutable_effective_time() = ToProtoTimestamp(gmek.effective_time);
-  }
-  auto const& cmek =
-      metadata.encryption().customer_managed_encryption_enforcement_config;
-  if (!cmek.restriction_mode.empty()) {
-    auto& config =
-        *encryption.mutable_customer_managed_encryption_enforcement_config();
-    config.set_restriction_mode(cmek.restriction_mode);
-    *config.mutable_effective_time() = ToProtoTimestamp(cmek.effective_time);
-  }
-  auto const& csek =
-      metadata.encryption().customer_supplied_encryption_enforcement_config;
-  if (!csek.restriction_mode.empty()) {
-    auto& config =
-        *encryption.mutable_customer_supplied_encryption_enforcement_config();
-    config.set_restriction_mode(csek.restriction_mode);
-    *config.mutable_effective_time() = ToProtoTimestamp(csek.effective_time);
-  }
+  auto update_config = [&](auto const& source, auto* dest) {
+    if (source.restriction_mode.empty()) return;
+    dest->set_restriction_mode(source.restriction_mode);
+    *dest->mutable_effective_time() = ToProtoTimestamp(source.effective_time);
+  };
+
+  update_config(
+      metadata.encryption().google_managed_encryption_enforcement_config,
+      encryption.mutable_google_managed_encryption_enforcement_config());
+  update_config(
+      metadata.encryption().customer_managed_encryption_enforcement_config,
+      encryption.mutable_customer_managed_encryption_enforcement_config());
+  update_config(
+      metadata.encryption().customer_supplied_encryption_enforcement_config,
+      encryption.mutable_customer_supplied_encryption_enforcement_config());
 }
 
 void UpdateBilling(Bucket& bucket, storage::BucketMetadata const& metadata) {

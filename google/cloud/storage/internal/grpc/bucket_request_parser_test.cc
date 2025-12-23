@@ -549,24 +549,21 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
               storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
           .SetEncryption(storage::BucketEncryption{
               /*.default_kms_key=*/"test-only-kms-key",
-              /*.google_managed_encryption_enforcement_config=*/storage::
-                  GoogleManagedEncryptionEnforcementConfig{
-                      "FULLY_RESTRICTED",
-                      google::cloud::internal::ParseRfc3339(
-                          "2025-12-19T20:19:32Z")
-                          .value()},
-              /*.customer_managed_encryption_enforcement_config=*/storage::
-                  CustomerManagedEncryptionEnforcementConfig{
-                      "NOT_RESTRICTED",
-                      google::cloud::internal::ParseRfc3339(
-                          "2025-12-19T20:21:35Z")
-                          .value()},
-              /*.customer_supplied_encryption_enforcement_config=*/storage::
-                  CustomerSuppliedEncryptionEnforcementConfig{
-                      "FULLY_RESTRICTED",
-                      google::cloud::internal::ParseRfc3339(
-                          "2025-12-19T20:22:19Z")
-                          .value()}})
+              /*.google_managed_encryption_enforcement_config=*/
+              storage::GoogleManagedEncryptionEnforcementConfig{
+                  "FULLY_RESTRICTED",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:19:32Z")
+                      .value()},
+              /*.customer_managed_encryption_enforcement_config=*/
+              storage::CustomerManagedEncryptionEnforcementConfig{
+                  "NOT_RESTRICTED",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:21:35Z")
+                      .value()},
+              /*.customer_supplied_encryption_enforcement_config=*/
+              storage::CustomerSuppliedEncryptionEnforcementConfig{
+                  "FULLY_RESTRICTED",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:22:19Z")
+                      .value()}})
           .SetAutoclass(storage::BucketAutoclass{true})
           .SetBilling(storage::BucketBilling{/*.requester_pays=*/true})
           .SetRetentionPolicy(std::chrono::seconds(123000))
@@ -834,24 +831,21 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
               storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
           .set_encryption(storage::BucketEncryption{
               /*.default_kms_key=*/"test-only-kms-key",
-              /*.google_managed_encryption_enforcement_config=*/storage::
-                  GoogleManagedEncryptionEnforcementConfig{
-                      "FULLY_RESTRICTED",
-                      google::cloud::internal::ParseRfc3339(
-                          "2025-12-19T20:27:45Z")
-                          .value()},
-              /*.customer_managed_encryption_enforcement_config=*/storage::
-                  CustomerManagedEncryptionEnforcementConfig{
-                      "NOT_RESTRICTED",
-                      google::cloud::internal::ParseRfc3339(
-                          "2025-12-19T20:28:25Z")
-                          .value()},
-              /*.customer_supplied_encryption_enforcement_config=*/storage::
-                  CustomerSuppliedEncryptionEnforcementConfig{
-                      "FULLY_RESTRICTED",
-                      google::cloud::internal::ParseRfc3339(
-                          "2025-12-19T20:29:11Z")
-                          .value()}})
+              /*.google_managed_encryption_enforcement_config=*/
+              storage::GoogleManagedEncryptionEnforcementConfig{
+                  "FULLY_RESTRICTED",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:27:45Z")
+                      .value()},
+              /*.customer_managed_encryption_enforcement_config=*/
+              storage::CustomerManagedEncryptionEnforcementConfig{
+                  "NOT_RESTRICTED",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:28:25Z")
+                      .value()},
+              /*.customer_supplied_encryption_enforcement_config=*/
+              storage::CustomerSuppliedEncryptionEnforcementConfig{
+                  "FULLY_RESTRICTED",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:29:11Z")
+                      .value()}})
           .set_autoclass(storage::BucketAutoclass{true})
           .set_billing(storage::BucketBilling{/*.requester_pays=*/true})
           .set_retention_policy(std::chrono::seconds(123000))

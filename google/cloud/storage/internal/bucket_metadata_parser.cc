@@ -157,31 +157,13 @@ Status ParseDefaultObjectAcl(BucketMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
-StatusOr<GoogleManagedEncryptionEnforcementConfig>
-ParseGoogleManagedEncryptionEnforcementConfig(nlohmann::json const& json) {
+template <typename ConfigType>
+StatusOr<ConfigType> ParseEncryptionEnforcementConfig(
+    nlohmann::json const& json) {
   auto restriction_mode = json.value("restrictionMode", "");
   auto effective_time = internal::ParseTimestampField(json, "effectiveTime");
   if (!effective_time) return std::move(effective_time).status();
-  return GoogleManagedEncryptionEnforcementConfig{std::move(restriction_mode),
-                                                  *effective_time};
-}
-
-StatusOr<CustomerManagedEncryptionEnforcementConfig>
-ParseCustomerManagedEncryptionEnforcementConfig(nlohmann::json const& json) {
-  auto restriction_mode = json.value("restrictionMode", "");
-  auto effective_time = internal::ParseTimestampField(json, "effectiveTime");
-  if (!effective_time) return std::move(effective_time).status();
-  return CustomerManagedEncryptionEnforcementConfig{std::move(restriction_mode),
-                                                    *effective_time};
-}
-
-StatusOr<CustomerSuppliedEncryptionEnforcementConfig>
-ParseCustomerSuppliedEncryptionEnforcementConfig(nlohmann::json const& json) {
-  auto restriction_mode = json.value("restrictionMode", "");
-  auto effective_time = internal::ParseTimestampField(json, "effectiveTime");
-  if (!effective_time) return std::move(effective_time).status();
-  return CustomerSuppliedEncryptionEnforcementConfig{
-      std::move(restriction_mode), *effective_time};
+  return ConfigType{std::move(restriction_mode), *effective_time};
 }
 
 Status ParseEncryption(BucketMetadata& meta, nlohmann::json const& json) {
@@ -190,19 +172,22 @@ Status ParseEncryption(BucketMetadata& meta, nlohmann::json const& json) {
     auto const& encryption = json["encryption"];
     e.default_kms_key_name = encryption.value("defaultKmsKeyName", "");
     if (encryption.contains("googleManagedEncryptionEnforcementConfig")) {
-      auto config = ParseGoogleManagedEncryptionEnforcementConfig(
+      auto config = ParseEncryptionEnforcementConfig<
+          GoogleManagedEncryptionEnforcementConfig>(
           encryption["googleManagedEncryptionEnforcementConfig"]);
       if (!config) return std::move(config).status();
       e.google_managed_encryption_enforcement_config = *std::move(config);
     }
     if (encryption.contains("customerManagedEncryptionEnforcementConfig")) {
-      auto config = ParseCustomerManagedEncryptionEnforcementConfig(
+      auto config = ParseEncryptionEnforcementConfig<
+          CustomerManagedEncryptionEnforcementConfig>(
           encryption["customerManagedEncryptionEnforcementConfig"]);
       if (!config) return std::move(config).status();
       e.customer_managed_encryption_enforcement_config = *std::move(config);
     }
     if (encryption.contains("customerSuppliedEncryptionEnforcementConfig")) {
-      auto config = ParseCustomerSuppliedEncryptionEnforcementConfig(
+      auto config = ParseEncryptionEnforcementConfig<
+          CustomerSuppliedEncryptionEnforcementConfig>(
           encryption["customerSuppliedEncryptionEnforcementConfig"]);
       if (!config) return std::move(config).status();
       e.customer_supplied_encryption_enforcement_config = *std::move(config);
@@ -422,33 +407,25 @@ void ToJsonEncryption(nlohmann::json& json, BucketMetadata const& meta) {
   if (!meta.has_encryption()) return;
   nlohmann::json e;
   SetIfNotEmpty(e, "defaultKmsKeyName", meta.encryption().default_kms_key_name);
-  auto const& gmek =
-      meta.encryption().google_managed_encryption_enforcement_config;
-  if (!gmek.restriction_mode.empty()) {
+
+  auto to_json_config = [&](char const* name, auto const& config_source) {
+    if (config_source.restriction_mode.empty()) return;
     nlohmann::json config;
-    config["restrictionMode"] = gmek.restriction_mode;
+    config["restrictionMode"] = config_source.restriction_mode;
     config["effectiveTime"] =
-        google::cloud::internal::FormatRfc3339(gmek.effective_time);
-    e["googleManagedEncryptionEnforcementConfig"] = std::move(config);
-  }
-  auto const& cmek =
-      meta.encryption().customer_managed_encryption_enforcement_config;
-  if (!cmek.restriction_mode.empty()) {
-    nlohmann::json config;
-    config["restrictionMode"] = cmek.restriction_mode;
-    config["effectiveTime"] =
-        google::cloud::internal::FormatRfc3339(cmek.effective_time);
-    e["customerManagedEncryptionEnforcementConfig"] = std::move(config);
-  }
-  auto const& csek =
-      meta.encryption().customer_supplied_encryption_enforcement_config;
-  if (!csek.restriction_mode.empty()) {
-    nlohmann::json config;
-    config["restrictionMode"] = csek.restriction_mode;
-    config["effectiveTime"] =
-        google::cloud::internal::FormatRfc3339(csek.effective_time);
-    e["customerSuppliedEncryptionEnforcementConfig"] = std::move(config);
-  }
+        google::cloud::internal::FormatRfc3339(config_source.effective_time);
+    e[name] = std::move(config);
+  };
+  to_json_config(
+      "googleManagedEncryptionEnforcementConfig",
+      meta.encryption().google_managed_encryption_enforcement_config);
+  to_json_config(
+      "customerManagedEncryptionEnforcementConfig",
+      meta.encryption().customer_managed_encryption_enforcement_config);
+  to_json_config(
+      "customerSuppliedEncryptionEnforcementConfig",
+      meta.encryption().customer_supplied_encryption_enforcement_config);
+
   json["encryption"] = std::move(e);
 }
 

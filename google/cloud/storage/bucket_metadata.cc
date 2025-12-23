@@ -150,8 +150,7 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   os << "]";
 
   if (rhs.has_encryption()) {
-    os << ", encryption="
-       << rhs.encryption();
+    os << ", encryption=" << rhs.encryption();
   }
 
   os << ", etag=" << rhs.etag();
@@ -364,45 +363,23 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     BucketEncryption const& v) {
   internal::PatchBuilder builder;
   builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
-  if (!v.google_managed_encryption_enforcement_config.restriction_mode
-           .empty()) {
+
+  auto add_config_patch = [&](char const* name, auto const& config) {
+    if (config.restriction_mode.empty()) return;
     builder.AddSubPatch(
-        "googleManagedEncryptionEnforcementConfig",
-        internal::PatchBuilder()
-            .SetStringField("restrictionMode",
-                            v.google_managed_encryption_enforcement_config
-                                .restriction_mode)
-            .SetStringField("effectiveTime",
-                            google::cloud::internal::FormatRfc3339(
-                                v.google_managed_encryption_enforcement_config
-                                    .effective_time)));
-  }
-  if (!v.customer_managed_encryption_enforcement_config.restriction_mode
-           .empty()) {
-    builder.AddSubPatch(
-        "customerManagedEncryptionEnforcementConfig",
-        internal::PatchBuilder()
-            .SetStringField("restrictionMode",
-                            v.customer_managed_encryption_enforcement_config
-                                .restriction_mode)
-            .SetStringField("effectiveTime",
-                            google::cloud::internal::FormatRfc3339(
-                                v.customer_managed_encryption_enforcement_config
-                                    .effective_time)));
-  }
-  if (!v.customer_supplied_encryption_enforcement_config.restriction_mode
-           .empty()) {
-    builder.AddSubPatch(
-        "customerSuppliedEncryptionEnforcementConfig",
-        internal::PatchBuilder()
-            .SetStringField("restrictionMode",
-                            v.customer_supplied_encryption_enforcement_config
-                                .restriction_mode)
-            .SetStringField("effectiveTime",
-                            google::cloud::internal::FormatRfc3339(
-                                v.customer_supplied_encryption_enforcement_config
-                                    .effective_time)));
-  }
+        name, internal::PatchBuilder()
+                  .SetStringField("restrictionMode", config.restriction_mode)
+                  .SetStringField("effectiveTime",
+                                  google::cloud::internal::FormatRfc3339(
+                                      config.effective_time)));
+  };
+  add_config_patch("googleManagedEncryptionEnforcementConfig",
+                   v.google_managed_encryption_enforcement_config);
+  add_config_patch("customerManagedEncryptionEnforcementConfig",
+                   v.customer_managed_encryption_enforcement_config);
+  add_config_patch("customerSuppliedEncryptionEnforcementConfig",
+                   v.customer_supplied_encryption_enforcement_config);
+
   impl_.AddSubPatch("encryption", std::move(builder));
   return *this;
 }

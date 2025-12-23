@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -62,15 +62,17 @@ TEST(BucketEncryptionTest, Parse) {
                 encryption.google_managed_encryption_enforcement_config
                     .effective_time));
 
-  EXPECT_EQ("NOT_RESTRICTED", encryption.customer_managed_encryption_enforcement_config
-                                  .restriction_mode);
+  EXPECT_EQ("NOT_RESTRICTED",
+            encryption.customer_managed_encryption_enforcement_config
+                .restriction_mode);
   EXPECT_EQ("2025-12-18T18:13:15Z",
             google::cloud::internal::FormatRfc3339(
                 encryption.customer_managed_encryption_enforcement_config
                     .effective_time));
 
-  EXPECT_EQ("NOT_RESTRICTED", encryption.customer_supplied_encryption_enforcement_config
-                                  .restriction_mode);
+  EXPECT_EQ("NOT_RESTRICTED",
+            encryption.customer_supplied_encryption_enforcement_config
+                .restriction_mode);
   EXPECT_EQ("2025-12-18T18:13:15Z",
             google::cloud::internal::FormatRfc3339(
                 encryption.customer_supplied_encryption_enforcement_config
@@ -98,18 +100,14 @@ TEST(BucketEncryptionTest, ToJson) {
   ASSERT_TRUE(json.contains("encryption"));
   auto e = json["encryption"];
   EXPECT_EQ("test-key", e["defaultKmsKeyName"]);
-  EXPECT_EQ(
-      "FULLY_RESTRICTED",
-      e["googleManagedEncryptionEnforcementConfig"]["restrictionMode"]);
-  EXPECT_EQ(
-      "2025-12-18T18:13:15Z",
-      e["googleManagedEncryptionEnforcementConfig"]["effectiveTime"]);
-  EXPECT_EQ(
-      "NOT_RESTRICTED",
-      e["customerManagedEncryptionEnforcementConfig"]["restrictionMode"]);
-  EXPECT_EQ(
-      "2025-12-18T18:13:15Z",
-      e["customerManagedEncryptionEnforcementConfig"]["effectiveTime"]);
+  EXPECT_EQ("FULLY_RESTRICTED",
+            e["googleManagedEncryptionEnforcementConfig"]["restrictionMode"]);
+  EXPECT_EQ("2025-12-18T18:13:15Z",
+            e["googleManagedEncryptionEnforcementConfig"]["effectiveTime"]);
+  EXPECT_EQ("NOT_RESTRICTED",
+            e["customerManagedEncryptionEnforcementConfig"]["restrictionMode"]);
+  EXPECT_EQ("2025-12-18T18:13:15Z",
+            e["customerManagedEncryptionEnforcementConfig"]["effectiveTime"]);
   EXPECT_FALSE(e.contains("customerSuppliedEncryptionEnforcementConfig"));
 }
 
@@ -130,12 +128,10 @@ TEST(BucketEncryptionTest, Patch) {
   ASSERT_TRUE(patch.contains("encryption"));
   auto e = patch["encryption"];
   EXPECT_EQ("test-key", e["defaultKmsKeyName"]);
-  EXPECT_EQ(
-      "FULLY_RESTRICTED",
-      e["googleManagedEncryptionEnforcementConfig"]["restrictionMode"]);
-  EXPECT_EQ(
-      "2025-12-18T18:13:15Z",
-      e["googleManagedEncryptionEnforcementConfig"]["effectiveTime"]);
+  EXPECT_EQ("FULLY_RESTRICTED",
+            e["googleManagedEncryptionEnforcementConfig"]["restrictionMode"]);
+  EXPECT_EQ("2025-12-18T18:13:15Z",
+            e["googleManagedEncryptionEnforcementConfig"]["effectiveTime"]);
 }
 
 }  // namespace
