@@ -236,10 +236,14 @@ TEST(BucketMetadataTest, Parse) {
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual.encryption().default_kms_key_name);
-  EXPECT_EQ("FULLY_RESTRICTED", actual.encryption().googleManagedEncryptionEnforcementConfig.restriction_mode);
-  EXPECT_EQ("NOT_RESTRICTED", actual.encryption().customerManagedEncryptionEnforcementConfig.restriction_mode);
-  EXPECT_EQ("NOT_RESTRICTED", actual.encryption().customerSuppliedEncryptionEnforcementConfig.restriction_mode);
-  EXPECT_EQ("2025-12-18T18:13:15Z", actual.encryption().customerSuppliedEncryptionEnforcementConfig.effective_time);
+  EXPECT_EQ("FULLY_RESTRICTED", actual.encryption().google_managed_encryption_enforcement_config.restriction_mode);
+  EXPECT_EQ("NOT_RESTRICTED", actual.encryption().customer_managed_encryption_enforcement_config.restriction_mode);
+  EXPECT_EQ("NOT_RESTRICTED", actual.encryption().customer_supplied_encryption_enforcement_config.restriction_mode);
+  EXPECT_EQ("2025-12-18T18:13:15Z",
+            google::cloud::internal::FormatRfc3339(
+                actual.encryption()
+                    .customer_supplied_encryption_enforcement_config
+                    .effective_time));
   EXPECT_EQ("XYZ=", actual.etag());
   // hierarchicalNamespace
   ASSERT_TRUE(actual.has_hierarchical_namespace());
@@ -872,11 +876,11 @@ TEST(BucketMetadataTest, SetEncryption) {
       "test-keyring-name/cryptoKeys/another-test-key-name";
   std::string fake_restriction_mode = "FULLY_RESTRICTED";
 
-  copy.set_encryption(BucketEncryption{fake_key_name, fake_restriction_mode});
+  copy.set_encryption(BucketEncryption{fake_key_name, {fake_restriction_mode}, {fake_restriction_mode}, {fake_restriction_mode}});
   EXPECT_EQ(fake_key_name, copy.encryption().default_kms_key_name);
-  EXPECT_EQ(fake_restriction_mode, copy.encryption().googleManagedEncryptionEnforcementConfig.restriction_mode);
-  EXPECT_EQ(fake_restriction_mode, copy.encryption().customerManagedEncryptionEnforcementConfig.restriction_mode);
-  EXPECT_EQ(fake_restriction_mode, copy.encryption().customerSuppliedEncryptionEnforcementConfig.restriction_mode);
+  EXPECT_EQ(fake_restriction_mode, copy.encryption().google_managed_encryption_enforcement_config.restriction_mode);
+  EXPECT_EQ(fake_restriction_mode, copy.encryption().customer_managed_encryption_enforcement_config.restriction_mode);
+  EXPECT_EQ(fake_restriction_mode, copy.encryption().customer_supplied_encryption_enforcement_config.restriction_mode);
   EXPECT_NE(expected, copy);
 }
 

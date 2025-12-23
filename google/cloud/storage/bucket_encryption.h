@@ -16,6 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ENCRYPTION_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/format_time_point.h"
+#include <chrono>
+#include <iosfwd>
+#include <iostream>
+#include <string>
+#include <tuple>
 #include <utility>
 
 namespace google {
@@ -31,22 +37,144 @@ struct GoogleManagedEncryptionEnforcementConfig {
   std::chrono::system_clock::time_point effective_time;
 };
 
+///@{
+/// @name Comparison operators For GoogleManagedEncryptionEnforcementConfig
 inline bool operator==(GoogleManagedEncryptionEnforcementConfig const& lhs,
                        GoogleManagedEncryptionEnforcementConfig const& rhs) {
-                        return std::tie(lhs.restriction_mode, lhs.effective_time) == 
-                        std::tie(rhs.restriction_mode, rhs.effective_time);
-                       }
+  return std::tie(lhs.restriction_mode, lhs.effective_time) ==
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
 
 inline bool operator<(GoogleManagedEncryptionEnforcementConfig const& lhs,
                       GoogleManagedEncryptionEnforcementConfig const& rhs) {
-                        return std::tie(lhs.restriction_mode, lhs.effective_time) <
-                        std::tie(rhs.restriction_mode, rhs.effective_time);
-                      }
+  return std::tie(lhs.restriction_mode, lhs.effective_time) <
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
 
 inline bool operator!=(GoogleManagedEncryptionEnforcementConfig const& lhs,
                        GoogleManagedEncryptionEnforcementConfig const& rhs) {
-                        
-                       }
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(GoogleManagedEncryptionEnforcementConfig const& lhs,
+                      GoogleManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(GoogleManagedEncryptionEnforcementConfig const& lhs,
+                       GoogleManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(GoogleManagedEncryptionEnforcementConfig const& lhs,
+                       GoogleManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+///@}
+
+inline std::ostream& operator<<(
+    std::ostream& os, GoogleManagedEncryptionEnforcementConfig const& rhs) {
+  return os << "GoogleManagedEncryptionEnforcementConfig={restriction_mode="
+            << rhs.restriction_mode << ", effective_time="
+            << google::cloud::internal::FormatRfc3339(rhs.effective_time)
+            << "}";
+}
+
+struct CustomerManagedEncryptionEnforcementConfig {
+  std::string restriction_mode;
+  std::chrono::system_clock::time_point effective_time;
+};
+
+///@{
+/// @name Comparison operators For CustomerManagedEncryptionEnforcementConfig
+inline bool operator==(CustomerManagedEncryptionEnforcementConfig const& lhs,
+                       CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return std::tie(lhs.restriction_mode, lhs.effective_time) ==
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
+
+inline bool operator<(CustomerManagedEncryptionEnforcementConfig const& lhs,
+                      CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return std::tie(lhs.restriction_mode, lhs.effective_time) <
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
+
+inline bool operator!=(CustomerManagedEncryptionEnforcementConfig const& lhs,
+                       CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(CustomerManagedEncryptionEnforcementConfig const& lhs,
+                      CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(CustomerManagedEncryptionEnforcementConfig const& lhs,
+                       CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(CustomerManagedEncryptionEnforcementConfig const& lhs,
+                       CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+///@}
+
+inline std::ostream& operator<<(
+    std::ostream& os, CustomerManagedEncryptionEnforcementConfig const& rhs) {
+  return os << "CustomerManagedEncryptionEnforcementConfig={restriction_mode="
+            << rhs.restriction_mode << ", effective_time="
+            << google::cloud::internal::FormatRfc3339(rhs.effective_time)
+            << "}";
+}
+
+struct CustomerSuppliedEncryptionEnforcementConfig {
+  std::string restriction_mode;
+  std::chrono::system_clock::time_point effective_time;
+};
+
+///@{
+/// @name Comparison operators For CustomerSuppliedEncryptionEnforcementConfig
+inline bool operator==(CustomerSuppliedEncryptionEnforcementConfig const& lhs,
+                       CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return std::tie(lhs.restriction_mode, lhs.effective_time) ==
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
+
+inline bool operator<(CustomerSuppliedEncryptionEnforcementConfig const& lhs,
+                      CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return std::tie(lhs.restriction_mode, lhs.effective_time) <
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
+
+inline bool operator!=(CustomerSuppliedEncryptionEnforcementConfig const& lhs,
+                       CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(CustomerSuppliedEncryptionEnforcementConfig const& lhs,
+                      CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(CustomerSuppliedEncryptionEnforcementConfig const& lhs,
+                       CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(CustomerSuppliedEncryptionEnforcementConfig const& lhs,
+                       CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+///@}
+
+inline std::ostream& operator<<(
+    std::ostream& os, CustomerSuppliedEncryptionEnforcementConfig const& rhs) {
+  return os << "CustomerSuppliedEncryptionEnforcementConfig={restriction_mode="
+            << rhs.restriction_mode << ", effective_time="
+            << google::cloud::internal::FormatRfc3339(rhs.effective_time)
+            << "}";
+}
 
 /**
  * Describes the default customer managed encryption key for a bucket.
@@ -62,19 +190,36 @@ inline bool operator!=(GoogleManagedEncryptionEnforcementConfig const& lhs,
  */
 struct BucketEncryption {
   std::string default_kms_key_name;
-  GoogleManagedEncryptionEnforcementConfig google_managed_encryption_enforcement_config;
-  CustomerManagedEncryptionEnforcementConfig customer_managed_encryption_enforcement_config;
-  CustomerSuppliedEncryptionEnforcementConfig customer_supplied_encryption_enforcement_config;
+  GoogleManagedEncryptionEnforcementConfig
+      google_managed_encryption_enforcement_config;
+  CustomerManagedEncryptionEnforcementConfig
+      customer_managed_encryption_enforcement_config;
+  CustomerSuppliedEncryptionEnforcementConfig
+      customer_supplied_encryption_enforcement_config;
 };
 
 inline bool operator==(BucketEncryption const& lhs,
                        BucketEncryption const& rhs) {
-  return lhs.default_kms_key_name == rhs.default_kms_key_name;
+  return std::tie(lhs.default_kms_key_name,
+                  lhs.google_managed_encryption_enforcement_config,
+                  lhs.customer_managed_encryption_enforcement_config,
+                  lhs.customer_supplied_encryption_enforcement_config) ==
+         std::tie(rhs.default_kms_key_name,
+                  rhs.google_managed_encryption_enforcement_config,
+                  rhs.customer_managed_encryption_enforcement_config,
+                  rhs.customer_supplied_encryption_enforcement_config);
 }
 
 inline bool operator<(BucketEncryption const& lhs,
                       BucketEncryption const& rhs) {
-  return lhs.default_kms_key_name < rhs.default_kms_key_name;
+  return std::tie(lhs.default_kms_key_name,
+                  lhs.google_managed_encryption_enforcement_config,
+                  lhs.customer_managed_encryption_enforcement_config,
+                  lhs.customer_supplied_encryption_enforcement_config) <
+         std::tie(rhs.default_kms_key_name,
+                  rhs.google_managed_encryption_enforcement_config,
+                  rhs.customer_managed_encryption_enforcement_config,
+                  rhs.customer_supplied_encryption_enforcement_config);
 }
 
 inline bool operator!=(BucketEncryption const& lhs,
@@ -95,6 +240,17 @@ inline bool operator<=(BucketEncryption const& lhs,
 inline bool operator>=(BucketEncryption const& lhs,
                        BucketEncryption const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
+}
+
+inline std::ostream& operator<<(std::ostream& os, BucketEncryption const& rhs) {
+  os << "BucketEncryption={default_kms_key_name=" << rhs.default_kms_key_name;
+  os << ", google_managed_encryption_enforcement_config="
+     << rhs.google_managed_encryption_enforcement_config;
+  os << ", customer_managed_encryption_enforcement_config="
+     << rhs.customer_managed_encryption_enforcement_config;
+  os << ", customer_supplied_encryption_enforcement_config="
+     << rhs.customer_supplied_encryption_enforcement_config;
+  return os << "}";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
