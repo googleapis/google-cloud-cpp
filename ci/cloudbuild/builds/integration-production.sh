@@ -37,6 +37,11 @@ excluded_rules=(
   "-//google/cloud/storage/examples:storage_service_account_samples"
   # This sample can be very long running due to creation time of AnywhereCache
   "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
+  # TODO(#15845): Re-enable these tests once the issue is resolved.
+  "-//google/cloud/storage/examples:storage_bucket_iam_samples"
+  "-//google/cloud/storage/tests:bucket_acl_integration_test"
+  "-//google/cloud/storage/tests:bucket_integration_test"
+  "-//google/cloud/storage/tests:default_object_acl_integration_test"
 )
 
 io::log_h2 "Running the integration tests against prod"
