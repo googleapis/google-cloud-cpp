@@ -79,7 +79,7 @@ inline bool operator>=(EncryptionEnforcementConfig<Tag> const& lhs,
 template <typename Tag>
 inline std::ostream& operator<<(std::ostream& os,
                                 EncryptionEnforcementConfig<Tag> const& rhs) {
-  return os << EncryptionEnforcementConfigName<Tag>::value
+  return os << EncryptionEnforcementConfigName<Tag>::kValue
             << "={restriction_mode=" << rhs.restriction_mode
             << ", effective_time="
             << google::cloud::internal::FormatRfc3339(rhs.effective_time)
@@ -93,7 +93,7 @@ using GoogleManagedEncryptionEnforcementConfig =
 template <>
 struct EncryptionEnforcementConfigName<
     GoogleManagedEncryptionEnforcementConfigTag> {
-  static constexpr char const* value =
+  static constexpr char const* kValue =
       "GoogleManagedEncryptionEnforcementConfig";
 };
 
@@ -104,7 +104,7 @@ using CustomerManagedEncryptionEnforcementConfig =
 template <>
 struct EncryptionEnforcementConfigName<
     CustomerManagedEncryptionEnforcementConfigTag> {
-  static constexpr char const* value =
+  static constexpr char const* kValue =
       "CustomerManagedEncryptionEnforcementConfig";
 };
 
@@ -115,7 +115,7 @@ using CustomerSuppliedEncryptionEnforcementConfig =
 template <>
 struct EncryptionEnforcementConfigName<
     CustomerSuppliedEncryptionEnforcementConfigTag> {
-  static constexpr char const* value =
+  static constexpr char const* kValue =
       "CustomerSuppliedEncryptionEnforcementConfig";
 };
 

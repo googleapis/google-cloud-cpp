@@ -406,7 +406,8 @@ TEST(PatchBucketRequestTest, DiffSetEncryption) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_encryption();
   BucketMetadata updated = original;
-  updated.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
+  updated.set_encryption(
+      BucketEncryption{"invalid-key-name-just-for-test", {}, {}, {}});
   PatchBucketRequest request("test-bucket", original, updated);
 
   auto patch = nlohmann::json::parse(request.payload());
@@ -418,7 +419,8 @@ TEST(PatchBucketRequestTest, DiffSetEncryption) {
 
 TEST(PatchBucketRequestTest, DiffResetEncryption) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
+  original.set_encryption(
+      BucketEncryption{"invalid-key-name-just-for-test", {}, {}, {}});
   BucketMetadata updated = original;
   updated.reset_encryption();
   PatchBucketRequest request("test-bucket", original, updated);

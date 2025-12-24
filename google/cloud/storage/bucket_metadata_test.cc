@@ -902,9 +902,9 @@ TEST(BucketMetadataTest, SetEncryption) {
   std::string fake_restriction_mode = "FULLY_RESTRICTED";
 
   copy.set_encryption(BucketEncryption{fake_key_name,
-                                       {fake_restriction_mode},
-                                       {fake_restriction_mode},
-                                       {fake_restriction_mode}});
+                                       {fake_restriction_mode, {}},
+                                       {fake_restriction_mode, {}},
+                                       {fake_restriction_mode, {}}});
   EXPECT_EQ(fake_key_name, copy.encryption().default_kms_key_name);
   EXPECT_EQ(fake_restriction_mode,
             copy.encryption()
@@ -1387,7 +1387,7 @@ TEST(BucketMetadataPatchBuilder, SetEncryption) {
   std::string expected =
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name";
-  builder.SetEncryption(BucketEncryption{expected});
+  builder.SetEncryption(BucketEncryption{expected, {}, {}, {}});
 
   auto actual = builder.BuildPatch();
   auto json = nlohmann::json::parse(actual);
