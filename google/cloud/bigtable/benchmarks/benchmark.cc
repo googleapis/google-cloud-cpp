@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include "google/cloud/bigtable/resource_names.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"

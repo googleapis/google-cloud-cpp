@@ -123,8 +123,6 @@ add_library(
     cluster_list_responses.h
     column_family.h
     completion_queue.h
-    data_client.cc
-    data_client.h
     data_connection.cc
     data_connection.h
     expr.cc
@@ -403,8 +401,6 @@ if (BUILD_TESTING)
         testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
         testing/embedded_server_test_fixture.h
-        testing/inprocess_data_client.cc
-        testing/inprocess_data_client.h
         testing/mock_async_failing_rpc_factory.h
         testing/mock_bigtable_stub.h
         testing/mock_data_client.h
@@ -456,7 +452,6 @@ if (BUILD_TESTING)
         client_test.cc
         cluster_config_test.cc
         column_family_test.cc
-        data_client_test.cc
         data_connection_test.cc
         expr_test.cc
         filters_test.cc
@@ -524,13 +519,10 @@ if (BUILD_TESTING)
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
-        table_check_and_mutate_row_test.cc
         table_config_test.cc
-        table_readmodifywriterow_test.cc
         table_readrow_test.cc
         table_readrows_test.cc
         table_resource_test.cc
-        table_sample_row_keys_test.cc
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
