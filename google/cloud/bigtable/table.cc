@@ -22,7 +22,6 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::Idempotency;
 using ::google::cloud::internal::MergeOptions;
 using ::google::cloud::internal::OptionsSpan;
 
