@@ -1113,9 +1113,6 @@ TEST_F(DataIntegrationTest, QueryWithNulls) {
           std::make_tuple(row_key3, absl::optional<std::string>(value3))));
 }
 
-// TODO(#8800) - remove after deprecation is complete
-#include "google/cloud/internal/diagnostics_pop.inc"
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
