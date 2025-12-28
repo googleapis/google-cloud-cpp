@@ -215,6 +215,18 @@ auto client = bigtable::CreateDefaultInstanceAdminClient(
 auto client = bigtable::MakeInstanceAdminClient(
     "my-project",
     google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+<summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
+</summary>
+
+AsyncRowReader::NO_ROWS_LIMIT has been removed. Please use
+`google::cloud::bigtable::RowReader::NO_ROWS_LIMIT` instead.
+
+```cpp
+// Before
+auto limit = google::cloud::bigtable::AsyncRowReader<>::NO_ROWS_LIMIT;
+
+// After
+auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 ```
 
 </details>

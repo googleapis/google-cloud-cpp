@@ -108,7 +108,6 @@ add_library(
     admin_client.h
     app_profile_config.cc
     app_profile_config.h
-    async_row_reader.h
     bound_query.cc
     bound_query.h
     bytes.cc
