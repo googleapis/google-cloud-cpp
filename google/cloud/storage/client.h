@@ -3603,20 +3603,8 @@ struct ClientImplDetails {
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   static Client CreateClient(std::shared_ptr<StorageConnection> c,
                              Policies&&... p) {
-    struct ApplyPoliciesHelper {
-      Options& opts;
-      void operator()(RetryPolicy const& p) {
-        opts.set<RetryPolicyOption>(p.clone());
-      }
-      void operator()(BackoffPolicy const& p) {
-        opts.set<BackoffPolicyOption>(p.clone());
-      }
-      void operator()(IdempotencyPolicy const& p) {
-        opts.set<IdempotencyPolicyOption>(p.clone());
-      }
-    };
-    auto opts = c->options();
-    (ApplyPoliciesHelper{opts}(std::forward<Policies>(p)), ...);
+    auto opts =
+        internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
     return CreateWithDecorations(opts, std::move(c));
   }
 };
