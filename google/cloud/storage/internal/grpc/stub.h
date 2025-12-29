@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H
 
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/generic_stub.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/minimal_iam_credentials_stub.h"

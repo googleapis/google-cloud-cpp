@@ -37,8 +37,6 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::google::cloud::testing_util::IsOkAndHolds;
-using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ElementsAre;
 using ::testing::NotNull;

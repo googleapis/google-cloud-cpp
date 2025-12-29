@@ -36,10 +36,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::testing::IsEmpty;
-using ::testing::Not;
 using ::testing::UnorderedElementsAre;
 
 namespace {

@@ -21,7 +21,6 @@ namespace storage {
 namespace testing {
 
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 ClientUnitTest::ClientUnitTest()
     : mock_(std::make_shared<testing::MockClient>()) {
