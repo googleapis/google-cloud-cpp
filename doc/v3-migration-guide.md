@@ -126,3 +126,149 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 ### Spanner
 
 ### Storage
+
+<details>
+<summary><code>ClientOptions</code> is removed</summary>
+
+The `ClientOptions` class is no longer available. You should now use
+`google::cloud::Options` to configure the `Client`.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+
+void CreateClient() {
+  auto credentials = google::cloud::storage::oauth2::GoogleDefaultCredentials().value();
+  auto options = google::cloud::storage::ClientOptions(credentials);
+  options.set_project_id("my-project");
+  options.set_upload_buffer_size(1024 * 1024);
+
+  google::cloud::storage::Client client(options);
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/options.h" // For option structs
+
+void CreateClient() {
+  auto credentials = google::cloud::MakeGoogleDefaultCredentials();
+  auto client = google::cloud::storage::Client(
+      google::cloud::Options{}
+          .set<google::cloud::Oauth2CredentialsOption>(credentials)
+          .set<google::cloud::storage::ProjectIdOption>("my-project")
+          .set<google::cloud::storage::UploadBufferSizeOption>(1024 * 1024));
+}
+```
+
+Use the following table to map `ClientOptions` setters to
+`google::cloud::Options`:
+
+| `ClientOptions` Method                | Replacement Option (`.set<T>(value)`)                   |
+| :------------------------------------ | :------------------------------------------------------ |
+| `set_credentials(c)`                  | `google::cloud::storage::Oauth2CredentialsOption`       |
+| `set_project_id(p)`                   | `google::cloud::storage::ProjectIdOption`               |
+| `set_endpoint(url)`                   | `google::cloud::storage::RestEndpointOption`            |
+| `set_iam_endpoint(url)`               | `google::cloud::storage::IamEndpointOption`             |
+| `SetDownloadBufferSize`               | `google::cloud::storage::DownloadBufferSizeOption`      |
+| `SetUploadBufferSizee`                | `google::cloud::storage::UploadBufferSizeOption`        |
+| `set_maximum_simple_upload_size(s)`   | `google::cloud::storage::MaximumSimpleUploadSizeOption` |
+| `set_enable_http_tracing(true)`       | `google::cloud::LoggingComponentsOption`                |
+| `set_enable_raw_client_tracing(true)` | `google::cloud::LoggingComponentsOption`                |
+
+**Example for Tracing:**
+
+```cpp
+// Before
+options.set_enable_http_tracing(true);
+
+// After
+auto opts = Options{}.lookup<LoggingComponentsOption>().insert("raw-client");
+```
+
+</details>
+
+<details>
+<summary><code>ChannelOptions</code> is removed</summary>
+
+The `ChannelOptions` class is no longer available. You should now use
+`google::cloud::Options` to configure the transport channel.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+
+void CreateClient() {
+  auto options = google::cloud::storage::ChannelOptions()
+      .set_ssl_root_path("path/to/roots.pem");
+
+  auto client = google::cloud::storage::MakeGrpcClient(
+      google::cloud::storage::ClientOptions(), options);
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/common_options.h"
+
+void CreateClient() {
+  auto client = google::cloud::storage::MakeGrpcClient(
+      google::cloud::Options{}.set<google::cloud::CARootsFilePathOption>(
+          "path/to/roots.pem"));
+}
+```
+
+</details>
+
+<details>
+<summary>ChannelOptions Mapping</summary>
+
+Use the following table to map `ChannelOptions` setters to
+`google::cloud::Options`:
+
+| `ChannelOptions` Method | Replacement Option (`.set<T>(value)`)  |
+| :---------------------- | :------------------------------------- |
+| `set_ssl_root_path(p)`  | `google::cloud::CARootsFilePathOption` |
+
+</details>
+
+<details>
+<summary><code>Client</code> Constructor</summary>
+
+The constructor `Client(ClientOptions)` is removed. The default constructor
+`Client()` generally uses default options and default credentials. To customize,
+use `Client(Options)`.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+
+void CreateClient() {
+  auto credentials = google::cloud::storage::oauth2::GoogleDefaultCredentials().value();
+  auto options = google::cloud::storage::ClientOptions(credentials);
+  auto client = google::cloud::storage::Client(options);
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/options.h"
+
+void CreateClient() {
+  auto credentials = google::cloud::MakeGoogleDefaultCredentials();
+  auto client = google::cloud::storage::Client(
+      google::cloud::Options{}.set<google::cloud::storage::Oauth2CredentialsOption>(credentials));
+}
+```
+
+</details>
