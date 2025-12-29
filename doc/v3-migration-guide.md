@@ -128,13 +128,13 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 <details>
 <summary>Removed <code>spanner::ClientOptions</code> class</summary>
 
-The `spanner::ClientOptions` class has been removed. Use `google::cloud::Options`
-instead to set the following as needed:
+The `spanner::ClientOptions` class has been removed. Use
+`google::cloud::Options` instead to set the following as needed:
 
-* `spanner::QueryOptimizerVersionOption`
-* `spanner::QueryOptimizerStatisticsPackageOption`
-* `spanner::RequestPriorityOption`
-* `spanner::RequestTagOption`
+- `spanner::QueryOptimizerVersionOption`
+- `spanner::QueryOptimizerStatisticsPackageOption`
+- `spanner::RequestPriorityOption`
+- `spanner::RequestTagOption`
 
 **Before:**
 
