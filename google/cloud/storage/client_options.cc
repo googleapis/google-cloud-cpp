@@ -50,16 +50,6 @@ absl::optional<std::string> GetEmulator() {
   return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
 }
 
-StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials(
-    Options const& options) {
-  auto emulator = GetEmulator();
-  if (emulator.has_value()) {
-    return StatusOr<std::shared_ptr<oauth2::Credentials>>(
-        oauth2::CreateAnonymousCredentials());
-  }
-  return oauth2::GoogleDefaultCredentials(options);
-}
-
 std::size_t DefaultConnectionPoolSize() {
   std::size_t nthreads = std::thread::hardware_concurrency();
   if (nthreads == 0) {

@@ -21,7 +21,6 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/opentelemetry_options.h"
-#include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
