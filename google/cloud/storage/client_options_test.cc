@@ -91,10 +91,6 @@ TEST_F(ClientOptionsTest, EndpointsDefault) {
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_EQ("https://storage.googleapis.com",
             options.get<RestEndpointOption>());
-  EXPECT_EQ("https://storage.googleapis.com/storage/v1",
-            internal::JsonEndpoint(options));
-  EXPECT_EQ("https://storage.googleapis.com/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
             internal::IamEndpoint(options));
 }
@@ -106,11 +102,6 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
       oauth2::CreateAnonymousCredentials(),
       Options{}.set<RestEndpointOption>("http://127.0.0.1.nip.io:1234"));
   EXPECT_EQ("http://127.0.0.1.nip.io:1234", options.get<RestEndpointOption>());
-  EXPECT_EQ("http://127.0.0.1.nip.io:1234/storage/v1",
-            internal::JsonEndpoint(options));
-  EXPECT_EQ("http://127.0.0.1.nip.io:1234/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://127.0.0.1.nip.io:1234", internal::XmlEndpoint(options));
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
             internal::IamEndpoint(options));
 }
@@ -121,11 +112,6 @@ TEST_F(ClientOptionsTest, EndpointsEmulator) {
   auto options =
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
-  EXPECT_EQ("http://localhost:1234/storage/v1",
-            internal::JsonEndpoint(options));
-  EXPECT_EQ("http://localhost:1234/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(options));
   EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
 }
 
@@ -136,23 +122,7 @@ TEST_F(ClientOptionsTest, OldEndpointsEmulator) {
   auto options =
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
-  EXPECT_EQ("http://localhost:1234/storage/v1",
-            internal::JsonEndpoint(options));
-  EXPECT_EQ("http://localhost:1234/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(options));
   EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
-}
-
-TEST_F(ClientOptionsTest, SetVersion) {
-  auto options = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
-      Options{}.set<internal::TargetApiVersionOption>("vTest"));
-  EXPECT_EQ("vTest", options.get<internal::TargetApiVersionOption>());
-  EXPECT_EQ("https://storage.googleapis.com/storage/vTest",
-            internal::JsonEndpoint(options));
-  EXPECT_EQ("https://storage.googleapis.com/upload/storage/vTest",
-            internal::JsonUploadEndpoint(options));
 }
 
 TEST_F(ClientOptionsTest, DefaultOptions) {

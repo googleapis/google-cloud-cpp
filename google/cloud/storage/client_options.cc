@@ -116,30 +116,6 @@ std::string RestEndpoint(Options const& options) {
   return GetEmulator().value_or(options.get<RestEndpointOption>());
 }
 
-std::string IamRestEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<IamEndpointOption>());
-}
-
-std::string IamRestPath() {
-  auto emulator = GetEmulator();
-  if (emulator) return "/iamapi";
-  return {};
-}
-
-std::string JsonEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<RestEndpointOption>()) +
-         "/storage/" + options.get<TargetApiVersionOption>();
-}
-
-std::string JsonUploadEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<RestEndpointOption>()) +
-         "/upload/storage/" + options.get<TargetApiVersionOption>();
-}
-
-std::string XmlEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<RestEndpointOption>());
-}
-
 std::string IamEndpoint(Options const& options) {
   auto emulator = GetEmulator();
   if (emulator) return *emulator + "/iamapi";
