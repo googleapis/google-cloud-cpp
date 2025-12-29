@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/request_project_id.h"
@@ -3421,79 +3422,6 @@ class Client {
   }
   ///@}
 
-  /**
-   * Creates the default client type given the options.
-   *
-   * @param options the client options, these are used to control credentials,
-   *   buffer sizes, etc.
-   * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when an operation needs to be
-   *   retried, or what operations cannot be retried because they are not
-   *   idempotent.
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  template <typename... Policies>
-  explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(InternalOnly{}, internal::ApplyPolicies(
-                                   internal::MakeOptions(std::move(options)),
-                                   std::forward<Policies>(policies)...)) {}
-
-  /**
-   * Creates the default client type given the credentials and policies.
-   *
-   * @param credentials a set of credentials to initialize the `ClientOptions`.
-   * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when an operation needs to be
-   *   retried, or what operations cannot be retried because they are not
-   *   idempotent.
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  template <typename... Policies>
-  explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
-                  Policies&&... policies)
-      : Client(InternalOnly{},
-               internal::ApplyPolicies(
-                   internal::DefaultOptions(std::move(credentials), {}),
-                   std::forward<Policies>(policies)...)) {}
-
-  /**
-   * Create a Client using ClientOptions::CreateDefaultClientOptions().
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  static StatusOr<Client> CreateDefaultClient();
-
-  /// Builds a client and maybe override the retry, idempotency, and/or backoff
-  /// policies.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  template <typename... Policies>
-#if !defined(_MSC_VER) || _MSC_VER >= 1920
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please use the constructors from ClientOptions instead."
-      " For mocking, please use testing::ClientFromMock() instead."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you have a use-case not covered by these.")
-#endif  // _MSC_VER
-  // We cannot `std::move(connection)` because it is used twice in the delegated
-  // constructor parameters. And we cannot just use `StorageConnection const&`
-  // because we do hold on to the `std::shared_ptr<>`.
-  explicit Client(
-      std::shared_ptr<internal::StorageConnection> const& connection,
-      Policies&&... policies)
-      : Client(InternalOnly{},
-               internal::ApplyPolicies(
-                   internal::DefaultOptions(
-                       connection->client_options().credentials(), {}),
-                   std::forward<Policies>(policies)...),
-               // We cannot std::move() because it is also used in the previous
-               // parameter.
-               connection) {
-  }
-
   /// Define a tag to disable automatic decorations of the StorageConnection.
   struct NoDecorations {};
 
@@ -3675,8 +3603,20 @@ struct ClientImplDetails {
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   static Client CreateClient(std::shared_ptr<StorageConnection> c,
                              Policies&&... p) {
-    auto opts =
-        internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
+    struct ApplyPoliciesHelper {
+      Options& opts;
+      void operator()(RetryPolicy const& p) {
+        opts.set<RetryPolicyOption>(p.clone());
+      }
+      void operator()(BackoffPolicy const& p) {
+        opts.set<BackoffPolicyOption>(p.clone());
+      }
+      void operator()(IdempotencyPolicy const& p) {
+        opts.set<IdempotencyPolicyOption>(p.clone());
+      }
+    };
+    auto opts = c->options();
+    (ApplyPoliciesHelper{opts}(std::forward<Policies>(p)), ...);
     return CreateWithDecorations(opts, std::move(c));
   }
 };

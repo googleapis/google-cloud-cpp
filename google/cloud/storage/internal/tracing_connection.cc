@@ -29,9 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
     : impl_(std::move(impl)) {}
 
-storage::ClientOptions const& TracingConnection::client_options() const {
-  return impl_->client_options();
-}
 Options TracingConnection::options() const { return impl_->options(); }
 
 StatusOr<storage::internal::ListBucketsResponse> TracingConnection::ListBuckets(

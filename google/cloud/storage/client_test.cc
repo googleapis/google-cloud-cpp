@@ -238,63 +238,6 @@ TEST_F(ClientTest, OTelDisableTracing) {
               ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-
-TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
-  auto m1 = std::make_shared<testing::MockClient>();
-
-  auto c1 = storage::Client(m1, Client::NoDecorations{});
-  EXPECT_EQ(c1.raw_client().get(), m1.get());
-
-  auto m2 = std::make_shared<testing::MockClient>();
-  auto c2 = storage::Client(m2, LimitedErrorCountRetryPolicy(3));
-  EXPECT_NE(c2.raw_client().get(), m2.get());
-}
-
-TEST_F(ClientTest, DeprecatedRetryPolicies) {
-  auto constexpr kNumRetries = 2;
-  auto mock_b = std::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, clone).WillOnce([=] {
-    auto clone_1 = std::make_unique<MockBackoffPolicy>();
-    EXPECT_CALL(*clone_1, clone).WillOnce([=] {
-      auto clone_2 = std::make_unique<MockBackoffPolicy>();
-      EXPECT_CALL(*clone_2, OnCompletion)
-          .Times(kNumRetries)
-          .WillRepeatedly(Return(std::chrono::milliseconds(0)));
-      return clone_2;
-    });
-    return clone_1;
-  });
-
-  auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, ListBuckets)
-      .Times(kNumRetries + 1)
-      .WillRepeatedly(Return(TransientError()));
-
-  auto client = storage::Client(mock, LimitedErrorCountRetryPolicy(kNumRetries),
-                                std::move(*mock_b));
-  (void)client.ListBuckets(OverrideDefaultProject("fake-project"));
-}
-
-TEST_F(ClientTest, DeprecatedClientFromMock) {
-  auto mock = std::make_shared<testing::MockClient>();
-  auto client = testing::ClientFromMock(mock);
-
-  internal::ListObjectsResponse response;
-  response.items.push_back(
-      ObjectMetadata{}.set_bucket("bucket").set_name("object/1"));
-  response.items.push_back(
-      ObjectMetadata{}.set_bucket("bucket").set_name("object/2"));
-  EXPECT_CALL(*mock, ListObjects)
-      .WillOnce(Return(TransientError()))
-      .WillOnce(Return(response));
-
-  auto stream = client.ListObjects("bucket", Prefix("object/"));
-  std::vector<StatusOr<ObjectMetadata>> objects{stream.begin(), stream.end()};
-  EXPECT_THAT(objects, ElementsAre(IsOkAndHolds(response.items[0]),
-                                   IsOkAndHolds(response.items[1])));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

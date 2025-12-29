@@ -69,22 +69,20 @@ ParseAuthorizedUserRefreshResponse(
 AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
                           std::chrono::system_clock>::
     AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
-                              ChannelOptions const& channel_options)
+                              Options options)
     : AuthorizedUserCredentials(
           google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo{
               info.client_id, info.client_secret, info.refresh_token,
               info.token_uri, info.universe_domain},
-          channel_options) {}
+          std::move(options)) {}
 
 AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
                           std::chrono::system_clock>::
     AuthorizedUserCredentials(
         google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
-        ChannelOptions const& channel_options)
+        Options options)
     : AuthorizedUserCredentials(
-          std::move(info),
-          Options{}.set<CARootsFilePathOption>(channel_options.ssl_root_path()),
-          [](Options const& o) {
+          std::move(info), std::move(options), [](Options const& o) {
             return rest_internal::MakeDefaultRestClient(std::string{}, o);
           }) {}
 

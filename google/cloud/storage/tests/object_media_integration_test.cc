@@ -515,8 +515,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   // The emulator does not support this type of fault injection for gRPC.
   if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(options);
+  // auto options = internal::DefaultOptions();
+  // ASSERT_STATUS_OK(options);
 
   auto client = MakeIntegrationTestClient(
       Options{}

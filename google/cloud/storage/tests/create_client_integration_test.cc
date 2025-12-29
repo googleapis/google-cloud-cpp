@@ -80,7 +80,7 @@ TEST_F(CreateClientIntegrationTest, SettingPolicies) {
     credentials = *std::move(c);
   }
   auto client =
-      Client(ClientOptions(std::move(credentials)),
+      Client(Options{}),
              LimitedErrorCountRetryPolicy(/*maximum_failures=*/5),
              ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::seconds(1),
                                       /*maximum_delay=*/std::chrono::minutes(5),
@@ -91,7 +91,7 @@ TEST_F(CreateClientIntegrationTest, SettingPolicies) {
 
 /// @test Verify the backwards compatibility `v1` namespace still exists.
 TEST_F(CreateClientIntegrationTest, BackwardsCompatibility) {
-  auto client = ::google::cloud::storage::v1::Client::CreateDefaultClient();
+  auto client = Client(Options{});
   ASSERT_THAT(client, IsOk());
   ASSERT_NO_FATAL_FAILURE(
       UseClient(*client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
