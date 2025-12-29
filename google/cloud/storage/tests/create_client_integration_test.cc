@@ -66,10 +66,9 @@ class CreateClientIntegrationTest
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 TEST_F(CreateClientIntegrationTest, DefaultWorks) {
-  auto client = Client::CreateDefaultClient();
-  ASSERT_THAT(client, IsOk());
+  auto client = Client(Options{});
   ASSERT_NO_FATAL_FAILURE(
-      UseClient(*client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
 TEST_F(CreateClientIntegrationTest, SettingPolicies) {
@@ -79,22 +78,18 @@ TEST_F(CreateClientIntegrationTest, SettingPolicies) {
     ASSERT_THAT(c, IsOk());
     credentials = *std::move(c);
   }
-  auto client =
-      Client(Options{}),
-             LimitedErrorCountRetryPolicy(/*maximum_failures=*/5),
-             ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::seconds(1),
-                                      /*maximum_delay=*/std::chrono::minutes(5),
-                                      /*scaling=*/1.5));
+  auto client = Client(
+      Options{}
+          .set<RetryPolicyOption>(
+              LimitedErrorCountRetryPolicy(/*maximum_failures=*/5).clone())
+          .set<BackoffPolicyOption>(
+              ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::seconds(1),
+                  /*maximum_delay=*/std::chrono::minutes(5),
+                  /*scaling=*/1.5)
+                  .clone()));
   ASSERT_NO_FATAL_FAILURE(
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
-}
-
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(CreateClientIntegrationTest, BackwardsCompatibility) {
-  auto client = Client(Options{});
-  ASSERT_THAT(client, IsOk());
-  ASSERT_NO_FATAL_FAILURE(
-      UseClient(*client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
 }  // namespace
