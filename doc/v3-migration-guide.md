@@ -142,3 +142,13 @@ contained internal symbols.
 </details>
 
 ### Storage
+
+### IAM
+
+<details>
+<summary>Removed <code>retry_traits.h</code> file</summary>
+
+The library no longer exposes `retry_traits.h` header file. It only contained
+internal symbols.
+
+</details>
