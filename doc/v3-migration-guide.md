@@ -44,6 +44,14 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+<details>
+<summary>Removed <code>retry_traits.h</code> file</summary>
+
+The library no longer exposes the `retry_traits.h` header file. It only
+contained internal symbols.
+
+</details>
+
 ### Bigtable
 
 <details>
@@ -124,5 +132,13 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 ### Pubsub
 
 ### Spanner
+
+<details>
+<summary>Removed <code>admin/retry_traits.h</code> file</summary>
+
+The library no longer exposes `spanner::retry_traits.h` header file. It only
+contained internal symbols.
+
+</details>
 
 ### Storage
