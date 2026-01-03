@@ -45,10 +45,10 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 ### Common
 
 <details>
-<summary>Removed <code>retry_traits.h</code> file</summary>
+<summary>Removed <code>bigquery/retry_traits.h</code> file</summary>
 
-The library no longer exposes the `retry_traits.h` header file. It only
-contained internal symbols.
+The library no longer exposes the `google/cloud/bigquery/retry_traits.h` header
+file. It only contained internal symbols.
 
 </details>
 
@@ -136,8 +136,8 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 <details>
 <summary>Removed <code>admin/retry_traits.h</code> file</summary>
 
-The library no longer exposes `spanner::retry_traits.h` header file. It only
-contained internal symbols.
+The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
+file. It only contained internal symbols.
 
 </details>
 
@@ -146,9 +146,9 @@ contained internal symbols.
 ### IAM
 
 <details>
-<summary>Removed <code>retry_traits.h</code> file</summary>
+<summary>Removed <code>iam/retry_traits.h</code> file</summary>
 
-The library no longer exposes `retry_traits.h` header file. It only contained
-internal symbols.
+The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
+only contained internal symbols.
 
 </details>
