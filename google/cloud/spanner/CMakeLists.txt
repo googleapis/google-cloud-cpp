@@ -173,6 +173,7 @@ add_library(
     internal/tuple_utils.h
     interval.cc
     interval.h
+    isolation_level.h
     json.h
     keys.cc
     keys.h

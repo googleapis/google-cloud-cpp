@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/spanner/isolation_level.h"
 #include "absl/types/optional.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <chrono>
@@ -103,10 +104,16 @@ class Transaction {
     // A tag used for collecting statistics about the transaction.
     ReadWriteOptions& WithTag(absl::optional<std::string> tag);
 
+    ReadWriteOptions& WithIsolationLevel(IsolationLevel isolation_level) {
+      isolation_level_ = isolation_level;
+      return *this;
+    }
+
    private:
     friend Transaction;
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts_;
     absl::optional<std::string> tag_;
+    IsolationLevel isolation_level_ = IsolationLevel::kUnspecified;
   };
 
   /**
