@@ -805,7 +805,10 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   auto tx_a_read_result = client_->Read(
       tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
   for (auto const& row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
-    EXPECT_STATUS_OK(row);
+    EXPECT_THAT(
+        row,
+        AnyOf(IsOk(), StatusIs(StatusCode::kUnimplemented,
+                               HasSubstr("Optimistic lock is not enabled"))));
   }
   tx_a = MakeReadWriteTransaction(
       tx_a, Transaction::ReadWriteOptions(read_lock_mode));
@@ -813,7 +816,10 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   auto optimistic_result =
       client_->Commit(tx_a, mutation_helper("SecondModifiedName"));
 
-  EXPECT_STATUS_OK(optimistic_result);
+  EXPECT_THAT(
+      optimistic_result,
+      AnyOf(IsOk(), StatusIs(StatusCode::kUnimplemented,
+                             HasSubstr("Optimistic lock is not enabled"))));
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by a timestamp.
