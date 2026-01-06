@@ -853,7 +853,7 @@ Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
 
 Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
                 grpc::WriteOptions& options,
-                storage::internal::HashValues hashes) {
+                storage::internal::HashValues const&hashes) {
   write_request.set_finish_write(true);
   options.set_last_message();
   return FinalizeChecksums(*write_request.mutable_object_checksums(),
