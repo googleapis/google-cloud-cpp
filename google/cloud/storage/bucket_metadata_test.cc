@@ -109,15 +109,15 @@ BucketMetadata CreateBucketMetadataForTest() {
       "encryption": {
         "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name",
         "googleManagedEncryptionEnforcementConfig": {
-          "restrictionMode": "FULLY_RESTRICTED",
+          "restrictionMode": "FullyRestricted",
           "effectiveTime": "2025-12-18T18:13:15Z"
         },
         "customerManagedEncryptionEnforcementConfig": {
-          "restrictionMode": "NOT_RESTRICTED",
+          "restrictionMode": "NotRestricted",
           "effectiveTime": "2025-12-18T18:13:15Z"
         },
         "customerSuppliedEncryptionEnforcementConfig": {
-          "restrictionMode": "NOT_RESTRICTED",
+          "restrictionMode": "NotRestricted",
           "effectiveTime": "2025-12-18T18:13:15Z"
         }
       },
@@ -236,15 +236,15 @@ TEST(BucketMetadataTest, Parse) {
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual.encryption().default_kms_key_name);
-  EXPECT_EQ("FULLY_RESTRICTED",
+  EXPECT_EQ("FullyRestricted",
             actual.encryption()
                 .google_managed_encryption_enforcement_config.restriction_mode);
   EXPECT_EQ(
-      "NOT_RESTRICTED",
+      "NotRestricted",
       actual.encryption()
           .customer_managed_encryption_enforcement_config.restriction_mode);
   EXPECT_EQ(
-      "NOT_RESTRICTED",
+      "NotRestricted",
       actual.encryption()
           .customer_supplied_encryption_enforcement_config.restriction_mode);
   EXPECT_EQ(
@@ -523,21 +523,21 @@ TEST(BucketMetadataTest, ToJsonString) {
       "test-keyring-name/cryptoKeys/test-key-name",
       encryption.value("defaultKmsKeyName", ""));
 
-  EXPECT_EQ("FULLY_RESTRICTED",
+  EXPECT_EQ("FullyRestricted",
             encryption["googleManagedEncryptionEnforcementConfig"].value(
                 "restrictionMode", ""));
   EXPECT_EQ("2025-12-18T18:13:15Z",
             encryption["googleManagedEncryptionEnforcementConfig"].value(
                 "effectiveTime", ""));
 
-  EXPECT_EQ("NOT_RESTRICTED",
+  EXPECT_EQ("NotRestricted",
             encryption["customerManagedEncryptionEnforcementConfig"].value(
                 "restrictionMode", ""));
   EXPECT_EQ("2025-12-18T18:13:15Z",
             encryption["customerManagedEncryptionEnforcementConfig"].value(
                 "effectiveTime", ""));
 
-  EXPECT_EQ("NOT_RESTRICTED",
+  EXPECT_EQ("NotRestricted",
             encryption["customerSuppliedEncryptionEnforcementConfig"].value(
                 "restrictionMode", ""));
   EXPECT_EQ("2025-12-18T18:13:15Z",
@@ -899,7 +899,7 @@ TEST(BucketMetadataTest, SetEncryption) {
   std::string fake_key_name =
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/another-test-key-name";
-  std::string fake_restriction_mode = "FULLY_RESTRICTED";
+  std::string fake_restriction_mode = "FullyRestricted";
 
   copy.set_encryption(BucketEncryption{fake_key_name,
                                        {fake_restriction_mode, {}},

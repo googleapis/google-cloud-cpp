@@ -30,15 +30,15 @@ TEST(BucketEncryptionTest, Parse) {
       "encryption": {
         "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name",
         "googleManagedEncryptionEnforcementConfig": {
-          "restrictionMode": "FULLY_RESTRICTED",
+          "restrictionMode": "FullyRestricted",
           "effectiveTime": "2025-12-18T18:13:15Z"
         },
         "customerManagedEncryptionEnforcementConfig": {
-          "restrictionMode": "NOT_RESTRICTED",
+          "restrictionMode": "NotRestricted",
           "effectiveTime": "2025-12-18T18:13:15Z"
         },
         "customerSuppliedEncryptionEnforcementConfig": {
-          "restrictionMode": "NOT_RESTRICTED",
+          "restrictionMode": "NotRestricted",
           "effectiveTime": "2025-12-18T18:13:15Z"
         }
       }
@@ -55,14 +55,14 @@ TEST(BucketEncryptionTest, Parse) {
       encryption.default_kms_key_name);
 
   EXPECT_EQ(
-      "FULLY_RESTRICTED",
+      "FullyRestricted",
       encryption.google_managed_encryption_enforcement_config.restriction_mode);
   EXPECT_EQ("2025-12-18T18:13:15Z",
             google::cloud::internal::FormatRfc3339(
                 encryption.google_managed_encryption_enforcement_config
                     .effective_time));
 
-  EXPECT_EQ("NOT_RESTRICTED",
+  EXPECT_EQ("NotRestricted",
             encryption.customer_managed_encryption_enforcement_config
                 .restriction_mode);
   EXPECT_EQ("2025-12-18T18:13:15Z",
@@ -70,7 +70,7 @@ TEST(BucketEncryptionTest, Parse) {
                 encryption.customer_managed_encryption_enforcement_config
                     .effective_time));
 
-  EXPECT_EQ("NOT_RESTRICTED",
+  EXPECT_EQ("NotRestricted",
             encryption.customer_supplied_encryption_enforcement_config
                 .restriction_mode);
   EXPECT_EQ("2025-12-18T18:13:15Z",
@@ -84,11 +84,11 @@ TEST(BucketEncryptionTest, ToJson) {
   BucketEncryption encryption;
   encryption.default_kms_key_name = "test-key";
   encryption.google_managed_encryption_enforcement_config.restriction_mode =
-      "FULLY_RESTRICTED";
+      "FullyRestricted";
   encryption.google_managed_encryption_enforcement_config.effective_time =
       google::cloud::internal::ParseRfc3339("2025-12-18T18:13:15Z").value();
   encryption.customer_managed_encryption_enforcement_config.restriction_mode =
-      "NOT_RESTRICTED";
+      "NotRestricted";
   encryption.customer_managed_encryption_enforcement_config.effective_time =
       google::cloud::internal::ParseRfc3339("2025-12-18T18:13:15Z").value();
 
@@ -100,11 +100,11 @@ TEST(BucketEncryptionTest, ToJson) {
   ASSERT_TRUE(json.contains("encryption"));
   auto e = json["encryption"];
   EXPECT_EQ("test-key", e["defaultKmsKeyName"]);
-  EXPECT_EQ("FULLY_RESTRICTED",
+  EXPECT_EQ("FullyRestricted",
             e["googleManagedEncryptionEnforcementConfig"]["restrictionMode"]);
   EXPECT_EQ("2025-12-18T18:13:15Z",
             e["googleManagedEncryptionEnforcementConfig"]["effectiveTime"]);
-  EXPECT_EQ("NOT_RESTRICTED",
+  EXPECT_EQ("NotRestricted",
             e["customerManagedEncryptionEnforcementConfig"]["restrictionMode"]);
   EXPECT_EQ("2025-12-18T18:13:15Z",
             e["customerManagedEncryptionEnforcementConfig"]["effectiveTime"]);
@@ -116,7 +116,7 @@ TEST(BucketEncryptionTest, Patch) {
   BucketEncryption encryption;
   encryption.default_kms_key_name = "test-key";
   encryption.google_managed_encryption_enforcement_config.restriction_mode =
-      "FULLY_RESTRICTED";
+      "FullyRestricted";
   encryption.google_managed_encryption_enforcement_config.effective_time =
       google::cloud::internal::ParseRfc3339("2025-12-18T18:13:15Z").value();
 
@@ -128,7 +128,7 @@ TEST(BucketEncryptionTest, Patch) {
   ASSERT_TRUE(patch.contains("encryption"));
   auto e = patch["encryption"];
   EXPECT_EQ("test-key", e["defaultKmsKeyName"]);
-  EXPECT_EQ("FULLY_RESTRICTED",
+  EXPECT_EQ("FullyRestricted",
             e["googleManagedEncryptionEnforcementConfig"]["restrictionMode"]);
   EXPECT_EQ("2025-12-18T18:13:15Z",
             e["googleManagedEncryptionEnforcementConfig"]["effectiveTime"]);

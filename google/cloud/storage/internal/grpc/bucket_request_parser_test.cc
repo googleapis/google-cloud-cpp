@@ -461,15 +461,15 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           encryption {
             default_kms_key: "test-only-kms-key"
             google_managed_encryption_enforcement_config {
-              restriction_mode: "FULLY_RESTRICTED"
+              restriction_mode: "FullyRestricted"
               effective_time { seconds: 1766175572 }
             }
             customer_managed_encryption_enforcement_config {
-              restriction_mode: "NOT_RESTRICTED"
+              restriction_mode: "NotRestricted"
               effective_time { seconds: 1766175695 }
             }
             customer_supplied_encryption_enforcement_config {
-              restriction_mode: "FULLY_RESTRICTED"
+              restriction_mode: "FullyRestricted"
               effective_time { seconds: 1766175739 }
             }
           }
@@ -551,17 +551,17 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
               /*.default_kms_key=*/"test-only-kms-key",
               /*.google_managed_encryption_enforcement_config=*/
               storage::GoogleManagedEncryptionEnforcementConfig{
-                  "FULLY_RESTRICTED",
+                  "FullyRestricted",
                   google::cloud::internal::ParseRfc3339("2025-12-19T20:19:32Z")
                       .value()},
               /*.customer_managed_encryption_enforcement_config=*/
               storage::CustomerManagedEncryptionEnforcementConfig{
-                  "NOT_RESTRICTED",
+                  "NotRestricted",
                   google::cloud::internal::ParseRfc3339("2025-12-19T20:21:35Z")
                       .value()},
               /*.customer_supplied_encryption_enforcement_config=*/
               storage::CustomerSuppliedEncryptionEnforcementConfig{
-                  "FULLY_RESTRICTED",
+                  "FullyRestricted",
                   google::cloud::internal::ParseRfc3339("2025-12-19T20:22:19Z")
                       .value()}})
           .SetAutoclass(storage::BucketAutoclass{true})
@@ -745,15 +745,15 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
           encryption {
             default_kms_key: "test-only-kms-key"
             google_managed_encryption_enforcement_config {
-              restriction_mode: "FULLY_RESTRICTED"
+              restriction_mode: "FullyRestricted"
               effective_time { seconds: 1766176065 }
             }
             customer_managed_encryption_enforcement_config {
-              restriction_mode: "NOT_RESTRICTED"
+              restriction_mode: "NotRestricted"
               effective_time { seconds: 1766176105 }
             }
             customer_supplied_encryption_enforcement_config {
-              restriction_mode: "FULLY_RESTRICTED"
+              restriction_mode: "FullyRestricted"
               effective_time { seconds: 1766176151 }
             }
           }
@@ -833,17 +833,17 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
               /*.default_kms_key=*/"test-only-kms-key",
               /*.google_managed_encryption_enforcement_config=*/
               storage::GoogleManagedEncryptionEnforcementConfig{
-                  "FULLY_RESTRICTED",
+                  "FullyRestricted",
                   google::cloud::internal::ParseRfc3339("2025-12-19T20:27:45Z")
                       .value()},
               /*.customer_managed_encryption_enforcement_config=*/
               storage::CustomerManagedEncryptionEnforcementConfig{
-                  "NOT_RESTRICTED",
+                  "NotRestricted",
                   google::cloud::internal::ParseRfc3339("2025-12-19T20:28:25Z")
                       .value()},
               /*.customer_supplied_encryption_enforcement_config=*/
               storage::CustomerSuppliedEncryptionEnforcementConfig{
-                  "FULLY_RESTRICTED",
+                  "FullyRestricted",
                   google::cloud::internal::ParseRfc3339("2025-12-19T20:29:11Z")
                       .value()}})
           .set_autoclass(storage::BucketAutoclass{true})
