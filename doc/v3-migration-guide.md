@@ -211,10 +211,11 @@ auto client = bigtable::CreateDefaultInstanceAdminClient(
 
 **After:**
 
-````cpp
+```cpp
 auto client = bigtable::MakeInstanceAdminClient(
     "my-project",
     google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
 
 </details>
 
@@ -231,7 +232,7 @@ auto limit = google::cloud::bigtable::AsyncRowReader<>::NO_ROWS_LIMIT;
 
 // After
 auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
-````
+```
 
 </details>
 
