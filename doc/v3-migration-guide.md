@@ -105,6 +105,24 @@ for (auto& row : table.ReadRows(
 </details>
 
 <details>
+
+<summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
+</summary>
+
+AsyncRowReader::NO_ROWS_LIMIT has been removed. Please use
+`google::cloud::bigtable::RowReader::NO_ROWS_LIMIT` instead.
+
+```cpp
+// Before
+auto limit = google::cloud::bigtable::AsyncRowReader<>::NO_ROWS_LIMIT;
+
+// After
+auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
+```
+
+</details>
+
+<details>
 <summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
 
 The `bigtable::DataClient` class and its associated factory functions (e.g.,
