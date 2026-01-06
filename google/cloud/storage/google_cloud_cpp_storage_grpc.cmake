@@ -110,6 +110,8 @@ add_library(
     internal/async/handle_redirect_error.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
+    internal/async/multi_stream_manager.cc
+    internal/async/multi_stream_manager.h
     internal/async/object_descriptor_connection_tracing.cc
     internal/async/object_descriptor_connection_tracing.h
     internal/async/object_descriptor_impl.cc
@@ -442,6 +444,7 @@ set(storage_client_grpc_unit_tests
     internal/async/default_options_test.cc
     internal/async/handle_redirect_error_test.cc
     internal/async/insert_object_test.cc
+    internal/async/multi_stream_manager_test.cc
     internal/async/object_descriptor_connection_tracing_test.cc
     internal/async/object_descriptor_impl_test.cc
     internal/async/object_descriptor_reader_test.cc
