@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"

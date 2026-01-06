@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include <numeric>
@@ -194,22 +195,6 @@ BulkMutator::BulkMutator(std::string const& app_profile_id,
                          std::shared_ptr<OperationContext> operation_context)
     : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
       operation_context_(std::move(operation_context)) {}
-
-grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
-                                         grpc::ClientContext& client_context) {
-  // Send the request to the server.
-  auto const& mutations = state_.BeforeStart();
-  auto stream = client.MutateRows(&client_context, mutations);
-  // Read the stream of responses.
-  btproto::MutateRowsResponse response;
-  while (stream->Read(&response)) {
-    state_.OnRead(std::move(response));
-  }
-  // Handle any errors in the stream.
-  auto grpc_status = stream->Finish();
-  state_.OnFinish(MakeStatusFromRpcError(grpc_status));
-  return grpc_status;
-}
 
 Status BulkMutator::MakeOneRequest(BigtableStub& stub,
                                    MutateRowsLimiter& limiter,

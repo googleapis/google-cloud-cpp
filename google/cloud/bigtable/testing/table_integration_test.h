@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/cell.h"
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -94,18 +93,11 @@ class TableIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override;
-
-  /// Gets a Table object for the current test.
-  bigtable::Table GetTable(
-      std::string const& implementation = "with-data-client");
+  bigtable::Table GetTable();
 
   /// Return all the cells in @p table that pass @p filter.
   static std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
                                               bigtable::Filter filter);
-
-  /// Return all the cells in @p table that pass @p filter.
-  std::vector<bigtable::Cell> ReadRows(std::string const& table_name,
-                                       bigtable::Filter filter);
 
   static std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
                                               std::int64_t rows_limit,
@@ -179,7 +171,6 @@ class TableIntegrationTest
     return names;
   }
 
-  std::shared_ptr<bigtable::DataClient> data_client_;
   std::shared_ptr<bigtable::DataConnection> data_connection_;
 };
 
