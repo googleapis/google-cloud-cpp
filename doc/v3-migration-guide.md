@@ -113,6 +113,7 @@ for (auto& row : table.ReadRows(
 </details>
 
 <details>
+
 <summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
 </summary>
 
@@ -126,6 +127,19 @@ auto limit = google::cloud::bigtable::AsyncRowReader<>::NO_ROWS_LIMIT;
 // After
 auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 ```
+
+</details>
+
+<details>
+<summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
+
+The `bigtable::DataClient` class and its associated factory functions (e.g.,
+`MakeDataClient`) have been removed. Applications should now use
+`bigtable::DataConnection` and `bigtable::MakeDataConnection()` instead. For
+detailed migration steps and examples, please refer to the official migration
+guide:
+
+[Migrating from DataClient to DataConnection](https://docs.cloud.google.com/cpp/docs/reference/bigtable/latest/migrating-from-dataclient)
 
 </details>
 

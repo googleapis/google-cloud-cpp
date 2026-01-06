@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H
 
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"

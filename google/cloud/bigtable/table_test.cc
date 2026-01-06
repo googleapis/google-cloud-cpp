@@ -178,6 +178,55 @@ TEST(TableTest, AppProfileId) {
   EXPECT_EQ(kAppProfileId, table.app_profile_id());
 }
 
+TEST(TableTest, WithNewTarget) {
+  auto conn = std::make_shared<MockDataConnection>();
+  Table table(conn, TableResource(kProjectId, kInstanceId, kTableId),
+              Options{}.set<AppProfileIdOption>(kAppProfileId));
+  EXPECT_EQ(table.project_id(), kProjectId);
+  EXPECT_EQ(table.instance_id(), kInstanceId);
+  EXPECT_EQ(table.table_id(), kTableId);
+  EXPECT_EQ(table.table_name(), kTableName);
+  EXPECT_EQ(table.app_profile_id(), kAppProfileId);
+
+  std::string const other_project_id = "other-project";
+  std::string const other_instance_id = "other-instance";
+  std::string const other_table_id = "other-table";
+  auto other_table =
+      table.WithNewTarget(other_project_id, other_instance_id, other_table_id);
+
+  EXPECT_EQ(other_table.project_id(), other_project_id);
+  EXPECT_EQ(other_table.instance_id(), other_instance_id);
+  EXPECT_EQ(other_table.table_id(), other_table_id);
+  EXPECT_EQ(other_table.table_name(),
+            TableName(other_project_id, other_instance_id, other_table_id));
+  EXPECT_EQ(other_table.app_profile_id(), kAppProfileId);
+}
+
+TEST(TableTest, WithNewTargetProfile) {
+  auto conn = std::make_shared<MockDataConnection>();
+  Table table(conn, TableResource(kProjectId, kInstanceId, kTableId),
+              Options{}.set<AppProfileIdOption>(kAppProfileId));
+  EXPECT_EQ(table.project_id(), kProjectId);
+  EXPECT_EQ(table.instance_id(), kInstanceId);
+  EXPECT_EQ(table.table_id(), kTableId);
+  EXPECT_EQ(table.table_name(), kTableName);
+  EXPECT_EQ(table.app_profile_id(), kAppProfileId);
+
+  std::string const other_project_id = "other-project";
+  std::string const other_instance_id = "other-instance";
+  std::string const other_table_id = "other-table";
+  std::string const other_profile_id = "other-profile";
+  auto other_table = table.WithNewTarget(other_project_id, other_instance_id,
+                                         other_profile_id, other_table_id);
+
+  EXPECT_EQ(other_table.project_id(), other_project_id);
+  EXPECT_EQ(other_table.instance_id(), other_instance_id);
+  EXPECT_EQ(other_table.table_id(), other_table_id);
+  EXPECT_EQ(other_table.table_name(),
+            TableName(other_project_id, other_instance_id, other_table_id));
+  EXPECT_EQ(other_table.app_profile_id(), other_profile_id);
+}
+
 TEST(TableTest, Apply) {
   auto mock = std::make_shared<MockDataConnection>();
   EXPECT_CALL(*mock, Apply)

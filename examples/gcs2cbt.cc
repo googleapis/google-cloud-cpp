@@ -60,8 +60,9 @@ int main(int argc, char* argv[]) try {
 
   // Create a connection to Cloud Bigtable and an object to manipulate the
   // specific table used in this demo.
-  cbt::Table table(cbt::MakeDataClient(options.project_id, options.instance_id),
-                   options.table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(options.project_id, options.instance_id,
+                                      options.table_id));
   cbt::MutationBatcher batcher(table);
 
   // How often do we print a progress marker ('.') in the reader thread.
