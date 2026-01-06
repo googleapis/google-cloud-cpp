@@ -15,8 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ENDPOINT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ENDPOINT_OPTIONS_H
 
-#include "google/cloud/bigtable/options.h"
-#include <chrono>
 #include <string>
 
 namespace google {
