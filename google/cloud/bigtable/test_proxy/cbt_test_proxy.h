@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/version.h"
 #include "protos/google/cloud/bigtable/test_proxy/test_proxy.grpc.pb.h"
 #include <memory>

@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MOCKS_MOCK_DATA_CONNECTION_H
 
 #include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 

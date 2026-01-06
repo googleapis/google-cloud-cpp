@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
