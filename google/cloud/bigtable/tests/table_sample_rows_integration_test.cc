@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client_options.h"
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/table.h"
@@ -37,12 +36,6 @@ namespace {
 
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::testing::IsEmpty;
-
-Table GetTable() {
-  return Table(MakeDataClient(TableTestEnvironment::project_id(),
-                              TableTestEnvironment::instance_id()),
-               TableTestEnvironment::table_id());
-}
 
 void VerifySamples(StatusOr<std::vector<RowKeySample>> samples) {
   ASSERT_STATUS_OK(samples);
@@ -132,21 +125,6 @@ TEST_F(SampleRowsIntegrationTest, AsyncWithDataConnection) {
                                    TableTestEnvironment::instance_id(),
                                    TableTestEnvironment::table_id()));
   auto fut = table.AsyncSampleRows();
-  VerifySamples(fut.get());
-};
-
-TEST_F(SampleRowsIntegrationTest, SyncWithDataClient) {
-  auto table = GetTable();
-  VerifySamples(table.SampleRows());
-};
-
-TEST_F(SampleRowsIntegrationTest, AsyncWithDataClient) {
-  auto table = GetTable();
-  auto fut = table.AsyncSampleRows();
-
-  // Block until the asynchronous operation completes. This is not what one
-  // would do in a real application (the synchronous API is better in that
-  // case), but we need to wait before checking the results.
   VerifySamples(fut.get());
 };
 
