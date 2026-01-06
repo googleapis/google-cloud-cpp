@@ -192,6 +192,7 @@ add_library(
     internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
+    internal/endpoint_options.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
     internal/legacy_async_bulk_apply.cc
