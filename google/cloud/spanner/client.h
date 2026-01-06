@@ -716,10 +716,6 @@ class Client {
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement,
                                                        Options opts = {});
 
-  explicit Client(std::shared_ptr<Connection> conn,
-                  std::initializer_list<internal::NonConstructible>)
-      : Client(std::move(conn)) {}
-
   ///@{
   /// @name Backwards compatibility for ReadOptions.
   /**
