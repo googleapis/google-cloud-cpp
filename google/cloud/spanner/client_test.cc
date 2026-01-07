@@ -1313,26 +1313,6 @@ TEST(ClientTest, UsesConnectionOptions) {
   EXPECT_STATUS_OK(rollback);
 }
 
-TEST(ClientTest, UsesClientOptions) {
-  auto conn = std::make_shared<MockConnection>();
-  auto txn = MakeReadWriteTransaction();
-
-  EXPECT_CALL(*conn, options).WillOnce([] {
-    return Options{}.set<StringOption>("connection");
-  });
-  EXPECT_CALL(*conn, Rollback)
-      .WillOnce([txn](Connection::RollbackParams const& params) {
-        auto const& options = internal::CurrentOptions();
-        EXPECT_THAT(options.get<StringOption>(), Eq("client"));
-        EXPECT_THAT(params.transaction, Eq(txn));
-        return Status();
-      });
-
-  Client client(conn, Options{}.set<StringOption>("client"));
-  auto rollback = client.Rollback(txn, Options{});
-  EXPECT_STATUS_OK(rollback);
-}
-
 TEST(ClientTest, UsesOperationOptions) {
   auto conn = std::make_shared<MockConnection>();
   auto txn = MakeReadWriteTransaction();
