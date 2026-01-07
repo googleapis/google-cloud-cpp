@@ -23,12 +23,7 @@ function (spanner_client_define_integration_tests)
 
     set(spanner_client_integration_tests
         # cmake-format: sort
-        backup_extra_integration_test.cc
-        backup_integration_test.cc
-        client_stress_test.cc
-        data_types_integration_test.cc
-        database_admin_integration_test.cc
-        instance_admin_integration_test.cc
+        client_stress_test.cc data_types_integration_test.cc
         session_pool_integration_test.cc)
 
     set(spanner_client_session_mode_sensitive_integration_tests
