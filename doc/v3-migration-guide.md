@@ -44,6 +44,14 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+<details>
+<summary>Removed <code>bigquery/retry_traits.h</code> file</summary>
+
+The library no longer exposes the `google/cloud/bigquery/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Bigtable
 
 <details>
@@ -139,4 +147,22 @@ guide:
 
 ### Spanner
 
+<details>
+<summary>Removed <code>admin/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Storage
+
+### IAM
+
+<details>
+<summary>Removed <code>iam/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
+only contained internal symbols.
+
+</details>
