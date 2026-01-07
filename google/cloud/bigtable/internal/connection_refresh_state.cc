@@ -107,6 +107,62 @@ void ScheduleChannelRefresh(
   state->timers().RegisterTimer(std::move(timer_future));
 }
 
+void ScheduleStubRefresh(
+    std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
+    std::shared_ptr<ConnectionRefreshState> const& state,
+    std::shared_ptr<BigtableStub> const& stub,
+    std::function<void(Status const&)> connection_status_fn) {
+  if (!connection_status_fn) {
+    connection_status_fn = LogFailedConnectionRefresh;
+  }
+  // The timers will only hold weak pointers to the channel or to the
+  // completion queue, so if either of them are destroyed, the timer chain
+  // will simply not continue.
+  std::weak_ptr<BigtableStub> weak_stub(stub);
+  std::weak_ptr<internal::CompletionQueueImpl> weak_cq_impl(cq_impl);
+  auto cq = CompletionQueue(cq_impl);
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto timer_future =
+      cq.MakeRelativeTimer(state->RandomizedRefreshDelay())
+          .then([weak_stub, weak_cq_impl, state,
+                 connection_status_fn =
+                     std::move(connection_status_fn)](TimerFuture fut) {
+            if (!fut.get()) {
+              // Timer cancelled.
+              return;
+            }
+            auto stub = weak_stub.lock();
+            if (!stub) return;
+            auto cq_impl = weak_cq_impl.lock();
+            if (!cq_impl) return;
+            auto cq = CompletionQueue(cq_impl);
+
+            auto client_context = std::make_shared<grpc::ClientContext>();
+            google::cloud::internal::ImmutableOptions options;
+            google::bigtable::v2::PingAndWarmRequest request;
+            // This RPC call does not set a deadline
+            // like AsyncWaitConnectionReady does.
+            stub->AsyncPingAndWarm(cq, client_context, std::move(options),
+                                   request)
+                .then(
+                    [weak_stub, weak_cq_impl, state,
+                     connection_status_fn = std::move(connection_status_fn)](
+                        future<
+                            StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+                            fut) {
+                      auto response = fut.get();
+                      // do something with response
+                      auto stub = weak_stub.lock();
+                      if (!stub) return;
+                      auto cq_impl = weak_cq_impl.lock();
+                      if (!cq_impl) return;
+                      ScheduleStubRefresh(cq_impl, state, stub,
+                                          std::move(connection_status_fn));
+                    });
+          });
+  state->timers().RegisterTimer(std::move(timer_future));
+}
+
 void OutstandingTimers::RegisterTimer(future<void> fut) {
   std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_) {

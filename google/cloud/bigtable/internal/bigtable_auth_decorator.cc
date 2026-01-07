@@ -221,6 +221,27 @@ BigtableAuth::AsyncCheckAndMutateRow(
       });
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableAuth::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PingAndWarmResponse>(
+                  std::move(context).status()));
+        }
+        return child->AsyncPingAndWarm(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableAuth::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
