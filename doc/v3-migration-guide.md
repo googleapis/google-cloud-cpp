@@ -263,6 +263,48 @@ guide:
 ### Spanner
 
 <details>
+<summary>Removed <code>spanner::ClientOptions</code> class</summary>
+
+The `spanner::ClientOptions` class has been removed. Use
+`google::cloud::Options` instead to set the following as needed:
+
+- `spanner::QueryOptimizerVersionOption`
+- `spanner::QueryOptimizerStatisticsPackageOption`
+- `spanner::RequestPriorityOption`
+- `spanner::RequestTagOption`
+
+**Before:**
+
+```cpp
+#include "google/cloud/spanner/client.h"
+
+// ...
+
+namespace spanner = ::google::cloud::spanner;
+auto client_options = spanner::ClientOptions().set_query_options(
+    spanner::QueryOptions().set_optimizer_version("1"));
+
+auto client = spanner::Client(connection, client_options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/options.h"
+
+// ...
+
+namespace spanner = ::google::cloud::spanner;
+auto options = google::cloud::Options{}.set<spanner::QueryOptimizerVersionOption>("1");
+
+auto client = spanner::Client(connection, options);
+```
+
+</details>
+
+<details>
+
 <summary>Removed <code>admin/retry_traits.h</code> file</summary>
 
 The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
