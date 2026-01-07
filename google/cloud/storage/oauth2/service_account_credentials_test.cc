@@ -18,6 +18,8 @@
 #include "google/cloud/storage/testing/constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/storage/testing/write_base64.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
@@ -389,7 +391,7 @@ TEST_F(ServiceAccountCredentialsTest, UsesCARootsInfo) {
       });
 
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      *info, ChannelOptions().set_ssl_root_path(cainfo));
+      *info, Options{}.set<google::cloud::CARootsFilePathOption>(cainfo));
   // Call Refresh to obtain the access token for our authorization header.
   auto authorization_header = credentials.AuthorizationHeader();
   ASSERT_STATUS_OK(authorization_header);

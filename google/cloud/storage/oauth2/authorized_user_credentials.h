@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/curl/request_builder.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
@@ -26,6 +25,7 @@
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include <chrono>
 #include <iostream>
@@ -121,13 +121,12 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
     AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
                               std::chrono::system_clock> : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(
-      AuthorizedUserCredentialsInfo const& info,
-      ChannelOptions const& channel_options = {});
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
+                                     Options options = {});
 
   explicit AuthorizedUserCredentials(
       google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
-      ChannelOptions const& channel_options = {});
+      Options options = {});
 
   StatusOr<std::string> AuthorizationHeader() override {
     return oauth2_internal::AuthenticationHeaderJoined(*impl_);
@@ -155,11 +154,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
     : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
-                                     ChannelOptions const& channel_options = {})
-      : info_(std::move(info)),
-        options_(Options{}.set<CARootsFilePathOption>(
-            channel_options.ssl_root_path())),
-        clock_() {}
+                                     Options options = {})
+      : info_(std::move(info)), options_(std::move(options)), clock_() {}
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);

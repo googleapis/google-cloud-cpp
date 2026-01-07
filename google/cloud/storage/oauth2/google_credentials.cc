@@ -51,7 +51,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     std::string const& path, bool non_service_account_ok,
     absl::optional<std::set<std::string>> service_account_scopes,
     absl::optional<std::string> service_account_subject,
-    ChannelOptions const& options) {
+    Options const& options) {
   std::ifstream ifs(path);
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
@@ -119,7 +119,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
     bool non_service_account_ok,
     absl::optional<std::set<std::string>> service_account_scopes,
     absl::optional<std::string> service_account_subject,
-    ChannelOptions const& options = {}) {
+    Options const& options = {}) {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
   if (path.empty()) {
@@ -146,7 +146,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
 }
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    ChannelOptions const& options) {
+    Options const& options) {
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
   auto creds = MaybeLoadCredsFromAdcPaths(true, {}, {}, options);
@@ -181,7 +181,7 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents,
-                                                ChannelOptions const& options) {
+                                                Options const& options) {
   auto info = ParseAuthorizedUserCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
@@ -216,7 +216,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options) {
+    absl::optional<std::string> subject, Options const& options) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
@@ -234,7 +234,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options) {
+    absl::optional<std::string> subject, Options const& options) {
   auto info = ParseServiceAccountP12File(path);
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
@@ -253,14 +253,14 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path) {
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromDefaultPaths(ChannelOptions const& options) {
+CreateServiceAccountCredentialsFromDefaultPaths(Options const& options) {
   return CreateServiceAccountCredentialsFromDefaultPaths({}, {}, options);
 }
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
     absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options) {
+    absl::optional<std::string> subject, Options const& options) {
   auto creds = MaybeLoadCredsFromAdcPaths(false, std::move(scopes),
                                           std::move(subject), options);
   if (!creds) {
@@ -280,7 +280,7 @@ CreateServiceAccountCredentialsFromDefaultPaths(
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
-                                                ChannelOptions const& options) {
+                                                Options const& options) {
   return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {},
                                                          options);
 }
@@ -288,7 +288,7 @@ CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options) {
+    absl::optional<std::string> subject, Options const& options) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());

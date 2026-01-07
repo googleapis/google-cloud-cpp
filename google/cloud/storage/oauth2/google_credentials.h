@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_GOOGLE_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_GOOGLE_CREDENTIALS_H
 
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/options.h"
 #include "absl/types/optional.h"
 #include <memory>
 #include <set>
@@ -48,7 +48,7 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    ChannelOptions const& options = {});
+    Options const& options = {});
 
 ///@{
 /**
@@ -93,8 +93,8 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonContents(
-    std::string const& contents, ChannelOptions const& options = {});
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents,
+                                                Options const& options = {});
 
 ///@{
 /**
@@ -197,7 +197,7 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options = {});
+    absl::optional<std::string> subject, Options const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a P12 file at the specified path.
@@ -241,7 +241,7 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options = {});
+    absl::optional<std::string> subject, Options const& options = {});
 ///@}
 
 /**
@@ -265,8 +265,7 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromDefaultPaths(
-    ChannelOptions const& options = {});
+CreateServiceAccountCredentialsFromDefaultPaths(Options const& options = {});
 
 /**
  * Produces a ServiceAccountCredentials type by trying to load the standard
@@ -300,7 +299,7 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
     absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options = {});
+    absl::optional<std::string> subject, Options const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a JSON string.
@@ -315,8 +314,8 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed in v4.0.0 and later. Prefer using the "
     "unified credentials documented in @ref guac.")
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, ChannelOptions const& options = {});
+CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
+                                                Options const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a JSON string.
@@ -346,7 +345,7 @@ GOOGLE_CLOUD_CPP_DEPRECATED(
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, ChannelOptions const& options = {});
+    absl::optional<std::string> subject, Options const& options = {});
 
 /**
  * Creates a ComputeEngineCredentials for the VM's default service account.
