@@ -88,7 +88,6 @@ add_library(
     admin/internal/instance_admin_tracing_connection.h
     admin/internal/instance_admin_tracing_stub.cc
     admin/internal/instance_admin_tracing_stub.h
-    admin/retry_traits.h
     backoff_policy.h
     backup.cc
     backup.h

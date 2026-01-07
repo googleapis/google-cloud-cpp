@@ -45,7 +45,6 @@ google_cloud_cpp_spanner_hdrs = [
     "admin/internal/instance_admin_stub_factory.h",
     "admin/internal/instance_admin_tracing_connection.h",
     "admin/internal/instance_admin_tracing_stub.h",
-    "admin/retry_traits.h",
     "backoff_policy.h",
     "backup.h",
     "batch_dml_result.h",
