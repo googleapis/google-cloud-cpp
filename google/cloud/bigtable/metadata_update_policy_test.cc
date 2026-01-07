@@ -79,7 +79,9 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
 }
 
 TEST_F(MetadataUpdatePolicyTest, TableAppProfileMetadata) {
-  auto table = Table(data_client_, "profile", kTableId);
+  auto table =
+      Table(data_connection_, TableResource(kProjectId, kInstanceId, kTableId),
+            Options{}.set<AppProfileIdOption>("profile"));
   grpc::string expected =
       "table_name=" + google::cloud::internal::UrlEncode(kTableName) +
       "&app_profile_id=profile";

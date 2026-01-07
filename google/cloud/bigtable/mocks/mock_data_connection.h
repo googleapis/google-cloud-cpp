@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 

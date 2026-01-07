@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BULK_MUTATOR_H
 
 #include "google/cloud/bigtable/completion_queue.h"
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
@@ -123,10 +122,6 @@ class BulkMutator {
 
   /// Return true if there are pending mutations in the mutator
   bool HasPendingMutations() const { return state_.HasPendingMutations(); }
-
-  /// Synchronously send one batch request to the given stub.
-  grpc::Status MakeOneRequest(bigtable::DataClient& client,
-                              grpc::ClientContext& client_context);
 
   /// Synchronously send one batch request to the given stub.
   Status MakeOneRequest(BigtableStub& stub, MutateRowsLimiter& limiter,
