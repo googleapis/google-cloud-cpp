@@ -88,7 +88,6 @@ add_library(
     admin/internal/instance_admin_tracing_connection.h
     admin/internal/instance_admin_tracing_stub.cc
     admin/internal/instance_admin_tracing_stub.h
-    admin/retry_traits.h
     backoff_policy.h
     backup.cc
     backup.h
@@ -97,7 +96,6 @@ add_library(
     bytes.h
     client.cc
     client.h
-    client_options.h
     commit_options.cc
     commit_options.h
     commit_result.h
@@ -456,7 +454,6 @@ function (spanner_client_define_tests)
         # cmake-format: sort
         backup_test.cc
         bytes_test.cc
-        client_options_test.cc
         client_test.cc
         commit_options_test.cc
         connection_options_test.cc

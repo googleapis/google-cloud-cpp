@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_CLIENT_H
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
-#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/admin_client_params.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include <memory>
 #include <string>
@@ -64,16 +64,6 @@ class AdminClient final {
 /// Create a new table admin client configured via @p options.
 std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
                                              Options options = {});
-
-/**
- * Create a new table admin client configured via @p options.
- *
- * @deprecated use the `MakeAdminClient` method which accepts
- * `google::cloud::Options` instead.
- */
-GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeAdminClient` instead")
-std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
-                                                      ClientOptions options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

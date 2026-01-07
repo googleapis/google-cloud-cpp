@@ -44,6 +44,14 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+<details>
+<summary>Removed <code>bigquery/retry_traits.h</code> file</summary>
+
+The library no longer exposes the `google/cloud/bigquery/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Bigtable
 
 <details>
@@ -105,6 +113,122 @@ for (auto& row : table.ReadRows(
 </details>
 
 <details>
+  <summary>Removed <code>bigtable::ClientOptions</code>
+</summary>
+#### `bigtable::ClientOptions`
+
+The deprecated `bigtable::ClientOptions` has been removed. Please use
+`google::cloud::Options` instead.
+
+The following table shows the mapping from `bigtable::ClientOptions` methods to
+their `google::cloud::Options` equivalents:
+
+| `bigtable::ClientOptions` method    | `google::cloud::Options` equivalent                                                             |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `(constructor)`                     | `google::cloud::Options{}`                                                                      |
+| `set_data_endpoint`                 | `google::cloud::EndpointOption`                                                                 |
+| `set_admin_endpoint`                | `google::cloud::EndpointOption`                                                                 |
+| `set_connection_pool_name`          | `google::cloud::GrpcChannelArgumentsOption` or`google::cloud::GrpcChannelArgumentsNativeOption` |
+| `set_connection_pool_size`          | `google::cloud::GrpcNumChannelsOption`                                                          |
+| `SetCredentials`                    | `google::cloud::GrpcCredentialOption`                                                           |
+| `set_channel_arguments`             | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetCompressionAlgorithm`           | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetGrpclbFallbackTimeout`          | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetUserAgentPrefix`                | `google::cloud::UserAgentProductsOption` or`google::cloud::GrpcChannelArgumentsNativeOption`    |
+| `SetResourceQuota`                  | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetMaxReceiveMessageSize`          | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetMaxSendMessageSize`             | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetLoadBalancingPolicyName`        | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetServiceConfigJSON`              | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetSslTargetNameOverride`          | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `enable_tracing`, `disable_tracing` | `google::cloud::LoggingComponentsOption`                                                        |
+| `tracing_options`                   | `google::cloud::GrpcTracingOptionsOption`                                                       |
+| `set_max_conn_refresh_period`       | `bigtable::MaxConnectionRefreshOption`                                                          |
+| `set_min_conn_refresh_period`       | `bigtable::MinConnectionRefreshOption`                                                          |
+| `set_background_thread_pool_size`   | `google::cloud::GrpcBackgroundThreadPoolSizeOption`                                             |
+| `DisableBackgroundThreads`          | `google::cloud::GrpcCompletionQueueOption`                                                      |
+
+Example usage of the replacements can be found below.
+
+**Before:**
+
+```cpp
+auto client = bigtable::Client(
+    bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::Client(
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultDataClient`
+
+The deprecated `bigtable::CreateDefaultDataClient` function has been removed.
+Please use `bigtable::MakeDataClient` instead.
+
+**Before:**
+
+```cpp
+auto client = bigtable::CreateDefaultDataClient(
+    "my-project", "my-instance",
+    bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::MakeDataClient(
+    "my-project", "my-instance",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultAdminClient`
+
+The deprecated `bigtable::CreateDefaultAdminClient` function has been removed.
+Please use `bigtable::MakeAdminClient` instead.
+
+**Before:**
+
+```cpp
+auto client = bigtable::CreateDefaultAdminClient(
+    "my-project", bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::MakeAdminClient(
+    "my-project",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultInstanceAdminClient`
+
+The deprecated `bigtable::CreateDefaultInstanceAdminClient` function has been
+removed. Please use `bigtable::MakeInstanceAdminClient` instead.
+
+**Before:**
+
+```cpp
+auto client = bigtable::CreateDefaultInstanceAdminClient(
+    "my-project", bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::MakeInstanceAdminClient(
+    "my-project",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+</details>
+
+<details>
+
 <summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
 </summary>
 
@@ -140,6 +264,15 @@ auto options = google::cloud::Options{}.set<google::cloud::bigtable::DataEndpoin
 ```cpp
 auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("...");
 ```
+<summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
+
+The `bigtable::DataClient` class and its associated factory functions (e.g.,
+`MakeDataClient`) have been removed. Applications should now use
+`bigtable::DataConnection` and `bigtable::MakeDataConnection()` instead. For
+detailed migration steps and examples, please refer to the official migration
+guide:
+
+[Migrating from DataClient to DataConnection](https://docs.cloud.google.com/cpp/docs/reference/bigtable/latest/migrating-from-dataclient)
 
 </details>
 
@@ -147,4 +280,64 @@ auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("..."
 
 ### Spanner
 
+<details>
+<summary>Removed <code>spanner::ClientOptions</code> class</summary>
+
+The `spanner::ClientOptions` class has been removed. Use
+`google::cloud::Options` instead to set the following as needed:
+
+- `spanner::QueryOptimizerVersionOption`
+- `spanner::QueryOptimizerStatisticsPackageOption`
+- `spanner::RequestPriorityOption`
+- `spanner::RequestTagOption`
+
+**Before:**
+
+```cpp
+#include "google/cloud/spanner/client.h"
+
+// ...
+
+namespace spanner = ::google::cloud::spanner;
+auto client_options = spanner::ClientOptions().set_query_options(
+    spanner::QueryOptions().set_optimizer_version("1"));
+
+auto client = spanner::Client(connection, client_options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/options.h"
+
+// ...
+
+namespace spanner = ::google::cloud::spanner;
+auto options = google::cloud::Options{}.set<spanner::QueryOptimizerVersionOption>("1");
+
+auto client = spanner::Client(connection, options);
+```
+
+</details>
+
+<details>
+
+<summary>Removed <code>admin/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Storage
+
+### IAM
+
+<details>
+<summary>Removed <code>iam/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
+only contained internal symbols.
+
+</details>

@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
+#include "google/cloud/grpc_options.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"

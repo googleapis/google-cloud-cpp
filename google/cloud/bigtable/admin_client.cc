@@ -28,12 +28,6 @@ std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
       new AdminClient(std::move(project), std::move(params)));
 }
 
-std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
-                                                      ClientOptions options) {
-  return MakeAdminClient(std::move(project),
-                         internal::MakeOptions(std::move(options)));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud

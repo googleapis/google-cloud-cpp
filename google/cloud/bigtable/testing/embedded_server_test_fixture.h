@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/bigtable/testing/inprocess_data_client.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gtest/gtest.h>
 #include <string>
@@ -79,7 +78,7 @@ class EmbeddedServerTestFixture : public ::testing::Test {
 
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
-  std::shared_ptr<DataClient> data_client_;
+  std::shared_ptr<DataConnection> data_connection_;
   std::shared_ptr<bigtable::Table> table_;
   std::thread wait_thread_;
   BigtableImpl bigtable_service_;

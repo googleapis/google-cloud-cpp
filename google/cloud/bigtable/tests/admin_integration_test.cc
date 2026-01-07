@@ -155,7 +155,8 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
 
   // Create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
-  bigtable::Table table(data_client_, table_id);
+  bigtable::Table table(MakeDataConnection(),
+                        TableResource(project_id(), instance_id(), table_id));
 
   // List tables
   auto tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
@@ -258,7 +259,6 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // to propagate to both clusters. First create a `bigtable::Table` object.
   auto table = Table(MakeDataConnection(),
                      TableResource(project_id(), id, random_table_id));
-
   // Insert some cells into the table.
   std::string const row_key1 = "check-consistency-row1";
   std::string const row_key2 = "check-consistency-row2";
@@ -318,7 +318,8 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
 
   // Create table
   ASSERT_STATUS_OK(table_admin->CreateTable(table_id, table_config));
-  bigtable::Table table(data_client_, table_id);
+  bigtable::Table table(MakeDataConnection(),
+                        TableResource(project_id(), instance_id(), table_id));
 
   // List tables
   auto tables = table_admin->ListTables(btadmin::Table::NAME_ONLY);
