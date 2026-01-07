@@ -132,6 +132,18 @@ struct EncryptionEnforcementConfigName<
  *     Service.
  */
 struct BucketEncryption {
+  BucketEncryption() = default;
+  explicit BucketEncryption(std::string default_kms_key_name)
+      : default_kms_key_name(std::move(default_kms_key_name)) {}
+  BucketEncryption(std::string default_kms_key_name,
+                   GoogleManagedEncryptionEnforcementConfig gmek,
+                   CustomerManagedEncryptionEnforcementConfig cmek,
+                   CustomerSuppliedEncryptionEnforcementConfig csek)
+      : default_kms_key_name(std::move(default_kms_key_name)),
+        google_managed_encryption_enforcement_config(std::move(gmek)),
+        customer_managed_encryption_enforcement_config(std::move(cmek)),
+        customer_supplied_encryption_enforcement_config(std::move(csek)) {}
+
   std::string default_kms_key_name;
   GoogleManagedEncryptionEnforcementConfig
       google_managed_encryption_enforcement_config;
