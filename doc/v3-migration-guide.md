@@ -44,6 +44,16 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+### Bigquery
+
+<details>
+<summary>Removed <code>bigquery/retry_traits.h</code> file</summary>
+
+The library no longer exposes the `google/cloud/bigquery/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Bigtable
 
 <details>
@@ -138,6 +148,14 @@ guide:
 ### Pubsub
 
 ### Spanner
+
+<details>
+<summary>Removed <code>admin/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
 
 ### Storage
 
@@ -254,7 +272,7 @@ Use the following table to map `ChannelOptions` setters to
 </details>
 
 <details>
-<summary><code>Client</code> Constructor</summary>
+<summary><code>Client</code> Constructor removal</summary>
 
 The constructor `Client(ClientOptions)` is removed. The default constructor
 `Client()` generally uses default options and default credentials. To customize,
@@ -284,5 +302,17 @@ void CreateClient() {
       google::cloud::Options{}.set<google::cloud::storage::Oauth2CredentialsOption>(credentials));
 }
 ```
+
+</details>
+
+### IAM
+
+<details>
+
+<summary>Removed <code>iam/retry_traits.h</code> file</summary>
+
+</details>
+The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
+only contained internal symbols.
 
 </details>
