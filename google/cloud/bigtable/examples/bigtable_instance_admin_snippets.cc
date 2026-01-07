@@ -23,6 +23,7 @@
 #include "google/cloud/location.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include "absl/strings/match.h"
 #include <iterator>
 
 namespace {
