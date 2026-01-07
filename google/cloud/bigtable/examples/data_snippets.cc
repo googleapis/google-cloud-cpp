@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
+#include "google/cloud/grpc_options.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/table.h"

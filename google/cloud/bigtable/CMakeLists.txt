@@ -122,8 +122,6 @@ add_library(
     cluster_list_responses.h
     column_family.h
     completion_queue.h
-    data_client.cc
-    data_client.h
     data_connection.cc
     data_connection.h
     expr.cc
@@ -195,16 +193,6 @@ add_library(
     internal/endpoint_options.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
-    internal/legacy_async_bulk_apply.cc
-    internal/legacy_async_bulk_apply.h
-    internal/legacy_async_row_reader.cc
-    internal/legacy_async_row_reader.h
-    internal/legacy_async_row_sampler.cc
-    internal/legacy_async_row_sampler.h
-    internal/legacy_row_reader.cc
-    internal/legacy_row_reader.h
-    internal/logging_data_client.cc
-    internal/logging_data_client.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
     internal/metrics.cc
@@ -403,11 +391,8 @@ if (BUILD_TESTING)
         testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
         testing/embedded_server_test_fixture.h
-        testing/inprocess_data_client.cc
-        testing/inprocess_data_client.h
         testing/mock_async_failing_rpc_factory.h
         testing/mock_bigtable_stub.h
-        testing/mock_data_client.h
         testing/mock_mutate_rows_limiter.h
         testing/mock_mutate_rows_reader.h
         testing/mock_partial_result_set_reader.h
@@ -418,9 +403,7 @@ if (BUILD_TESTING)
         testing/random_names.cc
         testing/random_names.h
         testing/table_integration_test.cc
-        testing/table_integration_test.h
-        testing/table_test_fixture.cc
-        testing/table_test_fixture.h)
+        testing/table_integration_test.h)
     target_link_libraries(
         bigtable_client_testing
         PUBLIC google-cloud-cpp::bigtable
@@ -456,7 +439,6 @@ if (BUILD_TESTING)
         client_test.cc
         cluster_config_test.cc
         column_family_test.cc
-        data_client_test.cc
         data_connection_test.cc
         expr_test.cc
         filters_test.cc
@@ -485,12 +467,6 @@ if (BUILD_TESTING)
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
-        internal/legacy_async_bulk_apply_test.cc
-        internal/legacy_async_row_reader_test.cc
-        internal/legacy_async_row_sampler_test.cc
-        internal/legacy_bulk_mutator_test.cc
-        internal/legacy_row_reader_test.cc
-        internal/logging_data_client_test.cc
         internal/logging_result_set_reader_test.cc
         internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
@@ -504,7 +480,6 @@ if (BUILD_TESTING)
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         internal/tuple_utils_test.cc
-        legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
@@ -522,15 +497,8 @@ if (BUILD_TESTING)
         rpc_retry_policy_test.cc
         sql_statement_test.cc
         table_admin_test.cc
-        table_apply_test.cc
-        table_bulk_apply_test.cc
-        table_check_and_mutate_row_test.cc
         table_config_test.cc
-        table_readmodifywriterow_test.cc
-        table_readrow_test.cc
-        table_readrows_test.cc
         table_resource_test.cc
-        table_sample_row_keys_test.cc
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc

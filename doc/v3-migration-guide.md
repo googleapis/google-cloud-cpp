@@ -44,6 +44,14 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+<details>
+<summary>Removed <code>bigquery/retry_traits.h</code> file</summary>
+
+The library no longer exposes the `google/cloud/bigquery/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Bigtable
 
 <details>
@@ -105,6 +113,7 @@ for (auto& row : table.ReadRows(
 </details>
 
 <details>
+
 <summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
 </summary>
 
@@ -143,8 +152,39 @@ auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("..."
 
 </details>
 
+<details>
+<summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
+
+The `bigtable::DataClient` class and its associated factory functions (e.g.,
+`MakeDataClient`) have been removed. Applications should now use
+`bigtable::DataConnection` and `bigtable::MakeDataConnection()` instead. For
+detailed migration steps and examples, please refer to the official migration
+guide:
+
+[Migrating from DataClient to DataConnection](https://docs.cloud.google.com/cpp/docs/reference/bigtable/latest/migrating-from-dataclient)
+
+</details>
+
 ### Pubsub
 
 ### Spanner
 
+<details>
+<summary>Removed <code>admin/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
+file. It only contained internal symbols.
+
+</details>
+
 ### Storage
+
+### IAM
+
+<details>
+<summary>Removed <code>iam/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
+only contained internal symbols.
+
+</details>
