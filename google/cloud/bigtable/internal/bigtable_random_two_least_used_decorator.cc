@@ -299,6 +299,21 @@ BigtableRandomTwoLeastUsed::AsyncCheckAndMutateRow(
   return result;
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableRandomTwoLeastUsed::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  auto child = Child();
+  auto stub = child->AcquireStub();
+  auto result = stub->AsyncPingAndWarm(cq, std::move(context),
+                                       std::move(options), request);
+  child->ReleaseStub();
+  return result;
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableRandomTwoLeastUsed::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,

@@ -111,6 +111,14 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
                google::cloud::internal::ImmutableOptions,
                google::bigtable::v2::CheckAndMutateRowRequest const&),
               (override));
+  MOCK_METHOD(future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>,
+              AsyncPingAndWarm,
+              (google::cloud::CompletionQueue&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
+               google::bigtable::v2::PingAndWarmRequest const&),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>,
       AsyncReadModifyWriteRow,
