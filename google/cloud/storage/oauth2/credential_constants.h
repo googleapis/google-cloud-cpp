@@ -14,7 +14,7 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIAL_CONSTANTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIAL_CONSTANTS_H
-
+#if 0
 #include "google/cloud/storage/version.h"
 #include <chrono>
 
@@ -101,5 +101,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
+#endif
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIAL_CONSTANTS_H
