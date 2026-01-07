@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H
 
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/curl/request_builder.h"
 #include "google/cloud/storage/internal/http_response.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -246,7 +246,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
       : ServiceAccountCredentials(std::move(info), {}) {}
   ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
-                            ChannelOptions const& options);
+                            Options options);
 
   StatusOr<std::string> AuthorizationHeader() override {
     return oauth2_internal::AuthenticationHeaderJoined(*impl_);
@@ -295,11 +295,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
       : ServiceAccountCredentials(std::move(info), {}) {}
-  ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
-                            ChannelOptions const& options)
-      : info_(std::move(info)),
-        options_(Options{}.set<CARootsFilePathOption>(options.ssl_root_path())),
-        clock_() {}
+  ServiceAccountCredentials(ServiceAccountCredentialsInfo info, Options options)
+      : info_(std::move(info)), options_(std::move(options)), clock_() {}
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);

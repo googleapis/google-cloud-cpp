@@ -32,7 +32,6 @@ class TracingConnection : public storage::internal::StorageConnection {
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
   ~TracingConnection() override = default;
 
-  storage::ClientOptions const& client_options() const override;
   Options options() const override;
 
   StatusOr<storage::internal::ListBucketsResponse> ListBuckets(

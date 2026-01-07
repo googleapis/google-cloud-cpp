@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/internal/rest/request_builder.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_client.h"

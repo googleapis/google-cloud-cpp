@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest/stub.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
@@ -31,6 +32,7 @@
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"

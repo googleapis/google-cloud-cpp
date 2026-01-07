@@ -197,7 +197,6 @@ TEST_F(BucketTest, CreateBucket) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, client_options()).Times(0);
   EXPECT_CALL(*mock_, CreateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketRequest const& r) {
