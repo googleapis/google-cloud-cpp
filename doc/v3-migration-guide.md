@@ -302,9 +302,9 @@ auto client = spanner::Client(connection, options);
 ```
 
 </details>
-  
+
 <details>
-  
+
 <summary>Removed <code>admin/retry_traits.h</code> file</summary>
 
 The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
