@@ -265,6 +265,39 @@ guide:
 ### Spanner
 
 <details>
+<summary>Removed <code>spanner::MakeTestRow</code>
+</summary>
+
+The `spanner::MakeTestRow` functions have been removed. Please use
+`spanner_mocks::MakeRow` instead.
+
+**Before:**
+
+```cpp
+#include "google/cloud/spanner/row.h"
+
+// ...
+
+auto row = google::cloud::spanner::MakeTestRow(
+    {{"c0", google::cloud::spanner::Value(42)}});
+auto row2 = google::cloud::spanner::MakeTestRow(1, "foo", true);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/spanner/mocks/row.h"
+
+// ...
+
+auto row = google::cloud::spanner_mocks::MakeRow(
+    {{"c0", google::cloud::spanner::Value(42)}});
+auto row2 = google::cloud::spanner_mocks::MakeRow(1, "foo", true);
+```
+
+</details>
+
+<details>
 <summary>Removed <code>spanner::ClientOptions</code> class</summary>
 
 The `spanner::ClientOptions` class has been removed. Use
