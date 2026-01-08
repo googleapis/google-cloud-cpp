@@ -258,7 +258,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       ParseCustomTime,
       ParseCustomerEncryption,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        return SetStringField(meta, json, "eTag", &ObjectMetadata::set_etag);
+        return SetStringField(meta, json, "etag", &ObjectMetadata::set_etag);
       },
       ParseEventBasedHold,
       ParseGeneration,
