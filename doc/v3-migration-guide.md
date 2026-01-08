@@ -369,6 +369,44 @@ file. It only contained internal symbols.
 
 </details>
 
+<details>
+<summary>Removed Admin Clients from <code>spanner</code> namespace</summary>
+
+The `DatabaseAdminClient` and `InstanceAdminClient` classes (and their
+associated connection classes and factory functions) have been removed from the
+`google::cloud::spanner` namespace. Please use the replacements in
+`google::cloud::spanner_admin`.
+
+**Before:**
+
+```cpp
+#include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/instance_admin_client.h"
+
+namespace spanner = ::google::cloud::spanner;
+
+void Function(spanner::DatabaseAdminClient db_admin,
+              spanner::InstanceAdminClient in_admin) {
+  // ...
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/spanner/admin/database_admin_client.h"
+#include "google/cloud/spanner/admin/instance_admin_client.h"
+
+namespace spanner_admin = ::google::cloud::spanner_admin;
+
+void Function(spanner_admin::DatabaseAdminClient db_admin,
+              spanner_admin::InstanceAdminClient in_admin) {
+  // ...
+}
+```
+
+</details>
+
 ### Storage
 
 <details>
