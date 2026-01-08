@@ -2,6 +2,7 @@ if (NOT GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
     return()
 endif ()
 
+find_package(Perl REQUIRED)
 set(output_dir "${PROJECT_BINARY_DIR}/product-neutral-guides/docfx")
 
 # Define the guide files in separate lists to avoid string(SPLIT).
@@ -20,12 +21,17 @@ if(num_guides GREATER 0)
         list(GET guide_display_names ${i} display_name)
 
         set(destination "${output_dir}/${target_name}.md")
+        set(url_prefix "https://github.com/googleapis/google-cloud-cpp/blob/main")
+        # Use the perl regex. The single quotes around the s|...|g
+        # expression are for the shell, which passes it to perl.
+        set(perl_command "${PERL_EXECUTABLE} -pe 's|\\[(.*?)\\]\\((/?)([^:h#][^)]*)\\)|[\$1](${url_prefix}/\$3)|g'")
         add_custom_command(
             OUTPUT "${destination}"
             COMMAND ${CMAKE_COMMAND} -E make_directory "${output_dir}"
-            COMMAND ${CMAKE_COMMAND} -E copy "${source_file}" "${destination}"
+            COMMAND sh -c "${perl_command} '${source_file}' > '${destination}'"
             DEPENDS "${source_file}"
-            COMMENT "Copying ${source_file} to ${destination}"
+            COMMENT "Copying and transforming ${source_file} to ${destination}"
+            VERBATIM
         )
         list(APPEND copied_files "${destination}")
 
