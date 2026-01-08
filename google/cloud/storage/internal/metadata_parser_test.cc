@@ -269,7 +269,8 @@ TEST(MetadataParserTest, ParseInvalidStringFieldType) {
               ::testing::HasSubstr("Error parsing field <field> as a string"));
 }
 
-/// @test Verify that we return an error for complex types where a string is expected.
+/// @test Verify that we return an error for complex types where a string is
+/// expected.
 TEST(MetadataParserTest, ParseInvalidStringFieldTypeComplex) {
   std::string text = R"""({
       "field": [1, 2, 3]
@@ -279,7 +280,6 @@ TEST(MetadataParserTest, ParseInvalidStringFieldTypeComplex) {
   EXPECT_THAT(ParseStringField(json_object, "field"),
               StatusIs(StatusCode::kInvalidArgument));
 }
-
 
 TEST(MetadataParserTest, NotJsonObject) {
   EXPECT_THAT(NotJsonObject(nlohmann::json{}, GCP_ERROR_INFO()),

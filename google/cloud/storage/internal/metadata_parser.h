@@ -89,7 +89,6 @@ StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
 StatusOr<std::string> ParseStringField(nlohmann::json const& json,
                                        char const* field_name);
 
-
 /// Return an error indicating that `j` is not a JSON object (it may be a
 /// string, or other valid JSON)
 Status NotJsonObject(nlohmann::json const& j,
