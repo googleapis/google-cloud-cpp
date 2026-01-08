@@ -180,9 +180,12 @@ TEST(OptionsTest, EndpointOptionOverridden) {
 TEST(OptionsTest, DefaultDataOptionsEndpoint) {
   auto options =
       Options{}
-          .set<DataEndpointOption>("data.googleapis.com")
-          .set<AdminEndpointOption>("tableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "data.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "tableadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "instanceadmin.googleapis.com");
   options = DefaultDataOptions(std::move(options));
   EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
 
