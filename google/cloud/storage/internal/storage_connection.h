@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_CONNECTION_H
 
 #include "google/cloud/storage/bucket_metadata.h"
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
@@ -56,8 +55,6 @@ class ObjectReadStreambuf;
 class StorageConnection {
  public:
   virtual ~StorageConnection() = default;
-
-  virtual ClientOptions const& client_options() const = 0;
 
   virtual google::cloud::Options options() const { return {}; }
 

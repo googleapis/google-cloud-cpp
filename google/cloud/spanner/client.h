@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_CLIENT_H
 
 #include "google/cloud/spanner/batch_dml_result.h"
-#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
@@ -716,15 +715,6 @@ class Client {
    */
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement,
                                                        Options opts = {});
-
-  ///@{
-  /// @name Backwards compatibility for ClientOptions.
-  explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
-      : Client(std::move(conn), Options(opts)) {}
-  explicit Client(std::shared_ptr<Connection> conn,
-                  std::initializer_list<internal::NonConstructible>)
-      : Client(std::move(conn)) {}
-  ///@}
 
   ///@{
   /// @name Backwards compatibility for ReadOptions.

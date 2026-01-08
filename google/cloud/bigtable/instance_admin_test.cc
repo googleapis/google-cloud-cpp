@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_instance_admin_connection.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/location.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/status_matchers.h"

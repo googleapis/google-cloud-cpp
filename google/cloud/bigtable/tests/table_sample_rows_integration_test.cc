@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

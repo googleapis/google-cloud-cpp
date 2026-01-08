@@ -44,6 +44,8 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+### Bigquery
+
 <details>
 <summary>Removed <code>bigquery/retry_traits.h</code> file</summary>
 
@@ -113,6 +115,121 @@ for (auto& row : table.ReadRows(
 </details>
 
 <details>
+  <summary>Removed <code>bigtable::ClientOptions</code>
+</summary>
+#### `bigtable::ClientOptions`
+
+The deprecated `bigtable::ClientOptions` has been removed. Please use
+`google::cloud::Options` instead.
+
+The following table shows the mapping from `bigtable::ClientOptions` methods to
+their `google::cloud::Options` equivalents:
+
+| `bigtable::ClientOptions` method    | `google::cloud::Options` equivalent                                                             |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `(constructor)`                     | `google::cloud::Options{}`                                                                      |
+| `set_data_endpoint`                 | `google::cloud::EndpointOption`                                                                 |
+| `set_admin_endpoint`                | `google::cloud::EndpointOption`                                                                 |
+| `set_connection_pool_name`          | `google::cloud::GrpcChannelArgumentsOption` or`google::cloud::GrpcChannelArgumentsNativeOption` |
+| `set_connection_pool_size`          | `google::cloud::GrpcNumChannelsOption`                                                          |
+| `SetCredentials`                    | `google::cloud::GrpcCredentialOption`                                                           |
+| `set_channel_arguments`             | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetCompressionAlgorithm`           | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetGrpclbFallbackTimeout`          | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetUserAgentPrefix`                | `google::cloud::UserAgentProductsOption` or`google::cloud::GrpcChannelArgumentsNativeOption`    |
+| `SetResourceQuota`                  | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetMaxReceiveMessageSize`          | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetMaxSendMessageSize`             | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetLoadBalancingPolicyName`        | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetServiceConfigJSON`              | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `SetSslTargetNameOverride`          | `google::cloud::GrpcChannelArgumentsNativeOption`                                               |
+| `enable_tracing`, `disable_tracing` | `google::cloud::LoggingComponentsOption`                                                        |
+| `tracing_options`                   | `google::cloud::GrpcTracingOptionsOption`                                                       |
+| `set_max_conn_refresh_period`       | `bigtable::MaxConnectionRefreshOption`                                                          |
+| `set_min_conn_refresh_period`       | `bigtable::MinConnectionRefreshOption`                                                          |
+| `set_background_thread_pool_size`   | `google::cloud::GrpcBackgroundThreadPoolSizeOption`                                             |
+| `DisableBackgroundThreads`          | `google::cloud::GrpcCompletionQueueOption`                                                      |
+
+Example usage of the replacements can be found below.
+
+**Before:**
+
+```cpp
+auto client = bigtable::Client(
+    bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::Client(
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultDataClient`
+
+The deprecated `bigtable::CreateDefaultDataClient` function has been removed.
+Please use `bigtable::MakeDataClient` instead.
+
+**Before:**
+
+```cpp
+auto client = bigtable::CreateDefaultDataClient(
+    "my-project", "my-instance",
+    bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::MakeDataClient(
+    "my-project", "my-instance",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultAdminClient`
+
+The deprecated `bigtable::CreateDefaultAdminClient` function has been removed.
+Please use `bigtable::MakeAdminClient` instead.
+
+**Before:**
+
+```cpp
+auto client = bigtable::CreateDefaultAdminClient(
+    "my-project", bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::MakeAdminClient(
+    "my-project",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+#### `bigtable::CreateDefaultInstanceAdminClient`
+
+The deprecated `bigtable::CreateDefaultInstanceAdminClient` function has been
+removed. Please use `bigtable::MakeInstanceAdminClient` instead.
+
+**Before:**
+
+```cpp
+auto client = bigtable::CreateDefaultInstanceAdminClient(
+    "my-project", bigtable::ClientOptions().set_connection_pool_size(4));
+```
+
+**After:**
+
+```cpp
+auto client = bigtable::MakeInstanceAdminClient(
+    "my-project",
+    google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(4));
+```
+
+</details>
+
+<details>
 
 <summary>Removed <code>bigtable::AsyncRowReader<>::NO_ROWS_LIMIT</code>
 </summary>
@@ -148,6 +265,81 @@ guide:
 ### Spanner
 
 <details>
+<summary>Removed <code>spanner::MakeTestRow</code>
+</summary>
+
+The `spanner::MakeTestRow` functions have been removed. Please use
+`spanner_mocks::MakeRow` instead.
+
+**Before:**
+
+```cpp
+#include "google/cloud/spanner/row.h"
+
+// ...
+
+auto row = google::cloud::spanner::MakeTestRow(
+    {{"c0", google::cloud::spanner::Value(42)}});
+auto row2 = google::cloud::spanner::MakeTestRow(1, "foo", true);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/spanner/mocks/row.h"
+
+// ...
+
+auto row = google::cloud::spanner_mocks::MakeRow(
+    {{"c0", google::cloud::spanner::Value(42)}});
+auto row2 = google::cloud::spanner_mocks::MakeRow(1, "foo", true);
+```
+
+</details>
+
+<details>
+<summary>Removed <code>spanner::ClientOptions</code> class</summary>
+
+The `spanner::ClientOptions` class has been removed. Use
+`google::cloud::Options` instead to set the following as needed:
+
+- `spanner::QueryOptimizerVersionOption`
+- `spanner::QueryOptimizerStatisticsPackageOption`
+- `spanner::RequestPriorityOption`
+- `spanner::RequestTagOption`
+
+**Before:**
+
+```cpp
+#include "google/cloud/spanner/client.h"
+
+// ...
+
+namespace spanner = ::google::cloud::spanner;
+auto client_options = spanner::ClientOptions().set_query_options(
+    spanner::QueryOptions().set_optimizer_version("1"));
+
+auto client = spanner::Client(connection, client_options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/options.h"
+
+// ...
+
+namespace spanner = ::google::cloud::spanner;
+auto options = google::cloud::Options{}.set<spanner::QueryOptimizerVersionOption>("1");
+
+auto client = spanner::Client(connection, options);
+```
+
+</details>
+
+<details>
+
 <summary>Removed <code>admin/retry_traits.h</code> file</summary>
 
 The library no longer exposes `google/cloud/spanner/admin/retry_traits.h` header
@@ -157,11 +349,159 @@ file. It only contained internal symbols.
 
 ### Storage
 
+<details>
+<summary><code>ClientOptions</code> is removed</summary>
+
+The `ClientOptions` class is no longer available. You should now use
+`google::cloud::Options` to configure the `Client`.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+
+void CreateClient() {
+  auto credentials = google::cloud::storage::oauth2::GoogleDefaultCredentials().value();
+  auto options = google::cloud::storage::ClientOptions(credentials);
+  options.set_project_id("my-project");
+  options.set_upload_buffer_size(1024 * 1024);
+
+  google::cloud::storage::Client client(options);
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/options.h" // For option structs
+
+void CreateClient() {
+  auto credentials = google::cloud::MakeGoogleDefaultCredentials();
+  auto client = google::cloud::storage::Client(
+      google::cloud::Options{}
+          .set<google::cloud::Oauth2CredentialsOption>(credentials)
+          .set<google::cloud::storage::ProjectIdOption>("my-project")
+          .set<google::cloud::storage::UploadBufferSizeOption>(1024 * 1024));
+}
+```
+
+Use the following table to map `ClientOptions` setters to
+`google::cloud::Options`:
+
+| `ClientOptions` Method                | Replacement Option (`.set<T>(value)`)                   |
+| :------------------------------------ | :------------------------------------------------------ |
+| `set_credentials(c)`                  | `google::cloud::storage::Oauth2CredentialsOption`       |
+| `set_project_id(p)`                   | `google::cloud::storage::ProjectIdOption`               |
+| `set_endpoint(url)`                   | `google::cloud::storage::RestEndpointOption`            |
+| `set_iam_endpoint(url)`               | `google::cloud::storage::IamEndpointOption`             |
+| `SetDownloadBufferSize`               | `google::cloud::storage::DownloadBufferSizeOption`      |
+| `SetUploadBufferSizee`                | `google::cloud::storage::UploadBufferSizeOption`        |
+| `set_maximum_simple_upload_size(s)`   | `google::cloud::storage::MaximumSimpleUploadSizeOption` |
+| `set_enable_http_tracing(true)`       | `google::cloud::LoggingComponentsOption`                |
+| `set_enable_raw_client_tracing(true)` | `google::cloud::LoggingComponentsOption`                |
+
+**Example for Tracing:**
+
+```cpp
+// Before
+options.set_enable_http_tracing(true);
+
+// After
+auto opts = Options{}.lookup<LoggingComponentsOption>().insert("raw-client");
+```
+
+</details>
+
+<details>
+<summary><code>ChannelOptions</code> is removed</summary>
+
+The `ChannelOptions` class is no longer available. You should now use
+`google::cloud::Options` to configure the transport channel.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+
+void CreateClient() {
+  auto options = google::cloud::storage::ChannelOptions()
+      .set_ssl_root_path("path/to/roots.pem");
+
+  auto client = google::cloud::storage::MakeGrpcClient(
+      google::cloud::storage::ClientOptions(), options);
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/common_options.h"
+
+void CreateClient() {
+  auto client = google::cloud::storage::MakeGrpcClient(
+      google::cloud::Options{}.set<google::cloud::CARootsFilePathOption>(
+          "path/to/roots.pem"));
+}
+```
+
+</details>
+
+<details>
+<summary>ChannelOptions Mapping</summary>
+
+Use the following table to map `ChannelOptions` setters to
+`google::cloud::Options`:
+
+| `ChannelOptions` Method | Replacement Option (`.set<T>(value)`)  |
+| :---------------------- | :------------------------------------- |
+| `set_ssl_root_path(p)`  | `google::cloud::CARootsFilePathOption` |
+
+</details>
+
+<details>
+<summary><code>Client</code> Constructor removal</summary>
+
+The constructor `Client(ClientOptions)` is removed. The default constructor
+`Client()` generally uses default options and default credentials. To customize,
+use `Client(Options)`.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+
+void CreateClient() {
+  auto credentials = google::cloud::storage::oauth2::GoogleDefaultCredentials().value();
+  auto options = google::cloud::storage::ClientOptions(credentials);
+  auto client = google::cloud::storage::Client(options);
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/options.h"
+
+void CreateClient() {
+  auto credentials = google::cloud::MakeGoogleDefaultCredentials();
+  auto client = google::cloud::storage::Client(
+      google::cloud::Options{}.set<google::cloud::storage::Oauth2CredentialsOption>(credentials));
+}
+```
+
+</details>
+
 ### IAM
 
 <details>
+
 <summary>Removed <code>iam/retry_traits.h</code> file</summary>
 
+</details>
 The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
 only contained internal symbols.
 

@@ -19,7 +19,6 @@
 spanner_client_unit_tests = [
     "backup_test.cc",
     "bytes_test.cc",
-    "client_options_test.cc",
     "client_test.cc",
     "commit_options_test.cc",
     "connection_options_test.cc",

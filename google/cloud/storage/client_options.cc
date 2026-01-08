@@ -50,16 +50,6 @@ absl::optional<std::string> GetEmulator() {
   return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
 }
 
-StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials(
-    ChannelOptions const& channel_options) {
-  auto emulator = GetEmulator();
-  if (emulator.has_value()) {
-    return StatusOr<std::shared_ptr<oauth2::Credentials>>(
-        oauth2::CreateAnonymousCredentials());
-  }
-  return oauth2::GoogleDefaultCredentials(channel_options);
-}
-
 std::size_t DefaultConnectionPoolSize() {
   std::size_t nthreads = std::thread::hardware_concurrency();
   if (nthreads == 0) {
@@ -116,46 +106,10 @@ std::string RestEndpoint(Options const& options) {
   return GetEmulator().value_or(options.get<RestEndpointOption>());
 }
 
-std::string IamRestEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<IamEndpointOption>());
-}
-
-std::string IamRestPath() {
-  auto emulator = GetEmulator();
-  if (emulator) return "/iamapi";
-  return {};
-}
-
-std::string JsonEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<RestEndpointOption>()) +
-         "/storage/" + options.get<TargetApiVersionOption>();
-}
-
-std::string JsonUploadEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<RestEndpointOption>()) +
-         "/upload/storage/" + options.get<TargetApiVersionOption>();
-}
-
-std::string XmlEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<RestEndpointOption>());
-}
-
 std::string IamEndpoint(Options const& options) {
   auto emulator = GetEmulator();
   if (emulator) return *emulator + "/iamapi";
   return options.get<IamEndpointOption>();
-}
-
-Options MakeOptions(ClientOptions o) {
-  auto opts = std::move(o.opts_);
-  if (!o.channel_options().ssl_root_path().empty()) {
-    opts.set<CARootsFilePathOption>(o.channel_options().ssl_root_path());
-  }
-  return opts;
-}
-
-ClientOptions MakeBackwardsCompatibleClientOptions(Options opts) {
-  return ClientOptions(std::move(opts));
 }
 
 Options ApplyPolicy(Options opts, RetryPolicy const& p) {
@@ -310,67 +264,6 @@ Options DefaultOptionsWithCredentials(Options opts) {
 }
 
 }  // namespace internal
-
-StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
-  return CreateDefaultClientOptions(ChannelOptions{});
-}
-
-StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
-    ChannelOptions const& channel_options) {
-  auto creds = StorageDefaultCredentials(channel_options);
-  if (!creds) return creds.status();
-  return ClientOptions(*creds, channel_options);
-}
-
-ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
-                             ChannelOptions channel_options)
-    : opts_(internal::DefaultOptions(std::move(credentials), {})),
-      channel_options_(std::move(channel_options)) {}
-
-ClientOptions::ClientOptions(Options o)
-    : opts_(std::move(o)),
-      user_agent_prefix_(
-          absl::StrJoin(opts_.get<UserAgentProductsOption>(), " ")) {
-  channel_options_.set_ssl_root_path(opts_.get<CARootsFilePathOption>());
-}
-
-bool ClientOptions::enable_http_tracing() const {
-  return opts_.get<LoggingComponentsOption>().count("http") != 0;
-}
-
-ClientOptions& ClientOptions::set_enable_http_tracing(bool enable) {
-  if (enable) {
-    opts_.lookup<LoggingComponentsOption>().insert("http");
-  } else {
-    opts_.lookup<LoggingComponentsOption>().erase("http");
-  }
-  return *this;
-}
-
-bool ClientOptions::enable_raw_client_tracing() const {
-  return opts_.get<LoggingComponentsOption>().count("raw-client") != 0;
-}
-
-ClientOptions& ClientOptions::set_enable_raw_client_tracing(bool enable) {
-  if (enable) {
-    opts_.lookup<LoggingComponentsOption>().insert("raw-client");
-  } else {
-    opts_.lookup<LoggingComponentsOption>().erase("raw-client");
-  }
-  return *this;
-}
-
-ClientOptions& ClientOptions::SetDownloadBufferSize(std::size_t size) {
-  opts_.set<DownloadBufferSizeOption>(
-      size == 0 ? GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE : size);
-  return *this;
-}
-
-ClientOptions& ClientOptions::SetUploadBufferSize(std::size_t size) {
-  opts_.set<UploadBufferSizeOption>(
-      size == 0 ? GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE : size);
-  return *this;
-}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

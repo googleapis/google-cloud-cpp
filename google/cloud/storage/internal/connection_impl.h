@@ -44,7 +44,6 @@ class StorageConnectionImpl
 
   ~StorageConnectionImpl() override = default;
 
-  ClientOptions const& client_options() const override;
   Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
@@ -188,7 +187,6 @@ class StorageConnectionImpl
 
   std::unique_ptr<storage_internal::GenericStub> stub_;
   Options options_;
-  ClientOptions client_options_;  // For backwards compatibility
   google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
