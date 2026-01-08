@@ -111,7 +111,8 @@ Status ParseMetadata(ObjectMetadata& meta, nlohmann::json const& json) {
   for (auto const& kv : f->items()) {
     if (!kv.value().is_string()) {
       return google::cloud::internal::InvalidArgumentError(
-          "Metadata value for key <") + kv.key() + "> is not a string", GCP_ERROR_INFO());
+          "Metadata value for key <" + kv.key() + "> is not a string",
+          GCP_ERROR_INFO());
     }
     metadata.emplace(kv.key(), kv.value().get<std::string>());
   }
@@ -240,7 +241,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
         return SetStringField(meta, json, "contentEncoding",
-                              &ObjectMetadata::content_encoding);
+                              &ObjectMetadata::set_content_encoding);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
         return SetStringField(meta, json, "contentLanguage",
