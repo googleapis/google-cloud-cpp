@@ -53,21 +53,33 @@ if(num_guides GREATER 0)
         )
         list(APPEND copied_files "${destination}")
 
-        string(APPEND toc_items "    - name: '${display_name}'\n      href: ${target_name}.md\n")
+        string(REPLACE "'" "''" escaped_display_name "${display_name}")
+        string(APPEND toc_items "    - name: '${escaped_display_name}'\n      href: ${target_name}.md\n")
     endforeach()
 endif()
 
 set(TOC_ITEMS ${toc_items})
 set(toc_file "${output_dir}/toc.yml")
+set(configured_toc_in "${PROJECT_BINARY_DIR}/product-neutral-guides/toc.yml.configured")
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/toc.yml.in"
-    "${toc_file}"
+    "${configured_toc_in}"
     @ONLY
+)
+
+# At build time, copy the configured file to its final destination. This command
+# depends on the markdown files, ensuring the correct build order.
+add_custom_command(
+    OUTPUT "${toc_file}"
+    COMMAND ${CMAKE_COMMAND} -E copy "${configured_toc_in}" "${toc_file}"
+    DEPENDS ${copied_files}
+    MAIN_DEPENDENCY "${configured_toc_in}"
+    COMMENT "Generating table of contents"
 )
 
 add_custom_target(
     product-neutral-guides-docs
-    DEPENDS ${copied_files}
+    DEPENDS ${copied_files} "${toc_file}"
 )
 
 add_dependencies(all-docfx product-neutral-guides-docs)
