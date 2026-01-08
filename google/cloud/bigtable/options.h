@@ -177,9 +177,9 @@ struct QueryPlanRefreshFunctionRetryPolicyOption {
 
 /// The complete list of options accepted by `bigtable::*Client`
 using ClientOptionList =
-    OptionList<bigtable_internal::DataEndpointOption,
-               bigtable_internal::AdminEndpointOption,
-               bigtable_internal::InstanceAdminEndpointOption,
+    OptionList<::google::cloud::bigtable_internal::DataEndpointOption,
+               ::google::cloud::bigtable_internal::AdminEndpointOption,
+               ::google::cloud::bigtable_internal::InstanceAdminEndpointOption,
                MinConnectionRefreshOption, MaxConnectionRefreshOption>;
 
 /**
