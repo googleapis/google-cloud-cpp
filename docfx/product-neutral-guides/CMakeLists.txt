@@ -6,9 +6,27 @@ find_package(Perl REQUIRED)
 set(output_dir "${PROJECT_BINARY_DIR}/product-neutral-guides/docfx")
 
 # Define the guide files in separate lists to avoid string(SPLIT).
-set(guide_target_names "getting-started")
-set(guide_source_files "${PROJECT_SOURCE_DIR}/README.md")
-set(guide_display_names "Getting Started")
+set(guide_target_names
+    "getting-started"
+    "core-concepts"
+    "client-configuration"
+    "occ"
+    "troubleshooting"
+)
+set(guide_source_files
+    "${PROJECT_SOURCE_DIR}/README.md"
+    "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/core-concepts.md"
+    "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/client-configuration.md"
+    "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/occ.md"
+    "${PROJECT_SOURCE_DIR}/doc/product-neutral-guides/troubleshooting.md"
+)
+set(guide_display_names
+    "Getting Started"
+    "Core Concepts"
+    "Client Configuration"
+    "Optimistic Concurrency Control (OCC)"
+    "Troubleshooting"
+)
 
 set(copied_files "")
 set(toc_items "")
