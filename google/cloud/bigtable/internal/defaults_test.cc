@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -58,8 +59,10 @@ TEST(OptionsTest, Defaults) {
   EXPECT_EQ(
       "bigtableadmin.googleapis.com",
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.has<UserProjectOption>());
@@ -114,12 +117,14 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
           .set<UserAgentProductsOption>({"test-prefix"}));
 
   EXPECT_EQ("testdata.googleapis.com",
-            opts.get<::google::cloud::bigtable_internal::>());
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
   EXPECT_EQ(
       "testadmin.googleapis.com",
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
-  EXPECT_EQ("testinstanceadmin.googleapis.com",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "testinstanceadmin.googleapis.com",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
@@ -411,8 +416,10 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOnly) {
   EXPECT_EQ(
       "bigtableadmin.googleapis.com",
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
-  EXPECT_EQ("instance-emulator-host:9000",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-emulator-host:9000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesOtherEnv) {
@@ -426,8 +433,10 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesOtherEnv) {
   EXPECT_EQ(
       "emulator-host:8000",
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
-  EXPECT_EQ("instance-emulator-host:9000",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-emulator-host:9000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorEnvOverridesUserOptions) {
@@ -461,10 +470,13 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesUserOption) {
   auto opts = DefaultOptions(
       Options{}
           .set<EndpointOption>("ignored-any")
-          .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "ignored-instance-admin"));
 
-  EXPECT_EQ("instance-emulator-host:9000",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-emulator-host:9000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorEnvDefaultsToInsecureCredentials) {
@@ -498,8 +510,10 @@ TEST(EndpointEnvTest, DirectPathEnabled) {
   EXPECT_EQ(
       "bigtableadmin.googleapis.com",
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
   EXPECT_EQ(1, opts.get<GrpcNumChannelsOption>());
 }
 
