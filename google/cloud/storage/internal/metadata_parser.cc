@@ -121,6 +121,17 @@ StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
   return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
                                                        GCP_ERROR_INFO());
 }
+StatusOr<std::string> ParseStringField(nlohmann::json const& json,
+                                       char const* field_name) {
+  if (json.count(field_name) == 0) return std::string{};
+  auto const& f = json[field_name];
+  if (f.is_string()) return f.get<std::string>();
+  std::ostringstream os;
+  os << "Error parsing field <" << field_name
+     << "> as a string, json=" << json;
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
+}
 
 Status NotJsonObject(nlohmann::json const& j,
                      google::cloud::internal::ErrorInfoBuilder eib) {

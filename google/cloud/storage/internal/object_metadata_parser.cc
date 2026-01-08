@@ -109,6 +109,10 @@ Status ParseMetadata(ObjectMetadata& meta, nlohmann::json const& json) {
   if (f == json.end()) return Status{};
   std::map<std::string, std::string> metadata;
   for (auto const& kv : f->items()) {
+    if (!kv.value().is_string()) {
+      return google::cloud::internal::InvalidArgumentError(
+          "Metadata value is not a string", GCP_ERROR_INFO());
+    }
     metadata.emplace(kv.key(), kv.value().get<std::string>());
   }
   meta.mutable_metadata() = std::move(metadata);
@@ -204,6 +208,14 @@ Status ParseHardDeleteTime(ObjectMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status SetStringField(ObjectMetadata& meta, nlohmann::json const& json,
+                      char const* key,
+                      ObjectMetadata& (ObjectMetadata::*setter)(std::string)) {
+  auto v = internal::ParseStringField(json, key);
+  if (!v) return std::move(v).status();
+  (meta.*setter)(*std::move(v));
+  return Status{};
+}
 }  // namespace
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
@@ -214,8 +226,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   Parser parsers[] = {
       ParseAcl,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_bucket(json.value("bucket", ""));
-        return Status{};
+        return SetStringField(meta, json, "bucket", &ObjectMetadata::set_bucket);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
         meta.set_cache_control(json.value("cacheControl", ""));
@@ -251,41 +262,33 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       ParseEventBasedHold,
       ParseGeneration,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_id(json.value("id", ""));
-        return Status{};
+        return SetStringField(meta, json, "id", &ObjectMetadata::set_id);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_kind(json.value("kind", ""));
-        return Status{};
+        return SetStringField(meta, json, "kind", &ObjectMetadata::set_kind);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_kms_key_name(json.value("kmsKeyName", ""));
-        return Status{};
+        return SetStringField(meta, json, "kmsKeyName", &ObjectMetadata::set_kms_key_name);
       },
       ParseMetageneration,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_md5_hash(json.value("md5Hash", ""));
-        return Status{};
+        return SetStringField(meta, json, "md5Hash", &ObjectMetadata::set_md5_hash);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_media_link(json.value("mediaLink", ""));
-        return Status{};
+        return SetStringField(meta, json, "mediaLink", &ObjectMetadata::set_media_link);
       },
       ParseMetadata,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_name(json.value("name", ""));
-        return Status{};
+        return SetStringField(meta, json, "name", &ObjectMetadata::set_name);
       },
       ParseOwner,
       ParseRetentionExpirationTime,
       ParseRetention,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_self_link(json.value("selfLink", ""));
-        return Status{};
+        return SetStringField(meta, json, "selfLink", &ObjectMetadata::set_self_link);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_storage_class(json.value("storageClass", ""));
-        return Status{};
+        return SetStringField(meta, json, "storageClass", &ObjectMetadata::set_storage_class);
       },
       ParseSize,
       ParseTemporaryHold,
