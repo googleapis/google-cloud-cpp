@@ -60,8 +60,6 @@ Client::Client(InternalOnly, Options const& opts)
     : Client(InternalOnlyNoDecorations{},
              storage_internal::MakeStorageConnection(opts)) {}
 
-StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
-
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
   auto source = connection_->ReadObject(request);
@@ -235,12 +233,12 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
-  return connection_->client_options().credentials()->AccountEmail();
+  return connection_->options().get<Oauth2CredentialsOption>()->AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = connection_->client_options().credentials();
+  auto credentials = connection_->options().get<Oauth2CredentialsOption>();
 
   // First try to sign locally.
   auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);

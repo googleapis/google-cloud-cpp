@@ -17,9 +17,9 @@
 
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/internal/storage_stub.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "google/storage/v2/storage.pb.h"

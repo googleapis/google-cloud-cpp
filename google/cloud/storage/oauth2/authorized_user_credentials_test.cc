@@ -15,6 +15,7 @@
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/mock_fake_clock.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
@@ -272,7 +273,7 @@ TEST_F(AuthorizedUserCredentialsTest, UsesCARootsInfo) {
   auto info = ParseAuthorizedUserCredentials(config, "test");
   ASSERT_STATUS_OK(info);
   AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(
-      *info, ChannelOptions().set_ssl_root_path(cainfo));
+      *info, Options{}.set<CARootsFilePathOption>(cainfo));
   EXPECT_EQ("Authorization: Mock-Type fake-token",
             credentials.AuthorizationHeader().value());
 }

@@ -125,12 +125,11 @@ bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
 ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                           std::chrono::system_clock>::
     ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
-                              ChannelOptions const& options)
+                              Options options)
     : impl_(std::make_unique<oauth2_internal::CachedCredentials>(
           std::make_unique<oauth2_internal::ServiceAccountCredentials>(
               internal::MapServiceAccountCredentialsInfo(std::move(info)),
-              Options{}.set<CARootsFilePathOption>(options.ssl_root_path()),
-              [](Options const& o) {
+              std::move(options), [](Options const& o) {
                 return rest_internal::MakeDefaultRestClient(std::string{}, o);
               }))) {}
 

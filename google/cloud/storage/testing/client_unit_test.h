@@ -34,7 +34,6 @@ class ClientUnitTest : public ::testing::Test {
   google::cloud::storage::Client ClientForMock();
 
   std::shared_ptr<testing::MockClient> mock_;
-  ClientOptions client_options_;
 };
 
 }  // namespace testing
