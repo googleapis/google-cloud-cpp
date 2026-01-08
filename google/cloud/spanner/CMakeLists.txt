@@ -106,20 +106,12 @@ add_library(
     create_instance_request_builder.h
     database.cc
     database.h
-    database_admin_client.cc
-    database_admin_client.h
-    database_admin_connection.cc
-    database_admin_connection.h
     date.h
     directed_read_replicas.h
     encryption_config.h
     iam_updater.h
     instance.cc
     instance.h
-    instance_admin_client.cc
-    instance_admin_client.h
-    instance_admin_connection.cc
-    instance_admin_connection.h
     internal/channel.h
     internal/connection_impl.cc
     internal/connection_impl.h
@@ -361,8 +353,6 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         # cmake-format: sort
         admin/mocks/mock_database_admin_connection.h
         admin/mocks/mock_instance_admin_connection.h
-        mocks/mock_database_admin_connection.h
-        mocks/mock_instance_admin_connection.h
         mocks/mock_spanner_connection.h
         mocks/row.h)
     export_list_to_bazel("google_cloud_cpp_spanner_mocks.bzl"
@@ -458,11 +448,7 @@ function (spanner_client_define_tests)
         commit_options_test.cc
         connection_options_test.cc
         create_instance_request_builder_test.cc
-        database_admin_client_test.cc
-        database_admin_connection_test.cc
         database_test.cc
-        instance_admin_client_test.cc
-        instance_admin_connection_test.cc
         instance_test.cc
         internal/connection_impl_test.cc
         internal/database_admin_logging_test.cc
