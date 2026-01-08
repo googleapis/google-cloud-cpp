@@ -19,6 +19,7 @@
 build --enable_platform_specific_config=true
 
 build --features=external_include_paths
+build --cxxopt=-Wno-private-header
 
 # The project requires C++ >= 17.
 build:linux --cxxopt=-std=c++17
