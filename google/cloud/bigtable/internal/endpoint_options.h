@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ENDPOINT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ENDPOINT_OPTIONS_H
 
+#include "google/cloud/version.h"
 #include <string>
 
 namespace google {
@@ -25,7 +26,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The endpoint for data operations.
  *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
  */
 struct DataEndpointOption {
   using Type = std::string;
@@ -34,7 +34,6 @@ struct DataEndpointOption {
 /**
  * The endpoint for table admin operations.
  *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
  */
 struct AdminEndpointOption {
   using Type = std::string;
