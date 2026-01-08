@@ -395,11 +395,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadUuid) {
   ASSERT_STATUS_OK(uuid2);
 
   std::vector<Uuid> const data = {
-      Uuid(0),
-      Uuid(1),
-      *uuid1,
-      *uuid2,
-      Uuid(37, 42),
+      Uuid(0), Uuid(1), *uuid1, *uuid2, Uuid(37, 42),
   };
   auto result = WriteReadData(*client_, data, "UuidValue");
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
