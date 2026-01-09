@@ -31,7 +31,6 @@ storage_client_unit_tests = [
     "client_object_acl_test.cc",
     "client_object_copy_test.cc",
     "client_object_test.cc",
-    "client_options_test.cc",
     "client_service_account_test.cc",
     "client_sign_policy_document_test.cc",
     "client_sign_url_test.cc",

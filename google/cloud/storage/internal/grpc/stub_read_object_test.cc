@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"

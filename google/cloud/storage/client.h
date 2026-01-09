@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/request_project_id.h"
@@ -55,6 +54,23 @@ namespace internal {
 class NonResumableParallelUploadState;
 class ResumableParallelUploadState;
 struct ClientImplDetails;
+
+Options ApplyPolicy(Options opts, RetryPolicy const& p);
+Options ApplyPolicy(Options opts, BackoffPolicy const& p);
+Options ApplyPolicy(Options opts, IdempotencyPolicy const& p);
+
+inline Options ApplyPolicies(Options opts) { return opts; }
+
+template <typename P, typename... Policies>
+Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
+  opts = ApplyPolicy(std::move(opts), std::forward<P>(head));
+  return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
+}
+
+Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
+                       Options opts);
+Options DefaultOptionsWithCredentials(Options opts);
+
 }  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.

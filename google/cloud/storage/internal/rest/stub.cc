@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest/stub.h"
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
@@ -46,6 +45,7 @@ namespace internal {
 
 namespace rest = google::cloud::rest_internal;
 using ::google::cloud::internal::AuthHeaderError;
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::internal::UrlEncode;
 
 namespace {
@@ -132,6 +132,22 @@ Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
   if (!ah.ok()) return ah;
   AddCustomHeaders(options, builder);
   return {};
+}
+
+absl::optional<std::string> GetEmulator() {
+  auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  if (emulator) return emulator;
+  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+}
+
+std::string RestEndpoint(Options const& options) {
+  return GetEmulator().value_or(options.get<RestEndpointOption>());
+}
+
+std::string IamEndpoint(Options const& options) {
+  auto emulator = GetEmulator();
+  if (emulator) return *emulator + "/iamapi";
+  return options.get<IamEndpointOption>();
 }
 
 }  // namespace
