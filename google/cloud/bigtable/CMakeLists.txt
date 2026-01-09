@@ -222,8 +222,6 @@ add_library(
     internal/traced_row_reader.h
     internal/tuple_utils.h
     internal/unary_client_utils.h
-    metadata_update_policy.cc
-    metadata_update_policy.h
     mutation_batcher.cc
     mutation_batcher.h
     mutation_branch.h
