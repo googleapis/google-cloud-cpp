@@ -415,6 +415,48 @@ ConfigTracingConnection::GetResourceDrift(
   return internal::EndSpan(*span, child_->GetResourceDrift(request));
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigTracingConnection::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::GetAutoMigrationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAutoMigrationConfig(request));
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigTracingConnection::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::UpdateAutoMigrationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAutoMigrationConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::UpdateAutoMigrationConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAutoMigrationConfig(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigTracingConnection::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::UpdateAutoMigrationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAutoMigrationConfig(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 ConfigTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

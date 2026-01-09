@@ -187,6 +187,25 @@ class ConfigTracingConnection : public config_v1::ConfigConnection {
       google::cloud::config::v1::GetResourceDriftRequest const& request)
       override;
 
+  StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

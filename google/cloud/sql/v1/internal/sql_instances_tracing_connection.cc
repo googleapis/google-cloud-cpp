@@ -43,6 +43,26 @@ SqlInstancesServiceTracingConnection::AddServerCa(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::AddServerCertificate(
+    google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::AddServerCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AddServerCertificate(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::AddEntraIdCertificate(
+    google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::AddEntraIdCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AddEntraIdCertificate(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceTracingConnection::Clone(
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
   auto span =
@@ -150,6 +170,26 @@ SqlInstancesServiceTracingConnection::ListServerCas(
   return internal::EndSpan(*span, child_->ListServerCas(request));
 }
 
+StatusOr<google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+SqlInstancesServiceTracingConnection::ListServerCertificates(
+    google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ListServerCertificates");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListServerCertificates(request));
+}
+
+StatusOr<google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+SqlInstancesServiceTracingConnection::ListEntraIdCertificates(
+    google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ListEntraIdCertificates");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListEntraIdCertificates(request));
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceTracingConnection::Patch(
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
@@ -211,6 +251,26 @@ SqlInstancesServiceTracingConnection::RotateServerCa(
       "sql_v1::SqlInstancesServiceConnection::RotateServerCa");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RotateServerCa(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::RotateServerCertificate(
+    google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::RotateServerCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RotateServerCertificate(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::RotateEntraIdCertificate(
+    google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::RotateEntraIdCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RotateEntraIdCertificate(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -329,6 +389,15 @@ SqlInstancesServiceTracingConnection::GetLatestRecoveryTime(
   return internal::EndSpan(*span, child_->GetLatestRecoveryTime(request));
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>
+SqlInstancesServiceTracingConnection::ExecuteSql(
+    google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::ExecuteSql");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ExecuteSql(request));
+}
+
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
 SqlInstancesServiceTracingConnection::AcquireSsrsLease(
     google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
@@ -347,6 +416,26 @@ SqlInstancesServiceTracingConnection::ReleaseSsrsLease(
       "sql_v1::SqlInstancesServiceConnection::ReleaseSsrsLease");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReleaseSsrsLease(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::PreCheckMajorVersionUpgrade(
+    google::cloud::sql::v1::
+        SqlInstancesPreCheckMajorVersionUpgradeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::PreCheckMajorVersionUpgrade");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PreCheckMajorVersionUpgrade(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::PointInTimeRestore(
+    google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::PointInTimeRestore");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PointInTimeRestore(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

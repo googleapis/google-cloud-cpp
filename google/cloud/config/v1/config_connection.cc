@@ -312,6 +312,36 @@ ConfigConnection::GetResourceDrift(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigConnection::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigConnection::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::AutoMigrationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigConnection::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::AutoMigrationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location> ConfigConnection::ListLocations(
     google::cloud::location::
         ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
