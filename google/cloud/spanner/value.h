@@ -25,6 +25,7 @@
 #include "google/cloud/spanner/proto_enum.h"
 #include "google/cloud/spanner/proto_message.h"
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/spanner/uuid.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
@@ -79,6 +80,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `absl::CivilDay`
  * INTERVAL     | `google::cloud::spanner::Interval`
+ * UUID         | `google::cloud::spanner::Uuid`
  * ENUM         | `google::cloud::spanner::ProtoEnum<E>`
  * PROTO        | `google::cloud::spanner::ProtoMessage<M>`
  * ARRAY        | `std::vector<T>`  // [1]
@@ -225,6 +227,8 @@ class Value {
       : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Interval v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
+  explicit Value(Uuid v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   template <typename E>
   explicit Value(ProtoEnum<E> v) : Value(PrivateConstructor{}, std::move(v)) {}
@@ -392,6 +396,7 @@ class Value {
   static bool TypeProtoIs(CommitTimestamp, google::spanner::v1::Type const&);
   static bool TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Interval, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(Uuid, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Json const&, google::spanner::v1::Type const&);
@@ -466,6 +471,8 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
   static google::spanner::v1::Type MakeTypeProto(absl::CivilDay);
   static google::spanner::v1::Type MakeTypeProto(Interval);
+  static google::spanner::v1::Type MakeTypeProto(Uuid);
+
   template <typename E>
   static google::spanner::v1::Type MakeTypeProto(ProtoEnum<E>) {
     google::spanner::v1::Type t;
@@ -546,6 +553,8 @@ class Value {
   static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
   static google::protobuf::Value MakeValueProto(absl::CivilDay d);
   static google::protobuf::Value MakeValueProto(Interval intvl);
+  static google::protobuf::Value MakeValueProto(Uuid u);
+
   template <typename E>
   static google::protobuf::Value MakeValueProto(ProtoEnum<E> e) {
     return MakeValueProto(std::int64_t{E{e}});
@@ -638,6 +647,8 @@ class Value {
                                            google::spanner::v1::Type const&);
   static StatusOr<Interval> GetValue(Interval, google::protobuf::Value const&,
                                      google::spanner::v1::Type const&);
+  static StatusOr<Uuid> GetValue(Uuid, google::protobuf::Value const&,
+                                 google::spanner::v1::Type const&);
   template <typename E>
   static StatusOr<ProtoEnum<E>> GetValue(ProtoEnum<E>,
                                          google::protobuf::Value const& pv,
