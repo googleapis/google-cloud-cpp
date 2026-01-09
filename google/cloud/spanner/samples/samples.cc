@@ -3444,9 +3444,10 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     return std::get<0>(*std::move(row));
   };
 
+  auto constexpr kInsufficientFundsMessage =
+      "The second album does not have enough funds to transfer";
   auto commit = client.Commit(
-      [&client, &get_current_budget](
-          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+      [&](spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         auto b1 = get_current_budget(client, txn, 1, 1);
         if (!b1) return std::move(b1).status();
         auto b2 = get_current_budget(client, txn, 2, 2);
@@ -3455,7 +3456,7 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
 
         if (*b2 < transfer_amount) {
           return Status(StatusCode::kFailedPrecondition,
-                        "Album budget funds are insufficient");
+                        kInsufficientFundsMessage);
         }
 
         return spanner::Mutations{
@@ -3466,11 +3467,6 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                 .Build()};
       });
 
-  if (!commit && commit.status().code() == StatusCode::kFailedPrecondition &&
-      commit.status().message() == "Album budget funds are insufficient") {
-    std::cerr << commit.status().message() << ".\n";
-    return;
-  }
   if (!commit) throw std::move(commit).status();
   std::cout << "Transfer was successful [spanner_read_write_transaction]\n";
 }
