@@ -98,7 +98,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       (emulator_ ? "" : R"sql(
           UuidValue UUID,
       )sql"),
-      R"sql("
+      R"sql(
           ArrayBoolValue ARRAY<BOOL>,
           ArrayInt64Value ARRAY<INT64>,
           ArrayFloat64Value ARRAY<FLOAT64>,
@@ -117,7 +117,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       (emulator_ ? "" : R"sql(
           ArrayUuidValue ARRAY<UUID>
       )sql"),
-      R"sql("
+      R"sql(
         ) PRIMARY KEY (Id)
       )sql"));
   if (!emulator_) {  // proto columns
