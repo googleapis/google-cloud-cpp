@@ -92,6 +92,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/data_tracing_connection.h",
     "internal/default_row_reader.h",
     "internal/defaults.h",
+    "internal/endpoint_options.h",
     "internal/google_bytes_traits.h",
     "internal/logging_result_set_reader.h",
     "internal/metrics.h",
