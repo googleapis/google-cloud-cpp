@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -53,10 +54,15 @@ TEST(OptionsTest, Defaults) {
       "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", absl::nullopt);
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("bigtable.googleapis.com", opts.get<DataEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.has<UserProjectOption>());
@@ -94,9 +100,12 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   channel_args.SetString("test-key-1", "value-1");
   auto opts = DefaultOptions(
       Options{}
-          .set<DataEndpointOption>("testdata.googleapis.com")
-          .set<AdminEndpointOption>("testadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("testinstanceadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "testdata.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "testadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "testinstanceadmin.googleapis.com")
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
@@ -107,10 +116,15 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
           .set<GrpcChannelArgumentsOption>({{"test-key-2", "value-2"}})
           .set<UserAgentProductsOption>({"test-prefix"}));
 
-  EXPECT_EQ("testdata.googleapis.com", opts.get<DataEndpointOption>());
-  EXPECT_EQ("testadmin.googleapis.com", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("testinstanceadmin.googleapis.com",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ("testdata.googleapis.com",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "testadmin.googleapis.com",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "testinstanceadmin.googleapis.com",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
@@ -134,29 +148,49 @@ TEST(OptionsTest, EndpointOptionSetsAll) {
   auto options = Options{}.set<EndpointOption>("endpoint-option");
   options = DefaultOptions(std::move(options));
   EXPECT_EQ("endpoint-option", options.get<EndpointOption>());
-  EXPECT_EQ("endpoint-option", options.get<DataEndpointOption>());
-  EXPECT_EQ("endpoint-option", options.get<AdminEndpointOption>());
-  EXPECT_EQ("endpoint-option", options.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "endpoint-option",
+      options.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "endpoint-option",
+      options.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "endpoint-option",
+      options.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(OptionsTest, EndpointOptionOverridden) {
-  auto options = Options{}
-                     .set<EndpointOption>("ignored")
-                     .set<DataEndpointOption>("data")
-                     .set<AdminEndpointOption>("table-admin")
-                     .set<InstanceAdminEndpointOption>("instance-admin");
+  auto options =
+      Options{}
+          .set<EndpointOption>("ignored")
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>("data")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "table-admin")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "instance-admin");
   options = DefaultOptions(std::move(options));
-  EXPECT_EQ("data", options.get<DataEndpointOption>());
-  EXPECT_EQ("table-admin", options.get<AdminEndpointOption>());
-  EXPECT_EQ("instance-admin", options.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "data",
+      options.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "table-admin",
+      options.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-admin",
+      options.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(OptionsTest, DefaultDataOptionsEndpoint) {
   auto options =
       Options{}
-          .set<DataEndpointOption>("data.googleapis.com")
-          .set<AdminEndpointOption>("tableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "data.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "tableadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "instanceadmin.googleapis.com");
   options = DefaultDataOptions(std::move(options));
   EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
 
@@ -168,9 +202,12 @@ TEST(OptionsTest, DefaultDataOptionsEndpoint) {
 TEST(OptionsTest, DefaultInstanceAdminOptions) {
   auto options =
       Options{}
-          .set<DataEndpointOption>("data.googleapis.com")
-          .set<AdminEndpointOption>("tableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "data.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "tableadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "instanceadmin.googleapis.com");
   options = DefaultInstanceAdminOptions(std::move(options));
   EXPECT_EQ("instanceadmin.googleapis.com", options.get<EndpointOption>());
 
@@ -182,9 +219,12 @@ TEST(OptionsTest, DefaultInstanceAdminOptions) {
 TEST(OptionsTest, DefaultTableAdminOptions) {
   auto options =
       Options{}
-          .set<DataEndpointOption>("data.googleapis.com")
-          .set<AdminEndpointOption>("tableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "data.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "tableadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "instanceadmin.googleapis.com");
   options = DefaultTableAdminOptions(std::move(options));
   EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
 
@@ -285,9 +325,12 @@ TEST(OptionsTest, BigtableEndpointOptionsOverrideUniverseDomain) {
   auto options =
       Options{}
           .set<google::cloud::internal::UniverseDomainOption>("ud-option.net")
-          .set<DataEndpointOption>("data.googleapis.com")
-          .set<AdminEndpointOption>("tableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "data.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "tableadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "instanceadmin.googleapis.com");
 
   EXPECT_EQ(DefaultDataOptions(options).get<EndpointOption>(),
             "data.googleapis.com");
@@ -304,9 +347,11 @@ TEST(OptionsTest, BigtableEndpointEnvVarsOverrideUniverseDomain) {
   auto options =
       Options{}
           .set<google::cloud::internal::UniverseDomainOption>("ud-option.net")
-          .set<DataEndpointOption>("ignored-data.googleapis.com")
-          .set<AdminEndpointOption>("ignored-tableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>(
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "ignored-data.googleapis.com")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "ignored-tableadmin.googleapis.com")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
               "ignored-instanceadmin.googleapis.com")
           .set<EndpointOption>("ignored-endpoint.googleapis.com");
 
@@ -350,9 +395,15 @@ TEST(EndpointEnvTest, EmulatorEnvOnly) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("emulator-host:8000", opts.get<DataEndpointOption>());
-  EXPECT_EQ("emulator-host:8000", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("emulator-host:8000", opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ("emulator-host:8000",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "emulator-host:8000",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "emulator-host:8000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, InstanceEmulatorEnvOnly) {
@@ -360,10 +411,15 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOnly) {
                                       "instance-emulator-host:9000");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("bigtable.googleapis.com", opts.get<DataEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("instance-emulator-host:9000",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-emulator-host:9000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesOtherEnv) {
@@ -372,10 +428,15 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesOtherEnv) {
                                       "instance-emulator-host:9000");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("emulator-host:8000", opts.get<DataEndpointOption>());
-  EXPECT_EQ("emulator-host:8000", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("instance-emulator-host:9000",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ("emulator-host:8000",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "emulator-host:8000",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-emulator-host:9000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorEnvOverridesUserOptions) {
@@ -384,13 +445,22 @@ TEST(EndpointEnvTest, EmulatorEnvOverridesUserOptions) {
   auto opts = DefaultOptions(
       Options{}
           .set<EndpointOption>("ignored-any")
-          .set<DataEndpointOption>("ignored-data")
-          .set<AdminEndpointOption>("ignored-admin")
-          .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
+          .set<::google::cloud::bigtable_internal::DataEndpointOption>(
+              "ignored-data")
+          .set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+              "ignored-admin")
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "ignored-instance-admin"));
 
-  EXPECT_EQ("emulator-host:8000", opts.get<DataEndpointOption>());
-  EXPECT_EQ("emulator-host:8000", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("emulator-host:8000", opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ("emulator-host:8000",
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
+  EXPECT_EQ(
+      "emulator-host:8000",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "emulator-host:8000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesUserOption) {
@@ -400,10 +470,13 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesUserOption) {
   auto opts = DefaultOptions(
       Options{}
           .set<EndpointOption>("ignored-any")
-          .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
+          .set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+              "ignored-instance-admin"));
 
-  EXPECT_EQ("instance-emulator-host:9000",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "instance-emulator-host:9000",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorEnvDefaultsToInsecureCredentials) {
@@ -431,12 +504,16 @@ TEST(EndpointEnvTest, DirectPathEnabled) {
 
   auto opts = DefaultOptions();
   EXPECT_EQ("google-c2p:///directpath-bigtable.googleapis.com",
-            opts.get<DataEndpointOption>());
+            opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
   EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
-  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
-            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
+  EXPECT_EQ(
+      "bigtableadmin.googleapis.com",
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
   EXPECT_EQ(1, opts.get<GrpcNumChannelsOption>());
 }
 

@@ -30,6 +30,7 @@
 #include "google/cloud/storage/internal/grpc/split_write_object_data.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
