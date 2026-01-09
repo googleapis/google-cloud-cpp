@@ -248,6 +248,28 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 </details>
 
 <details>
+<summary>Removed Endpoint Options
+</summary>
+
+The `bigtable::DataEndpointOption`, `bigtable::AdminEndpointOption`, and
+`bigtable::InstanceAdminEndpointOption` classes have been removed. Applications
+should use `google::cloud::EndpointOption` instead.
+
+**Before:**
+
+```cpp
+auto options = google::cloud::Options{}.set<google::cloud::bigtable::DataEndpointOption>("...");
+```
+
+**After:**
+
+```cpp
+auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("...");
+```
+
+</details>
+
+<details>
 <summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
 
 The `bigtable::DataClient` class and its associated factory functions (e.g.,
