@@ -126,6 +126,7 @@ StatusOr<std::string> ParseStringField(nlohmann::json const& json,
   if (json.count(field_name) == 0) return std::string{};
   auto const& f = json[field_name];
   if (f.is_string()) return f.get<std::string>();
+  if (f.is_null()) return std::string{};
   std::ostringstream os;
   os << "Error parsing field <" << field_name << "> as a string, json=" << json;
   return google::cloud::internal::InvalidArgumentError(std::move(os).str(),

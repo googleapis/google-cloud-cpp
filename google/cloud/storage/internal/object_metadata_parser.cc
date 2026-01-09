@@ -110,11 +110,18 @@ Status ParseMetadata(ObjectMetadata& meta, nlohmann::json const& json) {
   std::map<std::string, std::string> metadata;
   for (auto const& kv : f->items()) {
     if (!kv.value().is_string()) {
-      return google::cloud::internal::InvalidArgumentError(
-          "Metadata value for key <" + kv.key() + "> is not a string",
-          GCP_ERROR_INFO());
+      if (kv.value().is_null()) {
+        metadata.emplace(kv.key(), std::string{});
+      } else {
+        std::ostringstream os;
+        os << "Error parsing field <metadata." << kv.key()
+           << "> as a string, json=" << kv.value();
+        return google::cloud::internal::InvalidArgumentError(
+            std::move(os).str(), GCP_ERROR_INFO());
+      }
+    } else {
+      metadata.emplace(kv.key(), kv.value().get<std::string>());
     }
-    metadata.emplace(kv.key(), kv.value().get<std::string>());
   }
   meta.mutable_metadata() = std::move(metadata);
   return Status{};
