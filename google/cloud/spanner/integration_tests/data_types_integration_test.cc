@@ -398,7 +398,12 @@ TEST_F(DataTypeIntegrationTest, WriteReadUuid) {
       Uuid(0), Uuid(1), *uuid1, *uuid2, Uuid(37, 42),
   };
   auto result = WriteReadData(*client_, data, "UuidValue");
-  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+  }
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadProtoEnum) {
