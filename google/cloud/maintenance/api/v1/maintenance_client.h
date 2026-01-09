@@ -114,7 +114,7 @@ class MaintenanceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.maintenance.api.v1.MaintenanceSummary]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L145}
+  /// [google.cloud.maintenance.api.v1.MaintenanceSummary]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L133}
   /// [google.cloud.maintenance.api.v1.SummarizeMaintenancesRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L87}
   ///
   // clang-format on
@@ -153,7 +153,7 @@ class MaintenanceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.maintenance.api.v1.MaintenanceSummary]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L145}
+  /// [google.cloud.maintenance.api.v1.MaintenanceSummary]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L133}
   /// [google.cloud.maintenance.api.v1.SummarizeMaintenancesRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L87}
   ///
   // clang-format on
@@ -189,8 +189,8 @@ class MaintenanceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.maintenance.api.v1.ListResourceMaintenancesRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L399}
-  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L220}
+  /// [google.cloud.maintenance.api.v1.ListResourceMaintenancesRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L387}
+  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L208}
   ///
   // clang-format on
   StreamRange<google::cloud::maintenance::api::v1::ResourceMaintenance>
@@ -228,8 +228,8 @@ class MaintenanceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.maintenance.api.v1.ListResourceMaintenancesRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L399}
-  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L220}
+  /// [google.cloud.maintenance.api.v1.ListResourceMaintenancesRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L387}
+  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L208}
   ///
   // clang-format on
   StreamRange<google::cloud::maintenance::api::v1::ResourceMaintenance>
@@ -256,8 +256,8 @@ class MaintenanceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.maintenance.api.v1.GetResourceMaintenanceRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L437}
-  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L220}
+  /// [google.cloud.maintenance.api.v1.GetResourceMaintenanceRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L425}
+  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L208}
   ///
   // clang-format on
   StatusOr<google::cloud::maintenance::api::v1::ResourceMaintenance>
@@ -286,8 +286,8 @@ class MaintenanceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.maintenance.api.v1.GetResourceMaintenanceRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L437}
-  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L220}
+  /// [google.cloud.maintenance.api.v1.GetResourceMaintenanceRequest]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L425}
+  /// [google.cloud.maintenance.api.v1.ResourceMaintenance]: @googleapis_reference_link{google/cloud/maintenance/api/v1/maintenance_service.proto#L208}
   ///
   // clang-format on
   StatusOr<google::cloud::maintenance::api::v1::ResourceMaintenance>

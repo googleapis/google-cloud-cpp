@@ -208,6 +208,25 @@ class ConfigStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetResourceDriftRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateAutoMigrationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -446,6 +465,25 @@ class DefaultConfigStub : public ConfigStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetResourceDriftRequest const& request)
       override;
+
+  StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateAutoMigrationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

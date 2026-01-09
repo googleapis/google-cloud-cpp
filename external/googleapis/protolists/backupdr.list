@@ -10,3 +10,4 @@
 @com_google_googleapis//google/cloud/backupdr/v1:backupvault_disk.proto
 @com_google_googleapis//google/cloud/backupdr/v1:backupvault_gce.proto
 @com_google_googleapis//google/cloud/backupdr/v1:datasourcereference.proto
+@com_google_googleapis//google/cloud/backupdr/v1:protection_summary.proto

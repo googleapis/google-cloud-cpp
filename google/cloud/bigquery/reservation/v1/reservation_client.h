@@ -992,7 +992,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1417}
+  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1415}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1059,7 +1059,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1417}
+  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1415}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1122,7 +1122,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1439}
+  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1437}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1181,7 +1181,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1439}
+  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1437}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1220,7 +1220,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1476}
+  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1474}
   ///
   // clang-format on
   Status DeleteAssignment(std::string const& name, Options opts = {});
@@ -1260,7 +1260,7 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1476}
+  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1474}
   ///
   // clang-format on
   Status DeleteAssignment(
@@ -1329,7 +1329,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1491}
+  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1489}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1394,7 +1394,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1491}
+  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1489}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1460,7 +1460,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1522}
+  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1520}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1519,7 +1519,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1522}
+  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1520}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1555,7 +1555,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1580}
+  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1578}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
@@ -1590,7 +1590,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1580}
+  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1578}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
@@ -1620,7 +1620,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1607}
+  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1605}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1654,7 +1654,7 @@ class ReservationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1313}
-  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1607}
+  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1605}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
@@ -1682,8 +1682,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
-  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1653}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1627}
+  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1651}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
@@ -1712,8 +1712,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
-  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1653}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1627}
+  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1651}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
@@ -1748,8 +1748,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
-  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1665}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1627}
+  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1663}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
@@ -1788,8 +1788,8 @@ class ReservationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1629}
-  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1665}
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1627}
+  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1663}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>

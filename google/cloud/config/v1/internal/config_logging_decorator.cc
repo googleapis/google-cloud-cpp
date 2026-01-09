@@ -489,6 +489,53 @@ ConfigLogging::GetResourceDrift(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigLogging::GetAutoMigrationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::GetAutoMigrationConfigRequest const&
+                 request) {
+        return child_->GetAutoMigrationConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigLogging::AsyncUpdateAutoMigrationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+                 request) {
+        return child_->AsyncUpdateAutoMigrationConfig(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigLogging::UpdateAutoMigrationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+                 request) {
+        return child_->UpdateAutoMigrationConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
