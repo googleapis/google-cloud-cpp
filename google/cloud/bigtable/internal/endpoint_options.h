@@ -45,9 +45,7 @@ struct AdminEndpointOption {
  * In most scenarios this should have the same value as `AdminEndpointOption`.
  * The most common exception is testing, where the emulator for instance admin
  * operations may be different than the emulator for admin and data operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
+ * */
 struct InstanceAdminEndpointOption {
   using Type = std::string;
 };
