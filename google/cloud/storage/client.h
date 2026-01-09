@@ -3441,27 +3441,6 @@ class Client {
   /// Define a tag to disable automatic decorations of the StorageConnection.
   struct NoDecorations {};
 
-  /// Builds a client with a specific StorageConnection, without decorations.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  explicit Client(std::shared_ptr<internal::StorageConnection> connection,
-                  NoDecorations)
-      : Client(InternalOnlyNoDecorations{}, std::move(connection)) {}
-
-  /// Access the underlying `StorageConnection`.
-  /// @deprecated Only intended for implementors, do not use.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  std::shared_ptr<internal::StorageConnection> raw_client() const {
-    return connection_;
-  }
-
  private:
   friend class internal::NonResumableParallelUploadState;
   friend class internal::ResumableParallelUploadState;

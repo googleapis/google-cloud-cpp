@@ -117,9 +117,9 @@ TEST(GrpcPluginTest, HybridUsesGrpcBufferOptions) {
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = MakeGrpcClient(
       TestOptions().set<storage_experimental::GrpcPluginOption>("media"));
-  EXPECT_GE(
-      client.raw_client()->options().get<storage::UploadBufferSizeOption>(),
-      32 * 1024 * 1024L);
+  auto connection = ClientImplDetails::GetConnection(client);
+  EXPECT_GE(connection->options().get<storage::UploadBufferSizeOption>(),
+            32 * 1024 * 1024UL);
 }
 
 TEST(GrpcPluginTest, BackwardsCompatibilityShims) {
