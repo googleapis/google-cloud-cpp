@@ -748,7 +748,7 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
 StatusOr<Interval> Value::GetValue(Interval, google::protobuf::Value const& pv,
                                    google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing Interval");
+    return internal::UnknownError("missing Interval", GCP_ERROR_INFO());
   }
   return MakeInterval(pv.string_value());
 }
@@ -756,7 +756,7 @@ StatusOr<Interval> Value::GetValue(Interval, google::protobuf::Value const& pv,
 StatusOr<Uuid> Value::GetValue(Uuid, google::protobuf::Value const& pv,
                                google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing UUID");
+    return internal::UnknownError("missing UUID", GCP_ERROR_INFO());
   }
   return MakeUuid(pv.string_value());
 }
