@@ -195,9 +195,7 @@ class Table {
         table_name_(table_.FullName()),
         connection_(std::move(conn)),
         options_(google::cloud::internal::MergeOptions(std::move(options),
-                                                       connection_->options())),
-        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
-            table_name_, app_profile_id())) {}
+                                                       connection_->options())) {}
 
   std::string const& table_name() const { return table_name_; }
   std::string const& app_profile_id() const {
@@ -223,8 +221,6 @@ class Table {
     table.table_ = TableResource(std::move(project_id), std::move(instance_id),
                                  std::move(table_id));
     table.table_name_ = table.table_.FullName();
-    table.metadata_update_policy_ = bigtable_internal::MakeMetadataUpdatePolicy(
-        table.table_name_, table.app_profile_id());
     return table;
   }
 
@@ -239,8 +235,6 @@ class Table {
                                  std::move(table_id));
     table.table_name_ = table.table_.FullName();
     table.options_.set<AppProfileIdOption>(std::move(app_profile_id));
-    table.metadata_update_policy_ = bigtable_internal::MakeMetadataUpdatePolicy(
-        table.table_name_, table.app_profile_id());
     return table;
   }
 
@@ -833,10 +827,6 @@ class Table {
     return rpc_backoff_policy_prototype_->clone();
   }
 
-  MetadataUpdatePolicy clone_metadata_update_policy() {
-    return metadata_update_policy_;
-  }
-
   std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
     return idempotent_mutation_policy_->clone();
   }
@@ -871,7 +861,6 @@ class Table {
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<DataConnection> connection_;
   Options options_;
-  MetadataUpdatePolicy metadata_update_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
