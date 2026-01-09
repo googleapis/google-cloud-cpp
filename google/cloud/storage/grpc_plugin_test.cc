@@ -119,7 +119,7 @@ TEST(GrpcPluginTest, HybridUsesGrpcBufferOptions) {
       TestOptions().set<storage_experimental::GrpcPluginOption>("media"));
   auto connection = ClientImplDetails::GetConnection(client);
   EXPECT_GE(connection->options().get<storage::UploadBufferSizeOption>(),
-            32 * 1024 * 1024L);
+            32 * 1024 * 1024UL);
 }
 
 TEST(GrpcPluginTest, BackwardsCompatibilityShims) {
