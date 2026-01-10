@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/default_options.h"
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"

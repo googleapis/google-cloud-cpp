@@ -248,6 +248,28 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 </details>
 
 <details>
+<summary>Removed Endpoint Options
+</summary>
+
+The `bigtable::DataEndpointOption`, `bigtable::AdminEndpointOption`, and
+`bigtable::InstanceAdminEndpointOption` classes have been removed. Applications
+should use `google::cloud::EndpointOption` instead.
+
+**Before:**
+
+```cpp
+auto options = google::cloud::Options{}.set<google::cloud::bigtable::DataEndpointOption>("...");
+```
+
+**After:**
+
+```cpp
+auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("...");
+```
+
+</details>
+
+<details>
 <summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
 
 The `bigtable::DataClient` class and its associated factory functions (e.g.,
@@ -536,6 +558,71 @@ void CreateClient() {
   auto credentials = google::cloud::MakeGoogleDefaultCredentials();
   auto client = google::cloud::storage::Client(
       google::cloud::Options{}.set<google::cloud::storage::Oauth2CredentialsOption>(credentials));
+}
+```
+
+</details>
+
+<details>
+<summary>Removed <code>Client(Connection, NoDecorations)</code> constructor</summary>
+
+The `Client` constructor that accepted a `StorageConnection` and the
+`NoDecorations` tag has been removed. This was intended only for test code.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/mock_storage_connection.h"
+
+void TestClient() {
+  auto mock = std::make_shared<google::cloud::storage::testing::MockStorageConnection>();
+  // ...
+  auto client = google::cloud::storage::Client(
+      mock, google::cloud::storage::Client::NoDecorations{});
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/mock_storage_connection.h"
+
+void TestClient() {
+  auto mock = std::make_shared<google::cloud::storage::testing::MockStorageConnection>();
+  // ...
+  auto client = google::cloud::storage::internal::ClientImplDetails::CreateWithoutDecorations(mock);
+}
+```
+
+</details>
+
+<details>
+<summary>Removed <code>Client::raw_client()</code></summary>
+
+The `Client::raw_client()` method has been removed. This was intended only for
+internal use or testing. If you need access to the underlying connection for
+testing purposes, use `google::cloud::storage::internal::ClientImplDetails`.
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+
+void UseRawClient(google::cloud::storage::Client client) {
+  auto connection = client.raw_client();
+}
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/client.h"
+
+void UseRawClient(google::cloud::storage::Client client) {
+  auto connection =
+      google::cloud::storage::internal::ClientImplDetails::GetConnection(client);
 }
 ```
 

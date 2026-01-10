@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/request_project_id.h"
@@ -55,6 +54,23 @@ namespace internal {
 class NonResumableParallelUploadState;
 class ResumableParallelUploadState;
 struct ClientImplDetails;
+
+Options ApplyPolicy(Options opts, RetryPolicy const& p);
+Options ApplyPolicy(Options opts, BackoffPolicy const& p);
+Options ApplyPolicy(Options opts, IdempotencyPolicy const& p);
+
+inline Options ApplyPolicies(Options opts) { return opts; }
+
+template <typename P, typename... Policies>
+Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
+  opts = ApplyPolicy(std::move(opts), std::forward<P>(head));
+  return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
+}
+
+Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
+                       Options opts);
+Options DefaultOptionsWithCredentials(Options opts);
+
 }  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
@@ -3424,27 +3440,6 @@ class Client {
 
   /// Define a tag to disable automatic decorations of the StorageConnection.
   struct NoDecorations {};
-
-  /// Builds a client with a specific StorageConnection, without decorations.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  explicit Client(std::shared_ptr<internal::StorageConnection> connection,
-                  NoDecorations)
-      : Client(InternalOnlyNoDecorations{}, std::move(connection)) {}
-
-  /// Access the underlying `StorageConnection`.
-  /// @deprecated Only intended for implementors, do not use.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  std::shared_ptr<internal::StorageConnection> raw_client() const {
-    return connection_;
-  }
 
  private:
   friend class internal::NonResumableParallelUploadState;
