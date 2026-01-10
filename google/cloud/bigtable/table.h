@@ -194,8 +194,8 @@ class Table {
       : table_(std::move(tr)),
         table_name_(table_.FullName()),
         connection_(std::move(conn)),
-        options_(google::cloud::internal::MergeOptions(std::move(options),
-                                                       connection_->options())) {}
+        options_(google::cloud::internal::MergeOptions(
+            std::move(options), connection_->options())) {}
 
   std::string const& table_name() const { return table_name_; }
   std::string const& app_profile_id() const {

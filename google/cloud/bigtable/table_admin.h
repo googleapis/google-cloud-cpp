@@ -21,7 +21,6 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/iam_policy.h"
 #include "google/cloud/bigtable/internal/convert_policies.h"
-#include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table_config.h"
