@@ -770,11 +770,22 @@ StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
   // default (at least in this case), and that wastes bandwidth as the content
   // length is known.
   builder.AddHeader("Transfer-Encoding", {});
-  auto offset = request.offset();
-  for (auto const& b : request.payload()) {
-    request.hash_function().Update(offset,
-                                   absl::string_view{b.data(), b.size()});
-    offset += b.size();
+  auto hash_function = request.hash_function_ptr();
+  if (hash_function) {
+    auto offset = request.offset();
+    for (auto const& b : request.payload()) {
+      hash_function->Update(offset, absl::string_view{b.data(), b.size()});
+      offset += b.size();
+    }
+  }
+  if (request.last_chunk()) {
+    auto const& hashes = request.known_object_hashes();
+    if (!hashes.crc32c.empty()) {
+      builder.AddHeader("x-goog-hash", "crc32c=" + hashes.crc32c);
+    }
+    if (!hashes.md5.empty()) {
+      builder.AddHeader("x-goog-hash", "md5=" + hashes.md5);
+    }
   }
 
   auto failure_predicate = [](rest::HttpStatusCode code) {
