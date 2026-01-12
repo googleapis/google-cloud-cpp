@@ -333,7 +333,10 @@ TEST(GrpcBucketMetadataParser, BucketEncryptionRoundtrip) {
   google::storage::v2::Bucket::Encryption start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected = storage::BucketEncryption{
-      "projects/test-p/locations/us/keyRings/test-kr/cryptoKeys/test-key"};
+      "projects/test-p/locations/us/keyRings/test-kr/cryptoKeys/test-key",
+      {},
+      {},
+      {}};
   auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = ToProto(middle);
