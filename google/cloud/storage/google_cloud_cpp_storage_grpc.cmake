@@ -102,6 +102,8 @@ add_library(
     internal/async/connection_fwd.h
     internal/async/connection_impl.cc
     internal/async/connection_impl.h
+    internal/async/connection_logging.cc
+    internal/async/connection_logging.h
     internal/async/connection_tracing.cc
     internal/async/connection_tracing.h
     internal/async/default_options.cc
@@ -110,6 +112,8 @@ add_library(
     internal/async/handle_redirect_error.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
+    internal/async/object_descriptor_connection_logging.cc
+    internal/async/object_descriptor_connection_logging.h
     internal/async/object_descriptor_connection_tracing.cc
     internal/async/object_descriptor_connection_tracing.h
     internal/async/object_descriptor_impl.cc
@@ -132,6 +136,8 @@ add_library(
     internal/async/reader_connection_factory.h
     internal/async/reader_connection_impl.cc
     internal/async/reader_connection_impl.h
+    internal/async/reader_connection_logging.cc
+    internal/async/reader_connection_logging.h
     internal/async/reader_connection_resume.cc
     internal/async/reader_connection_resume.h
     internal/async/reader_connection_tracing.cc
@@ -438,10 +444,12 @@ set(storage_client_grpc_unit_tests
     internal/async/connection_impl_test.cc
     internal/async/connection_impl_upload_hash_test.cc
     internal/async/connection_impl_upload_test.cc
+    internal/async/connection_logging_test.cc
     internal/async/connection_tracing_test.cc
     internal/async/default_options_test.cc
     internal/async/handle_redirect_error_test.cc
     internal/async/insert_object_test.cc
+    internal/async/object_descriptor_connection_logging_test.cc
     internal/async/object_descriptor_connection_tracing_test.cc
     internal/async/object_descriptor_impl_test.cc
     internal/async/object_descriptor_reader_test.cc
@@ -453,6 +461,7 @@ set(storage_client_grpc_unit_tests
     internal/async/read_range_test.cc
     internal/async/reader_connection_factory_test.cc
     internal/async/reader_connection_impl_test.cc
+    internal/async/reader_connection_logging_test.cc
     internal/async/reader_connection_resume_test.cc
     internal/async/reader_connection_tracing_test.cc
     internal/async/rewriter_connection_impl_test.cc

@@ -14,10 +14,12 @@
 
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
+#include "google/cloud/storage/internal/async/connection_logging.h"
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -36,6 +38,12 @@ AsyncClient::AsyncClient(Options options) {
   connection_ = storage_internal::MakeTracingAsyncConnection(
       storage_internal::MakeAsyncConnection(background_->cq(),
                                             std::move(options)));
+  auto const components = connection_->options().get<LoggingComponentsOption>();
+  if (std::find(components.begin(), components.end(), "rpc") !=
+      components.end()) {
+    connection_ =
+        storage_internal::MakeLoggingAsyncConnection(std::move(connection_));
+  }
 }
 
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
