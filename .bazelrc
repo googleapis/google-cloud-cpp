@@ -19,12 +19,7 @@
 build --enable_platform_specific_config=true
 
 build --features=external_include_paths
-
-build --per_file_copt=grpc+//@-Wno-private-header
-build --copt=-Wno-private-header
 build --cxxopt=-Wno-private-header
-build --host_copt=-Wno-private-header
-build --host_cxxopt=-Wno-private-header
 
 # The project requires C++ >= 17.
 build:linux --cxxopt=-std=c++17
