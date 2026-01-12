@@ -41,12 +41,12 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/directed_read_replicas.h"
 #include "google/cloud/spanner/internal/session.h"
-#include "google/cloud/spanner/isolation_level.h"
 #include "google/cloud/spanner/lock_hint.h"
 #include "google/cloud/spanner/order_by.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
 #include "absl/types/variant.h"
@@ -417,6 +417,15 @@ struct ExcludeTransactionFromChangeStreamsOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set the transaction isolation level.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct TransactionIsolationLevelOption {
+  using Type = spanner::Transaction::IsolationLevel;
+};
+
+/**
  * Option for `google::cloud::Options` to return additional statistics
  * about the committed transaction in a `spanner::CommitResult`.
  *
@@ -424,16 +433,6 @@ struct ExcludeTransactionFromChangeStreamsOption {
  */
 struct CommitReturnStatsOption {
   using Type = bool;
-};
-
-/**
- * Option for `google::cloud::Options` to set the isolation level for
- * read-write transactions.
- *
- * @ingroup google-cloud-spanner-options
- */
-struct TransactionIsolationLevelOption {
-  using Type = IsolationLevel;
 };
 
 /**

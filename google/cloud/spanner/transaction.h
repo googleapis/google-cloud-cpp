@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/spanner/isolation_level.h"
 #include "absl/types/optional.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <chrono>
@@ -58,6 +57,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Transaction {
  public:
+  enum class IsolationLevel {
+    kUnspecified,
+    kSerializable,
+    kRepeatableRead,
+  };
+
   /**
    * Options for ReadOnly transactions.
    */
@@ -101,13 +106,13 @@ class Transaction {
 
     explicit ReadWriteOptions(ReadLockMode read_lock_mode);
 
+    explicit ReadWriteOptions(IsolationLevel isolation_level)
+        : isolation_level_(isolation_level) {}
+
     // A tag used for collecting statistics about the transaction.
     ReadWriteOptions& WithTag(absl::optional<std::string> tag);
 
-    ReadWriteOptions& WithIsolationLevel(IsolationLevel isolation_level) {
-      isolation_level_ = isolation_level;
-      return *this;
-    }
+    ReadWriteOptions& WithIsolationLevel(IsolationLevel isolation_level);
 
    private:
     friend Transaction;
@@ -156,6 +161,8 @@ class Transaction {
   explicit Transaction(ReadOnlyOptions opts);
   /// @copydoc Transaction(ReadOnlyOptions)
   explicit Transaction(ReadWriteOptions opts);
+  /// @copydoc Transaction(ReadOnlyOptions)
+  explicit Transaction(ReadWriteOptions opts, IsolationLevel isolation_level);
   /// @copydoc Transaction(ReadOnlyOptions)
   Transaction(Transaction const& txn, ReadWriteOptions opts);
   ///@}

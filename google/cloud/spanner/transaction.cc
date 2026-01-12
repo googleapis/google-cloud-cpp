@@ -54,6 +54,22 @@ ProtoReadLockMode(
   }
 }
 
+google::spanner::v1::TransactionOptions_IsolationLevel ProtoIsolationLevel(
+    absl::optional<Transaction::IsolationLevel> const& isolation_level) {
+  if (!isolation_level) {
+    return google::spanner::v1::TransactionOptions::ISOLATION_LEVEL_UNSPECIFIED;
+  }
+  switch (*isolation_level) {
+    case Transaction::IsolationLevel::kSerializable:
+      return google::spanner::v1::TransactionOptions::SERIALIZABLE;
+    case Transaction::IsolationLevel::kRepeatableRead:
+      return google::spanner::v1::TransactionOptions::REPEATABLE_READ;
+    default:
+      return google::spanner::v1::TransactionOptions::
+          ISOLATION_LEVEL_UNSPECIFIED;
+  }
+}
+
 google::spanner::v1::TransactionOptions MakeOpts(
     google::spanner::v1::TransactionOptions_ReadOnly ro_opts) {
   google::spanner::v1::TransactionOptions opts;
@@ -63,21 +79,21 @@ google::spanner::v1::TransactionOptions MakeOpts(
 
 google::spanner::v1::TransactionOptions MakeOpts(
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts,
-    IsolationLevel isolation_level) {
+    absl::optional<Transaction::IsolationLevel> isolation_level) {
   google::spanner::v1::TransactionOptions opts;
   *opts.mutable_read_write() = std::move(rw_opts);
   auto const& current = internal::CurrentOptions();
   if (current.get<ExcludeTransactionFromChangeStreamsOption>()) {
     opts.set_exclude_txn_from_change_streams(true);
   }
-  if (isolation_level == IsolationLevel::kUnspecified) {
-    isolation_level = current.get<TransactionIsolationLevelOption>();
-  }
-  if (isolation_level != IsolationLevel::kUnspecified) {
+  if (isolation_level &&
+      *isolation_level != Transaction::IsolationLevel::kUnspecified) {
+    opts.set_isolation_level(ProtoIsolationLevel(isolation_level));
+  } else if (current.has<TransactionIsolationLevelOption>()) {
     opts.set_isolation_level(
-        static_cast<google::spanner::v1::TransactionOptions::IsolationLevel>(
-            isolation_level));
+        ProtoIsolationLevel(current.get<TransactionIsolationLevelOption>()));
   }
+
   return opts;
 }
 
@@ -112,6 +128,13 @@ Transaction::ReadWriteOptions& Transaction::ReadWriteOptions::WithTag(
   return *this;
 }
 
+Transaction::ReadWriteOptions&
+Transaction::ReadWriteOptions::WithIsolationLevel(
+    IsolationLevel isolation_level) {
+  isolation_level_ = isolation_level;
+  return *this;
+}
+
 Transaction::SingleUseOptions::SingleUseOptions(ReadOnlyOptions opts) {
   ro_opts_ = std::move(opts.ro_opts_);
 }
@@ -140,6 +163,17 @@ Transaction::Transaction(ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() =
       MakeOpts(std::move(opts.rw_opts_), opts.isolation_level_);
+  auto const route_to_leader = true;  // read-write
+  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
+      std::move(selector), route_to_leader,
+      std::move(opts.tag_).value_or(std::string()));
+}
+
+Transaction::Transaction(ReadWriteOptions opts,
+                         IsolationLevel isolation_level) {
+  google::spanner::v1::TransactionSelector selector;
+  *selector.mutable_begin() =
+      MakeOpts(std::move(opts.rw_opts_), isolation_level);
   auto const route_to_leader = true;  // read-write
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       std::move(selector), route_to_leader,

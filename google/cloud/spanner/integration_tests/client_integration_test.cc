@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
-#include "google/cloud/spanner/isolation_level.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/credentials.h"
@@ -241,6 +240,9 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
                                    RowType(4, "test-fname-4", "test-lname-4")));
 }
 
+// A smoke test to verify that the TransactionIsolationLevelOption is
+// correctly processed and accepted by the Spanner backend. It does not
+// test the behavioral semantics of the isolation level itself.
 /// @test Verify that TransactionIsolationLevel works as expected.
 TEST_F(ClientIntegrationTest, TransactionIsolationLevel) {
   auto& client = *client_;
@@ -251,14 +253,12 @@ TEST_F(ClientIntegrationTest, TransactionIsolationLevel) {
         for (auto const& row : rows) {
           if (!row) return row.status();
         }
-        // std::cout << "Transaction is active." << std::endl;
         return Mutations{};
       },
-      Options{}.set<TransactionIsolationLevelOption>(
-          IsolationLevel::kRepeatableRead));
+      Options{}.set<spanner::TransactionIsolationLevelOption>(
+          Transaction::IsolationLevel::kRepeatableRead));
   EXPECT_THAT(commit, StatusIs(StatusCode::kOk));
 }
-
 
 /// @test Verify that Client::Rollback works as expected.
 TEST_F(ClientIntegrationTest, TransactionRollback) {
@@ -1419,6 +1419,9 @@ TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
   ASSERT_STATUS_OK(metadata);
 }
 
+// A smoke test to verify that the TransactionIsolationLevelOption is
+// correctly processed and accepted by the Spanner backend. It does not
+// test the behavioral semantics of the isolation level itself.
 /// @test Verify that TransactionIsolationLevel works as expected.
 TEST_F(PgClientIntegrationTest, TransactionIsolationLevel) {
   auto& client = *client_;
@@ -1430,8 +1433,8 @@ TEST_F(PgClientIntegrationTest, TransactionIsolationLevel) {
         }
         return Mutations{};
       },
-      Options{}.set<TransactionIsolationLevelOption>(
-          IsolationLevel::kRepeatableRead));
+      Options{}.set<spanner::TransactionIsolationLevelOption>(
+          Transaction::IsolationLevel::kRepeatableRead));
   EXPECT_THAT(commit, StatusIs(StatusCode::kOk));
 }
 
