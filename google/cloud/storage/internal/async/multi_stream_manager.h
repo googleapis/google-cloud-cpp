@@ -72,7 +72,7 @@ class MultiStreamManager {
   // Constructor creates the first stream using the factory immediately.
   explicit MultiStreamManager(StreamFactory stream_factory)
       : stream_factory_(std::move(stream_factory)) {
-    streams_.push_back(Stream{stream_factory_(), {}});
+    streams_.emplace_back(Stream{stream_factory_(), {}});
   }
 
   // Constructor accepts an already-created initial stream.
@@ -80,7 +80,7 @@ class MultiStreamManager {
   MultiStreamManager(StreamFactory stream_factory,
                      std::shared_ptr<StreamT> initial_stream)
       : stream_factory_(std::move(stream_factory)) {
-    streams_.push_back(Stream{std::move(initial_stream), {}});
+    streams_.emplace_back(Stream{std::move(initial_stream), {}});
   }
 
   StreamIterator GetFirstStream() {
@@ -110,7 +110,7 @@ class MultiStreamManager {
   }
 
   StreamIterator AddStream(std::shared_ptr<StreamT> stream) {
-    streams_.push_front(Stream{std::move(stream), {}});
+    streams_.emplace_front(Stream{std::move(stream), {}});
     return streams_.begin();
   }
 
@@ -159,7 +159,7 @@ class MultiStreamManager {
   }
 
   bool Empty() const { return streams_.empty(); }
-  StreamIterator End() { return streams_.end(); }
+  StreamIterator End() const { return streams_.end(); }
   std::size_t Size() const { return streams_.size(); }
 
  private:
