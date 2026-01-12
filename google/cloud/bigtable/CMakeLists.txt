@@ -223,8 +223,6 @@ add_library(
     internal/traced_row_reader.h
     internal/tuple_utils.h
     internal/unary_client_utils.h
-    metadata_update_policy.cc
-    metadata_update_policy.h
     mutation_batcher.cc
     mutation_batcher.h
     mutation_branch.h
@@ -477,7 +475,6 @@ if (BUILD_TESTING)
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         internal/tuple_utils_test.cc
-        metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
         mutations_test.cc

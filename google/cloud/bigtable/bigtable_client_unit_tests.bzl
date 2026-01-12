@@ -68,7 +68,6 @@ bigtable_client_unit_tests = [
     "internal/retry_traits_test.cc",
     "internal/traced_row_reader_test.cc",
     "internal/tuple_utils_test.cc",
-    "metadata_update_policy_test.cc",
     "mocks/mock_row_reader_test.cc",
     "mutation_batcher_test.cc",
     "mutations_test.cc",

@@ -282,6 +282,14 @@ guide:
 
 </details>
 
+<details>
+<summary>Removed <code>bigtable::MetadataUpdatePolicy</code></summary>
+
+The `bigtable::MetadataUpdatePolicy` class has been removed. It was only used in
+internal legacy files.
+
+</details>
+
 ### Pubsub
 
 ### Spanner
