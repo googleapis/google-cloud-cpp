@@ -1,4 +1,5 @@
 @com_google_googleapis//google/cloud/dialogflow/v2:agent.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:agent_coaching_instruction.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:answer_record.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:audio_config.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:context.proto
@@ -14,12 +15,17 @@
 @com_google_googleapis//google/cloud/dialogflow/v2:fulfillment.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:gcs.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:generator.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:generator_evaluation.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:human_agent_assistant_event.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:intent.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:knowledge_base.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:operations.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:participant.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:session.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:session_entity_type.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:sip_trunk.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:tool.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:tool_call.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:validation_result.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:version.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:webhook.proto

@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/time_utils.h"
 #include <algorithm>
 
@@ -162,13 +163,53 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
   return Status{};
 }
 
+google::protobuf::Timestamp ToProtoTimestamp(
+    std::chrono::system_clock::time_point tp) {
+  auto duration = tp.time_since_epoch();
+  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration);
+  auto nanos =
+      std::chrono::duration_cast<std::chrono::nanoseconds>(duration - seconds);
+  google::protobuf::Timestamp ts;
+  ts.set_seconds(seconds.count());
+  ts.set_nanos(static_cast<std::int32_t>(nanos.count()));
+  return ts;
+}
+
 Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
   if (e.is_null()) {
     b.clear_encryption();
-  } else {
-    b.mutable_encryption()->set_default_kms_key(
-        e.value("defaultKmsKeyName", ""));
+    return Status{};
   }
+  auto& encryption = *b.mutable_encryption();
+  if (e.contains("defaultKmsKeyName")) {
+    encryption.set_default_kms_key(e.value("defaultKmsKeyName", ""));
+  }
+  auto patch_config = [&](char const* json_key, auto* mutable_config) {
+    if (e.contains(json_key)) {
+      auto const& c = e[json_key];
+      if (c.contains("restrictionMode")) {
+        mutable_config->set_restriction_mode(c.value("restrictionMode", ""));
+      }
+      if (c.contains("effectiveTime")) {
+        auto ts =
+            google::cloud::internal::ParseRfc3339(c.value("effectiveTime", ""));
+        if (ts) {
+          *mutable_config->mutable_effective_time() = ToProtoTimestamp(*ts);
+        }
+      }
+    }
+  };
+
+  patch_config(
+      "googleManagedEncryptionEnforcementConfig",
+      encryption.mutable_google_managed_encryption_enforcement_config());
+  patch_config(
+      "customerManagedEncryptionEnforcementConfig",
+      encryption.mutable_customer_managed_encryption_enforcement_config());
+  patch_config(
+      "customerSuppliedEncryptionEnforcementConfig",
+      encryption.mutable_customer_supplied_encryption_enforcement_config());
+
   return Status{};
 }
 
@@ -289,8 +330,24 @@ void UpdateLogging(Bucket& bucket, storage::BucketMetadata const& metadata) {
 
 void UpdateEncryption(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_encryption()) return;
-  bucket.mutable_encryption()->set_default_kms_key(
-      metadata.encryption().default_kms_key_name);
+  auto& encryption = *bucket.mutable_encryption();
+  encryption.set_default_kms_key(metadata.encryption().default_kms_key_name);
+
+  auto update_config = [&](auto const& source, auto* dest) {
+    if (source.restriction_mode.empty()) return;
+    dest->set_restriction_mode(source.restriction_mode);
+    *dest->mutable_effective_time() = ToProtoTimestamp(source.effective_time);
+  };
+
+  update_config(
+      metadata.encryption().google_managed_encryption_enforcement_config,
+      encryption.mutable_google_managed_encryption_enforcement_config());
+  update_config(
+      metadata.encryption().customer_managed_encryption_enforcement_config,
+      encryption.mutable_customer_managed_encryption_enforcement_config());
+  update_config(
+      metadata.encryption().customer_supplied_encryption_enforcement_config,
+      encryption.mutable_customer_supplied_encryption_enforcement_config());
 }
 
 void UpdateBilling(Bucket& bucket, storage::BucketMetadata const& metadata) {

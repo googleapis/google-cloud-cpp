@@ -169,6 +169,16 @@ Idempotency ConfigConnectionIdempotencyPolicy::GetResourceDrift(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ConfigConnectionIdempotencyPolicy::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ConfigConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

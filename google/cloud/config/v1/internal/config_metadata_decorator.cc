@@ -360,6 +360,42 @@ ConfigMetadata::GetResourceDrift(
   return child_->GetResourceDrift(context, options, request);
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigMetadata::GetAutoMigrationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAutoMigrationConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncUpdateAutoMigrationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat(
+                  "auto_migration_config.name=",
+                  internal::UrlEncode(request.auto_migration_config().name())));
+  return child_->AsyncUpdateAutoMigrationConfig(cq, std::move(context),
+                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigMetadata::UpdateAutoMigrationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat(
+                  "auto_migration_config.name=",
+                  internal::UrlEncode(request.auto_migration_config().name())));
+  return child_->UpdateAutoMigrationConfig(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

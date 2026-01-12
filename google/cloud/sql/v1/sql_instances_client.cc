@@ -40,6 +40,24 @@ SqlInstancesServiceClient::AddServerCa(
   return connection_->AddServerCa(request);
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::AddServerCertificate(
+    google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddServerCertificate(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::AddEntraIdCertificate(
+    google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddEntraIdCertificate(request);
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlInstancesServiceClient::Clone(
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request,
     Options opts) {
@@ -128,6 +146,24 @@ SqlInstancesServiceClient::ListServerCas(
   return connection_->ListServerCas(request);
 }
 
+StatusOr<google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+SqlInstancesServiceClient::ListServerCertificates(
+    google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListServerCertificates(request);
+}
+
+StatusOr<google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+SqlInstancesServiceClient::ListEntraIdCertificates(
+    google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEntraIdCertificates(request);
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlInstancesServiceClient::Patch(
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request,
     Options opts) {
@@ -180,6 +216,24 @@ SqlInstancesServiceClient::RotateServerCa(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RotateServerCa(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::RotateServerCertificate(
+    google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RotateServerCertificate(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::RotateEntraIdCertificate(
+    google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RotateEntraIdCertificate(request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -282,6 +336,14 @@ SqlInstancesServiceClient::GetLatestRecoveryTime(
   return connection_->GetLatestRecoveryTime(request);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>
+SqlInstancesServiceClient::ExecuteSql(
+    google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteSql(request);
+}
+
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
 SqlInstancesServiceClient::AcquireSsrsLease(
     google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request,
@@ -296,6 +358,24 @@ SqlInstancesServiceClient::ReleaseSsrsLease(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReleaseSsrsLease(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::PreCheckMajorVersionUpgrade(
+    google::cloud::sql::v1::
+        SqlInstancesPreCheckMajorVersionUpgradeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PreCheckMajorVersionUpgrade(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::PointInTimeRestore(
+    google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PointInTimeRestore(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

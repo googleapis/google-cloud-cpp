@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// GoldenKitchenSinkClient
 ///
+/// This client uses GoldenKitchenSink version test-api-version.
+///
 /// @par Equality
 ///
 /// Instances of this class created via copy-construction or copy-assignment

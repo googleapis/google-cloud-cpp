@@ -159,6 +159,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
     case google::spanner::v1::TypeCode::INTERVAL:
+    case google::spanner::v1::TypeCode::UUID:
       return os << v.string_value();
 
     case google::spanner::v1::TypeCode::DATE:
@@ -272,6 +273,10 @@ bool Value::TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const& type) {
 
 bool Value::TypeProtoIs(Interval, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::INTERVAL;
+}
+
+bool Value::TypeProtoIs(Uuid, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::UUID;
 }
 
 bool Value::TypeProtoIs(std::string const&,
@@ -415,6 +420,12 @@ google::spanner::v1::Type Value::MakeTypeProto(Interval) {
   return t;
 }
 
+google::spanner::v1::Type Value::MakeTypeProto(Uuid) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::UUID);
+  return t;
+}
+
 google::spanner::v1::Type Value::MakeTypeProto(int) {
   return MakeTypeProto(std::int64_t{});
 }
@@ -534,6 +545,12 @@ google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
 google::protobuf::Value Value::MakeValueProto(Interval intvl) {
   google::protobuf::Value v;
   v.set_string_value(std::string(intvl));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(Uuid u) {
+  google::protobuf::Value v;
+  v.set_string_value(std::string(u));
   return v;
 }
 
@@ -731,9 +748,17 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
 StatusOr<Interval> Value::GetValue(Interval, google::protobuf::Value const& pv,
                                    google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing Interval");
+    return internal::UnknownError("missing Interval", GCP_ERROR_INFO());
   }
   return MakeInterval(pv.string_value());
+}
+
+StatusOr<Uuid> Value::GetValue(Uuid, google::protobuf::Value const& pv,
+                               google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return internal::UnknownError("missing UUID", GCP_ERROR_INFO());
+  }
+  return MakeUuid(pv.string_value());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

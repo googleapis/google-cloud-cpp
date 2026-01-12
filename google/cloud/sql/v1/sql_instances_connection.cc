@@ -43,6 +43,18 @@ SqlInstancesServiceConnection::AddServerCa(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::AddServerCertificate(
+    google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::AddEntraIdCertificate(
+    google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceConnection::Clone(
     google::cloud::sql::v1::SqlInstancesCloneRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -116,6 +128,18 @@ SqlInstancesServiceConnection::ListServerCas(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+SqlInstancesServiceConnection::ListServerCertificates(
+    google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+SqlInstancesServiceConnection::ListEntraIdCertificates(
+    google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceConnection::Patch(
     google::cloud::sql::v1::SqlInstancesPatchRequest const&) {
@@ -155,6 +179,19 @@ SqlInstancesServiceConnection::RestoreBackup(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceConnection::RotateServerCa(
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::RotateServerCertificate(
+    google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::RotateEntraIdCertificate(
+    google::cloud::sql::v1::
+        SqlInstancesRotateEntraIdCertificateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -231,6 +268,12 @@ SqlInstancesServiceConnection::GetLatestRecoveryTime(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>
+SqlInstancesServiceConnection::ExecuteSql(
+    google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
 SqlInstancesServiceConnection::AcquireSsrsLease(
     google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&) {
@@ -240,6 +283,19 @@ SqlInstancesServiceConnection::AcquireSsrsLease(
 StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
 SqlInstancesServiceConnection::ReleaseSsrsLease(
     google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::PreCheckMajorVersionUpgrade(
+    google::cloud::sql::v1::
+        SqlInstancesPreCheckMajorVersionUpgradeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::PointInTimeRestore(
+    google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

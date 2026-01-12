@@ -48,6 +48,35 @@ SqlInstancesServiceRestLogging::AddServerCa(
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::AddServerCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+              request) {
+        return child_->AddServerCertificate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::AddEntraIdCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::
+                 SqlInstancesAddEntraIdCertificateRequest const& request) {
+        return child_->AddEntraIdCertificate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestLogging::Clone(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
@@ -195,6 +224,34 @@ SqlInstancesServiceRestLogging::ListServerCas(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+SqlInstancesServiceRestLogging::ListServerCertificates(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::
+                 SqlInstancesListServerCertificatesRequest const& request) {
+        return child_->ListServerCertificates(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+SqlInstancesServiceRestLogging::ListEntraIdCertificates(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::
+                 SqlInstancesListEntraIdCertificatesRequest const& request) {
+        return child_->ListEntraIdCertificates(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestLogging::Patch(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -281,6 +338,34 @@ SqlInstancesServiceRestLogging::RotateServerCa(
              google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&
                  request) {
         return child_->RotateServerCa(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::RotateServerCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::
+                 SqlInstancesRotateServerCertificateRequest const& request) {
+        return child_->RotateServerCertificate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::RotateEntraIdCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::
+                 SqlInstancesRotateEntraIdCertificateRequest const& request) {
+        return child_->RotateEntraIdCertificate(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
@@ -451,6 +536,19 @@ SqlInstancesServiceRestLogging::GetLatestRecoveryTime(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>
+SqlInstancesServiceRestLogging::ExecuteSql(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const&
+                 request) {
+        return child_->ExecuteSql(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
 SqlInstancesServiceRestLogging::AcquireSsrsLease(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -475,6 +573,37 @@ SqlInstancesServiceRestLogging::ReleaseSsrsLease(
              google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
                  request) {
         return child_->ReleaseSsrsLease(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::PreCheckMajorVersionUpgrade(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::
+        SqlInstancesPreCheckMajorVersionUpgradeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::sql::v1::
+              SqlInstancesPreCheckMajorVersionUpgradeRequest const& request) {
+        return child_->PreCheckMajorVersionUpgrade(rest_context, options,
+                                                   request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::PointInTimeRestore(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
+              request) {
+        return child_->PointInTimeRestore(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

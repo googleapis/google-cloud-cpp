@@ -3426,6 +3426,8 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::Status;
+  using ::google::cloud::StatusCode;
   using ::google::cloud::StatusOr;
 
   // A helper to read a single album MarketingBudget.
@@ -3442,14 +3444,20 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     return std::get<0>(*std::move(row));
   };
 
+  auto constexpr kInsufficientFundsMessage =
+      "The second album does not have enough funds to transfer";
   auto commit = client.Commit(
-      [&client, &get_current_budget](
-          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+      [&](spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         auto b1 = get_current_budget(client, txn, 1, 1);
         if (!b1) return std::move(b1).status();
         auto b2 = get_current_budget(client, txn, 2, 2);
         if (!b2) return std::move(b2).status();
         std::int64_t transfer_amount = 200000;
+
+        if (*b2 < transfer_amount) {
+          return Status(StatusCode::kFailedPrecondition,
+                        kInsufficientFundsMessage);
+        }
 
         return spanner::Mutations{
             spanner::UpdateMutationBuilder(

@@ -143,7 +143,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1217}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1284}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -185,7 +185,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1217}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1284}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -212,7 +212,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1253}
+  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1320}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   ///
   // clang-format on
@@ -242,7 +242,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1253}
+  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1320}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   ///
   // clang-format on
@@ -327,9 +327,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1656}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1266}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1269}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1723}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1333}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1336}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
   ///
@@ -428,9 +428,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1656}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1266}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1269}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1723}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1333}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1336}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
   ///
@@ -554,10 +554,10 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
   /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1671}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1681}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1296}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1312}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1738}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1748}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1363}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1379}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -659,9 +659,9 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
   /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1671}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1681}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1296}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1738}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1748}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1363}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -725,7 +725,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1322}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1389}
   /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
   ///
   // clang-format on
@@ -759,7 +759,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1322}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1389}
   /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
   ///
   // clang-format on
@@ -807,7 +807,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1349}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1416}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
@@ -856,7 +856,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1349}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1416}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
@@ -892,8 +892,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
-  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1474}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
+  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1541}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
@@ -931,8 +931,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
-  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1474}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
+  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1541}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
@@ -969,8 +969,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1926}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1993}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstancePartition>
@@ -1008,8 +1008,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1926}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1993}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstancePartition>
@@ -1037,8 +1037,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1433}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1500}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
@@ -1067,8 +1067,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1433}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1500}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
@@ -1139,9 +1139,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1575}
-  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1452}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1642}
+  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1519}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1228,9 +1228,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1575}
-  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1452}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1642}
+  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1519}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1340,12 +1340,12 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
-  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1084}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1598}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1610}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1544}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1556}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
+  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1151}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1665}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1677}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1611}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1623}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1437,11 +1437,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
-  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1084}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1598}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1610}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1544}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
+  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1151}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1665}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1677}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1611}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1507,7 +1507,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1562}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1629}
   ///
   // clang-format on
   Status DeleteInstance(std::string const& name, Options opts = {});
@@ -1543,7 +1543,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1562}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1629}
   ///
   // clang-format on
   Status DeleteInstance(
@@ -1804,8 +1804,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1872}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1939}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::InstancePartition>
@@ -1834,8 +1834,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1872}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1939}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::InstancePartition>
@@ -1913,9 +1913,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1807}
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1827}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1874}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1894}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2008,9 +2008,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1807}
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1827}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1874}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1894}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2072,8 +2072,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1852}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
+  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1919}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1782}
   ///
   // clang-format on
   Status DeleteInstancePartition(std::string const& name, Options opts = {});
@@ -2105,8 +2105,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1852}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
+  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1919}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1782}
   ///
   // clang-format on
   Status DeleteInstancePartition(
@@ -2190,12 +2190,12 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1906}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1918}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1886}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1900}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1782}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1973}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1985}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1953}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1967}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2293,11 +2293,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1906}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1918}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1886}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1753}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1782}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1973}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1985}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1953}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2377,8 +2377,8 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1978}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1981}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2045}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2048}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
@@ -2430,8 +2430,8 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1978}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1981}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2045}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2048}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
@@ -2529,11 +2529,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
-  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2103}
-  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2116}
-  /// [google.spanner.admin.instance.v1.MoveInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2077}
-  /// [google.spanner.admin.instance.v1.MoveInstanceResponse]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2099}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1071}
+  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2170}
+  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2183}
+  /// [google.spanner.admin.instance.v1.MoveInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2144}
+  /// [google.spanner.admin.instance.v1.MoveInstanceResponse]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2166}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
