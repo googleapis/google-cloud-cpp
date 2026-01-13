@@ -135,8 +135,7 @@ class WrapRestCredentials {
   std::shared_ptr<oauth2_internal::Credentials> impl_;
 };
 
-Status AddAuthorizationHeader(Options const& options,
-                              RestRequestBuilder& builder) {
+Status AddAuthorizationHeader(Options const&, RestRequestBuilder&) {
   std::cout << __func__ << ": SKIPPED" << std::endl;
 #if 0
   // In tests this option may not be set. And over time we want to retire it.
