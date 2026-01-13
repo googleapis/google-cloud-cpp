@@ -58,7 +58,12 @@ CreateServiceAccountCredentialsFromJsonContents(
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto info =
       oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info) return info.status();
+  if (!info) {
+    std::cout << __PRETTY_FUNCTION__ << ": parse error" << std::endl;
+    return info.status();
+  }
+  std::cout << __PRETTY_FUNCTION__ << ": info->client_email='"
+    << info->client_email << "'" << std::endl;
 
   // Verify this is usable before returning it.
   auto const tp = std::chrono::system_clock::time_point{};
@@ -104,9 +109,13 @@ CreateServiceAccountCredentialsFromP12FilePath(
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto info = oauth2_internal::ParseServiceAccountP12File(path);
   if (!info) {
+    std::cout << __PRETTY_FUNCTION__ << ": return ErrorCredentials" << std::endl;
     return MakeErrorCredentials(std::move(info).status());
     // return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
+  std::cout << __PRETTY_FUNCTION__ << ": info->client_email='"
+    << info->client_email << "'" << std::endl;
+
   // These are supplied as extra parameters to this method, not in the P12
   // file.
   info->subject = std::move(subject);

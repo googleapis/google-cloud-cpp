@@ -103,6 +103,9 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
 
   // std::string account_email = (*creds)->AccountEmail();
   std::string account_email = sa_creds->AccountEmail();
+  std::cout << __func__ << "*************************************" << std::endl;
+  std::cout << __func__ << ": account_email=" << account_email << std::endl;
+  std::cout << __func__ << "*************************************" << std::endl;
 
   // auto client =
   //     MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
@@ -209,6 +212,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   // auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
   //     service_account_key_filename_);
   // ASSERT_STATUS_OK(creds);
+  std::cout << __func__ << ": service_account_key_filename_=" << service_account_key_filename_ << std::endl;
   auto credentials =
       MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
 
@@ -220,6 +224,10 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
 
   // std::string account_email = (*creds)->AccountEmail();
   std::string account_email = sa_creds->AccountEmail();
+  std::cout << __func__ << "*************************************" << std::endl;
+  std::cout << __func__ << ": account_email=" << account_email << std::endl;
+  std::cout << __func__ << "*************************************" << std::endl;
+
   auto client = MakeIntegrationTestClient(
       Options{}.set<UnifiedCredentialsOption>(credentials));
 
