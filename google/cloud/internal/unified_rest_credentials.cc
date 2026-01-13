@@ -118,7 +118,7 @@ CreateServiceAccountCredentialsFromFilePath(
     absl::optional<std::string> subject, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
   auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(
-      path, scopes, subject, options, std::move(client_factory));
+      path, scopes, subject, options, client_factory);
   if (credentials) {
     return *credentials;
   }
