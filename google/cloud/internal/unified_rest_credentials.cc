@@ -73,8 +73,8 @@ CreateServiceAccountCredentialsFromJsonContents(
 
 StatusOr<std::shared_ptr<oauth2_internal::Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
-    std::string const& path, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, Options const& options,
+    std::string const& path, absl::optional<std::set<std::string>>,
+    absl::optional<std::string>, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
