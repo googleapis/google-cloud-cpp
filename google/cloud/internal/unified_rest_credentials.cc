@@ -124,7 +124,8 @@ CreateServiceAccountCredentialsFromFilePath(
   auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(
       path, scopes, subject, options, client_factory);
   if (credentials) {
-    std::cout << __PRETTY_FUNCTION__ << ": return JSON credentials" << std::endl;
+    std::cout << __PRETTY_FUNCTION__ << ": return JSON credentials"
+              << std::endl;
     return *credentials;
   }
   return CreateServiceAccountCredentialsFromP12FilePath(

@@ -88,23 +88,26 @@ class V4PostPolicyConformanceTest : public V4SignedUrlConformanceTest {};
 TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            absl::nullopt);
+  auto credentials =
+      MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
+
   // auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
   //     service_account_key_filename_);
   // ASSERT_STATUS_OK(creds);
 
-  auto is = std::ifstream(service_account_key_filename_);
-  // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
-  auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-  auto creds = MakeServiceAccountCredentials(contents);
-  auto sa_creds = rest_internal::MapCredentials(*creds);
+  // auto is = std::ifstream(service_account_key_filename_);
+  // // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
+  // auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()),
+  // {}); auto creds = MakeServiceAccountCredentials(contents);
+  auto sa_creds = rest_internal::MapCredentials(*credentials);
 
   // std::string account_email = (*creds)->AccountEmail();
   std::string account_email = sa_creds->AccountEmail();
 
   // auto client =
   //     MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
-  auto client =
-      MakeIntegrationTestClient(Options{}.set<UnifiedCredentialsOption>(creds));
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<UnifiedCredentialsOption>(credentials));
 
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
@@ -206,17 +209,19 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   // auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
   //     service_account_key_filename_);
   // ASSERT_STATUS_OK(creds);
+  auto credentials =
+      MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
 
-  auto is = std::ifstream(service_account_key_filename_);
-  // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
-  auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-  auto creds = MakeServiceAccountCredentials(contents);
-  auto sa_creds = rest_internal::MapCredentials(*creds);
+  // auto is = std::ifstream(service_account_key_filename_);
+  // // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
+  // auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()),
+  // {}); auto creds = MakeServiceAccountCredentials(contents);
+  auto sa_creds = rest_internal::MapCredentials(*credentials);
 
   // std::string account_email = (*creds)->AccountEmail();
   std::string account_email = sa_creds->AccountEmail();
-  auto client =
-      MakeIntegrationTestClient(Options{}.set<UnifiedCredentialsOption>(creds));
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<UnifiedCredentialsOption>(credentials));
 
   auto const& test_params = (*post_policy_tests)[GetParam()];
   auto const& input = test_params.policyinput();
