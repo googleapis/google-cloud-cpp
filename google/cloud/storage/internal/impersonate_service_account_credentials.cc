@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#if 0
 #include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
@@ -76,3 +76,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+#endif

@@ -14,7 +14,7 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_IMPERSONATE_SERVICE_ACCOUNT_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_IMPERSONATE_SERVICE_ACCOUNT_CREDENTIALS_H
-
+#if 0
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/credentials.h"
@@ -54,5 +54,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
+#endif
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_IMPERSONATE_SERVICE_ACCOUNT_CREDENTIALS_H

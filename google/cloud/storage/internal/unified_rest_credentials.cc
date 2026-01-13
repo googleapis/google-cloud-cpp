@@ -11,18 +11,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-#include "google/cloud/storage/internal/unified_rest_credentials.h"
-#include "google/cloud/storage/internal/access_token_credentials.h"
-#include "google/cloud/storage/internal/error_credentials.h"
-#include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
+#if 0
+// #include "google/cloud/storage/internal/unified_rest_credentials.h"
+// #include "google/cloud/storage/internal/access_token_credentials.h"
+// #include "google/cloud/storage/internal/error_credentials.h"
+// #include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
+#include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
+#include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -50,8 +52,8 @@ using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 using ::google::cloud::oauth2_internal::Decorate;
 
-std::shared_ptr<oauth2::Credentials> MakeErrorCredentials(Status status) {
-  return std::make_shared<ErrorCredentials>(std::move(status));
+std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(Status status) {
+  return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
 }
 
 class WrapRestCredentials : public oauth2::Credentials {
@@ -77,40 +79,39 @@ class WrapRestCredentials : public oauth2::Credentials {
  private:
   std::shared_ptr<oauth2_internal::Credentials> impl_;
 };
-
 }  // namespace
 
-std::shared_ptr<oauth2::Credentials> MapCredentials(
+std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     google::cloud::Credentials const& credentials) {
   class RestVisitor : public CredentialsVisitor {
    public:
     explicit RestVisitor(oauth2_internal::HttpClientFactory client_factory)
         : client_factory_(std::move(client_factory)) {}
 
-    std::shared_ptr<oauth2::Credentials> result;
+    std::shared_ptr<oauth2_internal::Credentials> result;
 
     void visit(ErrorCredentialsConfig const& cfg) override {
       result = MakeErrorCredentials(cfg.status());
     }
 
     void visit(InsecureCredentialsConfig const&) override {
-      result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
+      result = std::make_shared<oauth2_internal::AnonymousCredentials>();
     }
     void visit(GoogleDefaultCredentialsConfig const& cfg) override {
       auto credentials = oauth2_internal::GoogleDefaultCredentials(
           cfg.options(), std::move(client_factory_));
       if (credentials) {
-        result = std::make_shared<WrapRestCredentials>(
-            Decorate(*std::move(credentials), cfg.options()));
+        result =
+            Decorate(*std::move(credentials), cfg.options());
         return;
       }
       result = MakeErrorCredentials(std::move(credentials).status());
     }
     void visit(AccessTokenConfig const& cfg) override {
-      result = std::make_shared<AccessTokenCredentials>(cfg.access_token());
+      result = std::make_shared<oauth2_internal::AccessTokenCredentials>(cfg.access_token());
     }
     void visit(ImpersonateServiceAccountConfig const& config) override {
-      result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
+      result = std::make_shared<oauth2_internal::ImpersonateServiceAccountCredentials>(config);
     }
     void visit(ServiceAccountConfig const& cfg) override {
       auto info = oauth2::ParseServiceAccountCredentials(cfg.json_object(), {});
@@ -168,3 +169,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+#endif
