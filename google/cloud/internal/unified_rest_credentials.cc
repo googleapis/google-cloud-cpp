@@ -55,9 +55,10 @@ StatusOr<std::shared_ptr<oauth2_internal::Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto info =
       oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info) return MakeErrorCredentials(std::move(info).status());
+  if (!info) return info.status();
 
   // Verify this is usable before returning it.
   auto const tp = std::chrono::system_clock::time_point{};
@@ -76,6 +77,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path, absl::optional<std::set<std::string>>,
     absl::optional<std::string>, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return CreateServiceAccountCredentialsFromJsonContents(
@@ -99,6 +101,7 @@ CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
     absl::optional<std::string> subject, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto info = oauth2_internal::ParseServiceAccountP12File(path);
   if (!info) {
     return MakeErrorCredentials(std::move(info).status());
@@ -117,9 +120,11 @@ CreateServiceAccountCredentialsFromFilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
     absl::optional<std::string> subject, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(
       path, scopes, subject, options, client_factory);
   if (credentials) {
+    std::cout << __PRETTY_FUNCTION__ << ": return JSON credentials" << std::endl;
     return *credentials;
   }
   return CreateServiceAccountCredentialsFromP12FilePath(
