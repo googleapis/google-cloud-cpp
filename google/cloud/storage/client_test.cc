@@ -261,8 +261,7 @@ TEST_F(ClientTest, OTelDisableTracing) {
 TEST_F(ClientTest, EndpointsDefault) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
-  auto options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto options = internal::DefaultOptions();
   EXPECT_EQ("https://storage.googleapis.com",
             options.get<RestEndpointOption>());
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
@@ -273,7 +272,7 @@ TEST_F(ClientTest, EndpointsOverride) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
   auto options = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
+
       Options{}.set<RestEndpointOption>("http://127.0.0.1.nip.io:1234"));
   EXPECT_EQ("http://127.0.0.1.nip.io:1234", options.get<RestEndpointOption>());
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
@@ -283,8 +282,7 @@ TEST_F(ClientTest, EndpointsOverride) {
 TEST_F(ClientTest, EndpointsEmulator) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            "http://localhost:1234");
-  auto options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto options = internal::DefaultOptions();
   EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
   EXPECT_EQ("http://localhost:1234/iamapi", options.get<IamEndpointOption>());
 }
@@ -293,23 +291,21 @@ TEST_F(ClientTest, OldEndpointsEmulator) {
   google::cloud::testing_util::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                            "http://localhost:1234");
-  auto options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto options = internal::DefaultOptions();
   EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
   EXPECT_EQ("http://localhost:1234/iamapi", options.get<IamEndpointOption>());
 }
 
 TEST_F(ClientTest, DefaultOptions) {
-  auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto o = internal::DefaultOptions();
   EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
 
   // Verify any set values are respected overridden.
   o = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}.set<RestEndpointOption>("https://private.googleapis.com"));
   EXPECT_EQ("https://private.googleapis.com", o.get<RestEndpointOption>());
 
-  o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  o = internal::DefaultOptions();
   EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
             o.get<IamEndpointOption>());
@@ -354,7 +350,6 @@ TEST_F(ClientTest, DefaultOptions) {
 
 TEST_F(ClientTest, IncorporatesUniverseDomain) {
   auto o = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}.set<google::cloud::internal::UniverseDomainOption>(
           "my-ud.net"));
   EXPECT_EQ(o.get<RestEndpointOption>(), "https://storage.my-ud.net");
@@ -365,7 +360,6 @@ TEST_F(ClientTest, IncorporatesUniverseDomainEnvVar) {
   ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
 
   auto o = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}.set<google::cloud::internal::UniverseDomainOption>(
           "ud-option.net"));
   EXPECT_EQ(o.get<RestEndpointOption>(), "https://storage.ud-env-var.net");
@@ -377,7 +371,6 @@ TEST_F(ClientTest, CustomEndpointOverridesUniverseDomain) {
   ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
 
   auto o = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}
           .set<RestEndpointOption>("https://custom-storage.googleapis.com")
           .set<IamEndpointOption>(
@@ -392,7 +385,6 @@ TEST_F(ClientTest, CustomEndpointOverridesUniverseDomain) {
 TEST_F(ClientTest, HttpVersion) {
   namespace rest = ::google::cloud::rest_internal;
   auto const options = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}.set<storage_experimental::HttpVersionOption>("2.0"));
   EXPECT_EQ("2.0", options.get<rest::HttpVersionOption>());
 }
@@ -400,7 +392,6 @@ TEST_F(ClientTest, HttpVersion) {
 TEST_F(ClientTest, CAPathOption) {
   namespace rest = ::google::cloud::rest_internal;
   auto const options = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}.set<internal::CAPathOption>("test-only"));
   EXPECT_EQ("test-only", options.get<rest::CAPathOption>());
 }
@@ -409,8 +400,7 @@ TEST_F(ClientTest, LoggingWithoutEnv) {
   ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                absl::nullopt);
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
-  auto const options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto const options = internal::DefaultOptions();
   EXPECT_FALSE(options.has<LoggingComponentsOption>());
 }
 
@@ -418,8 +408,7 @@ TEST_F(ClientTest, LoggingWithEnv) {
   ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                absl::nullopt);
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "rpc,http");
-  auto const options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto const options = internal::DefaultOptions();
   EXPECT_THAT(options.get<LoggingComponentsOption>(),
               UnorderedElementsAre("rpc", "http"));
 }
@@ -427,43 +416,37 @@ TEST_F(ClientTest, LoggingWithEnv) {
 TEST_F(ClientTest, TracingWithoutEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
                         absl::nullopt);
-  auto options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto options = internal::DefaultOptions();
   EXPECT_FALSE(options.get<OpenTelemetryTracingOption>());
 
   options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
-                               Options{}.set<OpenTelemetryTracingOption>(true));
+      internal::DefaultOptions(Options{}.set<OpenTelemetryTracingOption>(true));
   EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
 }
 
 TEST_F(ClientTest, TracingWithEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", "ON");
   auto const options = internal::DefaultOptions(
-      oauth2::CreateAnonymousCredentials(),
       Options{}.set<OpenTelemetryTracingOption>(false));
   EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
 }
 
 TEST_F(ClientTest, ProjectIdWithoutEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", absl::nullopt);
-  auto const options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto const options = internal::DefaultOptions();
   EXPECT_FALSE(options.has<ProjectIdOption>());
 }
 
 TEST_F(ClientTest, ProjectIdtWithEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", "my-project");
-  auto const options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  auto const options = internal::DefaultOptions();
   EXPECT_EQ("my-project", options.get<ProjectIdOption>());
 }
 
 TEST_F(ClientTest, OverrideWithRestInternal) {
   namespace rest = ::google::cloud::rest_internal;
   auto const options =
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
-                               Options{}
+      internal::DefaultOptions(Options{}
                                    .set<rest::ConnectionPoolSizeOption>(1234)
                                    .set<ConnectionPoolSizeOption>(2345));
   EXPECT_EQ(1234, options.get<rest::ConnectionPoolSizeOption>());
@@ -472,29 +455,24 @@ TEST_F(ClientTest, OverrideWithRestInternal) {
 
 TEST_F(ClientTest, Timeouts) {
   EXPECT_EQ(std::chrono::seconds(42),
-            internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
-                                     Options{}.set<TransferStallTimeoutOption>(
+            internal::DefaultOptions(Options{}.set<TransferStallTimeoutOption>(
                                          std::chrono::seconds(42)))
                 .get<DownloadStallTimeoutOption>());
 
   EXPECT_EQ(std::chrono::seconds(7),
             internal::DefaultOptions(
-                oauth2::CreateAnonymousCredentials(),
                 Options{}
                     .set<TransferStallTimeoutOption>(std::chrono::seconds(42))
                     .set<DownloadStallTimeoutOption>(std::chrono::seconds(7)))
                 .get<DownloadStallTimeoutOption>());
 
   EXPECT_EQ(std::chrono::seconds(7),
-            internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
-                                     Options{}.set<DownloadStallTimeoutOption>(
+            internal::DefaultOptions(Options{}.set<DownloadStallTimeoutOption>(
                                          std::chrono::seconds(7)))
                 .get<DownloadStallTimeoutOption>());
 
-  EXPECT_NE(
-      std::chrono::seconds(0),
-      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), Options{})
-          .get<DownloadStallTimeoutOption>());
+  EXPECT_NE(std::chrono::seconds(0),
+            internal::DefaultOptions().get<DownloadStallTimeoutOption>());
 }
 
 }  // namespace

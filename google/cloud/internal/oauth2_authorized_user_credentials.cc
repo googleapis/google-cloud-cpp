@@ -92,10 +92,13 @@ AuthorizedUserCredentials::AuthorizedUserCredentials(
     HttpClientFactory client_factory)
     : info_(std::move(info)),
       options_(std::move(options)),
-      client_factory_(std::move(client_factory)) {}
+      client_factory_(std::move(client_factory)) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 StatusOr<AccessToken> AuthorizedUserCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   rest_internal::RestRequest request;
   request.SetPath(info_.token_uri);
   request.AddHeader("content-type", "application/x-www-form-urlencoded");

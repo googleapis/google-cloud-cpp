@@ -248,10 +248,13 @@ ServiceAccountCredentials::ServiceAccountCredentials(
           std::move(options),
           Options{}.set<ServiceAccountCredentialsTokenUriOption>(
               info_.token_uri))),
-      client_factory_(std::move(client_factory)) {}
+      client_factory_(std::move(client_factory)) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 StatusOr<AccessToken> ServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (UseOAuth()) return GetTokenOAuth(tp);
   return GetTokenSelfSigned(tp);
 }

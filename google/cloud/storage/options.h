@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 
 #include "google/cloud/storage/idempotency_policy.h"
-#include "google/cloud/storage/oauth2/credentials.h"
+// #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/backoff_policy.h"
@@ -97,9 +97,9 @@ struct IamEndpointOption {
  * @deprecated prefer using `google::cloud::UnifiedCredentialsOption` and the
  *     unified credentials documented in @ref guac
  */
-struct Oauth2CredentialsOption {
-  using Type = std::shared_ptr<oauth2::Credentials>;
-};
+// struct Oauth2CredentialsOption {
+//   using Type = std::shared_ptr<oauth2::Credentials>;
+// };
 
 /**
  * Set the Google Cloud Platform project id.
@@ -332,7 +332,8 @@ struct IdempotencyPolicyOption {
 
 /// The complete list of options accepted by `storage::Client`.
 using ClientOptionList = ::google::cloud::OptionList<
-    RestEndpointOption, IamEndpointOption, Oauth2CredentialsOption,
+    RestEndpointOption, IamEndpointOption,
+    // Oauth2CredentialsOption,
     ProjectIdOption, ProjectIdOption, ConnectionPoolSizeOption,
     DownloadBufferSizeOption, UploadBufferSizeOption,
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,

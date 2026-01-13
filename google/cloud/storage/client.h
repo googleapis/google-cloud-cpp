@@ -35,6 +35,7 @@
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/group_options.h"
+#include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
@@ -67,8 +68,9 @@ Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
   return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
 }
 
-Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
-                       Options opts);
+Options DefaultOptions(
+    std::shared_ptr<oauth2_internal::Credentials> credentials, Options opts);
+Options DefaultOptions(Options opts = {});
 Options DefaultOptionsWithCredentials(Options opts);
 
 }  // namespace internal

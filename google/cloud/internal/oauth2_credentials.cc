@@ -48,6 +48,7 @@ StatusOr<std::string> Credentials::project_id(
 
 StatusOr<std::pair<std::string, std::string>> Credentials::AuthenticationHeader(
     std::chrono::system_clock::time_point tp) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto token = GetToken(tp);
   if (!token) return std::move(token).status();
   if (token->token.empty()) return std::make_pair(std::string{}, std::string{});

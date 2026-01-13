@@ -33,6 +33,7 @@ LoggingCredentials::~LoggingCredentials() = default;
 
 StatusOr<AccessToken> LoggingCredentials::GetToken(
     std::chrono::system_clock::time_point now) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto token = impl_->GetToken(now);
   if (!token) {
     GCP_LOG(DEBUG) << __func__ << "(" << phase_ << ") failed "

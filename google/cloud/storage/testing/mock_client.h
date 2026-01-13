@@ -176,9 +176,9 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (internal::GetNotificationRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::EmptyResponse>, DeleteNotification,
               (internal::DeleteNotificationRequest const&), (override));
-  MOCK_METHOD(
-      StatusOr<std::string>, AuthorizationHeader,
-      (std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
+  // MOCK_METHOD(
+  //     StatusOr<std::string>, AuthorizationHeader,
+  //     (std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
 
   MOCK_METHOD(std::vector<std::string>, InspectStackStructure, (),
               (const, override));

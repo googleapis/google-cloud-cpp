@@ -194,7 +194,9 @@ ComputeEngineCredentials::ComputeEngineCredentials(
     HttpClientFactory client_factory)
     : options_(std::move(options)),
       client_factory_(std::move(client_factory)),
-      service_account_email_(std::move(service_account_email)) {}
+      service_account_email_(std::move(service_account_email)) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 StatusOr<AccessToken> ComputeEngineCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {

@@ -25,13 +25,16 @@
 #include "google/cloud/storage/internal/rest/object_read_source.h"
 #include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
+#include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
@@ -108,15 +111,46 @@ StatusOr<ReturnType> CreateFromJson(
   return ReturnType::CreateFromJson(*payload);
 }
 
+class WrapRestCredentials {
+ public:
+  explicit WrapRestCredentials(
+      std::shared_ptr<oauth2_internal::Credentials> impl)
+      : impl_(std::move(impl)) {}
+
+  StatusOr<std::string> AuthorizationHeader() {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
+  }
+
+  StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& signing_account, std::string const& blob) const {
+    return impl_->SignBlob(signing_account.value_or(impl_->AccountEmail()),
+                           blob);
+  }
+
+  std::string AccountEmail() const { return impl_->AccountEmail(); }
+  std::string KeyId() const { return impl_->KeyId(); }
+
+ private:
+  std::shared_ptr<oauth2_internal::Credentials> impl_;
+};
+
 Status AddAuthorizationHeader(Options const& options,
                               RestRequestBuilder& builder) {
+  std::cout << __func__ << ": SKIPPED" << std::endl;
+#if 0
   // In tests this option may not be set. And over time we want to retire it.
-  if (!options.has<Oauth2CredentialsOption>()) return {};
-  auto auth_header =
-      options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+  if (!options.has<UnifiedCredentialsOption>()) {
+    std::cout << __func__ << ": no UnifiedCredentialsOption" << std::endl;
+    return {};
+  }
+  auto creds = options.get<UnifiedCredentialsOption>();
+  auto auth_header = WrapRestCredentials(
+    rest_internal::MapCredentials(*creds)).AuthorizationHeader();
   if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
   builder.AddHeader("Authorization", std::string(absl::StripPrefix(
                                          *auth_header, "Authorization: ")));
+#endif
   return {};
 }
 

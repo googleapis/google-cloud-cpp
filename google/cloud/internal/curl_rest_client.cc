@@ -112,7 +112,10 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
     : endpoint_address_(std::move(endpoint_address)),
       handle_factory_(std::move(factory)),
       options_(std::move(options)) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (options_.has<UnifiedCredentialsOption>()) {
+    std::cout << __PRETTY_FUNCTION__ << ": has UnifiedCredentialsOption"
+              << std::endl;
     credentials_ = MapCredentials(*options_.get<UnifiedCredentialsOption>());
   }
 }
@@ -124,6 +127,7 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto impl =
       std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options);
   if (credentials_) {
+    std::cout << __PRETTY_FUNCTION__ << ": has credentials_" << std::endl;
     auto auth_header =
         credentials_->AuthenticationHeader(std::chrono::system_clock::now());
     if (!auth_header.ok()) return std::move(auth_header).status();

@@ -21,7 +21,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessTokenCredentials::AccessTokenCredentials(
     google::cloud::AccessToken access_token)
-    : access_token_(std::move(access_token)) {}
+    : access_token_(std::move(access_token)) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 StatusOr<AccessToken> AccessTokenCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
