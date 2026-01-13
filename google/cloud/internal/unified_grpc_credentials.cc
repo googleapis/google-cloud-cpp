@@ -115,8 +115,15 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
                                                      std::move(options));
     }
     void visit(ServiceAccountConfig const& cfg) override {
-      result = std::make_unique<GrpcServiceAccountAuthentication>(
-          cfg.json_object(), std::move(options));
+      if (cfg.file_path().has_value()) {
+        std::ifstream is(*cfg.file_path());
+        std::string contents(std::istreambuf_iterator<char>{is}, {});
+        result = std::make_unique<GrpcServiceAccountAuthentication>(
+            std::move(contents), std::move(options));
+      } else {
+        result = std::make_unique<GrpcServiceAccountAuthentication>(
+            cfg.json_object(), std::move(options));
+      }
     }
     void visit(ExternalAccountConfig const& cfg) override {
       grpc::SslCredentialsOptions ssl_options;

@@ -71,13 +71,13 @@ class KeyFileIntegrationTest
 TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   if (UsingGrpc()) GTEST_SKIP();
 
-  // auto credentials =
-  //     oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
-  auto is = std::ifstream(key_filename_);
-  // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
-  auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-
-  auto credentials = MakeServiceAccountCredentials(contents);
+  auto credentials = MakeServiceAccountCredentialsFromFile(key_filename_);
+  // auto is = std::ifstream(key_filename_);
+  // // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
+  // auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()),
+  // {});
+  //
+  // auto credentials = MakeServiceAccountCredentials(contents);
   // ASSERT_STATUS_OK(credentials);
 
   auto client = MakeIntegrationTestClient(
@@ -104,15 +104,15 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
 TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   if (UsingGrpc()) GTEST_SKIP();
 
-  // auto credentials =
-  //     oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
+  auto credentials = MakeServiceAccountCredentialsFromFile(key_filename_);
   // ASSERT_STATUS_OK(credentials);
 
-  auto is = std::ifstream(key_filename_);
-  // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
-  auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-
-  auto credentials = MakeServiceAccountCredentials(contents);
+  // auto is = std::ifstream(key_filename_);
+  // // is.exceptions(std::ios::badbit);  // Minimal error handling in examples
+  // auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()),
+  // {});
+  //
+  // auto credentials = MakeServiceAccountCredentials(contents);
   // ASSERT_STATUS_OK(credentials);
 
   auto client = MakeIntegrationTestClient(

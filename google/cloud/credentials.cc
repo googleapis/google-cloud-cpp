@@ -51,6 +51,12 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
       std::move(json_object), std::move(opts));
 }
 
+std::shared_ptr<Credentials> MakeServiceAccountCredentialsFromFile(
+    std::string const& file_path, Options opts) {
+  return std::make_shared<internal::ServiceAccountConfig>("", file_path,
+                                                          std::move(opts));
+}
+
 std::shared_ptr<Credentials> MakeExternalAccountCredentials(
     std::string json_object, Options opts) {
   return std::make_shared<internal::ExternalAccountConfig>(

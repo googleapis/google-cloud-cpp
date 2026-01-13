@@ -145,14 +145,18 @@ class ImpersonateServiceAccountConfig : public Credentials {
 class ServiceAccountConfig : public Credentials {
  public:
   ServiceAccountConfig(std::string json_object, Options opts);
+  ServiceAccountConfig(std::string json_object, std::string file_path,
+                       Options opts);
 
   std::string const& json_object() const { return json_object_; }
+  absl::optional<std::string> const& file_path() const { return file_path_; }
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   std::string json_object_;
+  absl::optional<std::string> file_path_ = absl::nullopt;
   Options options_;
 };
 

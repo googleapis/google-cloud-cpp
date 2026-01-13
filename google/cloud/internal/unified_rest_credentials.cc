@@ -25,6 +25,8 @@
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/parse_service_account_p12_file.h"
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -49,7 +51,7 @@ std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(
   return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
 }
 
-std::shared_ptr<oauth2_internal::Credentials>
+StatusOr<std::shared_ptr<oauth2_internal::Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, Options const& options,
     oauth2_internal::HttpClientFactory client_factory) {
@@ -62,10 +64,67 @@ CreateServiceAccountCredentialsFromJsonContents(
   auto const components = AssertionComponentsFromInfo(*info, tp);
   auto jwt = internal::MakeJWTAssertionNoThrow(
       components.first, components.second, info->private_key);
-  if (!jwt) return MakeErrorCredentials(std::move(jwt).status());
+  // if (!jwt) return MakeErrorCredentials(std::move(jwt).status());
+  if (!jwt) return jwt.status();
+  return StatusOr<std::shared_ptr<oauth2_internal::Credentials>>(
+      std::make_shared<oauth2_internal::ServiceAccountCredentials>(
+          *info, options, std::move(client_factory)));
+}
 
+StatusOr<std::shared_ptr<oauth2_internal::Credentials>>
+CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, Options const& options,
+    oauth2_internal::HttpClientFactory client_factory) {
+  std::ifstream is(path);
+  std::string contents(std::istreambuf_iterator<char>{is}, {});
+  return CreateServiceAccountCredentialsFromJsonContents(
+      std::move(contents), options, std::move(client_factory));
+#if 0
+  auto info = ParseServiceAccountCredentials(contents, path);
+  if (!info) {
+    return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  // These are supplied as extra parameters to this method, not in the JSON
+  // file.
+  info->subject = std::move(subject);
+  info->scopes = std::move(scopes);
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<ServiceAccountCredentials<>>(*info, options));
+#endif
+}
+
+std::shared_ptr<oauth2_internal::Credentials>
+CreateServiceAccountCredentialsFromP12FilePath(
+    std::string const& path, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, Options const& options,
+    oauth2_internal::HttpClientFactory client_factory) {
+  auto info = oauth2_internal::ParseServiceAccountP12File(path);
+  if (!info) {
+    return MakeErrorCredentials(std::move(info).status());
+    // return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  // These are supplied as extra parameters to this method, not in the P12
+  // file.
+  info->subject = std::move(subject);
+  info->scopes = std::move(scopes);
   return std::make_shared<oauth2_internal::ServiceAccountCredentials>(
       *info, options, std::move(client_factory));
+}
+
+std::shared_ptr<oauth2_internal::Credentials>
+CreateServiceAccountCredentialsFromFilePath(
+    std::string const& path, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, Options const& options,
+    oauth2_internal::HttpClientFactory client_factory) {
+  auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(
+      path, scopes, subject, options, std::move(client_factory));
+  if (credentials) {
+    return *credentials;
+  }
+  return CreateServiceAccountCredentialsFromP12FilePath(
+      path, std::move(scopes), std::move(subject), options,
+      std::move(client_factory));
 }
 
 }  // namespace
@@ -120,10 +179,20 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ServiceAccountConfig const& cfg) override {
-      result = Decorate(
-          CreateServiceAccountCredentialsFromJsonContents(
-              cfg.json_object(), cfg.options(), std::move(client_factory_)),
-          cfg.options());
+      if (cfg.file_path().has_value()) {
+        result = Decorate(CreateServiceAccountCredentialsFromFilePath(
+                              *cfg.file_path(), {}, {}, cfg.options(),
+                              std::move(client_factory_)),
+                          cfg.options());
+      } else {
+        auto creds = CreateServiceAccountCredentialsFromJsonContents(
+            cfg.json_object(), cfg.options(), std::move(client_factory_));
+        if (creds) {
+          result = Decorate(std::move(*creds), cfg.options());
+          return;
+        }
+        result = MakeErrorCredentials(std::move(creds).status());
+      }
     }
 
     void visit(ExternalAccountConfig const& cfg) override {
