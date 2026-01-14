@@ -81,8 +81,8 @@ Options DefaultOptionsGrpc(
             google::cloud::internal::MakeAuthOptions(options)));
   }
 
-  auto const conformance =
-      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME");
+  auto const preserve_creds =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS");
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
   // if (testbench.has_value() && !testbench->empty() &&
@@ -90,7 +90,7 @@ Options DefaultOptionsGrpc(
   if (testbench.has_value() && !testbench->empty()) {
     options.set<EndpointOption>(*testbench);
 
-    if (!conformance.has_value()) {
+    if (!preserve_creds.has_value()) {
       // The emulator does not support HTTPS or authentication, use insecure
       // (sometimes called "anonymous") credentials, which disable SSL.
       options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());

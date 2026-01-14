@@ -88,6 +88,8 @@ class V4PostPolicyConformanceTest : public V4SignedUrlConformanceTest {};
 TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            absl::nullopt);
+  testing_util::ScopedEnvironment preserve_creds(
+      "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", "yes");
   auto credentials =
       MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
 
@@ -209,6 +211,8 @@ INSTANTIATE_TEST_SUITE_P(
 TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            absl::nullopt);
+  testing_util::ScopedEnvironment preserve_creds(
+      "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", "yes");
   // auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
   //     service_account_key_filename_);
   // ASSERT_STATUS_OK(creds);
