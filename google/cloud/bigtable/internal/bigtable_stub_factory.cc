@@ -60,7 +60,6 @@ std::string FeaturesMetadata() {
       proto.set_mutate_rows_rate_limit2(true);
       proto.set_routing_cookie(true);
       proto.set_retry_info(true);
-      // Flags for Directpath
       proto.set_traffic_director_enabled(true);
       proto.set_direct_access_requested(true);
       return internal::UrlsafeBase64Encode(proto.SerializeAsString());

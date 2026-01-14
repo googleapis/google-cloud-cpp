@@ -164,12 +164,10 @@ Options DefaultOptions(Options opts) {
     }
   }
 
-  auto const direct_path =
-      GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH").value_or("");
-  if (absl::c_any_of(absl::StrSplit(direct_path, ','),
-                     [](absl::string_view v) { return v == "bigtable"; })) {
-    opts.set<DataEndpointOption>(
-            "google-c2p:///directpath-bigtable.googleapis.com")
+  auto const direct_path = GetEnv("CBT_ENABLE_DIRECTPATH");
+  if (direct_path.has_value() &&
+      (*direct_path == "true" || *direct_path == "1")) {
+    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com")
         .set<AuthorityOption>("directpath-bigtable.googleapis.com");
 
     // When using DirectPath the gRPC library already does load balancing across
@@ -243,11 +241,6 @@ Options DefaultDataOptions(Options opts) {
   auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
   if (tracing && !tracing->empty()) {
     opts.set<OpenTelemetryTracingOption>(true);
-  }
-  auto const enable_directpath_env = GetEnv("CBT_ENABLE_DIRECTPATH");
-  if (enable_directpath_env.has_value() &&
-      (*enable_directpath_env == "true" || *enable_directpath_env == "1")) {
-    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com");
   }
   if (!opts.has<bigtable::DataRetryPolicyOption>()) {
     opts.set<bigtable::DataRetryPolicyOption>(
