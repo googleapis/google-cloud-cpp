@@ -48,36 +48,22 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 }
 
 std::string FeaturesMetadata() {
+  google::bigtable::v2::FeatureFlags proto;
+  proto.set_reverse_scans(true);
+  proto.set_last_scanned_row_responses(true);
+  proto.set_mutate_rows_rate_limit(true);
+  proto.set_mutate_rows_rate_limit2(true);
+  proto.set_routing_cookie(true);
+  proto.set_retry_info(true);
+
   auto const env = google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
   bool const directpath_enabled =
       env.has_value() && (*env == "true" || *env == "1");
   if (directpath_enabled) {
-    static auto const* const kFeaturesDirectPath = new auto([] {
-      google::bigtable::v2::FeatureFlags proto;
-      proto.set_reverse_scans(true);
-      proto.set_last_scanned_row_responses(true);
-      proto.set_mutate_rows_rate_limit(true);
-      proto.set_mutate_rows_rate_limit2(true);
-      proto.set_routing_cookie(true);
-      proto.set_retry_info(true);
-      proto.set_traffic_director_enabled(true);
-      proto.set_direct_access_requested(true);
-      return internal::UrlsafeBase64Encode(proto.SerializeAsString());
-    }());
-    return *kFeaturesDirectPath;
-  } else {
-    static auto const* const kFeaturesDefault = new auto([] {
-      google::bigtable::v2::FeatureFlags proto;
-      proto.set_reverse_scans(true);
-      proto.set_last_scanned_row_responses(true);
-      proto.set_mutate_rows_rate_limit(true);
-      proto.set_mutate_rows_rate_limit2(true);
-      proto.set_routing_cookie(true);
-      proto.set_retry_info(true);
-      return internal::UrlsafeBase64Encode(proto.SerializeAsString());
-    }());
-    return *kFeaturesDefault;
+    proto.set_traffic_director_enabled(true);
+    proto.set_direct_access_requested(true);
   }
+  return internal::UrlsafeBase64Encode(proto.SerializeAsString());
 }
 
 }  // namespace

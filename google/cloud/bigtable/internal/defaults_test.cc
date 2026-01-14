@@ -435,7 +435,6 @@ TEST(EndpointEnvTest, DirectPathEnabled) {
   EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
   EXPECT_EQ("bigtableadmin.googleapis.com",
             opts.get<InstanceAdminEndpointOption>());
-  EXPECT_EQ(1, opts.get<GrpcNumChannelsOption>());
 }
 
 TEST(EndpointEnvTest, DirectPathNotEnabled) {

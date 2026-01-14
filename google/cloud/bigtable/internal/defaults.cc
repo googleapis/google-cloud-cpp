@@ -168,10 +168,6 @@ Options DefaultOptions(Options opts) {
   if (direct_path.has_value() &&
       (*direct_path == "true" || *direct_path == "1")) {
     opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com");
-
-    // When using DirectPath the gRPC library already does load balancing across
-    // multiple sockets, it makes little sense to perform additional load
-    // balancing in the client library.
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
