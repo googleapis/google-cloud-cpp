@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_VERSION_INFO_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_VERSION_INFO_H
+#include "google/cloud/storage/internal/async/multi_stream_manager.h"
+#include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 
-// NOLINTNEXTLINE(modernize-macro-to-enum)
-#define GOOGLE_CLOUD_CPP_VERSION_MAJOR 2
-// NOLINTNEXTLINE(modernize-macro-to-enum)
-#define GOOGLE_CLOUD_CPP_VERSION_MINOR 46
-// NOLINTNEXTLINE(modernize-macro-to-enum)
-#define GOOGLE_CLOUD_CPP_VERSION_PATCH 0
-#define GOOGLE_CLOUD_CPP_VERSION_PRE_RELEASE ""
+namespace google {
+namespace cloud {
+namespace storage_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_VERSION_INFO_H
+// Explicit instantiation for ObjectDescriptorImpl usage.
+template class MultiStreamManager<ReadStream, ReadRange>;
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage_internal
+}  // namespace cloud
+}  // namespace google
