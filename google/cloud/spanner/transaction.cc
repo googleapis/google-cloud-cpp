@@ -169,17 +169,6 @@ Transaction::Transaction(ReadWriteOptions opts) {
       std::move(opts.tag_).value_or(std::string()));
 }
 
-Transaction::Transaction(ReadWriteOptions opts,
-                         IsolationLevel isolation_level) {
-  google::spanner::v1::TransactionSelector selector;
-  *selector.mutable_begin() =
-      MakeOpts(std::move(opts.rw_opts_), isolation_level);
-  auto const route_to_leader = true;  // read-write
-  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), route_to_leader,
-      std::move(opts.tag_).value_or(std::string()));
-}
-
 Transaction::Transaction(Transaction const& txn, ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() =

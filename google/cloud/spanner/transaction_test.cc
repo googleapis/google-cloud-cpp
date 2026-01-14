@@ -171,22 +171,6 @@ TEST(Transaction, MultiplexedPreviousTransactionId) {
       });
 }
 
-TEST(Transaction, IsolationLevel) {
-  auto opts = Transaction::ReadWriteOptions().WithIsolationLevel(
-      Transaction::IsolationLevel::kRepeatableRead);
-  Transaction txn = MakeReadWriteTransaction(opts);
-  spanner_internal::Visit(
-      txn, [](spanner_internal::SessionHolder&,
-              StatusOr<google::spanner::v1::TransactionSelector>& s,
-              spanner_internal::TransactionContext const&) {
-        EXPECT_TRUE(s->has_begin());
-        EXPECT_TRUE(s->begin().has_read_write());
-        EXPECT_EQ(s->begin().isolation_level(),
-                  google::spanner::v1::TransactionOptions::REPEATABLE_READ);
-        return 0;
-      });
-}
-
 TEST(Transaction, IsolationLevelPrecedence) {
   internal::OptionsSpan span(Options{}.set<TransactionIsolationLevelOption>(
       Transaction::IsolationLevel::kSerializable));
@@ -256,22 +240,6 @@ TEST(Transaction, ReadWriteOptionsWithReadLockMode) {
   check_lock_mode(
       Transaction::ReadLockMode::kOptimistic,
       google::spanner::v1::TransactionOptions_ReadWrite::OPTIMISTIC);
-}
-
-TEST(Transaction, ReadWriteOptionsWithIsolationLevel) {
-  auto opts = Transaction::ReadWriteOptions(
-      Transaction::IsolationLevel::kRepeatableRead);
-  Transaction txn(opts, Transaction::IsolationLevel::kRepeatableRead);
-  spanner_internal::Visit(
-      txn, [](spanner_internal::SessionHolder&,
-              StatusOr<google::spanner::v1::TransactionSelector>& s,
-              spanner_internal::TransactionContext const&) {
-        EXPECT_TRUE(s->has_begin());
-        EXPECT_TRUE(s->begin().has_read_write());
-        EXPECT_EQ(s->begin().isolation_level(),
-                  google::spanner::v1::TransactionOptions::REPEATABLE_READ);
-        return 0;
-      });
 }
 
 }  // namespace

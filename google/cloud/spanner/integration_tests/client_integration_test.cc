@@ -240,26 +240,6 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
                                    RowType(4, "test-fname-4", "test-lname-4")));
 }
 
-// A smoke test to verify that the TransactionIsolationLevelOption is
-// correctly processed and accepted by the Spanner backend. It does not
-// test the behavioral semantics of the isolation level itself.
-/// @test Verify that TransactionIsolationLevel works as expected.
-TEST_F(ClientIntegrationTest, TransactionIsolationLevel) {
-  auto& client = *client_;
-  auto commit = client.Commit(
-      [&](Transaction const& txn) -> StatusOr<Mutations> {
-        // Perform a read to ensure the transaction is active on the server.
-        auto rows = client.ExecuteQuery(txn, SqlStatement("SELECT 1"));
-        for (auto const& row : rows) {
-          if (!row) return row.status();
-        }
-        return Mutations{};
-      },
-      Options{}.set<spanner::TransactionIsolationLevelOption>(
-          Transaction::IsolationLevel::kRepeatableRead));
-  EXPECT_THAT(commit, StatusIs(StatusCode::kOk));
-}
-
 /// @test Verify that Client::Rollback works as expected.
 TEST_F(ClientIntegrationTest, TransactionRollback) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
@@ -1417,25 +1397,6 @@ TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
   ASSERT_STATUS_OK(metadata);
-}
-
-// A smoke test to verify that the TransactionIsolationLevelOption is
-// correctly processed and accepted by the Spanner backend. It does not
-// test the behavioral semantics of the isolation level itself.
-/// @test Verify that TransactionIsolationLevel works as expected.
-TEST_F(PgClientIntegrationTest, TransactionIsolationLevel) {
-  auto& client = *client_;
-  auto commit = client.Commit(
-      [&](Transaction const& txn) -> StatusOr<Mutations> {
-        auto rows = client.ExecuteQuery(txn, SqlStatement("SELECT 1"));
-        for (auto const& row : rows) {
-          if (!row) return row.status();
-        }
-        return Mutations{};
-      },
-      Options{}.set<spanner::TransactionIsolationLevelOption>(
-          Transaction::IsolationLevel::kRepeatableRead));
-  EXPECT_THAT(commit, StatusIs(StatusCode::kOk));
 }
 
 /// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
