@@ -8,7 +8,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ### [Spanner](/google/cloud/spanner/README.md)
 
-- feat(spanner): enable UUID data type ([#15867](https://github.com/googleapis/google-cloud-cpp/pull/15867)) 
+- feat(spanner): enable UUID data type ([#15867](https://github.com/googleapis/google-cloud-cpp/pull/15867))
 
 ### [Storage](/google/cloud/storage/README.md)
 
