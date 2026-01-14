@@ -201,6 +201,20 @@ TEST(Transaction, IsolationLevelPrecedence) {
       });
 }
 
+TEST(Transaction, IsolationLevelNotSpecified) {
+  // Case: Isolation not specified in transaction level or client level
+  auto opts = Transaction::ReadWriteOptions();
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [](spanner_internal::SessionHolder&,
+              StatusOr<google::spanner::v1::TransactionSelector>& s,
+              spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::ISOLATION_LEVEL_UNSPECIFIED);
+        return 0;
+      });
+}
+
 TEST(Transaction, ReadWriteOptionsWithTag) {
   auto opts = Transaction::ReadWriteOptions().WithTag("test-tag");
   Transaction txn = MakeReadWriteTransaction(opts);

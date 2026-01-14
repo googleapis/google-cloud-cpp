@@ -86,8 +86,7 @@ google::spanner::v1::TransactionOptions MakeOpts(
   if (current.get<ExcludeTransactionFromChangeStreamsOption>()) {
     opts.set_exclude_txn_from_change_streams(true);
   }
-  if (isolation_level &&
-      *isolation_level != Transaction::IsolationLevel::kUnspecified) {
+  if (isolation_level) {
     opts.set_isolation_level(ProtoIsolationLevel(isolation_level));
   } else if (current.has<TransactionIsolationLevelOption>()) {
     opts.set_isolation_level(

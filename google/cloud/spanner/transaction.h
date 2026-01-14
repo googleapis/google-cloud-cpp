@@ -130,8 +130,6 @@ class Transaction {
 
     explicit ReadWriteOptions(ReadLockMode read_lock_mode);
 
-    explicit ReadWriteOptions(IsolationLevel isolation_level)
-        : isolation_level_(isolation_level) {}
 
     // A tag used for collecting statistics about the transaction.
     ReadWriteOptions& WithTag(absl::optional<std::string> tag);
@@ -146,7 +144,7 @@ class Transaction {
     friend Transaction;
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts_;
     absl::optional<std::string> tag_;
-    IsolationLevel isolation_level_ = IsolationLevel::kUnspecified;
+    absl::optional<IsolationLevel> isolation_level_;
   };
 
   /**
