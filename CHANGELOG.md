@@ -4,7 +4,20 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.46.0 - TBD
+## v2.46.0 - 2026-01
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): enable UUID data type ([#15867](https://github.com/googleapis/google-cloud-cpp/pull/15867)) 
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Add full object checksum validation at finalization for json path ([#15815](https://github.com/googleapis/google-cloud-cpp/pull/15815))
+- feat(storage): add support for bucket encryption enforcement config ([#15844](https://github.com/googleapis/google-cloud-cpp/pull/15844))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-01-09T11:37:16-08:00](https://github.com/googleapis/googleapis/tree/6145b5ffe99d290c3d840136f310490d732acb04)
 
 ## v2.45.0 - 2025-12-17
 
