@@ -89,11 +89,15 @@ Options DefaultOptionsGrpc(
   //     !conformance.has_value()) {
   if (testbench.has_value() && !testbench->empty()) {
     options.set<EndpointOption>(*testbench);
-    // The emulator does not support HTTPS or authentication, use insecure
-    // (sometimes called "anonymous") credentials, which disable SSL.
-    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-    std::cout << __func__ << ": testbench detected forcing InsecureCredentials"
-              << std::endl;
+
+    if (!conformance.has_value()) {
+      // The emulator does not support HTTPS or authentication, use insecure
+      // (sometimes called "anonymous") credentials, which disable SSL.
+      options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+      std::cout << __func__
+                << ": testbench detected forcing InsecureCredentials"
+                << std::endl;
+    }
   }
 
   // gRPC <= 1.64 may crash when metrics are enabled, so we don't enable them by
