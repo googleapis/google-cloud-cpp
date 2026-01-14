@@ -91,23 +91,23 @@ class MultiStreamManager {
 
   StreamIterator GetLeastBusyStream() {
     if (streams_.empty()) return streams_.end();
-    auto least_busy_it = streams_.begin();
+    auto least_busy_stream_it = streams_.begin();
     // Track min_ranges to avoid calling .size() repeatedly if possible,
     // though for std::unordered_map .size() is O(1).
-    std::size_t min_ranges = least_busy_it->active_ranges.size();
-    if (min_ranges == 0) return least_busy_it;
+    std::size_t min_ranges = least_busy_stream_it->active_ranges.size();
+    if (min_ranges == 0) return least_busy_stream_it;
 
     // Start checking from the second element
     for (auto it = std::next(streams_.begin()); it != streams_.end(); ++it) {
       // Strict less-than ensures stability (preferring older streams if tied)
       auto size = it->active_ranges.size();
       if (size < min_ranges) {
-        least_busy_it = it;
+        least_busy_stream_it = it;
         min_ranges = size;
-        if (min_ranges == 0) return least_busy_it;
+        if (min_ranges == 0) return least_busy_stream_it;
       }
     }
-    return least_busy_it;
+    return least_busy_stream_it;
   }
 
   StreamIterator AddStream(std::shared_ptr<StreamT> stream) {

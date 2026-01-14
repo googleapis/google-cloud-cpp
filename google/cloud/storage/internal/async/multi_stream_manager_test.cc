@@ -64,12 +64,12 @@ TEST(MultiStreamManagerTest, ConstructsWithInitialStream) {
 
 TEST(MultiStreamManagerTest, AddStreamAppendsAndGetFirstReturnsNew) {
   auto mgr = MultiStreamManagerTest::MakeManager();
-  auto s1 = std::make_shared<FakeStream>();
-  auto it1 = mgr.AddStream(s1);
+  auto s = std::make_shared<FakeStream>();
+  auto it = mgr.AddStream(s);
   EXPECT_EQ(mgr.Size(), 2U);
-  EXPECT_EQ(it1->stream.get(), s1.get());
+  EXPECT_EQ(it->stream.get(), s.get());
   auto it_first = mgr.GetFirstStream();
-  EXPECT_EQ(it_first->stream.get(), s1.get());
+  EXPECT_EQ(it_first->stream.get(), s.get());
 }
 
 TEST(MultiStreamManagerTest, GetLeastBusyPrefersFewestActiveRanges) {
