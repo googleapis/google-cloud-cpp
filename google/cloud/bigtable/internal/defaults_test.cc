@@ -430,7 +430,7 @@ TEST(EndpointEnvTest, DirectPathEnabled) {
 
   auto opts = DefaultOptions();
   EXPECT_EQ("c2p://bigtable.googleapis.com", opts.get<DataEndpointOption>());
-  EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
+  EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
   EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
   EXPECT_EQ("bigtableadmin.googleapis.com",
@@ -453,9 +453,8 @@ TEST(EndpointEnvTest, DirectPathOverridesUserEndpoints) {
 
   auto opts = DefaultDataOptions(
       Options{}.set<EndpointOption>("ignored").set<AuthorityOption>("ignored"));
-  EXPECT_EQ("c2p://bigtable.googleapis.com",
-            opts.get<EndpointOption>());
-  EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
+  EXPECT_EQ("c2p://bigtable.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorOverridesDirectPath) {
