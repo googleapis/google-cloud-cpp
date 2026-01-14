@@ -21,6 +21,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -87,13 +88,16 @@ class V4PostPolicyConformanceTest : public V4SignedUrlConformanceTest {};
 TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            absl::nullopt);
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
-      service_account_key_filename_);
-  ASSERT_STATUS_OK(creds);
+  testing_util::ScopedEnvironment preserve_creds(
+      "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", "yes");
+  auto credentials =
+      MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
+  auto sa_creds = rest_internal::MapCredentials(*credentials);
+  std::string account_email = sa_creds->AccountEmail();
 
-  std::string account_email = (*creds)->AccountEmail();
-  auto client =
-      MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<UnifiedCredentialsOption>(credentials));
+
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
 
@@ -191,13 +195,15 @@ INSTANTIATE_TEST_SUITE_P(
 TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            absl::nullopt);
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
-      service_account_key_filename_);
-  ASSERT_STATUS_OK(creds);
+  testing_util::ScopedEnvironment preserve_creds(
+      "GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS", "yes");
+  auto credentials =
+      MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
+  auto sa_creds = rest_internal::MapCredentials(*credentials);
+  std::string account_email = sa_creds->AccountEmail();
 
-  std::string account_email = (*creds)->AccountEmail();
-  auto client =
-      MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<UnifiedCredentialsOption>(credentials));
 
   auto const& test_params = (*post_policy_tests)[GetParam()];
   auto const& input = test_params.policyinput();

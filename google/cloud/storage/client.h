@@ -28,13 +28,13 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/group_options.h"
+#include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
@@ -67,8 +67,10 @@ Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
   return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
 }
 
-Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
-                       Options opts);
+Options DefaultOptions(
+    std::shared_ptr<oauth2_internal::Credentials> const& credentials,
+    Options opts);
+Options DefaultOptions(Options opts = {});
 Options DefaultOptionsWithCredentials(Options opts);
 
 }  // namespace internal

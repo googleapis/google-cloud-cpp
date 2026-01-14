@@ -13,15 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
+#include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/sign_using_sha256.h"
 #include <nlohmann/json.hpp>
+#include <fstream>
 #include <functional>
 
 namespace google {
@@ -240,6 +243,74 @@ StatusOr<std::string> MakeSelfSignedJWT(
                                  info.private_key);
 }
 
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents, Options const& options,
+    HttpClientFactory client_factory) {
+  auto info = ParseServiceAccountCredentials(contents, "memory");
+  if (!info) return info.status();
+
+  if (options.has<ScopesOption>()) {
+    auto const& s = options.get<ScopesOption>();
+    std::set<std::string> scopes{s.begin(), s.end()};
+    info->scopes = std::move(scopes);
+  }
+
+  // Verify this is usable before returning it.
+  auto const tp = std::chrono::system_clock::time_point{};
+  auto const components = AssertionComponentsFromInfo(*info, tp);
+  auto jwt = MakeJWTAssertionNoThrow(components.first, components.second,
+                                     info->private_key);
+  if (!jwt) return jwt.status();
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<ServiceAccountCredentials>(*info, options,
+                                                  std::move(client_factory)));
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory) {
+  std::ifstream is(path);
+  if (!is.is_open()) {
+    // We use kUnknown here because we don't know if the file does not exist, or
+    // if we were unable to open it for some other reason.
+    return internal::UnknownError("Cannot open credentials file " + path,
+                                  GCP_ERROR_INFO());
+  }
+  std::string contents(std::istreambuf_iterator<char>{is}, {});
+  return CreateServiceAccountCredentialsFromJsonContents(
+      std::move(contents), options, std::move(client_factory));
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromP12FilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory) {
+  auto info = ParseServiceAccountP12File(path);
+  if (!info) return std::move(info).status();
+
+  if (options.has<ScopesOption>()) {
+    auto const& s = options.get<ScopesOption>();
+    std::set<std::string> scopes{s.begin(), s.end()};
+    info->scopes = std::move(scopes);
+  }
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<ServiceAccountCredentials>(*info, options,
+                                                  std::move(client_factory)));
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromFilePath(std::string const& path,
+                                            Options const& options,
+                                            HttpClientFactory client_factory) {
+  auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(
+      path, options, client_factory);
+  if (credentials) return *credentials;
+  return CreateServiceAccountCredentialsFromP12FilePath(
+      path, options, std::move(client_factory));
+}
+
 ServiceAccountCredentials::ServiceAccountCredentials(
     ServiceAccountCredentialsInfo info, Options options,
     HttpClientFactory client_factory)
@@ -313,7 +384,8 @@ bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
 }
 
 bool ServiceAccountCredentials::UseOAuth() {
-  return ServiceAccountUseOAuth(info_);
+  return options_.has<DisableSelfSignedJWTOption>() ||
+         ServiceAccountUseOAuth(info_);
 }
 
 StatusOr<AccessToken> ServiceAccountCredentials::GetTokenOAuth(

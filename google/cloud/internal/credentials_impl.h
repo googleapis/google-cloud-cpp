@@ -144,19 +144,23 @@ class ImpersonateServiceAccountConfig : public Credentials {
 
 class ServiceAccountConfig : public Credentials {
  public:
-  ServiceAccountConfig(std::string json_object, Options opts);
-  ServiceAccountConfig(std::string json_object, std::string file_path,
-                       Options opts);
+  // Only one of json_object or file_path should have a value.
+  // TODO(#15886): Use the C++ type system to make better constructors that
+  //   enforces this comment.
+  ServiceAccountConfig(absl::optional<std::string> json_object,
+                       absl::optional<std::string> file_path, Options opts);
 
-  std::string const& json_object() const { return json_object_; }
+  absl::optional<std::string> const& json_object() const {
+    return json_object_;
+  }
   absl::optional<std::string> const& file_path() const { return file_path_; }
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
-  std::string json_object_;
-  absl::optional<std::string> file_path_ = absl::nullopt;
+  absl::optional<std::string> json_object_;
+  absl::optional<std::string> file_path_;
   Options options_;
 };
 

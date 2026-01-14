@@ -16,10 +16,6 @@
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/connection_factory.h"
-#include "google/cloud/storage/internal/unified_rest_credentials.h"
-#include "google/cloud/storage/oauth2/credentials.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -28,11 +24,14 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/internal/sha256_hash.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/log.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/universe_domain_options.h"
@@ -51,6 +50,32 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+class WrapRestCredentials {
+ public:
+  explicit WrapRestCredentials(
+      std::shared_ptr<oauth2_internal::Credentials> impl)
+      : impl_(std::move(impl)) {}
+
+  StatusOr<std::string> AuthorizationHeader() {
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
+  }
+
+  StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& signing_account, std::string const& blob) const {
+    return impl_->SignBlob(signing_account.value_or(impl_->AccountEmail()),
+                           blob);
+  }
+
+  std::string AccountEmail() const { return impl_->AccountEmail(); }
+  std::string KeyId() const { return impl_->KeyId(); }
+
+ private:
+  std::shared_ptr<oauth2_internal::Credentials> impl_;
+};
+
+}  // namespace
 
 using ::google::cloud::rest_internal::CurlHandle;
 
@@ -249,17 +274,21 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
-  return connection_->options().get<Oauth2CredentialsOption>()->AccountEmail();
+
+  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
+      *connection_->options().get<UnifiedCredentialsOption>()));
+  return credentials.AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = connection_->options().get<Oauth2CredentialsOption>();
+  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
+      *connection_->options().get<UnifiedCredentialsOption>()));
 
   // First try to sign locally.
-  auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);
+  auto signed_blob = credentials.SignBlob(signing_account, string_to_sign);
   if (signed_blob) {
-    return SignBlobResponseRaw{credentials->KeyId(), *std::move(signed_blob)};
+    return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
   }
 
   // If signing locally fails that may be because the credentials do not
@@ -480,8 +509,12 @@ Options ApplyPolicy(Options opts, IdempotencyPolicy const& p) {
   return opts;
 }
 
-Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
+Options DefaultOptions(std::shared_ptr<oauth2_internal::Credentials> const&,
                        Options opts) {
+  return DefaultOptions(std::move(opts));
+}
+
+Options DefaultOptions(Options opts) {
   auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
   if (ud && !ud->empty()) {
     opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
@@ -491,38 +524,42 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   auto iam_ep = absl::StrCat(google::cloud::internal::UniverseDomainEndpoint(
                                  "https://iamcredentials.googleapis.com", opts),
                              "/v1");
-  auto o =
-      Options{}
-          .set<Oauth2CredentialsOption>(std::move(credentials))
-          .set<RestEndpointOption>(std::move(gcs_ep))
-          .set<IamEndpointOption>(std::move(iam_ep))
-          .set<TargetApiVersionOption>("v1")
-          .set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize())
-          .set<DownloadBufferSizeOption>(
-              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE)
-          .set<UploadBufferSizeOption>(
-              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE)
-          .set<MaximumSimpleUploadSizeOption>(
-              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE)
-          .set<EnableCurlSslLockingOption>(true)
-          .set<EnableCurlSigpipeHandlerOption>(true)
-          .set<MaximumCurlSocketRecvSizeOption>(0)
-          .set<MaximumCurlSocketSendSizeOption>(0)
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(
-              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))
-          .set<TransferStallMinimumRateOption>(1)
-          .set<DownloadStallMinimumRateOption>(1)
-          .set<RetryPolicyOption>(
-              LimitedTimeRetryPolicy(
-                  STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
-                  .clone())
-          .set<BackoffPolicyOption>(
-              ExponentialBackoffPolicy(
-                  STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
-                  STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
-                  STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
-                  .clone())
-          .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
+  Options o;
+  if (!opts.has<UnifiedCredentialsOption>()) {
+    o.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  }
+  // Storage has more stringent requirements w.r.t. self-signed JWTs
+  // than most services. Any scope makes the self-signed JWTs unusable with
+  // storage, but they remain usable with other services. We need to disable
+  // self-signed JWTs.
+  o.set<oauth2_internal::DisableSelfSignedJWTOption>({})
+      .set<RestEndpointOption>(std::move(gcs_ep))
+      .set<IamEndpointOption>(std::move(iam_ep))
+      .set<TargetApiVersionOption>("v1")
+      .set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize())
+      .set<DownloadBufferSizeOption>(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE)
+      .set<UploadBufferSizeOption>(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE)
+      .set<MaximumSimpleUploadSizeOption>(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE)
+      .set<EnableCurlSslLockingOption>(true)
+      .set<EnableCurlSigpipeHandlerOption>(true)
+      .set<MaximumCurlSocketRecvSizeOption>(0)
+      .set<MaximumCurlSocketSendSizeOption>(0)
+      .set<TransferStallTimeoutOption>(std::chrono::seconds(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))
+      .set<TransferStallMinimumRateOption>(1)
+      .set<DownloadStallMinimumRateOption>(1)
+      .set<RetryPolicyOption>(
+          LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
+              .clone())
+      .set<BackoffPolicyOption>(
+          ExponentialBackoffPolicy(STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
+                                   STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
+                                   STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
+              .clone())
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
 
   o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
   // If the application did not set `DownloadStallTimeoutOption` then use the
@@ -596,22 +633,19 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
-  if (opts.has<Oauth2CredentialsOption>()) {
-    auto credentials = opts.get<Oauth2CredentialsOption>();
-    return internal::DefaultOptions(std::move(credentials), std::move(opts));
-  }
   if (opts.has<UnifiedCredentialsOption>()) {
     auto credentials =
-        internal::MapCredentials(*opts.get<UnifiedCredentialsOption>());
+        rest_internal::MapCredentials(*opts.get<UnifiedCredentialsOption>());
     return internal::DefaultOptions(std::move(credentials), std::move(opts));
   }
   if (GetEmulator().has_value()) {
     return internal::DefaultOptions(
-        internal::MapCredentials(*google::cloud::MakeInsecureCredentials()),
+        rest_internal::MapCredentials(
+            *google::cloud::MakeInsecureCredentials()),
         std::move(opts));
   }
-  auto credentials =
-      internal::MapCredentials(*google::cloud::MakeGoogleDefaultCredentials(
+  auto credentials = rest_internal::MapCredentials(
+      *google::cloud::MakeGoogleDefaultCredentials(
           google::cloud::internal::MakeAuthOptions(opts)));
   return internal::DefaultOptions(std::move(credentials), std::move(opts));
 }

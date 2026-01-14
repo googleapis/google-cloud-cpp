@@ -117,12 +117,25 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ServiceAccountConfig const& cfg) override {
       if (cfg.file_path().has_value()) {
         std::ifstream is(*cfg.file_path());
+        if (!is.is_open()) {
+          // We use kUnknown here because we don't know if the file does not
+          // exist, or if we were unable to open it for some other reason.
+          result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+              ErrorCredentialsConfig{UnknownError(
+                  "Cannot open credentials file " + *cfg.file_path(),
+                  GCP_ERROR_INFO())});
+        }
         std::string contents(std::istreambuf_iterator<char>{is}, {});
         result = std::make_unique<GrpcServiceAccountAuthentication>(
             std::move(contents), std::move(options));
-      } else {
+      } else if (cfg.json_object().has_value()) {
         result = std::make_unique<GrpcServiceAccountAuthentication>(
-            cfg.json_object(), std::move(options));
+            *cfg.json_object(), std::move(options));
+      } else {
+        result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+            ErrorCredentialsConfig{InternalError(
+                "ServiceAccountConfig has neither json_object nor file_path",
+                GCP_ERROR_INFO())});
       }
     }
     void visit(ExternalAccountConfig const& cfg) override {

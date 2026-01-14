@@ -335,6 +335,9 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
  * [service account key]:
  * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
  *
+ * Use `ScopesOption` to restrict the authentication scope for the obtained
+ * credentials.
+ *
  * @ingroup guac
  *
  * @note While JSON file formats are supported for both REST and gRPC transport,

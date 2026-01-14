@@ -24,6 +24,7 @@
 #include "absl/types/optional.h"
 #include <chrono>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -126,6 +127,30 @@ CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
 StatusOr<std::string> MakeSelfSignedJWT(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point tp);
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents, Options const& options,
+    HttpClientFactory client_factory);
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory);
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromP12FilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory);
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromFilePath(std::string const& path,
+                                            Options const& options,
+                                            HttpClientFactory client_factory);
+
+struct DisableSelfSignedJWTOption {
+  using Type = std::monostate;
+};
 
 /**
  * Implements service account credentials for REST clients.
