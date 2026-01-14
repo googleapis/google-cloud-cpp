@@ -212,7 +212,8 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   // auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
   //     service_account_key_filename_);
   // ASSERT_STATUS_OK(creds);
-  std::cout << __func__ << ": service_account_key_filename_=" << service_account_key_filename_ << std::endl;
+  std::cout << __func__ << ": service_account_key_filename_="
+            << service_account_key_filename_ << std::endl;
   auto credentials =
       MakeServiceAccountCredentialsFromFile(service_account_key_filename_);
 

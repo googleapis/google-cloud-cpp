@@ -289,24 +289,24 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  //  std::cout << __func__ << ": signing_account 1=" << signing_account.name()
-  //  << std::endl;
+  std::cout << __func__ << ": signing_account 1=" << signing_account.name()
+            << std::endl;
 
   // auto credentials = connection_->options().get<Oauth2CredentialsOption>();
   assert(connection_->options().has<UnifiedCredentialsOption>());
   auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
       *connection_->options().get<UnifiedCredentialsOption>()));
-  //  std::cout << __func__ << ": signing_account 2=" << signing_account.name()
-  //  << std::endl;
+  std::cout << __func__ << ": signing_account 2=" << signing_account.name()
+            << std::endl;
 
   // First try to sign locally.
   auto signed_blob = credentials.SignBlob(signing_account, string_to_sign);
   if (signed_blob) {
-    //    std::cout << __func__ << ": signed locally" << std::endl;
+    std::cout << __func__ << ": signed locally" << std::endl;
     return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
   }
 
-  //  std::cout << __func__ << ": signed locally FAILED" << std::endl;
+  std::cout << __func__ << ": signed locally FAILED" << std::endl;
   // If signing locally fails that may be because the credentials do not
   // support signing, or because the signing account is different than the
   // credentials account. In either case, try to sign using the API.

@@ -262,6 +262,7 @@ StatusOr<AccessToken> ServiceAccountCredentials::GetToken(
 StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
     absl::optional<std::string> const& signing_account,
     std::string const& blob) const {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (signing_account.has_value() &&
       signing_account.value() != info_.client_email) {
     return internal::InvalidArgumentError(
