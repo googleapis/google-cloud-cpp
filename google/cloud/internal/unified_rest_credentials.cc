@@ -163,15 +163,18 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<oauth2_internal::Credentials> result;
 
     void visit(ErrorCredentialsConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result =
           std::make_shared<oauth2_internal::ErrorCredentials>(cfg.status());
     }
 
     void visit(InsecureCredentialsConfig const&) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_shared<oauth2_internal::AnonymousCredentials>();
     }
 
     void visit(GoogleDefaultCredentialsConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       auto credentials =
           google::cloud::oauth2_internal::GoogleDefaultCredentials(
               cfg.options(), std::move(client_factory_));
@@ -183,11 +186,13 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(AccessTokenConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_shared<oauth2_internal::AccessTokenCredentials>(
           cfg.access_token());
     }
 
     void visit(ImpersonateServiceAccountConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_shared<
           oauth2_internal::ImpersonateServiceAccountCredentials>(
           cfg, std::move(client_factory_));
@@ -195,6 +200,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ServiceAccountConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       if (cfg.file_path().has_value()) {
         result = Decorate(CreateServiceAccountCredentialsFromFilePath(
                               *cfg.file_path(), {}, {}, cfg.options(),
@@ -212,6 +218,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ExternalAccountConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       auto const ec = internal::ErrorContext();
       auto info = oauth2_internal::ParseExternalAccountConfiguration(
           cfg.json_object(), ec);
@@ -226,11 +233,13 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ApiKeyConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result =
           std::make_shared<oauth2_internal::ApiKeyCredentials>(cfg.api_key());
     }
 
     void visit(ComputeEngineCredentialsConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = Decorate(
           std::make_shared<
               google::cloud::oauth2_internal::ComputeEngineCredentials>(
