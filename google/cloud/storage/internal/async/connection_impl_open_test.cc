@@ -44,6 +44,8 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::InvokeWithoutArgs;
+using ::testing::NiceMock;
 using ::testing::NotNull;
 using ::testing::Optional;
 
@@ -184,9 +186,28 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         });
 
         return std::unique_ptr<BidiReadStream>(std::move(stream));
+      })
+      .WillRepeatedly([](CompletionQueue const&,
+                         std::shared_ptr<grpc::ClientContext> const&,
+                         google::cloud::internal::ImmutableOptions const&) {
+        auto stream = std::make_unique<NiceMock<MockStream>>();
+        ON_CALL(*stream, Start).WillByDefault(InvokeWithoutArgs([] {
+          return make_ready_future(false);
+        }));
+        ON_CALL(*stream, Finish).WillByDefault(InvokeWithoutArgs([] {
+          return make_ready_future(Status{});
+        }));
+        ON_CALL(*stream, Cancel).WillByDefault([] {});
+        return std::unique_ptr<BidiReadStream>(std::move(stream));
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            StatusOr<std::chrono::system_clock::time_point>(
+                std::chrono::system_clock::now()));
+      });
   auto connection = std::make_shared<AsyncConnectionImpl>(
       CompletionQueue(mock_cq), std::shared_ptr<GrpcChannelRefresh>(), mock,
       TestOptions());

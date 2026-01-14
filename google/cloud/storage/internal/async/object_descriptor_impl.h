@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/resume_policy.h"
+#include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader.h"
 #include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/async/read_range.h"
@@ -35,17 +36,25 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+struct ReadStream : public storage_internal::StreamBase {
+  ReadStream(std::shared_ptr<OpenStream> stream,
+             std::unique_ptr<storage_experimental::ResumePolicy> resume_policy)
+      : stream(std::move(stream)), resume_policy(std::move(resume_policy)) {}
+
+  void Cancel() override {
+    if (stream) stream->Cancel();
+  }
+
+  std::shared_ptr<OpenStream> stream;
+  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
+  google::storage::v2::BidiReadObjectRequest next_request;
+  bool write_pending = false;
+  bool read_pending = false;
+};
+
 class ObjectDescriptorImpl
     : public storage_experimental::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
- private:
-  struct Stream {
-    std::shared_ptr<OpenStream> stream;
-    std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
-    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
-    bool write_pending = false;
-  };
-
  public:
   ObjectDescriptorImpl(
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
@@ -73,35 +82,29 @@ class ObjectDescriptorImpl
   void MakeSubsequentStream() override;
 
  private:
+  using StreamManager = MultiStreamManager<ReadStream, ReadRange>;
+  using StreamIterator =
+      MultiStreamManager<ReadStream, ReadRange>::StreamIterator;
+
   std::weak_ptr<ObjectDescriptorImpl> WeakFromThis() {
     return shared_from_this();
   }
 
-  // This may seem expensive, but it is less bug-prone than iterating over
-  // the map with the lock held.
-  auto CopyActiveRanges(std::unique_lock<std::mutex> const&) const {
-    return streams_.back().active_ranges;
-  }
+  // Logic to ensure a background stream is always connecting which must be
+  // invoked while holding `mu_`.
+  void AssurePendingStreamQueued(std::unique_lock<std::mutex> const&);
 
-  auto CopyActiveRanges() const {
-    return CopyActiveRanges(std::unique_lock<std::mutex>(mu_));
-  }
-
-  auto CurrentStream(std::unique_lock<std::mutex>) const {
-    return streams_.back().stream;
-  }
-
-  void Flush(std::unique_lock<std::mutex> lk);
-  void OnWrite(bool ok);
-  void DoRead(std::unique_lock<std::mutex>);
+  void Flush(std::unique_lock<std::mutex> lk, StreamIterator it);
+  void OnWrite(StreamIterator it, bool ok);
+  void DoRead(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnRead(
+      StreamIterator it,
       absl::optional<google::storage::v2::BidiReadObjectResponse> response);
-  void CleanupDoneRanges(std::unique_lock<std::mutex> const&);
-  void DoFinish(std::unique_lock<std::mutex>);
-  void OnFinish(Status const& status);
-  void Resume(google::rpc::Status const& proto_status);
-  void OnResume(StatusOr<OpenStreamResult> result);
-  bool IsResumable(Status const& status,
+  void DoFinish(std::unique_lock<std::mutex> lk, StreamIterator it);
+  void OnFinish(StreamIterator it, Status const& status);
+  void Resume(StreamIterator it, google::rpc::Status const& proto_status);
+  void OnResume(StreamIterator it, StatusOr<OpenStreamResult> result);
+  bool IsResumable(StreamIterator it, Status const& status,
                    google::rpc::Status const& proto_status);
 
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_prototype_;
@@ -111,10 +114,14 @@ class ObjectDescriptorImpl
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
   absl::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
-  google::storage::v2::BidiReadObjectRequest next_request_;
 
   Options options_;
-  std::vector<Stream> streams_;
+  std::unique_ptr<StreamManager> stream_manager_;
+  // The future for the proactive background stream.
+  google::cloud::future<
+      google::cloud::StatusOr<storage_internal::OpenStreamResult>>
+      pending_stream_;
+  bool cancelled_ = false;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
