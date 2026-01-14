@@ -310,6 +310,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   EXPECT_EQ(expected_signature, doc_res->signature);
   EXPECT_EQ((std::map<std::string, std::string>(fields.begin(), fields.end())),
             doc_res->required_form_fields);
+  EXPECT_TRUE(false);
 }
 
 INSTANTIATE_TEST_SUITE_P(

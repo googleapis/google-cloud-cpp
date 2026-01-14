@@ -68,6 +68,7 @@ class WrapRestCredentials {
 
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       SigningAccount const& signing_account, std::string const& blob) const {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     return impl_->SignBlob(signing_account.value_or(impl_->AccountEmail()),
                            blob);
   }
@@ -360,6 +361,7 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
   request.AddMissingRequiredHeaders();
   SigningAccount const& signing_account = request.signing_account();
   auto signing_email = SigningEmail(signing_account);
+  std::cout << __PRETTY_FUNCTION__ << ": signing_email=" << signing_email << std::endl;
 
   auto string_to_sign = request.StringToSign(signing_email);
   auto signed_blob = SignBlobImpl(signing_account, string_to_sign);
