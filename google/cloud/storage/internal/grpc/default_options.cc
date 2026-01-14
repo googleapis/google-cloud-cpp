@@ -72,6 +72,10 @@ Options DefaultOptionsGrpc(
       storage::internal::DefaultOptionsWithCredentials(std::move(options));
   if (!options.has<UnifiedCredentialsOption>() &&
       !options.has<GrpcCredentialOption>()) {
+    std::cout << __func__
+              << ": !options.has<UnifiedCredentialsOption>() && "
+                 "!options.has<GrpcCredentialOption>()"
+              << std::endl;
     options.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials(
             google::cloud::internal::MakeAuthOptions(options)));
@@ -84,6 +88,8 @@ Options DefaultOptionsGrpc(
     // The emulator does not support HTTPS or authentication, use insecure
     // (sometimes called "anonymous") credentials, which disable SSL.
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+    std::cout << __func__ << ": testbench detected forcing InsecureCredentials"
+              << std::endl;
   }
 
   // gRPC <= 1.64 may crash when metrics are enabled, so we don't enable them by
