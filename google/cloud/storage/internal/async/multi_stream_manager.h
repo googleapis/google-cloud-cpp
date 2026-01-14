@@ -67,6 +67,7 @@ class MultiStreamManager {
   };
 
   using StreamIterator = typename std::list<Stream>::iterator;
+  using ConstStreamIterator = typename std::list<Stream>::const_iterator;
   using StreamFactory = std::function<std::shared_ptr<StreamT>()>;
 
   // Constructor creates the first stream using the factory immediately.
@@ -159,7 +160,7 @@ class MultiStreamManager {
   }
 
   bool Empty() const { return streams_.empty(); }
-  StreamIterator End() { return streams_.end(); }
+  ConstStreamIterator End() const { return streams_.end(); }
   std::size_t Size() const { return streams_.size(); }
 
  private:
