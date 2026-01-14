@@ -75,7 +75,6 @@ storage_client_integration_tests = [
     "storage_include_test.cc",
     "thread_integration_test.cc",
     "tracing_integration_test.cc",
-    "unified_credentials_integration_test.cc",
 ]
 
 storage_client_integration_tests_production = [
@@ -83,5 +82,4 @@ storage_client_integration_tests_production = [
     "key_file_integration_test.cc",
     "mtls_object_basic_crud_integration_test.cc",
     "signed_url_integration_test.cc",
-    "unified_credentials_integration_test.cc",
 ]
