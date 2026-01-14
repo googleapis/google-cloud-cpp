@@ -159,7 +159,7 @@ class MultiStreamManager {
   }
 
   bool Empty() const { return streams_.empty(); }
-  StreamIterator End() const { return streams_.end(); }
+  StreamIterator End() { return streams_.end(); }
   std::size_t Size() const { return streams_.size(); }
 
  private:
