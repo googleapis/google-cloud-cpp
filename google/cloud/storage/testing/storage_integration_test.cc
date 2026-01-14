@@ -195,9 +195,17 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
 
 bool StorageIntegrationTest::UsingEmulator() {
   auto emulator = EmulatorEndpoint();
-  if (emulator) return true;
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-      .has_value();
+  if (emulator) {
+    std::cout << __func__ << ": UsingEmulator1 == true" << std::endl;
+    return true;
+  }
+  auto foo = google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+                 .has_value();
+  std::cout << __func__ << ": UsingEmulator2 == " << (foo ? "true" : "false")
+            << std::endl;
+  return foo;
+  // return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+  //     .has_value();
 }
 
 bool StorageIntegrationTest::UsingGrpc() {
