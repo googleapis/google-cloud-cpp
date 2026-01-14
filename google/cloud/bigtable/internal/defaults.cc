@@ -175,7 +175,12 @@ Options DefaultOptions(Options opts) {
     // When using DirectPath the gRPC library already does load balancing across
     // multiple sockets, it makes little sense to perform additional load
     // balancing in the client library.
-    if (!opts.has<GrpcNumChannelsOption>()) opts.set<GrpcNumChannelsOption>(1);
+  }
+  
+  auto const enable_directpath_env = google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
+  if (enable_directpath_env.has_value() &&
+      (*enable_directpath_env == "true" || *enable_directpath_env == "1")) {
+    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com");
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
