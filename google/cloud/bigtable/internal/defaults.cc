@@ -176,12 +176,6 @@ Options DefaultOptions(Options opts) {
     // multiple sockets, it makes little sense to perform additional load
     // balancing in the client library.
   }
-  
-  auto const enable_directpath_env = google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
-  if (enable_directpath_env.has_value() &&
-      (*enable_directpath_env == "true" || *enable_directpath_env == "1")) {
-    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com");
-  }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator) {
@@ -249,6 +243,11 @@ Options DefaultDataOptions(Options opts) {
   auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
   if (tracing && !tracing->empty()) {
     opts.set<OpenTelemetryTracingOption>(true);
+  }
+  auto const enable_directpath_env = GetEnv("CBT_ENABLE_DIRECTPATH");
+  if (enable_directpath_env.has_value() &&
+      (*enable_directpath_env == "true" || *enable_directpath_env == "1")) {
+    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com");
   }
   if (!opts.has<bigtable::DataRetryPolicyOption>()) {
     opts.set<bigtable::DataRetryPolicyOption>(
