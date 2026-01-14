@@ -92,6 +92,12 @@ ServiceAccountConfig::ServiceAccountConfig(std::string json_object,
     : json_object_(std::move(json_object)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
+ServiceAccountConfig::ServiceAccountConfig(std::string json_object,
+                                           std::string file_path, Options opts)
+    : json_object_(std::move(json_object)),
+      file_path_(std::move(file_path)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
 ExternalAccountConfig::ExternalAccountConfig(std::string json_object,
                                              Options options)
     : json_object_(std::move(json_object)),
