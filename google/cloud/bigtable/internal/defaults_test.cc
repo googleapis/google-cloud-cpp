@@ -429,7 +429,7 @@ TEST(EndpointEnvTest, DirectPathEnabled) {
   ScopedEnvironment direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("c2p://bigtable.googleapis.com", opts.get<DataEndpointOption>());
+  EXPECT_EQ("c2p:///bigtable.googleapis.com", opts.get<DataEndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
   EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
@@ -451,9 +451,9 @@ TEST(EndpointEnvTest, DirectPathOverridesUserEndpoints) {
   ScopedEnvironment direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultDataOptions(
-      Options{}.set<EndpointOption>("ignored").set<AuthorityOption>("ignored"));
-  EXPECT_EQ("c2p://bigtable.googleapis.com", opts.get<EndpointOption>());
-  EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
+      Options{}.set<EndpointOption>("userendpoint").set<AuthorityOption>("userendpoint"));
+  EXPECT_EQ("c2p:///userendpoint", opts.get<EndpointOption>());
+  EXPECT_EQ("userendpoint", opts.get<AuthorityOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorOverridesDirectPath) {

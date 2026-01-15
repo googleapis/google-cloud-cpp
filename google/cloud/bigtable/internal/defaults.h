@@ -26,6 +26,8 @@ namespace internal {
 
 int DefaultConnectionPoolSize();
 
+bool EnableDirectAccess();
+
 /**
  * Returns an `Options` with the appropriate defaults for Bigtable.
  *

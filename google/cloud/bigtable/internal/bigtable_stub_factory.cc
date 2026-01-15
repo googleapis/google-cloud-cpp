@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
@@ -56,10 +57,7 @@ std::string FeaturesMetadata() {
   proto.set_routing_cookie(true);
   proto.set_retry_info(true);
 
-  auto const env = google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
-  bool const directpath_enabled =
-      env.has_value() && (*env == "true" || *env == "1");
-  if (directpath_enabled) {
+  if (bigtable::internal::EnableDirectAccess()) {
     proto.set_traffic_director_enabled(true);
     proto.set_direct_access_requested(true);
   }

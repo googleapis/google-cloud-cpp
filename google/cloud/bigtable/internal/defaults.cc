@@ -144,6 +144,12 @@ Options HandleUniverseDomain(Options opts) {
   return opts;
 }
 
+bool EnableDirectAccess() {
+  absl::optional<std::string> env_directpath =
+    google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
+  return env_directpath.has_value() && env_directpath.value() == "true";
+}
+
 Options DefaultOptions(Options opts) {
   using ::google::cloud::internal::GetEnv;
   auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
@@ -164,11 +170,13 @@ Options DefaultOptions(Options opts) {
     }
   }
 
-  auto const direct_path = GetEnv("CBT_ENABLE_DIRECTPATH");
-  if (direct_path.has_value() &&
-      (*direct_path == "true" || *direct_path == "1")) {
-    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com")
-        .set<AuthorityOption>("bigtable.googleapis.com");
+  if (EnableDirectAccess()) {
+    std::string endpoint = opts.get<EndpointOption>();
+    if (endpoint.empty()) {
+      endpoint = "bigtable.googleapis.com";
+    }
+    opts.set<DataEndpointOption>("c2p:///" + endpoint)
+        .set<AuthorityOption>(endpoint);
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
