@@ -175,7 +175,7 @@ TEST(Transaction, IsolationLevelPrecedence) {
   internal::OptionsSpan span(Options{}.set<TransactionIsolationLevelOption>(
       Transaction::IsolationLevel::kSerializable));
 
-  // Case 1: Per-call overrides client default
+  // Case 1: Per-call overrides default options
   auto opts = Transaction::ReadWriteOptions().WithIsolationLevel(
       Transaction::IsolationLevel::kRepeatableRead);
   Transaction txn = MakeReadWriteTransaction(opts);
