@@ -167,7 +167,8 @@ Options DefaultOptions(Options opts) {
   auto const direct_path = GetEnv("CBT_ENABLE_DIRECTPATH");
   if (direct_path.has_value() &&
       (*direct_path == "true" || *direct_path == "1")) {
-    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com");
+    opts.set<DataEndpointOption>("c2p://bigtable.googleapis.com")
+        .set<AuthorityOption>("bigtable.googleapis.com");
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
