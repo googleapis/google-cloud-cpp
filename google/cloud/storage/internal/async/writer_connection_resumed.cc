@@ -82,13 +82,6 @@ class AsyncWriterConnectionResumedState
     } else {
       buffer_offset_ = absl::get<std::int64_t>(state);
     }
-    if (first_response_.has_write_handle()) {
-      latest_write_handle_ = first_response_.write_handle();
-    } else if (initial_request_.has_append_object_spec() &&
-               initial_request_.append_object_spec().has_write_handle()) {
-      latest_write_handle_ =
-          initial_request_.append_object_spec().write_handle();
-    }
   }
 
   void Cancel() {
