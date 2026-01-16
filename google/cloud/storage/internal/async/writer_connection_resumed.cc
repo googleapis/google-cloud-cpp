@@ -186,17 +186,19 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
-    if (writing_) return;
+    if (state_ != State::kIdle) return;
     WriteLoop(std::move(lk));
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
-    if (writing_) return;
+    if (state_ != State::kIdle) return;
+
     // Determine if there's data left to write *before* potentially finalizing.
-    writing_ = write_offset_ < resend_buffer_.size();
+    auto const has_data = write_offset_ < resend_buffer_.size();
 
     // If we are writing data, continue doing so.
-    if (writing_) {
+    if (has_data) {
+      state_ = State::kWriting;
       // Still data to write, determine the next chunk.
       auto const n = resend_buffer_.size() - write_offset_;
       auto payload = resend_buffer_.Subcord(write_offset_, n);
@@ -204,7 +206,7 @@ class AsyncWriterConnectionResumedState
       return WriteStep(std::move(lk), std::move(payload));
     }
 
-    // No data left to write (writing_ is false).
+    // No data left to write.
     // Check if we need to finalize (only if not already writing data AND not
     // already finalizing).
     if (finalize_ && !finalizing_) {
@@ -213,23 +215,24 @@ class AsyncWriterConnectionResumedState
     }
     // If not finalizing, check if an empty flush is needed.
     if (flush_) {
-      writing_ = true;
-      // Pass empty payload to FlushStep 
+      state_ = State::kWriting;
+      // Pass empty payload to FlushStep
       return FlushStep(std::move(lk), absl::Cord{});
     }
 
     // No data to write, not finalizing, not flushing. The loop can stop.
-    // writing_ is already false.
+    state_ = State::kIdle;
   }
 
   // FinalizeStep is now called only when all data in resend_buffer_ is written.
   void FinalizeStep(std::unique_lock<std::mutex> lk) {
     // Check *under lock* if we are already finalizing.
-    if (finalizing_) {
+    if (finalizing_ || state_ != State::kIdle) {
       // If another thread initiated FinalizeStep concurrently, just return.
       return;
     }
     // Mark that we are starting the finalization process.
+    state_ = State::kWriting;
     finalizing_ = true;
     auto impl = Impl(lk);
     lk.unlock();
@@ -306,8 +309,8 @@ class AsyncWriterConnectionResumedState
     buffer_offset_ = persisted_size;
     write_offset_ -= static_cast<std::size_t>(n);
     // If the buffer is small enough, collect all the handlers to notify them.
-    auto const handlers = ClearHandlersIfEmpty(lk); 
-    writing_ = false;
+    auto const handlers = ClearHandlersIfEmpty(lk);
+    state_ = State::kIdle;
     StartWriting(std::move(lk));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
@@ -330,7 +333,7 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
-    writing_ = false; 
+    state_ = State::kIdle;
     return StartWriting(std::move(lk));
   }
 
@@ -349,8 +352,9 @@ class AsyncWriterConnectionResumedState
     }
     // Include write_handle to enable fast resume instead of slow
     // takeover. Without handle, server performs full state validation.
-    if (latest_write_handle_) {
-      *append_object_spec.mutable_write_handle() = *latest_write_handle_;
+    if (first_response_.has_write_handle()) {
+      *append_object_spec.mutable_write_handle() =
+          first_response_.write_handle();
     }
     append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
@@ -359,9 +363,11 @@ class AsyncWriterConnectionResumedState
     bool was_finalizing;
     {
       std::unique_lock<std::mutex> lk(mu_);
-      was_finalizing = finalizing_;    
-      writing_ = false; 
+      if (state_ == State::kResuming) return;
+      was_finalizing = finalizing_;
+      state_ = State::kResuming;
       if (!s.ok() && cancelled_) {
+        state_ = State::kIdle;
         return SetError(std::move(lk), std::move(s));
       }
     }
@@ -376,16 +382,13 @@ class AsyncWriterConnectionResumedState
   void OnResume(Status const& original_status, bool was_finalizing,
                 StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
-    // Update write_handle from any resume response that contains it.
-    if (res && res->first_response.has_write_handle()) {
-      latest_write_handle_ = res->first_response.write_handle();
-    }
 
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
       // finalized_ promise now, based on the resume attempt's outcome.
       if (!res) {
         // The resume attempt itself failed. Use that error.
+        state_ = State::kIdle;
         return SetError(std::move(lk), std::move(res).status());
       }
       // Resume attempt succeeded, check the persisted state.
@@ -401,12 +404,14 @@ class AsyncWriterConnectionResumedState
       // Use the original status that triggered the resume. Reset finalizing_
       // before setting the error, as the attempt is now over.
       finalizing_ = false;
+      state_ = State::kIdle;
       return SetError(std::move(lk), std::move(original_status));
     }
 
     // Resume was *not* triggered by finalization failure.
     if (!res) {
       // Regular resume attempt failed.
+      state_ = State::kIdle;
       return SetError(std::move(lk), std::move(res).status());
     }
     // Regular resume attempt succeeded. Check state.
@@ -434,7 +439,7 @@ class AsyncWriterConnectionResumedState
   void SetFinalized(std::unique_lock<std::mutex> lk,
                     google::storage::v2::Object object) {
     resend_buffer_.Clear();
-    writing_ = false;
+    state_ = State::kIdle;
     finalize_ = false;
     finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
@@ -482,7 +487,7 @@ class AsyncWriterConnectionResumedState
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
     resume_status_ = status;
-    writing_ = false;
+    state_ = State::kIdle;
     finalize_ = false;
     finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
@@ -605,7 +610,12 @@ class AsyncWriterConnectionResumedState
   std::vector<std::unique_ptr<BufferShrinkHandler>> flush_handlers_;
   
   // True if the writing loop is activate.
-  bool writing_ = false;
+  enum class State {
+    kIdle,
+    kWriting,
+    kResuming,
+  };
+  State state_ = State::kIdle;
 
   // True if cancelled, in which case any RPC failures are final.
   bool cancelled_ = false;
@@ -615,9 +625,6 @@ class AsyncWriterConnectionResumedState
 
   // Tracks if the final promise (`finalized_`) has been completed.
   bool finalized_promise_completed_ = false;
-
-  // Track the latest write handle seen in responses.
-  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 };
 
 /**
