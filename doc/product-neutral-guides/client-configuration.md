@@ -20,26 +20,7 @@ You can modify the API endpoint to connect to a specific Google Cloud region or 
 
 ### Connecting to a Regional Endpoint
 
-```c
-#include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/pubsub/publisher.h"
-#include "google/cloud/common_options.h"
-
-void CreateRegionalClient() {
-  namespace pubsub = ::google::cloud::pubsub;
-  namespace gc = ::google::cloud;
-
-  // Configure options
-  auto options = gc::Options{}
-      .set<gc::EndpointOption>("us-east1-pubsub.googleapis.com");
-
-  // Create the connection with options
-  auto connection = pubsub::MakePublisherConnection(options);
-  
-  // Create the client
-  auto client = pubsub::Publisher(connection);
-}
-```
+[!code-cpp[](../../google/cloud/pubsub/samples/client_samples.cc#publisher-set-endpoint)]
 
 ## 3. Configuring a Proxy
 
@@ -72,31 +53,7 @@ In C++, retry policies are configured via `Options` or passed specifically to th
 
 You can set the `RetryPolicyOption` and `BackoffPolicyOption`.
 
-```c
-#include "google/cloud/secretmanager/secret_manager_client.h"
-#include "google/cloud/options.h"
-#include <chrono>
-
-void ConfigureRetries() {
-  namespace secretmanager = ::google::cloud::secretmanager;
-  using namespace std::chrono_literals;
-
-  // Define a limited retry policy (e.g., max 3 retries or 10 minutes)
-  auto retry_policy = secretmanager::SecretManagerServiceLimitedTimeRetryPolicy(10min);
-
-  // Define backoff (exponential: starts at 1s, max 30s, scaling 2.0)
-  auto backoff_policy = google::cloud::ExponentialBackoffPolicy(1s, 30s, 2.0);
-
-  auto options = google::cloud::Options{}
-      .set<secretmanager::SecretManagerServiceRetryPolicyOption>(
-          retry_policy.clone())
-      .set<secretmanager::SecretManagerServiceBackoffPolicyOption>(
-          backoff_policy.clone());
-
-  auto connection = secretmanager::MakeSecretManagerServiceConnection(options);
-  auto client = secretmanager::SecretManagerServiceClient(connection);
-}
-```
+[!code-cpp[](../../google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc#set-retry-policy)]
 
 ### Configuring Timeouts
 
