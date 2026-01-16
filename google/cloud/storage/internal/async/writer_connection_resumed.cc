@@ -358,7 +358,6 @@ class AsyncWriterConnectionResumedState
       if (state_ == State::kResuming) return;
       was_finalizing = finalizing_;
       if (!s.ok() && cancelled_) {
-        state_ = State::kIdle;
         return SetError(std::move(lk), std::move(s));
       }
       state_ = State::kResuming;
