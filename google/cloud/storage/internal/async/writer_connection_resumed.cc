@@ -82,6 +82,13 @@ class AsyncWriterConnectionResumedState
     } else {
       buffer_offset_ = absl::get<std::int64_t>(state);
     }
+    if (first_response_.has_write_handle()) {
+      latest_write_handle_ = first_response_.write_handle();
+    } else if (initial_request_.has_append_object_spec() &&
+               initial_request_.append_object_spec().has_write_handle()) {
+      latest_write_handle_ =
+          initial_request_.append_object_spec().write_handle();
+    }
   }
 
   void Cancel() {
@@ -179,6 +186,7 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
+    if (writing_) return;
     WriteLoop(std::move(lk));
   }
 
@@ -344,9 +352,8 @@ class AsyncWriterConnectionResumedState
     }
     // Include write_handle to enable fast resume instead of slow
     // takeover. Without handle, server performs full state validation.
-    if (first_response_.has_write_handle()) {
-      *append_object_spec.mutable_write_handle() =
-          first_response_.write_handle();
+    if (latest_write_handle_) {
+      *append_object_spec.mutable_write_handle() = *latest_write_handle_;
     }
     append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
@@ -373,6 +380,10 @@ class AsyncWriterConnectionResumedState
   void OnResume(Status const& original_status, bool was_finalizing,
                 StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
+    // Update write_handle from any resume response that contains it.
+    if (res && res->first_response.has_write_handle()) {
+      latest_write_handle_ = res->first_response.write_handle();
+    }
 
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
@@ -613,6 +624,9 @@ class AsyncWriterConnectionResumedState
 
   // Tracks if the final promise (`finalized_`) has been completed.
   bool finalized_promise_completed_ = false;
+
+  // Track the latest write handle seen in responses.
+  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 };
 
 /**
