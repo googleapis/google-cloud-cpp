@@ -179,7 +179,6 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
-    if (state_ != State::kIdle) return;
     WriteLoop(std::move(lk));
   }
 
@@ -358,11 +357,11 @@ class AsyncWriterConnectionResumedState
       std::unique_lock<std::mutex> lk(mu_);
       if (state_ == State::kResuming) return;
       was_finalizing = finalizing_;
-      state_ = State::kResuming;
       if (!s.ok() && cancelled_) {
         state_ = State::kIdle;
         return SetError(std::move(lk), std::move(s));
       }
+      state_ = State::kResuming;
     }
     // Pass the original status `s` and `was_finalizing` to the callback.
     factory_(std::move(request))
@@ -381,7 +380,6 @@ class AsyncWriterConnectionResumedState
       // finalized_ promise now, based on the resume attempt's outcome.
       if (!res) {
         // The resume attempt itself failed. Use that error.
-        state_ = State::kIdle;
         return SetError(std::move(lk), std::move(res).status());
       }
       // Resume attempt succeeded, check the persisted state.
@@ -397,14 +395,12 @@ class AsyncWriterConnectionResumedState
       // Use the original status that triggered the resume. Reset finalizing_
       // before setting the error, as the attempt is now over.
       finalizing_ = false;
-      state_ = State::kIdle;
       return SetError(std::move(lk), std::move(original_status));
     }
 
     // Resume was *not* triggered by finalization failure.
     if (!res) {
       // Regular resume attempt failed.
-      state_ = State::kIdle;
       return SetError(std::move(lk), std::move(res).status());
     }
     // Regular resume attempt succeeded. Check state.
@@ -601,7 +597,7 @@ class AsyncWriterConnectionResumedState
   // - A Flush() call that returns an unsatisified future until the buffer is
   //   small enough.
   std::vector<std::unique_ptr<BufferShrinkHandler>> flush_handlers_;
-  
+
   // True if the writing loop is activate.
   enum class State {
     kIdle,
