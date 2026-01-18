@@ -302,6 +302,58 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object, Options opts = {});
 
 /**
+ * Creates service account credentials from a service account key contained in
+ * a file.
+ *
+ * A [service account] is an account for an application or compute workload
+ * instead of an individual end user. The recommended practice is to use
+ * Google Default Credentials, which relies on the configuration of the Google
+ * Cloud system hosting your application (GCE, GKE, Cloud Run) to authenticate
+ * your workload or application.  But sometimes you may need to create and
+ * download a [service account key], for example, to use a service account
+ * when running your application on a system that is not part of Google Cloud.
+ *
+ * Service account credentials are used in this latter case.
+ *
+ * You can create multiple service account keys for a single service account.
+ * When you create a service account key, the key is returned as string, in the
+ * format described by [aip/4112]. This string contains an id for the service
+ * account, as well as the cryptographical materials (a RSA private key)
+ * required to authenticate the caller.
+ *
+ * Therefore, services account keys should be treated as any other secret
+ * with security implications. Think of them as unencrypted passwords. Do not
+ * store them where unauthorized persons or programs may read them.
+ *
+ * As stated above, most applications should probably use default credentials,
+ * maybe pointing them to a file with these contents. Using this function may be
+ * useful when the service account key is obtained from Cloud Secret Manager or
+ * a similar service.
+ *
+ * [aip/4112]: https://google.aip.dev/auth/4112
+ * [service account]: https://cloud.google.com/iam/docs/overview#service_account
+ * [service account key]:
+ * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
+ *
+ * Use `ScopesOption` to restrict the authentication scope for the obtained
+ * credentials.
+ *
+ * @ingroup guac
+ *
+ * @note While JSON file formats are supported for both REST and gRPC transport,
+ *   PKCS#12 is only supported for REST transport.
+ *
+ * @param file_path path to file containing the service account key
+ * Typically applications read this from a file, or download the contents from
+ * something like Google's secret manager service.
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
+ */
+std::shared_ptr<Credentials> MakeServiceAccountCredentialsFromFile(
+    std::string const& file_path, Options opts = {});
+
+/**
  * Creates credentials based on external accounts.
  *
  * [Workload Identity Federation] can grant on-premises or multi-cloud workloads
@@ -406,13 +458,26 @@ struct DelegatesOption {
 };
 
 /**
- * Configure the scopes for `MakeImpersonateServiceAccountCredentials()`
+ * Configure the scopes for `MakeImpersonateServiceAccountCredentials()`.
+ * Override the scopes for `MakeServiceAccountCredentials` and
+ * `MakeServiceAccountCredentialsFromFile()`.
  *
  * @ingroup options
  * @ingroup guac
  */
 struct ScopesOption {
   using Type = std::vector<std::string>;
+};
+
+/**
+ * Overrides the subject for `MakeServiceAccountCredentials` and
+ * `MakeServiceAccountCredentialsFromFile()`.
+ *
+ * @ingroup options
+ * @ingroup guac
+ */
+struct SubjectOption {
+  using Type = std::string;
 };
 
 /**
