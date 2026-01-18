@@ -44,7 +44,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace rest = google::cloud::rest_internal;
-using ::google::cloud::internal::AuthHeaderError;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::internal::UrlEncode;
 
@@ -108,18 +107,6 @@ StatusOr<ReturnType> CreateFromJson(
   return ReturnType::CreateFromJson(*payload);
 }
 
-Status AddAuthorizationHeader(Options const& options,
-                              RestRequestBuilder& builder) {
-  // In tests this option may not be set. And over time we want to retire it.
-  if (!options.has<Oauth2CredentialsOption>()) return {};
-  auto auth_header =
-      options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
-  if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
-  builder.AddHeader("Authorization", std::string(absl::StripPrefix(
-                                         *auth_header, "Authorization: ")));
-  return {};
-}
-
 void AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
   if (!options.has<CustomHeadersOption>()) return;
   for (auto const& h : options.get<CustomHeadersOption>()) {
@@ -128,8 +115,6 @@ void AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
 }
 
 Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
-  auto ah = AddAuthorizationHeader(options, builder);
-  if (!ah.ok()) return ah;
   AddCustomHeaders(options, builder);
   return {};
 }

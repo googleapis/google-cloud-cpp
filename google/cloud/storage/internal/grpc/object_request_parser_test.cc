@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"

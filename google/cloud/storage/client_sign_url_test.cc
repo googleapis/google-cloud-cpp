@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/testing_util/status_matchers.h"

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
@@ -894,6 +895,61 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   auto token = *status;
   EXPECT_EQ(token.expiration, now + expires_in);
   EXPECT_EQ(token.token, "access-token-r1");
+}
+
+TEST(ServiceAccountCredentialsTest,
+     ApplyServiceAccountCredentialsInfoOverrides) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+
+  auto options = Options{}
+                     .set<google::cloud::ScopesOption>(std::vector<std::string>(
+                         {"https://www.googleapis.com/auth/userinfo.email",
+                          "https://www.googleapis.com/auth/cloud-platform"}))
+                     .set<google::cloud::SubjectOption>("my-subject");
+
+  ApplyServiceAccountCredentialsInfoOverrides(options, *info);
+
+  auto const tp = std::chrono::system_clock::from_time_t(kFixedJwtTimestamp);
+  auto components = AssertionComponentsFromInfo(*info, tp);
+  auto assertion =
+      MakeJWTAssertion(components.first, components.second, info->private_key);
+
+  std::vector<std::string> actual_tokens = absl::StrSplit(assertion, '.');
+  ASSERT_EQ(actual_tokens.size(), 3);
+  std::vector<std::vector<std::uint8_t>> decoded(actual_tokens.size());
+  std::transform(
+      actual_tokens.begin(), actual_tokens.end(), decoded.begin(),
+      [](std::string const& e) { return UrlsafeBase64Decode(e).value(); });
+
+  // Verify this is a valid key.
+  auto const signature =
+      SignUsingSha256(actual_tokens[0] + '.' + actual_tokens[1], kPrivateKey);
+  ASSERT_STATUS_OK(signature);
+  EXPECT_EQ(*signature, decoded[2]);
+
+  // Verify the header and payloads are valid.
+  auto const header =
+      nlohmann::json::parse(decoded[0].begin(), decoded[0].end());
+  auto const expected_header =
+      nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
+  EXPECT_EQ(header, expected_header);
+
+  auto const payload = nlohmann::json::parse(decoded[1]);
+  auto const iat = static_cast<std::intmax_t>(kFixedJwtTimestamp);
+  auto const exp = iat + 3600;
+  auto const expected_payload = nlohmann::json{
+      {"iss", kClientEmail},
+      {"scope",
+       "https://www.googleapis.com/auth/cloud-platform "
+       "https://www.googleapis.com/auth/userinfo.email"},
+      {"aud", kTokenUri},
+      {"iat", iat},
+      {"exp", exp},
+      {"sub", "my-subject"},
+  };
+
+  EXPECT_EQ(payload, expected_payload);
 }
 
 }  // namespace
