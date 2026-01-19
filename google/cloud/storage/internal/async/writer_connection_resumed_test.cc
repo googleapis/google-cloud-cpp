@@ -203,9 +203,8 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
-  auto w = flush.get();
-  if(!w.ok()) {
-    FAIL() << "Flush failed: " << w;
+  if (!flush.get().ok()) {
+    FAIL() << "Flush failed: " << flush.get();
   }
 }
 
@@ -478,10 +477,12 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
 
   ASSERT_TRUE(write_future.is_ready());
   ASSERT_TRUE(flush_future.is_ready());
-
-  // Both futures should complete successfully.
-  EXPECT_THAT(write_future.get(), StatusIs(StatusCode::kOk));
-  EXPECT_THAT(flush_future.get(), StatusIs(StatusCode::kOk));
+  if (!write_future.get().ok()) {
+    FAIL() << "Write failed: " << write_future.get();
+  }
+  if (!flush_future.get().ok()) {
+    FAIL() << "Flush failed: " << flush_future.get();
+  }
 }
 
 TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
