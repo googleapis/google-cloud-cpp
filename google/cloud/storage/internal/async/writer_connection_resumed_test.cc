@@ -203,8 +203,10 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
-
-  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
+  auto w = flush.get();
+  if(!w.ok()) {
+    FAIL() << "Flush failed: " << w;
+  }
 }
 
 TEST(WriteConnectionResumed, FlushNonEmpty) {
