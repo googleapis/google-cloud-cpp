@@ -174,15 +174,13 @@ TEST(WriterConnectionResumed, FlushEmpty) {
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Flush).WillRepeatedly([&](auto const& p) {
     EXPECT_TRUE(p.payload().empty());
-    return sequencer.PushBack("Flush").then([](auto f) {
-      if (!f.get()) return TransientError();
+    return sequencer.PushBack("Flush").then([](auto) {
       return Status{};
     });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
-        [](auto f) -> StatusOr<std::int64_t> {
-          if (!f.get()) return TransientError();
+        [](auto) -> StatusOr<std::int64_t> {
           return 0;
         });
   });
@@ -218,22 +216,19 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
   EXPECT_CALL(*mock, Flush)
       .WillOnce([&](auto const& p) {
         EXPECT_EQ(p.payload(), payload.payload());
-        return sequencer.PushBack("Flush").then([](auto f) {
-          if (!f.get()) return TransientError();
-          return Status{};
+        return sequencer.PushBack("Flush").then([](auto) {
+      return Status{};
         });
       })
       .WillOnce([&](auto const& p) {
         EXPECT_TRUE(p.payload().empty());
-        return sequencer.PushBack("Flush").then([](auto f) {
-          if (!f.get()) return TransientError();
-          return Status{};
+        return sequencer.PushBack("Flush").then([](auto) {
+      return Status{};
         });
       });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
-        [](auto f) -> StatusOr<std::int64_t> {
-          if (!f.get()) return TransientError();
+        [](auto) -> StatusOr<std::int64_t> {
           return 1024;
         });
   });
@@ -412,15 +407,13 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Flush(_)).WillRepeatedly([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto f) {
-      if (!f.get()) return TransientError();
+    return sequencer.PushBack("Flush").then([](auto) {
       return Status{};
     });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
-        [](auto f) -> StatusOr<std::int64_t> {
-          if (!f.get()) return TransientError();
+        [](auto) -> StatusOr<std::int64_t> {
           return 0;
         });
   });
