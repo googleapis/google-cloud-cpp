@@ -186,7 +186,6 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
-    if (writing_) return;
     WriteLoop(std::move(lk));
   }
 
@@ -271,7 +270,8 @@ class AsyncWriterConnectionResumedState
       auto self = w.lock();
       if (!self) return;
       self->OnQuery(f.get());
-      self->SetFlushed(std::unique_lock<std::mutex>(self->mu_), std::move(result));
+      self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
+                       std::move(result));
     });
   }
 

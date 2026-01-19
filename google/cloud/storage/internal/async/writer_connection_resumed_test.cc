@@ -419,24 +419,24 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
     });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto f) -> StatusOr<std::int64_t> {
-      if (!f.get()) return TransientError();
-      return 0;
-    });
+    return sequencer.PushBack("Query").then(
+        [](auto f) -> StatusOr<std::int64_t> {
+          if (!f.get()) return TransientError();
+          return 0;
+        });
   });
 
   // Make Write detect concurrent invocations. If two writes run concurrently
   // the compare_exchange will fail and the test will fail.
   std::atomic<bool> in_write{false};
-  EXPECT_CALL(*mock, Write(_))
-      .WillRepeatedly([&](auto) {
-        bool expected = false;
-        EXPECT_TRUE(in_write.compare_exchange_strong(expected, true));
-        // Simulate some work that allows a concurrent write to attempt to run.
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        in_write.store(false);
-        return make_ready_future(Status{});
-      });
+  EXPECT_CALL(*mock, Write(_)).WillRepeatedly([&](auto) {
+    bool expected = false;
+    EXPECT_TRUE(in_write.compare_exchange_strong(expected, true));
+    // Simulate some work that allows a concurrent write to attempt to run.
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    in_write.store(false);
+    return make_ready_future(Status{});
+  });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -464,11 +464,13 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
 
   // Wait for both futures to complete with a timeout to avoid indefinite hang.
   auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
-  while (!write_future.is_ready() && std::chrono::steady_clock::now() < deadline) {
+  while (!write_future.is_ready() &&
+         std::chrono::steady_clock::now() < deadline) {
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
   }
   deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
-  while (!flush_future.is_ready() && std::chrono::steady_clock::now() < deadline) {
+  while (!flush_future.is_ready() &&
+         std::chrono::steady_clock::now() < deadline) {
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
   }
 
@@ -479,7 +481,6 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
   EXPECT_THAT(write_future.get(), StatusIs(StatusCode::kOk));
   EXPECT_THAT(flush_future.get(), StatusIs(StatusCode::kOk));
 }
-
 
 TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
   struct {
