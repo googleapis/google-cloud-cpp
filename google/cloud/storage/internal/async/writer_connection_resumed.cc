@@ -266,7 +266,7 @@ class AsyncWriterConnectionResumedState
     write_offset_ += write_size;
     auto impl = Impl(lk);
     lk.unlock();
-    impl->Query().then([this, result, w = WeakFromThis()](auto f) {
+    impl->Query().then([result, w = WeakFromThis()](auto f) {
       auto self = w.lock();
       if (!self) return;
       self->OnQuery(f.get());
