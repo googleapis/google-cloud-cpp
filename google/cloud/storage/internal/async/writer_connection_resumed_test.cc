@@ -203,9 +203,7 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
-  if (!flush.get().ok()) {
-    FAIL() << "Flush failed: " << flush.get();
-  }
+  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
 }
 
 TEST(WriteConnectionResumed, FlushNonEmpty) {
@@ -415,14 +413,14 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Flush(_)).WillRepeatedly([&](auto) {
     return sequencer.PushBack("Flush").then([](auto f) {
-      if (!f.valid() || !f.get()) return TransientError();
+      if (!f.get()) return TransientError();
       return Status{};
     });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
         [](auto f) -> StatusOr<std::int64_t> {
-          if (!f.valid() || !f.get()) return TransientError();
+          if (!f.get()) return TransientError();
           return 0;
         });
   });
@@ -477,12 +475,8 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
 
   ASSERT_TRUE(write_future.is_ready());
   ASSERT_TRUE(flush_future.is_ready());
-  if (!write_future.get().ok()) {
-    FAIL() << "Write failed: " << write_future.get();
-  }
-  if (!flush_future.get().ok()) {
-    FAIL() << "Flush failed: " << flush_future.get();
-  }
+  EXPECT_THAT(write_future.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(flush_future.get(), StatusIs(StatusCode::kOk));
 }
 
 TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
