@@ -415,14 +415,14 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Flush(_)).WillRepeatedly([&](auto) {
     return sequencer.PushBack("Flush").then([](auto f) {
-      if (!f.get()) return TransientError();
+      if (!f.valid() || !f.get()) return TransientError();
       return Status{};
     });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
         [](auto f) -> StatusOr<std::int64_t> {
-          if (!f.get()) return TransientError();
+          if (!f.valid() || !f.get()) return TransientError();
           return 0;
         });
   });
