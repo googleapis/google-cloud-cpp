@@ -346,9 +346,15 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
  * @param file_path path to file containing the service account key
  * Typically applications read this from a file, or download the contents from
  * something like Google's secret manager service.
- * @param opts optional configuration values.  Note that the effect of these
- *     parameters depends on the underlying transport. For example,
- *     `LoggingComponentsOption` is ignored by gRPC-based services.
+ * @param opts optional configuration values.
+ *
+ * `ScopesOption` the scopes to request during the authorization grant. If
+ *     omitted, the cloud-platform scope, defined by
+ *     `GoogleOAuthScopeCloudPlatform()`, is used as a default.
+ * `SubjectOption` for domain-wide delegation; the email address of the user for
+ *     which to request delegated access. If omitted AND no "subject" is defined
+ *     in the provided file, no "subject" attribute is included in the
+ *     authorization grant.
  */
 std::shared_ptr<Credentials> MakeServiceAccountCredentialsFromFile(
     std::string const& file_path, Options opts = {});

@@ -628,6 +628,95 @@ void UseRawClient(google::cloud::storage::Client client) {
 
 </details>
 
+<details>
+<summary>Removed deprecated <code>Oauth2CredentialsOption</code></summary>
+
+The `google::cloud::UnifiedCredentialsOption` and the unified credentials API
+documented at
+https://docs.cloud.google.com/cpp/docs/reference/common/latest/group__guac
+should be used instead.
+
+**Before:**
+
+```cpp
+#include "google/cloud/options.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
+
+namespace gc = ::google::cloud;
+namespace gcs = ::google::cloud::storage;
+namespace oauth2 = ::google::cloud::storage::oauth2;
+
+auto options = gc::Options{}
+    .set<gcs::Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials());
+auto client = gcs::Client(options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/options.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/credentials.h"
+
+namespace gc = ::google::cloud;
+namespace gcs = ::google::cloud::storage;
+
+auto options = gc::Options{}
+    .set<gc::UnifiedCredentialsOption>(gc::MakeInsecureCredentials());
+auto client = gcs::Client(options);
+```
+
+</details>
+
+<details>
+<summary>Removed deprecated <code>CreateServiceAccountCredentialsFromFilePath</code></summary>
+
+The `google::cloud::MakeServiceAccountCredentialsFromFile` factory function and
+associated override options `google::cloud::ScopesOption` and
+`google::cloud::subjectOption` should be used instead.
+
+**Before:**
+
+```cpp
+#include "google/cloud/options.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
+
+namespace gc = ::google::cloud;
+namespace gcs = ::google::cloud::storage;
+namespace oauth2 = ::google::cloud::storage::oauth2;
+
+std::set<std::string> scopes = {"scope1", "scope2"};
+auto credentials = CreateServiceAccountCredentialsFromFilePath(
+    "path-to-file", scopes, "my-subject");
+
+auto options = gc::Options{}
+    .set<gcs::Oauth2CredentialsOption>(credentials);
+auto client = gcs::Client(options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/options.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/credentials.h"
+
+namespace gc = ::google::cloud;
+namespace gcs = ::google::cloud::storage;
+
+auto options = gc::Options{}
+    .set<gc::ScopesOption>(std::vector<std::string>({"scope1", "scope2"}))
+    .set<gc::SubjectOption>("my-subject");
+
+options = options.set<gc::UnifiedCredentialsOption>(
+    gc::MakeServiceAccountCredentialsFromFile("path-to-file", options));
+auto client = gcs::Client(options);
+```
+
+</details>
+
 ### IAM
 
 <details>

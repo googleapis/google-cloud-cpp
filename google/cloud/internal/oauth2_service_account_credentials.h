@@ -66,6 +66,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
+/// Applies any overrides contained in `ScopesOption` or `SubjectOption`.
+void ApplyServiceAccountCredentialsInfoOverrides(
+    Options const& options, ServiceAccountCredentialsInfo& info);
+
 /// Parses a refresh response JSON string to create an access token.
 StatusOr<AccessToken> ParseServiceAccountRefreshResponse(
     rest_internal::RestResponse& response,

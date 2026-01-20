@@ -28,7 +28,6 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/internal/sign_blob_requests.h"
-#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/internal/rest_context.h"

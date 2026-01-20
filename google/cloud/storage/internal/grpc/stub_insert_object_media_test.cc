@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/stub.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"

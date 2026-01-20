@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/credentials.h"
@@ -72,12 +71,6 @@ TEST_F(CreateClientIntegrationTest, DefaultWorks) {
 }
 
 TEST_F(CreateClientIntegrationTest, SettingPolicies) {
-  auto credentials = oauth2::CreateAnonymousCredentials();
-  if (!UsingEmulator()) {
-    auto c = oauth2::GoogleDefaultCredentials();
-    ASSERT_THAT(c, IsOk());
-    credentials = *std::move(c);
-  }
   auto client = Client(
       Options{}
           .set<RetryPolicyOption>(

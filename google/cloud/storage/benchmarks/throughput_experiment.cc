@@ -16,6 +16,7 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/grpc_error_delegate.h"
@@ -260,8 +261,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
       : endpoint_(options.rest_options.get<gcs::RestEndpointOption>()),
         target_api_version_path_(
             options.rest_options.get<gcs::internal::TargetApiVersionOption>()),
-        creds_(google::cloud::storage::oauth2::GoogleDefaultCredentials()
-                   .value()) {
+        creds_(rest_internal::MapCredentials(*MakeGoogleDefaultCredentials())) {
     if (target_api_version_path_.empty()) {
       target_api_version_path_ = "v1";
     }
@@ -271,13 +271,14 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
-    auto header = creds_->AuthorizationHeader();
-    if (!header) return {};
+    auto token = creds_->GetToken(std::chrono::system_clock::now());
+    if (!token) return {};
+    auto header = std::string{"Authorization: "} + token->token;
 
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     struct curl_slist* slist1 = nullptr;
-    slist1 = curl_slist_append(slist1, header->c_str());
+    slist1 = curl_slist_append(slist1, header.c_str());
 
     auto* hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_BUFFERSIZE, 102400L);
@@ -339,7 +340,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
  private:
   std::string endpoint_;
   std::string target_api_version_path_;
-  std::shared_ptr<google::cloud::storage::oauth2::Credentials> creds_;
+  std::shared_ptr<oauth2_internal::Credentials> creds_;
 };
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

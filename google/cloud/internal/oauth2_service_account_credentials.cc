@@ -133,6 +133,19 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   return info;
 }
 
+void ApplyServiceAccountCredentialsInfoOverrides(
+    Options const& options, ServiceAccountCredentialsInfo& info) {
+  if (options.has<ScopesOption>()) {
+    auto const& s = options.get<ScopesOption>();
+    std::set<std::string> scopes{s.begin(), s.end()};
+    info.scopes = std::move(scopes);
+  }
+
+  if (options.has<SubjectOption>()) {
+    info.subject = options.get<SubjectOption>();
+  }
+}
+
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now) {
@@ -249,17 +262,7 @@ CreateServiceAccountCredentialsFromJsonContents(
     HttpClientFactory client_factory) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info) return info.status();
-
-  if (options.has<ScopesOption>()) {
-    auto const& s = options.get<ScopesOption>();
-    std::set<std::string> scopes{s.begin(), s.end()};
-    info->scopes = std::move(scopes);
-  }
-
-  if (options.has<SubjectOption>()) {
-    info->subject = options.get<SubjectOption>();
-  }
-
+  ApplyServiceAccountCredentialsInfoOverrides(options, *info);
   // Verify this is usable before returning it.
   auto const tp = std::chrono::system_clock::time_point{};
   auto const components = AssertionComponentsFromInfo(*info, tp);
@@ -293,17 +296,7 @@ CreateServiceAccountCredentialsFromP12FilePath(
     HttpClientFactory client_factory) {
   auto info = ParseServiceAccountP12File(path);
   if (!info) return std::move(info).status();
-
-  if (options.has<ScopesOption>()) {
-    auto const& s = options.get<ScopesOption>();
-    std::set<std::string> scopes{s.begin(), s.end()};
-    info->scopes = std::move(scopes);
-  }
-
-  if (options.has<SubjectOption>()) {
-    info->subject = options.get<SubjectOption>();
-  }
-
+  ApplyServiceAccountCredentialsInfoOverrides(options, *info);
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<ServiceAccountCredentials>(*info, options,
                                                   std::move(client_factory)));
