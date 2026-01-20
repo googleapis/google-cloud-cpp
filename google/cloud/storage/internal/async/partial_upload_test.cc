@@ -518,7 +518,6 @@ TEST(PartialUpload, ErrorOnChecksums) {
 TEST(PartialUpload, ClearsSpecAfterFirstChunk) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
-  auto const view = absl::string_view(buffer.data(), buffer.size());
 
   AsyncSequencer<bool> sequencer;
   auto rpc = std::make_unique<MockStream>();
