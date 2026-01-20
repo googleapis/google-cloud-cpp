@@ -131,7 +131,6 @@ class Transaction {
 
     explicit ReadWriteOptions(ReadLockMode read_lock_mode);
 
-
     // A tag used for collecting statistics about the transaction.
     ReadWriteOptions& WithTag(absl::optional<std::string> tag);
 

@@ -210,7 +210,8 @@ TEST(Transaction, IsolationLevelNotSpecified) {
               StatusOr<google::spanner::v1::TransactionSelector>& s,
               spanner_internal::TransactionContext const&) {
         EXPECT_EQ(s->begin().isolation_level(),
-                  google::spanner::v1::TransactionOptions::ISOLATION_LEVEL_UNSPECIFIED);
+                  google::spanner::v1::TransactionOptions::
+                      ISOLATION_LEVEL_UNSPECIFIED);
         return 0;
       });
 }
