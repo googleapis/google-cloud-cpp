@@ -103,6 +103,11 @@ class AsyncWriterConnectionResumedState
     return UploadId(std::unique_lock<std::mutex>(mu_));
   }
 
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return latest_write_handle_;
+  }
+
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
@@ -294,6 +299,13 @@ class AsyncWriterConnectionResumedState
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
+    auto handle = impl_->WriteHandle();
+    if (handle) {
+      std::cout << "Updating latest write handle from OnQuery in "
+                   "Resumed..............\n";
+      latest_write_handle_ = *std::move(handle);
+    }
+
     if (persisted_size < buffer_offset_) {
       return SetError(
           std::move(lk),
@@ -682,6 +694,11 @@ class AsyncWriterConnectionResumed
   void Cancel() override { return state_->Cancel(); }
 
   std::string UploadId() const override { return state_->UploadId(); }
+
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    return state_->WriteHandle();
+  }
 
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {

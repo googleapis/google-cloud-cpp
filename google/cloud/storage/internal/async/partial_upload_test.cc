@@ -515,6 +515,67 @@ TEST(PartialUpload, ErrorOnChecksums) {
   EXPECT_THAT(success, StatusIs(StatusCode::kInvalidArgument));
 }
 
+TEST(PartialUpload, ClearsSpecAfterFirstChunk) {
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const buffer = RandomData(generator, 2 * kExpectedChunkSize + 1024);
+  auto const view = absl::string_view(buffer.data(), buffer.size());
+
+  AsyncSequencer<bool> sequencer;
+  auto rpc = std::make_unique<MockStream>();
+  EXPECT_CALL(*rpc, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), 0);
+        // The oneof field must be set on the first message.
+        EXPECT_TRUE(request.has_append_object_spec());
+        EXPECT_EQ(request.append_object_spec().object(), "test-object");
+        return sequencer.PushBack("Write");
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), kExpectedChunkSize);
+        // These fields must be cleared after the first message.
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_FALSE(request.has_append_object_spec());
+        EXPECT_FALSE(request.has_upload_id());
+        return sequencer.PushBack("Write");
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.write_offset(), 2 * kExpectedChunkSize);
+        // These fields must be cleared after the first message.
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_FALSE(request.has_append_object_spec());
+        EXPECT_FALSE(request.has_upload_id());
+        return sequencer.PushBack("Write");
+      });
+
+  auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
+  Request request;
+  request.mutable_append_object_spec()->set_object("test-object");
+
+  auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
+                                  absl::Cord(buffer), PartialUpload::kFinalize);
+
+  auto result = call->Start();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  ASSERT_TRUE(result.is_ready());
+  auto success = result.get();
+  EXPECT_THAT(success, IsOkAndHolds(true));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

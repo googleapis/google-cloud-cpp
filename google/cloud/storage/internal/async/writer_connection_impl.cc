@@ -172,7 +172,8 @@ AsyncWriterConnectionImpl::MakeRequest() {
   auto request = request_;
   if (first_request_) {
     first_request_ = false;
-    if (latest_write_handle_.has_value()) {
+    if (latest_write_handle_.has_value() && request.has_append_object_spec()) {
+      std::cout << "Setting write handle in request..............\n";
       *request.mutable_append_object_spec()->mutable_write_handle() =
           *latest_write_handle_;
     }
@@ -247,6 +248,7 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
         });
   }
   if (response->has_write_handle()) {
+    std::cout << "Updating latest write handle..............\n";
     latest_write_handle_ = response->write_handle();
   }
   if (response->has_persisted_size()) {

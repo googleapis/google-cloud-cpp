@@ -523,6 +523,78 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
   }
 }
 
+TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  initial_request.mutable_append_object_spec()->set_bucket(
+      "projects/_/buckets/test-bucket");
+  initial_request.mutable_append_object_spec()->set_object("test-object");
+
+  google::storage::v2::BidiWriteObjectResponse first_response;
+  first_response.mutable_write_handle()->set_handle("initial-handle");
+
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  google::storage::v2::BidiWriteHandle handle;
+  handle.set_handle("updated-handle");
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(handle));
+
+  EXPECT_CALL(*mock, Flush(_)).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then([](auto f) {
+      if (f.get()) return Status{};
+      return TransientError();
+    });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then(
+        [](auto f) -> StatusOr<std::int64_t> {
+          if (!f.get()) return TransientError();
+          return 1024;
+        });
+  });
+
+  MockAsyncWriterConnection* mock_ptr = mock.get();
+
+  MockFactory mock_factory;
+  google::storage::v2::BidiWriteObjectRequest captured_request;
+  EXPECT_CALL(mock_factory, Call(_))
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest request) {
+        captured_request = std::move(request);
+        return sequencer.PushBack("Factory").then([](auto) {
+          return StatusOr<WriteObject::WriteResult>(
+              internal::AbortedError("stop test", GCP_ERROR_INFO()));
+        });
+      });
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto flush1 = connection->Flush(TestPayload(1024));
+  sequencer.PopFrontWithName().first.set_value(true);
+  sequencer.PopFrontWithName().first.set_value(true);
+  EXPECT_THAT(flush1.get(), StatusIs(StatusCode::kOk));
+
+  EXPECT_CALL(*mock_ptr, Flush(_)).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush2").then(
+        [](auto) { return TransientError(); });
+  });
+
+  auto flush2 = connection->Flush(TestPayload(1024));
+  sequencer.PopFrontWithName().first.set_value(false);
+
+  sequencer.PopFrontWithName().first.set_value(true);
+
+  EXPECT_THAT(flush2.get(), StatusIs(StatusCode::kAborted));
+
+  EXPECT_TRUE(captured_request.has_append_object_spec());
+  EXPECT_TRUE(captured_request.append_object_spec().has_write_handle());
+  EXPECT_EQ(captured_request.append_object_spec().write_handle().handle(),
+            "updated-handle");
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
