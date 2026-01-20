@@ -58,6 +58,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Transaction {
  public:
   /**
+   * Defines the isolation level for a transaction.
+   *
+   * This determines how concurrent transactions interact with each other and
+   * what consistency guarantees are provided for read and write operations.
+   *
+   * @note This setting only applies to read-write transactions.
+   *
+   * See the `v1::TransactionOptions` proto for more details.
+   *
+   * @see https://docs.cloud.google.com/spanner/docs/isolation-levels
+   */
+  enum class IsolationLevel {
+    /// The isolation level is not specified, using the backend default.
+    kUnspecified,
+    /**
+     * All transactions appear as if they executed in a serial order.
+     * This is the default isolation level for read-write transactions.
+     */
+    kSerializable,
+    /**
+     * All reads performed during the transaction observe a consistent snapshot
+     * of the database. The transaction is only successfully committed in the
+     * absence of conflicts between its updates and any concurrent updates
+     * that have occurred since that snapshot. Consequently, in contrast to
+     * `kSerializable` transactions, only write-write conflicts are detected in
+     * snapshot transactions.
+     */
+    kRepeatableRead,
+  };
+
+  /**
    * Options for ReadOnly transactions.
    */
   class ReadOnlyOptions {
@@ -103,10 +134,17 @@ class Transaction {
     // A tag used for collecting statistics about the transaction.
     ReadWriteOptions& WithTag(absl::optional<std::string> tag);
 
+    // Sets the isolation level for the transaction. This controls how the
+    // transaction interacts with other concurrent transactions, primarily
+    // regarding data consistency for reads and writes.
+    // See `IsolationLevel` enum for possible values.
+    ReadWriteOptions& WithIsolationLevel(IsolationLevel isolation_level);
+
    private:
     friend Transaction;
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts_;
     absl::optional<std::string> tag_;
+    absl::optional<IsolationLevel> isolation_level_;
   };
 
   /**
