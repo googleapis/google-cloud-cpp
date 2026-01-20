@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "absl/base/no_destructor.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
@@ -48,7 +48,7 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
-std::string FeaturesMetadata() {
+std::string CreateFeaturesMetadataString(bool enable_direct_access) {
   google::bigtable::v2::FeatureFlags proto;
   proto.set_reverse_scans(true);
   proto.set_last_scanned_row_responses(true);
@@ -57,11 +57,23 @@ std::string FeaturesMetadata() {
   proto.set_routing_cookie(true);
   proto.set_retry_info(true);
 
-  if (bigtable::internal::EnableDirectAccess()) {
+  if (enable_direct_access) {
     proto.set_traffic_director_enabled(true);
     proto.set_direct_access_requested(true);
   }
   return internal::UrlsafeBase64Encode(proto.SerializeAsString());
+}
+
+std::string FeaturesMetadata() {
+  if (bigtable::internal::EnableDirectAccess()) {
+    static const absl::NoDestructor<std::string> kDirectAccessFeatures(
+        CreateFeaturesMetadataString(true));
+    return *kDirectAccessFeatures;
+  } else {
+    static const absl::NoDestructor<std::string> kDefaultFeatures(
+        CreateFeaturesMetadataString(false));
+    return *kDefaultFeatures;
+  }
 }
 
 }  // namespace
