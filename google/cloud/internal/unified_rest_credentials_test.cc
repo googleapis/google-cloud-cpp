@@ -405,7 +405,7 @@ TEST(UnifiedRestCredentialsTest, ServiceAccount) {
   EXPECT_CALL(client_factory, Call).Times(0);
 
   auto const config =
-      internal::ServiceAccountConfig(contents.dump(), Options{});
+      internal::ServiceAccountConfig(contents.dump(), absl::nullopt, Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto access_token = credentials->GetToken(now);
   ASSERT_STATUS_OK(access_token);

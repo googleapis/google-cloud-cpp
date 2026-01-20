@@ -113,7 +113,14 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
       result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
     }
     void visit(ServiceAccountConfig const& cfg) override {
-      auto info = oauth2::ParseServiceAccountCredentials(cfg.json_object(), {});
+      if (!cfg.json_object().has_value()) {
+        result = MakeErrorCredentials(google::cloud::internal::InternalError(
+            "ServiceAccountConfig has no value for json_object field",
+            GCP_ERROR_INFO()));
+        return;
+      }
+      auto info =
+          oauth2::ParseServiceAccountCredentials(*cfg.json_object(), {});
       if (!info) {
         result = MakeErrorCredentials(std::move(info).status());
         return;

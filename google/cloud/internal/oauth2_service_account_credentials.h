@@ -24,6 +24,7 @@
 #include "absl/types/optional.h"
 #include <chrono>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace google {
@@ -126,6 +127,58 @@ CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
 StatusOr<std::string> MakeSelfSignedJWT(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point tp);
+
+/**
+ * Creates a ServiceAccountCredentials from a JSON string.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents, Options const& options,
+    HttpClientFactory client_factory);
+
+/**
+ * Creates a ServiceAccountCredentials from a JSON file at the specified path.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory);
+
+/**
+ * Creates a ServiceAccountCredentials from a P12 file at the specified path.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromP12FilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory);
+
+/**
+ * Creates a ServiceAccountCredentials from a file at the specified path.
+ *
+ * @note This function automatically detects if the file is a JSON or P12 (aka
+ * PFX aka PKCS#12) file and tries to load the file as a service account
+ * credential. We strongly recommend that applications use JSON files for
+ * service account key files.
+ *
+ * These credentials use the cloud-platform OAuth 2.0 scope, defined by
+ * `GoogleOAuthScopeCloudPlatform()`. To specify alternate scopes, use the
+ * `google::cloud::ScopesOption`.
+ */
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromFilePath(std::string const& path,
+                                            Options const& options,
+                                            HttpClientFactory client_factory);
+
+/**
+ * Specifying this Option prevents self-signed JWTs from being used.
+ *
+ * Some services, namely storage, have more stringent requirements w.r.t.
+ * self-signed JWTs.
+ */
+struct DisableSelfSignedJWTOption {
+  using Type = std::monostate;
+};
 
 /**
  * Implements service account credentials for REST clients.
