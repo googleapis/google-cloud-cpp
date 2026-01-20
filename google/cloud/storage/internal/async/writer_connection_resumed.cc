@@ -301,8 +301,6 @@ class AsyncWriterConnectionResumedState
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
     auto handle = impl_->WriteHandle();
     if (handle) {
-      std::cout << "Updating latest write handle from OnQuery in "
-                   "Resumed..............\n";
       latest_write_handle_ = *std::move(handle);
     }
 
