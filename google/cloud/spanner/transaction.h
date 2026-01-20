@@ -62,6 +62,7 @@ class Transaction {
    *
    * This determines how concurrent transactions interact with each other and
    * what consistency guarantees are provided for read and write operations.
+   *
    * @note This setting only applies to read-write transactions.
    *
    * See the `v1::TransactionOptions` proto for more details.
