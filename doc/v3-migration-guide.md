@@ -44,6 +44,35 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Common
 
+<details>
+<summary>Removed <code>google::cloud::grpc_utils</code> namespace and headers.
+</summary>
+
+Types that were previously defined in both `google::cloud::grpc_utils` and
+`google::cloud` now only exist in `google::cloud`.
+
+For example, code that used to look like this:
+
+**Before:**
+
+```cpp
+#include "google/cloud/grpc_utils/completion_queue.h
+
+google::cloud::grpc_utils::CompletionQueue cq;
+```
+
+Should be changed to this:
+
+**After:**
+
+```cpp
+#include "google/cloud/completion_queue.h
+
+google::cloud::CompletionQueue cq;
+```
+
+</details>
+
 ### Bigquery
 
 <details>
