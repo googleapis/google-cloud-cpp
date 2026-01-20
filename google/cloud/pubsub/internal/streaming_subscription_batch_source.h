@@ -21,7 +21,6 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/retry_policy.h"
-#include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"

@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_BLOCKING_PUBLISHER_H
 
 #include "google/cloud/pubsub/blocking_publisher_connection.h"
-#include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/pubsub/version.h"
 #include <string>
 

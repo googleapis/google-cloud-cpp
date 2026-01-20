@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/mocks/mock_exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_subscriber_connection.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/internal/make_status.h"

@@ -22,7 +22,6 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/pull_response.h"
 #include "google/cloud/pubsub/retry_policy.h"
-#include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/non_constructible.h"
@@ -143,49 +142,6 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription, Options opts = {});
-
-/**
- * Creates a new `SubscriberConnection` object to work with `Subscriber`.
- *
- * The `SubscriberConnection` class is not intended for direct use in
- * applications, it is provided for applications wanting to mock the
- * `Subscriber` behavior in their tests.
- *
- * @par Performance
- * Creating a new `SubscriberConnection` is relatively expensive. This typically
- * initiates connections to the service, and therefore these objects should be
- * shared and reused when possible. Note that gRPC reuses existing OS resources
- * (sockets) whenever possible, so applications may experience better
- * performance on the second (and subsequent) calls to this function with the
- * identical values for @p options. However, this behavior is not guaranteed
- * and applications should not rely on it.
- *
- * @see `SubscriberConnection`
- *
- * @par Changing Retry Parameters Example
- * @snippet samples.cc subscriber-retry-settings
- *
- * @param subscription the Cloud Pub/Sub subscription used by the returned
- *     connection.
- * @param options configure the flow control and other parameters in the
- *     returned connection.
- * @param connection_options (optional) general configuration for this
- *    connection, this type is also used to configure `pubsub::Publisher`.
- * @param retry_policy control for how long (or how many times) are retryable
- *     RPCs attempted.
- * @param backoff_policy controls the backoff behavior between retry attempts,
- *     typically some form of exponential backoff with jitter.
- *
- * @deprecated Please use the `MakeSubscriberConnection` function which accepts
- *     `google::cloud::Options` instead.
- */
-GOOGLE_CLOUD_CPP_DEPRECATED(
-    "use the overload consuming google::cloud::Options instead")
-std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, SubscriberOptions options,
-    ConnectionOptions connection_options = {},
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

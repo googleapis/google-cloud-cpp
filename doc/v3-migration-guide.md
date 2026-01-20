@@ -340,9 +340,9 @@ namespace gc = ::google::cloud;
 namespace pubsub = ::google::cloud::pubsub;
 
 auto options = gc::Options{}
-    .set<pubsub::MessagePrderingOption>(true)
+    .set<pubsub::MessageOrderingOption>(true)
     .set<pubsub::FullPublisherActionOption>(
-        pubsub::FullPublisherAction::kBlockIgnored);
+        pubsub::FullPublisherAction::kIgnored);
 
 auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
     topic, options));
@@ -394,7 +394,7 @@ namespace gc = ::google::cloud;
 namespace pubsub = ::google::cloud::pubsub;
 
 auto options = gc::Options{}
-    .set<pubsub::MaxDeadlineTimeOption>(10)
+    .set<pubsub::MaxDeadlineTimeOption>(std::chrono::seconds(10))
     .set<pubsub::MaxOutstandingMessagesOption>(42);
 
 auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(

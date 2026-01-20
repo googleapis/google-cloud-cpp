@@ -15,6 +15,7 @@
 #include "google/cloud/iam/iam_policy_client.h"
 #include "google/cloud/pubsub/admin/subscription_admin_client.h"
 #include "google/cloud/pubsub/admin/topic_admin_client.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/internal/getenv.h"

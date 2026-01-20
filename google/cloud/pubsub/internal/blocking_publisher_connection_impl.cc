@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/blocking_publisher_connection_impl.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
 

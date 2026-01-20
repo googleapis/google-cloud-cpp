@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/admin/subscription_admin_client.h"
 #include "google/cloud/pubsub/admin/topic_admin_client.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/samples/testdata/schema.pb.h"
 #include "google/cloud/pubsub/schema.h"
