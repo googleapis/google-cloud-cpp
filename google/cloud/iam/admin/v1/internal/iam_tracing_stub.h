@@ -184,7 +184,6 @@ class IAMTracingStub : public IAMStub {
 std::shared_ptr<IAMStub> MakeIAMTracingStub(std::shared_ptr<IAMStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -71,7 +71,6 @@ std::shared_ptr<IAMCredentialsStub> MakeIAMCredentialsTracingStub(
     std::shared_ptr<IAMCredentialsStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1_internal
 }  // namespace cloud
 }  // namespace google

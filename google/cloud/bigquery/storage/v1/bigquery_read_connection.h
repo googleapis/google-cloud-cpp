@@ -223,7 +223,6 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1
 }  // namespace cloud
 }  // namespace google
