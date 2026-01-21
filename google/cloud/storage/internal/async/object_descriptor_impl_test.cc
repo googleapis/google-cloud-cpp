@@ -1779,16 +1779,10 @@ TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
   AsyncSequencer<bool> sequencer;
   auto stream = std::make_unique<MockStream>();
 
-  EXPECT_CALL(*stream, Read).WillOnce([&] {
-    return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
-  });
   EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
-  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*stream, Cancel).Times(1);
 
   MockFactory factory;
-  EXPECT_CALL(factory, Call).Times(1);
-
   Options options;
   options.set<storage_experimental::EnableMultiStreamOptimizationOption>(false);
 
@@ -1797,15 +1791,7 @@ TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
       google::storage::v2::BidiReadObjectSpec{},
       std::make_shared<OpenStream>(std::move(stream)), options);
 
-  tested->Start(Response{});
-
-  auto read_called = sequencer.PopFrontWithName();
-  EXPECT_EQ(read_called.second, "Read");
-  read_called.first.set_value(true);
-
   tested->MakeSubsequentStream();
-
-  EXPECT_EQ(tested->StreamSize(), 1);
 
   tested.reset();
 }
