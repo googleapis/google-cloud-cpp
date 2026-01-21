@@ -19,9 +19,9 @@
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 

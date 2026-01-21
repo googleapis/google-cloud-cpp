@@ -18,10 +18,11 @@
 
 #include "google/cloud/logging/v2/internal/config_service_v2_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "google/logging/v2/logging_config.grpc.pb.h"
 #include <memory>
 #include <string>

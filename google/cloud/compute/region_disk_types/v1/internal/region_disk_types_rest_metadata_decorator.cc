@@ -17,10 +17,10 @@
 // source: google/cloud/compute/region_disk_types/v1/region_disk_types.proto
 
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_rest_metadata_decorator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
