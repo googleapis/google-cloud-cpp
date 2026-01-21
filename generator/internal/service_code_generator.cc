@@ -72,9 +72,6 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
   SetMethods();
-  auto e = service_vars_.find("backwards_compatibility_namespace_alias");
-  define_backwards_compatibility_namespace_alias_ =
-      (e != service_vars_.end() && e->second == "true");
 }
 
 ServiceCodeGenerator::ServiceCodeGenerator(
@@ -324,9 +321,7 @@ Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
                         ns_documentation);
 }
 
-void ServiceCodeGenerator::HeaderCloseNamespaces() {
-  CloseNamespaces(header_, define_backwards_compatibility_namespace_alias_);
-}
+void ServiceCodeGenerator::HeaderCloseNamespaces() { CloseNamespaces(header_); }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(cc_, ns_type, "product_path");
@@ -336,7 +331,7 @@ Status ServiceCodeGenerator::CcOpenForwardingNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(cc_, ns_type, "forwarding_product_path");
 }
 
-void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_, false); }
+void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_); }
 
 void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
   header_.Print(service_vars_, text);
@@ -445,15 +440,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
   return {};
 }
 
-void ServiceCodeGenerator::CloseNamespaces(
-    Printer& p, bool define_backwards_compatibility_namespace_alias) {
+void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
   p.Print(R"""(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END)""");
-  // TODO(#7463) - remove backwards compatibility namespaces
-  if (define_backwards_compatibility_namespace_alias) {
-    p.Print(R"""(
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls))""");
-  }
   p.Print(R"""(
 }  // namespace $namespace$
 }  // namespace cloud

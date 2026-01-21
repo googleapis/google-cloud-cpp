@@ -289,10 +289,6 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       args.emplace_back(absl::StrCat("--cpp_codegen_opt=omit_rpc=",
                                      SafeReplaceAll(omit_rpc, ",", "@")));
     }
-    if (service.backwards_compatibility_namespace_alias()) {
-      args.emplace_back(
-          "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
-    }
     for (auto const& retry_code : service.retryable_status_codes()) {
       args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code);
     }

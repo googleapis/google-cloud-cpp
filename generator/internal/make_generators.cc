@@ -148,10 +148,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   }
 
   if (generate_rest_transport) {
-    // All REST interfaces postdate the change to the format of our inline
-    // namespace name, so we never need to add a backwards-compatibility alias.
     auto rest_service_vars = service_vars;
-    rest_service_vars.erase("backwards_compatibility_namespace_alias");
     code_generators.push_back(std::make_unique<ConnectionRestGenerator>(
         service, rest_service_vars, method_vars, context, mixin_methods));
     code_generators.push_back(std::make_unique<ConnectionImplRestGenerator>(

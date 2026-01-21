@@ -38,11 +38,6 @@ message ServiceConfiguration {
 
   repeated string omitted_services = 8;
 
-  // If set to true generate the `gcpxxV1` alias for our inline namespace. Older
-  // versions of the generated libraries need this, but new libraries should not
-  // have it.
-  bool backwards_compatibility_namespace_alias = 9;
-
   // If all rpcs in the service have the same set of retryable status codes,
   // typically found in the service_config.json accompanying the proto files,
   // generate the ServiceNameRetryTraits struct using the provided codes.
