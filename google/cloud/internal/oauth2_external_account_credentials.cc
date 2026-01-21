@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
@@ -24,6 +23,7 @@
 #include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
+#include "absl/strings/str_cat.h"
 #include <nlohmann/json.hpp>
 
 namespace google {

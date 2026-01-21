@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/iam/credentials/v1/iam_credentials_client.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/str_cat.h"
 
 namespace {
 

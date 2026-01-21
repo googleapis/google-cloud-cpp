@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/tracing_rest_client.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
@@ -22,6 +21,7 @@
 #include "absl/functional/function_ref.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
+#include "absl/strings/str_cat.h"
 #include <array>
 #include <cstdint>
 

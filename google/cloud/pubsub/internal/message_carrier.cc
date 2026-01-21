@@ -14,9 +14,9 @@
 
 #include "google/cloud/pubsub/internal/message_carrier.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "absl/strings/str_cat.h"
 #include <string>
 
 namespace google {

@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/benchmarks/aggregate_download_throughput_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_join.h"
 #include <iostream>
 #include <iterator>
 #include <sstream>

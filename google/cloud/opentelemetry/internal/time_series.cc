@@ -14,9 +14,9 @@
 
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_replace.h"
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>

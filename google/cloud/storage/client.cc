@@ -17,8 +17,6 @@
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
@@ -35,6 +33,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include <cstdlib>
 #include <fstream>

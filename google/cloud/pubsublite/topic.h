@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_H
 
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/location.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include <utility>
 
 namespace google {

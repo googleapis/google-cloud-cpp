@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_soft_delete_policy.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <sstream>

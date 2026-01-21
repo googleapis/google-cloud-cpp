@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/user_agent_prefix.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compiler_info.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

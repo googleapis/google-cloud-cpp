@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
 #include "google/cloud/storage/options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/url_encode.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

@@ -14,10 +14,10 @@
 
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/base64.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/functional/function_ref.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
 #include <algorithm>

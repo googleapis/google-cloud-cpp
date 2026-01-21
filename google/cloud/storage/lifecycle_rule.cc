@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/lifecycle_rule.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "absl/strings/str_join.h"
 #include <algorithm>
 #include <iostream>
 #include <string>

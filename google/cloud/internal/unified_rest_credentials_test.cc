@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/unified_rest_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <cstdlib>

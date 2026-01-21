@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_context.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "absl/strings/str_join.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>

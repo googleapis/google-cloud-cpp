@@ -14,11 +14,11 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/status.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <string>
 #include <utility>

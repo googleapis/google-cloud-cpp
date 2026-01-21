@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_ZONE_H
 
 #include "google/cloud/pubsublite/internal/cloud_region.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <utility>
 

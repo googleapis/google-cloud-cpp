@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/resource_detector_impl.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
@@ -21,6 +20,7 @@
 #include "google/cloud/log.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <nlohmann/json.hpp>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>

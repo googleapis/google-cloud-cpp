@@ -17,11 +17,11 @@
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <chrono>
 
 namespace google {

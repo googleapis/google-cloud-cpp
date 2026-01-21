@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/make_status.h"
@@ -23,6 +22,7 @@
 #include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/sign_using_sha256.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <functional>

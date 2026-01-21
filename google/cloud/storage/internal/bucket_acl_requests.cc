@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "absl/strings/str_join.h"
 #include <iostream>
 #include <string>
 #include <utility>

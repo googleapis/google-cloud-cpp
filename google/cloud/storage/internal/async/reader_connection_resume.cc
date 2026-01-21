@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {
