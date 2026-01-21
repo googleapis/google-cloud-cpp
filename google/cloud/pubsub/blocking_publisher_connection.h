@@ -19,7 +19,6 @@
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"

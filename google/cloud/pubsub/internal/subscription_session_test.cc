@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"

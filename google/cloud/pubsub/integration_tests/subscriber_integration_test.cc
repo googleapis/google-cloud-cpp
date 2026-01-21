@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/internal/noop_message_callback.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"

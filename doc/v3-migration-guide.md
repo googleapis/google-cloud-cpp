@@ -292,6 +292,117 @@ internal legacy files.
 
 ### Pubsub
 
+<details>
+  <summary>Removed <code>pubsub::PublisherOptions</code>
+</summary>
+#### `pubsub::PublisherOptions`
+
+The deprecated `pubsub::PublisherOptions` has been removed. Please use
+`google::cloud::Options` instead.
+
+The following table shows the mapping from `pubsub::PublisherOptions` methods to
+their `google::cloud::Options` equivalents:
+
+| `pubsub::PublisherOptions` method | `google::cloud::Options` equivalent                |
+| --------------------------------- | -------------------------------------------------- |
+| `(constructor)`                   | `google::cloud::Options{}`                         |
+| `set_maximum_hold_time`           | `google::cloud::pubsub::MaxHoldTimeOption`         |
+| `set_maximum_batch_message_count` | `google::cloud::pubsub::MaxBatchMessagesOption`    |
+| `set_maximum_batch_bytes`         | `google::cloud::pubsub::MaxBatchBytesOption`       |
+| `enable_message_ordering`         | `google::cloud::pubsub::MessageOrderingOption`     |
+| `disable_message_ordering`        | `google::cloud::pubsub::MessageOrderingOption`     |
+| `set_maximum_pending_bytes`       | `google::cloud::pubsub::MaxPendingBytesOption`     |
+| `set_maximum_pending_messages`    | `google::cloud::pubsub::MaxPendingMessagesOption`  |
+| `set_full_publisher_ignored`      | `google::cloud::pubsub::FullPublisherActionOption` |
+| `set_full_publisher_rejects`      | `google::cloud::pubsub::FullPublisherActionOption` |
+| `set_full_publisher_blocks`       | `google::cloud::pubsub::FullPublisherActionOption` |
+
+Example usage of the replacements can be found below.
+
+**Before:**
+
+```cpp
+namespace gc = ::google::cloud;
+namespace pubsub = ::google::cloud::pubsub;
+
+auto publisher_options = pubsub::PublisherOptions{}
+    .enable_message_ordering()
+    .set_full_publisher_ignored();
+
+auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+    topic, publisher_options);
+```
+
+**After:**
+
+```cpp
+namespace gc = ::google::cloud;
+namespace pubsub = ::google::cloud::pubsub;
+
+auto options = gc::Options{}
+    .set<pubsub::MessageOrderingOption>(true)
+    .set<pubsub::FullPublisherActionOption>(
+        pubsub::FullPublisherAction::kIgnored);
+
+auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+    topic, options));
+```
+
+</details>
+
+<details>
+  <summary>Removed <code>pubsub::SubscriberOptions</code>
+</summary>
+#### `pubsub::SubscriberOptions`
+
+The deprecated `pubsub::SubscriberOptions` has been removed. Please use
+`google::cloud::Options` instead.
+
+The following table shows the mapping from `pubsub::SubscriberOptions` methods
+to their `google::cloud::Options` equivalents:
+
+| `pubsub::SubscriberOptions` method | `google::cloud::Options` equivalent                   |
+| ---------------------------------- | ----------------------------------------------------- |
+| `(constructor)`                    | `google::cloud::Options{}`                            |
+| `set_max_deadline_time`            | `google::cloud::pubsub::MaxDeadlineTimeOption`        |
+| `set_max_deadline_extension`       | `google::cloud::pubsub::MaxDeadlineExtensionOption`   |
+| `set_max_outstanding_messages`     | `google::cloud::pubsub::MaxOutstandingMessagesOption` |
+| `set_max_outstanding_bytes`        | `google::cloud::pubsub::MaxOutstandingBytesOption`    |
+| `set_max_concurrency`              | `google::cloud::pubsub::MaxConcurrencyOption`         |
+| `set_shutdown_polling_period`      | `google::cloud::pubsub::ShutdownPollingPeriodOption`  |
+
+Example usage of the replacements can be found below.
+
+**Before:**
+
+```cpp
+namespace gc = ::google::cloud;
+namespace pubsub = ::google::cloud::pubsub;
+
+auto subscriber_options = pubsub::SubscriberOptions{}
+    .set_max_deadline_time(std::chrono::seconds(10))
+    .set_max_outstanding_messages(42);
+
+auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    subscription, subscriber_options);
+```
+
+**After:**
+
+```cpp
+namespace gc = ::google::cloud;
+namespace pubsub = ::google::cloud::pubsub;
+
+auto options = gc::Options{}
+    .set<pubsub::MaxDeadlineTimeOption>(std::chrono::seconds(10))
+    .set<pubsub::MaxOutstandingMessagesOption>(42);
+
+auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    subscription, options));
+```
+
+</details>
+
 ### Spanner
 
 <details>

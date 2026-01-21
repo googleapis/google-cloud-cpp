@@ -24,6 +24,7 @@
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
 #include "google/cloud/pubsub/internal/tracing_message_callback.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/opentelemetry_options.h"
 
