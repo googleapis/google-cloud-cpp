@@ -14,10 +14,10 @@
 
 #include "generator/internal/scaffold_generator.h"
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>

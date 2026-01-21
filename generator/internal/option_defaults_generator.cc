@@ -100,7 +100,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
     case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
-      CcLocalIncludes({"google/cloud/internal/absl_str_cat_quiet.h"});
+      CcLocalIncludes({"absl/strings/str_cat.h"});
       break;
     default:
       break;

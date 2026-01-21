@@ -17,8 +17,8 @@
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include "google/protobuf/descriptor.pb.h"
 #include <google/protobuf/compiler/importer.h>

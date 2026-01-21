@@ -20,9 +20,9 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/resolve_comment_references.h"
 #include "generator/internal/resolve_method_return.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/string_view.h"
 #include "google/longrunning/operations.pb.h"
 #include <google/protobuf/descriptor.h>

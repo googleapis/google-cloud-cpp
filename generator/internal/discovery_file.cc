@@ -14,8 +14,8 @@
 
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_join.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <fstream>
