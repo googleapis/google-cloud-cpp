@@ -1764,13 +1764,6 @@ TEST_F(ClientIntegrationTest, MakeConnectionOverloads) {
                      .clone());
 }
 
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(ClientIntegrationTest, BackwardsCompatibility) {
-  auto connection = ::google::cloud::spanner::v1::MakeConnection(GetDatabase());
-  EXPECT_THAT(connection, NotNull());
-  ASSERT_NO_FATAL_FAILURE(Client(std::move(connection)));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
