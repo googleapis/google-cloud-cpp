@@ -76,9 +76,9 @@ Options DefaultOptionsAsync(Options opts) {
           .set<storage_experimental::IdempotencyPolicyOption>(
               storage_experimental::MakeStrictIdempotencyPolicy)
           .set<storage_experimental::EnableCrc32cValidationOption>(true)
-          .set<storage_experimental::MaximumRangeSizeOption>(128 * 1024 *
-                                                             1024L)
-          .set<storage_experimental::EnableMultiStreamOptimizationOption>(true));
+          .set<storage_experimental::MaximumRangeSizeOption>(128 * 1024 * 1024L)
+          .set<storage_experimental::EnableMultiStreamOptimizationOption>(
+              true));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 
