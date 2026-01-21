@@ -42,9 +42,6 @@ add_library(
     future_generic.h
     future_void.h
     idempotency.h
-    internal/absl_str_cat_quiet.h
-    internal/absl_str_join_quiet.h
-    internal/absl_str_replace_quiet.h
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
