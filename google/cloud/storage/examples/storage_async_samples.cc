@@ -690,10 +690,10 @@ void CreateAndWriteAppendableObject(google::cloud::storage::AsyncClient& client,
   auto coro = [](gcs::AsyncClient& client, std::string bucket_name,
                  std::string object_name)
       -> google::cloud::future<google::storage::v2::Object> {
-    auto [writer, token] = (co_await client.StartAppendableObjectUpload(
-                                gcs::BucketName(std::move(bucket_name)),
-                                std::move(object_name)))
-                               .value();
+    auto [writer, token] =
+        (co_await client.StartAppendableObjectUpload(
+             gcs::BucketName(std::move(bucket_name)), std::move(object_name)))
+            .value();
     std::cout << "Appendable upload started for object " << object_name << "\n";
 
     token = (co_await writer.Write(std::move(token),

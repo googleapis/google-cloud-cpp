@@ -121,7 +121,7 @@ class AsyncWriterConnectionBufferedState
     return std::move(finalized_future_);
   }
 
-  future<Status> Flush(storage_experimental::WritePayload const& p) {
+  future<Status> Flush(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     // Create a new promise for this flush operation.
     promise<Status> current_flush_promise;
@@ -228,7 +228,7 @@ class AsyncWriterConnectionBufferedState
     auto impl = Impl(lk);
     lk.unlock();
     // Finalize with an empty payload.
-    (void)impl->Finalize(storage_experimental::WritePayload{})
+    (void)impl->Finalize(storage::WritePayload{})
         .then([w = WeakFromThis()](auto f) {
           if (auto self = w.lock()) return self->OnFinalize(f.get());
         });
@@ -345,8 +345,7 @@ class AsyncWriterConnectionBufferedState
 
   void OnResume(
       Status const& original_status, bool was_finalizing,
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>
-          impl) {
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> impl) {
     std::unique_lock<std::mutex> lk(mu_);
 
     // Resume was *not* triggered by finalization failure.
@@ -640,8 +639,11 @@ class AsyncWriterConnectionBuffered : public storage::AsyncWriterConnection {
     return state_->Finalize(std::move(p));
   }
 
-  future<Status> Flush(storage_experimental::WritePayload p) override {
+  future<Status> Flush(storage::WritePayload p) override {
     return state_->Flush(std::move(p));
+  }
+
+  future<StatusOr<std::int64_t>> Query() override { return state_->Query(); }
 
   RpcMetadata GetRequestMetadata() override {
     return state_->GetRequestMetadata();

@@ -41,6 +41,7 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
   }
   //! [instrumented-client]
   namespace gc = ::google::cloud;
+  namespace gcs = ::google::cloud::storage;
   [](std::string const& project_id, std::string const& bucket_name,
      std::string const& object_name) {
     auto configuration =

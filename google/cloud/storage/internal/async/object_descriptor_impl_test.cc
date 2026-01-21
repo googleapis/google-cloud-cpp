@@ -1604,8 +1604,11 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
       e2.first.set_value(true);  // Allow factory to proceed
     } else {
       ADD_FAILURE() << "Got unexpected events: " << e1.second << ", "
-  });
+                    << e2.second;
+    }
+  };
 
+  auto stream1 = std::make_unique<MockStream>();
   // To keep Stream 1 alive during startup, the first Read returns a valid
   // (empty) response. Subsequent reads return nullopt to trigger the
   // Finish/Resume logic.

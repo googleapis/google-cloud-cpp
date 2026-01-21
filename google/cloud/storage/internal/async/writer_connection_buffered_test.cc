@@ -140,8 +140,8 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
       auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
       EXPECT_CALL(*resumed_mock, PersistedState)
           .WillRepeatedly(Return(TestObject()));
-      return make_status_or(
-          std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
+      return make_status_or(std::unique_ptr<storage::AsyncWriterConnection>(
+          std::move(resumed_mock)));
     });
   });
 
@@ -181,7 +181,8 @@ TEST(WriteConnectionBuffered, FinalizeFailsAndResumeFails) {
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
     return sequencer.PushBack("Retry").then([&](auto) {
-      return StatusOr<std::unique_ptr<AsyncWriterConnection>>(resume_error);
+      return StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+          resume_error);
     });
   });
 
@@ -205,7 +206,8 @@ TEST(WriteConnectionBuffered, FinalizeFailsAndResumeFails) {
 
 TEST(WriteConnectionBuffered, WriteResumes) {
   AsyncSequencer<bool> sequencer;
-  auto make_mock = [&sequencer]() -> std::unique_ptr<AsyncWriterConnection> {
+  auto make_mock =
+      [&sequencer]() -> std::unique_ptr<storage::AsyncWriterConnection> {
     auto mock = std::make_unique<MockAsyncWriterConnection>();
     EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
     EXPECT_CALL(*mock, PersistedState)
@@ -417,7 +419,8 @@ TEST(WriteConnectionBuffered, ReconnectError) {
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(1).WillOnce([&sequencer] {
     return sequencer.PushBack("Retry").then([](auto) {
-      return StatusOr<std::unique_ptr<AsyncWriterConnection>>(TransientError());
+      return StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+          TransientError());
     });
   });
 
@@ -473,7 +476,7 @@ TEST(WriteConnectionBuffered, FinalizeSucceedsThenError) {
   // The resume attempt will fail permanently.
   EXPECT_CALL(mock_factory, Call).WillOnce([&] {
     return sequencer.PushBack("Resume").then(
-        [](auto) -> StatusOr<std::unique_ptr<AsyncWriterConnection>> {
+        [](auto) -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           return PermanentError();
         });
   });
@@ -740,7 +743,7 @@ TEST(WriteConnectionBuffered, ErrorFailsPendingFlushes) {
   // The implementation calls Resume on a permanent error.
   EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
     return sequencer.PushBack("Resume").then(
-        [&](auto) -> StatusOr<std::unique_ptr<AsyncWriterConnection>> {
+        [&](auto) -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           return resume_error;
         });
   });
@@ -1129,7 +1132,7 @@ TEST(WriteConnectionBuffered, FinalizeFailsThenResumeFails) {
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
     return sequencer.PushBack("Resume").then(
-        [&](auto) -> StatusOr<std::unique_ptr<AsyncWriterConnection>> {
+        [&](auto) -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           return resume_error;
         });
   });
@@ -1177,8 +1180,8 @@ TEST(WriteConnectionBuffered,
       auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
       EXPECT_CALL(*resumed_mock, PersistedState)
           .WillRepeatedly(Return(MakePersistedState(0)));
-      return make_status_or(
-          std::unique_ptr<AsyncWriterConnection>(std::move(resumed_mock)));
+      return make_status_or(std::unique_ptr<storage::AsyncWriterConnection>(
+          std::move(resumed_mock)));
     });
   });
 
@@ -1228,11 +1231,11 @@ TEST(WriteConnectionBuffered, SetFinalizedIsIdempotent) {
   // The resume attempt will discover the object is already finalized.
   EXPECT_CALL(mock_factory, Call).WillOnce([&] {
     return sequencer.PushBack("Resume").then(
-        [](auto) -> StatusOr<std::unique_ptr<AsyncWriterConnection>> {
+        [](auto) -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
           EXPECT_CALL(*resumed_mock, PersistedState)
               .WillRepeatedly(Return(TestObject()));
-          return std::unique_ptr<AsyncWriterConnection>(
+          return std::unique_ptr<storage::AsyncWriterConnection>(
               std::move(resumed_mock));
         });
   });
