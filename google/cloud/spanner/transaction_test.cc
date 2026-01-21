@@ -188,7 +188,7 @@ TEST(Transaction, IsolationLevelPrecedence) {
         return 0;
       });
 
-  // Case 2: Fallback to client default
+  // Case 2: Fallback to default options
   auto opts_default = Transaction::ReadWriteOptions();
   Transaction txn_default = MakeReadWriteTransaction(opts_default);
   spanner_internal::Visit(
@@ -202,7 +202,7 @@ TEST(Transaction, IsolationLevelPrecedence) {
 }
 
 TEST(Transaction, IsolationLevelNotSpecified) {
-  // Case: Isolation not specified in transaction level or client level
+  // Case: Isolation not specified in transaction options or default options
   auto opts = Transaction::ReadWriteOptions();
   Transaction txn = MakeReadWriteTransaction(opts);
   spanner_internal::Visit(

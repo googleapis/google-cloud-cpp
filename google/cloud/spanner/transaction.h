@@ -83,7 +83,7 @@ class Transaction {
      * absence of conflicts between its updates and any concurrent updates
      * that have occurred since that snapshot. Consequently, in contrast to
      * `kSerializable` transactions, only write-write conflicts are detected in
-     * snapshot transactions.
+     * repeatable read transactions.
      */
     kRepeatableRead,
   };
