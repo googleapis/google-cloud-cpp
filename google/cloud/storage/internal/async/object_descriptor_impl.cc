@@ -342,6 +342,10 @@ bool ObjectDescriptorImpl::IsResumable(
          storage_experimental::ResumePolicy::kContinue;
 }
 
+std::size_t ObjectDescriptorImpl::StreamSize() const {
+  return stream_manager_->Size();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
