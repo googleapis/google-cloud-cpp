@@ -1787,6 +1787,7 @@ TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
   EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
 
   MockFactory factory;
+  EXPECT_CALL(factory, Call).Times(1);
 
   Options options;
   options.set<storage_experimental::EnableMultiStreamOptimizationOption>(false);
