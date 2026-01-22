@@ -42,6 +42,8 @@ RUN dnf makecache && dnf debuginfo-install -y libstdc++
 # These are used by the docfx tool.
 RUN dnf makecache && dnf install -y pugixml-devel yaml-cpp-devel
 
+RUN dnf install -y valgrind
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
