@@ -3528,7 +3528,7 @@ void IsolationLevelSetting(std::string const& project_id,
   if (!commit) throw std::move(commit).status();
   std::cout << "Update was successful [spanner_isolation_level_setting]\n";
 }
-//! [END spanner_isolation_level] [spanner-isolation-level-setting-sample]",
+//! [END spanner_isolation_level] [spanner-isolation-level-setting-sample],
 
 void IsolationLevelSettingCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
