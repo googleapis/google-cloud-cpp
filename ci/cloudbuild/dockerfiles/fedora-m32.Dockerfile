@@ -36,7 +36,6 @@ RUN dnf makecache && \
         glibc-devel.i686 \
         gmock-devel.i686 \
         google-benchmark-devel.i686 \
-        google-crc32c-devel.i686 \
         grpc-devel.i686 \
         gtest-devel.i686 \
         libcurl-devel.i686 \

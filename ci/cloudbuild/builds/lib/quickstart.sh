@@ -59,6 +59,7 @@ function quickstart::build_one_quickstart() {
     "-S" "${src_dir}"
     "-B" "${cmake_bin_dir}"
     -DCMAKE_CXX_STANDARD=17
+    -DCMAKE_BUILD_TYPE=Debug
     -DCMAKE_PREFIX_PATH="${prefix}"
   )
   if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
@@ -120,7 +121,11 @@ function quickstart::run_one_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${bin_dir_suffix}"
-  io::run "${cmake_bin_dir}/quickstart" "${run_args[@]}"
+  if command -v /usr/bin/valgrind >/dev/null 2>&1; then
+    io::run valgrind --leak-check=full "${cmake_bin_dir}/quickstart" "${run_args[@]}"
+  else
+    io::run env MALLOC_CHECK_=3 "${cmake_bin_dir}/quickstart" "${run_args[@]}"
+  fi
 
   #  echo
   #  io::log "[ Make ]"

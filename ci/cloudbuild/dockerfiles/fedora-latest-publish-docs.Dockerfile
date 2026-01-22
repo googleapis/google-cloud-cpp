@@ -27,7 +27,6 @@ RUN dnf makecache && \
     dnf install -y \
         gmock-devel \
         google-benchmark-devel \
-        google-crc32c-devel \
         grpc-devel \
         gtest-devel \
         json-devel \
