@@ -54,9 +54,13 @@ void ObjectDescriptorImpl::Start(
   if (it == stream_manager_->End()) return;
   lk.unlock();
   OnRead(it, std::move(first_response));
-  // Acquire lock and queue the background stream.
-  lk.lock();
-  AssurePendingStreamQueued(lk);
+  // Acquire lock and queue the background stream if multi-stream optimization
+  // is enabled.
+  if (options_
+          .get<storage_experimental::EnableMultiStreamOptimizationOption>()) {
+    lk.lock();
+    AssurePendingStreamQueued(lk);
+  }
 }
 
 void ObjectDescriptorImpl::Cancel() {
@@ -82,6 +86,12 @@ void ObjectDescriptorImpl::AssurePendingStreamQueued(
 }
 
 void ObjectDescriptorImpl::MakeSubsequentStream() {
+  if (!options_
+           .get<storage_experimental::EnableMultiStreamOptimizationOption>()) {
+    // Do nothing if multi-stream optimization is disabled.
+    return;
+  }
+
   std::unique_lock<std::mutex> lk(mu_);
   // Reuse an idle stream if possible.
   if (stream_manager_->ReuseIdleStreamToFront(
@@ -330,6 +340,10 @@ bool ObjectDescriptorImpl::IsResumable(
   }
   return it->stream->resume_policy->OnFinish(status) ==
          storage_experimental::ResumePolicy::kContinue;
+}
+
+std::size_t ObjectDescriptorImpl::StreamSize() const {
+  return stream_manager_->Size();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

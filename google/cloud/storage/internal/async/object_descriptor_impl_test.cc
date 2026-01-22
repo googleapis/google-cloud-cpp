@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/options.h"
@@ -68,6 +69,18 @@ auto NoResume() {
   return storage_experimental::LimitedErrorCountResumePolicy(0)();
 }
 
+auto MakeTested(
+    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
+    OpenStreamFactory make_stream,
+    google::storage::v2::BidiReadObjectSpec read_object_spec,
+    std::shared_ptr<OpenStream> stream) {
+  Options options;
+  options.set<storage_experimental::EnableMultiStreamOptimizationOption>(true);
+  return std::make_shared<ObjectDescriptorImpl>(
+      std::move(resume_policy), std::move(make_stream),
+      std::move(read_object_spec), std::move(stream), std::move(options));
+}
+
 MATCHER_P(IsProtoEqualModuloRepeatedFieldOrdering, value,
           "Checks whether protos are equal, ignoring repeated field ordering") {
   std::string delta;
@@ -98,10 +111,9 @@ TEST(ObjectDescriptorImpl, LifecycleNoRead) {
   EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
     return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
   });
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
   auto response = Response{};
   EXPECT_TRUE(
       TextFormat::ParseFromString(kMetadataText, response.mutable_metadata()));
@@ -142,10 +154,9 @@ TEST(ObjectDescriptorImpl, LifecycleCancelRacesWithFinish) {
   EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
     return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
   });
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
   auto response = Response{};
   EXPECT_TRUE(
       TextFormat::ParseFromString(kMetadataText, response.mutable_metadata()));
@@ -231,10 +242,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
   EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
     return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
   });
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -351,10 +361,9 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
   EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
     return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
   });
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -501,10 +510,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
     return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
   });
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -617,10 +625,9 @@ TEST(ObjectDescriptorImpl, AllRangesFailOnUnrecoverableError) {
   EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
     return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
   });
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
   tested->Start(Response{});
   EXPECT_FALSE(tested->metadata().has_value());
 
@@ -795,10 +802,10 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      storage_experimental::LimitedErrorCountResumePolicy(1)(),
-      factory.AsStdFunction(), spec,
-      std::make_shared<OpenStream>(InitialStream(sequencer)));
+  auto tested =
+      MakeTested(storage_experimental::LimitedErrorCountResumePolicy(1)(),
+                 factory.AsStdFunction(), spec,
+                 std::make_shared<OpenStream>(InitialStream(sequencer)));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -959,9 +966,8 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(), spec,
-      std::make_shared<OpenStream>(initial_stream()));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(), spec,
+                           std::make_shared<OpenStream>(initial_stream()));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -1075,10 +1081,10 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      storage_experimental::LimitedErrorCountResumePolicy(1)(),
-      factory.AsStdFunction(), spec,
-      std::make_shared<OpenStream>(initial_stream()));
+  auto tested =
+      MakeTested(storage_experimental::LimitedErrorCountResumePolicy(1)(),
+                 factory.AsStdFunction(), spec,
+                 std::make_shared<OpenStream>(initial_stream()));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -1215,9 +1221,8 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   EXPECT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(), spec,
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(), spec,
+                           std::make_shared<OpenStream>(std::move(stream)));
   tested->Start(Response{});
   EXPECT_FALSE(tested->metadata().has_value());
 
@@ -1296,10 +1301,9 @@ TEST(ObjectDescriptorImpl, ProactiveStreamCreation) {
         [](auto) { return StatusOr<OpenStreamResult>(PermanentError()); });
   });
 
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
 
   tested->Start(Response{});
 
@@ -1358,10 +1362,9 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
         return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
       });
 
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream1)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream1)));
   tested->Start(Response{});
 
   // Start a read on stream1 to make it busy.
@@ -1431,10 +1434,9 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesIdleStreamAlreadyLast) {
         return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
       });
 
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream1)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream1)));
   auto start_response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(object_data_ranges { read_range { read_id: 0 read_offset: 0 } })pb",
@@ -1555,10 +1557,9 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
         return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
       });
 
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream1)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream1)));
 
   auto start_response = Response{};
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -1667,7 +1668,7 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
         });
       });
 
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
+  auto tested = MakeTested(
       storage_experimental::LimitedErrorCountResumePolicy(1)(),
       factory.AsStdFunction(), google::storage::v2::BidiReadObjectSpec{},
       std::make_shared<OpenStream>(std::move(stream1)));
@@ -1741,10 +1742,9 @@ TEST(ObjectDescriptorImpl, ReadFailsWhenAllStreamsAreDead) {
     });
   });
 
-  auto tested = std::make_shared<ObjectDescriptorImpl>(
-      NoResume(), factory.AsStdFunction(),
-      google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
 
   tested->Start(Response{});
 
@@ -1771,6 +1771,29 @@ TEST(ObjectDescriptorImpl, ReadFailsWhenAllStreamsAreDead) {
   auto result = reader->Read().get();
   EXPECT_THAT(result,
               VariantWith<Status>(StatusIs(StatusCode::kFailedPrecondition)));
+}
+
+/// @test Verify that disabling multi-stream optimization prevents background
+/// stream creation.
+TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*stream, Cancel).Times(1);
+
+  MockFactory factory;
+  Options options;
+  options.set<storage_experimental::EnableMultiStreamOptimizationOption>(false);
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  tested->MakeSubsequentStream();
+
+  tested.reset();
 }
 
 }  // namespace
