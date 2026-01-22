@@ -1460,7 +1460,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesIdleStreamAlreadyLast) {
 /// @test Verify an idle stream at the front is moved to the back and reused.
 TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
   AsyncSequencer<bool> sequencer;
-
+  std::cout<<"test line\n";
   // First stream setup
   auto stream1 = std::make_unique<MockStream>();
   EXPECT_CALL(*stream1, Write(_, _)).WillRepeatedly([](auto const&, auto) {
