@@ -481,7 +481,6 @@ service {
   forwarding_product_path: "google/cloud/bigquery"
   initial_copyright_year: "2021"
   omitted_services: ["BigQueryWrite"]
-  backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   omit_streaming_updater: true
 }
@@ -2679,7 +2678,6 @@ service {
   product_path: "google/cloud/iam/credentials/v1"
   forwarding_product_path: "google/cloud/iam"
   initial_copyright_year: "2020"
-  backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   idempotency_overrides: [
     {rpc_name: "IAMCredentials.GenerateAccessToken", idempotency: IDEMPOTENT},
@@ -2695,7 +2693,6 @@ service {
   forwarding_product_path: "google/cloud/iam"
   initial_copyright_year: "2021"
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
-  backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   omitted_rpcs: [
     "SignBlob(std::string const&, std::string const&)",
@@ -3698,7 +3695,6 @@ service {
   initial_copyright_year: "2021"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
-  backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   omit_repo_metadata: true
@@ -3711,7 +3707,6 @@ service {
   initial_copyright_year: "2021"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
-  backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   omit_repo_metadata: true

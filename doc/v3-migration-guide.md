@@ -45,6 +45,62 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 ### Common
 
 <details>
+<summary>Removed <code>v1</code> inline namespace alias.
+</summary>
+
+The `v1` namespace should be omitted for libraries that are unversioned:
+
+- Bigtable
+- PubSub
+- Spanner
+- Storage
+
+For example, code that used to look like this:
+
+**Before:**
+
+```cpp
+
+google::cloud::v1::pubsub::Publisher publisher;
+```
+
+Should be changed to this:
+
+**After:**
+
+```cpp
+google::cloud::pubsub::Publisher publisher;
+```
+
+</details>
+
+<details>
+<summary>Removed <code>gcpcxxV1</code> inline namespace alias.
+</summary>
+
+The `gcpcxxV1` namespace should be omitted from versioned libraries. The version
+is now part of the service namespace.
+
+For example, code that used to look like this:
+
+**Before:**
+
+```cpp
+
+google::cloud::bigquery_storage_v1::gcpcxxV1::BigQueryReadClient client;
+```
+
+Should be changed to this:
+
+**After:**
+
+```cpp
+google::cloud::bigquery_storage_v1::BigQueryReadClient client;
+```
+
+</details>
+
+<details>
 <summary>Removed <code>google::cloud::grpc_utils</code> namespace and headers.
 </summary>
 

@@ -265,16 +265,6 @@ TEST(ProcessCommandLineArgs, ProcessArgAsyncOnlyRpc) {
               Contains(Pair("gen_async_rpcs", HasSubstr("AsyncOnly"))));
 }
 
-TEST(ProcessCommandLineArgs, ProcessArgNamespaceAlias) {
-  auto result = ProcessCommandLineArgs(
-      ",product_path=google/cloud/spanner/"
-      ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
-      ",backwards_compatibility_namespace_alias=true");
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, Contains(Pair("backwards_compatibility_namespace_alias",
-                                     HasSubstr("true"))));
-}
-
 TEST(ProcessCommandLineArgs, ProcessOmitClient) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/spanner/"
