@@ -92,6 +92,19 @@ TEST(DefaultOptionsAsync, MaximumRangeSizeOption) {
   EXPECT_EQ(max_range_size_option, 128 * 1024 * 1024L);
 }
 
+TEST(DefaultOptionsAsync, EnableMultiStreamOptimizationOption) {
+  auto const options = DefaultOptionsAsync({});
+  EXPECT_TRUE(
+      options.get<storage_experimental::EnableMultiStreamOptimizationOption>());
+
+  auto const updated_options = DefaultOptionsAsync(
+      Options{}.set<storage_experimental::EnableMultiStreamOptimizationOption>(
+          false));
+  EXPECT_FALSE(
+      updated_options
+          .get<storage_experimental::EnableMultiStreamOptimizationOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
