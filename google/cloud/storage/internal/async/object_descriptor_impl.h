@@ -81,6 +81,8 @@ class ObjectDescriptorImpl
 
   void MakeSubsequentStream() override;
 
+  std::size_t StreamSize() const;
+
  private:
   using StreamManager = MultiStreamManager<ReadStream, ReadRange>;
   using StreamIterator =
