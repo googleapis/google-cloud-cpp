@@ -120,7 +120,7 @@ function quickstart::run_one_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${bin_dir_suffix}"
-  io::run "${cmake_bin_dir}/quickstart" "${run_args[@]}"
+  io::run env MALLOC_CHECK_=3 "${cmake_bin_dir}/quickstart" "${run_args[@]}"
 
   #  echo
   #  io::log "[ Make ]"
