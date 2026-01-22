@@ -35,7 +35,7 @@ RUN zypper refresh && \
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
-        libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel \
+        libcurl-devel libopenssl-devel nlohmann_json-devel \
         grpc-devel libprotobuf-devel
 # ```
 

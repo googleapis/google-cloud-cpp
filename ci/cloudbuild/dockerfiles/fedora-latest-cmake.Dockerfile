@@ -42,6 +42,8 @@ RUN dnf makecache && dnf debuginfo-install -y libstdc++
 # These are used by the docfx tool.
 RUN dnf makecache && dnf install -y pugixml-devel yaml-cpp-devel
 
+RUN dnf install -y valgrind
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
@@ -70,7 +72,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # We disable the inline namespace because otherwise Abseil LTS updates break our
 # `check-api` build.
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -98,19 +100,6 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.2.tar.gz | \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -DBENCHMARK_ENABLE_TESTING=OFF \
-      -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
-    ldconfig && cd /var/tmp && rm -fr build
-
-WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DCRC32C_BUILD_TESTS=OFF \
-      -DCRC32C_BUILD_BENCHMARKS=OFF \
-      -DCRC32C_USE_GLOG=OFF \
       -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build

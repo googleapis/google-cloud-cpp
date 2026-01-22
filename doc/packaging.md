@@ -188,7 +188,7 @@ development packages
 
 ```bash
 apk update && \
-    apk add abseil-cpp-dev crc32c-dev c-ares-dev curl-dev grpc-dev \
+    apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
 ```
 
@@ -256,7 +256,7 @@ dependencies of `google-cloud-cpp`.
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        json-devel libcurl-devel google-crc32c-devel openssl-devel
+        json-devel libcurl-devel openssl-devel
 ```
 
 #### Patching pkg-config
@@ -277,15 +277,6 @@ curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
-```
-
-Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting with
-Fedora:38. If you using Fedora >= 38 or you are not planning to use
-`pkg-config(1)` you can ignore this step. Alternatively, you can install RE2 and
-gRPC from source.
-
-```
-sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
@@ -365,7 +356,7 @@ Install some of the dependencies for `google-cloud-cpp`.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
-        libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel \
+        libcurl-devel libopenssl-devel nlohmann_json-devel \
         grpc-devel libprotobuf-devel
 ```
 
@@ -478,12 +469,11 @@ ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 #### abseil
 
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp curl -fsSL
-https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
 tar -xzf - --strip-components=1 && \
 cmake \
 -DCMAKE_BUILD_TYPE=Release \
 -DABSL_BUILD_TESTING=OFF \
--DABSL_PROPAGATE_CXX_STD=ON \
 -DBUILD_SHARED_LIBS=yes \
 -S . -B cmake-out && \
 cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -553,18 +543,14 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` propagates
-the version of C++ used to compile Abseil to anything that depends on Abseil.
-
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -614,26 +600,6 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### crc32c
-
-The project depends on the Crc32c library, we need to compile this from source:
-
-```bash
-mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -725,18 +691,14 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` propagates
-the version of C++ used to compile Abseil to anything that depends on Abseil.
-
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -805,26 +767,6 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### crc32c
-
-The project depends on the Crc32c library, we need to compile this from source:
-
-```bash
-mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -947,12 +889,12 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgcon
 #### abseil
 
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp curl -fsSL
-https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
 tar -xzf - --strip-components=1 && \
 cmake \
 -DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_CXX_STANDARD=17 \
 -DABSL_BUILD_TESTING=OFF \
--DABSL_PROPAGATE_CXX_STD=ON \
 -DBUILD_SHARED_LIBS=yes \
 -S . -B cmake-out && \
 cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1022,41 +964,16 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 #### Abseil
 
-Debian 11 ships with Abseil==20200923.3. Unfortunately, the current gRPC version
-needs Abseil >= 20210324. Enabling `ABSL_PROPAGATE_CXX_STD` propagates the
-version of C++ used to compile Abseil to anything that depends on Abseil.
-
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### crc32c
-
-The project depends on the Crc32c library, we need to compile this from source:
-
-```bash
-mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
-        -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1238,20 +1155,14 @@ export PATH=/usr/local/bin:${PATH}
 
 #### Abseil
 
-Rocky Linux 9 includes a package for Abseil, unfortunately, this package is
-incomplete, as it lacks the CMake support files for it. We need to compile
-Abseiil from source. Enabling `ABSL_PROPAGATE_CXX_STD` propagates the version of
-C++ used to compile Abseil to anything that depends on Abseil.
-
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -1323,26 +1234,6 @@ curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### crc32c
-
-The project depends on the Crc32c library, we need to compile this from source:
-
-```bash
-mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \

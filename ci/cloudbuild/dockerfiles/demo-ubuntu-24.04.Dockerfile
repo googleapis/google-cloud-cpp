@@ -64,12 +64,11 @@ RUN ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 
 # #### abseil
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
