@@ -104,8 +104,13 @@ function quickstart::run_gcs_grpc_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-storage_grpc"
-  "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
 
+  if command -v /usr/bin/valgrind >/dev/null 2>&1; then
+    io::run valgrind --leak-check=full "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
+  else
+    io::run env MALLOC_CHECK_=3 "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
+  fi
+  
   #  echo
   #  io::log "[ Make ]"
   #  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-storage_grpc"
