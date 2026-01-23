@@ -121,6 +121,10 @@ class AsyncWriterConnection {
 
   /// Return the request metadata.
   virtual RpcMetadata GetRequestMetadata() = 0;
+
+  /// Returns the latest write handle, if any.
+  virtual absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const = 0;
 };
 
 /**

@@ -50,6 +50,12 @@ class AsyncWriterConnectionTracing
     return impl_->UploadId();
   }
 
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    // No tracing, this is a local call without any significant work.
+    return impl_->WriteHandle();
+  }
+
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     // No tracing, this is a local call without any significant work.
