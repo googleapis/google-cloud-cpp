@@ -46,6 +46,7 @@
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
 #include "absl/types/variant.h"
@@ -413,6 +414,15 @@ struct TransactionTagOption {
  */
 struct ExcludeTransactionFromChangeStreamsOption {
   using Type = bool;
+};
+
+/**
+ * Option for `google::cloud::Options` to set the transaction isolation level.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct TransactionIsolationLevelOption {
+  using Type = spanner::Transaction::IsolationLevel;
 };
 
 /**

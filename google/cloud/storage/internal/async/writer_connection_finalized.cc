@@ -40,6 +40,11 @@ std::string AsyncWriterConnectionFinalized::UploadId() const {
   return upload_id_;
 }
 
+absl::optional<google::storage::v2::BidiWriteHandle>
+AsyncWriterConnectionFinalized::WriteHandle() const {
+  return absl::nullopt;
+}
+
 absl::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriterConnectionFinalized::PersistedState() const {
   return object_;

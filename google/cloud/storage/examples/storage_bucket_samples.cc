@@ -51,8 +51,8 @@ void ListBuckets(google::cloud::storage::Client client,
 
 void ListBucketsPartialSuccess(google::cloud::storage::Client client,
                                std::vector<std::string> const& /*argv*/) {
-  //! [list buckets partial success] [START
-  //! storage_list_buckets_partial_success]
+  //! [list buckets partial success]
+  //! [START storage_list_buckets_partial_success]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client) {
