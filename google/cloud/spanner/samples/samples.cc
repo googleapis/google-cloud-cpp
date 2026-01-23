@@ -5955,6 +5955,9 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_directed_read");
   DirectedRead(project_id, instance_id, database_id);
 
+  SampleBanner("isolation-level-setting");
+  IsolationLevelSetting(project_id, instance_id, database_id);
+
   SampleBanner("spanner_batch_client");
   UsePartitionQuery(client);
 
