@@ -58,7 +58,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 
 # ```bash
 RUN apk update && \
-    apk add abseil-cpp-dev crc32c-dev c-ares-dev curl-dev grpc-dev \
+    apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
 # ```
 

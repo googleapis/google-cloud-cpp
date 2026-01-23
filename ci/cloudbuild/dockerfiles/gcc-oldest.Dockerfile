@@ -32,7 +32,6 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | 
       -DCMAKE_CXX_STANDARD=17 \
       -DCMAKE_BUILD_TYPE=Release \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
     cmake --build cmake-out && cmake --install cmake-out && \

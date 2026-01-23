@@ -31,7 +31,7 @@ RUN dnf makecache && \
 # ```bash
 RUN dnf makecache && \
     dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        json-devel libcurl-devel google-crc32c-devel openssl-devel
+        json-devel libcurl-devel openssl-devel
 # ```
 
 # #### Patching pkg-config
@@ -52,14 +52,6 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build
-# ```
-
-# Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting
-# with Fedora:38. If you using Fedora >= 38 or you are not planning to use
-# `pkg-config(1)` you can ignore this step.  Alternatively, you can install RE2
-# and gRPC from source.
-# ```
-# sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
