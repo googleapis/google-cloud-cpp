@@ -172,7 +172,7 @@ AsyncWriterConnectionImpl::MakeRequest() {
   auto request = request_;
   if (first_request_) {
     first_request_ = false;
-    if (latest_write_handle_.has_value()) {
+    if (latest_write_handle_.has_value() && request.has_append_object_spec()) {
       *request.mutable_append_object_spec()->mutable_write_handle() =
           *latest_write_handle_;
     }

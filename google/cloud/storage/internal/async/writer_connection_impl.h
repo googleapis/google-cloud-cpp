@@ -54,6 +54,10 @@ class AsyncWriterConnectionImpl
   void Cancel() override { return impl_->Cancel(); }
 
   std::string UploadId() const override;
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    return latest_write_handle_;
+  }
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
