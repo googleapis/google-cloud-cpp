@@ -96,6 +96,10 @@ class AsyncWriterConnectionBufferedState
     return UploadId(std::unique_lock<std::mutex>(mu_));
   }
 
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle() const {
+    return Impl(std::unique_lock<std::mutex>(mu_))->WriteHandle();
+  }
+
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
@@ -617,6 +621,11 @@ class AsyncWriterConnectionBuffered
   void Cancel() override { return state_->Cancel(); }
 
   std::string UploadId() const override { return state_->UploadId(); }
+
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    return state_->WriteHandle();
+  }
 
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
