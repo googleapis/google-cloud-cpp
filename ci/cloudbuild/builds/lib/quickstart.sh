@@ -89,12 +89,16 @@ function quickstart::build_one_quickstart() {
 #   quickstart::build_cmake_and_make "/usr/local"
 #   quickstart::run_cmake_and_make "/usr/local"
 function quickstart::run_cmake_and_make() {
+  io::run ulimit -c unlimited
+  io::run ulimit -a
   local prefix="$1"
   for lib in $(quickstart::libraries); do
     io::log_h2 "Running quickstart: ${lib}"
     mapfile -t run_args < <(quickstart::arguments "${lib}")
     quickstart::run_one_quickstart "${prefix}" "${lib}" "${run_args[@]}"
   done
+
+  io::run find . -name '*core*'
 }
 
 function quickstart::run_gcs_grpc_quickstart() {
@@ -104,7 +108,12 @@ function quickstart::run_gcs_grpc_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-storage_grpc"
-  "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
+
+  if command -v /usr/bin/valgrind >/dev/null 2>&1; then
+    io::run valgrind --leak-check=full "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
+  else
+    io::run env MALLOC_CHECK_=3 "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
+  fi
 
   #  echo
   #  io::log "[ Make ]"
