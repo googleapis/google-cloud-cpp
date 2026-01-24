@@ -85,7 +85,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 namespace google {
 namespace cloud {
-namespace bigquery {
+namespace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void BigQueryReadReadRowsStreamingUpdater(
@@ -96,6 +96,6 @@ void BigQueryReadReadRowsStreamingUpdater(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigquery
+}  // namespace
 }  // namespace cloud
 }  // namespace google
