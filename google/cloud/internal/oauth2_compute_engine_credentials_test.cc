@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/make_status.h"
@@ -23,6 +22,7 @@
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <chrono>
 

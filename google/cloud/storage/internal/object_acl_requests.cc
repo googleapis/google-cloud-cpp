@@ -16,8 +16,8 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_join.h"
 #include <iostream>
 #include <string>
 #include <utility>

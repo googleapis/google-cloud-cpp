@@ -15,8 +15,6 @@
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_writev.h"
@@ -26,6 +24,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/strip.h"
 #include <curl/easy.h>
 #include <algorithm>

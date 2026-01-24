@@ -14,13 +14,13 @@
 
 #include "google/cloud/internal/populate_rest_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
 
 namespace google {

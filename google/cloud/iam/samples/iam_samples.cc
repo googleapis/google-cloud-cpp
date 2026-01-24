@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/iam/admin/v1/iam_client.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <chrono>

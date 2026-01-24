@@ -257,8 +257,7 @@ Status StubRestGenerator::GenerateCc() {
 
   CcPrint("\n");
   CcLocalIncludes({vars("stub_rest_header_path"),
-                   "google/cloud/common_options.h",
-                   "google/cloud/internal/absl_str_cat_quiet.h",
+                   "google/cloud/common_options.h", "absl/strings/str_cat.h",
                    "google/cloud/internal/rest_stub_helpers.h",
                    "google/cloud/status_or.h"});
   CcProtobufGenCodeIncludes({vars("proto_header_path"),

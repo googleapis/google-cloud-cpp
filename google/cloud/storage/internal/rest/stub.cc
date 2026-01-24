@@ -26,7 +26,6 @@
 #include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
@@ -34,6 +33,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
 #include <sstream>
 

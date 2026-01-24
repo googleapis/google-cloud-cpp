@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/resource_detector_impl.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
@@ -23,6 +22,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/faas_attributes.h>

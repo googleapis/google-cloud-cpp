@@ -17,9 +17,9 @@
 // source: generator/integration_tests/test_request_id.proto
 
 #include "generator/integration_tests/golden/v1/internal/request_id_metadata_decorator.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/rest_parse_json_error.h"
 #include "google/cloud/internal/rest_response.h"
+#include "absl/strings/str_join.h"
 #include <iostream>
 #include <utility>
 

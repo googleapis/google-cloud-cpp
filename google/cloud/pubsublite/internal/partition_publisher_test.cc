@@ -17,11 +17,11 @@
 #include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
 #include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <memory>

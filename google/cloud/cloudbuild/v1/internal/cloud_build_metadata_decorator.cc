@@ -18,12 +18,12 @@
 
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
 #include <memory>
 #include <string>

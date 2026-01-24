@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/noexcept_action.h"
@@ -21,6 +20,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>

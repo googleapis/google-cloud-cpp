@@ -14,10 +14,10 @@
 
 #ifdef _WIN32
 #include "google/cloud/internal/sign_using_sha256.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/internal/win32/win32_helpers.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include <array>
 #include <memory>

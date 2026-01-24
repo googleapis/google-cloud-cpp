@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/deployment_resource_pool_option_defaults.h"
 #include "google/cloud/aiplatform/v1/deployment_resource_pool_connection.h"
 #include "google/cloud/aiplatform/v1/deployment_resource_pool_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 

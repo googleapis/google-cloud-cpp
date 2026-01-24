@@ -17,15 +17,15 @@
 #include "generator/internal/discovery_proto_export_file.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>

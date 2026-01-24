@@ -18,9 +18,9 @@
 
 #include "google/cloud/spanner/admin/internal/database_admin_rest_stub.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
 #include "google/longrunning/operations.pb.h"
 #include "google/spanner/admin/database/v1/spanner_database_admin.pb.h"
 #include <memory>

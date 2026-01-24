@@ -13,9 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/external_account_token_source_aws.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/external_account_source_format.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -25,6 +22,9 @@
 #include "google/cloud/internal/sha256_hmac.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>

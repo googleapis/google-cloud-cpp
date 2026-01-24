@@ -17,9 +17,9 @@
 
 #include "google/cloud/pubsublite/internal/cloud_region.h"
 #include "google/cloud/pubsublite/internal/cloud_zone.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include "absl/types/variant.h"
 #include <algorithm>
 

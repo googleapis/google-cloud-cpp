@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/bucket_name.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
 
 namespace google {

@@ -94,19 +94,6 @@ time {
     xargs -r -P "$(nproc)" -n 50 -0 awk -f "ci/check-include-guards.gawk"
 }
 
-# TODO(#4501) - this fixup can be removed if #include <absl/...> works
-# Apply transformations to fix errors on MSVC+x86. See the bug for a detailed
-# explanation as to why this is needed:
-#   https://github.com/googleapis/google-cloud-cpp/issues/4501
-# This should run before clang-format because it might alter the order of any
-# includes.
-printf "%-50s" "Running Abseil header fixes:" >&2
-time {
-  expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
-  (git grep -zEl '#include "absl/strings/str_(cat|replace|join).h"' -- '*.h' '*.cc' ':!google/cloud/internal/absl_str_*quiet.h' || true) |
-    xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
-}
-
 # Apply several transformations that cannot be enforced by clang-format:
 #     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
 #       are obsoleted by the gRPC team, so we should not use them in our code.

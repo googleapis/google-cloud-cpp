@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/debug_string_protobuf.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/time.h"
 #include "google/protobuf/duration.pb.h"
 #include "google/protobuf/timestamp.pb.h"

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_request.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/strip.h"
 #include <iterator>
 

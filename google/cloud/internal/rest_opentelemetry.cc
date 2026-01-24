@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_opentelemetry.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/semconv/network_attributes.h>
