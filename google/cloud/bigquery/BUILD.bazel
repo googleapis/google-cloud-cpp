@@ -23,7 +23,6 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "biglake/v1/",
     "analyticshub/v1/",
     "connection/v1/",

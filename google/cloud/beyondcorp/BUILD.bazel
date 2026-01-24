@@ -19,7 +19,6 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "appconnections/v1/",
     "appconnectors/v1/",
     "appgateways/v1/",
