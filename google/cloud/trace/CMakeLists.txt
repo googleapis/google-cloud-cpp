@@ -18,7 +18,7 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
     trace "Cloud Trace API"
-    SERVICE_DIRS "__EMPTY__" "v1/" "v2/"
+    SERVICE_DIRS "v1/" "v2/"
     BACKWARDS_COMPAT_PROTO_TARGETS "devtools_cloudtrace_v2_trace_protos"
                                    "devtools_cloudtrace_v2_tracing_protos")
 

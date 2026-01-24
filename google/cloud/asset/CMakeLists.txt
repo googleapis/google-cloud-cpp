@@ -19,7 +19,6 @@ include(GoogleCloudCppLibrary)
 google_cloud_cpp_add_gapic_library(
     asset "Cloud Asset API"
     SERVICE_DIRS
-        "__EMPTY__"
         "v1/"
         # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore
         # it does not appear in protolists/asset.list. In addition, it is not
