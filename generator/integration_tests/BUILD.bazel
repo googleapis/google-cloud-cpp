@@ -77,8 +77,6 @@ filegroup(
     name = "golden_hdrs",
     srcs = glob(
         include = [
-            "golden/*.h",
-            "golden/mocks/*.h",
             "golden/v1/*.cc",
             "golden/v1/*.h",
             "golden/v1/internal/*.cc",

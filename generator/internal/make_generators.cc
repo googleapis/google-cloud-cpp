@@ -20,11 +20,6 @@
 #include "generator/internal/connection_impl_rest_generator.h"
 #include "generator/internal/connection_rest_generator.h"
 #include "generator/internal/descriptor_utils.h"
-#include "generator/internal/forwarding_client_generator.h"
-#include "generator/internal/forwarding_connection_generator.h"
-#include "generator/internal/forwarding_idempotency_policy_generator.h"
-#include "generator/internal/forwarding_mock_connection_generator.h"
-#include "generator/internal/forwarding_options_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/logging_decorator_rest_generator.h"
@@ -109,22 +104,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   }
   if (!get_flag("omit_stub_factory") && generate_grpc_transport) {
     code_generators.push_back(std::make_unique<StubFactoryGenerator>(
-        service, service_vars, method_vars, context, mixin_methods));
-  }
-  auto const forwarding_headers = service_vars.find("forwarding_product_path");
-  if (forwarding_headers != service_vars.end() &&
-      !forwarding_headers->second.empty()) {
-    code_generators.push_back(std::make_unique<ForwardingClientGenerator>(
-        service, service_vars, method_vars, context, mixin_methods));
-    code_generators.push_back(std::make_unique<ForwardingConnectionGenerator>(
-        service, service_vars, method_vars, context, mixin_methods));
-    code_generators.push_back(
-        std::make_unique<ForwardingIdempotencyPolicyGenerator>(
-            service, service_vars, method_vars, context, mixin_methods));
-    code_generators.push_back(
-        std::make_unique<ForwardingMockConnectionGenerator>(
-            service, service_vars, method_vars, context, mixin_methods));
-    code_generators.push_back(std::make_unique<ForwardingOptionsGenerator>(
         service, service_vars, method_vars, context, mixin_methods));
   }
 
