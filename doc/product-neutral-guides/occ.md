@@ -2,26 +2,32 @@
 
 ## Introduction to OCC
 
-Optimistic Concurrency Control (OCC) is a strategy used to manage shared resources and prevent "lost updates" or race conditions.
+Optimistic Concurrency Control (OCC) is a strategy used to manage shared
+resources and prevent "lost updates" or race conditions.
 
-In Google Cloud C++ libraries, IAM Policy objects contain an `etag` field. When calling `SetIamPolicy`, the client library serializes this `etag`. If the server detects that the `etag` provided does not match the current version on the server, it returns a `kAborted` (or sometimes `kFailedPrecondition`) status.
+In Google Cloud C++ libraries, IAM Policy objects contain an `etag` field. When
+calling `SetIamPolicy`, the client library serializes this `etag`. If the server
+detects that the `etag` provided does not match the current version on the
+server, it returns a `kAborted` (or sometimes `kFailedPrecondition`) status.
 
 ## Implementing the OCC Loop in C++
 
-The core of the implementation is a `while` loop that checks the `Status` returned by the API call.
+The core of the implementation is a `while` loop that checks the `Status`
+returned by the API call.
 
 ### Steps of the Loop
 
-| Step | Action | C++ Implementation |
-| ----- | ----- | ----- |
-| **1\. Read** | Fetch the current IAM Policy. | `client.GetIamPolicy(name)` |
-| **2\. Modify** | Apply changes to the `google::iam::v1::Policy` object. | Modify repeated fields (bindings). |
-| **3\. Write** | Attempt to set the policy. | `client.SetIamPolicy(name, policy)` |
-| **4\. Retry** | Check `Status.code()`. | `if (status.code() == StatusCode::kAborted) continue;` |
+| Step          | Action                                                 | C++ Implementation                                     |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------ |
+| **1. Read**   | Fetch the current IAM Policy.                          | `client.GetIamPolicy(name)`                            |
+| **2. Modify** | Apply changes to the `google::iam::v1::Policy` object. | Modify repeated fields (bindings).                     |
+| **3. Write**  | Attempt to set the policy.                             | `client.SetIamPolicy(name, policy)`                    |
+| **4. Retry**  | Check `Status.code()`.                                 | `if (status.code() == StatusCode::kAborted) continue;` |
 
 ## C++ Code Example
 
-The following example demonstrates how to implement the OCC loop using the `google-cloud-cpp` Resource Manager library.
+The following example demonstrates how to implement the OCC loop using the
+`google-cloud-cpp` Resource Manager library.
 
 ```c
 #include "google/cloud/resourcemanager/v3/projects_client.h"
@@ -45,10 +51,10 @@ google::cloud::StatusOr<iam::Policy> UpdateIamPolicyWithOCC(
     std::string const& project_id,
     std::string const& role,
     std::string const& member) {
-  
+
   auto client = resourcemanager::ProjectsClient(
       resourcemanager::MakeProjectsConnection());
-  
+
   std::string const resource_name = "projects/" + project_id;
   int max_retries = 5;
   int retries = 0;
@@ -91,11 +97,11 @@ google::cloud::StatusOr<iam::Policy> UpdateIamPolicyWithOCC(
     auto status = updated_policy.status();
     if (status.code() == google::cloud::StatusCode::kAborted ||
         status.code() == google::cloud::StatusCode::kFailedPrecondition) {
-      
+
       retries++;
-      std::cout << "Concurrency conflict (etag mismatch). Retrying... (" 
+      std::cout << "Concurrency conflict (etag mismatch). Retrying... ("
                 << retries << "/" << max_retries << ")\n";
-      
+
       // Simple exponential backoff
       std::this_thread::sleep_for(std::chrono::milliseconds(100 * retries));
       continue; // Restart loop
