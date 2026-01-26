@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

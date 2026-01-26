@@ -20,14 +20,14 @@
 #include "generator/internal/format_method_comments.h"
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/scaffold_generator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <algorithm>

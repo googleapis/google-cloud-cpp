@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

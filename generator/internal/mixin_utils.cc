@@ -14,10 +14,10 @@
 
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/base/no_destructor.h"
 #include "absl/strings/ascii.h"
+#include "absl/strings/str_join.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <yaml-cpp/yaml.h>

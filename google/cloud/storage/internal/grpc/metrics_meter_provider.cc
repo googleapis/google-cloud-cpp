@@ -16,7 +16,7 @@
 
 #include "google/cloud/storage/internal/grpc/metrics_meter_provider.h"
 #include "google/cloud/storage/internal/grpc/metrics_histograms.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/version.h>
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || \

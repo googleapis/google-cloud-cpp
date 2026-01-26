@@ -21,7 +21,7 @@
 #include "generator/integration_tests/golden/v1/golden_rest_only_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 

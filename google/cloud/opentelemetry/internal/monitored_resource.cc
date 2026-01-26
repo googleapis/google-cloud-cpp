@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/types/optional.h"
 #include "absl/types/variant.h"
 #include <opentelemetry/common/attribute_value.h>

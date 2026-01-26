@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
 #include <functional>
 #include <iterator>
 

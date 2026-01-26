@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_WRITE_RPC_LOGGING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_WRITE_RPC_LOGGING_H
 
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

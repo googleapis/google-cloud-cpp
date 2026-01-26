@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_loop_helpers.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

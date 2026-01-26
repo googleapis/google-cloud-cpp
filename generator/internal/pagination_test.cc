@@ -16,7 +16,7 @@
 #include "generator/testing/descriptor_pool_fixture.h"
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "absl/strings/str_replace.h"
 #include "google/protobuf/descriptor.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/text_format.h>

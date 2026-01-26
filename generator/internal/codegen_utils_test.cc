@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>

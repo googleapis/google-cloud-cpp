@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/str_join.h"
 #include <gmock/gmock.h>
 
 namespace google {

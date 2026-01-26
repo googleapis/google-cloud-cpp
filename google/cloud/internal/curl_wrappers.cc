@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_wrappers.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #ifndef _WIN32
 #include <openssl/crypto.h>

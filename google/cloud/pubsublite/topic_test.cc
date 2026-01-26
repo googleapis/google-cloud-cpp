@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/topic.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_join.h"
 #include <gmock/gmock.h>
 #include <deque>
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "generator/internal/routing.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "google/api/routing.pb.h"
 #include <google/protobuf/compiler/cpp/names.h>

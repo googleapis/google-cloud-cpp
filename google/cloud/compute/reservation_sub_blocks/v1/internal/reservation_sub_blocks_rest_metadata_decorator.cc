@@ -18,10 +18,10 @@
 // google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto
 
 #include "google/cloud/compute/reservation_sub_blocks/v1/internal/reservation_sub_blocks_rest_metadata_decorator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
