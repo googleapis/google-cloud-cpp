@@ -315,20 +315,10 @@ Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(header_, ns_type, "product_path");
 }
 
-Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
-    NamespaceType ns_type, std::string const& ns_documentation) {
-  return OpenNamespaces(header_, ns_type, "forwarding_product_path",
-                        ns_documentation);
-}
-
 void ServiceCodeGenerator::HeaderCloseNamespaces() { CloseNamespaces(header_); }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(cc_, ns_type, "product_path");
-}
-
-Status ServiceCodeGenerator::CcOpenForwardingNamespaces(NamespaceType ns_type) {
-  return OpenNamespaces(cc_, ns_type, "forwarding_product_path");
 }
 
 void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_); }

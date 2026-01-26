@@ -129,6 +129,118 @@ google::cloud::CompletionQueue cq;
 
 </details>
 
+<details>
+<summary>Removed unversioned forwarding headers.
+</summary>
+
+Some early libraries were created without version and/or service directories.
+For backwards compatibility, forwarding headers were left at parent directory
+that pointed at the first version of the library:
+
+- google/cloud/accessapproval
+- google/cloud/accesscontextmanager
+- google/cloud/apigateway
+- google/cloud/apigeeconnect
+- google/cloud/apikeys
+- google/cloud/appengine
+- google/cloud/artifactregistry
+- google/cloud/asset
+- google/cloud/assuredworkloads
+- google/cloud/automl
+- google/cloud/baremetalsolution
+- google/cloud/batch
+- google/cloud/beyondcorp
+- google/cloud/bigquery
+- google/cloud/billing
+- google/cloud/binaryauthorization
+- google/cloud/certificatemanager
+- google/cloud/channel
+- google/cloud/cloudbuild
+- google/cloud/composer
+- google/cloud/connectors
+- google/cloud/contactcenterinsights
+- google/cloud/container
+- google/cloud/containeranalysis
+- google/cloud/datacatalog
+- google/cloud/datamigration
+- google/cloud/dataplex
+- google/cloud/dataproc
+- google/cloud/datastream
+- google/cloud/deploy
+- google/cloud/dlp
+- google/cloud/documentai
+- google/cloud/edgecontainer
+- google/cloud/eventarc
+- google/cloud/filestore
+- google/cloud/functions
+- google/cloud/gkehub
+- google/cloud/iam
+- google/cloud/iap
+- google/cloud/ids
+- google/cloud/kms
+- google/cloud/language
+- google/cloud/logging
+- google/cloud/managedidentities
+- google/cloud/memcache
+- google/cloud/monitoring
+- google/cloud/networkconnectivity
+- google/cloud/networkmanagement
+- google/cloud/notebooks
+- google/cloud/optimization
+- google/cloud/orgpolicy
+- google/cloud/osconfig
+- google/cloud/oslogin
+- google/cloud/policytroubleshooter
+- google/cloud/privateca
+- google/cloud/profiler
+- google/cloud/recommender
+- google/cloud/redis
+- google/cloud/resourcemanager
+- google/cloud/retail
+- google/cloud/run
+- google/cloud/scheduler
+- google/cloud/secretmanager
+- google/cloud/securitycenter
+- google/cloud/servicecontrol
+- google/cloud/servicedirectory
+- google/cloud/servicemanagement
+- google/cloud/serviceusage
+- google/cloud/shell
+- google/cloud/speech
+- google/cloud/storagetransfer
+- google/cloud/talent
+- google/cloud/tasks
+- google/cloud/texttospeech
+- google/cloud/tpu
+- google/cloud/trace
+- google/cloud/translate
+- google/cloud/video
+- google/cloud/videointelligence
+- google/cloud/vision
+- google/cloud/vmmigration
+- google/cloud/vpcaccess
+- google/cloud/webrisk
+- google/cloud/websecurityscanner
+- google/cloud/workflows
+
+For example, code that used to look like this:
+
+**Before:**
+
+```cpp
+#include "google/cloud/bigquery/bigquery_read_client.h"
+```
+
+Should be changed to this:
+
+**After:**
+
+```cpp
+#include "google/cloud/bigquery/storage/v1/bigquery_read_client.h"
+```
+
+</details>
+
 ### Bigquery
 
 <details>

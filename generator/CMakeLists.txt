@@ -67,16 +67,6 @@ add_library(
     internal/format_class_comments.h
     internal/format_method_comments.cc
     internal/format_method_comments.h
-    internal/forwarding_client_generator.cc
-    internal/forwarding_client_generator.h
-    internal/forwarding_connection_generator.cc
-    internal/forwarding_connection_generator.h
-    internal/forwarding_idempotency_policy_generator.cc
-    internal/forwarding_idempotency_policy_generator.h
-    internal/forwarding_mock_connection_generator.cc
-    internal/forwarding_mock_connection_generator.h
-    internal/forwarding_options_generator.cc
-    internal/forwarding_options_generator.h
     internal/generator_interface.h
     internal/http_annotation_parser.cc
     internal/http_annotation_parser.h

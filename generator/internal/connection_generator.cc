@@ -495,22 +495,6 @@ $connection_class_name$::Async$method_name$(
   }
 
   CcCloseNamespaces();
-
-  // TODO(#8234): This is a special case for backwards compatibility of the
-  //     streaming update function.
-  if (vars().at("service_name") == "BigQueryRead") {
-    CcOpenForwardingNamespaces();
-    CcPrint(R"""(
-void BigQueryReadReadRowsStreamingUpdater(
-    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
-    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
-  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(response,
-                                                                 request);
-}
-)""");
-    CcCloseNamespaces();
-  }
-
   return {};
 }
 

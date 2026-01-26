@@ -165,16 +165,6 @@ void ProcessArgAdditionalProtoFiles(
                   command_line_args);
 }
 
-void ProcessArgForwardingProductPath(
-    std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  auto path = std::find_if(command_line_args.begin(), command_line_args.end(),
-                           [](std::pair<std::string, std::string> const& p) {
-                             return p.first == "forwarding_product_path";
-                           });
-  if (path == command_line_args.end() || path->second.empty()) return;
-  FormatProductPath(path->second);
-}
-
 void ProcessArgIdempotencyOverride(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   ProcessRepeated("idempotency_override", "idempotency_overrides",
@@ -285,7 +275,6 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
-  ProcessArgForwardingProductPath(command_line_args);
   ProcessArgIdempotencyOverride(command_line_args);
   ProcessArgServiceNameMapping(command_line_args);
   ProcessArgServiceNameToComment(command_line_args);

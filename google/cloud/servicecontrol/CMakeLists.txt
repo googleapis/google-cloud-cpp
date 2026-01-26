@@ -18,7 +18,7 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
     servicecontrol "Service Control API"
-    SERVICE_DIRS "__EMPTY__" "v1/" "v2/"
+    SERVICE_DIRS "v1/" "v2/"
     SHARED_PROTO_DEPS "logging_type")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
