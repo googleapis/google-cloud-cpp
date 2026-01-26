@@ -45,8 +45,8 @@ This will log request payloads and response statuses to `clog` (standard error).
 
 ### Enabling Tracing via Code
 
-You can programmatically enable tracing using `TracingComponentsOption`. This
-is useful if you want to target specific subsystems or log streams.
+You can programmatically enable tracing using `TracingComponentsOption`. This is
+useful if you want to target specific subsystems or log streams.
 
 ```c
 #include "google/cloud/pubsub/publisher_connection.h"
@@ -83,13 +83,12 @@ When `rpc` tracing is enabled, you will see output similar to this:
 If you encounter issues, the Google Cloud C++ team maintains a repository on
 GitHub.
 
-* **GitHub Repository:** [googleapis/google-cloud-cpp](https://github.com/googleapis/google-cloud-cpp)
-* **Stack Overflow:** Use tags `google-cloud-platform` and `c++`.
+- **GitHub Repository:**
+  [googleapis/google-cloud-cpp](https://github.com/googleapis/google-cloud-cpp)
+- **Stack Overflow:** Use tags `google-cloud-platform` and `c++`.
 
 When filing an issue, please include:
 
 1. The library version (or commit hash).
-2. The OS and Compiler version (e.g., GCC 11 on Ubuntu 20.04).
-3. Debug logs (sanitized) from `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`.
-
-
+1. The OS and Compiler version (e.g., GCC 11 on Ubuntu 20.04).
+1. Debug logs (sanitized) from `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`.

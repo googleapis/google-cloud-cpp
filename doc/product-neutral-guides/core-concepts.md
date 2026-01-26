@@ -6,7 +6,8 @@ control (Pagination, Futures, Streaming).
 
 ## 1. Installation & Setup
 
-The C++ libraries are typically installed via **vcpkg** or **Conda**, or compiled from source using **CMake**.
+The C++ libraries are typically installed via **vcpkg** or **Conda**, or
+compiled from source using **CMake**.
 
 **Example using vcpkg:**
 
@@ -22,13 +23,13 @@ add_executable(my_app main.cc)
 target_link_libraries(my_app google-cloud-cpp::pubsub)
 ```
 
-## 2. StatusOr\<T\> and Error Handling
+## 2. StatusOr\<T> and Error Handling
 
 C++ does not use exceptions for API errors by default. Instead, it uses
 `google::cloud::StatusOr<T>`.
 
-* **Success:** The object contains the requested value.
-* **Failure:** The object contains a `Status` (error code and message).
+- **Success:** The object contains the requested value.
+- **Failure:** The object contains a `Status` (error code and message).
 
 ```c
 void HandleResponse(google::cloud::StatusOr<std::string> response) {

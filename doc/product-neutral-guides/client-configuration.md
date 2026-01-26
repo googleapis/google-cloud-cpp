@@ -9,13 +9,13 @@ connection factory functions.
 The `google::cloud::Options` class is a type-safe map where you set specific
 option structs.
 
-| Option Struct | Description |
-| ----- | ----- |
-| `google::cloud::EndpointOption` | The address of the API remote host. Used for Regional Endpoints. |
-| `google::cloud::UserProjectOption` | Quota project to use for the request. |
-| `google::cloud::AuthorityOption` | Sets the `:authority` pseudo-header (useful for testing/emulators). |
-| `google::cloud::UnifiedCredentialsOption` | Explicit credentials object (overrides default discovery). |
-| `google::cloud::TracingComponentsOption` | Controls client-side logging/tracing. |
+| Option Struct                             | Description                                                         |
+| ----------------------------------------- | ------------------------------------------------------------------- |
+| `google::cloud::EndpointOption`           | The address of the API remote host. Used for Regional Endpoints.    |
+| `google::cloud::UserProjectOption`        | Quota project to use for the request.                               |
+| `google::cloud::AuthorityOption`          | Sets the `:authority` pseudo-header (useful for testing/emulators). |
+| `google::cloud::UnifiedCredentialsOption` | Explicit credentials object (overrides default discovery).          |
+| `google::cloud::TracingComponentsOption`  | Controls client-side logging/tracing.                               |
 
 ## 2. Customizing the API Endpoint
 
@@ -24,7 +24,7 @@ to a private endpoint.
 
 ### Connecting to a Regional Endpoint
 
-[!code-cpp[](../../google/cloud/pubsub/samples/client_samples.cc#publisher-set-endpoint)]
+\[!code-cpp[](../../google/cloud/pubsub/samples/client_samples.cc#publisher-set-endpoint)]
 
 ## 3. Configuring a Proxy
 
@@ -62,7 +62,7 @@ the connection factory.
 
 You can set the `RetryPolicyOption` and `BackoffPolicyOption`.
 
-[!code-cpp[](../../google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc#set-retry-policy)]
+\[!code-cpp[](../../google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc#set-retry-policy)]
 
 ### Configuring Timeouts
 
