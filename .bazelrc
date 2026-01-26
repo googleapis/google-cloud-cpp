@@ -131,3 +131,4 @@ build:msan --linkopt=-L/usr/lib/x86_64-unknown-linux-gnu
 
 # --config otel2: Open Telemetery ABI version 2
 build:otel2 --cxxopt=-DOPENTELEMETRY_ABI_VERSION_NO=2
+build:otel2 --@opentelemetry-cpp//api:abi_version_no=2
