@@ -301,6 +301,24 @@ BigtableLogging::AsyncCheckAndMutateRow(
       tracing_options_);
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableLogging::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::v2::PingAndWarmRequest const& request) {
+        return child_->AsyncPingAndWarm(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableLogging::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,

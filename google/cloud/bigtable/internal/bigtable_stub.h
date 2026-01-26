@@ -119,6 +119,12 @@ class BigtableStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) = 0;
 
+  virtual future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+  AsyncPingAndWarm(google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::bigtable::v2::PingAndWarmRequest const& request) = 0;
+
   virtual future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
   AsyncReadModifyWriteRow(
       google::cloud::CompletionQueue& cq,
@@ -218,6 +224,12 @@ class DefaultBigtableStub : public BigtableStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;
+
+  future<StatusOr<google::bigtable::v2::PingAndWarmResponse>> AsyncPingAndWarm(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PingAndWarmRequest const& request) override;
 
   future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
   AsyncReadModifyWriteRow(

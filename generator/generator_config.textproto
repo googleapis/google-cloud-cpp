@@ -580,6 +580,7 @@ service {
     "ReadModifyWriteRow",
     "ReadRows",
     "SampleRowKeys",
+    "PingAndWarm",
     "PrepareQuery"
   ]
   omit_repo_metadata: true

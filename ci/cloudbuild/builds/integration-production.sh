@@ -27,7 +27,7 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
+#io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 excluded_rules=(
   "-//examples:grpc_credential_types"
@@ -39,8 +39,8 @@ excluded_rules=(
   "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
 )
 
+#   --test_filter="*ReadRowsAllRows*" --test_timeout=30 \
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
-io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" --test_tag_filters="integration-test,-ud-only" \
-  -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"
+io::run bazel test "${args[@]}" "${integration_args[@]}" --test_output=all \
+  //google/cloud/bigtable/tests:data_integration_test

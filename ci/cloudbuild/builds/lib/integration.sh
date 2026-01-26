@@ -51,7 +51,7 @@ function integration::bazel_args() {
 
   # Integration tests are inherently flaky. Make up to three attempts to get the
   # test passing.
-  args+=(--flaky_test_attempts=3)
+  #args+=(--flaky_test_attempts=3)
 
   args+=(
     # Common settings

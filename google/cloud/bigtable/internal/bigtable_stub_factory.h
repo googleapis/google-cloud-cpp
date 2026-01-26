@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_STUB_FACTORY_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
@@ -28,18 +29,32 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+enum class ChannelSelectionStrategy { kRoundRobin, kRandomTwoLeastUsed };
+
+struct ChannelSelectionStrategyOption {
+  using Type = ChannelSelectionStrategy;
+};
+
 using BaseBigtableStubFactory = std::function<std::shared_ptr<BigtableStub>(
     std::shared_ptr<grpc::Channel>)>;
 
 std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)> child_factory);
+    Options const& options, std::function<std::shared_ptr<BigtableStub>(int)>
+                                refreshing_channel_stub_factory);
+
+std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
+    Options const& options, BaseBigtableStubFactory stub_factory,
+    //    std::function<std::shared_ptr<BigtableStub>(int)>
+    //        refreshing_channel_stub_factory,
+    std::shared_ptr<ConnectionRefreshState> refresh_state);
 
 /// Used in testing to create decorated mocks.
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     CompletionQueue const& cq, Options const& options,
-    BaseBigtableStubFactory const& base_factory);
+    BaseBigtableStubFactory const& stub_factory);
 
 /// Default function used by `DataConnectionImpl`.
 std::shared_ptr<BigtableStub> CreateBigtableStub(
