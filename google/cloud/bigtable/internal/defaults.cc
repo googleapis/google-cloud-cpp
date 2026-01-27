@@ -144,6 +144,12 @@ Options HandleUniverseDomain(Options opts) {
   return opts;
 }
 
+bool EnableDirectAccess() {
+  absl::optional<std::string> env_directpath =
+    google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH");
+  return env_directpath.has_value() && env_directpath.value() == "true";
+}
+
 Options DefaultOptions(Options opts) {
   using ::google::cloud::internal::GetEnv;
   auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
@@ -164,18 +170,13 @@ Options DefaultOptions(Options opts) {
     }
   }
 
-  auto const direct_path =
-      GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH").value_or("");
-  if (absl::c_any_of(absl::StrSplit(direct_path, ','),
-                     [](absl::string_view v) { return v == "bigtable"; })) {
-    opts.set<DataEndpointOption>(
-            "google-c2p:///directpath-bigtable.googleapis.com")
-        .set<AuthorityOption>("directpath-bigtable.googleapis.com");
-
-    // When using DirectPath the gRPC library already does load balancing across
-    // multiple sockets, it makes little sense to perform additional load
-    // balancing in the client library.
-    if (!opts.has<GrpcNumChannelsOption>()) opts.set<GrpcNumChannelsOption>(1);
+  if (EnableDirectAccess()) {
+    std::string endpoint = opts.get<EndpointOption>();
+    if (endpoint.empty()) {
+      endpoint = "bigtable.googleapis.com";
+    }
+    opts.set<DataEndpointOption>("c2p:///" + endpoint)
+        .set<AuthorityOption>(endpoint);
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
