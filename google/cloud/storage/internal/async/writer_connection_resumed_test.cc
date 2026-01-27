@@ -590,8 +590,7 @@ TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
   ASSERT_TRUE(current_handle.has_value());
   EXPECT_EQ(current_handle->handle(), "initial-handle");
 
-  auto flush =
-      connection->Flush(storage_experimental::WritePayload(expected_payload));
+  auto flush = connection->Flush(storage::WritePayload(expected_payload));
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");

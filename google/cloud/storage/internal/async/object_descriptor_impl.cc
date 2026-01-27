@@ -56,8 +56,7 @@ void ObjectDescriptorImpl::Start(
   OnRead(it, std::move(first_response));
   // Acquire lock and queue the background stream if multi-stream optimization
   // is enabled.
-  if (options_
-          .get<storage_experimental::EnableMultiStreamOptimizationOption>()) {
+  if (options_.get<storage::EnableMultiStreamOptimizationOption>()) {
     lk.lock();
     AssurePendingStreamQueued(lk);
   }
@@ -86,8 +85,7 @@ void ObjectDescriptorImpl::AssurePendingStreamQueued(
 }
 
 void ObjectDescriptorImpl::MakeSubsequentStream() {
-  if (!options_
-           .get<storage_experimental::EnableMultiStreamOptimizationOption>()) {
+  if (!options_.get<storage::EnableMultiStreamOptimizationOption>()) {
     // Do nothing if multi-stream optimization is disabled.
     return;
   }

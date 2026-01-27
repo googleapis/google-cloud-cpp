@@ -97,15 +97,12 @@ TEST(DefaultOptionsAsync, MaximumRangeSizeOption) {
 
 TEST(DefaultOptionsAsync, EnableMultiStreamOptimizationOption) {
   auto const options = DefaultOptionsAsync({});
-  EXPECT_TRUE(
-      options.get<storage_experimental::EnableMultiStreamOptimizationOption>());
+  EXPECT_TRUE(options.get<storage::EnableMultiStreamOptimizationOption>());
 
   auto const updated_options = DefaultOptionsAsync(
-      Options{}.set<storage_experimental::EnableMultiStreamOptimizationOption>(
-          false));
+      Options{}.set<storage::EnableMultiStreamOptimizationOption>(false));
   EXPECT_FALSE(
-      updated_options
-          .get<storage_experimental::EnableMultiStreamOptimizationOption>());
+      updated_options.get<storage::EnableMultiStreamOptimizationOption>());
 }
 
 }  // namespace
