@@ -207,7 +207,7 @@ TEST(ReaderConnectionImpl, HashingError) {
 
 TEST(ReaderConnectionImpl, FullHashes) {
   // /bin/echo -n 'The quick brown fox jumps over the lazy dog' > foo.txt
-  // gsutil hash foo.txt
+  // gcloud storage hash foo.txt
   auto constexpr kQuickFoxCrc32cChecksum = "ImIEBA==";
   auto constexpr kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
   auto const crc32c = Crc32cToProto(kQuickFoxCrc32cChecksum).value();
