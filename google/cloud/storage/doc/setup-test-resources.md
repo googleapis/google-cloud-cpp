@@ -69,6 +69,7 @@ list of allowed locations. In this example, we'll use `us-central1`.
 
 ```console
 BUCKET=... # e.g. cloud-cpp-testing-bucket
+# Gsutil command could not be translated. Reason: The top-level flag "-l" is not a valid gsutil flag and is not found in the migration guide.
 gsutil -l us-central1 gs://${BUCKET}
 ```
 
@@ -79,6 +80,7 @@ initial bucket.
 
 ```console
 DESTINATION_BUCKET=... # e.g. cloud-cpp-testing-destination-bucket
+# Gsutil command could not be translated. Reason: The top-level flag "-l" is not a valid gsutil flag and is not found in the migration guide.
 gsutil -l us-east1 gs://${DESTINATION_BUCKET}
 ```
 
@@ -106,13 +108,13 @@ Authorize our service account to use the new key:
 
 ```
 KEYNAME=projects/${PROJECT_NAME}/locations/global/keyRings/${KR}/cryptoKeys/${KEYID}
-gsutil kms authorize -p ${PROJECT_NAME} -k ${KEYNAME}
+gcloud storage service-agent --project ${PROJECT_NAME} --authorize-cmek=${KEYNAME}
 ```
 
 Configure the bucket to use this new key as the default:
 
 ```
-gsutil kms encryption -k ${KEYNAME} gs://${BUCKET}
+gcloud storage buckets update gs://${BUCKET} --default-encryption-key=${KEYNAME}
 ```
 
 ## Setting up a Service Account for HMAC Keys

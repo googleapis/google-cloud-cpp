@@ -45,9 +45,9 @@ PROJECT_NUMBER=$(gcloud projects list \
     --format="value(project_number)" \
     --limit=1)
 
-gsutil iam ch \
-    "serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com:objectAdmin" \
-    "gs://${BUCKET_NAME}"
+gcloud storage buckets add-iam-policy-binding "gs://${BUCKET_NAME}" \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role="objectAdmin"
 ```
 
 ## Create the Docker image

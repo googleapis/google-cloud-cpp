@@ -160,7 +160,7 @@ def verify(tmpdir, name, source, cache, upload, **kwargs):
     same = cmp(source_file, cache_file)
     if not same and args.populate:
         print(f"[ Uploading {upload} ]")
-        subprocess.run(["gsutil", "-q", "cp", source_file, upload], check=False)
+        subprocess.run(["gcloud", "storage", "cp", source_file, upload], check=False)
         print(f"[ Reverifying {cache} ]")
         urlretrieve(cache, cache_file)
         same = cmp(source_file, cache_file)
