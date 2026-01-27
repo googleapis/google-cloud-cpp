@@ -34,6 +34,7 @@ into your project.
 - @ref spanner-auth-example
 - @ref spanner-universe-domain-example
 - @ref spanner-mocking
+- @ref spanner-isolation-level-example
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
   C++ client libraries.
@@ -62,6 +63,19 @@ Follow these links to find examples for other `*Client` classes:
 
 - [`DatabaseAdminClient`](@ref DatabaseAdminClient-set-endpoint-snippet)
 - [`InstanceAdminClient`](@ref InstanceAdminClient-set-endpoint-snippet)
+
+*/
+
+/**
+@page spanner-isolation-level-example Support Isolation Level
+
+Cloud Spanner supports different isolation levels for read-write transactions.
+You can specify a default isolation level at the client-level, or override it
+at the transaction-level.
+
+The following example shows how to set the isolation level:
+
+@snippet samples.cc spanner-isolation-level-setting-sample
 
 */
 

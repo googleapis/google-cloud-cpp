@@ -172,16 +172,16 @@ AsyncWriterConnectionImpl::MakeRequest() {
   auto request = request_;
   if (first_request_) {
     first_request_ = false;
+    if (latest_write_handle_.has_value() && request.has_append_object_spec()) {
+      *request.mutable_append_object_spec()->mutable_write_handle() =
+          *latest_write_handle_;
+    }
   } else {
     request.clear_upload_id();
     request.clear_write_object_spec();
     request.clear_append_object_spec();
   }
   request.set_write_offset(offset_);
-  if (latest_write_handle_.has_value()) {
-    *request.mutable_append_object_spec()->mutable_write_handle() =
-        *latest_write_handle_;
-  }
   return request;
 }
 

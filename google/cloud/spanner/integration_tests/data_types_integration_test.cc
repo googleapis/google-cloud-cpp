@@ -388,6 +388,24 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadUuid) {
+  auto uuid1 = MakeUuid("{DECAFBAD-DEAD-FADE-CAFE-FEEDFACEBEEF}");
+  ASSERT_STATUS_OK(uuid1);
+  auto uuid2 = MakeUuid("0b6ed04ca16dfc4652817f9978c13738");
+  ASSERT_STATUS_OK(uuid2);
+
+  std::vector<Uuid> const data = {
+      Uuid(0), Uuid(1), *uuid1, *uuid2, Uuid(37, 42),
+  };
+  auto result = WriteReadData(*client_, data, "UuidValue");
+
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+  }
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadProtoEnum) {
   std::vector<ProtoEnum<testing::Genre>> const data = {
       testing::Genre::POP,

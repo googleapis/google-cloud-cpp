@@ -630,7 +630,9 @@ StatusOr<storage::internal::QueryResumableUploadResponse> GrpcStub::UploadChunk(
     auto& data = *proto_request.mutable_checksummed_data();
     SetMutableContent(data, splitter.Next());
     data.set_crc32c(Crc32c(GetContent(data)));
-    request.hash_function().Update(offset, GetContent(data), data.crc32c());
+    if (request.hash_function_ptr()) {
+      request.hash_function().Update(offset, GetContent(data), data.crc32c());
+    }
     offset += GetContent(data).size();
 
     auto wopts = grpc::WriteOptions();

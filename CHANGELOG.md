@@ -4,7 +4,43 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.45.0 - TBD
+## v2.47.0 - TBD
+
+## v2.46.0 - 2026-01
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): enable UUID data type ([#15867](https://github.com/googleapis/google-cloud-cpp/pull/15867))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Add full object checksum validation at finalization for json path ([#15815](https://github.com/googleapis/google-cloud-cpp/pull/15815))
+- feat(storage): add support for bucket encryption enforcement config ([#15844](https://github.com/googleapis/google-cloud-cpp/pull/15844))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-01-09T11:37:16-08:00](https://github.com/googleapis/googleapis/tree/6145b5ffe99d290c3d840136f310490d732acb04)
+
+## v2.45.0 - 2025-12-17
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Maintenance API](/google/cloud/maintenance/README.md)
+
+### [Pubsub](google/cloud/pubsub/README.md)
+
+- fix(pubsub): impersonate sa credentials CompletionQueue lifetime ([#15833](https://github.com/googleapis/google-cloud-cpp/pull/15833))
+
+### [Storage](google/cloud/storage/README.md)
+
+- fix(storage): append object spec should only be set in the first request ([#15831](https://github.com/googleapis/google-cloud-cpp/pull/15831))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-12-11T12:53:16-08:00](https://github.com/googleapis/googleapis/tree/05f65958eb7f2a8bc59db87ad40487f0fb093097)
 
 ## v2.44.0 - 2025-12
 

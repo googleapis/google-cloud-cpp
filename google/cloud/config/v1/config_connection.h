@@ -325,6 +325,23 @@ class ConfigConnection {
   virtual StatusOr<google::cloud::config::v1::ResourceDrift> GetResourceDrift(
       google::cloud::config::v1::GetResourceDriftRequest const& request);
 
+  virtual StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

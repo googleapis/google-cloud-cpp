@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/options.h"
+#include "google/cloud/options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -165,6 +167,51 @@ TEST(Transaction, MultiplexedPreviousTransactionId) {
                       .multiplexed_session_previous_transaction_id(),
                   aborted_txn_id);
         EXPECT_EQ(ctx.tag, "app=cart,env=dev");
+        return 0;
+      });
+}
+
+TEST(Transaction, IsolationLevelPrecedence) {
+  internal::OptionsSpan span(Options{}.set<TransactionIsolationLevelOption>(
+      Transaction::IsolationLevel::kSerializable));
+
+  // Case 1: Per-call overrides default options
+  auto opts = Transaction::ReadWriteOptions().WithIsolationLevel(
+      Transaction::IsolationLevel::kRepeatableRead);
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [](spanner_internal::SessionHolder&,
+              StatusOr<google::spanner::v1::TransactionSelector>& s,
+              spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::REPEATABLE_READ);
+        return 0;
+      });
+
+  // Case 2: Fallback to default options
+  auto opts_default = Transaction::ReadWriteOptions();
+  Transaction txn_default = MakeReadWriteTransaction(opts_default);
+  spanner_internal::Visit(
+      txn_default, [](spanner_internal::SessionHolder&,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
+                      spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::SERIALIZABLE);
+        return 0;
+      });
+}
+
+TEST(Transaction, IsolationLevelNotSpecified) {
+  // Case: Isolation not specified in transaction options or default options
+  auto opts = Transaction::ReadWriteOptions();
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [](spanner_internal::SessionHolder&,
+              StatusOr<google::spanner::v1::TransactionSelector>& s,
+              spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::
+                      ISOLATION_LEVEL_UNSPECIFIED);
         return 0;
       });
 }

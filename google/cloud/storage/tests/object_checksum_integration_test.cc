@@ -145,14 +145,8 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectDefault) {
   EXPECT_THAT(os.computed_hash(),
               HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-    if (UsingGrpc()) {
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
-    } else {
-      // Streaming uploads over REST cannot include checksums
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
-    }
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
   }
 }
 
@@ -200,14 +194,8 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitEnable) {
   EXPECT_THAT(os.computed_hash(),
               HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-    if (UsingGrpc()) {
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
-    } else {
-      // Streaming uploads over REST cannot include checksums
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
-      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
-    }
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
   }
 }
 
@@ -287,6 +275,54 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectUploadBadChecksum) {
   stream.Close();
   EXPECT_TRUE(stream.bad());
   ASSERT_THAT(stream.metadata(), Not(IsOk()));
+}
+
+/// @test Verify that full object checksums are sent in the final chunk.
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithFullChecksumValidation) {
+  auto client = MakeIntegrationTestClient();
+  auto object_name = MakeRandomObjectName();
+  auto content = LoremIpsum();
+  auto expected_crc32c = ComputeCrc32cChecksum(content);
+
+  auto os = client.WriteObject(bucket_name_, object_name,
+                               DisableCrc32cChecksum(false),
+                               DisableMD5Hash(true), IfGenerationMatch(0));
+  os << content;
+  os.Close();
+  auto meta = os.metadata();
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  EXPECT_EQ(os.computed_hash(), expected_crc32c);
+
+  if (meta->has_metadata("x_emulator_upload")) {
+    EXPECT_THAT(meta->metadata(),
+                Contains(Pair("x_emulator_crc32c", expected_crc32c)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", "true")));
+  }
+}
+
+/// @test Verify that the upload fails when the provided CRC32C checksum does
+/// not match the data.
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithIncorrectChecksumValue) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+  auto client = MakeIntegrationTestClient();
+  auto object_name = MakeRandomObjectName();
+  auto content = LoremIpsum();
+
+  auto bad_crc32c =
+      ComputeCrc32cChecksum("this is not the data being uploaded");
+
+  auto os = client.WriteObject(bucket_name_, object_name,
+                               Crc32cChecksumValue(bad_crc32c),
+                               DisableMD5Hash(true), IfGenerationMatch(0));
+
+  os << content;
+  os.Close();
+  EXPECT_TRUE(os.bad());
+  auto meta = os.metadata();
+  EXPECT_THAT(meta, Not(IsOk()));
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.

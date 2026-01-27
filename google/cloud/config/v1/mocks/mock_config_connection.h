@@ -405,6 +405,54 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       (google::cloud::config::v1::GetResourceDriftRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::AutoMigrationConfig>,
+      GetAutoMigrationConfig,
+      (google::cloud::config::v1::GetAutoMigrationConfigRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAutoMigrationConfig(Matcher<google::cloud::config::v1::UpdateAutoMigrationConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>,
+      UpdateAutoMigrationConfig,
+      (google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAutoMigrationConfig(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAutoMigrationConfig,
+      (NoAwaitTag,
+       google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAutoMigrationConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>,
+              UpdateAutoMigrationConfig,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

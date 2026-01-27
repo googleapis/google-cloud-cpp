@@ -150,8 +150,7 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   os << "]";
 
   if (rhs.has_encryption()) {
-    os << ", encryption.default_kms_key_name="
-       << rhs.encryption().default_kms_key_name;
+    os << ", encryption=" << rhs.encryption();
   }
 
   os << ", etag=" << rhs.etag();
@@ -362,9 +361,26 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetDefaultAcl() {
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     BucketEncryption const& v) {
-  impl_.AddSubPatch("encryption",
-                    internal::PatchBuilder().SetStringField(
-                        "defaultKmsKeyName", v.default_kms_key_name));
+  internal::PatchBuilder builder;
+  builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+
+  auto add_config_patch = [&](char const* name, auto const& config) {
+    if (config.restriction_mode.empty()) return;
+    builder.AddSubPatch(
+        name, internal::PatchBuilder()
+                  .SetStringField("restrictionMode", config.restriction_mode)
+                  .SetStringField("effectiveTime",
+                                  google::cloud::internal::FormatRfc3339(
+                                      config.effective_time)));
+  };
+  add_config_patch("googleManagedEncryptionEnforcementConfig",
+                   v.google_managed_encryption_enforcement_config);
+  add_config_patch("customerManagedEncryptionEnforcementConfig",
+                   v.customer_managed_encryption_enforcement_config);
+  add_config_patch("customerSuppliedEncryptionEnforcementConfig",
+                   v.customer_supplied_encryption_enforcement_config);
+
+  impl_.AddSubPatch("encryption", std::move(builder));
   return *this;
 }
 

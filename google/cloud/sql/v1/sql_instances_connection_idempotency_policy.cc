@@ -40,6 +40,18 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AddServerCa(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::AddServerCertificate(
+    google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::AddEntraIdCertificate(
+    google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Clone(
     google::cloud::sql::v1::SqlInstancesCloneRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -100,6 +112,18 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ListServerCas(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::ListServerCertificates(
+    google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::ListEntraIdCertificates(
+    google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Patch(
     google::cloud::sql::v1::SqlInstancesPatchRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -132,6 +156,19 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RestoreBackup(
 
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RotateServerCa(
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::RotateServerCertificate(
+    google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::RotateEntraIdCertificate(
+    google::cloud::sql::v1::
+        SqlInstancesRotateEntraIdCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -199,6 +236,11 @@ SqlInstancesServiceConnectionIdempotencyPolicy::GetLatestRecoveryTime(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ExecuteSql(
+    google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AcquireSsrsLease(
     google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -206,6 +248,18 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AcquireSsrsLease(
 
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ReleaseSsrsLease(
     google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::PreCheckMajorVersionUpgrade(
+    google::cloud::sql::v1::
+        SqlInstancesPreCheckMajorVersionUpgradeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PointInTimeRestore(
+    google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

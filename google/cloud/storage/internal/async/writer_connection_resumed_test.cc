@@ -22,6 +22,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/storage/v2/storage.pb.h>
 #include <gmock/gmock.h>
+#include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -170,19 +172,14 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, Flush).WillOnce([&](auto const& p) {
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(absl::nullopt));
+  EXPECT_CALL(*mock, Flush).WillRepeatedly([&](auto const& p) {
     EXPECT_TRUE(p.payload().empty());
-    return sequencer.PushBack("Flush").then([](auto f) {
-      if (!f.get()) return TransientError();
-      return Status{};
-    });
+    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
   });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
-        [](auto f) -> StatusOr<std::int64_t> {
-          if (!f.get()) return TransientError();
-          return 0;
-        });
+        [](auto) -> StatusOr<std::int64_t> { return 0; });
   });
 
   MockFactory mock_factory;
@@ -201,7 +198,6 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
-
   EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
 }
 
@@ -214,13 +210,19 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
 
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, Flush).WillOnce([&](auto const& p) {
-    EXPECT_EQ(p.payload(), payload.payload());
-    return sequencer.PushBack("Flush").then([](auto f) {
-      if (!f.get()) return TransientError();
-      return Status{};
-    });
-  });
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(absl::nullopt));
+  EXPECT_CALL(*mock, Flush)
+      .WillOnce([&](auto const& p) {
+        EXPECT_EQ(p.payload(), payload.payload());
+        return sequencer.PushBack("Flush").then([](auto f) {
+          if (!f.get()) return TransientError();
+          return Status{};
+        });
+      })
+      .WillOnce([&](auto const& p) {
+        EXPECT_TRUE(p.payload().empty());
+        return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+      });
   EXPECT_CALL(*mock, Query).WillOnce([&]() {
     return sequencer.PushBack("Query").then(
         [](auto f) -> StatusOr<std::int64_t> {
@@ -394,6 +396,77 @@ TEST(WriteConnectionResumed, ResumeUsesAppendObjectSpecFromInitialRequest) {
             "projects/_/buckets/test-bucket");
 }
 
+TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(absl::nullopt));
+  EXPECT_CALL(*mock, Flush(_)).WillRepeatedly([&](auto) {
+    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then(
+        [](auto) -> StatusOr<std::int64_t> { return 0; });
+  });
+
+  // Make Write detect concurrent invocations. If two writes run concurrently
+  // the compare_exchange will fail and the test will fail.
+  std::atomic<bool> in_write{false};
+  EXPECT_CALL(*mock, Write(_)).WillRepeatedly([&](auto) {
+    bool expected = false;
+    EXPECT_TRUE(in_write.compare_exchange_strong(expected, true));
+    // Simulate some work that allows a concurrent write to attempt to run.
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    in_write.store(false);
+    return make_ready_future(Status{});
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  // Start a flush which will call impl->Flush() and block.
+  auto flush_future = connection->Flush({});
+  // Allow the Flush to complete, this will schedule a Query (but Query will
+  // remain blocked until we pop it).
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+
+  // Immediately perform a user Write after the flush completed but before
+  // Query completes. This can race with the OnQuery-driven write.
+  auto write_future = connection->Write(TestPayload(1024));
+
+  // Now allow the Query to complete; OnQuery may schedule a write.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+
+  // Wait for both futures to complete with a timeout to avoid indefinite hang.
+  auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+  while (!write_future.is_ready() &&
+         std::chrono::steady_clock::now() < deadline) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+  }
+  deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+  while (!flush_future.is_ready() &&
+         std::chrono::steady_clock::now() < deadline) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+  }
+
+  ASSERT_TRUE(write_future.is_ready());
+  ASSERT_TRUE(flush_future.is_ready());
+  EXPECT_THAT(write_future.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(flush_future.get(), StatusIs(StatusCode::kOk));
+}
+
 TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
   struct {
     bool use_write_object_spec;
@@ -457,6 +530,90 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
     EXPECT_TRUE(captured.append_object_spec().has_write_handle());
     EXPECT_EQ(captured.append_object_spec().write_handle().handle(), tc.handle);
   }
+}
+
+TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* mock_ptr = mock.get();
+
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  google::storage::v2::BidiWriteObjectResponse first_response;
+  first_response.mutable_write_handle()->set_handle("initial-handle");
+
+  EXPECT_CALL(*mock_ptr, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  google::storage::v2::BidiWriteHandle new_handle;
+  new_handle.set_handle("updated-handle");
+  EXPECT_CALL(*mock_ptr, WriteHandle).WillRepeatedly(Return(new_handle));
+
+  auto const expected_payload = std::string(1024, 'A');
+
+  EXPECT_CALL(*mock_ptr, Flush(_))
+      .WillOnce([&](auto const& p) {
+        EXPECT_EQ(p.size(), expected_payload.size());
+        return sequencer.PushBack("Flush").then([](auto f) {
+          if (f.get()) return Status{};
+          return TransientError();
+        });
+      })
+      .WillOnce([&](auto const& p) {
+        // Ghost flush (internal implementation detail)
+        EXPECT_TRUE(p.payload().empty());
+        return sequencer.PushBack("GhostFlush").then([](auto) {
+          return Status{};
+        });
+      });
+
+  EXPECT_CALL(*mock_ptr, Query)
+      .WillOnce([&]() {
+        return sequencer.PushBack("Query").then(
+            [](auto f) -> StatusOr<std::int64_t> {
+              if (!f.get()) return TransientError();
+              return 1024;
+            });
+      })
+      .WillOnce([&]() {
+        return sequencer.PushBack("GhostQuery")
+            .then([](auto) -> StatusOr<std::int64_t> { return 1024; });
+      });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto current_handle = connection->WriteHandle();
+  ASSERT_TRUE(current_handle.has_value());
+  EXPECT_EQ(current_handle->handle(), "initial-handle");
+
+  auto flush =
+      connection->Flush(storage_experimental::WritePayload(expected_payload));
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "GhostFlush");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "GhostQuery");
+  next.first.set_value(true);
+
+  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
+
+  current_handle = connection->WriteHandle();
+  ASSERT_TRUE(current_handle.has_value());
+  EXPECT_EQ(current_handle->handle(), "updated-handle");
 }
 
 }  // namespace
