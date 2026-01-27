@@ -1598,7 +1598,8 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
     auto e2 = seq.PopFrontWithName();
     std::set<std::string> names = {e1.second, e2.second};
     if (names.count("Read[1]") != 0 && names.count("ProactiveFactory") != 0) {
-      e2.first.set_value(true);  // Allow factory to proceed
+      e1.first.set_value(true);
+      e2.first.set_value(true);
     } else {
       ADD_FAILURE() << "Got unexpected events: " << e1.second << ", "
                     << e2.second;
@@ -1625,6 +1626,12 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
       return TransientError();
     });
   });
+  EXPECT_CALL(*stream1, Write)
+      .WillOnce([&](Request const&, grpc::WriteOptions) {
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
   EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
 
   auto stream2 = std::make_unique<MockStream>();
@@ -1661,24 +1668,23 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
   // Register the read range.
   auto reader = tested->Read({0, 100});
 
-  auto next_event = sequencer.PopFrontWithName();
+  bool write1_seen = false;
+  bool read_loop_seen = false;
   promise<bool> fail_stream_promise;
 
-  if (next_event.second == "Read[Loop]") {
-    fail_stream_promise = std::move(next_event.first);
-    // Now expect Write[1]
-    auto w1 = sequencer.PopFrontWithName();
-    EXPECT_EQ(w1.second, "Write[1]");
-    w1.first.set_value(true);
-  } else {
-    // It was Write[1] immediately
-    EXPECT_EQ(next_event.second, "Write[1]");
-    next_event.first.set_value(true);
-
-    // Now wait for Read[Loop]
-    auto read_loop = sequencer.PopFrontWithName();
-    EXPECT_EQ(read_loop.second, "Read[Loop]");
-    fail_stream_promise = std::move(read_loop.first);
+  while (!write1_seen || !read_loop_seen) {
+    auto event = sequencer.PopFrontWithName();
+    if (event.second == "Write[1]") {
+      EXPECT_FALSE(write1_seen);
+      write1_seen = true;
+      event.first.set_value(true);
+    } else if (event.second == "Read[Loop]") {
+      EXPECT_FALSE(read_loop_seen);
+      read_loop_seen = true;
+      fail_stream_promise = std::move(event.first);
+    } else {
+      FAIL() << "Unexpected event: " << event.second;
+    }
   }
 
   // Trigger Failure on Stream 1.
