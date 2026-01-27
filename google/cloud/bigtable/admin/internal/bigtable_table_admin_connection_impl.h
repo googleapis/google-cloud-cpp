@@ -238,6 +238,7 @@ class BigtableTableAdminConnectionImpl
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub_;
   Options options_;
+  StatusOr<CompletionQueue> completion_queue() const override;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
