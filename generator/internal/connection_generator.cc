@@ -57,6 +57,8 @@ Status ConnectionGenerator::GenerateHeader() {
       {vars("idempotency_policy_header_path"), vars("retry_traits_header_path"),
        HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
+       HasEmitCompletionQueueAccessor() ? "google/cloud/completion_queue.h"
+                                        : "",
        "google/cloud/backoff_policy.h",
        HasLongrunningMethod() || HasAsyncMethod() ? "google/cloud/future.h"
                                                   : "",
@@ -91,7 +93,21 @@ Status ConnectionGenerator::GenerateHeader() {
     }
   }
 
-  auto result = HeaderOpenNamespaces();
+  Status result;
+  if (HasEmitCompletionQueueAccessor()) {
+    result = HeaderOpenNamespaces();
+    if (!result.ok()) return result;
+    HeaderPrint(R"""(class $connection_class_name$;)""");
+    HeaderCloseNamespaces();
+
+    result = HeaderOpenNamespaces(NamespaceType::kInternal);
+    if (!result.ok()) return result;
+    HeaderPrint(
+        R"""(StatusOr<CompletionQueue> completion_queue($product_namespace$::$connection_class_name$ const& conn);)""");
+    HeaderCloseNamespaces();
+  }
+
+  result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
   HeaderPrint(R"""(
@@ -315,6 +331,13 @@ class $connection_class_name$ {
         __FILE__, __LINE__);
   }
 
+  if (HasEmitCompletionQueueAccessor()) {
+    HeaderPrint(R"""( protected:
+  friend StatusOr<CompletionQueue> $product_internal_namespace$::completion_queue(
+      $connection_class_name$ const& conn);
+  virtual StatusOr<CompletionQueue> completion_queue() const;
+)""");
+  }
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
@@ -488,6 +511,15 @@ $connection_class_name$::Async$method_name$(
                        All(IsNonStreaming, Not(IsLongrunningOperation),
                            Not(IsPaginated)))},
         __FILE__, __LINE__);
+  }
+
+  if (HasEmitCompletionQueueAccessor()) {
+    CcPrint(
+        R"""(
+StatusOr<CompletionQueue> $connection_class_name$::completion_queue() const {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+)""");
   }
 
   if (HasGenerateGrpcTransport()) {

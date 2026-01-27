@@ -60,6 +60,11 @@ std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
 
 }  // namespace
 
+StatusOr<CompletionQueue> completion_queue(
+    bigtable_admin::BigtableTableAdminConnection const& conn) {
+  return conn.completion_queue();
+}
+
 BigtableTableAdminConnectionImpl::BigtableTableAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub,
@@ -1291,6 +1296,11 @@ BigtableTableAdminConnectionImpl::AsyncCheckConsistency(
                                            std::move(options), request);
       },
       std::move(current), std::move(request_copy), __func__);
+}
+
+StatusOr<CompletionQueue> BigtableTableAdminConnectionImpl::completion_queue()
+    const {
+  return background_->cq();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
