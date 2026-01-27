@@ -246,6 +246,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
    */
   bool IsDeprecated() const;
 
+  bool HasEmitCompletionQueueAccessor() const;
+
  private:
   void SetMethods();
 
