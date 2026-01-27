@@ -1,0 +1,10 @@
+Transport,Strategy,TotalObjects,PageSize,LatencySeconds
+Grpc,start-offset,500000000,5000,800.217
+Grpc,start-offset,500000000,5000,687.531
+Grpc,start-offset,500000000,5000,692.278
+DirectPath,start-offset,500000000,5000,799.6
+DirectPath,start-offset,500000000,5000,687.638
+DirectPath,start-offset,500000000,5000,689.509
+Json,start-offset,500000000,5000,1992.25
+Json,start-offset,500000000,5000,1998.25
+Json,start-offset,500000000,5000,1961.23
