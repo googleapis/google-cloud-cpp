@@ -192,5 +192,3 @@ void StreamingRecognize(google::cloud::speech::SpeechClient client) {
   auto status = stream->Finish();
 }
 ```
-
-

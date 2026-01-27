@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) try {
   }
 
   // Transform code snippets
-  std::regex snippet_re(R"(\[!code-cpp\[\]\((.*?)\)\])");
+  std::regex snippet_re(R"(<!-- code-include:\s*(.*?) -->)");
   std::string transformed_content;
   auto it = std::sregex_iterator(content.begin(), content.end(), snippet_re);
   auto end = std::sregex_iterator();

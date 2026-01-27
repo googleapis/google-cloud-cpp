@@ -117,5 +117,3 @@ google::cloud::StatusOr<iam::Policy> UpdateIamPolicyWithOCC(
       "Failed to update IAM policy after max retries due to contention.");
 }
 ```
-
-

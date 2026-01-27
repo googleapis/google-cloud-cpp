@@ -24,7 +24,7 @@ to a private endpoint.
 
 ### Connecting to a Regional Endpoint
 
-[!code-cpp[](../../google/cloud/pubsub/samples/client_samples.cc#publisher-set-endpoint)]
+<!-- code-include: ../../google/cloud/pubsub/samples/client_samples.cc#publisher-set-endpoint -->
 
 ## 3. Configuring a Proxy
 
@@ -62,7 +62,7 @@ the connection factory.
 
 You can set the `RetryPolicyOption` and `BackoffPolicyOption`.
 
-[!code-cpp[](../../google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc#set-retry-policy)]
+<!-- code-include: ../../google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc#set-retry-policy -->
 
 ### Configuring Timeouts
 
