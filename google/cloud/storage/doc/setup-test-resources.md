@@ -80,8 +80,7 @@ initial bucket.
 
 ```console
 DESTINATION_BUCKET=... # e.g. cloud-cpp-testing-destination-bucket
-# Gsutil command could not be translated. Reason: The top-level flag "-l" is not a valid gsutil flag and is not found in the migration guide.
-gsutil -l us-east1 gs://${DESTINATION_BUCKET}
+gcloud storage buckets create gs://${DESTINATION_BUCKET} --location=us-east1
 ```
 
 ## Setting up a Pub/Sub Topic
