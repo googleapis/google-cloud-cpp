@@ -59,8 +59,8 @@ source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 production_only_targets=(
   "//google/cloud/bigtable/examples:bigtable_table_admin_backup_snippets"
   "//google/cloud/bigtable/examples:table_admin_iam_policy_snippets"
-  "//google/cloud/bigtable/tests:admin_backup_integration_test"
-  "//google/cloud/bigtable/tests:admin_iam_policy_integration_test"
+  "//google/cloud/bigtable/tests:table_admin_backup_integration_test"
+  "//google/cloud/bigtable/tests:table_admin_iam_policy_integration_test"
 )
 
 # Coverage builds are more subject to flakiness, as we must explicitly disable

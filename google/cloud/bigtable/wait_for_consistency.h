@@ -23,6 +23,39 @@ namespace cloud {
 namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+enum class Consistency {
+  /// Some of the mutations created before the consistency token have not been
+  /// received by all the table replicas.
+  kInconsistent,
+  /// All mutations created before the consistency token have been received by
+  /// all the table replicas.
+  kConsistent,
+};
+
+/**
+ * Checks consistency of a table with multiple calls using a background thread
+ * from the provided connection.
+ *
+ * This function polls the service until the table is Consistent, the polling
+ * policies are exhausted, or an error occurs.
+ *
+ * @param connection the connection to the Bigtable admin service.
+ * @param table_name the full name of the table for which we want to check
+ *   consistency ("projects/<project>/instances/<instance>/tables/<table>").
+ * @param consistency_token the consistency token of the table.
+ * @return the consistency status for the table.
+ *
+ * @par Idempotency
+ * This operation is read-only and therefore it is always idempotent.
+ *
+ * @par Example
+ * @snippet table_admin_snippets.cc wait for consistency check
+ */
+google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
+    std::shared_ptr<BigtableTableAdminConnection> const& connection,
+    std::string const& table_name, std::string const& consistency_token,
+    Options options = {});
+
 /**
  * Polls until a table is consistent, or until the polling policy has expired.
  *

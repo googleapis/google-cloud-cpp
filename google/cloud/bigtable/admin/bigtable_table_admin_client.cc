@@ -821,6 +821,14 @@ BigtableTableAdminClient::AsyncCheckConsistency(
   return connection_->AsyncCheckConsistency(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+BigtableTableAdminClient::WaitForConsistency(
+    google::bigtable::admin::v2::CheckConsistencyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->WaitForConsistency(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
 }  // namespace cloud

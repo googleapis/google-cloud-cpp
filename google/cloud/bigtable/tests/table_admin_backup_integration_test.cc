@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -41,22 +41,17 @@ namespace bigtable = ::google::cloud::bigtable;
 class AdminBackupIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::unique_ptr<bigtable::TableAdmin> table_admin_;
-  std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
-
   void SetUp() override {
     TableIntegrationTest::SetUp();
-
-    std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::MakeAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id());
-    table_admin_ = std::make_unique<bigtable::TableAdmin>(
-        admin_client, bigtable::testing::TableTestEnvironment::instance_id());
-    auto instance_admin_client = bigtable::MakeInstanceAdminClient(
-        bigtable::testing::TableTestEnvironment::project_id());
+    table_admin_ = std::make_unique<bigtable_admin::BigtableTableAdminClient>(
+        bigtable_admin::MakeBigtableTableAdminConnection());
     instance_admin_ =
-        std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+        std::make_unique<bigtable_admin::BigtableInstanceAdminClient>(
+            bigtable_admin::MakeBigtableInstanceAdminConnection());
   }
+
+  std::unique_ptr<bigtable_admin::BigtableTableAdminClient> table_admin_;
+  std::unique_ptr<bigtable_admin::BigtableInstanceAdminClient> instance_admin_;
 };
 
 /// @test Verify that `bigtable::TableAdmin` Backup CRUD operations work as
@@ -66,14 +61,16 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto const table_name =
       bigtable::TableName(project_id(), instance_id(), table_id);
 
-  auto clusters = instance_admin_->ListClusters(table_admin_->instance_id());
+  auto clusters = instance_admin_->ListClusters(
+      bigtable::InstanceName(project_id(), instance_id()));
   ASSERT_STATUS_OK(clusters);
-  auto const cluster_name = clusters->clusters.begin()->name();
+  auto const cluster_name = clusters->clusters().begin()->name();
   auto const cluster_id =
       cluster_name.substr(cluster_name.rfind('/') + 1,
                           cluster_name.size() - cluster_name.rfind('/'));
   auto const backup_id = RandomBackupId();
-  auto const backup_name = cluster_name + "/backups/" + backup_id;
+  auto backup_name =
+      bigtable::BackupName(project_id(), instance_id(), cluster_id, backup_id);
 
   // Create backup
   // The proto documentation says backup expiration times are in "microseconds
@@ -82,28 +79,42 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto expire_time = std::chrono::time_point_cast<std::chrono::microseconds>(
       std::chrono::system_clock::now() + std::chrono::hours(12));
 
-  auto backup = table_admin_->CreateBackup(
-      {cluster_id, backup_id, table_id, expire_time});
+  google::bigtable::admin::v2::Backup b;
+  *b.mutable_expire_time() = ToProtoTimestamp(expire_time);
+  auto backup = table_admin_
+                    ->CreateBackup(bigtable::ClusterName(
+                                       project_id(), instance_id(), cluster_id),
+                                   backup_id, b)
+                    .get();
+
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
 
   // List backups to verify new backup has been created
-  auto backups = table_admin_->ListBackups({});
-  ASSERT_STATUS_OK(backups);
-  EXPECT_THAT(BackupNames(*backups), Contains(backup_name));
+  auto backups = table_admin_->ListBackups(table_name);
+  std::vector<google::bigtable::admin::v2::Backup> backups_list;
+  for (auto& b : backups) {
+    ASSERT_STATUS_OK(b);
+    backups_list.push_back(*b);
+  }
+  EXPECT_THAT(BackupNames(backups_list), Contains(backup_name));
 
   // Get backup to verify create
-  backup = table_admin_->GetBackup(cluster_id, backup_id);
+  backup = table_admin_->GetBackup(backup_name);
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
 
   // Update backup
   expire_time += std::chrono::hours(12);
-  backup = table_admin_->UpdateBackup({cluster_id, backup_id, expire_time});
+  google::bigtable::admin::v2::Backup update_backup = *backup;
+  *update_backup.mutable_expire_time() = ToProtoTimestamp(expire_time);
+  google::protobuf::FieldMask update_mask;
+  update_mask.add_paths("expire_time");
+  backup = table_admin_->UpdateBackup(update_backup, update_mask);
   ASSERT_STATUS_OK(backup);
 
   // Verify the update
-  backup = table_admin_->GetBackup(cluster_id, backup_id);
+  backup = table_admin_->GetBackup(backup_name);
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
   EXPECT_THAT(backup->expire_time(),
@@ -113,21 +124,37 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 
   // Verify the delete
-  auto tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(tables);
-  EXPECT_THAT(TableNames(*tables), Not(Contains(table_name)));
+  google::bigtable::admin::v2::ListTablesRequest list_request;
+  list_request.set_parent(bigtable::InstanceName(project_id(), instance_id()));
+  list_request.set_view(btadmin::Table::NAME_ONLY);
+  auto tables = table_admin_->ListTables(list_request);
+  std::vector<btadmin::Table> table_list;
+  for (auto& t : tables) {
+    ASSERT_STATUS_OK(t);
+    table_list.push_back(*t);
+  }
+  EXPECT_THAT(TableNames(table_list), Not(Contains(table_name)));
 
   // Restore table
-  auto table = table_admin_->RestoreTable({table_id, cluster_id, backup_id});
+  google::bigtable::admin::v2::RestoreTableRequest restore_request;
+  restore_request.set_parent(
+      bigtable::InstanceName(project_id(), instance_id()));
+  restore_request.set_backup(backup_name);
+  restore_request.set_table_id(table_name);
+  auto table = table_admin_->RestoreTable(restore_request).get();
   EXPECT_STATUS_OK(table);
 
   // Verify the restore
-  tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(tables);
-  EXPECT_THAT(TableNames(*tables), Contains(table_name).Times(1));
+  tables = table_admin_->ListTables(list_request);
+  table_list.clear();
+  for (auto& t : tables) {
+    ASSERT_STATUS_OK(t);
+    table_list.push_back(*t);
+  }
+  EXPECT_THAT(TableNames(table_list), Contains(table_name).Times(1));
 
   // Delete backup
-  EXPECT_STATUS_OK(table_admin_->DeleteBackup(cluster_id, backup_id));
+  EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_name));
 }
 
 }  // namespace

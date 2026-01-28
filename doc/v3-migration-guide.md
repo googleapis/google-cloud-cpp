@@ -487,6 +487,120 @@ internal legacy files.
 
 </details>
 
+<details>
+<summary>Removed <code>bigtable::AdminClient</code> and <code>bigtable::TableAdmin</code></summary>
+
+The `bigtable::AdminClient` class and `bigtable::TableAdmin` class have been
+replaced with `bigtable_admin::BigtableTableAdminClient`.
+
+**Before:**
+
+```cpp
+
+std::shared_ptr<bigtable::AdminClient> admin_client = 
+    bigtable::MakeAdminClient("project-id");
+auto table_admin = std::make_unique<bigtable::TableAdmin>(
+    admin_client, "instance-id");
+
+// Drop a selection of rows by key prefix.
+auto result = table_admin.DropRowByPrefix("table-id", "row-key-prefix");
+
+// Drop all rows.
+result = table_admin.DropAllRows("table-id");
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+
+auto table_admin = bigtable_admin::BigtableTableAdminClient(
+    bigtable_admin::MakeBigtableAdminConnection());
+auto table_name = bigtable::TableName("project-id", "instance-id", "table-id");
+
+// Drop a selection of rows by key prefix.
+google::bigtable::admin::v2::DropRowRangeRequest drop_rows_by_prefix;
+drop_rows_by_prefix.set_name(table_name);
+drop_rows_by_prefix.set_row_key_prefix("row-key-prefix");
+auto result = table_admin.DropRowRange(drop_rows_by_prefix);
+
+// Drop all rows.
+google::bigtable::admin::v2::DropRowRangeRequest drop_all_rows;
+drop_all_rows.set_name(table_name);
+drop_all_rows.set_delete_all_data_from_table(true);
+result = table_admin.DropRowRange(drop_all_rows);
+```
+
+</details>
+
+<details><summary><code>WaitForConsistency</code> is now a free function</summary>
+
+With the removal of the `bigtable::TableAdmin` class, `WaitForConsistency` is
+now a free function.
+
+**Before:**
+
+```cpp
+
+std::shared_ptr<bigtable::AdminClient> admin_client = 
+    bigtable::MakeAdminClient("project-id");
+auto table_admin = std::make_unique<bigtable::TableAdmin>(
+    admin_client, "instance-id");
+
+auto token = table_admin.GenerateConsistencyToken("table-id");
+if (!token) throw std::runtime_error(token.status().message());
+auto result = table_admin.WaitForConsistency("table-id", *token);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
+
+auto connection = bigtable_admin::MakeBigtableAdminConnection();
+auto table_admin = bigtable_admin::BigtableTableAdminClient(connection);
+auto table_name = bigtable::TableName("project-id", "instance-id", "table-id");
+
+auto token = table_admin.GenerateConsistencyToken(table_name);
+if (!token) throw std::runtime_error(token.status().message());
+auto result = bigtable_admin::WaitForConsistency(connection, table_name,
+                                                 token->consistency_token());
+```
+
+</details>
+
+<details>
+<summary>Removed <code>bigtable::InstanceAdminClient</code> and <code>bigtable::InstanceAdmin</code></summary>
+
+The `bigtable::InstanceAdminClient` class and `bigtable::InstanceAdmin` class
+have been replaced with `bigtable_admin::BigtableInstanceAdminClient`.
+
+**Before:**
+
+```cpp
+auto instance_admin_client = bigtable::MakeInstanceAdminClient("project-id");
+auto instance_admin =
+    std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+
+auto clusters = instance_admin->ListClusters();
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
+
+auto instance_admin =
+        std::make_unique<bigtable_admin::BigtableInstanceAdminClient>(
+            bigtable_admin::MakeBigtableInstanceAdminConnection());
+
+auto clusters = instance_admin->ListClusters(
+    InstanceName("project-id", "instance-id"));
+```
+
+</details>
+
 ### Pubsub
 
 <details>

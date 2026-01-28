@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/iam_binding.h"
+#include "google/cloud/bigtable/iam_policy.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -29,10 +30,6 @@ namespace {
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::shared_ptr<AdminClient> admin_client_;
-  std::unique_ptr<TableAdmin> table_admin_;
-  std::string service_account_;
-
   void SetUp() override {
     TableIntegrationTest::SetUp();
 
@@ -41,34 +38,37 @@ class AdminIAMPolicyIntegrationTest
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
 
-    admin_client_ =
-        MakeAdminClient(testing::TableTestEnvironment::project_id());
-    table_admin_ = std::make_unique<TableAdmin>(
-        admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
+    table_admin_ = std::make_unique<bigtable_admin::BigtableTableAdminClient>(
+        bigtable_admin::MakeBigtableTableAdminConnection());
   }
+
+  std::string service_account_;
+  std::unique_ptr<bigtable_admin::BigtableTableAdminClient> table_admin_;
 };
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
 
+  auto table_name = bigtable::TableName(project_id(), instance_id(), table_id);
+
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
-  auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_policy);
+  auto initial_policy = table_admin_->SetIamPolicy(table_name, iam_policy);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = table_admin_->GetIamPolicy(table_id);
+  auto fetched_policy = table_admin_->GetIamPolicy(table_name);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version(), fetched_policy->version());
   EXPECT_EQ(initial_policy->etag(), fetched_policy->etag());
 
   auto permission_set = table_admin_->TestIamPermissions(
-      table_id, {"bigtable.tables.get", "bigtable.tables.readRows"});
+      table_name, {"bigtable.tables.get", "bigtable.tables.readRows"});
   ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2, permission_set->size());
+  EXPECT_EQ(2, permission_set->permissions().size());
 }
 
 }  // namespace

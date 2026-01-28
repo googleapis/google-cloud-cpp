@@ -162,6 +162,16 @@ class TableIntegrationTest
     return names;
   }
 
+  static StatusOr<std::vector<std::string>> TableNames(
+      StreamRange<google::bigtable::admin::v2::Table>& tables) {
+    std::vector<std::string> names;
+    for (auto const& table : tables) {
+      if (!table) return table.status();
+      names.push_back(table->name());
+    }
+    return names;
+  }
+
   static std::vector<std::string> BackupNames(
       std::vector<google::bigtable::admin::v2::Backup> const& backups) {
     std::vector<std::string> names(backups.size());

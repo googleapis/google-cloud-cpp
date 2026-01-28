@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H
 
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gtest/gtest.h>
 #include <string>

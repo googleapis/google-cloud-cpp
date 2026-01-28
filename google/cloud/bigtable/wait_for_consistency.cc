@@ -13,15 +13,43 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/wait_for_consistency.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h"
 #include <chrono>
 
 namespace google {
 namespace cloud {
 namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
+    std::shared_ptr<BigtableTableAdminConnection> const& connection,
+    std::string const& table_id, std::string const& consistency_token,
+    Options options) {
+  auto cq = bigtable_admin_internal::completion_queue(*connection);
+  if (!cq.ok()) return make_ready_future(StatusOr<Consistency>(cq.status()));
+
+  // We avoid lifetime issues due to ownership cycles, by holding the
+  // `BackgroundThreads` which run the `CompletionQueue` outside of the
+  // operation, in this class. If the `BackgroundThreads` running the
+  // `CompletionQueue` were instead owned by the Connection, we would have an
+  // ownership cycle. We have made this mistake before. See #7740 for more
+  // details.
+  auto client = bigtable_admin::BigtableTableAdminClient(connection);
+  return bigtable_admin::AsyncWaitForConsistency(
+             *std::move(cq), std::move(client), table_id, consistency_token,
+             std::move(options))
+      .then([](future<Status> f) -> StatusOr<Consistency> {
+        auto s = f.get();
+        if (!s.ok()) return s;
+        return Consistency::kConsistent;
+      });
+}
+
 namespace {
 
 // This class borrows heavily from `google::cloud::internal::AsyncRetryLoop`
@@ -52,7 +80,8 @@ class AsyncWaitForConsistencyImpl
   }
 
  private:
-  using RespType = StatusOr<bigtable::admin::v2::CheckConsistencyResponse>;
+  using RespType =
+      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>;
   using TimerResult = StatusOr<std::chrono::system_clock::time_point>;
 
   struct State {
@@ -152,7 +181,7 @@ class AsyncWaitForConsistencyImpl
   }
 
   CompletionQueue cq_;
-  bigtable::admin::v2::CheckConsistencyRequest request_;
+  google::bigtable::admin::v2::CheckConsistencyRequest request_;
   BigtableTableAdminClient client_;
   Options options_;
   std::shared_ptr<PollingPolicy> polling_policy_;
