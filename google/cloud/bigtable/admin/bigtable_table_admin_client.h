@@ -2581,6 +2581,10 @@ class BigtableTableAdminClient {
       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       Options opts = {});
 
+future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+     WaitForConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request,
+                     Options opts = {});
+
  private:
   std::shared_ptr<BigtableTableAdminConnection> connection_;
   Options options_;

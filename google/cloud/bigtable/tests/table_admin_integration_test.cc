@@ -322,13 +322,18 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Wait until all the mutations before the `consistency_token` have propagated
   // everywhere.
-  google::cloud::future<google::cloud::StatusOr<bigtable_admin::Consistency>>
-      result = google::cloud::bigtable_admin::WaitForConsistency(
-          table_admin_connection, table_created->name(),
-          consistency_token->consistency_token());
-  auto is_consistent = result.get();
+//  google::cloud::future<google::cloud::StatusOr<bigtable_admin::Consistency>>
+//      result = google::cloud::bigtable_admin::WaitForConsistency(
+//          table_admin_connection, table_created->name(),
+//          consistency_token->consistency_token());
+
+  google::bigtable::admin::v2::CheckConsistencyRequest wait_request;
+  wait_request.set_name(table_created->name());
+  wait_request.set_consistency_token(consistency_token->consistency_token());
+  future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>> result = table_admin->WaitForConsistency(wait_request);
+  StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> is_consistent = result.get();
   ASSERT_STATUS_OK(is_consistent);
-  EXPECT_EQ(bigtable_admin::Consistency::kConsistent, *is_consistent);
+  EXPECT_TRUE(is_consistent->consistent());
 
   // Cleanup the table and the instance.
   EXPECT_STATUS_OK(table_admin->DeleteTable(table_created->name()));
