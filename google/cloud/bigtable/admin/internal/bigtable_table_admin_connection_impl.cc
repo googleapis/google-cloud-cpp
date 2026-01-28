@@ -1298,31 +1298,6 @@ BigtableTableAdminConnectionImpl::AsyncCheckConsistency(
       std::move(current), std::move(request_copy), __func__);
 }
 
-future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-BigtableTableAdminConnectionImpl::WaitForConsistency(
-    google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto request_copy = request;
-  auto const idempotent =
-      idempotency_policy(*current)->CheckConsistency(request_copy);
-  auto retry = retry_policy(*current);
-  auto backoff = backoff_policy(*current);
-  auto attempt_predicate =
-      [](StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> const&
-             r) { return r.ok() && r->consistent(); };
-  return google::cloud::internal::AsyncRetryLoop(
-      std::move(retry), std::move(backoff), idempotent, background_->cq(),
-      [stub = stub_](
-          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-        return stub->AsyncCheckConsistency(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      std::move(current), std::move(request_copy), __func__,
-      std::move(attempt_predicate));
-}
-
 StatusOr<CompletionQueue> BigtableTableAdminConnectionImpl::completion_queue()
     const {
   return background_->cq();

@@ -89,6 +89,7 @@ add_library(
     admin/internal/bigtable_table_admin_auth_decorator.h
     admin/internal/bigtable_table_admin_connection_impl.cc
     admin/internal/bigtable_table_admin_connection_impl.h
+    admin/internal/bigtable_table_admin_connection_impl_bespoke.cc
     admin/internal/bigtable_table_admin_logging_decorator.cc
     admin/internal/bigtable_table_admin_logging_decorator.h
     admin/internal/bigtable_table_admin_metadata_decorator.cc

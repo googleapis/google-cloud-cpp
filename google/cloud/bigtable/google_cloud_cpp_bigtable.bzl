@@ -159,6 +159,7 @@ google_cloud_cpp_bigtable_srcs = [
     "admin/internal/bigtable_instance_admin_tracing_stub.cc",
     "admin/internal/bigtable_table_admin_auth_decorator.cc",
     "admin/internal/bigtable_table_admin_connection_impl.cc",
+    "admin/internal/bigtable_table_admin_connection_impl_bespoke.cc",
     "admin/internal/bigtable_table_admin_logging_decorator.cc",
     "admin/internal/bigtable_table_admin_metadata_decorator.cc",
     "admin/internal/bigtable_table_admin_option_defaults.cc",
