@@ -588,7 +588,6 @@ service {
     {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
   ]
   omit_repo_metadata: true
-  emit_completion_queue_accessor: true
 }
 
 # Billing

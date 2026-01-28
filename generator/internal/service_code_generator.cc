@@ -511,11 +511,6 @@ bool ServiceCodeGenerator::IsDeprecated() const {
   return service_descriptor_->options().deprecated();
 }
 
-bool ServiceCodeGenerator::HasEmitCompletionQueueAccessor() const {
-  return vars().find("emit_completion_queue_accessor") != vars().end() &&
-         vars().at("emit_completion_queue_accessor") == "true";
-}
-
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

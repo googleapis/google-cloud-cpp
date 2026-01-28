@@ -382,11 +382,6 @@ BigtableTableAdminConnection::AsyncCheckConsistency(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<CompletionQueue> BigtableTableAdminConnection::completion_queue()
-    const {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
 std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
