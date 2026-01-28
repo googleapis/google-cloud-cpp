@@ -34,9 +34,9 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::AsyncConnection;
+using ::google::cloud::storage::ObjectDescriptorConnection;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage_experimental::AsyncConnection;
-using ::google::cloud::storage_experimental::ObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
@@ -120,7 +120,7 @@ TEST(ConnectionTracing, InsertObject) {
 TEST(ConnectionTracing, ReadObjectError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -130,9 +130,8 @@ TEST(ConnectionTracing, ReadObjectError) {
   auto result = actual->ReadObject(AsyncConnection::ReadObjectParams{})
                     .then(expect_no_context);
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -146,7 +145,7 @@ TEST(ConnectionTracing, ReadObjectError) {
 TEST(ConnectionTracing, ReadObjectSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -157,14 +156,13 @@ TEST(ConnectionTracing, ReadObjectSuccess) {
   auto f = actual->ReadObject(AsyncConnection::ReadObjectParams{})
                .then(expect_no_context);
 
-  using Response = ::google::cloud::storage_experimental::
-      AsyncReaderConnection::ReadResponse;
+  using Response =
+      ::google::cloud::storage::AsyncReaderConnection::ReadResponse;
   auto mock_reader = std::make_unique<MockAsyncReaderConnection>();
   EXPECT_CALL(*mock_reader, Read)
       .WillOnce(Return(ByMove(make_ready_future(Response(Status{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>(
-          std::move(mock_reader)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>(
+      std::move(mock_reader)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
@@ -180,7 +178,7 @@ TEST(ConnectionTracing, ReadObjectSuccess) {
 
 TEST(ConnectionTracing, ReadObjectRange) {
   auto span_catcher = InstallSpanCatcher();
-  PromiseWithOTelContext<StatusOr<storage_experimental::ReadPayload>> p;
+  PromiseWithOTelContext<StatusOr<storage::ReadPayload>> p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
   EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
@@ -188,7 +186,7 @@ TEST(ConnectionTracing, ReadObjectRange) {
   auto actual = MakeTracingAsyncConnection(std::move(mock));
   auto result = actual->ReadObjectRange(AsyncConnection::ReadObjectParams{})
                     .then(expect_no_context);
-  p.set_value(storage_experimental::ReadPayload{});
+  p.set_value(storage::ReadPayload{});
   ASSERT_STATUS_OK(result.get());
 
   auto spans = span_catcher->GetSpans();
@@ -201,7 +199,7 @@ TEST(ConnectionTracing, ReadObjectRange) {
 TEST(ConnectionTracing, StartUnbufferedUploadError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -211,9 +209,8 @@ TEST(ConnectionTracing, StartUnbufferedUploadError) {
   auto result = actual->StartUnbufferedUpload(AsyncConnection::UploadParams{})
                     .then(expect_no_context);
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -227,7 +224,7 @@ TEST(ConnectionTracing, StartUnbufferedUploadError) {
 TEST(ConnectionTracing, StartUnbufferedUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -242,14 +239,13 @@ TEST(ConnectionTracing, StartUnbufferedUploadSuccess) {
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
           make_ready_future(make_status_or(google::storage::v2::Object{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          std::move(mock_reader)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      std::move(mock_reader)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto reader = *std::move(result);
-  auto r = reader->Finalize(storage_experimental::WritePayload{}).get();
+  auto r = reader->Finalize(storage::WritePayload{}).get();
   EXPECT_STATUS_OK(r);
 
   auto spans = span_catcher->GetSpans();
@@ -263,7 +259,7 @@ TEST(ConnectionTracing, StartUnbufferedUploadSuccess) {
 TEST(ConnectionTracing, StartBufferedUploadError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -273,9 +269,8 @@ TEST(ConnectionTracing, StartBufferedUploadError) {
   auto result = actual->StartBufferedUpload(AsyncConnection::UploadParams{})
                     .then(expect_no_context);
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -289,7 +284,7 @@ TEST(ConnectionTracing, StartBufferedUploadError) {
 TEST(ConnectionTracing, StartBufferedUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -304,14 +299,13 @@ TEST(ConnectionTracing, StartBufferedUploadSuccess) {
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
           make_ready_future(make_status_or(google::storage::v2::Object{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          std::move(mock_reader)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      std::move(mock_reader)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto reader = *std::move(result);
-  auto r = reader->Finalize(storage_experimental::WritePayload{}).get();
+  auto r = reader->Finalize(storage::WritePayload{}).get();
   EXPECT_STATUS_OK(r);
 
   auto spans = span_catcher->GetSpans();
@@ -325,7 +319,7 @@ TEST(ConnectionTracing, StartBufferedUploadSuccess) {
 TEST(ConnectionTracing, ResumeUnbufferedUploadError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -336,9 +330,8 @@ TEST(ConnectionTracing, ResumeUnbufferedUploadError) {
       actual->ResumeUnbufferedUpload(AsyncConnection::ResumeUploadParams{})
           .then(expect_no_context);
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -352,7 +345,7 @@ TEST(ConnectionTracing, ResumeUnbufferedUploadError) {
 TEST(ConnectionTracing, ResumeUnbufferedUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -367,14 +360,13 @@ TEST(ConnectionTracing, ResumeUnbufferedUploadSuccess) {
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
           make_ready_future(make_status_or(google::storage::v2::Object{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          std::move(mock_reader)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      std::move(mock_reader)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto reader = *std::move(result);
-  auto r = reader->Finalize(storage_experimental::WritePayload{}).get();
+  auto r = reader->Finalize(storage::WritePayload{}).get();
   EXPECT_STATUS_OK(r);
 
   auto spans = span_catcher->GetSpans();
@@ -388,7 +380,7 @@ TEST(ConnectionTracing, ResumeUnbufferedUploadSuccess) {
 TEST(ConnectionTracing, ResumeBufferedUploadError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -399,9 +391,8 @@ TEST(ConnectionTracing, ResumeBufferedUploadError) {
       actual->ResumeBufferedUpload(AsyncConnection::ResumeUploadParams{})
           .then(expect_no_context);
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -415,7 +406,7 @@ TEST(ConnectionTracing, ResumeBufferedUploadError) {
 TEST(ConnectionTracing, ResumeBufferedUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -430,14 +421,13 @@ TEST(ConnectionTracing, ResumeBufferedUploadSuccess) {
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
           make_ready_future(make_status_or(google::storage::v2::Object{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          std::move(mock_reader)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      std::move(mock_reader)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto reader = *std::move(result);
-  auto r = reader->Finalize(storage_experimental::WritePayload{}).get();
+  auto r = reader->Finalize(storage::WritePayload{}).get();
   EXPECT_STATUS_OK(r);
 
   auto spans = span_catcher->GetSpans();
@@ -550,8 +540,8 @@ TEST(ConnectionTracing, RewriteObject) {
 
 TEST(ConnectionTracing, OpenError) {
   auto span_catcher = InstallSpanCatcher();
-  PromiseWithOTelContext<StatusOr<
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
+  PromiseWithOTelContext<
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -561,10 +551,8 @@ TEST(ConnectionTracing, OpenError) {
   auto result =
       actual->Open(AsyncConnection::OpenParams{}).then(expect_no_context);
 
-  p.set_value(
-      StatusOr<
-          std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -577,8 +565,8 @@ TEST(ConnectionTracing, OpenError) {
 
 TEST(ConnectionTracing, OpenSuccess) {
   auto span_catcher = InstallSpanCatcher();
-  PromiseWithOTelContext<StatusOr<
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
+  PromiseWithOTelContext<
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>>
       p;
   auto mock = std::make_unique<MockAsyncConnection>();
   EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
@@ -589,10 +577,8 @@ TEST(ConnectionTracing, OpenSuccess) {
 
   auto mock_descriptor =
       std::make_shared<MockAsyncObjectDescriptorConnection>();
-  p.set_value(
-      StatusOr<
-          std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>(
-          std::move(mock_descriptor)));
+  p.set_value(StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>(
+      std::move(mock_descriptor)));
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto descriptor = *std::move(result);
@@ -608,7 +594,7 @@ TEST(ConnectionTracing, OpenSuccess) {
 TEST(ConnectionTracing, StartAppendableObjectUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -625,14 +611,13 @@ TEST(ConnectionTracing, StartAppendableObjectUploadSuccess) {
   EXPECT_CALL(*mock_header, Finalize)
       .WillOnce(Return(ByMove(
           make_ready_future(make_status_or(google::storage::v2::Object{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          std::move(mock_header)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      std::move(mock_header)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto writer = *std::move(result);
-  auto w = writer->Finalize(storage_experimental::WritePayload{}).get();
+  auto w = writer->Finalize(storage::WritePayload{}).get();
   EXPECT_STATUS_OK(w);
 
   auto spans = span_catcher->GetSpans();
@@ -647,7 +632,7 @@ TEST(ConnectionTracing, StartAppendableObjectUploadSuccess) {
 TEST(ConnectionTracing, StartAppendableObjectUploadError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -657,9 +642,8 @@ TEST(ConnectionTracing, StartAppendableObjectUploadError) {
   auto result = actual->StartAppendableObjectUpload(
       AsyncConnection::AppendableUploadParams{});
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();
@@ -674,7 +658,7 @@ TEST(ConnectionTracing, StartAppendableObjectUploadError) {
 TEST(ConnectionTracing, ResumeAppendableObjectUploadSuccess) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -691,14 +675,13 @@ TEST(ConnectionTracing, ResumeAppendableObjectUploadSuccess) {
   EXPECT_CALL(*mock_writer, Finalize)
       .WillOnce(Return(ByMove(
           make_ready_future(make_status_or(google::storage::v2::Object{})))));
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          std::move(mock_writer)));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      std::move(mock_writer)));
 
   auto result = f.get();
   ASSERT_STATUS_OK(result);
   auto writer = *std::move(result);
-  auto w = writer->Finalize(storage_experimental::WritePayload{}).get();
+  auto w = writer->Finalize(storage::WritePayload{}).get();
   EXPECT_STATUS_OK(w);
 
   auto spans = span_catcher->GetSpans();
@@ -713,7 +696,7 @@ TEST(ConnectionTracing, ResumeAppendableObjectUploadSuccess) {
 TEST(ConnectionTracing, ResumeAppendableObjectUploadError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+      StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
       p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -725,9 +708,8 @@ TEST(ConnectionTracing, ResumeAppendableObjectUploadError) {
                         AsyncConnection::AppendableUploadParams{})
                     .then(expect_no_context);
 
-  p.set_value(
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-          PermanentError()));
+  p.set_value(StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+      PermanentError()));
   EXPECT_THAT(result.get(), StatusIs(PermanentError().code()));
 
   auto spans = span_catcher->GetSpans();

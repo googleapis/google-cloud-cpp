@@ -69,14 +69,14 @@ auto TestOptions(Options options = {}) {
       std::move(options),
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<storage_experimental::AsyncRetryPolicyOption>(
-              storage_experimental::LimitedErrorCountRetryPolicy(2).clone())
+          .set<storage::AsyncRetryPolicyOption>(
+              storage::LimitedErrorCountAsyncRetryPolicy(2).clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return DefaultOptionsAsync(std::move(options));
 }
 
-std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
+std::shared_ptr<storage::AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
   return MakeAsyncConnection(std::move(cq), std::move(mock),
@@ -173,10 +173,10 @@ TEST_F(AsyncConnectionImplTest, ComposeObjectTooManyTransients) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   // Use a policy that makes a default-initialized request retryable.
-  auto connection = MakeTestConnection(
-      pool.cq(), mock,
-      Options{}.set<storage_experimental::IdempotencyPolicyOption>(
-          storage_experimental::MakeAlwaysRetryIdempotencyPolicy));
+  auto connection =
+      MakeTestConnection(pool.cq(), mock,
+                         Options{}.set<storage::AsyncIdempotencyPolicyOption>(
+                             storage::MakeAlwaysRetryAsyncIdempotencyPolicy));
   auto pending = connection->ComposeObject(
       {google::storage::v2::ComposeObjectRequest{}, connection->options()});
 

@@ -53,8 +53,8 @@ absl::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
   return persisted_size;
 }
 
-storage_experimental::WritePayload TestPayload(std::size_t n) {
-  return storage_experimental::WritePayload(std::string(n, 'A'));
+storage::WritePayload TestPayload(std::size_t n) {
+  return storage::WritePayload(std::string(n, 'A'));
 }
 
 auto TestObject() {
@@ -590,8 +590,7 @@ TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
   ASSERT_TRUE(current_handle.has_value());
   EXPECT_EQ(current_handle->handle(), "initial-handle");
 
-  auto flush =
-      connection->Flush(storage_experimental::WritePayload(expected_payload));
+  auto flush = connection->Flush(storage::WritePayload(expected_payload));
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");

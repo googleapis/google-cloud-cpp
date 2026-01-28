@@ -46,7 +46,7 @@ class GrpcChannelRefresh;
 class StorageStub;
 
 class AsyncConnectionImpl
-    : public storage_experimental::AsyncConnection,
+    : public storage::AsyncConnection,
       public std::enable_shared_from_this<AsyncConnectionImpl> {
  public:
   explicit AsyncConnectionImpl(CompletionQueue cq,
@@ -60,32 +60,31 @@ class AsyncConnectionImpl
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override;
 
-  future<StatusOr<
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-  Open(OpenParams p) override;
+  future<StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>> Open(
+      OpenParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
-  ReadObject(ReadObjectParams p) override;
-
-  future<StatusOr<storage_experimental::ReadPayload>> ReadObjectRange(
+  future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>> ReadObject(
       ReadObjectParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<storage::ReadPayload>> ReadObjectRange(
+      ReadObjectParams p) override;
+
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartAppendableObjectUpload(AppendableUploadParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeAppendableObjectUpload(AppendableUploadParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartBufferedUpload(UploadParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeUnbufferedUpload(ResumeUploadParams p) override;
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeBufferedUpload(ResumeUploadParams p) override;
 
   future<StatusOr<google::storage::v2::Object>> ComposeObject(
@@ -93,7 +92,7 @@ class AsyncConnectionImpl
 
   future<Status> DeleteObject(DeleteObjectParams p) override;
 
-  std::shared_ptr<storage_experimental::AsyncRewriterConnection> RewriteObject(
+  std::shared_ptr<storage::AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) override;
 
   // Expose this function for testing purposes. It creates a factory to create
@@ -116,23 +115,23 @@ class AsyncConnectionImpl
   QueryWriteStatus(internal::ImmutableOptions current,
                    google::storage::v2::QueryWriteStatusRequest request);
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeUpload(internal::ImmutableOptions current,
                google::storage::v2::QueryWriteStatusRequest query);
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartUnbufferedUploadImpl(
       internal::ImmutableOptions current,
       google::storage::v2::StartResumableWriteRequest request,
       StatusOr<google::storage::v2::StartResumableWriteResponse> response);
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeUnbufferedUploadImpl(
       internal::ImmutableOptions current,
       google::storage::v2::QueryWriteStatusRequest query,
       StatusOr<google::storage::v2::QueryWriteStatusResponse> response);
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   UnbufferedUploadImpl(
       internal::ImmutableOptions current,
       std::function<void(grpc::ClientContext&)> configure_context,
@@ -140,7 +139,7 @@ class AsyncConnectionImpl
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       std::int64_t persisted_size);
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   AppendableObjectUploadImpl(AppendableUploadParams p);
 
   CompletionQueue cq_;
@@ -151,11 +150,11 @@ class AsyncConnectionImpl
 };
 
 /// Create a connection and the default stub.
-std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
+std::shared_ptr<storage::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, Options options = Options{});
 
 /// Create a connection with a custom stub (usually a mock).
-std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
+std::shared_ptr<storage::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

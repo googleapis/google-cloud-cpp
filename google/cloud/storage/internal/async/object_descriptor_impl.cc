@@ -31,7 +31,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ObjectDescriptorImpl::ObjectDescriptorImpl(
-    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
+    std::unique_ptr<storage::ResumePolicy> resume_policy,
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream, Options options)
@@ -56,8 +56,7 @@ void ObjectDescriptorImpl::Start(
   OnRead(it, std::move(first_response));
   // Acquire lock and queue the background stream if multi-stream optimization
   // is enabled.
-  if (options_
-          .get<storage_experimental::EnableMultiStreamOptimizationOption>()) {
+  if (options_.get<storage::EnableMultiStreamOptimizationOption>()) {
     lk.lock();
     AssurePendingStreamQueued(lk);
   }
@@ -86,8 +85,7 @@ void ObjectDescriptorImpl::AssurePendingStreamQueued(
 }
 
 void ObjectDescriptorImpl::MakeSubsequentStream() {
-  if (!options_
-           .get<storage_experimental::EnableMultiStreamOptimizationOption>()) {
+  if (!options_.get<storage::EnableMultiStreamOptimizationOption>()) {
     // Do nothing if multi-stream optimization is disabled.
     return;
   }
@@ -137,12 +135,12 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   });
 }
 
-std::unique_ptr<storage_experimental::AsyncReaderConnection>
-ObjectDescriptorImpl::Read(ReadParams p) {
+std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
+    ReadParams p) {
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       std::shared_ptr<storage::internal::HashFunction>(
           storage::internal::CreateNullHashFunction());
-  if (options_.has<storage_experimental::EnableCrc32cValidationOption>()) {
+  if (options_.has<storage::EnableCrc32cValidationOption>()) {
     hash_function =
         std::make_shared<storage::internal::Crc32cMessageHashFunction>(
             storage::internal::CreateNullHashFunction());
@@ -155,7 +153,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
     range->OnFinish(Status(StatusCode::kFailedPrecondition,
                            "Cannot read object, all streams failed"));
     if (!internal::TracingEnabled(options_)) {
-      return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+      return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(range)));
     }
     return MakeTracingObjectDescriptorReader(std::move(range));
@@ -171,7 +169,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   Flush(std::move(lk), it);
 
   if (!internal::TracingEnabled(options_)) {
-    return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+    return std::unique_ptr<storage::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
   }
 
@@ -339,7 +337,7 @@ bool ObjectDescriptorImpl::IsResumable(
     return true;
   }
   return it->stream->resume_policy->OnFinish(status) ==
-         storage_experimental::ResumePolicy::kContinue;
+         storage::ResumePolicy::kContinue;
 }
 
 std::size_t ObjectDescriptorImpl::StreamSize() const {

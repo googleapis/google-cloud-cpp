@@ -65,17 +65,14 @@ auto constexpr kMetadataText = R"pb(
   generation: 42
 )pb";
 
-auto NoResume() {
-  return storage_experimental::LimitedErrorCountResumePolicy(0)();
-}
+auto NoResume() { return storage::LimitedErrorCountResumePolicy(0)(); }
 
-auto MakeTested(
-    std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
-    OpenStreamFactory make_stream,
-    google::storage::v2::BidiReadObjectSpec read_object_spec,
-    std::shared_ptr<OpenStream> stream) {
+auto MakeTested(std::unique_ptr<storage::ResumePolicy> resume_policy,
+                OpenStreamFactory make_stream,
+                google::storage::v2::BidiReadObjectSpec read_object_spec,
+                std::shared_ptr<OpenStream> stream) {
   Options options;
-  options.set<storage_experimental::EnableMultiStreamOptimizationOption>(true);
+  options.set<storage::EnableMultiStreamOptimizationOption>(true);
   return std::make_shared<ObjectDescriptorImpl>(
       std::move(resume_policy), std::move(make_stream),
       std::move(read_object_spec), std::move(stream), std::move(options));
@@ -268,11 +265,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
@@ -408,11 +403,9 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
@@ -538,11 +531,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r1.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
@@ -556,11 +547,9 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   // The future returned by `Read()` should become satisfied at this point.
   // We expect it to contain the right data.
   EXPECT_THAT(s1r2.get(),
-              VariantWith<storage_experimental::ReadPayload>(ResultOf(
+              VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
 
@@ -802,10 +791,9 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
-  auto tested =
-      MakeTested(storage_experimental::LimitedErrorCountResumePolicy(1)(),
-                 factory.AsStdFunction(), spec,
-                 std::make_shared<OpenStream>(InitialStream(sequencer)));
+  auto tested = MakeTested(
+      storage::LimitedErrorCountResumePolicy(1)(), factory.AsStdFunction(),
+      spec, std::make_shared<OpenStream>(InitialStream(sequencer)));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -852,9 +840,9 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   EXPECT_TRUE(s2r1.is_ready());
   EXPECT_TRUE(s3r1.is_ready());
 
-  auto expected_r1 = VariantWith<storage_experimental::ReadPayload>(ResultOf(
+  auto expected_r1 = VariantWith<storage::ReadPayload>(ResultOf(
       "contents are",
-      [](storage_experimental::ReadPayload const& p) { return p.contents(); },
+      [](storage::ReadPayload const& p) { return p.contents(); },
       ElementsAre(absl::string_view{"0123456789"})));
 
   EXPECT_THAT(s1r1.get(), expected_r1);
@@ -1081,10 +1069,9 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
-  auto tested =
-      MakeTested(storage_experimental::LimitedErrorCountResumePolicy(1)(),
-                 factory.AsStdFunction(), spec,
-                 std::make_shared<OpenStream>(initial_stream()));
+  auto tested = MakeTested(storage::LimitedErrorCountResumePolicy(1)(),
+                           factory.AsStdFunction(), spec,
+                           std::make_shared<OpenStream>(initial_stream()));
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
   tested->Start(std::move(response));
@@ -1590,7 +1577,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
   auto r1f1 = reader1->Read();
   read1_1.first.set_value(true);
   // read1_2/read1_3 completed via ready futures; no sequencer pops needed.
-  ASSERT_THAT(r1f1.get(), VariantWith<storage_experimental::ReadPayload>(_));
+  ASSERT_THAT(r1f1.get(), VariantWith<storage::ReadPayload>(_));
   auto r1f2 = reader1->Read();
   ASSERT_THAT(r1f2.get(), VariantWith<Status>(IsOk()));
 
@@ -1611,8 +1598,8 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
     auto e2 = seq.PopFrontWithName();
     std::set<std::string> names = {e1.second, e2.second};
     if (names.count("Read[1]") != 0 && names.count("ProactiveFactory") != 0) {
-      e1.first.set_value(true);  // Allow read to proceed
-      e2.first.set_value(true);  // Allow factory to proceed
+      e1.first.set_value(true);
+      e2.first.set_value(true);
     } else {
       ADD_FAILURE() << "Got unexpected events: " << e1.second << ", "
                     << e2.second;
@@ -1620,10 +1607,6 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
   };
 
   auto stream1 = std::make_unique<MockStream>();
-  EXPECT_CALL(*stream1, Write).WillOnce([&](auto, auto) {
-    return sequencer.PushBack("Write[1]").then([](auto f) { return f.get(); });
-  });
-
   // To keep Stream 1 alive during startup, the first Read returns a valid
   // (empty) response. Subsequent reads return nullopt to trigger the
   // Finish/Resume logic.
@@ -1643,6 +1626,12 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
       return TransientError();
     });
   });
+  EXPECT_CALL(*stream1, Write)
+      .WillOnce([&](Request const&, grpc::WriteOptions) {
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
   EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
 
   auto stream2 = std::make_unique<MockStream>();
@@ -1668,10 +1657,10 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
         });
       });
 
-  auto tested = MakeTested(
-      storage_experimental::LimitedErrorCountResumePolicy(1)(),
-      factory.AsStdFunction(), google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream1)));
+  auto tested = MakeTested(storage::LimitedErrorCountResumePolicy(1)(),
+                           factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream1)));
 
   tested->Start(Response{});
   expect_startup_events(sequencer);
@@ -1679,24 +1668,23 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
   // Register the read range.
   auto reader = tested->Read({0, 100});
 
-  auto next_event = sequencer.PopFrontWithName();
+  bool write1_seen = false;
+  bool read_loop_seen = false;
   promise<bool> fail_stream_promise;
 
-  if (next_event.second == "Read[Loop]") {
-    fail_stream_promise = std::move(next_event.first);
-    // Now expect Write[1]
-    auto w1 = sequencer.PopFrontWithName();
-    EXPECT_EQ(w1.second, "Write[1]");
-    w1.first.set_value(true);
-  } else {
-    // It was Write[1] immediately
-    EXPECT_EQ(next_event.second, "Write[1]");
-    next_event.first.set_value(true);
-
-    // Now wait for Read[Loop]
-    auto read_loop = sequencer.PopFrontWithName();
-    EXPECT_EQ(read_loop.second, "Read[Loop]");
-    fail_stream_promise = std::move(read_loop.first);
+  while (!write1_seen || !read_loop_seen) {
+    auto event = sequencer.PopFrontWithName();
+    if (event.second == "Write[1]") {
+      EXPECT_FALSE(write1_seen);
+      write1_seen = true;
+      event.first.set_value(true);
+    } else if (event.second == "Read[Loop]") {
+      EXPECT_FALSE(read_loop_seen);
+      read_loop_seen = true;
+      fail_stream_promise = std::move(event.first);
+    } else {
+      FAIL() << "Unexpected event: " << event.second;
+    }
   }
 
   // Trigger Failure on Stream 1.
@@ -1784,7 +1772,7 @@ TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
 
   MockFactory factory;
   Options options;
-  options.set<storage_experimental::EnableMultiStreamOptimizationOption>(false);
+  options.set<storage::EnableMultiStreamOptimizationOption>(false);
 
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),

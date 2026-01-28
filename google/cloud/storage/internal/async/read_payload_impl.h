@@ -34,8 +34,8 @@ struct ReadPayloadImpl {
    * We don't want a public constructor, because `absl::Cord` is not stable
    * enough for public APIs.
    */
-  static storage_experimental::ReadPayload Make(absl::Cord contents) {
-    return storage_experimental::ReadPayload(std::move(contents));
+  static storage::ReadPayload Make(absl::Cord contents) {
+    return storage::ReadPayload(std::move(contents));
   }
 
   /**
@@ -45,13 +45,13 @@ struct ReadPayloadImpl {
    * uses `std::string` or `absl::Cord` depending on how the protos were
    * compiled.
    */
-  static storage_experimental::ReadPayload Make(std::string contents) {
-    return storage_experimental::ReadPayload(std::move(contents));
+  static storage::ReadPayload Make(std::string contents) {
+    return storage::ReadPayload(std::move(contents));
   }
 
   /// Append the data from @p rhs to @p lhs.
-  static void Accumulate(storage_experimental::ReadPayload& lhs,
-                         storage_experimental::ReadPayload&& rhs) {
+  static void Accumulate(storage::ReadPayload& lhs,
+                         storage::ReadPayload&& rhs) {
     if (lhs.impl_.empty()) {
       lhs = std::move(rhs);
       return;
@@ -61,18 +61,18 @@ struct ReadPayloadImpl {
 
   /// Get the object hashes (by move) from the payload.
   static absl::optional<storage::internal::HashValues> GetObjectHashes(
-      storage_experimental::ReadPayload& payload) {
+      storage::ReadPayload& payload) {
     return std::move(payload.object_hash_values_);
   }
 
   /// Set the object hashes in the payload.
-  static void SetObjectHashes(storage_experimental::ReadPayload& payload,
+  static void SetObjectHashes(storage::ReadPayload& payload,
                               storage::internal::HashValues hashes) {
     payload.object_hash_values_ = std::move(hashes);
   }
 
-  static void Append(storage_experimental::ReadPayload& payload,
-                     storage_experimental::ReadPayload new_data) {
+  static void Append(storage::ReadPayload& payload,
+                     storage::ReadPayload new_data) {
     payload.impl_.Append(std::move(new_data.impl_));
   }
 };
