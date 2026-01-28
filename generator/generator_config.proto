@@ -167,12 +167,6 @@ message ServiceConfiguration {
   // RPCs. If set to false (the default), a no-op resumption function will be
   // generated.
   bool omit_streaming_updater = 29;
-
-  // In rare cases, specifically bigtable::WaitForConsistency, the
-  // CompletionQueue from the BackgroundThreads owned by the Connection is
-  // needed elsewhere. This emits a protected accessor and friend function for
-  // that purpose.
-  bool emit_completion_queue_accessor = 30;
 }
 
 message DiscoveryDocumentDefinedProduct {
