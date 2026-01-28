@@ -383,8 +383,9 @@ BigtableTableAdminConnection::AsyncCheckConsistency(
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-     BigtableTableAdminConnection::WaitForConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-    return google::cloud::make_ready_future<
+BigtableTableAdminConnection::WaitForConsistency(
+    google::bigtable::admin::v2::CheckConsistencyRequest const&) {
+  return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

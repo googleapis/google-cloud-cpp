@@ -382,8 +382,10 @@ class BigtableTableAdminConnection {
   AsyncCheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-     WaitForConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request);
+  virtual future<
+      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+  WaitForConsistency(
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 
  protected:
   friend StatusOr<CompletionQueue> bigtable_admin_internal::completion_queue(

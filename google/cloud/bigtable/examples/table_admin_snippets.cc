@@ -643,8 +643,8 @@ void WaitForConsistencyCheck(
       throw std::move(consistency_token).status();
     }
     auto token = consistency_token->consistency_token();
-//    auto consistency_future =
-//        cbta::WaitForConsistency(connection, table_name, token);
+    //    auto consistency_future =
+    //        cbta::WaitForConsistency(connection, table_name, token);
 
     google::bigtable::admin::v2::CheckConsistencyRequest wait_request;
     wait_request.set_name(table_name);

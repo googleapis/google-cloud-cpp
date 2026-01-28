@@ -1299,18 +1299,17 @@ BigtableTableAdminConnectionImpl::AsyncCheckConsistency(
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-    BigtableTableAdminConnectionImpl::WaitForConsistency(
+BigtableTableAdminConnectionImpl::WaitForConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-    auto current = google::cloud::internal::SaveCurrentOptions();
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CheckConsistency(request_copy);
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
-  auto attempt_predicate = [](
-                               StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> const& r) {
-    return r.ok() && r->consistent();
-  };
+  auto attempt_predicate =
+      [](StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> const&
+             r) { return r.ok() && r->consistent(); };
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](

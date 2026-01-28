@@ -235,7 +235,8 @@ class BigtableTableAdminConnectionImpl
       override;
 
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-     WaitForConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request) override;
+  WaitForConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const&
+                         request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
