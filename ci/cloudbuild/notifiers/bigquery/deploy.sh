@@ -30,7 +30,7 @@ cd "${PROGRAM_DIR}"
 
 readonly BUCKET="gs://cloud-cpp-testing-resources-configs/google-cloud-cpp"
 io::log_h1 "Copying bigquery.yaml to ${BUCKET}"
-gsutil cp bigquery.yaml gs://cloud-cpp-testing-resources-configs/google-cloud-cpp
+gcloud storage cp bigquery.yaml gs://cloud-cpp-testing-resources-configs/google-cloud-cpp
 
 readonly SERVICE="google-cloud-cpp-gcb-bigquery-notifier"
 io::log_h1 "Deploying Cloud Run service ${SERVICE}"
