@@ -69,8 +69,7 @@ list of allowed locations. In this example, we'll use `us-central1`.
 
 ```console
 BUCKET=... # e.g. cloud-cpp-testing-bucket
-# Gsutil command could not be translated. Reason: The top-level flag "-l" is not a valid gsutil flag and is not found in the migration guide.
-gsutil -l us-central1 gs://${BUCKET}
+gcloud storage buckets create gs://${BUCKET} --location=us-central1
 ```
 
 ## Setting up a Destination Bucket
