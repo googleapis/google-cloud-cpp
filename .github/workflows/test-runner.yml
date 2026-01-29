@@ -93,12 +93,12 @@ jobs:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
     # label already and it gets a new commit.
-    if: |-
-      ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
-      }}
+#    if: |-
+#      ${{
+#        github.event_name == 'schedule' ||
+#        github.event_name == 'push' ||
+#        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+#      }}
     name: Windows-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/windows-bazel.yml
