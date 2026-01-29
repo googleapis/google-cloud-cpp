@@ -59,6 +59,13 @@ service {
   ]
   override_service_config_yaml_name: "generator/integration_tests/test2.yaml"
   endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
+  bespoke_methods : [
+    {
+    name: "WaitForConsistency",
+    return_type: "StatusOr<google::protobuf::Empty>",
+    parameters: "(google::protobuf::Empty const& request, Options opts = {})"
+    }
+  ]
 }
 
 service {

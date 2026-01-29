@@ -68,6 +68,10 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::string vars(std::string const& key) const;
   MethodDescriptorList const& methods() const { return methods_; }
   MethodDescriptorList const& async_methods() const { return async_methods_; }
+  std::vector<cpp::generator::ServiceConfiguration::BespokeMethod> const&
+  bespoke_methods() const {
+    return bespoke_methods_;
+  }
   void SetVars(absl::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
@@ -268,6 +272,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool pb_h_system_includes_ = false;
   MethodDescriptorList methods_;
   MethodDescriptorList async_methods_;
+  std::vector<cpp::generator::ServiceConfiguration::BespokeMethod>
+      bespoke_methods_;
   Printer header_;
   Printer cc_;
   std::vector<MixinMethod> mixin_methods_;

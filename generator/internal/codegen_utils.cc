@@ -111,6 +111,11 @@ void ProcessArgOmitRpc(
   ProcessRepeated("omit_rpc", "omitted_rpcs", command_line_args);
 }
 
+void ProcessArgBespokeMethod(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("bespoke_method", "bespoke_methods", command_line_args);
+}
+
 void ProcessArgServiceEndpointEnvVar(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   auto service_endpoint_env_var =
@@ -269,6 +274,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgCopyrightYear(command_line_args);
   ProcessArgOmitService(command_line_args);
   ProcessArgOmitRpc(command_line_args);
+  ProcessArgBespokeMethod(command_line_args);
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
   ProcessArgEndpointLocationStyle(command_line_args);
