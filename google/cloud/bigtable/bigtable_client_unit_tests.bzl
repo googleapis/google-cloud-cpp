@@ -87,5 +87,4 @@ bigtable_client_unit_tests = [
     "testing/random_names_test.cc",
     "timestamp_test.cc",
     "value_test.cc",
-    "wait_for_consistency_test.cc",
 ]

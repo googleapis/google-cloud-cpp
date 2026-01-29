@@ -138,7 +138,6 @@ google_cloud_cpp_bigtable_hdrs = [
     "value.h",
     "version.h",
     "version_info.h",
-    "wait_for_consistency.h",
 ]
 
 google_cloud_cpp_bigtable_srcs = [
@@ -234,5 +233,4 @@ google_cloud_cpp_bigtable_srcs = [
     "timestamp.cc",
     "value.cc",
     "version.cc",
-    "wait_for_consistency.cc",
 ]

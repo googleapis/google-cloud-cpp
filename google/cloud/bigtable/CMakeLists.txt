@@ -264,9 +264,7 @@ add_library(
     value.h
     version.cc
     version.h
-    version_info.h
-    wait_for_consistency.cc
-    wait_for_consistency.h)
+    version_info.h)
 target_link_libraries(
     google_cloud_cpp_bigtable
     PUBLIC absl::memory
@@ -486,8 +484,7 @@ if (BUILD_TESTING)
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
         timestamp_test.cc
-        value_test.cc
-        wait_for_consistency_test.cc)
+        value_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("bigtable_client_unit_tests.bzl"
