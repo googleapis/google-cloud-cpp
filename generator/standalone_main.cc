@@ -284,12 +284,10 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     for (auto const& bespoke_method : service.bespoke_methods()) {
       args.emplace_back(absl::StrCat(
           "--cpp_codegen_opt=bespoke_method=",
-          absl::StrJoin(
-              {SafeReplaceAll(bespoke_method.client_comments(), ",", "@"),
-               SafeReplaceAll(bespoke_method.name(), ",", "@"),
-               SafeReplaceAll(bespoke_method.return_type(), ",", "@"),
-               SafeReplaceAll(bespoke_method.parameters(), ",", "@")},
-              "@@")));
+          absl::StrJoin({SafeReplaceAll(bespoke_method.name(), ",", "@"),
+                         SafeReplaceAll(bespoke_method.return_type(), ",", "@"),
+                         SafeReplaceAll(bespoke_method.parameters(), ",", "@")},
+                        "@@")));
     }
     for (auto const& retry_code : service.retryable_status_codes()) {
       args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code);

@@ -169,12 +169,18 @@ message ServiceConfiguration {
   bool omit_streaming_updater = 29;
 
   message BespokeMethod {
-    string client_comments = 1;
-    string name = 2;
-    string return_type = 3;
-    string parameters = 4;
+    string name = 1;
+    string return_type = 2;
+    string parameters = 3;
   }
 
+  // Only added to maintain feature parity when migrating from the handwritten
+  // Bigtable Table Admin class to the generated class. While some attempts were
+  // made to generalize this feature, it currently only supports the
+  // WaitForConsistency method. This functionality can be enhanced later if we
+  // ever need to use this again.
+  // The implementation for this method in the ConnectionImpl class is not
+  // generated and must be handwritten in a separate .cc file.
   repeated BespokeMethod bespoke_methods = 30;
 }
 

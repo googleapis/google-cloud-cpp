@@ -319,9 +319,9 @@ class $connection_class_name$ {
   for (auto const& method : bespoke_methods()) {
     HeaderPrint("\n");
     HeaderPrint(absl::StrCat(
-        "virtual ", method.return_type(), " ", method.name(),
+        "  virtual ", method.return_type(), " ", method.name(),
         absl::StrReplaceAll(method.parameters(), {{", Options opts = {}", ""}}),
-        ";"));
+        ";\n"));
   }
 
   // close abstract interface Connection base class
