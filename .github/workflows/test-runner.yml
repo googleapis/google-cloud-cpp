@@ -143,7 +143,7 @@ jobs:
           github.event_name == 'push' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
-      sccache-mode: 'READ_WRITE'
+      sccache-mode: 'DISABLED'
       vcpkg-cache-mode: 'readwrite'
       execute-integration-tests: true
     secrets: inherit
