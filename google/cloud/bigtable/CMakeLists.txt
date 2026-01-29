@@ -105,8 +105,6 @@ add_library(
     admin/internal/bigtable_table_admin_tracing_connection.h
     admin/internal/bigtable_table_admin_tracing_stub.cc
     admin/internal/bigtable_table_admin_tracing_stub.h
-    admin_client.cc
-    admin_client.h
     app_profile_config.cc
     app_profile_config.h
     bound_query.cc
@@ -132,10 +130,6 @@ add_library(
     iam_policy.h
     idempotent_mutation_policy.cc
     idempotent_mutation_policy.h
-    instance_admin.cc
-    instance_admin.h
-    instance_admin_client.cc
-    instance_admin_client.h
     instance_config.cc
     instance_config.h
     instance_list_responses.h
@@ -260,8 +254,6 @@ add_library(
     sql_statement.h
     table.cc
     table.h
-    table_admin.cc
-    table_admin.h
     table_config.cc
     table_config.h
     table_resource.cc
@@ -425,7 +417,6 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_client_unit_tests
         # cmake-format: sort
-        admin_client_test.cc
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
@@ -442,8 +433,6 @@ if (BUILD_TESTING)
         iam_binding_test.cc
         iam_policy_test.cc
         idempotent_mutation_policy_test.cc
-        instance_admin_client_test.cc
-        instance_admin_test.cc
         instance_config_test.cc
         instance_resource_test.cc
         instance_update_config_test.cc
@@ -491,7 +480,6 @@ if (BUILD_TESTING)
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
         sql_statement_test.cc
-        table_admin_test.cc
         table_config_test.cc
         table_resource_test.cc
         table_test.cc
