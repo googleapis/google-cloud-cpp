@@ -170,16 +170,23 @@ struct FutureValueType<future<T>> {
  * functions.  If the value is visible, the retry loop will stop on the next
  * callback and/or before the next request or timer is issued.
  */
-template <typename Functor, typename Request, typename RetryPolicyType>
+template <
+    typename Functor, typename Request, typename RetryPolicyType,
+    typename ReturnType = google::cloud::internal::invoke_result_t<
+        Functor, google::cloud::CompletionQueue&,
+        std::shared_ptr<grpc::ClientContext>, ImmutableOptions, Request const&>>
 class AsyncRetryLoopImpl
     : public std::enable_shared_from_this<
           AsyncRetryLoopImpl<Functor, Request, RetryPolicyType>> {
  public:
-  AsyncRetryLoopImpl(std::unique_ptr<RetryPolicyType> retry_policy,
-                     std::unique_ptr<BackoffPolicy> backoff_policy,
-                     Idempotency idempotency, google::cloud::CompletionQueue cq,
-                     Functor&& functor, ImmutableOptions options,
-                     Request request, char const* location)
+  AsyncRetryLoopImpl(
+      std::unique_ptr<RetryPolicyType> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotency,
+      google::cloud::CompletionQueue cq, Functor&& functor,
+      ImmutableOptions options, Request request, char const* location,
+      std::function<
+          bool(typename FutureValueType<ReturnType>::value_type const&)>
+          attempt_predicate = {})
       : retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
         idempotency_(idempotency),
@@ -188,11 +195,9 @@ class AsyncRetryLoopImpl
         functor_(std::forward<Functor>(functor)),
         request_(std::move(request)),
         location_(location),
-        call_context_(std::move(options)) {}
+        call_context_(std::move(options)),
+        attempt_predicate_(std::move(attempt_predicate)) {}
 
-  using ReturnType = ::google::cloud::internal::invoke_result_t<
-      Functor, google::cloud::CompletionQueue&,
-      std::shared_ptr<grpc::ClientContext>, ImmutableOptions, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
@@ -256,8 +261,16 @@ class AsyncRetryLoopImpl
   }
 
   void OnAttempt(T result) {
-    // A successful attempt, set the value and finish the loop.
-    if (result.ok()) return SetDone(std::move(result));
+    if (attempt_predicate_) {
+      // A successful attempt that satisfies the predicate, set the value and
+      // finish the loop.
+      if (result.ok() && attempt_predicate_(result)) {
+        return SetDone(std::move(result));
+      }
+    } else {
+      // A successful attempt, set the value and finish the loop.
+      if (result.ok()) return SetDone(std::move(result));
+    }
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
     auto delay =
@@ -325,6 +338,8 @@ class AsyncRetryLoopImpl
   CallContext call_context_;
   Status last_status_;
   promise<T> result_;
+  std::function<bool(typename FutureValueType<ReturnType>::value_type const&)>
+      attempt_predicate_;
 
   // Only the following variables require synchronization, as they coordinate
   // the work between the retry loop (which would be lock-free) and the cancel
@@ -339,17 +354,23 @@ class AsyncRetryLoopImpl
 /**
  * Create the right AsyncRetryLoopImpl object and start the retry loop on it.
  */
-template <typename Functor, typename Request, typename RetryPolicyType,
-          std::enable_if_t<google::cloud::internal::is_invocable<
-                               Functor, google::cloud::CompletionQueue&,
-                               std::shared_ptr<grpc::ClientContext>,
-                               ImmutableOptions, Request const&>::value,
-                           int> = 0>
-auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
-                    std::unique_ptr<BackoffPolicy> backoff_policy,
-                    Idempotency idempotency, google::cloud::CompletionQueue cq,
-                    Functor&& functor, ImmutableOptions options,
-                    Request request, char const* location)
+template <
+    typename Functor, typename Request, typename RetryPolicyType,
+    std::enable_if_t<google::cloud::internal::is_invocable<
+                         Functor, google::cloud::CompletionQueue&,
+                         std::shared_ptr<grpc::ClientContext>, ImmutableOptions,
+                         Request const&>::value,
+                     int> = 0,
+    typename ReturnType = google::cloud::internal::invoke_result_t<
+        Functor, google::cloud::CompletionQueue&,
+        std::shared_ptr<grpc::ClientContext>, ImmutableOptions, Request const&>>
+auto AsyncRetryLoop(
+    std::unique_ptr<RetryPolicyType> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotency,
+    google::cloud::CompletionQueue cq, Functor&& functor,
+    ImmutableOptions options, Request request, char const* location,
+    std::function<bool(typename FutureValueType<ReturnType>::value_type const&)>
+        attempt_predicate = {})
     -> google::cloud::internal::invoke_result_t<
         Functor, google::cloud::CompletionQueue&,
         std::shared_ptr<grpc::ClientContext>, ImmutableOptions,
@@ -358,7 +379,7 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
       std::make_shared<AsyncRetryLoopImpl<Functor, Request, RetryPolicyType>>(
           std::move(retry_policy), std::move(backoff_policy), idempotency,
           std::move(cq), std::forward<Functor>(functor), options,
-          std::move(request), location);
+          std::move(request), location, std::move(attempt_predicate));
   return loop->Start();
 }
 
