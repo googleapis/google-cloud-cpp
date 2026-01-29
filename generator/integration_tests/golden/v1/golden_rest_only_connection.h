@@ -176,6 +176,8 @@ class GoldenRestOnlyConnection {
 
   virtual Status
   Noop(google::protobuf::Empty const& request);
+
+  virtual StatusOr<google::protobuf::Empty> WaitForConsistency(google::protobuf::Empty const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

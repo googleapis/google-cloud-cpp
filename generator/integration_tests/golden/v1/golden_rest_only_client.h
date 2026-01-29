@@ -109,6 +109,37 @@ class GoldenRestOnlyClient {
   Status
   Noop(google::protobuf::Empty const& request, Options opts = {});
 
+
+  // clang-format off
+  ///
+  /// Polls a table until it is consistent or the RetryPolicy is exhausted based
+  /// on a consistency token, that is, if replication has caught up based on the
+  /// provided conditions specified in the token and the check request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CheckConsistencyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.CheckConsistencyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L909}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L948}
+  ///
+  // clang-format on
+StatusOr<google::protobuf::Empty> WaitForConsistency(google::protobuf::Empty const& request, Options opts = {});
  private:
   std::shared_ptr<GoldenRestOnlyConnection> connection_;
   Options options_;
