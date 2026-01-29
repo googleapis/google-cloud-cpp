@@ -22,7 +22,6 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection_idempotency_policy.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -34,27 +33,6 @@
 #include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
-
-namespace google {
-namespace cloud {
-namespace bigtable_admin {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class BigtableTableAdminConnection;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigtable_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-StatusOr<CompletionQueue> completion_queue(
-    bigtable_admin::BigtableTableAdminConnection const& conn);
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
-}  // namespace cloud
-}  // namespace google
 
 namespace google {
 namespace cloud {
@@ -386,11 +364,6 @@ class BigtableTableAdminConnection {
       StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   WaitForConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
-
- protected:
-  friend StatusOr<CompletionQueue> bigtable_admin_internal::completion_queue(
-      BigtableTableAdminConnection const& conn);
-  virtual StatusOr<CompletionQueue> completion_queue() const;
 };
 
 /**
