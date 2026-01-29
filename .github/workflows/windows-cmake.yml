@@ -39,7 +39,7 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         msvc: [ msvc-2022 ]
-        build_type: [ Release ]
+        build_type: [ Debug ]
         arch: [ x64 ]
         shard: [ Core1 ]
         exclude:
