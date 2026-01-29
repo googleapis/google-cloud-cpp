@@ -50,7 +50,8 @@ google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
         return Consistency::kConsistent;
       });
 #endif
-  return make_ready_future<StatusOr<Consistency>>(internal::UnimplementedError("not implemented"));
+  return make_ready_future<StatusOr<Consistency>>(
+      internal::UnimplementedError("not implemented"));
 }
 
 namespace {
