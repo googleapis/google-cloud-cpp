@@ -88,6 +88,8 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-bazel:
+    # Disabled
+    if: false
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
     # label already and it gets a new commit.
@@ -127,8 +129,6 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-cmake:
-    # Disabled
-    if: false
     name: Windows-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/windows-cmake.yml
@@ -147,39 +147,3 @@ jobs:
       vcpkg-cache-mode: 'readwrite'
       execute-integration-tests: true
     secrets: inherit
-  notify:
-    name: Notify-Google-Chat
-    # Wait until all the other jobs have completed.
-    needs:
-      # macos-bazel is disabled
-      # macos-cmake is disabled
-      - windows-bazel
-      # windows-cmake is disabled is disabled
-    # Run even if the other jobs failed or were skipped.
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Google Chat
-        shell: bash
-        run: |
-          event_name="${{ github.event_name }}"
-          case "${event_name}" in
-            schedule)
-              ;;
-            push)
-              ;;
-            *)
-              exit 0
-              ;;
-          esac
-          failure="${{ contains(needs.*.result, 'failure') }}"
-          cancelled="${{ contains(needs.*.result, 'cancelled') }}"
-          status=""
-          # Report whether any of the jobs failed or were cancelled.
-          if [[ "${cancelled}" == "true" ]]; then status="cancelled"; fi
-          if [[ "${failure}" == "true" ]]; then status="failure"; fi
-          # Exit early if there is nothing interesting to report.
-          if [[ -z "${status}" ]]; then exit 0; fi
-          printf '{"text": "GHA Build %s %s/%s/actions/runs/%s"}' \
-            "${status}" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.run_id }}" |
-          curl -fsX POST -o /dev/null -d@- -H "Content-Type: application/json; charset=UTF-8" '${{ secrets.CLOUD_CPP_BUILD_ALERTS_WEBHOOK }}'
