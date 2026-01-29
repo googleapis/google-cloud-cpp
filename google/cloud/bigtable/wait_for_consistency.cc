@@ -30,6 +30,7 @@ google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
     std::shared_ptr<BigtableTableAdminConnection> const& connection,
     std::string const& table_id, std::string const& consistency_token,
     Options options) {
+#if 0
   auto cq = bigtable_admin_internal::completion_queue(*connection);
   if (!cq.ok()) return make_ready_future(StatusOr<Consistency>(cq.status()));
 
@@ -48,6 +49,8 @@ google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
         if (!s.ok()) return s;
         return Consistency::kConsistent;
       });
+#endif
+  return make_ready_future<StatusOr<Consistency>>(internal::UnimplementedError("not implemented"));
 }
 
 namespace {
