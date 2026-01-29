@@ -21,6 +21,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "google/api/client.pb.h"
 #include <google/protobuf/descriptor.h>
 
@@ -380,6 +381,12 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : bespoke_methods()) {
+    HeaderPrint("\n");
+    HeaderPrint(absl::StrCat(method.return_type(), " ", method.name(),
+                             method.parameters(), ";"));
+  }
+
   HeaderPrint(  // clang-format off
     "\n"
     " private:\n"
@@ -714,6 +721,19 @@ $client_class_name$::Async$method_name$(Options opts) {
             All(IsNonStreaming, Not(IsLongrunningOperation),
                 Not(IsPaginated)))},
         __FILE__, __LINE__);
+  }
+
+  for (auto const& method : bespoke_methods()) {
+    CcPrint("\n");
+    CcPrint(absl::StrCat(
+        method.return_type(), R"""( $client_class_name$::)""", method.name(),
+        absl::StrReplaceAll(method.parameters(), {{" = {}", ""}}),
+        absl::StrFormat(R"""( {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->%s(request);
+}
+)""",
+                        method.name())));
   }
 
   CcCloseNamespaces();

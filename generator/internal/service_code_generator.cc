@@ -482,6 +482,23 @@ void ServiceCodeGenerator::SetMethods() {
   for (auto const& mixin_method : mixin_methods_) {
     methods_.emplace_back(mixin_method.method.get());
   }
+
+  auto bespoke_methods_var = service_vars_.find("bespoke_methods");
+  if (bespoke_methods_var != service_vars_.end()) {
+    auto methods = absl::StrSplit(bespoke_methods_var->second, ",");
+    for (auto const& method : methods) {
+      std::vector<std::string> pieces = absl::StrSplit(method, "@@");
+      assert(pieces.size() == 4);
+      cpp::generator::ServiceConfiguration::BespokeMethod bespoke_method;
+      bespoke_method.set_client_comments(SafeReplaceAll(pieces[0], "@", ","));
+      bespoke_method.set_name(SafeReplaceAll(pieces[1], "@", ","));
+      bespoke_method.set_return_type(SafeReplaceAll(pieces[2], "@", ","));
+      bespoke_method.set_parameters(SafeReplaceAll(pieces[3], "@", ","));
+      std::cout << __func__
+                << ": bespoke_method=" << bespoke_method.DebugString() << "\n";
+      bespoke_methods_.emplace_back(std::move(bespoke_method));
+    }
+  }
 }
 
 std::string ServiceCodeGenerator::GetPbIncludeByTransport() const {
@@ -509,11 +526,6 @@ std::vector<MixinMethod> const& ServiceCodeGenerator::MixinMethods() const {
 
 bool ServiceCodeGenerator::IsDeprecated() const {
   return service_descriptor_->options().deprecated();
-}
-
-bool ServiceCodeGenerator::HasEmitCompletionQueueAccessor() const {
-  return vars().find("emit_completion_queue_accessor") != vars().end() &&
-         vars().at("emit_completion_queue_accessor") == "true";
 }
 
 }  // namespace generator_internal

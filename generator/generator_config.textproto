@@ -588,7 +588,12 @@ service {
     {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
   ]
   omit_repo_metadata: true
-  emit_completion_queue_accessor: true
+  bespoke_methods : [
+    {
+    client_comments: "Polls until the table is consistent or until the retry policy has expired.",
+    name: "WaitForConsistency",
+    return_type: "future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>",
+    parameters: "(google::bigtable::admin::v2::CheckConsistencyRequest const& request, Options opts = {})"}]
 }
 
 # Billing

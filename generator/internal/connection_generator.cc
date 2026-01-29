@@ -19,6 +19,7 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -57,8 +58,6 @@ Status ConnectionGenerator::GenerateHeader() {
       {vars("idempotency_policy_header_path"), vars("retry_traits_header_path"),
        HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
-       HasEmitCompletionQueueAccessor() ? "google/cloud/completion_queue.h"
-                                        : "",
        "google/cloud/backoff_policy.h",
        HasLongrunningMethod() || HasAsyncMethod() ? "google/cloud/future.h"
                                                   : "",
@@ -93,21 +92,7 @@ Status ConnectionGenerator::GenerateHeader() {
     }
   }
 
-  Status result;
-  if (HasEmitCompletionQueueAccessor()) {
-    result = HeaderOpenNamespaces();
-    if (!result.ok()) return result;
-    HeaderPrint(R"""(class $connection_class_name$;)""");
-    HeaderCloseNamespaces();
-
-    result = HeaderOpenNamespaces(NamespaceType::kInternal);
-    if (!result.ok()) return result;
-    HeaderPrint(
-        R"""(StatusOr<CompletionQueue> completion_queue($product_namespace$::$connection_class_name$ const& conn);)""");
-    HeaderCloseNamespaces();
-  }
-
-  result = HeaderOpenNamespaces();
+  auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
   HeaderPrint(R"""(
@@ -331,13 +316,14 @@ class $connection_class_name$ {
         __FILE__, __LINE__);
   }
 
-  if (HasEmitCompletionQueueAccessor()) {
-    HeaderPrint(R"""( protected:
-  friend StatusOr<CompletionQueue> $product_internal_namespace$::completion_queue(
-      $connection_class_name$ const& conn);
-  virtual StatusOr<CompletionQueue> completion_queue() const;
-)""");
+  for (auto const& method : bespoke_methods()) {
+    HeaderPrint("\n");
+    HeaderPrint(absl::StrCat(
+        "virtual ", method.return_type(), " ", method.name(),
+        absl::StrReplaceAll(method.parameters(), {{", Options opts = {}", ""}}),
+        ";"));
   }
+
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
@@ -513,13 +499,24 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
-  if (HasEmitCompletionQueueAccessor()) {
+  for (auto const& method : bespoke_methods()) {
+    CcPrint("\n");
+    std::string make_return =
+        absl::StrContains(method.return_type(), "future")
+            ? absl::StrCat("google::cloud::make_ready_", method.return_type())
+            : method.return_type();
+
     CcPrint(
-        R"""(
-StatusOr<CompletionQueue> $connection_class_name$::completion_queue() const {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        absl::StrCat(method.return_type(), R"""( $connection_class_name$::)""",
+                     method.name(),
+                     absl::StrReplaceAll(method.parameters(),
+                                         {{" request, Options opts = {}", ""}}),
+                     " {\n",
+                     absl::StrFormat(R"""(  return %s(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
-)""");
+)""",
+                                     make_return)));
   }
 
   if (HasGenerateGrpcTransport()) {

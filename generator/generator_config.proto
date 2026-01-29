@@ -168,11 +168,14 @@ message ServiceConfiguration {
   // generated.
   bool omit_streaming_updater = 29;
 
-  // In rare cases, specifically bigtable::WaitForConsistency, the
-  // CompletionQueue from the BackgroundThreads owned by the Connection is
-  // needed elsewhere. This emits a protected accessor and friend function for
-  // that purpose.
-  bool emit_completion_queue_accessor = 30;
+  message BespokeMethod {
+    string client_comments = 1;
+    string name = 2;
+    string return_type = 3;
+    string parameters = 4;
+  }
+
+  repeated BespokeMethod bespoke_methods = 30;
 }
 
 message DiscoveryDocumentDefinedProduct {
