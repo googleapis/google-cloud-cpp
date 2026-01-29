@@ -85,7 +85,8 @@ $cmake_args=@(
     "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`"",
     "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
     "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
-    "-DCMAKE_CXX_COMPILER=cl.exe"
+    "-DCMAKE_CXX_COMPILER=cl.exe",
+    "-DCMAKE_CXX_STANDARD=17"
 )
 
 Write-Host "$(Get-Date -Format o) Configuring CMake with $cmake_args"

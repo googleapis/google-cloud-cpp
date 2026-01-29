@@ -102,6 +102,7 @@ $cmake_args=@(
     "-DVCPKG_OVERLAY_TRIPLETS=${project_root}/ci/kokoro/windows/triplets",
     "-DCMAKE_C_COMPILER=cl.exe",
     "-DCMAKE_CXX_COMPILER=cl.exe",
+    "-DCMAKE_CXX_STANDARD=17",
     "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
     "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON",
     "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>",
