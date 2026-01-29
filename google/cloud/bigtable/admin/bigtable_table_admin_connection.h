@@ -359,6 +359,11 @@ class BigtableTableAdminConnection {
       StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
+
+  virtual future<
+      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+  WaitForConsistency(
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 };
 
 /**

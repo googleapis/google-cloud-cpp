@@ -588,6 +588,13 @@ service {
     {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
   ]
   omit_repo_metadata: true
+  bespoke_methods : [
+    {
+    name: "WaitForConsistency",
+    return_type: "future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>",
+    parameters: "(google::bigtable::admin::v2::CheckConsistencyRequest const& request, Options opts = {})"
+    }
+  ]
 }
 
 # Billing
