@@ -633,30 +633,27 @@ void WaitForConsistencyCheck(
   using ::google::cloud::future;
   using ::google::cloud::Status;
   using ::google::cloud::StatusOr;
-  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+  [](cbta::BigtableTableAdminClient, std::string const& project_id,
      std::string const& instance_id, std::string const& table_id) {
+    auto client = cbta::BigtableTableAdminClient(
+        cbta::MakeBigtableTableAdminConnection());
     std::string table_name = cbt::TableName(project_id, instance_id, table_id);
     StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
-        consistency_token = admin.GenerateConsistencyToken(table_name);
+        consistency_token = client.GenerateConsistencyToken(table_name);
     if (!consistency_token) {
       throw std::move(consistency_token).status();
     }
-    // Start a thread to perform the background work.
-    CompletionQueue cq;
-    std::thread cq_runner([&cq] { cq.Run(); });
+    auto token = consistency_token->consistency_token();
+    //    auto consistency_future =
+    //        cbta::WaitForConsistency(connection, table_name, token);
 
-    std::string token = consistency_token->consistency_token();
-    future<Status> consistent_future =
-        cbta::AsyncWaitForConsistency(cq, admin, table_name, token);
-
-    // Simplify the example by blocking until the operation is done.
-    Status status = consistent_future.get();
-    if (!status.ok()) throw std::runtime_error(status.message());
+    google::bigtable::admin::v2::CheckConsistencyRequest wait_request;
+    wait_request.set_name(table_name);
+    wait_request.set_consistency_token(token);
+    auto consistency_future = client.WaitForConsistency(wait_request);
+    auto consistency = consistency_future.get();
+    if (!consistency) throw std::runtime_error(consistency.status().message());
     std::cout << "Table is consistent with token " << token << "\n";
-
-    // Shutdown the work queue and join the background thread
-    cq.Shutdown();
-    cq_runner.join();
   }
   //! [wait for consistency check]
   (std::move(admin), argv.at(0), argv.at(1), argv.at(2));

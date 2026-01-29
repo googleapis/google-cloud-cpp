@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
@@ -221,11 +223,13 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
   // new instance and the new table.
-  auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id());
-  bigtable::InstanceAdmin instance_admin(instance_admin_client);
-
-  auto admin_client = bigtable::MakeAdminClient(project_id());
-  bigtable::TableAdmin table_admin(admin_client, id);
+  auto instance_admin =
+      std::make_unique<bigtable_admin::BigtableInstanceAdminClient>(
+          bigtable_admin::MakeBigtableInstanceAdminConnection());
+  auto table_admin_connection =
+      bigtable_admin::MakeBigtableTableAdminConnection();
+  auto table_admin = std::make_unique<bigtable_admin::BigtableTableAdminClient>(
+      table_admin_connection);
 
   // The instance configuration is involved, it needs two clusters, which must
   // be production clusters (and therefore have at least 3 nodes each), and
@@ -243,7 +247,9 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
   // Create the new instance.
-  auto instance = instance_admin.CreateInstance(config).get();
+  auto create_request = config.as_proto();
+  create_request.set_parent(Project(project_id()).FullName());
+  auto instance = instance_admin->CreateInstance(create_request).get();
   ASSERT_STATUS_OK(instance);
 
   // The table is going to be very simple, just one column family.
@@ -252,7 +258,10 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
       {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
 
   // Create the new table.
-  auto table_created = table_admin.CreateTable(random_table_id, table_config);
+  auto request = std::move(table_config).as_proto();
+  request.set_parent(InstanceName(project_id(), id));
+  request.set_table_id(random_table_id);
+  auto table_created = table_admin->CreateTable(request);
   ASSERT_STATUS_OK(table_created);
 
   // We need to mutate the data in the table and then wait for those mutations
@@ -273,20 +282,24 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create a consistency token after modifying the table.
   auto consistency_token =
-      table_admin.GenerateConsistencyToken(random_table_id);
+      table_admin->GenerateConsistencyToken(table_created->name());
   ASSERT_STATUS_OK(consistency_token);
 
   // Wait until all the mutations before the `consistency_token` have propagated
   // everywhere.
-  google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
-      table_admin.WaitForConsistency(random_table_id, *consistency_token);
-  auto is_consistent = result.get();
+  google::bigtable::admin::v2::CheckConsistencyRequest wait_request;
+  wait_request.set_name(table_created->name());
+  wait_request.set_consistency_token(consistency_token->consistency_token());
+  future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+      result = table_admin->WaitForConsistency(wait_request);
+  StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
+      is_consistent = result.get();
   ASSERT_STATUS_OK(is_consistent);
-  EXPECT_EQ(bigtable::Consistency::kConsistent, *is_consistent);
+  EXPECT_TRUE(is_consistent->consistent());
 
   // Cleanup the table and the instance.
-  EXPECT_STATUS_OK(table_admin.DeleteTable(random_table_id));
-  EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
+  EXPECT_STATUS_OK(table_admin->DeleteTable(table_created->name()));
+  EXPECT_STATUS_OK(instance_admin->DeleteInstance(instance->name()));
 }
 
 /// @test Verify rpc logging for `bigtable::TableAdmin`
