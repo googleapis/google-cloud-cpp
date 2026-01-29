@@ -31,6 +31,14 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/etc/quickstart-config.sh
 source module ci/lib/io.sh
 
+function cleanup() {
+  local exit_status=$?
+  io::log_h2 "cleanup on EXIT with exit_status=${exit_status}"
+  io::run find . -name '*core*'
+}
+
+trap 'cleanup' INT TERM EXIT
+
 # Builds the CMake and Makefile quickstart programs but DOES NOT RUN THEM. This
 # is a useful way to test that the artifacts installed by `google-cloud-cpp`
 # work for compilation. This function requires a single argument specifying the
@@ -97,8 +105,6 @@ function quickstart::run_cmake_and_make() {
     mapfile -t run_args < <(quickstart::arguments "${lib}")
     quickstart::run_one_quickstart "${prefix}" "${lib}" "${run_args[@]}"
   done
-
-  io::run find . -name '*core*'
 }
 
 function quickstart::run_gcs_grpc_quickstart() {
