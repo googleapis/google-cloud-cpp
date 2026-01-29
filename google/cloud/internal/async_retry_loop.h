@@ -261,15 +261,10 @@ class AsyncRetryLoopImpl
   }
 
   void OnAttempt(T result) {
-    if (attempt_predicate_) {
-      // A successful attempt that satisfies the predicate, set the value and
-      // finish the loop.
-      if (result.ok() && attempt_predicate_(result)) {
-        return SetDone(std::move(result));
-      }
-    } else {
-      // A successful attempt, set the value and finish the loop.
-      if (result.ok()) return SetDone(std::move(result));
+    // If the attempt is successful and satisfies the attempt predicate, if
+    // provided, set the value and finish the loop.
+    if (result.ok() && (!attempt_predicate_ || attempt_predicate_(result))) {
+      return SetDone(std::move(result));
     }
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
