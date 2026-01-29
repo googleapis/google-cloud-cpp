@@ -198,10 +198,6 @@ class AsyncRetryLoopImpl
         call_context_(std::move(options)),
         attempt_predicate_(std::move(attempt_predicate)) {}
 
-  //  using ReturnType = ::google::cloud::internal::invoke_result_t<
-  //      Functor, google::cloud::CompletionQueue&,
-  //      std::shared_ptr<grpc::ClientContext>, ImmutableOptions, Request
-  //      const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
@@ -265,13 +261,11 @@ class AsyncRetryLoopImpl
   }
 
   void OnAttempt(T result) {
-    if (attempt_predicate_) {
-      if (result.ok() && attempt_predicate_(result)) {
-        return SetDone(std::move(result));
-      }
+    // If the attempt is successful and satisfies the attempt predicate, if
+    // provided, set the value and finish the loop.
+    if (result.ok() && (!attempt_predicate_ || attempt_predicate_(result))) {
+      return SetDone(std::move(result));
     }
-    // A successful attempt, set the value and finish the loop.
-    if (result.ok()) return SetDone(std::move(result));
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
     auto delay =
