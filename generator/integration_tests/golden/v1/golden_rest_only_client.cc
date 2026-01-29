@@ -38,6 +38,11 @@ GoldenRestOnlyClient::Noop(google::protobuf::Empty const& request, Options opts)
   return connection_->Noop(request);
 }
 
+StatusOr<google::protobuf::Empty> GoldenRestOnlyClient::WaitForConsistency(google::protobuf::Empty const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->WaitForConsistency(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
