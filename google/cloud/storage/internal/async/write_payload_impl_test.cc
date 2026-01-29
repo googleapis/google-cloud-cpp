@@ -27,7 +27,7 @@ using ::testing::IsEmpty;
 using ::testing::Not;
 
 TEST(WritePayloadImpl, Default) {
-  auto const actual = storage_experimental::WritePayload();
+  auto const actual = storage::WritePayload();
   EXPECT_TRUE(actual.empty());
   EXPECT_EQ(actual.size(), 0);
   EXPECT_THAT(actual.payload(), IsEmpty());

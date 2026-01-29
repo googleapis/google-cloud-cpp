@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct ReadStream : public storage_internal::StreamBase {
   ReadStream(std::shared_ptr<OpenStream> stream,
-             std::unique_ptr<storage_experimental::ResumePolicy> resume_policy)
+             std::unique_ptr<storage::ResumePolicy> resume_policy)
       : stream(std::move(stream)), resume_policy(std::move(resume_policy)) {}
 
   void Cancel() override {
@@ -46,21 +46,21 @@ struct ReadStream : public storage_internal::StreamBase {
   }
 
   std::shared_ptr<OpenStream> stream;
-  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy;
+  std::unique_ptr<storage::ResumePolicy> resume_policy;
   google::storage::v2::BidiReadObjectRequest next_request;
   bool write_pending = false;
   bool read_pending = false;
 };
 
 class ObjectDescriptorImpl
-    : public storage_experimental::ObjectDescriptorConnection,
+    : public storage::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
  public:
-  ObjectDescriptorImpl(
-      std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
-      OpenStreamFactory make_stream,
-      google::storage::v2::BidiReadObjectSpec read_object_spec,
-      std::shared_ptr<OpenStream> stream, Options options = {});
+  ObjectDescriptorImpl(std::unique_ptr<storage::ResumePolicy> resume_policy,
+                       OpenStreamFactory make_stream,
+                       google::storage::v2::BidiReadObjectSpec read_object_spec,
+                       std::shared_ptr<OpenStream> stream,
+                       Options options = {});
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
@@ -76,8 +76,7 @@ class ObjectDescriptorImpl
   absl::optional<google::storage::v2::Object> metadata() const override;
 
   // Start a new ranged read.
-  std::unique_ptr<storage_experimental::AsyncReaderConnection> Read(
-      ReadParams p) override;
+  std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override;
 
   void MakeSubsequentStream() override;
 
@@ -109,7 +108,7 @@ class ObjectDescriptorImpl
   bool IsResumable(StreamIterator it, Status const& status,
                    google::rpc::Status const& proto_status);
 
-  std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_prototype_;
+  std::unique_ptr<storage::ResumePolicy> resume_policy_prototype_;
   OpenStreamFactory make_stream_;
 
   mutable std::mutex mu_;

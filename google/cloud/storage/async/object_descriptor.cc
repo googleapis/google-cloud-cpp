@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 absl::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
@@ -28,10 +28,11 @@ absl::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
 std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
                                                           std::int64_t limit) {
   std::int64_t max_range =
-      impl_->options().get<storage_experimental::MaximumRangeSizeOption>();
+      impl_->options().get<storage::MaximumRangeSizeOption>();
   if (limit > max_range) {
     impl_->MakeSubsequentStream();
   }
+
   auto reader = impl_->Read({offset, limit});
   auto token = storage_internal::MakeAsyncToken(reader.get());
   return {AsyncReader(std::move(reader)), std::move(token)};
@@ -52,6 +53,6 @@ std::pair<AsyncReader, AsyncToken> ObjectDescriptor::ReadLast(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

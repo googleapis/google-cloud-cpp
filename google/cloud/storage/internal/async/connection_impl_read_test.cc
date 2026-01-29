@@ -77,14 +77,14 @@ auto TestOptions(Options options = {}) {
       std::move(options),
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<storage_experimental::AsyncRetryPolicyOption>(
-              storage_experimental::LimitedErrorCountRetryPolicy(2).clone())
+          .set<storage::AsyncRetryPolicyOption>(
+              storage::LimitedErrorCountAsyncRetryPolicy(2).clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return DefaultOptionsAsync(std::move(options));
 }
 
-std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
+std::shared_ptr<storage::AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
   return MakeAsyncConnection(std::move(cq), std::move(mock),
@@ -211,8 +211,7 @@ TEST_F(AsyncConnectionImplTest, ReadObject) {
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
   auto response = data.get();
-  ASSERT_TRUE(
-      absl::holds_alternative<storage_experimental::ReadPayload>(response));
+  ASSERT_TRUE(absl::holds_alternative<storage::ReadPayload>(response));
 
   // The `Read()` and `Finish()` calls must happen before the second `Read()` is
   // satisfied.
@@ -312,8 +311,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectWithTimeout) {
   next.first.set_value(true);
 
   auto response = data.get();
-  ASSERT_TRUE(
-      absl::holds_alternative<storage_experimental::ReadPayload>(response));
+  ASSERT_TRUE(absl::holds_alternative<storage::ReadPayload>(response));
 
   // Trigger another read. Since this closes the stream, the `Read()` and
   // `Finish()` calls must happen before the second `Read()` is satisfied.
@@ -534,19 +532,18 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {
   });
 
   auto mock_resume_policy_factory =
-      []() -> std::unique_ptr<storage_experimental::ResumePolicy> {
+      []() -> std::unique_ptr<storage::ResumePolicy> {
     auto policy = std::make_unique<MockResumePolicy>();
     EXPECT_CALL(*policy, OnStartSuccess).Times(0);  // Never resumed
     EXPECT_CALL(*policy, OnFinish(StatusIs(StatusCode::kInvalidArgument)))
-        .WillOnce(Return(storage_experimental::ResumePolicy::kStop));
+        .WillOnce(Return(storage::ResumePolicy::kStop));
     return policy;
   };
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(
       pool.cq(), mock,
-      Options{}.set<storage_experimental::ResumePolicyOption>(
-          mock_resume_policy_factory));
+      Options{}.set<storage::ResumePolicyOption>(mock_resume_policy_factory));
   auto pending = connection->ReadObject(
       {google::storage::v2::ReadObjectRequest{}, connection->options()});
 
@@ -629,7 +626,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
   });
 
   auto mock_resume_policy_factory =
-      []() -> std::unique_ptr<storage_experimental::ResumePolicy> {
+      []() -> std::unique_ptr<storage::ResumePolicy> {
     auto policy = std::make_unique<MockResumePolicy>();
     EXPECT_CALL(*policy, OnStartSuccess).Times(2);  // Per Read() success
     EXPECT_CALL(*policy, OnFinish).Times(0);
@@ -637,10 +634,10 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
   };
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(
-      pool.cq(), mock,
-      TestOptions(Options{}.set<storage_experimental::ResumePolicyOption>(
-          mock_resume_policy_factory)));
+  auto connection =
+      MakeTestConnection(pool.cq(), mock,
+                         TestOptions(Options{}.set<storage::ResumePolicyOption>(
+                             mock_resume_policy_factory)));
   auto pending = connection->ReadObject(
       {google::storage::v2::ReadObjectRequest{}, connection->options()});
 
@@ -661,12 +658,11 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
   auto response = data.get();
-  EXPECT_THAT(response, VariantWith<storage_experimental::ReadPayload>(ResultOf(
-                            "payload contents",
-                            [](storage_experimental::ReadPayload const& p) {
-                              return p.contents();
-                            },
-                            ElementsAre(std::string(kQuick)))));
+  EXPECT_THAT(response,
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "payload contents",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(std::string(kQuick)))));
 
   // Trigger the second `Read()` and simulate its behavior.
   data = reader->Read();
@@ -674,12 +670,11 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
   response = data.get();
-  EXPECT_THAT(response, VariantWith<storage_experimental::ReadPayload>(ResultOf(
-                            "payload contents",
-                            [](storage_experimental::ReadPayload const& p) {
-                              return p.contents();
-                            },
-                            ElementsAre(std::string(kQuick)))));
+  EXPECT_THAT(response,
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "payload contents",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(std::string(kQuick)))));
 
   // The last Read() triggers the end of stream message, including a call to
   // `Finish()`. It should detect the invalid checksum.
