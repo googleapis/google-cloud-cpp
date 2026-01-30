@@ -5,7 +5,7 @@ index f014ecd..fd8898a 100644
 @@ -1,7 +1,11 @@
  # Copyright The OpenTelemetry Authors
  # SPDX-License-Identifier: Apache-2.0
-
+ 
 -find_package(OpenTracing CONFIG QUIET)
 +find_package(OpenTracing CONFIG REQUIRED)
 +if(NOT TARGET OpenTracing::opentracing AND TARGET OpenTracing::opentracing-static)
@@ -13,5 +13,5 @@ index f014ecd..fd8898a 100644
 +endif()
 +
  set(OpenTracing_PROVIDER "find_package")
-
+ 
  if(NOT OpenTracing_FOUND)
