@@ -314,23 +314,23 @@ void ServiceCodeGenerator::CcSystemIncludes(
 void ServiceCodeGenerator::HeaderGrpcPortsDefInclude() {
   header_.Print(R"""(
 // Must be included last.
-#include <grpcpp/ports_def.inc>
+#include "google/cloud/ports_def.inc"
 )""");
 }
 void ServiceCodeGenerator::HeaderGrpcPortsUndefInclude() {
   header_.Print(R"""(
-#include <grpcpp/ports_undef.inc>
+#include "google/cloud/ports_undef.inc"
 )""");
 }
 void ServiceCodeGenerator::CcGrpcPortsDefInclude() {
   cc_.Print(R"""(
 // Must be included last.
-#include <grpcpp/ports_def.inc>
+#include "google/cloud/ports_def.inc"
 )""");
 }
 void ServiceCodeGenerator::CcGrpcPortsUndefInclude() {
   cc_.Print(R"""(
-#include <grpcpp/ports_undef.inc>
+#include "google/cloud/ports_undef.inc"
 )""");
 }
 
