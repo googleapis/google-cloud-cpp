@@ -28,6 +28,9 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace discoveryengine_v1_internal {
@@ -237,5 +240,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_STUB_H

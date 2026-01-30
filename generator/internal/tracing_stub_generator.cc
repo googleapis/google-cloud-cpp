@@ -50,7 +50,7 @@ Status TracingStubGenerator::GenerateHeader() {
                        "google/cloud/internal/trace_propagator.h",
                        "google/cloud/options.h", "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -83,6 +83,7 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -118,7 +119,7 @@ Status TracingStubGenerator::GenerateCc() {
            : "",
        "google/cloud/internal/grpc_opentelemetry.h"});
   CcSystemIncludes({"memory", "utility"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -346,6 +347,7 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 }
 )""");
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

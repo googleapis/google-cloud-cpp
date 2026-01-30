@@ -23,6 +23,9 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace pubsub_admin_internal {
@@ -209,3 +212,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_admin_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

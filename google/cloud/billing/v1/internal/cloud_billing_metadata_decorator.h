@@ -26,6 +26,9 @@
 #include <memory>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace billing_v1_internal {
@@ -108,5 +111,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_BILLING_METADATA_DECORATOR_H

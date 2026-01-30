@@ -29,6 +29,9 @@
 #include <utility>
 #include <vector>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace servicedirectory_v1_internal {
@@ -88,3 +91,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

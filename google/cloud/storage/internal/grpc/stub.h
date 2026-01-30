@@ -26,6 +26,9 @@
 #include <string>
 #include <vector>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace storage_internal {
@@ -296,5 +299,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H

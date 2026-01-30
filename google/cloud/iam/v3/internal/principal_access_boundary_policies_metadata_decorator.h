@@ -27,6 +27,9 @@
 #include <memory>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace iam_v3_internal {
@@ -128,5 +131,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v3_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_INTERNAL_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_METADATA_DECORATOR_H

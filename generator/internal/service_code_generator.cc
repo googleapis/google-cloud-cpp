@@ -311,6 +311,29 @@ void ServiceCodeGenerator::CcSystemIncludes(
   GenerateSystemIncludes(cc_, system_includes);
 }
 
+void ServiceCodeGenerator::HeaderGrpcPortsDefInclude() {
+  header_.Print(R"""(
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+)""");
+}
+void ServiceCodeGenerator::HeaderGrpcPortsUndefInclude() {
+  header_.Print(R"""(
+#include "google/cloud/ports_undef.inc"
+)""");
+}
+void ServiceCodeGenerator::CcGrpcPortsDefInclude() {
+  cc_.Print(R"""(
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+)""");
+}
+void ServiceCodeGenerator::CcGrpcPortsUndefInclude() {
+  cc_.Print(R"""(
+#include "google/cloud/ports_undef.inc"
+)""");
+}
+
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(header_, ns_type, "product_path");
 }

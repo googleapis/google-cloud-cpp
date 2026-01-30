@@ -26,6 +26,9 @@
 #include <set>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace servicecontrol_v2_internal {
@@ -55,5 +58,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_INTERNAL_SERVICE_CONTROLLER_AUTH_DECORATOR_H

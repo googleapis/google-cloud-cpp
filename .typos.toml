@@ -62,6 +62,9 @@ extend-exclude = [
     "external/googleapis.patch",
     # Mispelled test names in Bigtable conformance tests
     "google/cloud/bigtable/ci/run_conformance_tests_proxy_bazel.sh",
+    # ports files don't need to be checked
+    "google/cloud/ports_def.inc",
+    "google/cloud/ports_undef.inc",
 ]
 
 [default]

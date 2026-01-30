@@ -25,6 +25,9 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace apikeys_v2_internal {
@@ -127,5 +130,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_V2_INTERNAL_API_KEYS_TRACING_STUB_H

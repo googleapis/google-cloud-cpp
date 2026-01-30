@@ -41,6 +41,9 @@
 #include <cinttypes>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace storage_internal {
