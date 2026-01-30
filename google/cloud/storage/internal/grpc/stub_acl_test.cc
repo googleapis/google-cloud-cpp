@@ -23,6 +23,8 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace storage_internal {
