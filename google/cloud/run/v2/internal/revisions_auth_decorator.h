@@ -27,6 +27,9 @@
 #include <set>
 #include <string>
 
+// Must be included last.
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace run_v2_internal {
@@ -94,5 +97,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_AUTH_DECORATOR_H

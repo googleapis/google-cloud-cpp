@@ -25,6 +25,9 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace parallelstore_v1_internal {
@@ -161,5 +164,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace parallelstore_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PARALLELSTORE_V1_INTERNAL_PARALLELSTORE_TRACING_STUB_H

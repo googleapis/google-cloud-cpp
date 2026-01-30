@@ -26,6 +26,9 @@
 #include <memory>
 #include <string>
 
+// Must be included last.
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace essentialcontacts_v1_internal {
@@ -89,5 +92,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace essentialcontacts_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_INTERNAL_ESSENTIAL_CONTACTS_METADATA_DECORATOR_H
