@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Release ]
         arch: [ x64 ]
-        shard: [ Core3, Core4 ]
+        shard: [ Core1, Core2, Core3, Core4, Core5, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Shard5 ]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -103,6 +103,7 @@ jobs:
           dataproc
           discoveryengine
           monitoring
+          opentelemetry
           retail
           sql
           dialogflow_cx
@@ -209,6 +210,8 @@ jobs:
           universe_domain
         )
         shard5_features=(
+          asset
+          channel
           video
           datacatalog
           iam
@@ -269,10 +272,6 @@ jobs:
           skipped_features+=("${shard3_features[@]}")
           skipped_features+=("${shard4_features[@]}")
           skipped_features+=("${shard5_features[@]}")
-          # We use vcpkg in this build, which ships with Protobuf v21.x.
-          # Both `asset` and `channel` require Protobuf >= 23.x to compile on
-          # Windows.
-          skipped_features+=(asset channel)
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi

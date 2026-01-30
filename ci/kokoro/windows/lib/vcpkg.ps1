@@ -69,9 +69,10 @@ function Install-Vcpkg {
 
     $vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-version.txt"
     $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip"
-    if ($vcpkg_version -match "[0-9]{4}.[0-9]{2}.[0-9]{2}" ) {
-        $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/refs/tags/${vcpkg_version}.zip"
-    }
+#     TODO(#15942): Figure out why this check isn't working.
+#     if ($vcpkg_version -match "[0-9]{4}.[0-9]{2}.[0-9]{2}" ) {
+#         $vcpkg_url = "https://github.com/microsoft/vcpkg/archive/refs/tags/${vcpkg_version}.zip"
+#     }
     Write-Host "$(Get-Date -Format o) Downloading vcpkg archive from $vcpkg_url"
 
     # Download the right version of `vcpkg`

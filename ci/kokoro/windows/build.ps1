@@ -86,6 +86,9 @@ if ($BuildName -eq "cmake-debug") {
     $BuildScript = "builds/quickstart-cmake.ps1"
 }
 
+$env:VCPKG_OVERLAY_PORTS = "ci\kokoro\windows\vcpkg-overlays"
+
+
 $ScriptLocation = Split-Path $PSCommandPath -Parent
 
 Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) Running build script for $BuildName build"

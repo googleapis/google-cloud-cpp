@@ -84,6 +84,8 @@ cmake_flags=(
   "-DGOOGLE_CLOUD_CPP_ENABLE=universe_domain"
 )
 
+export VCPKG_OVERLAY_PORTS="ci\kokoro\windows\vcpkg-overlays"
+
 # The downloads can fail, therefore require a retry loop.
 io::log_h2 "Download and compile dependencies using vcpkg"
 ci/retry-command.sh 3 120 \
