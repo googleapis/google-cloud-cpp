@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+//
 // Protect Code from unwanted/inconvienet macros
 //
 // You must follow this pattern when #including port_def.inc in a header file:
