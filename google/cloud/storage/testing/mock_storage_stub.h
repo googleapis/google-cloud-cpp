@@ -22,7 +22,7 @@
 #include <memory>
 
 // Must be included last.
-#include <grpcpp/ports_def.inc>
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -260,6 +260,6 @@ using MockAsyncBidiWriteObjectStream =
 }  // namespace cloud
 }  // namespace google
 
-#include <grpcpp/ports_undef.inc>
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_STORAGE_STUB_H

@@ -42,7 +42,7 @@
 #include <utility>
 
 // Must be included last.
-#include <grpcpp/ports_def.inc>
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
