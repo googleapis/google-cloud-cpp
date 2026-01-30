@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#define NOMINMAX
+#define NOMINMAX  // Handles Windows.h macro "max" issues.
 #include "google/cloud/internal/curl_handle_factory.h"
 #include <benchmark/benchmark.h>
 #undef NOMINMAX

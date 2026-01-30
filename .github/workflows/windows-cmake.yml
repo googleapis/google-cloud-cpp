@@ -39,9 +39,9 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         msvc: [ msvc-2022 ]
-        build_type: [ Debug ]
+        build_type: [ Release ]
         arch: [ x64 ]
-        shard: [ Core1 ]
+        shard: [ Core1, Core3, Core4 ]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
