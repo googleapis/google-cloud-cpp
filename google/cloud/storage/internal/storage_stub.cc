@@ -28,7 +28,7 @@
 #include <memory>
 #include <utility>
 
-#undef GetObject
+#include <grpcpp/ports_def.inc>
 
 namespace google {
 namespace cloud {
@@ -456,3 +456,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
