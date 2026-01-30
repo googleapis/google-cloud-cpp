@@ -16,6 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/storage/v2/storage.proto
 
+#undef GetObject
+
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
