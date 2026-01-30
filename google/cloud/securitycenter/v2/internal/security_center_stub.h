@@ -30,7 +30,7 @@
 #include <utility>
 
 // Must be included last.
-#include <grpcpp/ports_def.inc>
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -572,6 +572,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#include <grpcpp/ports_undef.inc>
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_INTERNAL_SECURITY_CENTER_STUB_H
