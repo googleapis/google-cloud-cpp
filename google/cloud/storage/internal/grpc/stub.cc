@@ -37,11 +37,10 @@
 #include "absl/strings/match.h"
 #include "absl/time/time.h"
 #include <grpcpp/grpcpp.h>
+#include <grpcpp/ports_def.inc>
 #include <algorithm>
 #include <cinttypes>
 #include <utility>
-
-#include <grpcpp/ports_def.inc>
 
 namespace google {
 namespace cloud {

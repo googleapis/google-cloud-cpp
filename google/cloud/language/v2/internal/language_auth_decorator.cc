@@ -21,6 +21,9 @@
 #include <memory>
 #include <utility>
 
+// Must be included last
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace language_v2_internal {
@@ -80,3 +83,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>

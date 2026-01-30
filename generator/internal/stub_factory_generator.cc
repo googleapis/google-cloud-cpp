@@ -51,7 +51,7 @@ Status StubFactoryGenerator::GenerateHeader() {
                        "google/cloud/internal/unified_grpc_credentials.h",
                        "google/cloud/options.h", "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -63,6 +63,7 @@ std::shared_ptr<$stub_class_name$> CreateDefault$stub_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -93,7 +94,7 @@ Status StubFactoryGenerator::GenerateCc() {
   headers.insert(headers.end(), {vars("proto_grpc_header_path")});
   CcProtobufGenCodeIncludes(headers);
   CcSystemIncludes({"memory", "utility"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -168,6 +169,7 @@ CreateDefault$stub_class_name$(
 )""");
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

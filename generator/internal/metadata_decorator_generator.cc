@@ -133,7 +133,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
                                      ? "google/longrunning/operations.grpc.pb.h"
                                      : ""});
   HeaderSystemIncludes({"map", "memory", "string"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -164,6 +164,7 @@ class $metadata_class_name$ : public $stub_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -189,7 +190,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
        "google/cloud/status_or.h", "google/cloud/internal/url_encode.h"});
   CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
   CcSystemIncludes({"memory", "string", "utility", "vector"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -417,6 +418,7 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 )""");
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

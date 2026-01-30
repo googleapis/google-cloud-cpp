@@ -27,6 +27,9 @@
 #include <set>
 #include <string>
 
+// Must be included last
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace resourcemanager_v3_internal {
@@ -127,5 +130,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_VALUES_LOGGING_DECORATOR_H

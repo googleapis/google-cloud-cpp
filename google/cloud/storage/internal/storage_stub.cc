@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/storage/v2/storage.proto
 
-
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
@@ -28,6 +27,7 @@
 #include <memory>
 #include <utility>
 
+// Must be included last
 #include <grpcpp/ports_def.inc>
 
 namespace google {

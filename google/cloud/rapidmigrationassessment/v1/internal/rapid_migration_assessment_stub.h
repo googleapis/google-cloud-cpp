@@ -31,6 +31,9 @@
 #include <memory>
 #include <utility>
 
+// Must be included last
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace rapidmigrationassessment_v1_internal {
@@ -347,5 +350,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rapidmigrationassessment_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RAPIDMIGRATIONASSESSMENT_V1_INTERNAL_RAPID_MIGRATION_ASSESSMENT_STUB_H

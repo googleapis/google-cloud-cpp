@@ -33,6 +33,7 @@
 #include <memory>
 #include <utility>
 
+// Must be included last
 #include <grpcpp/ports_def.inc>
 
 namespace google {
@@ -376,4 +377,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #include <grpcpp/ports_undef.inc>
+
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_STUB_H

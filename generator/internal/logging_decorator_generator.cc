@@ -63,7 +63,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
                                      ? "google/longrunning/operations.grpc.pb.h"
                                      : ""});
   HeaderSystemIncludes({"memory", "set", "string"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -92,6 +92,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   HeaderPrint("};  // $logging_class_name$\n");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }
@@ -127,7 +128,7 @@ Status LoggingDecoratorGenerator::GenerateCc() {
        "google/cloud/status_or.h"});
   CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
   CcSystemIncludes({"memory", "set", "string", "utility"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -408,6 +409,7 @@ future<Status> $logging_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

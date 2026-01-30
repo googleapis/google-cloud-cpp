@@ -25,6 +25,9 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last
+#include <grpcpp/ports_def.inc>
+
 namespace google {
 namespace cloud {
 namespace bigtable_admin_internal {
@@ -39,5 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google
+
+#include <grpcpp/ports_undef.inc>
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_INTERNAL_BIGTABLE_INSTANCE_ADMIN_STUB_FACTORY_H
