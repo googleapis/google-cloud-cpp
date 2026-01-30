@@ -101,6 +101,8 @@ google_cloud_cpp_common_hdrs = [
     "optional.h",
     "options.h",
     "polling_policy.h",
+    "ports_def.inc",
+    "ports_undef.inc",
     "project.h",
     "retry_policy.h",
     "rpc_metadata.h",

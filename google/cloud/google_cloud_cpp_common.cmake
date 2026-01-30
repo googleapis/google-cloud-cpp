@@ -160,6 +160,8 @@ add_library(
     options.cc
     options.h
     polling_policy.h
+    ports_def.inc
+    ports_undef.inc
     project.cc
     project.h
     retry_policy.h
