@@ -51,7 +51,7 @@ Status RoundRobinDecoratorGenerator::GenerateHeader() {
   HeaderPrint("\n");
   HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
   HeaderSystemIncludes({"memory", "mutex", "vector"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -78,6 +78,7 @@ class $round_robin_class_name$ : public $stub_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -98,6 +99,7 @@ Status RoundRobinDecoratorGenerator::GenerateCc() {
       vars("round_robin_header_path"),
   });
   CcSystemIncludes({"memory", "mutex", "vector"});
+  CcGrpcPortsDefInclude();
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -268,6 +270,7 @@ $round_robin_class_name$::Child() {
 )""");
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

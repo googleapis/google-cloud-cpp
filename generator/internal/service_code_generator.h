@@ -81,6 +81,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void HeaderSystemIncludes(std::vector<std::string> const& system_includes);
   void CcSystemIncludes(std::vector<std::string> const& system_includes);
 
+  void HeaderGrpcPortsDefInclude();
+  void HeaderGrpcPortsUndefInclude();
+  void CcGrpcPortsDefInclude();
+  void CcGrpcPortsUndefInclude();
+
   void HeaderProtobufGenCodeIncludes(
       std::vector<std::string> const& pb_h_includes);
   void CcProtobufGenCodeIncludes(std::vector<std::string> const& pb_h_includes);
