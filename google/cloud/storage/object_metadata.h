@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/object_retention.h"
+#include "google/cloud/storage/object_contexts.h"
 #include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
@@ -450,6 +451,26 @@ class ObjectMetadata {
     return *this;
   }
 
+  /// Returns `true` if the object has user-defined contexts.
+  bool has_contexts() const { return contexts_.has_value(); }
+
+  /**
+   * The object's user custom contexts.
+   */
+  ObjectContexts const& contexts() const { return *contexts_; }
+
+  /// Change or set the object's custom contexts.
+  ObjectMetadata& set_contexts(ObjectContexts v) {
+    contexts_ = std::move(v);
+    return *this;
+  }
+
+  /// Reset the object's custom contexts.
+  ObjectMetadata& reset_contexts() {
+    contexts_.reset();
+    return *this;
+  }
+
   /// An HTTPS link to the object metadata.
   std::string const& self_link() const { return self_link_; }
 
@@ -612,6 +633,7 @@ class ObjectMetadata {
   std::string md5_hash_;
   std::string media_link_;
   std::map<std::string, std::string> metadata_;
+  absl::optional<ObjectContexts> contexts_;
   std::string name_;
   absl::optional<Owner> owner_;
   std::chrono::system_clock::time_point retention_expiration_time_;

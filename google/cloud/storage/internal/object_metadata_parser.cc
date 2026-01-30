@@ -160,6 +160,33 @@ Status ParseRetention(ObjectMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseContexts(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f_contexts = json.find("contexts");
+  if (f_contexts == json.end()) return Status{};
+
+  auto f_custom = f_contexts->find("custom");
+  if (f_custom == f_contexts->end()) return Status{};
+
+  ObjectContexts contexts;
+  for (auto const& kv : f_custom->items()) {
+    ObjectCustomContextPayload payload;
+    auto value = kv.value().value("value", "");
+    payload.value = value;
+
+    auto create_time = internal::ParseTimestampField(kv.value(), "createTime");
+    if (!create_time) return std::move(create_time).status();
+    payload.create_time = *create_time;
+
+    auto update_time = internal::ParseTimestampField(kv.value(), "updateTime");
+    if (!update_time) return std::move(update_time).status();
+    payload.update_time = *update_time;
+
+    contexts.custom.emplace(kv.key(), std::move(payload));
+  }
+  meta.set_contexts(std::move(contexts));
+  return Status{};
+}
+
 Status ParseSize(ObjectMetadata& meta, nlohmann::json const& json) {
   auto v = internal::ParseUnsignedLongField(json, "size");
   if (!v) return std::move(v).status();
@@ -296,6 +323,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       ParseOwner,
       ParseRetentionExpirationTime,
       ParseRetention,
+      ParseContexts,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
         return SetStringField(meta, json, "selfLink",
                               &ObjectMetadata::set_self_link);
@@ -372,6 +400,22 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
                                 meta.retention().retain_until_time)}};
   }
 
+  if (meta.has_contexts()) {
+    nlohmann::json custom_json;
+    for (auto const& kv : meta.contexts().custom) {
+      custom_json[kv.first] = nlohmann::json{
+          {"value", kv.second.value},
+          {"createTime",
+           google::cloud::internal::FormatRfc3339(kv.second.create_time)},
+          {"updateTime",
+           google::cloud::internal::FormatRfc3339(kv.second.update_time)},
+      };
+    }
+
+    metadata_as_json["contexts"] =
+        nlohmann::json{"custom", std::move(custom_json)};
+  }
+
   return metadata_as_json;
 }
 
@@ -428,6 +472,22 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
         {"mode", meta.retention().mode},
         {"retainUntilTime", google::cloud::internal::FormatRfc3339(
                                 meta.retention().retain_until_time)}};
+  }
+
+  if (meta.has_contexts()) {
+    nlohmann::json custom_json;
+    for (auto const& kv : meta.contexts().custom) {
+      custom_json[kv.first] = nlohmann::json{
+          {"value", kv.second.value},
+          {"createTime",
+           google::cloud::internal::FormatRfc3339(kv.second.create_time)},
+          {"updateTime",
+           google::cloud::internal::FormatRfc3339(kv.second.update_time)},
+      };
+    }
+
+    metadata_as_json["contexts"] =
+        nlohmann::json{"custom", std::move(custom_json)};
   }
 
   return metadata_as_json;

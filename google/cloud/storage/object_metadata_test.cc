@@ -120,6 +120,15 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "mode": "Unlocked",
         "retainUntilTime": "2024-07-18T00:00:00Z"
       },
+      "contexts": {
+        "custom": {
+          "environment": {
+            "value": "prod",
+            "createTime": "2024-07-18T00:00:00Z",
+            "updateTime": "2024-07-18T00:00:00Z"
+          }
+        }
+      },
       "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz",
       "size": 102400,
       "storageClass": "STANDARD",
@@ -175,7 +184,6 @@ TEST(ObjectMetadataTest, Parse) {
                 ObjectRetentionUnlocked(),
                 google::cloud::internal::ParseRfc3339("2024-07-18T00:00:00Z")
                     .value()}));
-
   EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());
   EXPECT_EQ(102400, actual.size());
@@ -207,6 +215,14 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ(actual.hard_delete_time(),
             std::chrono::system_clock::from_time_t(1710160496L) +
                 std::chrono::milliseconds(789));
+  ASSERT_TRUE(actual.has_contexts());
+  EXPECT_EQ(
+      actual.contexts().custom.at("environment"),
+      (ObjectCustomContextPayload{
+          "prod",
+          google::cloud::internal::ParseRfc3339("2024-07-18T00:00:00Z").value(),
+          google::cloud::internal::ParseRfc3339("2024-07-18T00:00:00Z")
+              .value()}));
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -267,6 +283,11 @@ TEST(ObjectMetadataTest, JsonForCompose) {
       {"customTime", "2020-08-10T12:34:56Z"},
       {"retention",
        {{"mode", "Unlocked"}, {"retainUntilTime", "2024-07-18T00:00:00Z"}}},
+      {"contexts",
+       {"custom", nlohmann::json{{"environment",
+                                  {{"createTime", "2024-07-18T00:00:00Z"},
+                                   {"updateTime", "2024-07-18T00:00:00Z"},
+                                   {"value", "prod"}}}}}},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -306,7 +327,13 @@ TEST(ObjectMetadataTest, JsonForCopy) {
       {"customTime", "2020-08-10T12:34:56Z"},
       {"retention",
        {{"mode", "Unlocked"}, {"retainUntilTime", "2024-07-18T00:00:00Z"}}},
+      {"contexts",
+       {"custom", nlohmann::json{{"environment",
+                                  {{"createTime", "2024-07-18T00:00:00Z"},
+                                   {"updateTime", "2024-07-18T00:00:00Z"},
+                                   {"value", "prod"}}}}}},
   };
+
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
 }
@@ -348,6 +375,11 @@ TEST(ObjectMetadataTest, JsonForInsert) {
       {"customTime", "2020-08-10T12:34:56Z"},
       {"retention",
        {{"mode", "Unlocked"}, {"retainUntilTime", "2024-07-18T00:00:00Z"}}},
+      {"contexts",
+       {"custom", nlohmann::json{{"environment",
+                                  {{"createTime", "2024-07-18T00:00:00Z"},
+                                   {"updateTime", "2024-07-18T00:00:00Z"},
+                                   {"value", "prod"}}}}}},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -388,6 +420,11 @@ TEST(ObjectMetadataTest, JsonForRewrite) {
       {"customTime", "2020-08-10T12:34:56Z"},
       {"retention",
        {{"mode", "Unlocked"}, {"retainUntilTime", "2024-07-18T00:00:00Z"}}},
+      {"contexts",
+       {"custom", nlohmann::json{{"environment",
+                                  {{"createTime", "2024-07-18T00:00:00Z"},
+                                   {"updateTime", "2024-07-18T00:00:00Z"},
+                                   {"value", "prod"}}}}}},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -429,6 +466,11 @@ TEST(ObjectMetadataTest, JsonForUpdate) {
       {"customTime", "2020-08-10T12:34:56Z"},
       {"retention",
        {{"mode", "Unlocked"}, {"retainUntilTime", "2024-07-18T00:00:00Z"}}},
+      {"contexts",
+       {"custom", nlohmann::json{{"environment",
+                                  {{"createTime", "2024-07-18T00:00:00Z"},
+                                   {"updateTime", "2024-07-18T00:00:00Z"},
+                                   {"value", "prod"}}}}}},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -642,6 +684,33 @@ TEST(ObjectMetadataTest, ResetRetention) {
   auto copy = expected;
   copy.reset_retention();
   EXPECT_FALSE(copy.has_retention());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the `contexts` field.
+TEST(ObjectMetadataTest, SetContexts) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  auto const context_payload = ObjectCustomContextPayload{
+      "engineering",
+      google::cloud::internal::ParseRfc3339("2025-07-18T00:00:00Z").value(),
+      google::cloud::internal::ParseRfc3339("2025-07-18T00:00:00Z").value()};
+  std::map<std::string, ObjectCustomContextPayload>  custom{
+    {"department", context_payload}};
+  auto const contexts = ObjectContexts{custom};
+  copy.set_contexts(contexts);
+  EXPECT_TRUE(expected.has_contexts());
+  EXPECT_TRUE(copy.has_contexts());
+  EXPECT_EQ(contexts, copy.contexts());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can reset the `contexts` field.
+TEST(ObjectMetadataTest, ResetContexts) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  copy.reset_contexts();
+  EXPECT_FALSE(copy.has_contexts());
   EXPECT_NE(expected, copy);
 }
 
