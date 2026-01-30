@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/storage/v2/storage.proto
 
-#undef GetObject
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
@@ -28,6 +27,8 @@
 #include "google/storage/v2/storage.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+#undef GetObject
 
 namespace google {
 namespace cloud {
