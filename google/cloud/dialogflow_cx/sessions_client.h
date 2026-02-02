@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Sessions.DetectIntent]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L73}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L75}
 ///
 class SessionsClient {
  public:
@@ -120,8 +120,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L216}
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L252}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L218}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L260}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
@@ -156,8 +156,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L216}
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L252}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L218}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L260}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
@@ -192,8 +192,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L332}
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L465}
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L340}
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L479}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -225,8 +225,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1239}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1271}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1271}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1303}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
@@ -262,10 +262,10 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1306}
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1319}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1271}
-  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L113}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1338}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1351}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1303}
+  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L115}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
@@ -297,8 +297,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AnswerFeedback]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L154}
-  /// [google.cloud.dialogflow.cx.v3.SubmitAnswerFeedbackRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L193}
+  /// [google.cloud.dialogflow.cx.v3.AnswerFeedback]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.SubmitAnswerFeedbackRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L195}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>

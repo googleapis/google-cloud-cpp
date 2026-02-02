@@ -76,6 +76,12 @@ class AgentEndpointServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) = 0;
+
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(grpc::ClientContext& context, Options const& options,
+                    google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) = 0;
 };
 
 class DefaultAgentEndpointServiceStub : public AgentEndpointServiceStub {
@@ -123,6 +129,12 @@ class DefaultAgentEndpointServiceStub : public AgentEndpointServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
+
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(grpc::ClientContext& context, Options const& options,
+                    google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::osconfig::agentendpoint::v1::

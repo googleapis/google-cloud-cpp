@@ -1296,6 +1296,133 @@ StatusOr<google::longrunning::Operation> NetAppTracingStub::DeleteQuotaRule(
                            child_->DeleteQuotaRule(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppTracingStub::AsyncRestoreBackupFiles(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "RestoreBackupFiles");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncRestoreBackupFiles(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingStub::RestoreBackupFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "RestoreBackupFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RestoreBackupFiles(context, options, request));
+}
+
+StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse>
+NetAppTracingStub::ListHostGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListHostGroupsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "ListHostGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListHostGroups(context, options, request));
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> NetAppTracingStub::GetHostGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetHostGroupRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp", "GetHostGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetHostGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppTracingStub::AsyncCreateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "CreateHostGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateHostGroup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingStub::CreateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "CreateHostGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateHostGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppTracingStub::AsyncUpdateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "UpdateHostGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateHostGroup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingStub::UpdateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "UpdateHostGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateHostGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppTracingStub::AsyncDeleteHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "DeleteHostGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteHostGroup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingStub::DeleteHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "DeleteHostGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteHostGroup(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetAppTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

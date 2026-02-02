@@ -220,6 +220,24 @@ class NetAppConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteQuotaRule(
       google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
 
+  virtual google::cloud::Idempotency RestoreBackupFiles(
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request);
+
+  virtual google::cloud::Idempotency ListHostGroups(
+      google::cloud::netapp::v1::ListHostGroupsRequest request);
+
+  virtual google::cloud::Idempotency GetHostGroup(
+      google::cloud::netapp::v1::GetHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency CreateHostGroup(
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateHostGroup(
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteHostGroup(
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

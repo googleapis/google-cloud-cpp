@@ -219,6 +219,11 @@ class AgentEndpointServiceConnection {
   ReportInventory(
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request);
+
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request);
 };
 
 /**

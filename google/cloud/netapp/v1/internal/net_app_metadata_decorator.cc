@@ -1034,6 +1034,105 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteQuotaRule(
   return child_->DeleteQuotaRule(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncRestoreBackupFiles(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRestoreBackupFiles(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::RestoreBackupFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestoreBackupFiles(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse>
+NetAppMetadata::ListHostGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListHostGroupsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListHostGroups(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> NetAppMetadata::GetHostGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetHostGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetHostGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncCreateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateHostGroup(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::CreateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateHostGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncUpdateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("host_group.name=",
+                           internal::UrlEncode(request.host_group().name())));
+  return child_->AsyncUpdateHostGroup(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::UpdateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("host_group.name=",
+                           internal::UrlEncode(request.host_group().name())));
+  return child_->UpdateHostGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncDeleteHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteHostGroup(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteHostGroup(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetAppMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

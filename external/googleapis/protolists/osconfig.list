@@ -4,6 +4,7 @@
 @com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:os_policy.proto
 @com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:patch_jobs.proto
 @com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:tasks.proto
+@com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:vm_inventory.proto
 @com_google_googleapis//google/cloud/osconfig/v1:inventory.proto
 @com_google_googleapis//google/cloud/osconfig/v1:os_policy.proto
 @com_google_googleapis//google/cloud/osconfig/v1:os_policy_assignment_reports.proto
