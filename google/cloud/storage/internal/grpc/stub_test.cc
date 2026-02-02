@@ -23,6 +23,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
+// Must be included last.
 #include <grpcpp/ports_def.inc>
 
 namespace google {

@@ -21,6 +21,7 @@
 #include <gmock/gmock.h>
 #include <memory>
 
+// Must be included last.
 #include <grpcpp/ports_def.inc>
 
 namespace google {
