@@ -12,6 +12,7 @@
 @com_google_googleapis//grafeas/v1:intoto_statement.proto
 @com_google_googleapis//grafeas/v1:package.proto
 @com_google_googleapis//grafeas/v1:provenance.proto
+@com_google_googleapis//grafeas/v1:risk.proto
 @com_google_googleapis//grafeas/v1:sbom.proto
 @com_google_googleapis//grafeas/v1:secret.proto
 @com_google_googleapis//grafeas/v1:severity.proto
