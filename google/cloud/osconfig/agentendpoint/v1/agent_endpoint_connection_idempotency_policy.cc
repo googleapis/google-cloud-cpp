@@ -62,6 +62,12 @@ Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportInventory(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportVmInventory(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReportVmInventoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
 MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>();

@@ -100,6 +100,15 @@ AgentEndpointServiceMetadata::ReportInventory(
   return child_->ReportInventory(context, options, request);
 }
 
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceMetadata::ReportVmInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request) {
+  SetMetadata(context, options);
+  return child_->ReportVmInventory(context, options, request);
+}
+
 void AgentEndpointServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {

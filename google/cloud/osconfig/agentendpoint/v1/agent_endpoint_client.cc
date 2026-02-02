@@ -162,6 +162,28 @@ AgentEndpointServiceClient::ReportInventory(
   return connection_->ReportInventory(request);
 }
 
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceClient::ReportVmInventory(
+    std::string const& instance_id_token, std::string const& inventory_checksum,
+    google::cloud::osconfig::agentendpoint::v1::VmInventory const& vm_inventory,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest request;
+  request.set_instance_id_token(instance_id_token);
+  request.set_inventory_checksum(inventory_checksum);
+  *request.mutable_vm_inventory() = vm_inventory;
+  return connection_->ReportVmInventory(request);
+}
+
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceClient::ReportVmInventory(
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportVmInventory(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1
 }  // namespace cloud

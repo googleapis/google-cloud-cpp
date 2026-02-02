@@ -1375,7 +1375,7 @@ class SqlInstancesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.SqlInstancesExecuteSqlRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2257}
-  /// [google.cloud.sql.v1.SqlInstancesExecuteSqlResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2317}
+  /// [google.cloud.sql.v1.SqlInstancesExecuteSqlResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2322}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse> ExecuteSql(
@@ -1405,8 +1405,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2401}
-  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2418}
+  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2406}
+  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2423}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
@@ -1438,8 +1438,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2424}
-  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2436}
+  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2429}
+  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2441}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
@@ -1505,7 +1505,7 @@ class SqlInstancesServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1169}
-  /// [google.cloud.sql.v1.SqlInstancesPointInTimeRestoreRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2443}
+  /// [google.cloud.sql.v1.SqlInstancesPointInTimeRestoreRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L2448}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> PointInTimeRestore(

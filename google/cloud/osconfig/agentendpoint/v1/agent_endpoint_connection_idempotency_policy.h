@@ -56,6 +56,10 @@ class AgentEndpointServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ReportInventory(
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request);
+
+  virtual google::cloud::Idempotency ReportVmInventory(
+      google::cloud::osconfig::agentendpoint::v1::
+          ReportVmInventoryRequest const& request);
 };
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>

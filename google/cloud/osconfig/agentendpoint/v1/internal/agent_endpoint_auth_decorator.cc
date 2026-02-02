@@ -96,6 +96,16 @@ AgentEndpointServiceAuth::ReportInventory(
   return child_->ReportInventory(context, options, request);
 }
 
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceAuth::ReportVmInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReportVmInventory(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1_internal
 }  // namespace cloud

@@ -76,6 +76,12 @@ class AgentEndpointServiceLogging : public AgentEndpointServiceStub {
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(grpc::ClientContext& context, Options const& options,
+                    google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) override;
+
  private:
   std::shared_ptr<AgentEndpointServiceStub> child_;
   TracingOptions tracing_options_;

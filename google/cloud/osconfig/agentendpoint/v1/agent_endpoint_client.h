@@ -108,8 +108,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L75}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L87}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L95}
   ///
   // clang-format on
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
@@ -140,8 +140,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L75}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L87}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L95}
   ///
   // clang-format on
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
@@ -170,8 +170,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L90}
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L106}
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
@@ -200,8 +200,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L90}
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L106}
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
@@ -238,8 +238,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L105}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L113}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L145}
   ///
   // clang-format on
   StatusOr<
@@ -272,8 +272,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L105}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L113}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L145}
   ///
   // clang-format on
   StatusOr<
@@ -312,8 +312,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L143}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L178}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L151}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L186}
   ///
   // clang-format on
   StatusOr<
@@ -347,8 +347,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L143}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L178}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L151}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L186}
   ///
   // clang-format on
   StatusOr<
@@ -382,8 +382,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L181}
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L214}
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L189}
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L222}
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
@@ -415,8 +415,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L181}
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L214}
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L189}
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L222}
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
@@ -451,8 +451,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L217}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L235}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L225}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
@@ -485,8 +485,8 @@ class AgentEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L217}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L235}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L225}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
@@ -494,6 +494,78 @@ class AgentEndpointServiceClient {
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Reports the VMs current inventory.
+  ///
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
+  ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+  ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
+  /// @param inventory_checksum  Required. This is a client created checksum that should be generated based
+  ///  on the contents of the reported inventory. This will be used by the service
+  ///  to determine if it has the latest version of inventory.
+  /// @param vm_inventory  Optional. This is the details of the VM inventory. Should only be provided
+  ///  if the inventory has changed since the last report, or if instructed by the
+  ///  service to provide full inventory.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L249}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L267}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(
+      std::string const& instance_id_token,
+      std::string const& inventory_checksum,
+      google::cloud::osconfig::agentendpoint::v1::VmInventory const&
+          vm_inventory,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Reports the VMs current inventory.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L249}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportVmInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L267}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request,
+                    Options opts = {});
 
  private:
   std::shared_ptr<AgentEndpointServiceConnection> connection_;
