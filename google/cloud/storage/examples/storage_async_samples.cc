@@ -156,6 +156,7 @@ void InsertObjectVectorVectors(google::cloud::storage::AsyncClient& client,
 void OpenObjectSingleRangedRead(google::cloud::storage::AsyncClient& client,
                                 std::vector<std::string> const& argv) {
   //! [open-object-single-ranged-read]
+  // [START storage_open_object_single_ranged_read]
   namespace gcs = google::cloud::storage;
 
   // Helper coroutine to count newlines returned by an AsyncReader.
