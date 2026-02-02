@@ -310,15 +310,23 @@ class CancelJobRequest {
 };
 
 struct DataFormatOptions {
-  DataFormatOptions() = default;
-  bool use_int64_timestamp = false;
+  DataFormatOptions()
+      : _reserved1(false),
+        _reserved2(false),
+        timestamp_output_format("FLOAT64") {}
+
+  // Reserved to preserve ABI / layout
+  bool _reserved1;
+  bool _reserved2;
+
+  std::string timestamp_output_format;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataFormatOptions,
-                                                use_int64_timestamp);
+                                                timestamp_output_format);
 
 // Indicates the type of compute mode for the query stage.
 //

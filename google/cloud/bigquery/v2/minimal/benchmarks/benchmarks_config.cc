@@ -357,8 +357,11 @@ google::cloud::StatusOr<JobConfig> JobConfig::ParseArgs(
       {"--query-drop=", "whether to execute drop stmt",
        [this](std::string const& v) { query_drop = (v == "true"); }});
   flags_.push_back(
-      {"--use-int64-timestamp=", "outputs timestamp as usec int64",
-       [this](std::string const& v) { use_int64_timestamp = (v == "true"); }});
+         {"--timestamp-output-format=", 
+          "sets timestamp output format",
+          [this](std::string const& v) {
+              timestamp_output_format = v;  // or validate v == "ISO8601_STRING"
+          }});
   flags_.push_back(
       {"--min-creation-time=",
        "min job creation time. If set, only jobs created after or at this "

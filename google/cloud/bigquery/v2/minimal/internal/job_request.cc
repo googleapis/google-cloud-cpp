@@ -338,12 +338,20 @@ std::string PostQueryRequest::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string DataFormatOptions::DebugString(absl::string_view name,
-                                           TracingOptions const& options,
-                                           int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .Field("use_int64_timestamp", use_int64_timestamp)
-      .Build();
+std::string DataFormatOptions::DebugString(
+    absl::string_view name,
+    TracingOptions const& options,
+    int indent) const {
+
+  auto formatter =
+      internal::DebugFormatter(name, options, indent);
+
+  if (!timestamp_output_format.empty()) {
+    formatter.Field("timestamp_output_format",
+                    timestamp_output_format);
+  }
+
+  return formatter.Build();
 }
 
 std::string QueryRequest::DebugString(absl::string_view name,
