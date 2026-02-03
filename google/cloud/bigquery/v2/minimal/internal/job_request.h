@@ -313,12 +313,14 @@ struct DataFormatOptions {
   DataFormatOptions() = default;
   bool use_int64_timestamp = false;
 
+  std::string timestamp_output_format = "FLOAT64";
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataFormatOptions,
-                                                use_int64_timestamp);
+                                                 use_int64_timestamp, 
+                                                timestamp_output_format);
 
 // Indicates the type of compute mode for the query stage.
 //

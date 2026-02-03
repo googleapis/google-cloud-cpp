@@ -343,6 +343,7 @@ std::string DataFormatOptions::DebugString(absl::string_view name,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .Field("use_int64_timestamp", use_int64_timestamp)
+      .Field("timestamp_output_format",timestamp_output_format)
       .Build();
 }
 
