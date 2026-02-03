@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_client_unit_tests = [
-    "admin_client_test.cc",
     "app_profile_config_test.cc",
     "async_read_stream_test.cc",
     "bigtable_version_test.cc",
@@ -34,8 +33,6 @@ bigtable_client_unit_tests = [
     "iam_binding_test.cc",
     "iam_policy_test.cc",
     "idempotent_mutation_policy_test.cc",
-    "instance_admin_client_test.cc",
-    "instance_admin_test.cc",
     "instance_config_test.cc",
     "instance_resource_test.cc",
     "instance_update_config_test.cc",
@@ -83,7 +80,6 @@ bigtable_client_unit_tests = [
     "rpc_backoff_policy_test.cc",
     "rpc_retry_policy_test.cc",
     "sql_statement_test.cc",
-    "table_admin_test.cc",
     "table_config_test.cc",
     "table_resource_test.cc",
     "table_test.cc",
@@ -91,5 +87,4 @@ bigtable_client_unit_tests = [
     "testing/random_names_test.cc",
     "timestamp_test.cc",
     "value_test.cc",
-    "wait_for_consistency_test.cc",
 ]
