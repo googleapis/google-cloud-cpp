@@ -16,11 +16,11 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-# TODO(#5726) - DO NOT CHANGE THESE TARGET NAMES These package names are
-# expected to remain usable until we have retired them. They are *deprecated*
-# (that is, we no longer recommend their use), but *NOT* retired (that is, they
-# remain available). This is a test for backwards compatibility. If you need to
-# change the test, there is good chance you are breaking something.
+# These package names are expected to remain usable until we have retired them.
+# They are *deprecated* (that is, we no longer recommend their use), but *NOT*
+# decommissioned (that is, they remain available). This is a test for backwards
+# compatibility. If you need to change the test, there is good chance you are
+# breaking something.
 DEPRECATED_TARGETS = [
 ]
 
