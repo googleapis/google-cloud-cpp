@@ -185,7 +185,10 @@ cc_library(
     testonly = True,
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",

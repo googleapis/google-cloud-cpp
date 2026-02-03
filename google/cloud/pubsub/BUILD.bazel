@@ -60,16 +60,14 @@ cc_library(
     ],
 )
 
-# TODO(#3701): Delete this target after 2023-04-01.
 cc_library(
     name = "pubsub_client_testing",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":pubsub_client_testing_private"],
 )
 
