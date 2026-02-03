@@ -99,7 +99,7 @@ struct JobConfig : public Config {
 
   int start_index = 0;
   int timeout_ms;
-  static std::string timestamp_output_format;
+  std::string timestamp_output_format;
 
   bigquery_v2_minimal_internal::Projection projection;
   bigquery_v2_minimal_internal::StateFilter state_filter;

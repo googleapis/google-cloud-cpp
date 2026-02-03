@@ -311,20 +311,19 @@ class CancelJobRequest {
 
 struct DataFormatOptions {
   DataFormatOptions()
-      : _reserved1(false),
-        _reserved2(false),
-        timestamp_output_format("FLOAT64") {}
-
-  // Reserved to preserve ABI / layout
-  bool _reserved1;
-  bool _reserved2;
+      : timestamp_output_format("FLOAT64") {}
 
   std::string timestamp_output_format;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
+
+ private:
+  bool _reserved1 = false;
+  bool _reserved2 = false;
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataFormatOptions,
                                                 timestamp_output_format);
 

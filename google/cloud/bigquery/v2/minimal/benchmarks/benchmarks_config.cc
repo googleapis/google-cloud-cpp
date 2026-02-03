@@ -360,7 +360,7 @@ google::cloud::StatusOr<JobConfig> JobConfig::ParseArgs(
          {"--timestamp-output-format=", 
           "sets timestamp output format",
           [this](std::string const& v) {
-              timestamp_output_format = v;  // or validate v == "ISO8601_STRING"
+              timestamp_output_format = v;
           }});
   flags_.push_back(
       {"--min-creation-time=",
