@@ -16,19 +16,12 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-# TODO(#5726) - DO NOT CHANGE THESE TARGET NAMES These package names are
-# expected to remain usable until we have retired them. They are *deprecated*
-# (that is, we no longer recommend their use), but *NOT* retired (that is, they
-# remain available). This is a test for backwards compatibility. If you need to
-# change the test, there is good chance you are breaking something.
+# These package names are expected to remain usable until we have retired them.
+# They are *deprecated* (that is, we no longer recommend their use), but *NOT*
+# decommissioned (that is, they remain available). This is a test for backwards
+# compatibility. If you need to change the test, there is good chance you are
+# breaking something.
 DEPRECATED_TARGETS = [
-    "google/cloud/pubsub:pubsub_client_testing",
-    "google/cloud/spanner:spanner_client_testing",
-    "google/cloud/testing_util:google_cloud_cpp_testing",
-    "google/cloud/testing_util:google_cloud_cpp_testing_grpc",
-    "google/cloud/testing_util:google_cloud_cpp_testing_rest",
-    "google/cloud:google_cloud_cpp_common",
-    "google/cloud:google_cloud_cpp_grpc_utils",
 ]
 
 [cc_test(

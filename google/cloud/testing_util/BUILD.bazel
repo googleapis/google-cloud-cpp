@@ -52,12 +52,11 @@ cc_library(
 cc_library(
     name = "google_cloud_cpp_testing",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_testing_private"],
 )
 
@@ -91,12 +90,11 @@ cc_library(
 cc_library(
     name = "google_cloud_cpp_testing_grpc",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_testing_grpc_private"],
 )
 
@@ -125,11 +123,10 @@ cc_library(
 cc_library(
     name = "google_cloud_cpp_testing_rest",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_testing_rest_private"],
 )

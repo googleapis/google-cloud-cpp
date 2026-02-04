@@ -91,13 +91,11 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_common",
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. Use
-    //:common instead. More info:
-    https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_common_private"],
 )
 
@@ -162,13 +160,11 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_grpc_utils",
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. Use
-    //:grpc_utils instead. More info:
-    https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_grpc_utils_private"],
 )
 
