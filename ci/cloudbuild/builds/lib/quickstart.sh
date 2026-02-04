@@ -31,11 +31,14 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/etc/quickstart-config.sh
 source module ci/lib/io.sh
 
+quickstart_program=""
+
 function cleanup() {
   local exit_status=$?
   io::log_h2 "cleanup on EXIT with exit_status=${exit_status}"
   if ((exit_status != 0)); then
-    io::run find . -name '*core*'
+    io::run find . -name 'core'
+    gdb --exec="${quickstart_program}" --core=./core --eval-command="bt full"
   fi
 }
 
@@ -138,6 +141,7 @@ function quickstart::run_one_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${bin_dir_suffix}"
+  quickstart_program="${cmake_bin_dir}/quickstart"
   if command -v /usr/bin/valgrind >/dev/null 2>&1; then
     io::run valgrind --leak-check=full "${cmake_bin_dir}/quickstart" "${run_args[@]}"
   else
