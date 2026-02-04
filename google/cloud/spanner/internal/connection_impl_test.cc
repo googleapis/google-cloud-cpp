@@ -286,17 +286,7 @@ google::spanner::v1::Transaction MakeTestTransaction(
   *txn.mutable_precommit_token() = token;
   return txn;
 }
-#if 0
-// Create a `BatchCreateSessionsResponse` with the given `sessions`.
-google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
-    std::vector<std::string> sessions) {
-  google::spanner::v1::BatchCreateSessionsResponse response;
-  for (auto& session : sessions) {
-    response.add_session()->set_name(std::move(session));
-  }
-  return response;
-}
-#endif
+
 // Create a `CommitResponse` with the given `commit_timestamp` and
 // `commit_stats`.
 google::spanner::v1::CommitResponse MakeCommitResponse(
@@ -413,15 +403,6 @@ TEST(ConnectionImplTest, ReadCreateSessionFailure) {
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
 
-  // EXPECT_CALL(*mock, CreateSession(_, _, HasDatabase(db)))
-  //     .WillRepeatedly(Return(
-  //         Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
-  // EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
-
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rows = conn->Read(
@@ -446,9 +427,6 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(
           Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -531,9 +509,6 @@ TEST(ConnectionImplTest, ReadSuccess) {
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
         return MakeReader<PartialResultSet>({responses[1], responses[2]});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -576,9 +551,6 @@ TEST(ConnectionImplTest, ReadDirectedRead) {
         return MakeReader<PartialResultSet>(
             {R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb"});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -610,9 +582,6 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {}, internal::PermissionDeniedError("uh-oh")))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -640,9 +609,6 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
         return MakeReader<PartialResultSet>(
             {}, internal::UnavailableError("try-again"));
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -664,17 +630,12 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .WillOnce(Return(MakeSessionsResponse({"multiplexed"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   auto constexpr kText = R"pb(
     metadata: { transaction: { id: "ABCDEF00" } }
   )pb";
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -730,10 +691,6 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
                  _, _, AllOf(HasSession("multiplexed"), HasBeginTransaction())))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(ok_reader))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .InSequence(s)
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -796,10 +753,6 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
                                          HasTransactionId("FEDCBA98"))))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(ok_reader))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .InSequence(s)
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -844,10 +797,6 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
                                          HasTransactionId("FEDCBA98"))))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(reader2))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .InSequence(s)
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -891,9 +840,6 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {},
           internal::PermissionDeniedError("uh-oh in GrpcReader::Finish")))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -938,9 +884,6 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -982,9 +925,6 @@ TEST(ConnectionImplTest, ExecuteQueryDirectedRead) {
         return MakeReader<PartialResultSet>(
             {R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb"});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1029,9 +969,6 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1078,9 +1015,6 @@ TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1156,9 +1090,6 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                   google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
         return MakeReader<PartialResultSet>({kResponsePgNumeric});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1211,9 +1142,6 @@ TEST(ConnectionImplTest, ExecuteQueryPgOidResult) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1244,9 +1172,6 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1538,11 +1463,6 @@ TEST(ConnectionImplTest, ExecuteDmlCreateSessionFailure) {
   EXPECT_CALL(*mock, CreateSession(_, _, HasDatabase(db)))
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
-  // EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1570,9 +1490,6 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1598,9 +1515,6 @@ TEST(ConnectionImplTest, ExecuteDmlDeletePermanentFailure) {
     EXPECT_CALL(*mock, BeginTransaction)
         .WillOnce(Return(MakeTestTransaction()));
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1630,9 +1544,6 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteTooManyTransientFailures) {
     EXPECT_CALL(*mock, ExecuteSql)
         .Times(AtLeast(2))
         .WillRepeatedly(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1664,10 +1575,6 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
     // not valid the client fails any subsequent operations itself.
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(op_status));
     EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(begin_status));
-
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1697,10 +1604,6 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionMissing) {
   google::spanner::v1::ResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString("metadata: {}", &response));
   EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(response));
-
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1748,9 +1651,6 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1787,11 +1687,6 @@ TEST(ConnectionImplTest, ProfileQueryCreateSessionFailure) {
   EXPECT_CALL(*mock, CreateSession(_, _, HasDatabase(db)))
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
-  EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1815,9 +1710,6 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(
           Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1837,10 +1729,6 @@ TEST(ConnectionImplTest, ProfileDmlCreateSessionFailure) {
   EXPECT_CALL(*mock, CreateSession(_, _, HasDatabase(db)))
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
   EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1877,9 +1765,6 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -1920,9 +1805,6 @@ TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {
     EXPECT_CALL(*mock, BeginTransaction)
         .WillOnce(Return(MakeTestTransaction()));
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1952,9 +1834,6 @@ TEST(ConnectionImplTest, ProfileDmlDeleteTooManyTransientFailures) {
     EXPECT_CALL(*mock, ExecuteSql)
         .Times(AtLeast(2))
         .WillRepeatedly(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1983,9 +1862,6 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(ByMove(std::move(response))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2009,11 +1885,6 @@ TEST(ConnectionImplTest, AnalyzeSqlCreateSessionFailure) {
   EXPECT_CALL(*mock, CreateSession(_, _, HasDatabase(db)))
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
-  // EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2038,9 +1909,6 @@ TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
     EXPECT_CALL(*mock, BeginTransaction)
         .WillOnce(Return(MakeTestTransaction()));
     EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2070,9 +1938,6 @@ TEST(ConnectionImplTest, AnalyzeSqlDeleteTooManyTransientFailures) {
     EXPECT_CALL(*mock, ExecuteSql)
         .Times(AtLeast(2))
         .WillRepeatedly(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2217,9 +2082,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   google::spanner::v1::ExecuteBatchDmlResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*mock, ExecuteBatchDml).WillOnce(Return(response));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto request = {
       spanner::SqlStatement("UPDATE ..."),
@@ -2256,9 +2118,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPermanentFailure) {
     EXPECT_CALL(*mock, BeginTransaction)
         .WillOnce(Return(MakeTestTransaction()));
     EXPECT_CALL(*mock, ExecuteBatchDml).WillOnce(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto request = {
@@ -2293,10 +2152,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlTooManyTransientFailures) {
     EXPECT_CALL(*mock, ExecuteBatchDml)
         .Times(AtLeast(2))
         .WillRepeatedly(Return(status));
-
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto request = {
@@ -2338,9 +2193,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
                                        AllOf(HasSession("multiplexed"),
                                              HasTransactionId("BD000001"))))
         .WillOnce(Return(response));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-    //     .WillOnce(Return(make_ready_future(Status{})));
   }
 
   auto request = {spanner::SqlStatement("UPDATE ...")};
@@ -2380,9 +2232,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
           {},
           internal::UnavailableError("try-again in ExecutePartitionedDml")))))
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kTextResponse}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2415,9 +2264,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlExcludeFromChangeStreams) {
               ExecuteStreamingSql(
                   _, _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kTextResponse}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(
@@ -2437,11 +2283,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlCreateSessionFailure) {
   EXPECT_CALL(*mock, CreateSession(_, _, HasDatabase(db)))
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
-  // EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2466,10 +2307,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>(
           {}, internal::InternalError("permanent failure")))));
-
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2496,9 +2333,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
             {},
             internal::UnavailableError("try-again in ExecutePartitionedDml"));
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2534,10 +2368,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
                   "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream")))))
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kTextResponse}))));
 
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
-
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto result = conn->ExecutePartitionedDml(
@@ -2556,9 +2386,6 @@ TEST(ConnectionImplTest,
   EXPECT_CALL(*mock, BeginTransaction)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied,
                               "uh-oh in ExecutePartitionedDml")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2579,9 +2406,6 @@ TEST(ConnectionImplTest,
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
                                     "try-again in ExecutePartitionedDml")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("session-name")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2617,12 +2441,6 @@ TEST(ConnectionImplTest, CommitCreateSessionTooManyTransientFailures) {
       .WillRepeatedly(Return(
           Status(StatusCode::kUnavailable, "try-again in CreateSession")));
 
-  //
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
-
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
@@ -2646,9 +2464,6 @@ TEST(ConnectionImplTest, CommitCreateSessionRetry) {
                                   HasNakedTransactionId(txn.id()))))
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Commit")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2674,9 +2489,6 @@ TEST(ConnectionImplTest, CommitBeginTransactionRetry) {
                             AllOf(HasSession("multiplexed"),
                                   HasNakedTransactionId(txn.id()))))
       .WillOnce(Return(MakeCommitResponse(commit_timestamp)));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2693,10 +2505,6 @@ TEST(ConnectionImplTest, CommitBeginTransactionSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BeginTransaction)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2717,9 +2525,6 @@ TEST(ConnectionImplTest, CommitBeginTransactionPermanentFailure) {
   EXPECT_CALL(*mock, BeginTransaction)
       .WillOnce(Return(
           Status(StatusCode::kInvalidArgument, "BeginTransaction failed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2748,9 +2553,6 @@ TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
                                   HasNakedTransactionId(txn.id()))))
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Commit")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2772,9 +2574,6 @@ TEST(ConnectionImplTest, CommitCommitTooManyTransientFailures) {
                                   HasNakedTransactionId(txn.id()))))
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Commit")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -2791,9 +2590,6 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, Commit).Times(0);
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2822,9 +2618,6 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
                                   HasNakedTransactionId("test-txn-id"))))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(MakeCommitResponse(commit_timestamp)));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2854,9 +2647,6 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2894,9 +2684,6 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value(),
           spanner::CommitStats{42})));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3231,9 +3018,6 @@ TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreams) {
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(
@@ -3262,9 +3046,6 @@ TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3291,9 +3072,6 @@ TEST(ConnectionImplTest, CommitSuccessWithCompression) {
             spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
                 .value());
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(
@@ -3331,9 +3109,6 @@ TEST(ConnectionImplTest, CommitAtLeastOnce) {
         EXPECT_THAT(request.request_options().transaction_tag(), IsEmpty());
         return MakeCommitResponse(commit_timestamp);
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3388,9 +3163,6 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
               commit_timestamp { seconds: 123 }
             )pb"});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3405,66 +3177,6 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
                      Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)))))));
   EXPECT_EQ(++it, commit_results.end());
 }
-
-#if 0  // session pool test
-TEST(ConnectionImplTest, CommitAtLeastOnceBatchedSessionNotFound) {
-  auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
-  auto db = spanner::Database("placeholder_project", "placeholder_instance",
-                              "placeholder_database_id");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-      .WillOnce(Return(MakeSessionsResponse({"test-session-name-1"})))
-      .WillOnce(Return(MakeSessionsResponse({"test-session-name-2"})));
-  using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
-  EXPECT_CALL(*mock, BatchWrite)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
-                   BatchWriteRequest const& request) {
-        EXPECT_EQ("test-session-name-1", request.session());
-        EXPECT_THAT(request.mutation_groups(), IsEmpty());
-        EXPECT_FALSE(request.exclude_txn_from_change_streams());
-        return MakeReader<BatchWriteResponse>(
-            {}, SessionNotFoundError(request.session()));
-      })
-      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
-                    BatchWriteRequest const& request) {
-        EXPECT_EQ("test-session-name-2", request.session());
-        EXPECT_THAT(request.mutation_groups(), IsEmpty());
-        EXPECT_FALSE(request.exclude_txn_from_change_streams());
-        return MakeReader<BatchWriteResponse>(
-            {R"pb(status {}
-                  commit_timestamp { seconds: 123 })pb"});
-      });
-  EXPECT_CALL(
-      *mock, AsyncDeleteSession(_, _, _, HasSessionName("test-session-name-2")))
-      .WillOnce(Return(make_ready_future(Status{})));
-
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
-  {
-    auto commit_results = conn->BatchWrite({{}, Options{}});
-    auto it = commit_results.begin();
-    ASSERT_NE(it, commit_results.end());
-    EXPECT_THAT(*it, Not(IsOk()));
-    EXPECT_TRUE(IsSessionNotFound(it->status())) << it->status();
-    EXPECT_EQ(++it, commit_results.end());
-  }
-
-  // "test-session-name-1" should not have been returned to the pool.
-  // The best (only?) way to verify this is to make another write and
-  // check that another session was allocated (hence the strict mock).
-  {
-    auto commit_results = conn->BatchWrite({{}, Options{}});
-    auto it = commit_results.begin();
-    ASSERT_NE(it, commit_results.end());
-    EXPECT_THAT(
-        *it,
-        IsOkAndHolds(AllOf(
-            Field(&spanner::BatchedCommitResult::indexes, IsEmpty()),
-            Field(&spanner::BatchedCommitResult::commit_timestamp,
-                  Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)))))));
-    EXPECT_EQ(++it, commit_results.end());
-  }
-}
-#endif
 
 TEST(ConnectionImplTest, CommitAtLeastOnceBatchedExcludeFromChangeStreams) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -3495,9 +3207,6 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatchedExcludeFromChangeStreams) {
               commit_timestamp { seconds: 123 }
             )pb"});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(
@@ -3521,10 +3230,6 @@ TEST(ConnectionImplTest, RollbackCreateSessionFailure) {
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillRepeatedly(Return(
           Status(StatusCode::kPermissionDenied, "uh-oh in CreateSession")));
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .Times(AtLeast(2))
-  //     .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied,
-  //                                   "uh-oh in BatchCreateSessions")));
   EXPECT_CALL(*mock, Rollback).Times(0);
   EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
@@ -3550,9 +3255,6 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
                               AllOf(HasSession(session_name),
                                     HasNakedTransactionId(transaction_id))))
       .WillOnce(Return(Status()));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3567,9 +3269,6 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, Rollback).Times(0);
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3593,9 +3292,6 @@ TEST(ConnectionImplTest, RollbackPermanentFailure) {
                                     HasNakedTransactionId(transaction_id))))
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in Rollback")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -3619,9 +3315,6 @@ TEST(ConnectionImplTest, RollbackTooManyTransientFailures) {
       .Times(AtLeast(2))
       .WillRepeatedly(
           Return(Status(StatusCode::kUnavailable, "try-again in Rollback")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -3644,9 +3337,6 @@ TEST(ConnectionImplTest, RollbackSuccess) {
                                     HasNakedTransactionId(transaction_id))))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(Status()));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3663,9 +3353,6 @@ TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, Rollback).Times(0);
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3698,9 +3385,6 @@ TEST(ConnectionImplTest, ReadPartition) {
         return MakeReader<PartialResultSet>(
             {R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb"});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3749,11 +3433,6 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
-
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
@@ -3800,10 +3479,6 @@ TEST(ConnectionImplTest, PartitionReadPermanentFailure) {
     EXPECT_CALL(*mock, BeginTransaction)
         .WillOnce(Return(MakeTestTransaction()));
     EXPECT_CALL(*mock, PartitionRead).WillOnce(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _,
-    //             Not(HasSessionName("multiplexed"))))
-    //     .Times(0);
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -3834,10 +3509,6 @@ TEST(ConnectionImplTest, PartitionReadTooManyTransientFailures) {
     EXPECT_CALL(*mock, PartitionRead)
         .Times(AtLeast(2))
         .WillRepeatedly(Return(status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _,
-    //             Not(HasSessionName("multiplexed"))))
-    //     .Times(0);
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -3869,9 +3540,6 @@ TEST(ConnectionImplTest, QueryPartition) {
         return MakeReader<PartialResultSet>(
             {R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb"});
       });
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -3914,11 +3582,6 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
-
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::SqlStatement sql_statement("SELECT * FROM Table");
@@ -3953,10 +3616,6 @@ TEST(ConnectionImplTest, PartitionQueryPermanentFailure) {
     EXPECT_CALL(*mock, BeginTransaction)
         .WillOnce(Return(MakeTestTransaction()));
     EXPECT_CALL(*mock, PartitionQuery).WillOnce(Return(failed_status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _,
-    //             Not(HasSessionName("multiplexed"))))
-    //     .Times(0);
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -3987,10 +3646,6 @@ TEST(ConnectionImplTest, PartitionQueryTooManyTransientFailures) {
     EXPECT_CALL(*mock, PartitionQuery)
         .Times(AtLeast(2))
         .WillRepeatedly(Return(failed_status));
-    // EXPECT_CALL(*mock,
-    //             AsyncDeleteSession(_, _, _,
-    //             Not(HasSessionName("multiplexed"))))
-    //     .Times(0);
   }
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -4050,119 +3705,6 @@ TEST(ConnectionImplTest, MultipleThreads) {
   }
 }
 
-#if 0  // session pool test
-/**
- * @test Verify Transactions remain bound to a single Session.
- *
- * This test makes interleaved Read() calls using two separate Transactions,
- * and ensures each Transaction uses the same session consistently.
- */
-TEST(ConnectionImplTest, TransactionSessionBinding) {
-  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  auto db = spanner::Database("placeholder_project", "placeholder_instance",
-                              "placeholder_database_id");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-      .WillOnce(Return(MakeSessionsResponse({"session-1"})))
-      .WillOnce(Return(MakeSessionsResponse({"session-2"})));
-
-  constexpr int kNumResponses = 4;
-  std::array<std::unique_ptr<MockStreamingReadRpc<PartialResultSet>>,
-             kNumResponses>
-      readers;
-  for (int i = 0; i < kNumResponses; ++i) {
-    auto constexpr kText = R"pb(
-      metadata: {
-        row_type: {
-          fields: {
-            name: "Number",
-            type: { code: INT64 }
-          }
-        }
-      }
-    )pb";
-    PartialResultSet response;
-    ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-    // The first two responses are reads from two different "begin"
-    // transactions.
-    if (i == 0) {
-      *response.mutable_metadata()->mutable_transaction() =
-          MakeTestTransaction("ABCDEF01");
-    } else if (i == 1) {
-      *response.mutable_metadata()->mutable_transaction() =
-          MakeTestTransaction("ABCDEF02");
-    }
-    response.add_values()->set_string_value(std::to_string(i));
-    readers[i] = MakeReader<PartialResultSet>({std::move(response)});
-  }
-
-  // Ensure the StreamingRead calls have the expected session and transaction
-  // IDs or "begin" set as appropriate.
-  {
-    InSequence s;
-    EXPECT_CALL(
-        *mock, StreamingRead(
-                   _, _, AllOf(HasSession("session-1"), HasBeginTransaction())))
-        .WillOnce(Return(ByMove(std::move(readers[0]))));
-    EXPECT_CALL(
-        *mock, StreamingRead(
-                   _, _, AllOf(HasSession("session-2"), HasBeginTransaction())))
-        .WillOnce(Return(ByMove(std::move(readers[1]))));
-    EXPECT_CALL(*mock, StreamingRead(_, _,
-                                     AllOf(HasSession("session-1"),
-                                           HasTransactionId("ABCDEF01"))))
-        .WillOnce(Return(ByMove(std::move(readers[2]))));
-    EXPECT_CALL(*mock, StreamingRead(_, _,
-                                     AllOf(HasSession("session-2"),
-                                           HasTransactionId("ABCDEF02"))))
-        .WillOnce(Return(ByMove(std::move(readers[3]))));
-  }
-
-  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, HasSessionName("session-1")))
-      .WillOnce(Return(make_ready_future(Status{})));
-  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, HasSessionName("session-2")))
-      .WillOnce(Return(make_ready_future(Status{})));
-
-  // Now do the actual reads and verify the results.
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
-
-  spanner::Transaction txn1 =
-      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
-  auto rows = conn->Read({txn1, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn1,
-              HasSessionAndTransaction("session-1", "ABCDEF01", false, ""));
-  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    ASSERT_STATUS_OK(row);
-    EXPECT_EQ(std::get<0>(*row), 0);
-  }
-
-  spanner::Transaction txn2 =
-      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
-  rows = conn->Read({txn2, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn2,
-              HasSessionAndTransaction("session-2", "ABCDEF02", false, ""));
-  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    ASSERT_STATUS_OK(row);
-    EXPECT_EQ(std::get<0>(*row), 1);
-  }
-
-  rows = conn->Read({txn1, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn1,
-              HasSessionAndTransaction("session-1", "ABCDEF01", false, ""));
-  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    ASSERT_STATUS_OK(row);
-    EXPECT_EQ(std::get<0>(*row), 2);
-  }
-
-  rows = conn->Read({txn2, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn2,
-              HasSessionAndTransaction("session-2", "ABCDEF02", false, ""));
-  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    ASSERT_STATUS_OK(row);
-    EXPECT_EQ(std::get<0>(*row), 3);
-  }
-}
-#endif
 /**
  * @test Verify if a `Transaction` outlives the `ConnectionImpl` it was used
  * with, it does not call back into the deleted `ConnectionImpl` to release
@@ -4182,14 +3724,6 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kText}))));
 
-  // Because the transaction outlives the connection, the session is not in
-  // the pool when the connection is destroyed, so the session is leaked.
-  // Only the multiplexed session is deleted.
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
-
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::Transaction txn =
@@ -4206,76 +3740,6 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   conn.reset();
 }
 
-#if 0  // session pool test
-TEST(ConnectionImplTest, ReadSessionNotFound) {
-  auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
-  auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-      .WillOnce(Return(MakeSessionsResponse({"test-session-name-1"})))
-      .WillOnce(Return(MakeSessionsResponse({"test-session-name-2"})));
-  EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
-                   google::spanner::v1::ReadRequest const& request) {
-        EXPECT_THAT(request.session(), Eq("test-session-name-1"));
-        EXPECT_THAT(request.transaction().id(), Eq("test-txn-id-1"));
-        return MakeReader<PartialResultSet>(
-            {}, SessionNotFoundError(request.session()));
-      })
-      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&, Options const&,
-                   google::spanner::v1::ReadRequest const& request) {
-        EXPECT_THAT(request.session(), Eq("test-session-name-2"));
-        EXPECT_THAT(request.transaction().id(), Eq("test-txn-id-2"));
-        return MakeReader<PartialResultSet>({
-            R"pb(
-              metadata: {
-                row_type: {
-                  fields: {
-                    name: "UserId",
-                    type: { code: INT64 }
-                  }
-                  fields: {
-                    name: "UserName",
-                    type: { code: STRING }
-                  }
-                }
-              }
-            )pb"});
-      });
-  EXPECT_CALL(
-      *mock, AsyncDeleteSession(_, _, _, HasSessionName("test-session-name-1")))
-      .Times(0);
-  EXPECT_CALL(
-      *mock, AsyncDeleteSession(_, _, _, HasSessionName("test-session-name-2")))
-      .WillOnce(Return(make_ready_future(Status{})));
-
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedRetryOptions());
-  {
-    auto txn = spanner::MakeReadWriteTransaction();
-    SetTransactionId(txn, "test-txn-id-1");
-    auto params = spanner::Connection::ReadParams{txn};
-    auto response = GetSingularRow(conn->Read(std::move(params)));
-    EXPECT_THAT(response, Not(IsOk()));
-    auto const& status = response.status();
-    EXPECT_TRUE(IsSessionNotFound(status)) << status;
-    EXPECT_THAT(txn, HasBadSession());
-  }
-
-  // "test-session-name-1" should not have been returned to the pool.
-  // The best (only?) way to verify this is to make another read and
-  // check that another session was allocated (hence the strict mock).
-  {
-    auto txn = spanner::MakeReadWriteTransaction();
-    SetTransactionId(txn, "test-txn-id-2");
-    auto params = spanner::Connection::ReadParams{txn};
-    auto rows = conn->Read(std::move(params));
-    using RowType = std::tuple<std::int64_t, std::string>;
-    auto stream = spanner::StreamOf<RowType>(rows);
-    auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
-    EXPECT_THAT(actual, IsEmpty());
-  }
-}
-#endif
 TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -4283,10 +3747,6 @@ TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, PartitionRead)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4309,10 +3769,6 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(
           Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4334,10 +3790,6 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(
           Return(ByMove(MakeReader<PartialResultSet>({}, finish_status))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4357,10 +3809,6 @@ TEST(ConnectionImplTest, ExecuteDmlSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4380,10 +3828,6 @@ TEST(ConnectionImplTest, ProfileDmlSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4403,10 +3847,6 @@ TEST(ConnectionImplTest, AnalyzeSqlSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4426,10 +3866,6 @@ TEST(ConnectionImplTest, PartitionQuerySessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, PartitionQuery)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4449,10 +3885,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, ExecuteBatchDml)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4479,10 +3911,6 @@ TEST(ConnectionImplTest, CommitSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, Commit)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4502,10 +3930,6 @@ TEST(ConnectionImplTest, RollbackSessionNotFound) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, Rollback)
       .WillOnce(Return(SessionNotFoundError("multiplexed")));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _,
-  //             Not(HasSessionName("multiplexed"))))
-  //     .Times(0);
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -4521,9 +3945,6 @@ TEST(ConnectionImplTest, ReadRequestOrderByParameterUnspecified) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
   Sequence s;
   EXPECT_CALL(
       *mock,
@@ -4556,9 +3977,6 @@ TEST(ConnectionImplTest, ReadRequestOrderByParameterNoOrder) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
   Sequence s;
   EXPECT_CALL(
       *mock,
@@ -4598,9 +4016,6 @@ TEST(ConnectionImplTest, ReadRequestLockHintParameterUnspecified) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
   Sequence s;
   EXPECT_CALL(
       *mock,
@@ -4633,9 +4048,6 @@ TEST(ConnectionImplTest, ReadRequestLockHintShared) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
   Sequence s;
   EXPECT_CALL(
       *mock,
@@ -4677,12 +4089,6 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, CreateSession(_, _, IsMultiplexed()))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
-
-  // EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
-  //     .WillOnce(Return(MakeSessionsResponse({"multiplexed"})));
-  // EXPECT_CALL(*mock,
-  //             AsyncDeleteSession(_, _, _, HasSessionName("multiplexed")))
-  //     .WillOnce(Return(make_ready_future(Status{})));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
