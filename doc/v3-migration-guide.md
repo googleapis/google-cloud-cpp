@@ -1082,6 +1082,15 @@ auto client = gc::storage::MakeGrpcClient();
 </details>
 
 <details>
+<summary>Removed <code>experimental-storage_grpc</code> targets from CMake and Bazel</summary>
+
+CMake should now link to `google-cloud-cpp::storage_grpc`.
+
+Bazel should now depend on `@google_cloud_cpp//:storage_grpc`
+
+</details>
+
+<details>
 <summary>Removed deprecated <code>Oauth2CredentialsOption</code></summary>
 
 The `google::cloud::UnifiedCredentialsOption` and the unified credentials API
