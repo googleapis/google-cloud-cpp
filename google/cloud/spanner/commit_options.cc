@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/commit_options.h"
+
+// do no reorder
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/options.h"
 
 namespace google {
@@ -48,3 +51,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

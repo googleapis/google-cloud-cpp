@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
@@ -302,3 +303,4 @@ int main(int argc, char* argv[]) {
 
   return RUN_ALL_TESTS();
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

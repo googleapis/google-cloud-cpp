@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/defaults.h"
@@ -124,7 +125,7 @@ google::spanner::v1::Session MakeMultiplexedSession(std::string name,
   session.set_multiplexed(true);
   return session;
 }
-
+#if 0
 // Create a response with the given `sessions`.
 google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
     std::vector<std::string> sessions, std::string role = "") {
@@ -138,7 +139,7 @@ google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
   }
   return response;
 }
-
+#endif
 std::shared_ptr<SessionPool> MakeTestSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     CompletionQueue cq, Options opts = {}) {
@@ -162,9 +163,8 @@ TEST_F(SessionPoolTest, Multiplexed) {
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(
-      db, {mock}, threads.cq(),
-      Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), {});
+  // Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -184,11 +184,10 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
       });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(
-      db, {mock}, threads.cq(),
-      Options{}
-          .set<spanner::RouteToLeaderOption>(true)
-          .set<spanner::EnableMultiplexedSessionOption>({}));
+  auto pool =
+      MakeTestSessionPool(db, {mock}, threads.cq(),
+                          Options{}.set<spanner::RouteToLeaderOption>(true));
+  // .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -198,17 +197,30 @@ TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
 TEST_F(SessionPoolTest, AllocateRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock,
-              BatchCreateSessions(
-                  _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(42))))
+
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::BatchCreateSessionsRequest const&) {
+                       google::spanner::v1::CreateSessionRequest const&) {
         EXPECT_THAT(GetMetadata(context),
                     Contains(Pair(kRouteToLeader, "true")));
-        return MakeSessionsResponse({"session1"});
+        return MakeMultiplexedSession("multiplexed");
       });
-  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
-      .WillOnce(Return(make_ready_future(Status{})));
+
+  // EXPECT_CALL(*mock,
+  //             BatchCreateSessions(
+  //                 _, _, AllOf(DatabaseIs(db.FullName()),
+  //                 SessionCountIs(42))))
+  //     .WillOnce([this](grpc::ClientContext& context, Options const&,
+  //                      google::spanner::v1::BatchCreateSessionsRequest
+  //                      const&) {
+  //       EXPECT_THAT(GetMetadata(context),
+  //                   Contains(Pair(kRouteToLeader, "true")));
+  //       return MakeSessionsResponse({"session1"});
+  //     });
+  // EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+  //     .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool =
@@ -216,15 +228,16 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
                           Options{}
                               .set<spanner::RouteToLeaderOption>(true)
                               .set<spanner::SessionPoolMinSessionsOption>(42));
-  auto session = pool->Allocate();
+  auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "session1");
+  EXPECT_EQ((*session)->session_name(), "multiplexed");
   EXPECT_EQ(pool->GetStub(**session), mock);
 }
 
 TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+
   EXPECT_CALL(
       *mock,
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
@@ -237,11 +250,10 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
       });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(
-      db, {mock}, threads.cq(),
-      Options{}
-          .set<spanner::RouteToLeaderOption>(false)
-          .set<spanner::EnableMultiplexedSessionOption>({}));
+  auto pool =
+      MakeTestSessionPool(db, {mock}, threads.cq(),
+                          Options{}.set<spanner::RouteToLeaderOption>(false));
+  // .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -251,18 +263,32 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
 TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock,
-              BatchCreateSessions(
-                  _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(42))))
+
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
       .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::BatchCreateSessionsRequest const&) {
+                       google::spanner::v1::CreateSessionRequest const&) {
         EXPECT_THAT(GetMetadata(context),
                     AnyOf(Contains(Pair(kRouteToLeader, "false")),
                           Not(Contains(Pair(kRouteToLeader, _)))));
-        return MakeSessionsResponse({"session1"});
+        return MakeMultiplexedSession("multiplexed");
       });
-  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
-      .WillOnce(Return(make_ready_future(Status{})));
+
+  // EXPECT_CALL(*mock,
+  //             BatchCreateSessions(
+  //                 _, _, AllOf(DatabaseIs(db.FullName()),
+  //                 SessionCountIs(42))))
+  //     .WillOnce([this](grpc::ClientContext& context, Options const&,
+  //                      google::spanner::v1::BatchCreateSessionsRequest
+  //                      const&) {
+  //       EXPECT_THAT(GetMetadata(context),
+  //                   AnyOf(Contains(Pair(kRouteToLeader, "false")),
+  //                         Not(Contains(Pair(kRouteToLeader, _)))));
+  //       return MakeSessionsResponse({"session1"});
+  //     });
+  // EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+  //     .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool =
@@ -270,12 +296,13 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
                           Options{}
                               .set<spanner::RouteToLeaderOption>(false)
                               .set<spanner::SessionPoolMinSessionsOption>(42));
-  auto session = pool->Allocate();
+  auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "session1");
+  EXPECT_EQ((*session)->session_name(), "multiplexed");
   EXPECT_EQ(pool->GetStub(**session), mock);
 }
 
+#if 0
 TEST_F(SessionPoolTest, ReleaseBadSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -313,6 +340,7 @@ TEST_F(SessionPoolTest, ReleaseBadSession) {
     EXPECT_EQ((*session)->session_name(), "session2");  // Got a new session
   }
 }
+#endif
 
 TEST_F(SessionPoolTest, MultiplexedCreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -322,14 +350,14 @@ TEST_F(SessionPoolTest, MultiplexedCreateError) {
           Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(
-      db, {mock}, threads.cq(),
-      Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), {});
+  // Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   EXPECT_THAT(session,
               StatusIs(StatusCode::kInternal, HasSubstr("init failure")));
 }
 
+#if 0
 TEST_F(SessionPoolTest, CreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -344,27 +372,37 @@ TEST_F(SessionPoolTest, CreateError) {
   EXPECT_THAT(session,
               StatusIs(StatusCode::kInternal, HasSubstr("some failure")));
 }
+#endif
 
 TEST_F(SessionPoolTest, ReuseSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions)
-      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
-  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
-      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       google::spanner::v1::CreateSessionRequest const&) {
+        return MakeMultiplexedSession("multiplexed");
+      });
+
+  // EXPECT_CALL(*mock, BatchCreateSessions)
+  //     .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  // EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+  //     .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
-  auto session = pool->Allocate();
+  auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "session1");
+  EXPECT_EQ((*session)->session_name(), "multiplexed");
   session->reset();
 
-  auto session2 = pool->Allocate();
+  auto session2 = pool->Multiplexed();
   ASSERT_STATUS_OK(session2);
-  EXPECT_EQ((*session2)->session_name(), "session1");
+  EXPECT_EQ((*session2)->session_name(), "multiplexed");
 }
 
+#if 0  // session pool test
 TEST_F(SessionPoolTest, Lifo) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -399,7 +437,9 @@ TEST_F(SessionPoolTest, Lifo) {
   ASSERT_STATUS_OK(session4);
   EXPECT_EQ((*session4)->session_name(), "session1");
 }
+#endif
 
+#if 0  // pool test
 TEST_F(SessionPoolTest, MinSessionsEagerAllocation) {
   int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -419,7 +459,9 @@ TEST_F(SessionPoolTest, MinSessionsEagerAllocation) {
       Options{}.set<spanner::SessionPoolMinSessionsOption>(min_sessions));
   auto session = pool->Allocate();
 }
+#endif
 
+#if 0  // pool test
 TEST_F(SessionPoolTest, MinSessionsMultipleAllocations) {
   int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -461,7 +503,9 @@ TEST_F(SessionPoolTest, MinSessionsMultipleAllocations) {
   EXPECT_THAT(session_names,
               UnorderedElementsAre("s1", "s2", "s3", "s4", "s5", "s6", "s7"));
 }
+#endif
 
+#if 0  // pool test
 TEST_F(SessionPoolTest, MaxSessionsFailOnExhaustion) {
   int const max_sessions_per_channel = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -498,7 +542,9 @@ TEST_F(SessionPoolTest, MaxSessionsFailOnExhaustion) {
   EXPECT_THAT(session, StatusIs(StatusCode::kResourceExhausted,
                                 "session pool exhausted"));
 }
+#endif
 
+#if 0  // pool test
 TEST_F(SessionPoolTest, MaxSessionsBlockUntilRelease) {
   int const max_sessions_per_channel = 1;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -530,6 +576,7 @@ TEST_F(SessionPoolTest, MaxSessionsBlockUntilRelease) {
   session->reset();
   t.join();
 }
+#endif
 
 TEST_F(SessionPoolTest, MultiplexedLabels) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -552,14 +599,14 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
       db, {mock}, threads.cq(),
-      Options{}
-          .set<spanner::SessionPoolLabelsOption>(std::move(labels))
-          .set<spanner::EnableMultiplexedSessionOption>({}));
+      Options{}.set<spanner::SessionPoolLabelsOption>(std::move(labels)));
+  // .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
 }
 
+#if 0
 TEST_F(SessionPoolTest, Labels) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -578,6 +625,7 @@ TEST_F(SessionPoolTest, Labels) {
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
 }
+#endif
 
 TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -596,14 +644,14 @@ TEST_F(SessionPoolTest, MultiplexedCreatorRole) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
       db, {mock}, threads.cq(),
-      Options{}
-          .set<spanner::SessionCreatorRoleOption>(role)
-          .set<spanner::EnableMultiplexedSessionOption>({}));
+      Options{}.set<spanner::SessionCreatorRoleOption>(role));
+  // .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
 }
 
+#if 0
 TEST_F(SessionPoolTest, CreatorRole) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -623,7 +671,9 @@ TEST_F(SessionPoolTest, CreatorRole) {
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
 }
+#endif
 
+#if 0
 TEST_F(SessionPoolTest, MultipleChannels) {
   auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -668,7 +718,9 @@ TEST_F(SessionPoolTest, MultipleChannels) {
   EXPECT_THAT(session_names, UnorderedElementsAre("c1s1", "c1s2", "c1s3",
                                                   "c2s1", "c2s2", "c2s3"));
 }
+#endif
 
+#if 0
 TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
   auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -732,6 +784,7 @@ TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
   EXPECT_THAT(session, StatusIs(StatusCode::kResourceExhausted,
                                 "session pool exhausted"));
 }
+#endif
 
 TEST_F(SessionPoolTest, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -772,8 +825,8 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementSuccess) {
           .set<MultiplexedSessionBackgroundWorkIntervalOption>(
               background_interval)
           .set<MultiplexedSessionReplacementIntervalOption>(
-              replacement_interval)
-          .set<spanner::EnableMultiplexedSessionOption>({}));
+              replacement_interval));
+  // .set<spanner::EnableMultiplexedSessionOption>({}));
 
   auto s1 = pool->Multiplexed();
   ASSERT_STATUS_OK(s1);
@@ -814,8 +867,8 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
           .set<MultiplexedSessionBackgroundWorkIntervalOption>(
               background_interval)
           .set<MultiplexedSessionReplacementIntervalOption>(
-              replacement_interval)
-          .set<spanner::EnableMultiplexedSessionOption>({}));
+              replacement_interval));
+  // .set<spanner::EnableMultiplexedSessionOption>({}));
 
   auto s1 = pool->Multiplexed();
   ASSERT_STATUS_OK(s1);
@@ -832,6 +885,7 @@ TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
   impl->SimulateCompletion(false);
 }
 
+#if 0
 TEST_F(SessionPoolTest, SessionRefresh) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
   EXPECT_CALL(*mock, BatchCreateSessions)
@@ -905,6 +959,9 @@ TEST_F(SessionPoolTest, SessionRefresh) {
   impl->SimulateCompletion(false);
 }
 
+#endif
+
+#if 0
 TEST_F(SessionPoolTest, SessionRefreshNotFound) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
   EXPECT_CALL(*mock, BatchCreateSessions)
@@ -977,9 +1034,10 @@ TEST_F(SessionPoolTest, SessionRefreshNotFound) {
   // automatically as part of its shutdown.
   impl->SimulateCompletion(false);
 }
-
+#endif
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

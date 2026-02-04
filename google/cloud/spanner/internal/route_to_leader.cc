@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/route_to_leader.h"
+// do no reorder
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/options.h"
 
@@ -33,3 +36,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

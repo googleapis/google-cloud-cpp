@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 //! [all]
 
@@ -108,3 +109,4 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
 }  // namespace
 
 //! [all]
+#include "google/cloud/internal/diagnostics_pop.inc"
