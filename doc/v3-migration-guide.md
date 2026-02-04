@@ -42,6 +42,23 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### CMake
 
+<details>
+<summary>Removed backward compatible proto interface libraries.</summary>
+
+If your application links directly to one of these decommissioned proto
+libraries, the CMakeLists.txt should be updated with the preferred proto library
+name.
+
+| Library                    | Decommissioned Proto Library        | Preferred Proto Library                |
+| -------------------------- | ----------------------------------- | -------------------------------------- |
+| google/cloud/dialogflow_es | cloud_dialogflow_v2_protos          | google-cloud-cpp::dialogflow_es_protos |
+| google/cloud/logging       | logging_type_type_protos            | google-cloud-cpp::logging_protos       |
+| google/cloud/speech        | cloud_speech_protos                 | google-cloud-cpp::speech_protos        |
+| google/cloud/texttospeech  | cloud_texttospeech_protos           | google-cloud-cpp::texttospeech_protos  |
+| google/cloud/trace         | devtools_cloudtrace_v2_trace_protos | google-cloud-cpp::trace_protos         |
+
+</details>
+
 ### Common
 
 <details>
@@ -1048,6 +1065,35 @@ void UseRawClient(google::cloud::storage::Client client) {
   auto connection =
       google::cloud::storage::internal::ClientImplDetails::GetConnection(client);
 }
+```
+
+</details>
+
+<details>
+<summary>Removed <code>storage_experimental::GrpcPluginOption</code> and <code>storage_experimental::DefaultGrpcClient</code></summary>
+
+The `storage_experimental::GrpcPluginOption` is no longer necessary. Instead of
+calling `storage_experimental::DefaultGrpcClient` now call
+`storage::MakeGrpcClient`
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+namespace gc = ::google::cloud;
+
+auto options = gc::Options{}
+    .set<gc::storage_experimental::GrpcPluginOption>("media");
+auto client = gc::storage_experimental::DefaultGrpcClient(options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+namespace gc = ::google::cloud;
+
+auto client = gc::storage::MakeGrpcClient();
 ```
 
 </details>
