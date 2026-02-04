@@ -622,7 +622,7 @@ void DropRowsByPrefix(
 }
 
 void WaitForConsistencyCheck(
-    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    google::cloud::bigtable_admin::BigtableTableAdminClient const& admin,
     std::vector<std::string> const& argv) {
   //! [wait for consistency check]
   namespace cbt = ::google::cloud::bigtable;
@@ -631,7 +631,7 @@ void WaitForConsistencyCheck(
   using ::google::cloud::future;
   using ::google::cloud::Status;
   using ::google::cloud::StatusOr;
-  [](cbta::BigtableTableAdminClient, std::string const& project_id,
+  [](cbta::BigtableTableAdminClient const&, std::string const& project_id,
      std::string const& instance_id, std::string const& table_id) {
     auto client = cbta::BigtableTableAdminClient(
         cbta::MakeBigtableTableAdminConnection());

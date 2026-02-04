@@ -90,8 +90,6 @@ using ::testing::Property;
 using ::testing::Return;
 using ::testing::Sequence;
 using ::testing::SetArgPointee;
-using ::testing::StartsWith;
-using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedPointwise;
 using ::testing::Unused;
@@ -3663,7 +3661,6 @@ TEST(ConnectionImplTest, MultipleThreads) {
   auto db = spanner::Database("project", "instance", "database");
   std::string const session_prefix = "test-session-prefix-";
   std::string const role = "TestRole";
-  std::atomic<int> session_counter(0);
   EXPECT_CALL(*mock, CreateSession(_, _, AllOf(IsMultiplexed())))
       .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, Rollback)

@@ -47,7 +47,6 @@ namespace {
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::FakeSteadyClock;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AnyOf;
@@ -57,8 +56,6 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
-using ::testing::StrictMock;
-using ::testing::UnorderedElementsAre;
 
 auto constexpr kRouteToLeader = "x-goog-spanner-route-to-leader";
 
@@ -279,8 +276,8 @@ TEST_F(SessionPoolTest, ReuseSession) {
   EXPECT_CALL(
       *mock,
       CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
-      .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       google::spanner::v1::CreateSessionRequest const&) {
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::CreateSessionRequest const&) {
         return MakeMultiplexedSession("multiplexed");
       });
 
