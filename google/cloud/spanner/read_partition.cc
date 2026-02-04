@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/spanner/v1/spanner.pb.h"

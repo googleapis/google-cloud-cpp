@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-
 #include "google/cloud/spanner/query_options.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/version.h"

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/options.h"

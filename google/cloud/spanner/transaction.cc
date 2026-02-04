@@ -18,7 +18,6 @@
 // do no reorder
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/options.h"
-
 #include "google/protobuf/duration.pb.h"
 
 namespace google {

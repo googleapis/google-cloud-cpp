@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
