@@ -1053,6 +1053,44 @@ void UseRawClient(google::cloud::storage::Client client) {
 </details>
 
 <details>
+<summary>Removed <code>storage_experimental::GrpcPluginOption</code> and <code>storage_experimental::DefaultGrpcClient</code></summary>
+
+The `storage_experimental::GrpcPluginOption` is no longer necessary. Instead of
+calling `storage_experimental::DefaultGrpcClient` now call
+`storage::MakeGrpcClient`
+
+**Before:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+namespace gc = ::google::cloud;
+
+auto options = gc::Options{}
+    .set<gc::storage_experimental::GrpcPluginOption>("media");
+auto client = gc::storage_experimental::DefaultGrpcClient(options);
+```
+
+**After:**
+
+```cpp
+#include "google/cloud/storage/grpc_plugin.h"
+namespace gc = ::google::cloud;
+
+auto client = gc::storage::MakeGrpcClient();
+```
+
+</details>
+
+<details>
+<summary>Removed <code>experimental-storage_grpc</code> targets from CMake and Bazel</summary>
+
+CMake should now link to `google-cloud-cpp::storage_grpc`.
+
+Bazel should now depend on `@google_cloud_cpp//:storage_grpc`
+
+</details>
+
+<details>
 <summary>Removed deprecated <code>Oauth2CredentialsOption</code></summary>
 
 The `google::cloud::UnifiedCredentialsOption` and the unified credentials API
