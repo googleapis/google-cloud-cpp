@@ -42,11 +42,13 @@ inline bool operator==(ObjectCustomContextPayload const& lhs,
          std::tie(rhs.value, rhs.create_time, rhs.create_time);
 };
 
-inline bool operator!=(ObjectCustomContextPayload const& lhs, ObjectCustomContextPayload const& rhs) {
+inline bool operator!=(ObjectCustomContextPayload const& lhs,
+                       ObjectCustomContextPayload const& rhs) {
   return !(lhs == rhs);
 }
 
-std::ostream& operator<<(std::ostream& os, ObjectCustomContextPayload const& rhs);
+std::ostream& operator<<(std::ostream& os,
+                         ObjectCustomContextPayload const& rhs);
 
 /**
  * Specifies the custom contexts of an object.
@@ -57,6 +59,21 @@ struct ObjectContexts {
    * value.
    */
   std::map<std::string, ObjectCustomContextPayload> custom;
+
+  /**
+   * A set of helper functions to handle the custom.
+   */
+  bool has_custom(std::string const& key) const {
+    return custom.end() != custom.find(key);
+  }
+  ObjectCustomContextPayload const& get_custom(std::string const& key) const {
+    return custom.at(key);
+  }
+  void upsert_custom(std::string const& key,
+                     ObjectCustomContextPayload const& value) {
+    custom[key] = value;
+  }
+  void delete_custom(std::string const& key) { custom.erase(key); }
 };
 
 inline bool operator==(ObjectContexts const& lhs, ObjectContexts const& rhs) {

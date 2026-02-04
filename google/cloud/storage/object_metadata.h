@@ -17,8 +17,8 @@
 
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
-#include "google/cloud/storage/object_retention.h"
 #include "google/cloud/storage/object_contexts.h"
+#include "google/cloud/storage/object_retention.h"
 #include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
@@ -696,6 +696,9 @@ class ObjectMetadataPatchBuilder {
                                           std::string const& value);
   ObjectMetadataPatchBuilder& ResetMetadata(std::string const& key);
   ObjectMetadataPatchBuilder& ResetMetadata();
+
+  ObjectMetadataPatchBuilder& SetContexts(ObjectContexts const& tp);
+  ObjectMetadataPatchBuilder& ResetContexts();
 
   ObjectMetadataPatchBuilder& SetTemporaryHold(bool v);
   ObjectMetadataPatchBuilder& ResetTemporaryHold();

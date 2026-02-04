@@ -277,6 +277,31 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
   return *this;
 }
 
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContexts(
+    ObjectContexts const& tp) {
+  internal::PatchBuilder customSubpatch;
+  for (auto const& pair : tp.custom) {
+    customSubpatch.AddSubPatch(
+        pair.first.c_str(),
+        internal::PatchBuilder()
+            .SetStringField("value", pair.second.value)
+            .SetStringField(
+                "createTime",
+                google::cloud::internal::FormatRfc3339(pair.second.create_time))
+            .SetStringField("updateTime",
+                            google::cloud::internal::FormatRfc3339(
+                                pair.second.update_time)));
+  }
+  impl_.AddSubPatch("contexts", internal::PatchBuilder().AddSubPatch(
+                                    "custom", customSubpatch));
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContexts() {
+  impl_.RemoveField("contexts");
+  return *this;
+}
+
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetTemporaryHold(
     bool v) {
   impl_.SetBoolField("temporaryHold", v);
