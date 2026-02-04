@@ -42,6 +42,23 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### CMake
 
+<details>
+<summary>Removed backward compatible proto interface libraries.</summary>
+
+If your application links directly to one of these decommissioned proto
+libraries, the CMakeLists.txt should be updated with the preferred proto library
+name.
+
+| Library                    | Decommissioned Proto Library        | Preferred Proto Library                |
+| -------------------------- | ----------------------------------- | -------------------------------------- |
+| google/cloud/dialogflow_es | cloud_dialogflow_v2_protos          | google-cloud-cpp::dialogflow_es_protos |
+| google/cloud/logging       | logging_type_type_protos            | google-cloud-cpp::logging_protos       |
+| google/cloud/speech        | cloud_speech_protos                 | google-cloud-cpp::speech_protos        |
+| google/cloud/texttospeech  | cloud_texttospeech_protos           | google-cloud-cpp::texttospeech_protos  |
+| google/cloud/trace         | devtools_cloudtrace_v2_trace_protos | google-cloud-cpp::trace_protos         |
+
+</details>
+
 ### Common
 
 <details>

@@ -34,7 +34,9 @@ source module ci/lib/io.sh
 function cleanup() {
   local exit_status=$?
   io::log_h2 "cleanup on EXIT with exit_status=${exit_status}"
-  io::run find . -name '*core*'
+  if ((exit_status != 0)); then
+    io::run find . -name '*core*'
+  fi
 }
 
 trap 'cleanup' INT TERM EXIT

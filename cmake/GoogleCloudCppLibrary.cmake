@@ -222,17 +222,6 @@ function (google_cloud_cpp_add_gapic_library library display_name)
     list(TRANSFORM shared_proto_dep_targets PREPEND "google_cloud_cpp_")
     list(TRANSFORM shared_proto_dep_targets APPEND "_protos")
 
-    # We used to offer the proto library by another name. Maintain backwards
-    # compatibility by providing an interface library with that name. Also make
-    # sure we install it as part of google_cloud_cpp_${library}-targets.
-    unset(backwards_compat_proto_targets)
-    foreach (old_protos IN LISTS _opt_BACKWARDS_COMPAT_PROTO_TARGETS)
-        google_cloud_cpp_backwards_compat_protos_library("${old_protos}"
-                                                         "${library}_protos")
-        list(APPEND backwards_compat_proto_targets
-             "google_cloud_cpp_${old_protos}")
-    endforeach ()
-
     file(
         GLOB source_files
         RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
