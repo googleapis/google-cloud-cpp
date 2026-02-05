@@ -49,6 +49,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "apigateway"
     "apigeeconnect"
     "apikeys"
+    "apiregistry"
     "appengine"
     "apphub"
     "artifactregistry"

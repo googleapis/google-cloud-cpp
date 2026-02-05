@@ -16,7 +16,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/apiregistry/v1/ EDIT HERE _client.h"
+#include "google/cloud/apiregistry/v1/cloud_api_registry_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -29,10 +29,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace apiregistry = ::google::cloud::apiregistry_v1;
-  auto client = apiregistry::ServiceClient(
-      apiregistry::MakeServiceConnection());  // EDIT HERE
+  auto client = apiregistry::CloudApiRegistryClient(
+      apiregistry::MakeCloudApiRegistryConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListMcpServers(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
